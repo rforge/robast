@@ -46,7 +46,9 @@ exportClasses("InfluenceCurve",
               "IC", 
               "ContIC", 
               "TotalVarIC")
-
+exportClasses("BiasType", "onesidedBiasType",
+              "asymmetricBiasType", 
+              "symmetricBiasType")
 exportMethods("show", 
               "plot", 
               "coerce", 
@@ -107,7 +109,8 @@ exportMethods("optIC",
 exportMethods("ksEstimator",
               "oneStepEstimator", 
               "locMEstimator")
-
+exportMethods("nu", "nu<-", "name", "name<-",
+              "sign", "sign<-")
 export("PosDefSymmMatrix")
 export("NoSymmetry", 
        "EllipticalSymmetry", 
@@ -147,3 +150,5 @@ export("InfluenceCurve",
        "IC", 
        "ContIC", 
        "TotalVarIC")
+export(symmetricBias, asymmetricBias, 
+       positiveBias, negativeBias)

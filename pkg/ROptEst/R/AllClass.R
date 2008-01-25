@@ -397,3 +397,23 @@ setClass("TotalVarIC",
                                 "!= dimension of 'stand'"))
                 return(TRUE)
             })
+
+################################################################################
+# Bias Classes
+################################################################################
+
+### from session 10-01-08 : class Bias type
+setClass("BiasType", representation(name = "character"),
+          contains = "VIRTUAL")
+          
+setClass("symmetricBiasType", prototype = prototype(name = "symmetric Bias"),
+          contains = "BiasType")
+
+setClass("onesidedBiasType", representation(sign = "numeric"),
+          prototype = prototype(name = "positive Bias", sign = 1),
+          contains = "BiasType")
+
+setClass("asymmetricBiasType", 
+          representation(nu = "numeric"), ### weights acc. to paper
+          prototype = prototype(name = "asymmetric Bias", nu = c(1,1)),
+          contains = "BiasType")
