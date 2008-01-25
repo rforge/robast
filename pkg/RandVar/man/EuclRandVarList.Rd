@@ -48,4 +48,4 @@ function(...){
 }
 \concept{random variable}
 \concept{random matrix}
-\keyword{}
+\keyword{classes}

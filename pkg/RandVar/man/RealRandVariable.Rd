@@ -35,4 +35,4 @@ function(Map = list(function(x){1}), Domain = NULL, Range) {
 }
 }
 \concept{random variable}
-\keyword{}
+\keyword{classes}

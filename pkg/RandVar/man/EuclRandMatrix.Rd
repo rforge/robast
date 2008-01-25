@@ -68,4 +68,4 @@ function(Map = list(function(x){1}), nrow = 1, ncol = 1,
 }
 \concept{random variable}
 \concept{random matrix}
-\keyword{}
+\keyword{classes}

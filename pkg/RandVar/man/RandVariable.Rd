@@ -49,4 +49,4 @@ function(Map = list(function(x){ }), Domain = NULL, Range = NULL) {
 }
 }
 \concept{random variable}
-\keyword{}
+\keyword{classes}
