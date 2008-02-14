@@ -1,59 +1,11 @@
 import("distr")
 import("distrEx")
+import("distrMod")
 import("RandVar")
 
-exportClasses("PosDefSymmMatrix",
-              "OptionalNumeric") 
-exportClasses("Symmetry", 
-              "DistributionSymmetry",  
-              "NoSymmetry", 
-              "EllipticalSymmetry", 
-              "SphericalSymmetry", 
-              "FunctionSymmetry",
-              "NonSymmetric",
-              "EvenSymmetric",
-              "OddSymmetric",
-              "FunSymmList",
-              "DistrSymmList")
-exportClasses("ParamFamParameter", 
-              "ProbFamily", 
-              "ParamFamily", 
-              "L2ParamFamily")
-exportClasses("Neighborhood", 
-              "UncondNeighborhood", 
-              "ContNeighborhood", 
-              "TotalVarNeighborhood") 
-exportClasses("RobModel", 
-              "FixRobModel", 
-              "InfRobModel") 
-exportClasses("RiskType", 
-              "asRisk", 
-              "asCov", 
-              "trAsCov", 
-              "asHampel", 
-              "asBias", 
-              "asGRisk", 
-              "asMSE", 
-              "asUnOvShoot", 
-              "fiRisk", 
-              "fiCov", 
-              "trFiCov", 
-              "fiHampel", 
-              "fiMSE", 
-              "fiBias", 
-              "fiUnOvShoot")
-exportClasses("InfluenceCurve", 
-              "IC", 
-              "ContIC", 
-              "TotalVarIC")
-exportClasses("BiasType", "onesidedBiasType",
-              "asymmetricBiasType", 
-              "symmetricBiasType")
 exportMethods("show", 
-              "plot", 
               "coerce", 
-              "length", 
-              "E")
+              "length")
 exportMethods("type",
               "SymmCenter")
 exportMethods("name", "name<-", 
@@ -64,18 +16,10 @@ exportMethods("name", "name<-",
               "nuisance", "nuisance<-", 
               "trafo", "trafo<-", 
               "param", 
-              "L2deriv", 
-              "L2derivSymm", 
-              "L2derivDistr", 
-              "L2derivDistrSymm", 
-              "FisherInfo", 
-              "checkL2deriv",
               "infoPlot")
 exportMethods("radius")
 exportMethods("center", "center<-", 
               "neighbor", "neighbor<-")
-exportMethods("bound", 
-              "width")
 exportMethods("Curve", 
               "Risks", "Risks<-", "addRisk<-", 
               "Infos", "Infos<-", "addInfo<-", 
@@ -106,49 +50,3 @@ exportMethods("optIC",
               "getIneffDiff", 
               "leastFavorableRadius",
               "lowerCaseRadius")
-exportMethods("ksEstimator",
-              "oneStepEstimator", 
-              "locMEstimator")
-exportMethods("nu", "nu<-", "name", "name<-",
-              "sign", "sign<-")
-export("PosDefSymmMatrix")
-export("NoSymmetry", 
-       "EllipticalSymmetry", 
-       "SphericalSymmetry", 
-       "NonSymmetric",
-       "EvenSymmetric",
-       "OddSymmetric",
-       "DistrSymmList",
-       "FunSymmList") 
-export("ParamFamParameter", 
-       "ParamFamily", 
-       "L2ParamFamily", 
-       "BinomFamily", 
-       "PoisFamily", 
-       "NormLocationFamily", 
-       "GumbelLocationFamily", 
-       "NormScaleFamily", 
-       "ExpScaleFamily",
-       "LnormScaleFamily", 
-       "GammaFamily", 
-       "NormLocationScaleFamily")
-export("ContNeighborhood", "TotalVarNeighborhood") 
-export("FixRobModel", "InfRobModel") 
-export("asCov", 
-       "trAsCov", 
-       "asHampel", 
-       "asBias", 
-       "asMSE", 
-       "asUnOvShoot", 
-       "fiCov", 
-       "trFiCov", 
-       "fiHampel", 
-       "fiMSE", 
-       "fiBias", 
-       "fiUnOvShoot")
-export("InfluenceCurve", 
-       "IC", 
-       "ContIC", 
-       "TotalVarIC")
-export(symmetricBias, asymmetricBias, 
-       positiveBias, negativeBias)
