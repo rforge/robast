@@ -1,36 +1,3 @@
-setMethod("show", "ParamFamParameter", 
-    function(object){
-        cat(paste("An object of class", dQuote(class(object)), "\n"))
-        cat("name:\t", object@name, "\n")
-        cat("main:\t", object@main, "\n")
-        if(!is.null(object@nuisance))
-            cat("nuisance:\t", object@nuisance, "\n")
-        if(!identical(all.equal(object@trafo, diag(length(object)), 
-                            tolerance = .Machine$double.eps^0.5), TRUE)){
-            cat("trafo:\n")
-            print(object@trafo)
-        }
-    })
-setMethod("show", "Symmetry", 
-    function(object){ 
-        cat("type of symmetry:\t", object@type, "\n") 
-        if(!is.null(object@SymmCenter))
-            cat("center of symmetry:\n") 
-            print(object@SymmCenter)
-    })
-setMethod("show", "ParamFamily", 
-    function(object){
-        cat(paste("An object of class", dQuote(class(object)), "\n"))
-        cat("### name:\t", object@name, "\n")
-        cat("\n### distribution:\t")
-        print(object@distribution)
-        cat("\n### param:\t")
-        show(object@param)
-        if(length(object@props) != 0){
-            cat("\n### props:\n")
-            show(object@props)
-        }
-    })
 setMethod("show", "Neighborhood", 
     function(object){
         cat(paste("An object of class", dQuote(class(object)), "\n"))

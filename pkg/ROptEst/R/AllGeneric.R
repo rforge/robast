@@ -1,59 +1,5 @@
-if(!isGeneric("type")){ 
-    setGeneric("type", function(object) standardGeneric("type"))
-}
-if(!isGeneric("SymmCenter")){ 
-    setGeneric("SymmCenter", function(object) standardGeneric("SymmCenter"))
-}
-if(!isGeneric("distrSymm")){ 
-    setGeneric("distrSymm", function(object) standardGeneric("distrSymm"))
-}
-if(!isGeneric("distribution")){ 
-    setGeneric("distribution", function(object) standardGeneric("distribution"))
-}
-if(!isGeneric("props")){ 
-    setGeneric("props", function(object) standardGeneric("props"))
-}
-if(!isGeneric("props<-")){ 
-    setGeneric("props<-", function(object, value) standardGeneric("props<-"))
-}
-if(!isGeneric("addProp<-")){
-    setGeneric("addProp<-", function(object, value) standardGeneric("addProp<-"))
-}
-if(!isGeneric("main")){
-    setGeneric("main", function(object) standardGeneric("main"))
-}
-if(!isGeneric("main<-")){ 
-    setGeneric("main<-", function(object, value) standardGeneric("main<-"))
-}
-if(!isGeneric("nuisance")){
-    setGeneric("nuisance", function(object) standardGeneric("nuisance"))
-}
-if(!isGeneric("nuisance<-")){ 
-    setGeneric("nuisance<-", function(object, value) standardGeneric("nuisance<-"))
-}
-if(!isGeneric("trafo")){
-    setGeneric("trafo", function(object) standardGeneric("trafo"))
-}
-if(!isGeneric("trafo<-")){ 
-    setGeneric("trafo<-", function(object, value) standardGeneric("trafo<-"))
-}
 if(!isGeneric("param<-")){ 
     setGeneric("param<-", function(object, value) standardGeneric("param<-"))
-}
-if(!isGeneric("L2deriv")){
-    setGeneric("L2deriv", function(object) standardGeneric("L2deriv"))
-}
-if(!isGeneric("L2derivSymm")){
-    setGeneric("L2derivSymm", function(object) standardGeneric("L2derivSymm"))
-}
-if(!isGeneric("L2derivDistr")){
-    setGeneric("L2derivDistr", function(object) standardGeneric("L2derivDistr"))
-}
-if(!isGeneric("L2derivDistrSymm")){
-    setGeneric("L2derivDistrSymm", function(object) standardGeneric("L2derivDistrSymm"))
-}
-if(!isGeneric("FisherInfo")){
-    setGeneric("FisherInfo", function(object) standardGeneric("FisherInfo"))
 }
 if(!isGeneric("radius")){ 
     setGeneric("radius", function(object) standardGeneric("radius"))
@@ -102,9 +48,6 @@ if(!isGeneric("CallL2Fam")){
 }
 if(!isGeneric("CallL2Fam<-")){ 
     setGeneric("CallL2Fam<-", function(object, value) standardGeneric("CallL2Fam<-"))
-}
-if(!isGeneric("checkL2deriv")){
-    setGeneric("checkL2deriv", function(L2Fam, ...) standardGeneric("checkL2deriv"))
 }
 if(!isGeneric("generateIC")){
     setGeneric("generateIC", function(neighbor, L2Fam, ...) standardGeneric("generateIC"))
