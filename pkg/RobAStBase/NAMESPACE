@@ -1,0 +1,83 @@
+import("distr")
+import("distrEx")
+import("distrMod")
+import("RandVar")
+
+exportClasses("Neighborhood", 
+              "UncondNeighborhood", 
+              "ContNeighborhood", 
+              "TotalVarNeighborhood") 
+exportClasses("RobModel", 
+              "FixRobModel", 
+              "InfRobModel") 
+exportClasses("InfluenceCurve", 
+              "IC", 
+              "ContIC", 
+              "TotalVarIC")
+exportMethods("show", 
+              "plot", 
+              "coerce", 
+              "length")
+exportMethods("type",
+              "SymmCenter")
+exportMethods("name", "name<-", 
+              "distribution", 
+              "distrSymm",
+              "props", "props<-", "addProp<-", 
+              "main", "main<-", 
+              "nuisance", "nuisance<-", 
+              "trafo", "trafo<-", 
+              "param", 
+              "L2deriv", 
+              "L2derivSymm", 
+              "L2derivDistr", 
+              "L2derivDistrSymm", 
+              "FisherInfo", 
+              "checkL2deriv",
+              "infoPlot")
+exportMethods("radius")
+exportMethods("center", "center<-", 
+              "neighbor", "neighbor<-")
+exportMethods("bound", 
+              "width")
+exportMethods("Curve", 
+              "Risks", "Risks<-", "addRisk<-", 
+              "Infos", "Infos<-", "addInfo<-", 
+              "CallL2Fam", "CallL2Fam<-", 
+              "generateIC", 
+              "checkIC",
+              "evalIC",
+              "clip", "clip<-", 
+              "cent", "cent<-", 
+              "stand", "stand<-", 
+              "lowerCase", "lowerCase<-", 
+              "neighborRadius", "neighborRadius<-", 
+              "clipLo", "clipLo<-", 
+              "clipUp", "clipUp<-") 
+exportMethods("optIC", 
+              "getInfRobIC", 
+              "getFixRobIC",
+              "getAsRisk", 
+              "getFiRisk",
+              "getInfClip", 
+              "getFixClip",
+              "getInfGamma", 
+              "getInfCent", 
+              "getInfStand", 
+              "getRiskIC", 
+              "optRisk", 
+              "radiusMinimaxIC", 
+              "getIneffDiff", 
+              "leastFavorableRadius",
+              "lowerCaseRadius")
+exportMethods("ksEstimator",
+              "oneStepEstimator", 
+              "locMEstimator")
+exportMethods("nu", "nu<-", "name", "name<-",
+              "sign", "sign<-")
+export("ContNeighborhood", "TotalVarNeighborhood") 
+export("FixRobModel", "InfRobModel") 
+export("InfluenceCurve", 
+       "IC", 
+       "ContIC", 
+       "TotalVarIC")
