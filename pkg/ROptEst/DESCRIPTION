@@ -1,9 +1,9 @@
 Package: ROptEst
 Version: 0.6.0
-Date: 2008-02-11
+Date: 2008-02-14
 Title: Optimally robust estimation
 Description: Optimally robust estimation using S4 classes and methods
-Depends: R(>= 2.4.0), methods, distr(>= 1.9), distrEx(>= 1.9), RandVar(>= 0.6.2)
+Depends: R(>= 2.4.0), methods, distr(>= 2.0), distrEx(>= 2.0), distrMod(>= 2.0), RandVar(>= 0.6.2)
 Author: Matthias Kohl
 Maintainer: Matthias Kohl <Matthias.Kohl@stamats.de>
 SaveImage: no
