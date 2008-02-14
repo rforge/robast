@@ -84,15 +84,15 @@ setMethod("checkL2deriv", "L2ParamFamily",
 
         cent <- E(object = L2Fam, fun = L2deriv)
         if(out) cat("precision of centering:\t", cent, "\n")
-        
+
         consist <- E(object = L2Fam, fun = L2deriv %*% t(L2deriv))
         consist <- consist - as(L2Fam@FisherInfo, "matrix")
         if(out){
             cat("precision of Fisher information:\n")
             print(consist)
         }
-        
+
         prec <- max(abs(cent), abs(consist))
-        
+ 
         return(list(maximum.deviation = prec))
     })
