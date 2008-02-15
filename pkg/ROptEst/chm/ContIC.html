@@ -1,0 +1,121 @@
+<html><head><title>Generating function for ContIC-class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>ContIC(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   ContIC">
+<param name="keyword" value=" Generating function for ContIC-class">
+</object>
+
+
+<h2>Generating function for ContIC-class</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generates an object of class <code>"ContIC"</code>;
+i.e., an influence curves <i>eta</i> of the form
+</p><p align="center"><i>eta = (A Lambda - a)min(1, b/|A Lambda - a|)</i></p><p>
+with clipping bound <i>b</i>, centering constant <i>a</i> and
+standardizing matrix <i>A</i>. <i>Lambda</i> stands for
+the L2 derivative of the corresponding L2 differentiable 
+parametric family which can be created via <code>CallL2Fam</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+ContIC(name, CallL2Fam = call("L2ParamFamily"), 
+       Curve = EuclRandVarList(RealRandVariable(Map = c(function(x){x}), 
+                                                Domain = Reals())), 
+       Risks, Infos, clip = Inf, cent = 0, stand = as.matrix(1), 
+       lowerCase = NULL, neighborRadius = 0)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+object of class <code>"character"</code>. </td></tr>
+<tr valign="top"><td><code>CallL2Fam</code></td>
+<td>
+object of class <code>"call"</code>:
+creates an object of the underlying L2-differentiable 
+parametric family. </td></tr>
+<tr valign="top"><td><code>Curve</code></td>
+<td>
+object of class <code>"EuclRandVarList"</code> </td></tr>
+<tr valign="top"><td><code>Risks</code></td>
+<td>
+object of class <code>"list"</code>: 
+list of risks; cf. <code><a href="RiskType-class.html">RiskType-class</a></code>. </td></tr>
+<tr valign="top"><td><code>Infos</code></td>
+<td>
+matrix of characters with two columns 
+named <code>method</code> and <code>message</code>: additional informations. </td></tr>
+<tr valign="top"><td><code>clip</code></td>
+<td>
+positive real: clipping bound. </td></tr>
+<tr valign="top"><td><code>cent</code></td>
+<td>
+real: centering constant </td></tr>
+<tr valign="top"><td><code>stand</code></td>
+<td>
+matrix: standardizing matrix </td></tr>
+<tr valign="top"><td><code>lowerCase</code></td>
+<td>
+optional constant for lower case solution. </td></tr>
+<tr valign="top"><td><code>neighborRadius</code></td>
+<td>
+radius of the corresponding (unconditional) 
+contamination neighborhood. </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"ContIC"</code></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="IC-class.html">IC-class</a></code>, <code><a href="ContIC.html">ContIC</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+IC1 &lt;- ContIC()
+plot(IC1)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

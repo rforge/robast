@@ -1,0 +1,91 @@
+<html><head><title>Generic function for checking L2-derivatives</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>checkL2deriv(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   checkL2deriv">
+<param name="keyword" value=" Generic function for checking L2-derivatives">
+</object>
+
+
+<h2>Generic function for checking L2-derivatives</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for checking the L2-derivative of
+an L2-differentiable family of probability measures.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+checkL2deriv(L2Fam, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>L2Fam</code></td>
+<td>
+L2-differentiable family of probability measures </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional parameters </td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+The precisions of the centering and the Fisher information
+are computed.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+The maximum deviation is returned.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="L2ParamFamily-class.html">L2ParamFamily-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+F1 &lt;- new("L2ParamFamily")
+checkL2deriv(F1)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

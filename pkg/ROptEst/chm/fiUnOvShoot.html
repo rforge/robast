@@ -1,0 +1,88 @@
+<html><head><title>Generating function for fiUnOvShoot-class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>fiUnOvShoot(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   fiUnOvShoot">
+<param name="keyword" value=" Generating function for fiUnOvShoot-class">
+</object>
+
+
+<h2>Generating function for fiUnOvShoot-class</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generates an object of class <code>"fiUnOvShoot"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>fiUnOvShoot(width = 1.960)</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>width</code></td>
+<td>
+positive real: half the width of given confidence interval. </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"fiUnOvShoot"</code></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Huber, P.J. (1968) Robust Confidence Limits. Z. Wahrscheinlichkeitstheor.
+Verw. Geb. <B>10</B>:269&ndash;278.
+</p>
+<p>
+Rieder, H. (1989) A finite-sample minimax regression estimator. 
+Statistics <B>20</B>(2): 211&ndash;221.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+<p>
+Ruckdeschel, P. and Kohl, M. (2005) How to approximate 
+the finite sample risk of M-estimators.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="fiUnOvShoot-class.html">fiUnOvShoot-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+fiUnOvShoot()
+
+## The function is currently defined as
+function(width = 1.960){ new("fiUnOvShoot", width = width) }
+</pre>
+
+
+
+<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

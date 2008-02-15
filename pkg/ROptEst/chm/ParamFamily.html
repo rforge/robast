@@ -1,0 +1,119 @@
+<html><head><title>Generating function for ParamFamily-class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>ParamFamily(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   ParamFamily">
+<param name="keyword" value=" Generating function for ParamFamily-class">
+</object>
+
+
+<h2>Generating function for ParamFamily-class</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generates an object of class <code>"ParamFamily"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+ParamFamily(name, distribution = Norm(), distrSymm, main = 0, 
+            nuisance, trafo, param, props = character(0))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+character string: name of family </td></tr>
+<tr valign="top"><td><code>distribution</code></td>
+<td>
+object of class <code>"Distribution"</code>: 
+member of the family </td></tr>
+<tr valign="top"><td><code>distrSymm</code></td>
+<td>
+object of class <code>"DistributionSymmetry"</code>: 
+symmetry of <code>distribution</code>. </td></tr>
+<tr valign="top"><td><code>main</code></td>
+<td>
+numeric vector: main parameter </td></tr>
+<tr valign="top"><td><code>nuisance</code></td>
+<td>
+numeric vector: nuisance parameter </td></tr>
+<tr valign="top"><td><code>trafo</code></td>
+<td>
+matrix: transformation of the parameters </td></tr>
+<tr valign="top"><td><code>param</code></td>
+<td>
+object of class <code>"ParamFamParameter"</code>:
+parameter of the family </td></tr>
+<tr valign="top"><td><code>props</code></td>
+<td>
+character vector: properties of the family </td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+If <code>name</code> is missing, the default 
+&ldquo;"parametric family of probability measures"&rdquo; is used. 
+In case <code>distrSymm</code> is missing it is set 
+to <code>NoSymmetry()</code>.
+If <code>param</code> is missing, the parameter is created via
+<code>main</code>, <code>nuisance</code> and <code>trafo</code> as described
+in <code><a href="ParamFamParameter.html">ParamFamParameter</a></code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"ParamFamily"</code></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="ParamFamily-class.html">ParamFamily-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+F1 &lt;- ParamFamily()
+plot(F1)
+
+## The function is currently defined as
+function(name, distribution = Norm(), main = 0, nuisance, 
+         trafo, param, props = character(0)){
+    if(missing(name)) 
+        name &lt;- "parametric family of probability measures"
+    if(missing(distrSymm)) distrSymm &lt;- NoSymmetry()
+    if(missing(param)) 
+        param &lt;- ParamFamParameter(name = paste("parameter of", name), 
+                        main = main, nuisance = nuisance, trafo = trafo)
+    return(new("ParamFamily", name = name, distribution = distribution, 
+               distrSymm = distrSymm, param = param, props = props))
+}
+</pre>
+
+
+
+<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

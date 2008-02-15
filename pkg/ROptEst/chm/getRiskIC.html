@@ -1,0 +1,229 @@
+<html><head><title>Generic function for the computation of a risk for an IC</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>getRiskIC(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   getRiskIC">
+<param name="keyword" value="R:   getRiskIC-methods">
+<param name="keyword" value="R:   getRiskIC,IC,asCov,missing,missing-method">
+<param name="keyword" value="R:   getRiskIC,IC,asCov,missing,L2ParamFamily-method">
+<param name="keyword" value="R:   getRiskIC,IC,trAsCov,missing,missing-method">
+<param name="keyword" value="R:   getRiskIC,IC,trAsCov,missing,L2ParamFamily-method">
+<param name="keyword" value="R:   getRiskIC,IC,asBias,ContNeighborhood,missing-method">
+<param name="keyword" value="R:   getRiskIC,IC,asBias,ContNeighborhood,L2ParamFamily-method">
+<param name="keyword" value="R:   getRiskIC,IC,asBias,TotalVarNeighborhood,missing-method">
+<param name="keyword" value="R:   getRiskIC,IC,asBias,TotalVarNeighborhood,L2ParamFamily-method">
+<param name="keyword" value="R:   getRiskIC,IC,asMSE,UncondNeighborhood,missing-method">
+<param name="keyword" value="R:   getRiskIC,IC,asMSE,UncondNeighborhood,L2ParamFamily-method">
+<param name="keyword" value="R:   getRiskIC,TotalVarIC,asUnOvShoot,UncondNeighborhood,missing-method">
+<param name="keyword" value="R:   getRiskIC,IC,fiUnOvShoot,ContNeighborhood,missing-method">
+<param name="keyword" value="R:   getRiskIC,IC,fiUnOvShoot,TotalVarNeighborhood,missing-method">
+<param name="keyword" value=" Generic function for the computation of a risk for an IC">
+</object>
+
+
+<h2>Generic function for the computation of a risk for an IC</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for the computation of a risk for an IC.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+getRiskIC(IC, risk, neighbor, L2Fam, ...)
+
+## S4 method for signature 'IC, asCov, missing, missing':
+getRiskIC(IC, risk, tol = .Machine$double.eps^0.25)
+
+## S4 method for signature 'IC, asCov, missing,
+##   L2ParamFamily':
+getRiskIC(IC, risk, L2Fam, tol = .Machine$double.eps^0.25)
+
+## S4 method for signature 'IC, trAsCov, missing, missing':
+getRiskIC(IC, risk, tol = .Machine$double.eps^0.25)
+
+## S4 method for signature 'IC, trAsCov, missing,
+##   L2ParamFamily':
+getRiskIC(IC, risk, L2Fam, tol = .Machine$double.eps^0.25)
+
+## S4 method for signature 'IC, asBias, ContNeighborhood,
+##   missing':
+getRiskIC(IC, risk, neighbor, tol = .Machine$double.eps^0.25)
+
+## S4 method for signature 'IC, asBias, ContNeighborhood,
+##   L2ParamFamily':
+getRiskIC(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
+
+## S4 method for signature 'IC, asBias,
+##   TotalVarNeighborhood, missing':
+getRiskIC(IC, risk, neighbor, tol = .Machine$double.eps^0.25)
+
+## S4 method for signature 'IC, asBias,
+##   TotalVarNeighborhood, L2ParamFamily':
+getRiskIC(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
+
+## S4 method for signature 'IC, asMSE, UncondNeighborhood,
+##   missing':
+getRiskIC(IC, risk, neighbor, tol = .Machine$double.eps^0.25)
+
+## S4 method for signature 'IC, asMSE, UncondNeighborhood,
+##   L2ParamFamily':
+getRiskIC(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
+
+## S4 method for signature 'TotalVarIC, asUnOvShoot,
+##   UncondNeighborhood, missing':
+getRiskIC(IC, risk, neighbor)
+
+## S4 method for signature 'IC, fiUnOvShoot,
+##   ContNeighborhood, missing':
+getRiskIC(IC, risk, neighbor, sampleSize, Algo = "A", cont = "left")
+
+## S4 method for signature 'IC, fiUnOvShoot,
+##   TotalVarNeighborhood, missing':
+getRiskIC(IC, risk, neighbor, sampleSize, Algo = "A", cont = "left")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>IC</code></td>
+<td>
+object of class <code>"InfluenceCurve"</code> </td></tr>
+<tr valign="top"><td><code>risk</code></td>
+<td>
+object of class <code>"RiskType"</code>. </td></tr>
+<tr valign="top"><td><code>neighbor</code></td>
+<td>
+object of class <code>"Neighborhood"</code>. </td></tr>
+<tr valign="top"><td><code>L2Fam</code></td>
+<td>
+object of class <code>"L2ParamFamily"</code>. </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional parameters </td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+the desired accuracy (convergence tolerance).</td></tr>
+<tr valign="top"><td><code>sampleSize</code></td>
+<td>
+integer: sample size. </td></tr>
+<tr valign="top"><td><code>Algo</code></td>
+<td>
+"A" or "B". </td></tr>
+<tr valign="top"><td><code>cont</code></td>
+<td>
+"left" or "right". </td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+To make sure that the results are valid, it is recommended
+to include an additional check of the IC properties of <code>IC</code> 
+using <code>checkIC</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+The risk of an IC is computed.</p>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>IC = "IC", risk = "asCov", neighbor = "missing", L2Fam = "missing"</dt><dd>asymptotic covariance of <code>IC</code>. </dd>
+
+
+<dt>IC = "IC", risk = "asCov", neighbor = "missing", L2Fam = "L2ParamFamily"</dt><dd>asymptotic covariance of <code>IC</code> under <code>L2Fam</code>. </dd>
+
+
+<dt>IC = "IC", risk = "trAsCov", neighbor = "missing", L2Fam = "missing"</dt><dd>asymptotic covariance of <code>IC</code>. </dd>
+
+
+<dt>IC = "IC", risk = "trAsCov", neighbor = "missing", L2Fam = "L2ParamFamily"</dt><dd>asymptotic covariance of <code>IC</code> under <code>L2Fam</code>. </dd>
+
+
+<dt>IC = "IC", risk = "asBias", neighbor = "ContNeighborhood", L2Fam = "missing"</dt><dd>asymptotic bias of <code>IC</code> under convex contaminations. </dd>
+
+
+<dt>IC = "IC", risk = "asBias", neighbor = "ContNeighborhood", L2Fam = "L2ParamFamily"</dt><dd>asymptotic bias of <code>IC</code> under convex contaminations and <code>L2Fam</code>. </dd>
+
+
+<dt>IC = "IC", risk = "asBias", neighbor = "TotalVarNeighborhood", L2Fam = "missing"</dt><dd>asymptotic bias of <code>IC</code> in case of total variation neighborhoods. </dd>
+
+
+<dt>IC = "IC", risk = "asBias", neighbor = "TotalVarNeighborhood", L2Fam = "L2ParamFamily"</dt><dd>asymptotic bias of <code>IC</code> under <code>L2Fam</code> in case of total variation 
+neighborhoods. </dd>
+
+
+<dt>IC = "IC", risk = "asMSE", neighbor = "UncondNeighborhood", L2Fam = "missing"</dt><dd>asymptotic mean square error of <code>IC</code>. </dd>
+
+
+<dt>IC = "IC", risk = "asMSE", neighbor = "UncondNeighborhood", L2Fam = "L2ParamFamily"</dt><dd>asymptotic mean square error of <code>IC</code> under <code>L2Fam</code>. </dd>
+
+
+<dt>IC = "TotalVarIC", risk = "asUnOvShoot", neighbor = "UncondNeighborhood", L2Fam = "missing"</dt><dd>asymptotic under-/overshoot risk of <code>IC</code>. </dd>
+
+
+<dt>IC = "IC", risk = "fiUnOvShoot", neighbor = "ContNeighborhood", L2Fam = "missing"</dt><dd>finite-sample under-/overshoot risk of <code>IC</code>. </dd>
+
+
+<dt>IC = "IC", risk = "fiUnOvShoot", neighbor = "TotalVarNeighborhood", L2Fam = "missing"</dt><dd>finite-sample under-/overshoot risk of <code>IC</code>. </dd>
+</dl>
+
+<h3>Note</h3>
+
+<p>
+This generic function is still under construction.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Huber, P.J. (1968) Robust Confidence Limits. Z. Wahrscheinlichkeitstheor.
+Verw. Geb. <B>10</B>:269&ndash;278.
+</p>
+<p>
+Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. <B>8</B>: 106&ndash;115.
+</p>
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+<p>
+Ruckdeschel, P. and Kohl, M. (2005) Computation of the Finite Sample Risk 
+of M-estimators on Neighborhoods.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="getRiskIC.html">getRiskIC-methods</a></code>, <code><a href="InfRobModel-class.html">InfRobModel-class</a></code>
+</p>
+
+
+
+<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

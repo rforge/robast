@@ -1,0 +1,122 @@
+<html><head><title>Generating function for EuclRandMatrix-class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>EuclRandMatrix(RandVar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   EuclRandMatrix">
+<param name="keyword" value=" Generating function for EuclRandMatrix-class">
+</object>
+
+
+<h2>Generating function for EuclRandMatrix-class</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generates an object of class <code>"EuclRandMatrix"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+EuclRandMatrix(Map = list(function(x){1}), nrow = 1, ncol = 1, 
+            Domain = NULL, dimension = 1, Range)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>Map</code></td>
+<td>
+list of functions forming the map. </td></tr>
+<tr valign="top"><td><code>nrow</code></td>
+<td>
+number of rows.  </td></tr>
+<tr valign="top"><td><code>ncol</code></td>
+<td>
+number of columns. </td></tr>
+<tr valign="top"><td><code>Domain</code></td>
+<td>
+object of class <code>"OptionalrSpace"</code>: 
+domain of <code>Map</code> </td></tr>
+<tr valign="top"><td><code>dimension</code></td>
+<td>
+positive integer: dimension of the 
+range of <code>Map</code> </td></tr>
+<tr valign="top"><td><code>Range</code></td>
+<td>
+object of class <code>"OptionalrSpace"</code>: 
+range of <code>Map</code> </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"EuclRandMatrix"</code></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="EuclRandMatrix-class.html">EuclRandMatrix-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+L1 &lt;- list(function(x){x}, function(x){x^2}, function(x){x^3}, function(x){x^4}, 
+           function(x){x^5}, function(x){x^6})
+L2 &lt;- list(function(x){exp(x)}, function(x){abs(x)}, 
+           function(x){sin(x)}, function(x){floor(x)})
+
+R1 &lt;- EuclRandMatrix(Map = L1, nrow = 3, Domain = Reals(), dimension = 1)
+R1[1:2, 2]
+R1[1:2, 1:2]
+Map(R1[1,2])
+Map(t(R1)[2,1])
+
+R2 &lt;- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
+(DL &lt;- imageDistr(R2, Norm()))
+plot(DL)
+
+Map(gamma(R2)) # "Math" group
+
+## "Arith" group
+Map(2/R1)
+Map(R2 * R2)
+
+## The function is currently defined as
+function(Map = list(function(x){1}), nrow = 1, ncol = 1,
+                              Domain = NULL, dimension = 1) {
+    if (missing(nrow)) 
+        nrow &lt;- ceiling(length(Map)/ncol)
+    else if (missing(ncol)) 
+        ncol &lt;- ceiling(length(Map)/nrow)
+    
+    if(missing(Range))
+        return(new("EuclRandMatrix", Map = Map, Domain = Domain, 
+                   Range = EuclideanSpace(dimension = dimension),
+                   Dim = as.integer(c(nrow, ncol))))
+    else
+        return(new("EuclRandMatrix", Map = Map, Domain = Domain, 
+                   Range = Range, Dim = as.integer(c(nrow, ncol))))
+}
+</pre>
+
+
+
+<hr><div align="center">[Package <em>RandVar</em> version 0.6.2 <a href="00Index.html">Index]</a></div>
+
+</body></html>

@@ -1,0 +1,103 @@
+<html><head><title>Generating function for ParamFamParameter-class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>ParamFamParameter(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   ParamFamParameter">
+<param name="keyword" value=" Generating function for ParamFamParameter-class">
+</object>
+
+
+<h2>Generating function for ParamFamParameter-class</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generates an object of class <code>"ParamFamParameter"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+ParamFamParameter(name, main = numeric(0), nuisance, trafo)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+character string: name of parameter </td></tr>
+<tr valign="top"><td><code>main</code></td>
+<td>
+numeric vector: main parameter </td></tr>
+<tr valign="top"><td><code>nuisance</code></td>
+<td>
+numeric vector: nuisance paramter </td></tr>
+<tr valign="top"><td><code>trafo</code></td>
+<td>
+matrix: transformation of the parameter </td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+If <code>name</code> is missing, the default 
+&ldquo;"parameter of a parametric family of probability measures"&rdquo;
+is used. If <code>nuisance</code> is missing, the nuisance parameter is 
+set to <code>NULL</code>. The number of columns of <code>trafo</code> have
+to be equal and the number of rows have to be not larger than 
+the sum of the lengths of <code>main</code> and <code>nuisance</code>. 
+If <code>trafo</code> is missing, no transformation to the parameter
+is applied; i.e., <code>trafo</code> is set to an identity matrix.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"ParamFamParameter"</code></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="ParamFamParameter-class.html">ParamFamParameter-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+ParamFamParameter(main = 0, nuisance = 1, trafo = diag(c(1,2)))
+
+## The function is currently defined as
+function(name, main = numeric(0), nuisance, trafo){
+    if(missing(name))
+        name &lt;- "parameter of a parametric family of probability measures"
+    if(missing(nuisance))
+        nuisance &lt;- NULL
+    if(missing(trafo))
+        trafo &lt;- diag(length(main)+length(nuisance))
+
+    return(new("ParamFamParameter", name = name, main = main, 
+               nuisance = nuisance, trafo = trafo))
+}
+</pre>
+
+
+
+<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

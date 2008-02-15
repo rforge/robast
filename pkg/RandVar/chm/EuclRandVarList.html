@@ -1,0 +1,93 @@
+<html><head><title>Generating function for EuclRandVarList-class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>EuclRandVarList(RandVar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   EuclRandVarList">
+<param name="keyword" value=" Generating function for EuclRandVarList-class">
+</object>
+
+
+<h2>Generating function for EuclRandVarList-class</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generates an object of class <code>"EuclRandVarList"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+EuclRandVarList(...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+Objects of class <code>"EuclRandVariable"</code> which
+shall form the list of Euclidean random variables. </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"EuclRandVarList"</code></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="EuclRandVarList-class.html">EuclRandVarList-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+L1 &lt;- list(function(x){x}, function(x){x^2}, function(x){x^3}, function(x){x^4}, 
+           function(x){x^5}, function(x){x^6})
+L2 &lt;- list(function(x){exp(x)}, function(x){abs(x)}, 
+           function(x){sin(x)}, function(x){floor(x)})
+
+R1 &lt;- new("EuclRandVariable", Map = L2, Domain = Reals(), Range = Reals())
+R2 &lt;- EuclRandMatrix(Map = L1, ncol = 2, Domain = Reals(), dimension = 1)
+R3 &lt;- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
+
+(RL1 &lt;- EuclRandVarList(R1, R2, R3))
+is(R1, "EuclRandVarList")
+as(R1, "EuclRandVarList")
+is(R2, "EuclRandVarList")
+as(R2, "EuclRandVarList")
+
+Map(exp(RL1)[[1]]) # "Math" group
+
+## "Arith" group
+Map((1 + RL1)[[1]])
+Map((RL1 * 2)[[2]])
+Map((RL1 / RL1)[[3]])
+
+## The function is currently defined as
+function(...){ 
+    new("EuclRandVarList", list(...)) 
+}
+</pre>
+
+
+
+<hr><div align="center">[Package <em>RandVar</em> version 0.6.2 <a href="00Index.html">Index]</a></div>
+
+</body></html>
