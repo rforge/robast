@@ -6,7 +6,8 @@
   Generates an object of class \code{"FixRobModel"}.
 }
 \usage{
-FixRobModel(center = ParamFamily(), neighbor = ContNeighborhood())
+FixRobModel(center = ParamFamily(modifyParam = 
+            function(theta) Norm(mean = theta)), neighbor = ContNeighborhood())
 }
 \arguments{
   \item{center}{ object of class \code{"ProbFamily"} }
@@ -22,7 +23,7 @@ FixRobModel(center = ParamFamily(), neighbor = ContNeighborhood())
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{FixRobModel-class}}}
+\seealso{\code{\link[RobAStBase]{FixRobModel-class}}}
 \examples{
 (M1 <- FixRobModel())
 

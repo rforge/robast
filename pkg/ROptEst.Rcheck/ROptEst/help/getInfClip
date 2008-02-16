@@ -1,0 +1,104 @@
+getInfClip              package:ROptEst              R Documentation
+
+_G_e_n_e_r_i_c _F_u_n_c_t_i_o_n _f_o_r _t_h_e _C_o_m_p_u_t_a_t_i_o_n _o_f _t_h_e _O_p_t_i_m_a_l _C_l_i_p_p_i_n_g _B_o_u_n_d
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Generic function for the computation of the optimal clipping bound
+     in case of infinitesimal robust models. This function is rarely
+     called  directly. It is used to compute optimally robust ICs.
+
+_U_s_a_g_e:
+
+     getInfClip(clip, L2deriv, risk, neighbor, ...)
+
+     ## S4 method for signature 'numeric,
+     ##   UnivariateDistribution, asMSE, ContNeighborhood':
+     getInfClip(clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
+
+     ## S4 method for signature 'numeric,
+     ##   UnivariateDistribution, asMSE, TotalVarNeighborhood':
+     getInfClip(clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
+
+     ## S4 method for signature 'numeric, EuclRandVariable,
+     ##   asMSE, ContNeighborhood':
+     getInfClip(clip, L2deriv, risk, neighbor, Distr, stand, biastype, cent, trafo)
+
+     ## S4 method for signature 'numeric,
+     ##   UnivariateDistribution, asUnOvShoot,
+     ##   UncondNeighborhood':
+     getInfClip(clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
+
+     ## S4 method for signature 'numeric,
+     ##   UnivariateDistribution, asSemivar, ContNeighborhood':
+     getInfClip(clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
+
+_A_r_g_u_m_e_n_t_s:
+
+    clip: positive real: clipping bound 
+
+ L2deriv: L2-derivative of some L2-differentiable family  of
+          probability measures. 
+
+    risk: object of class '"RiskType"'. 
+
+neighbor: object of class '"Neighborhood"'. 
+
+     ...: additional parameters. 
+
+biastype: object of class '"BiasType"' 
+
+    cent: optimal centering constant. 
+
+   stand: standardizing matrix. 
+
+   Distr: object of class '"Distribution"'. 
+
+    symm: logical: indicating symmetry of 'L2deriv'. 
+
+   trafo: matrix: transformation of the parameter. 
+
+_V_a_l_u_e:
+
+     The optimal clipping bound is computed.
+
+_M_e_t_h_o_d_s:
+
+     _c_l_i_p = "_n_u_m_e_r_i_c", _L_2_d_e_r_i_v = "_U_n_i_v_a_r_i_a_t_e_D_i_s_t_r_i_b_u_t_i_o_n",  _r_i_s_k = "_a_s_M_S_E", _n_e_i_g_h_b_o_r = "_C_o_n_t_N_e_i_g_h_b_o_r_h_o_o_d" 
+          optimal clipping bound for asymtotic mean square error. 
+
+     _c_l_i_p = "_n_u_m_e_r_i_c", _L_2_d_e_r_i_v = "_U_n_i_v_a_r_i_a_t_e_D_i_s_t_r_i_b_u_t_i_o_n",  _r_i_s_k = "_a_s_M_S_E", _n_e_i_g_h_b_o_r = "_T_o_t_a_l_V_a_r_N_e_i_g_h_b_o_r_h_o_o_d" 
+          optimal clipping bound for asymtotic mean square error. 
+
+     _c_l_i_p = "_n_u_m_e_r_i_c", _L_2_d_e_r_i_v = "_E_u_c_l_R_a_n_d_V_a_r_i_a_b_l_e",  _r_i_s_k = "_a_s_M_S_E", _n_e_i_g_h_b_o_r = "_C_o_n_t_N_e_i_g_h_b_o_r_h_o_o_d" 
+          optimal clipping bound for asymtotic mean square error. 
+
+     _c_l_i_p = "_n_u_m_e_r_i_c", _L_2_d_e_r_i_v = "_U_n_i_v_a_r_i_a_t_e_D_i_s_t_r_i_b_u_t_i_o_n",  _r_i_s_k = "_a_s_U_n_O_v_S_h_o_o_t", _n_e_i_g_h_b_o_r = "_U_n_c_o_n_d_N_e_i_g_h_b_o_r_h_o_o_d" 
+          optimal clipping bound for asymtotic under-/overshoot risk. 
+
+     _c_l_i_p = "_n_u_m_e_r_i_c", _L_2_d_e_r_i_v = "_U_n_i_v_a_r_i_a_t_e_D_i_s_t_r_i_b_u_t_i_o_n",  _r_i_s_k = "_a_s_S_e_m_i_v_a_r", _n_e_i_g_h_b_o_r = "_C_o_n_t_N_e_i_g_h_b_o_r_h_o_o_d" 
+          optimal clipping bound for asymtotic semivariance.
+
+_A_u_t_h_o_r(_s):
+
+     Matthias Kohl Matthias.Kohl@stamats.de, Peter Ruckdeschel
+     Peter.Ruckdeschel@uni-bayreuth.de
+
+_R_e_f_e_r_e_n_c_e_s:
+
+     Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats.
+     *8*: 106-115.
+
+     Rieder, H. (1994) _Robust Asymptotic Statistics_. New York:
+     Springer.
+
+     Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence
+     Curves. Mathematical Methods in Statistics _14_(1), 105-131.
+
+     Kohl, M. (2005) _Numerical Contributions to the Asymptotic Theory
+     of Robustness_.  Bayreuth: Dissertation.
+
+_S_e_e _A_l_s_o:
+
+     'ContIC-class', 'TotalVarIC-class'
+

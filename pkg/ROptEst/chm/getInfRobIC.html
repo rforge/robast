@@ -10,8 +10,7 @@
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asCov,ContNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asCov,TotalVarNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,RealRandVariable,asCov,ContNeighborhood-method">
-<param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asBias,ContNeighborhood-method">
-<param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asBias,TotalVarNeighborhood-method">
+<param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asBias,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,RealRandVariable,asBias,ContNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asHampel,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,RealRandVariable,asHampel,ContNeighborhood-method">
@@ -52,13 +51,8 @@ getInfRobIC(L2deriv, risk, neighbor, Finfo, trafo)
 getInfRobIC(L2deriv, risk, neighbor, Distr, Finfo, trafo)
 
 ## S4 method for signature 'UnivariateDistribution, asBias,
-##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
-
-## S4 method for signature 'UnivariateDistribution, asBias,
-##   TotalVarNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
+##   UncondNeighborhood':
+getInfRobIC(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 
 ## S4 method for signature 'RealRandVariable, asBias,
@@ -68,27 +62,27 @@ getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm,
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asHampel, UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
+getInfRobIC(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 
 ## S4 method for signature 'RealRandVariable, asHampel,
 ##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
+getInfRobIC(L2deriv, risk, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asGRisk, UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
+getInfRobIC(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 
 ## S4 method for signature 'RealRandVariable, asGRisk,
 ##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
+getInfRobIC(L2deriv, risk, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asUnOvShoot, UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
+getInfRobIC(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 </pre>
 
@@ -109,6 +103,9 @@ object of class <code>"Neighborhood"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters. </td></tr>
+<tr valign="top"><td><code>biastype</code></td>
+<td>
+object of class <code>"BiasType"</code>. </td></tr>
 <tr valign="top"><td><code>Distr</code></td>
 <td>
 object of class <code>"Distribution"</code>. </td></tr>
@@ -175,12 +172,7 @@ parametric families with unknown <i>k</i>-dimensional parameter
 
 
 <dt>L2deriv = "UnivariateDistribution", risk = "asBias", 
-neighbor = "ContNeighborhood"</dt><dd>computes the bias optimal influence curve for L2 differentiable 
-parametric families with unknown one-dimensional parameter. </dd>
-
-
-<dt>L2deriv = "UnivariateDistribution", risk = "asBias", 
-neighbor = "TotalVarNeighborhood"</dt><dd>computes the bias optimal influence curve for L2 differentiable 
+neighbor = "UncondNeighborhood"</dt><dd>computes the bias optimal influence curve for L2 differentiable 
 parametric families with unknown one-dimensional parameter. </dd>
 
 
@@ -228,10 +220,18 @@ Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de
 <h3>References</h3>
 
 <p>
-Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. <B>8</B>: 106&ndash;115.
+Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. <B>8</B>: 106-115.
 </p>
 <p>
 Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Ruckdeschel, P. and Rieder, H. (2004) Optimal Influence Curves for
+General Loss Functions. Statistics &amp; Decisions <B>22</B>: 201-223.
+</p>
+<p>
+Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+Mathematical Methods in Statistics <EM>14</EM>(1), 105-131.
 </p>
 <p>
 Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
@@ -242,11 +242,20 @@ Bayreuth: Dissertation.
 <h3>See Also</h3>
 
 <p>
-<code><a href="InfRobModel-class.html">InfRobModel-class</a></code>
+<code><a onclick="findlink('RobAStBase', 'InfRobModel-class.html')" style="text-decoration: underline; color: blue; cursor: hand">InfRobModel-class</a></code>
 </p>
 
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
 
-<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
 
 </body></html>

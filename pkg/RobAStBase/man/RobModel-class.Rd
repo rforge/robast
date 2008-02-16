@@ -42,7 +42,7 @@
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{ProbFamily-class}}, \code{\link{Neighborhood-class}}}
+\seealso{\code{\link[distrMod]{ProbFamily-class}}, \code{\link{Neighborhood-class}}}
 %\examples{}
 \concept{robust model}
 \keyword{classes}

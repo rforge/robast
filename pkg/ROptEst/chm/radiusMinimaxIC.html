@@ -29,7 +29,8 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
 
 ## S4 method for signature 'L2ParamFamily,
 ##   UncondNeighborhood, asGRisk':
-radiusMinimaxIC(L2Fam, neighbor, risk, 
+radiusMinimaxIC(
+        L2Fam, neighbor, risk, biastype = symmetricBias(),
         loRad, upRad, z.start = NULL, A.start = NULL, upper = 1e5, 
         maxiter = 100, tol = .Machine$double.eps^0.4, warn = FALSE)
 </pre>
@@ -50,6 +51,9 @@ object of class <code>"RiskType"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters. </td></tr>
+<tr valign="top"><td><code>biastype</code></td>
+<td>
+object of class <code>"BiasType"</code>. </td></tr>
 <tr valign="top"><td><code>loRad</code></td>
 <td>
 the lower end point of the interval to be searched. </td></tr>
@@ -90,7 +94,8 @@ The radius minimax IC is computed.</p>
 <h3>Author(s)</h3>
 
 <p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@uni-bayreuth.de">Peter.Ruckdeschel@uni-bayreuth.de</a>
 </p>
 
 
@@ -126,6 +131,6 @@ radiusMinimaxIC(L2Fam=N, neighbor=ContNeighborhood(),
 
 
 
-<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
 
 </body></html>

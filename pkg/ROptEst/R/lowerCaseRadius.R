@@ -3,8 +3,9 @@
 ###############################################################################
 setMethod("lowerCaseRadius", signature(L2Fam = "L2ParamFamily",
                                        neighbor = "ContNeighborhood",
-                                       risk = "asMSE"),
-    function(L2Fam, neighbor, risk){
+                                       risk = "asMSE",
+                                       biastype = "BiasType"),
+    function(L2Fam, neighbor, risk, biastype = symmetricBias()){
         if(length(L2Fam@param) != 1) stop("not yet implemented")
 
         D1 <- L2Fam@distribution
@@ -52,8 +53,9 @@ setMethod("lowerCaseRadius", signature(L2Fam = "L2ParamFamily",
     })
 setMethod("lowerCaseRadius", signature(L2Fam = "L2ParamFamily",
                                        neighbor = "TotalVarNeighborhood",
-                                       risk = "asMSE"),
-    function(L2Fam, neighbor, risk){
+                                       risk = "asMSE",
+                                       biastype = "BiasType"),
+    function(L2Fam, neighbor, risk, biastype = symmetricBias()){
         if(length(L2Fam@param) != 1) stop("not yet implemented")
 
         D1 <- L2Fam@distribution

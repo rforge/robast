@@ -11,7 +11,7 @@
   rarely called directly. It is used to compute optimally robust ICs.
 }
 \usage{
-getFixClip(clip, Distr, risk, neighbor, ...)
+getFixClip(clip, Distr, risk, neighbor,  ...)
 
 \S4method{getFixClip}{numeric,Norm,fiUnOvShoot,ContNeighborhood}(clip, Distr, risk, neighbor)
 
@@ -43,7 +43,7 @@ getFixClip(clip, Distr, risk, neighbor, ...)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{ContIC-class}}, \code{\link{TotalVarIC-class}}}
+\seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link[RobAStBase]{TotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
 \keyword{}

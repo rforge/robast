@@ -1,0 +1,77 @@
+\HeaderA{leastFavorableRadius}{Generic Function for the Computation of Least Favorable Radii}{leastFavorableRadius}
+\aliasA{leastFavorableRadius,L2ParamFamily,UncondNeighborhood,asGRisk-method}{leastFavorableRadius}{leastFavorableRadius,L2ParamFamily,UncondNeighborhood,asGRisk.Rdash.method}
+\aliasA{leastFavorableRadius-methods}{leastFavorableRadius}{leastFavorableRadius.Rdash.methods}
+\begin{Description}\relax
+Generic function for the computation of least favorable radii.
+\end{Description}
+\begin{Usage}
+\begin{verbatim}
+leastFavorableRadius(L2Fam, neighbor, risk, ...)
+
+## S4 method for signature 'L2ParamFamily,
+##   UncondNeighborhood, asGRisk':
+leastFavorableRadius(
+          L2Fam, neighbor, risk, biastype = symmetricBias(), rho, upRad = 1, 
+            z.start = NULL, A.start = NULL, upper = 100, maxiter = 100, 
+            tol = .Machine$double.eps^0.4, warn = FALSE)
+\end{verbatim}
+\end{Usage}
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{L2Fam}] L2-differentiable family of probability measures. 
+\item[\code{neighbor}] object of class \code{"Neighborhood"}. 
+\item[\code{risk}] object of class \code{"RiskType"}. 
+\item[\code{...}] additional parameters 
+\item[\code{biastype}] object of class \code{"BiasType"}. 
+\item[\code{upRad}] the upper end point of the radius interval to be searched. 
+\item[\code{rho}] The considered radius interval is: \eqn{[r \rho, r/\rho]}{[r*rho, r/rho]}
+with \eqn{\rho\in(0,1)}{0 < rho < 1}. 
+\item[\code{z.start}] initial value for the centering constant. 
+\item[\code{A.start}] initial value for the standardizing matrix. 
+\item[\code{upper}] upper bound for the optimal clipping bound. 
+\item[\code{maxiter}] the maximum number of iterations 
+\item[\code{tol}] the desired accuracy (convergence tolerance).
+\item[\code{warn}] logical: print warnings. 
+\end{ldescription}
+\end{Arguments}
+\begin{Value}
+The least favorable radius and the corresponding inefficiency 
+are computed.
+\end{Value}
+\begin{Section}{Methods}
+\describe{
+\item[L2Fam = "L2ParamFamily", neighbor = "UncondNeighborhood", 
+risk = "asGRisk"] computation of the least favorable radius. 
+}
+\end{Section}
+\begin{Author}\relax
+Matthias Kohl \email{Matthias.Kohl@stamats.de},
+Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}
+\end{Author}
+\begin{References}\relax
+Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
+the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
+
+Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
+the Radius. Submitted. Appeared as discussion paper Nr. 81. 
+SFB 373 (Quantification and Simulation of Economic Processes),
+Humboldt University, Berlin; also available under
+\url{www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf}
+
+Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+Mathematical Methods in Statistics \emph{14}(1), 105-131.
+
+Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
+Bayreuth: Dissertation.
+\end{References}
+\begin{SeeAlso}\relax
+\code{\LinkA{radiusMinimaxIC}{radiusMinimaxIC}}
+\end{SeeAlso}
+\begin{Examples}
+\begin{ExampleCode}
+N <- NormLocationFamily(mean=0, sd=1) 
+leastFavorableRadius(L2Fam=N, neighbor=ContNeighborhood(),
+                     risk=asMSE(), rho=0.5)
+\end{ExampleCode}
+\end{Examples}
+

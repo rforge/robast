@@ -34,7 +34,7 @@
     \item{\code{name}:}{ object of class \code{"character"} }
     \item{\code{Curve}:}{ object of class \code{"EuclRandVarList"} }
     \item{\code{Risks}:}{ object of class \code{"list"}: 
-      list of risks; cf. \code{\link{RiskType-class}}. }
+      list of risks; cf. \code{\link[distrMod]{RiskType-class}}. }
     \item{\code{Infos}:}{ object of class \code{"matrix"}
       with two columns named \code{method} and \code{message}:
       additional informations. }
@@ -92,7 +92,7 @@
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{InfluenceCurve}}, \code{\link{RiskType-class}}}
+\seealso{\code{\link{InfluenceCurve}}, \code{\link[distrMod]{RiskType-class}}}
 \examples{
 new("InfluenceCurve")
 }

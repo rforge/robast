@@ -28,7 +28,7 @@
     \item{\code{name}:}{Object of class \code{"character"}. }
     \item{\code{Curve}:}{Object of class \code{"EuclRandVarList"}.}
     \item{\code{Risks}:}{Object of class \code{"list"}: 
-      list of risks; cf. \code{\link{RiskType-class}}. }
+      list of risks; cf. \code{\link[distrMod]{RiskType-class}}. }
     \item{\code{Infos}:}{Object of class \code{"matrix"}
       with two columns named \code{method} and \code{message}:
       additional informations. }

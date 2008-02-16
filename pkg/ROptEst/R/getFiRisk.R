@@ -41,8 +41,10 @@ conv.tnorm <- function(z, A, B, mu, n, m){
 
 setMethod("getFiRisk", signature(risk = "fiUnOvShoot",
                                  Distr = "Norm",
-                                 neighbor = "ContNeighborhood"),
-    function(risk, Distr, neighbor, clip, stand, sampleSize, Algo, cont){
+                                 neighbor = "ContNeighborhood"
+                                 ),
+    function(risk, Distr, neighbor, clip, stand, 
+             sampleSize, Algo, cont){
         eps <- neighbor@radius
         tau <- risk@width
         n <- sampleSize

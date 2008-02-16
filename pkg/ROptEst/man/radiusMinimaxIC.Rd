@@ -10,7 +10,8 @@
 \usage{
 radiusMinimaxIC(L2Fam, neighbor, risk, ...)
 
-\S4method{radiusMinimaxIC}{L2ParamFamily,UncondNeighborhood,asGRisk}(L2Fam, neighbor, risk, 
+\S4method{radiusMinimaxIC}{L2ParamFamily,UncondNeighborhood,asGRisk}(
+        L2Fam, neighbor, risk, biastype = symmetricBias(),
         loRad, upRad, z.start = NULL, A.start = NULL, upper = 1e5, 
         maxiter = 100, tol = .Machine$double.eps^0.4, warn = FALSE)
 }
@@ -19,6 +20,7 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{risk}{ object of class \code{"RiskType"}. }
   \item{\dots}{ additional parameters. }
+  \item{biastype}{ object of class \code{"BiasType"}. }
   \item{loRad}{ the lower end point of the interval to be searched. }
   \item{upRad}{ the upper end point of the interval to be searched. }
   \item{z.start}{ initial value for the centering constant. }
@@ -45,7 +47,8 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 }
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de},
+Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}}
 %\note{}
 \seealso{\code{\link{radiusMinimaxIC}}}
 \examples{

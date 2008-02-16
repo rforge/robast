@@ -1,0 +1,137 @@
+Entry: getAsRisk
+Aliases: getAsRisk getAsRisk-methods getAsRisk,asMSE,UnivariateDistribution,Neighborhood,BiasType-method getAsRisk,asMSE,EuclRandVariable,Neighborhood,BiasType-method getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,BiasType-method getAsRisk,asBias,UnivariateDistribution,TotalVarNeighborhood,BiasType-method getAsRisk,asBias,RealRandVariable,ContNeighborhood,BiasType-method getAsRisk,asCov,UnivariateDistribution,ContNeighborhood,BiasType-method getAsRisk,asCov,UnivariateDistribution,TotalVarNeighborhood,BiasType-method getAsRisk,asCov,RealRandVariable,ContNeighborhood,BiasType-method getAsRisk,trAsCov,UnivariateDistribution,UncondNeighborhood,BiasType-method getAsRisk,trAsCov,RealRandVariable,ContNeighborhood,BiasType-method getAsRisk,asUnOvShoot,UnivariateDistribution,UncondNeighborhood,BiasType-method getAsRisk,asSemivar,UnivariateDistribution,Neighborhood,onesidedBias-method
+Keywords: 
+Description: Generic Function for Computation of Asymptotic Risks
+URL: ../../../library/ROptEst/html/getAsRisk.html
+
+Entry: getBiasIC
+Aliases: getBiasIC getBiasIC-methods getBiasIC,IC,ContNeighborhood,missing,BiasType-method getBiasIC,IC,ContNeighborhood,L2ParamFamily,BiasType-method getBiasIC,IC,TotalVarNeighborhood,missing,BiasType-method getBiasIC,IC,TotalVarNeighborhood,L2ParamFamily,BiasType-method
+Keywords: 
+Description: Generic function for the computation of the asymptotic bias for an IC
+URL: ../../../library/ROptEst/html/getBiasIC.html
+
+Entry: getFiRisk
+Aliases: getFiRisk getFiRisk-methods getFiRisk,fiUnOvShoot,Norm,ContNeighborhood-method getFiRisk,fiUnOvShoot,Norm,TotalVarNeighborhood-method
+Keywords: 
+Description: Generic Function for Computation of Finite-Sample Risks
+URL: ../../../library/ROptEst/html/getFiRisk.html
+
+Entry: getFixClip
+Aliases: getFixClip getFixClip-methods getFixClip,numeric,Norm,fiUnOvShoot,ContNeighborhood-method getFixClip,numeric,Norm,fiUnOvShoot,TotalVarNeighborhood-method
+Keywords: 
+Description: Generic Function for the Computation of the Optimal Clipping Bound
+URL: ../../../library/ROptEst/html/getFixClip.html
+
+Entry: getFixRobIC
+Aliases: getFixRobIC getFixRobIC-methods getFixRobIC,Norm,fiUnOvShoot,UncondNeighborhood-method
+Keywords: 
+Description: Generic Function for the Computation of Optimally Robust ICs
+URL: ../../../library/ROptEst/html/getFixRobIC.html
+
+Entry: getIneffDiff
+Aliases: getIneffDiff getIneffDiff-methods getIneffDiff,numeric,L2ParamFamily,UncondNeighborhood,asMSE,BiasType-method
+Keywords: 
+Description: Generic Function for the Computation of Inefficiency Differences
+URL: ../../../library/ROptEst/html/getIneffDiff.html
+
+Entry: getInfCent
+Aliases: getInfCent getInfCent-methods getInfCent,UnivariateDistribution,ContNeighborhood,BiasType-method getInfCent,UnivariateDistribution,TotalVarNeighborhood,BiasType-method getInfCent,RealRandVariable,ContNeighborhood,BiasType-method getInfCent,UnivariateDistribution,ContNeighborhood,onesidedBias-method getInfCent,UnivariateDistribution,ContNeighborhood,asymmetricBias-method
+Keywords: 
+Description: Generic Function for the Computation of the Optimal Centering Constant/Lower Clipping Bound
+URL: ../../../library/ROptEst/html/getInfCent.html
+
+Entry: getInfClip
+Aliases: getInfClip getInfClip-methods getInfClip,numeric,UnivariateDistribution,asMSE,ContNeighborhood-method getInfClip,numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood-method getInfClip,numeric,EuclRandVariable,asMSE,ContNeighborhood-method getInfClip,numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method getInfClip,numeric,UnivariateDistribution,asSemivar,ContNeighborhood-method
+Keywords: 
+Description: Generic Function for the Computation of the Optimal Clipping Bound
+URL: ../../../library/ROptEst/html/getInfClip.html
+
+Entry: getInfGamma
+Aliases: getInfGamma getInfGamma-methods getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,BiasType-method getInfGamma,UnivariateDistribution,asGRisk,TotalVarNeighborhood,BiasType-method getInfGamma,RealRandVariable,asMSE,ContNeighborhood,BiasType-method getInfGamma,UnivariateDistribution,asUnOvShoot,ContNeighborhood,BiasType-method getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,onesidedBias-method getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,asymmetricBias-method
+Keywords: 
+Description: Generic Function for the Computation of the Optimal Clipping Bound
+URL: ../../../library/ROptEst/html/getInfGamma.html
+
+Entry: getInfRobIC
+Aliases: getInfRobIC getInfRobIC-methods getInfRobIC,UnivariateDistribution,asCov,ContNeighborhood-method getInfRobIC,UnivariateDistribution,asCov,TotalVarNeighborhood-method getInfRobIC,RealRandVariable,asCov,ContNeighborhood-method getInfRobIC,UnivariateDistribution,asBias,UncondNeighborhood-method getInfRobIC,RealRandVariable,asBias,ContNeighborhood-method getInfRobIC,UnivariateDistribution,asHampel,UncondNeighborhood-method getInfRobIC,RealRandVariable,asHampel,ContNeighborhood-method getInfRobIC,UnivariateDistribution,asGRisk,UncondNeighborhood-method getInfRobIC,RealRandVariable,asGRisk,ContNeighborhood-method getInfRobIC,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method
+Keywords: 
+Description: Generic Function for the Computation of Optimally Robust ICs
+URL: ../../../library/ROptEst/html/getInfRobIC.html
+
+Entry: getInfStand
+Aliases: getInfStand getInfStand-methods getInfStand,UnivariateDistribution,ContNeighborhood,BiasType-method getInfStand,UnivariateDistribution,TotalVarNeighborhood,BiasType-method getInfStand,RealRandVariable,ContNeighborhood,BiasType-method getInfStand,UnivariateDistribution,ContNeighborhood,onesidedBias-method getInfStand,UnivariateDistribution,ContNeighborhood,asymmetricBias-method
+Keywords: 
+Description: Generic Function for the Computation of the Standardizing Matrix
+URL: ../../../library/ROptEst/html/getInfStand.html
+
+Entry: getL1normL2deriv
+Aliases: getL1normL2deriv getL1normL2deriv-methods getL1normL2deriv,UnivariateDistribution-method getL1normL2deriv,RealRandVariable-method
+Keywords: 
+Description: Calculation of L1 norm of L2derivative
+URL: ../../../library/ROptEst/html/getL1normL2deriv.html
+
+Entry: getL2normL2deriv
+Aliases: getL2normL2deriv
+Keywords: 
+Description: Calculation of L2 norm of L2derivative
+URL: ../../../library/ROptEst/html/getL2normL2deriv.html
+
+Entry: getRiskIC
+Aliases: getRiskIC getRiskIC-methods getRiskIC,IC,asCov,missing,missing-method getRiskIC,IC,asCov,missing,L2ParamFamily-method getRiskIC,IC,trAsCov,missing,missing-method getRiskIC,IC,trAsCov,missing,L2ParamFamily-method getRiskIC,IC,asBias,UncondNeighborhood,missing-method getRiskIC,IC,asBias,UncondNeighborhood,L2ParamFamily-method getRiskIC,IC,asMSE,UncondNeighborhood,missing-method getRiskIC,IC,asMSE,UncondNeighborhood,L2ParamFamily-method getRiskIC,TotalVarIC,asUnOvShoot,UncondNeighborhood,missing-method getRiskIC,IC,fiUnOvShoot,ContNeighborhood,missing-method getRiskIC,IC,fiUnOvShoot,TotalVarNeighborhood,missing-method
+Keywords: 
+Description: Generic function for the computation of a risk for an IC
+URL: ../../../library/ROptEst/html/getRiskIC.html
+
+Entry: leastFavorableRadius
+Aliases: leastFavorableRadius leastFavorableRadius-methods leastFavorableRadius,L2ParamFamily,UncondNeighborhood,asGRisk-method
+Keywords: 
+Description: Generic Function for the Computation of Least Favorable Radii
+URL: ../../../library/ROptEst/html/leastFavorableRadius.html
+
+Entry: locMEstimator
+Aliases: locMEstimator locMEstimator-methods locMEstimator,numeric,InfluenceCurve-method
+Keywords: 
+Description: Generic function for the computation of location M estimators
+URL: ../../../library/ROptEst/html/locMEstimator.html
+
+Entry: lowerCaseRadius
+Aliases: lowerCaseRadius lowerCaseRadius-methods lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,BiasType-method lowerCaseRadius,L2ParamFamily,TotalVarNeighborhood,asMSE,BiasType-method
+Keywords: 
+Description: Computation of the lower case radius
+URL: ../../../library/ROptEst/html/lowerCaseRadius.html
+
+Entry: minmaxBias
+Aliases: minmaxBias minmaxBias-methods minmaxBias,UnivariateDistribution,ContNeighborhood,BiasType-method minmaxBias,UnivariateDistribution,ContNeighborhood,asymmetricBias-method minmaxBias,UnivariateDistribution,TotalVarNeighborhood,BiasType-method minmaxBias,RealRandVariable,ContNeighborhood,BiasType-method
+Keywords: 
+Description: Generic Function for the Computation of Bias-Optimally Robust ICs
+URL: ../../../library/ROptEst/html/minmaxBias.html
+
+Entry: optIC
+Aliases: optIC optIC-methods optIC,L2ParamFamily,asCov-method optIC,InfRobModel,asRisk-method optIC,InfRobModel,asUnOvShoot-method optIC,FixRobModel,fiUnOvShoot-method
+Keywords: 
+Description: Generic function for the computation of optimally robust ICs
+URL: ../../../library/ROptEst/html/optIC.html
+
+Entry: optRisk
+Aliases: optRisk optRisk-methods optRisk,L2ParamFamily,asCov-method optRisk,InfRobModel,asRisk-method optRisk,FixRobModel,fiUnOvShoot-method
+Keywords: 
+Description: Generic function for the computation of the minimal risk
+URL: ../../../library/ROptEst/html/optRisk.html
+
+Entry: radiusMinimaxIC
+Aliases: radiusMinimaxIC radiusMinimaxIC-methods radiusMinimaxIC,L2ParamFamily,UncondNeighborhood,asGRisk-method
+Keywords: 
+Description: Generic function for the computation of the radius minimax IC
+URL: ../../../library/ROptEst/html/radiusMinimaxIC.html
+
+Entry: trAsCov-class
+Aliases: trAsCov-class
+Keywords: classes
+Description: Trace of asymptotic covariance
+URL: ../../../library/ROptEst/html/trAsCov-class.html
+
+Entry: trFiCov-class
+Aliases: trFiCov-class
+Keywords: classes
+Description: Trace of finite-sample covariance
+URL: ../../../library/ROptEst/html/trFiCov-class.html

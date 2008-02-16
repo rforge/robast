@@ -1,7 +1,7 @@
 \name{getIneffDiff}
 \alias{getIneffDiff}
 \alias{getIneffDiff-methods}
-\alias{getIneffDiff,numeric,L2ParamFamily,UncondNeighborhood,asMSE-method}
+\alias{getIneffDiff,numeric,L2ParamFamily,UncondNeighborhood,asMSE,BiasType-method}
 
 \title{Generic Function for the Computation of Inefficiency Differences}
 \description{
@@ -10,9 +10,10 @@
   the radius minimax IC and the least favorable radius.
 }
 \usage{
-getIneffDiff(radius, L2Fam, neighbor, risk, ...)
+getIneffDiff(radius, L2Fam, neighbor, risk, biastype, ...)
 
-\S4method{getIneffDiff}{numeric,L2ParamFamily,UncondNeighborhood,asMSE}(radius, L2Fam, neighbor, risk, loRad, upRad, 
+\S4method{getIneffDiff}{numeric,L2ParamFamily,UncondNeighborhood,asMSE,BiasType}(
+          radius, L2Fam, neighbor, risk, biastype = symmetricBias(), loRad, upRad, 
             loRisk, upRisk, z.start = NULL, A.start = NULL, upper.b, MaxIter, eps, warn)
 }
 \arguments{
@@ -20,6 +21,7 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
   \item{L2Fam}{ L2-differentiable family of probability measures. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{risk}{ object of class \code{"RiskType"}. }
+  \item{biastype}{ object of class \code{"BiasType"}. }
   \item{\dots}{ additional parameters }
   \item{loRad}{ the lower end point of the interval to be searched. }
   \item{upRad}{ the upper end point of the interval to be searched. }
@@ -39,7 +41,7 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
 \section{Methods}{
 \describe{
   \item{radius = "numeric", L2Fam = "L2ParamFamily", 
-        neighbor = "UncondNeighborhood", risk = "asMSE":}{ 
+        neighbor = "UncondNeighborhood", risk = "asMSE", biastype = "BiasType":}{ 
      computes difference of asymptotic MSE--inefficiency for
      the boundaries of a given radius interval.}
 }}
@@ -50,10 +52,14 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
   Humboldt University, Berlin; also available under
   \url{www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf}
 
+  Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+  Mathematical Methods in Statistics \emph{14}(1), 105-131.
+
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 }
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de},
+        Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}}
 %\note{}
 \seealso{\code{\link{radiusMinimaxIC}}, \code{\link{leastFavorableRadius}}}
 %\examples{}

@@ -4,14 +4,15 @@
 setMethod("getIneffDiff", signature(radius = "numeric", 
                                     L2Fam = "L2ParamFamily", 
                                     neighbor = "UncondNeighborhood",
-                                    risk = "asMSE"),
-    function(radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
+                                    risk = "asMSE", biastype = "BiasType"),
+    function(radius, L2Fam, neighbor, risk, biastype = symmetricBias(), 
+             loRad, upRad, loRisk, upRisk, 
              z.start = NULL, A.start = NULL, upper.b, MaxIter, eps, warn){
         L2derivDim <- numberOfMaps(L2Fam@L2deriv)
         if(L2derivDim == 1){
             neighbor@radius <- radius
             res <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
-                        risk = risk, symm = L2Fam@L2derivDistrSymm[[1]], 
+                        risk = risk, biastype = biastype, symm = L2Fam@L2derivDistrSymm[[1]], 
                         Finfo = L2Fam@FisherInfo, upper = upper.b,
                         trafo = L2Fam@param@trafo, maxiter = MaxIter, tol = eps, warn = warn)
             trafo <- as.vector(L2Fam@param@trafo)
@@ -47,7 +48,7 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                 trafo <- L2Fam@param@trafo
                 neighbor@radius <- radius
                 res <- getInfRobIC(L2deriv = L2deriv, neighbor = neighbor, risk = risk, 
-                            Distr = L2Fam@distribution, DistrSymm = L2Fam@distrSymm, 
+                            biastype = biastype, Distr = L2Fam@distribution, DistrSymm = L2Fam@distrSymm, 
                             L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                             Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
                             A.start = A.start, upper = upper.b, maxiter = MaxIter, 

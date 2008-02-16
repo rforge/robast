@@ -1,0 +1,94 @@
+\HeaderA{getInfCent}{Generic Function for the Computation of the Optimal Centering Constant/Lower Clipping Bound}{getInfCent}
+\aliasA{getInfCent,RealRandVariable,ContNeighborhood,BiasType-method}{getInfCent}{getInfCent,RealRandVariable,ContNeighborhood,BiasType.Rdash.method}
+\aliasA{getInfCent,UnivariateDistribution,ContNeighborhood,asymmetricBias-method}{getInfCent}{getInfCent,UnivariateDistribution,ContNeighborhood,asymmetricBias.Rdash.method}
+\aliasA{getInfCent,UnivariateDistribution,ContNeighborhood,BiasType-method}{getInfCent}{getInfCent,UnivariateDistribution,ContNeighborhood,BiasType.Rdash.method}
+\aliasA{getInfCent,UnivariateDistribution,ContNeighborhood,onesidedBias-method}{getInfCent}{getInfCent,UnivariateDistribution,ContNeighborhood,onesidedBias.Rdash.method}
+\aliasA{getInfCent,UnivariateDistribution,TotalVarNeighborhood,BiasType-method}{getInfCent}{getInfCent,UnivariateDistribution,TotalVarNeighborhood,BiasType.Rdash.method}
+\aliasA{getInfCent-methods}{getInfCent}{getInfCent.Rdash.methods}
+\begin{Description}\relax
+Generic function for the computation of the optimal centering constant
+(contamination neighborhoods) respectively, of the optimal lower clipping
+bound (total variation neighborhood).
+This function is rarely called directly. It is used to 
+compute optimally robust ICs.
+\end{Description}
+\begin{Usage}
+\begin{verbatim}
+getInfCent(L2deriv, neighbor, biastype, ...)
+
+## S4 method for signature 'UnivariateDistribution,
+##   ContNeighborhood, BiasType':
+getInfCent(L2deriv, 
+     neighbor, biastype = symmetricBias(), clip, cent, tol.z, symm, trafo)
+
+## S4 method for signature 'UnivariateDistribution,
+##   TotalVarNeighborhood, BiasType':
+getInfCent(L2deriv, 
+     neighbor, biastype = symmetricBias(), clip, cent, tol.z, symm, trafo)
+
+## S4 method for signature 'RealRandVariable,
+##   ContNeighborhood, BiasType':
+getInfCent(L2deriv, 
+     neighbor, biastype = symmetricBias(), z.comp, stand, cent, clip)
+
+## S4 method for signature 'UnivariateDistribution,
+##   ContNeighborhood, onesidedBias':
+getInfCent(L2deriv, 
+     neighbor, biastype = positiveBias(), clip, cent, tol.z, symm, trafo)
+
+## S4 method for signature 'UnivariateDistribution,
+##   ContNeighborhood, asymmetricBias':
+getInfCent(L2deriv, 
+     neighbor, biastype = asymmetricBias(), clip, cent, tol.z, symm, trafo)
+\end{verbatim}
+\end{Usage}
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{L2deriv}] L2-derivative of some L2-differentiable family 
+of probability measures. 
+\item[\code{neighbor}] object of class \code{"Neighborhood"}. 
+\item[\code{biastype}] object of class \code{"BiasType"} 
+\item[\code{...}] additional parameters. 
+\item[\code{clip}] optimal clipping bound. 
+\item[\code{cent}] optimal centering constant. 
+\item[\code{stand}] standardizing matrix. 
+\item[\code{tol.z}] the desired accuracy (convergence tolerance). 
+\item[\code{symm}] logical: indicating symmetry of \code{L2deriv}. 
+\item[\code{trafo}] matrix: transformation of the parameter. 
+\item[\code{z.comp}] logical vector: indication which components of the 
+centering constant have to be computed. 
+\end{ldescription}
+\end{Arguments}
+\begin{Value}
+The optimal centering constant is computed.
+\end{Value}
+\begin{Section}{Methods}
+\describe{
+\item[L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "BiasType"] computation of optimal centering constant for symmetric bias. 
+
+\item[L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", biastype = "BiasType"] computation of optimal lower clipping bound for symmetric bias. 
+
+\item[L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", biastype = "BiasType"] computation of optimal centering constant for symmetric bias. 
+
+\item[L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "onesidedBias"] computation of optimal centering constant for onesided bias. 
+
+\item[L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "asymmetricBias"] computation of optimal centering constant for asymmetric bias. 
+}
+\end{Section}
+\begin{Author}\relax
+Matthias Kohl \email{Matthias.Kohl@stamats.de},
+Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}
+\end{Author}
+\begin{References}\relax
+Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
+
+Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+Mathematical Methods in Statistics \emph{14}(1), 105-131.
+
+Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
+Bayreuth: Dissertation.
+\end{References}
+\begin{SeeAlso}\relax
+\code{\LinkA{ContIC-class}{ContIC.Rdash.class}}, \code{\LinkA{TotalVarIC-class}{TotalVarIC.Rdash.class}}
+\end{SeeAlso}
+

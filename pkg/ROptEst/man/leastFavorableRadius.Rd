@@ -10,7 +10,8 @@
 \usage{
 leastFavorableRadius(L2Fam, neighbor, risk, ...)
 
-\S4method{leastFavorableRadius}{L2ParamFamily,UncondNeighborhood,asGRisk}(L2Fam, neighbor, risk, rho, upRad = 1, 
+\S4method{leastFavorableRadius}{L2ParamFamily,UncondNeighborhood,asGRisk}(
+          L2Fam, neighbor, risk, biastype = symmetricBias(), rho, upRad = 1, 
             z.start = NULL, A.start = NULL, upper = 100, maxiter = 100, 
             tol = .Machine$double.eps^0.4, warn = FALSE)
 }
@@ -19,6 +20,7 @@ leastFavorableRadius(L2Fam, neighbor, risk, ...)
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{risk}{ object of class \code{"RiskType"}. }
   \item{\dots}{ additional parameters }
+  \item{biastype}{ object of class \code{"BiasType"}. }
   \item{upRad}{ the upper end point of the radius interval to be searched. }
   \item{rho}{ The considered radius interval is: \eqn{[r \rho, r/\rho]}{[r*rho, r/rho]}
     with \eqn{\rho\in(0,1)}{0 < rho < 1}. }
@@ -40,16 +42,23 @@ leastFavorableRadius(L2Fam, neighbor, risk, ...)
         risk = "asGRisk"}{ computation of the least favorable radius. }
 }}
 \references{ 
+  Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
+  the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
+
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
   the Radius. Submitted. Appeared as discussion paper Nr. 81. 
   SFB 373 (Quantification and Simulation of Economic Processes),
   Humboldt University, Berlin; also available under
   \url{www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf}
 
+  Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+  Mathematical Methods in Statistics \emph{14}(1), 105-131.
+
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 }
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de},
+Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}}
 %\note{}
 \seealso{\code{\link{radiusMinimaxIC}}}
 \examples{

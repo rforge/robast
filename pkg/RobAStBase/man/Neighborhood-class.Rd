@@ -34,7 +34,7 @@
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{ProbFamily-class}}}
+\seealso{\code{\link[distrMod]{ProbFamily-class}}}
 %\examples{}
 \concept{neighborhood}
 \keyword{classes}

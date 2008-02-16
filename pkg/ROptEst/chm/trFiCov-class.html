@@ -62,7 +62,7 @@ the finite sample risk of M-estimators.
 <h3>See Also</h3>
 
 <p>
-<code><a href="fiRisk-class.html">fiRisk-class</a></code>, <code><a href="trFiCov.html">trFiCov</a></code>
+<code><a onclick="findlink('distrMod', 'fiRisk-class.html')" style="text-decoration: underline; color: blue; cursor: hand">fiRisk-class</a></code>, <code><a onclick="findlink('distrMod', 'trFiCov.html')" style="text-decoration: underline; color: blue; cursor: hand">trFiCov</a></code>
 </p>
 
 
@@ -72,8 +72,17 @@ the finite sample risk of M-estimators.
 new("trFiCov")
 </pre>
 
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
 
-<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
 
 </body></html>

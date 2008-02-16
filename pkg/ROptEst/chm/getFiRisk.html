@@ -32,13 +32,13 @@ getFiRisk(risk, Distr, neighbor, ...)
 
 ## S4 method for signature 'fiUnOvShoot, Norm,
 ##   ContNeighborhood':
-getFiRisk(risk, Distr, neighbor, 
-            clip, stand, sampleSize, Algo, cont)
+getFiRisk(risk, Distr, 
+          neighbor, clip, stand, sampleSize, Algo, cont)
 
 ## S4 method for signature 'fiUnOvShoot, Norm,
 ##   TotalVarNeighborhood':
-getFiRisk(risk, Distr, neighbor, 
-            clip, stand, sampleSize, Algo, cont)
+getFiRisk(risk, Distr, 
+          neighbor, clip, stand, sampleSize, Algo, cont)
 </pre>
 
 
@@ -124,11 +124,20 @@ of M-estimators on Neighborhoods.
 <h3>See Also</h3>
 
 <p>
-<code><a href="fiRisk-class.html">fiRisk-class</a></code>
+<code><a onclick="findlink('distrMod', 'fiRisk-class.html')" style="text-decoration: underline; color: blue; cursor: hand">fiRisk-class</a></code>
 </p>
 
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
 
-<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
 
 </body></html>

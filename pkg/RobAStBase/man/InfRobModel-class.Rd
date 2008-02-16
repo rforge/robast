@@ -37,7 +37,7 @@ Class \code{"RobModel"}, directly.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{ProbFamily-class}}, \code{\link{UncondNeighborhood-class}},
+\seealso{\code{\link[distrMod]{ProbFamily-class}}, \code{\link{UncondNeighborhood-class}},
   \code{\link{InfRobModel}}}
 \examples{
 new("InfRobModel")

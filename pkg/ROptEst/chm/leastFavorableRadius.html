@@ -29,7 +29,8 @@ leastFavorableRadius(L2Fam, neighbor, risk, ...)
 
 ## S4 method for signature 'L2ParamFamily,
 ##   UncondNeighborhood, asGRisk':
-leastFavorableRadius(L2Fam, neighbor, risk, rho, upRad = 1, 
+leastFavorableRadius(
+          L2Fam, neighbor, risk, biastype = symmetricBias(), rho, upRad = 1, 
             z.start = NULL, A.start = NULL, upper = 100, maxiter = 100, 
             tol = .Machine$double.eps^0.4, warn = FALSE)
 </pre>
@@ -50,6 +51,9 @@ object of class <code>"RiskType"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters </td></tr>
+<tr valign="top"><td><code>biastype</code></td>
+<td>
+object of class <code>"BiasType"</code>. </td></tr>
 <tr valign="top"><td><code>upRad</code></td>
 <td>
 the upper end point of the radius interval to be searched. </td></tr>
@@ -93,18 +97,27 @@ risk = "asGRisk"</dt><dd>computation of the least favorable radius. </dd>
 <h3>Author(s)</h3>
 
 <p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@uni-bayreuth.de">Peter.Ruckdeschel@uni-bayreuth.de</a>
 </p>
 
 
 <h3>References</h3>
 
 <p>
+Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
+the Radius. Statistical Methods and Applications <EM>17</EM>(1) 13-40.
+</p>
+<p>
 Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
 the Radius. Submitted. Appeared as discussion paper Nr. 81. 
 SFB 373 (Quantification and Simulation of Economic Processes),
 Humboldt University, Berlin; also available under
 <a href="www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf">www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf</a>
+</p>
+<p>
+Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+Mathematical Methods in Statistics <EM>14</EM>(1), 105-131.
 </p>
 <p>
 Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
@@ -129,6 +142,6 @@ leastFavorableRadius(L2Fam=N, neighbor=ContNeighborhood(),
 
 
 
-<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
 
 </body></html>

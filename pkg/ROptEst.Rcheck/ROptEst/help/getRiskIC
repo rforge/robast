@@ -1,0 +1,159 @@
+getRiskIC              package:ROptEst              R Documentation
+
+_G_e_n_e_r_i_c _f_u_n_c_t_i_o_n _f_o_r _t_h_e _c_o_m_p_u_t_a_t_i_o_n _o_f _a _r_i_s_k _f_o_r _a_n _I_C
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Generic function for the computation of a risk for an IC.
+
+_U_s_a_g_e:
+
+     getRiskIC(IC, risk, neighbor, L2Fam, ...)
+
+     ## S4 method for signature 'IC, asCov, missing, missing':
+     getRiskIC(IC, risk, tol = .Machine$double.eps^0.25)
+
+     ## S4 method for signature 'IC, asCov, missing,
+     ##   L2ParamFamily':
+     getRiskIC(IC, risk, L2Fam, tol = .Machine$double.eps^0.25)
+
+     ## S4 method for signature 'IC, trAsCov, missing, missing':
+     getRiskIC(IC, risk, tol = .Machine$double.eps^0.25)
+
+     ## S4 method for signature 'IC, trAsCov, missing,
+     ##   L2ParamFamily':
+     getRiskIC(IC, risk, L2Fam, tol = .Machine$double.eps^0.25)
+
+     ## S4 method for signature 'IC, asBias, UncondNeighborhood,
+     ##   missing':
+     getRiskIC(IC, risk, neighbor, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+
+     ## S4 method for signature 'IC, asBias, UncondNeighborhood,
+     ##   L2ParamFamily':
+     getRiskIC(IC, risk, neighbor, L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+
+     ## S4 method for signature 'IC, asMSE, UncondNeighborhood,
+     ##   missing':
+     getRiskIC(IC, risk, neighbor, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+
+     ## S4 method for signature 'IC, asMSE, UncondNeighborhood,
+     ##   L2ParamFamily':
+     getRiskIC(IC, risk, neighbor, L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+
+     ## S4 method for signature 'TotalVarIC, asUnOvShoot,
+     ##   UncondNeighborhood, missing':
+     getRiskIC(IC, risk, neighbor)
+
+     ## S4 method for signature 'IC, fiUnOvShoot,
+     ##   ContNeighborhood, missing':
+     getRiskIC(IC, risk, neighbor, sampleSize, Algo = "A", cont = "left")
+
+     ## S4 method for signature 'IC, fiUnOvShoot,
+     ##   TotalVarNeighborhood, missing':
+     getRiskIC(IC, risk, neighbor, sampleSize, Algo = "A", cont = "left")
+
+_A_r_g_u_m_e_n_t_s:
+
+      IC: object of class '"InfluenceCurve"' 
+
+    risk: object of class '"RiskType"'. 
+
+neighbor: object of class '"Neighborhood"'. 
+
+   L2Fam: object of class '"L2ParamFamily"'. 
+
+     ...: additional parameters 
+
+biastype: object of class '"BiasType"'. 
+
+     tol: the desired accuracy (convergence tolerance).
+
+sampleSize: integer: sample size. 
+
+    Algo: "A" or "B". 
+
+    cont: "left" or "right". 
+
+_D_e_t_a_i_l_s:
+
+     To make sure that the results are valid, it is recommended to
+     include an additional check of the IC properties of 'IC'  using
+     'checkIC'.
+
+_V_a_l_u_e:
+
+     The risk of an IC is computed.
+
+_M_e_t_h_o_d_s:
+
+     _I_C = "_I_C", _r_i_s_k = "_a_s_C_o_v", _n_e_i_g_h_b_o_r = "_m_i_s_s_i_n_g", _L_2_F_a_m = "_m_i_s_s_i_n_g" 
+          asymptotic covariance of 'IC'. 
+
+     _I_C = "_I_C", _r_i_s_k = "_a_s_C_o_v", _n_e_i_g_h_b_o_r = "_m_i_s_s_i_n_g", _L_2_F_a_m = "_L_2_P_a_r_a_m_F_a_m_i_l_y" 
+          asymptotic covariance of 'IC' under 'L2Fam'. 
+
+     _I_C = "_I_C", _r_i_s_k = "_t_r_A_s_C_o_v", _n_e_i_g_h_b_o_r = "_m_i_s_s_i_n_g", _L_2_F_a_m = "_m_i_s_s_i_n_g" 
+          asymptotic covariance of 'IC'. 
+
+     _I_C = "_I_C", _r_i_s_k = "_t_r_A_s_C_o_v", _n_e_i_g_h_b_o_r = "_m_i_s_s_i_n_g", _L_2_F_a_m = "_L_2_P_a_r_a_m_F_a_m_i_l_y" 
+          asymptotic covariance of 'IC' under 'L2Fam'. 
+
+     _I_C = "_I_C", _r_i_s_k = "_a_s_B_i_a_s", _n_e_i_g_h_b_o_r = "_C_o_n_t_N_e_i_g_h_b_o_r_h_o_o_d", _L_2_F_a_m = "_m_i_s_s_i_n_g" 
+          asymptotic bias of 'IC' under convex contaminations. 
+
+     _I_C = "_I_C", _r_i_s_k = "_a_s_B_i_a_s", _n_e_i_g_h_b_o_r = "_C_o_n_t_N_e_i_g_h_b_o_r_h_o_o_d", _L_2_F_a_m = "_L_2_P_a_r_a_m_F_a_m_i_l_y" 
+          asymptotic bias of 'IC' under convex contaminations and
+          'L2Fam'. 
+
+     _I_C = "_I_C", _r_i_s_k = "_a_s_B_i_a_s", _n_e_i_g_h_b_o_r = "_T_o_t_a_l_V_a_r_N_e_i_g_h_b_o_r_h_o_o_d", _L_2_F_a_m = "_m_i_s_s_i_n_g" 
+          asymptotic bias of 'IC' in case of total variation
+          neighborhoods. 
+
+     _I_C = "_I_C", _r_i_s_k = "_a_s_B_i_a_s", _n_e_i_g_h_b_o_r = "_T_o_t_a_l_V_a_r_N_e_i_g_h_b_o_r_h_o_o_d", _L_2_F_a_m = "_L_2_P_a_r_a_m_F_a_m_i_l_y" 
+          asymptotic bias of 'IC' under 'L2Fam' in case of total
+          variation  neighborhoods. 
+
+     _I_C = "_I_C", _r_i_s_k = "_a_s_M_S_E", _n_e_i_g_h_b_o_r = "_U_n_c_o_n_d_N_e_i_g_h_b_o_r_h_o_o_d", _L_2_F_a_m = "_m_i_s_s_i_n_g" 
+          asymptotic mean square error of 'IC'. 
+
+     _I_C = "_I_C", _r_i_s_k = "_a_s_M_S_E", _n_e_i_g_h_b_o_r = "_U_n_c_o_n_d_N_e_i_g_h_b_o_r_h_o_o_d", _L_2_F_a_m = "_L_2_P_a_r_a_m_F_a_m_i_l_y" 
+          asymptotic mean square error of 'IC' under 'L2Fam'. 
+
+     _I_C = "_T_o_t_a_l_V_a_r_I_C", _r_i_s_k = "_a_s_U_n_O_v_S_h_o_o_t", _n_e_i_g_h_b_o_r = "_U_n_c_o_n_d_N_e_i_g_h_b_o_r_h_o_o_d", _L_2_F_a_m = "_m_i_s_s_i_n_g" 
+          asymptotic under-/overshoot risk of 'IC'. 
+
+     _I_C = "_I_C", _r_i_s_k = "_f_i_U_n_O_v_S_h_o_o_t", _n_e_i_g_h_b_o_r = "_C_o_n_t_N_e_i_g_h_b_o_r_h_o_o_d", _L_2_F_a_m = "_m_i_s_s_i_n_g" 
+          finite-sample under-/overshoot risk of 'IC'. 
+
+     _I_C = "_I_C", _r_i_s_k = "_f_i_U_n_O_v_S_h_o_o_t", _n_e_i_g_h_b_o_r = "_T_o_t_a_l_V_a_r_N_e_i_g_h_b_o_r_h_o_o_d", _L_2_F_a_m = "_m_i_s_s_i_n_g" 
+          finite-sample under-/overshoot risk of 'IC'. 
+
+_N_o_t_e:
+
+     This generic function is still under construction.
+
+_A_u_t_h_o_r(_s):
+
+     Matthias Kohl Matthias.Kohl@stamats.de
+
+_R_e_f_e_r_e_n_c_e_s:
+
+     Huber, P.J. (1968) Robust Confidence Limits. Z.
+     Wahrscheinlichkeitstheor. Verw. Geb. *10*:269-278.
+
+     Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats.
+     *8*: 106-115.
+
+     Rieder, H. (1994) _Robust Asymptotic Statistics_. New York:
+     Springer.
+
+     Kohl, M. (2005) _Numerical Contributions to the Asymptotic Theory
+     of Robustness_.  Bayreuth: Dissertation.
+
+     Ruckdeschel, P. and Kohl, M. (2005) Computation of the Finite
+     Sample Risk  of M-estimators on Neighborhoods.
+
+_S_e_e _A_l_s_o:
+
+     'getRiskIC-methods', 'InfRobModel-class'
+

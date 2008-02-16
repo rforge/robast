@@ -54,27 +54,6 @@ exportMethods("Curve",
               "neighborRadius", "neighborRadius<-", 
               "clipLo", "clipLo<-", 
               "clipUp", "clipUp<-") 
-exportMethods("optIC", 
-              "getInfRobIC", 
-              "getFixRobIC",
-              "getAsRisk", 
-              "getFiRisk",
-              "getInfClip", 
-              "getFixClip",
-              "getInfGamma", 
-              "getInfCent", 
-              "getInfStand", 
-              "getRiskIC", 
-              "optRisk", 
-              "radiusMinimaxIC", 
-              "getIneffDiff", 
-              "leastFavorableRadius",
-              "lowerCaseRadius")
-exportMethods("ksEstimator",
-              "oneStepEstimator", 
-              "locMEstimator")
-exportMethods("nu", "nu<-", "name", "name<-",
-              "sign", "sign<-")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 
 export("InfluenceCurve", 

@@ -7,10 +7,12 @@
 <table width="100%"><tr><td>getInfGamma(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   getInfGamma">
 <param name="keyword" value="R:   getInfGamma-methods">
-<param name="keyword" value="R:   getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood-method">
-<param name="keyword" value="R:   getInfGamma,UnivariateDistribution,asGRisk,TotalVarNeighborhood-method">
-<param name="keyword" value="R:   getInfGamma,RealRandVariable,asMSE,ContNeighborhood-method">
-<param name="keyword" value="R:   getInfGamma,UnivariateDistribution,asUnOvShoot,ContNeighborhood-method">
+<param name="keyword" value="R:   getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,BiasType-method">
+<param name="keyword" value="R:   getInfGamma,UnivariateDistribution,asGRisk,TotalVarNeighborhood,BiasType-method">
+<param name="keyword" value="R:   getInfGamma,RealRandVariable,asMSE,ContNeighborhood,BiasType-method">
+<param name="keyword" value="R:   getInfGamma,UnivariateDistribution,asUnOvShoot,ContNeighborhood,BiasType-method">
+<param name="keyword" value="R:   getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,onesidedBias-method">
+<param name="keyword" value="R:   getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,asymmetricBias-method">
 <param name="keyword" value=" Generic Function for the Computation of the Optimal Clipping Bound">
 </object>
 
@@ -30,23 +32,37 @@ to compute optimally robust ICs.
 <h3>Usage</h3>
 
 <pre>
-getInfGamma(L2deriv, risk, neighbor, ...)
+getInfGamma(L2deriv, risk, neighbor, biastype, ...)
 
 ## S4 method for signature 'UnivariateDistribution, asMSE,
-##   ContNeighborhood':
-getInfGamma(L2deriv, risk, neighbor, cent, clip)
+##   ContNeighborhood, BiasType':
+getInfGamma(L2deriv, 
+     risk, neighbor, biastype = symmetricBias(), cent, clip)
 
 ## S4 method for signature 'UnivariateDistribution,
-##   asGRisk, TotalVarNeighborhood':
-getInfGamma(L2deriv, risk, neighbor, cent, clip)
+##   asGRisk, TotalVarNeighborhood, BiasType':
+getInfGamma(L2deriv, 
+     risk, neighbor, biastype = symmetricBias(), cent, clip)
 
 ## S4 method for signature 'RealRandVariable, asMSE,
-##   ContNeighborhood':
-getInfGamma(L2deriv, risk, neighbor, Distr, stand, cent, clip)
+##   ContNeighborhood, BiasType':
+getInfGamma(L2deriv, 
+     risk, neighbor, biastype = symmetricBias(), Distr, stand, cent, clip)
 
 ## S4 method for signature 'UnivariateDistribution,
-##   asUnOvShoot, ContNeighborhood':
-getInfGamma(L2deriv, risk, neighbor, cent, clip)
+##   asUnOvShoot, ContNeighborhood, BiasType':
+getInfGamma(L2deriv, 
+     risk, neighbor, biastype = symmetricBias(), cent, clip)
+
+## S4 method for signature 'UnivariateDistribution, asMSE,
+##   ContNeighborhood, onesidedBias':
+getInfGamma(L2deriv, 
+     risk, neighbor, biastype = positiveBias(), cent, clip)
+
+## S4 method for signature 'UnivariateDistribution, asMSE,
+##   ContNeighborhood, asymmetricBias':
+getInfGamma(L2deriv, 
+    risk, neighbor, biastype  = asymmetricBias(), cent, clip)
 </pre>
 
 
@@ -63,6 +79,9 @@ object of class <code>"RiskType"</code>. </td></tr>
 <tr valign="top"><td><code>neighbor</code></td>
 <td>
 object of class <code>"Neighborhood"</code>. </td></tr>
+<tr valign="top"><td><code>biastype</code></td>
+<td>
+object of class <code>"BiasType"</code> </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters </td></tr>
@@ -92,25 +111,40 @@ Ruckdeschel and Rieder (2004).
 
 <dl>
 <dt>L2deriv = "UnivariateDistribution", risk = "asMSE", 
-neighbor = "ContNeighborhood"</dt><dd>used by <code>getInfClip</code>. </dd>
+neighbor = "ContNeighborhood", 
+biastype = "BiasType"</dt><dd>used by <code>getInfClip</code> for symmetric bias. </dd>
 
 
 <dt>L2deriv = "UnivariateDistribution", risk = "asGRisk", 
-neighbor = "TotalVarNeighborhood"</dt><dd>used by <code>getInfClip</code>. </dd>
+neighbor = "TotalVarNeighborhood", 
+biastype = "BiasType"</dt><dd>used by <code>getInfClip</code> for symmetric bias. </dd>
 
 
 <dt>L2deriv = "RealRandVariable", risk = "asMSE", 
-neighbor = "ContNeighborhood"</dt><dd>used by <code>getInfClip</code>. </dd>
+neighbor = "ContNeighborhood", 
+biastype = "BiasType"</dt><dd>used by <code>getInfClip</code> for symmetric bias. </dd>
 
 
 <dt>L2deriv = "UnivariateDistribution", risk = "asUnOvShoot", 
-neighbor = "ContNeighborhood"</dt><dd>used by <code>getInfClip</code>. </dd>
+neighbor = "ContNeighborhood", 
+biastype = "BiasType"</dt><dd>used by <code>getInfClip</code> for symmetric bias. </dd>
+
+
+<dt>L2deriv = "UnivariateDistribution", risk = "asMSE", 
+neighbor = "ContNeighborhood", 
+biastype = "onesidedBias"</dt><dd>used by <code>getInfClip</code> for onesided bias. </dd>
+
+
+<dt>L2deriv = "UnivariateDistribution", risk = "asMSE", 
+neighbor = "ContNeighborhood", 
+biastype = "asymmetricBias"</dt><dd>used by <code>getInfClip</code> for asymmetric bias. </dd>
 </dl>
 
 <h3>Author(s)</h3>
 
 <p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@uni-bayreuth.de">Peter.Ruckdeschel@uni-bayreuth.de</a>
 </p>
 
 
@@ -124,7 +158,11 @@ Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
 </p>
 <p>
 Ruckdeschel, P. and Rieder, H. (2004) Optimal Influence Curves for
-General Loss Functions. Statistics &amp; Decisions (submitted).
+General Loss Functions. Statistics &amp; Decisions <EM>22</EM>, 201-223.
+</p>
+<p>
+Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+Mathematical Methods in Statistics <EM>14</EM>(1), 105-131.
 </p>
 <p>
 Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
@@ -135,13 +173,22 @@ Bayreuth: Dissertation.
 <h3>See Also</h3>
 
 <p>
-<code><a href="asGRisk-class.html">asGRisk-class</a></code>, <code><a href="asMSE-class.html">asMSE-class</a></code>,
-<code><a href="asUnOvShoot-class.html">asUnOvShoot-class</a></code>, <code><a href="ContIC-class.html">ContIC-class</a></code>, 
-<code><a href="TotalVarIC-class.html">TotalVarIC-class</a></code>
+<code><a onclick="findlink('distrMod', 'asGRisk-class.html')" style="text-decoration: underline; color: blue; cursor: hand">asGRisk-class</a></code>, <code><a onclick="findlink('distrMod', 'asMSE-class.html')" style="text-decoration: underline; color: blue; cursor: hand">asMSE-class</a></code>,
+<code><a onclick="findlink('distrMod', 'asUnOvShoot-class.html')" style="text-decoration: underline; color: blue; cursor: hand">asUnOvShoot-class</a></code>, <code><a onclick="findlink('RobAStBase', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, 
+<code><a onclick="findlink('RobAStBase', 'TotalVarIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">TotalVarIC-class</a></code>
 </p>
 
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
 
-<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
 
 </body></html>

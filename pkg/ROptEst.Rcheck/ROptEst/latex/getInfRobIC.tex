@@ -1,0 +1,164 @@
+\HeaderA{getInfRobIC}{Generic Function for the Computation of Optimally Robust ICs}{getInfRobIC}
+\aliasA{getInfRobIC,RealRandVariable,asBias,ContNeighborhood-method}{getInfRobIC}{getInfRobIC,RealRandVariable,asBias,ContNeighborhood.Rdash.method}
+\aliasA{getInfRobIC,RealRandVariable,asCov,ContNeighborhood-method}{getInfRobIC}{getInfRobIC,RealRandVariable,asCov,ContNeighborhood.Rdash.method}
+\aliasA{getInfRobIC,RealRandVariable,asGRisk,ContNeighborhood-method}{getInfRobIC}{getInfRobIC,RealRandVariable,asGRisk,ContNeighborhood.Rdash.method}
+\aliasA{getInfRobIC,RealRandVariable,asHampel,ContNeighborhood-method}{getInfRobIC}{getInfRobIC,RealRandVariable,asHampel,ContNeighborhood.Rdash.method}
+\aliasA{getInfRobIC,UnivariateDistribution,asBias,UncondNeighborhood-method}{getInfRobIC}{getInfRobIC,UnivariateDistribution,asBias,UncondNeighborhood.Rdash.method}
+\aliasA{getInfRobIC,UnivariateDistribution,asCov,ContNeighborhood-method}{getInfRobIC}{getInfRobIC,UnivariateDistribution,asCov,ContNeighborhood.Rdash.method}
+\aliasA{getInfRobIC,UnivariateDistribution,asCov,TotalVarNeighborhood-method}{getInfRobIC}{getInfRobIC,UnivariateDistribution,asCov,TotalVarNeighborhood.Rdash.method}
+\aliasA{getInfRobIC,UnivariateDistribution,asGRisk,UncondNeighborhood-method}{getInfRobIC}{getInfRobIC,UnivariateDistribution,asGRisk,UncondNeighborhood.Rdash.method}
+\aliasA{getInfRobIC,UnivariateDistribution,asHampel,UncondNeighborhood-method}{getInfRobIC}{getInfRobIC,UnivariateDistribution,asHampel,UncondNeighborhood.Rdash.method}
+\aliasA{getInfRobIC,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method}{getInfRobIC}{getInfRobIC,UnivariateDistribution,asUnOvShoot,UncondNeighborhood.Rdash.method}
+\aliasA{getInfRobIC-methods}{getInfRobIC}{getInfRobIC.Rdash.methods}
+\begin{Description}\relax
+Generic function for the computation of optimally robust ICs 
+in case of infinitesimal robust models. This function is 
+rarely called directly.
+\end{Description}
+\begin{Usage}
+\begin{verbatim}
+getInfRobIC(L2deriv, risk, neighbor, ...)
+
+## S4 method for signature 'UnivariateDistribution, asCov,
+##   ContNeighborhood':
+getInfRobIC(L2deriv, risk, neighbor, Finfo, trafo)
+
+## S4 method for signature 'UnivariateDistribution, asCov,
+##   TotalVarNeighborhood':
+getInfRobIC(L2deriv, risk, neighbor, Finfo, trafo)
+
+## S4 method for signature 'RealRandVariable, asCov,
+##   ContNeighborhood':
+getInfRobIC(L2deriv, risk, neighbor, Distr, Finfo, trafo)
+
+## S4 method for signature 'UnivariateDistribution, asBias,
+##   UncondNeighborhood':
+getInfRobIC(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
+             upper, maxiter, tol, warn)
+
+## S4 method for signature 'RealRandVariable, asBias,
+##   ContNeighborhood':
+getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
+             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
+
+## S4 method for signature 'UnivariateDistribution,
+##   asHampel, UncondNeighborhood':
+getInfRobIC(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
+             upper, maxiter, tol, warn)
+
+## S4 method for signature 'RealRandVariable, asHampel,
+##   ContNeighborhood':
+getInfRobIC(L2deriv, risk, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
+             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
+
+## S4 method for signature 'UnivariateDistribution,
+##   asGRisk, UncondNeighborhood':
+getInfRobIC(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
+             upper, maxiter, tol, warn)
+
+## S4 method for signature 'RealRandVariable, asGRisk,
+##   ContNeighborhood':
+getInfRobIC(L2deriv, risk, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
+             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
+
+## S4 method for signature 'UnivariateDistribution,
+##   asUnOvShoot, UncondNeighborhood':
+getInfRobIC(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
+             upper, maxiter, tol, warn)
+\end{verbatim}
+\end{Usage}
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{L2deriv}] L2-derivative of some L2-differentiable family 
+of probability measures. 
+\item[\code{risk}] object of class \code{"RiskType"}. 
+\item[\code{neighbor}] object of class \code{"Neighborhood"}. 
+\item[\code{...}] additional parameters. 
+\item[\code{biastype}] object of class \code{"BiasType"}. 
+\item[\code{Distr}] object of class \code{"Distribution"}. 
+\item[\code{symm}] logical: indicating symmetry of \code{L2deriv}. 
+\item[\code{DistrSymm}] object of class \code{"DistributionSymmetry"}. 
+\item[\code{L2derivSymm}] object of class \code{"FunSymmList"}. 
+\item[\code{L2derivDistrSymm}] object of class \code{"DistrSymmList"}. 
+\item[\code{Finfo}] Fisher information matrix. 
+\item[\code{z.start}] initial value for the centering constant. 
+\item[\code{A.start}] initial value for the standardizing matrix. 
+\item[\code{trafo}] matrix: transformation of the parameter. 
+\item[\code{upper}] upper bound for the optimal clipping bound. 
+\item[\code{maxiter}] the maximum number of iterations. 
+\item[\code{tol}] the desired accuracy (convergence tolerance).
+\item[\code{warn}] logical: print warnings. 
+\end{ldescription}
+\end{Arguments}
+\begin{Value}
+The optimally robust IC is computed.
+\end{Value}
+\begin{Section}{Methods}
+\describe{
+\item[L2deriv = "UnivariateDistribution", risk = "asCov", 
+neighbor = "ContNeighborhood"] computes the classical optimal influence curve for L2 differentiable 
+parametric families with unknown one-dimensional parameter. 
+
+\item[L2deriv = "UnivariateDistribution", risk = "asCov", 
+neighbor = "TotalVarNeighborhood"] computes the classical optimal influence curve for L2 differentiable 
+parametric families with unknown one-dimensional parameter. 
+
+\item[L2deriv = "RealRandVariable", risk = "asCov", 
+neighbor = "ContNeighborhood"] computes the classical optimal influence curve for L2 differentiable 
+parametric families with unknown \eqn{k}{}-dimensional parameter 
+(\eqn{k > 1}{}) where the underlying distribution is univariate. 
+
+\item[L2deriv = "UnivariateDistribution", risk = "asBias", 
+neighbor = "UncondNeighborhood"] computes the bias optimal influence curve for L2 differentiable 
+parametric families with unknown one-dimensional parameter. 
+
+\item[L2deriv = "RealRandVariable", risk = "asBias", 
+neighbor = "ContNeighborhood"] computes the bias optimal influence curve for L2 differentiable 
+parametric families with unknown \eqn{k}{}-dimensional parameter 
+(\eqn{k > 1}{}) where the underlying distribution is univariate. 
+
+\item[L2deriv = "UnivariateDistribution", risk = "asHampel", 
+neighbor = "UncondNeighborhood"] computes the optimally robust influence curve for L2 differentiable 
+parametric families with unknown one-dimensional parameter. 
+
+\item[L2deriv = "RealRandVariable", risk = "asHampel", 
+neighbor = "ContNeighborhood"] computes the optimally robust influence curve for L2 differentiable 
+parametric families with unknown \eqn{k}{}-dimensional parameter 
+(\eqn{k > 1}{}) where the underlying distribution is univariate. 
+
+\item[L2deriv = "UnivariateDistribution", risk = "asGRisk", 
+neighbor = "UncondNeighborhood"] computes the optimally robust influence curve for L2 differentiable 
+parametric families with unknown one-dimensional parameter. 
+
+\item[L2deriv = "RealRandVariable", risk = "asGRisk", 
+neighbor = "ContNeighborhood"] computes the optimally robust influence curve for L2 differentiable 
+parametric families with unknown \eqn{k}{}-dimensional parameter 
+(\eqn{k > 1}{}) where the underlying distribution is univariate. 
+
+\item[L2deriv = "UnivariateDistribution", risk = "asUnOvShoot", 
+neighbor = "UncondNeighborhood"] computes the optimally robust influence curve for one-dimensional
+L2 differentiable parametric families and 
+asymptotic under-/overshoot risk. 
+}
+\end{Section}
+\begin{Author}\relax
+Matthias Kohl \email{Matthias.Kohl@stamats.de}
+\end{Author}
+\begin{References}\relax
+Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. \bold{8}: 106-115.
+
+Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
+
+Ruckdeschel, P. and Rieder, H. (2004) Optimal Influence Curves for
+General Loss Functions. Statistics \& Decisions \bold{22}: 201-223.
+
+Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+Mathematical Methods in Statistics \emph{14}(1), 105-131.
+
+Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
+Bayreuth: Dissertation.
+\end{References}
+\begin{SeeAlso}\relax
+\code{\LinkA{InfRobModel-class}{InfRobModel.Rdash.class}}
+\end{SeeAlso}
+

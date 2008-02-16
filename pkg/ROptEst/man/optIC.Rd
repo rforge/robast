@@ -15,11 +15,13 @@ optIC(model, risk, ...)
 
 \S4method{optIC}{L2ParamFamily,asCov}(model, risk)
 
-\S4method{optIC}{InfRobModel,asRisk}(model, risk, z.start = NULL, A.start = NULL, upper = 1e4, 
+\S4method{optIC}{InfRobModel,asRisk}(model, risk, biastype = symmetricBias(), 
+                 z.start = NULL, A.start = NULL, upper = 1e4, 
              maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE)
 
-\S4method{optIC}{InfRobModel,asUnOvShoot}(model, risk, upper = 1e4, maxiter = 50, 
-             tol = .Machine$double.eps^0.4, warn = TRUE)
+\S4method{optIC}{InfRobModel,asUnOvShoot}(model, risk, biastype = symmetricBias(), 
+                 upper = 1e4, maxiter = 50, 
+                 tol = .Machine$double.eps^0.4, warn = TRUE)
 
 \S4method{optIC}{FixRobModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, maxiter = 50, 
              tol = .Machine$double.eps^0.4, warn = TRUE, Algo = "A", cont = "left")
@@ -28,6 +30,7 @@ optIC(model, risk, ...)
   \item{model}{ probability model. }
   \item{risk}{ object of class \code{"RiskType"}. }
   \item{\dots}{ additional parameters. }
+  \item{biastype}{ object of class \code{"BiasType"} }
   \item{z.start}{ initial value for the centering constant. }
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{upper}{ upper bound for the optimal clipping bound. }
@@ -77,7 +80,7 @@ optIC(model, risk, ...)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{InfluenceCurve-class}}, \code{\link{RiskType-class}}}
+\seealso{\code{\link[RobAStBase]{InfluenceCurve-class}}, \code{\link[distrMod]{RiskType-class}}}
 \examples{
 B <- BinomFamily(size = 25, prob = 0.25) 
 

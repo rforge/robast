@@ -29,14 +29,14 @@ setMethod("optIC", signature(model = "L2ParamFamily", risk = "asCov"),
 ## Optimally robust IC for infinitesimal robust model and asymptotic risks
 ###############################################################################
 setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
-    function(model, risk, z.start = NULL, A.start = NULL, upper = 1e4, 
+    function(model, risk, biastype = symmetricBias(), z.start = NULL, A.start = NULL, upper = 1e4, 
              maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE){
         L2derivDim <- numberOfMaps(model@center@L2deriv)
         if(L2derivDim == 1){
             ow <- options("warn")
             options(warn = -1)
             res <- getInfRobIC(L2deriv = model@center@L2derivDistr[[1]], 
-                        neighbor = model@neighbor, risk = risk, 
+                        neighbor = model@neighbor, risk = risk, biastype = biastype, 
                         symm = model@center@L2derivDistrSymm[[1]],
                         Finfo = model@center@FisherInfo, trafo = model@center@param@trafo, 
                         upper = upper, maxiter = maxiter, tol = tol, warn = warn)
@@ -67,7 +67,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                 ow <- options("warn")
                 options(warn = -1)
                 res <- getInfRobIC(L2deriv = L2deriv, neighbor = model@neighbor, 
-                            risk = risk, Distr = model@center@distribution, 
+                            risk = risk, biastype = biastype, Distr = model@center@distribution, 
                             DistrSymm = model@center@distrSymm, L2derivSymm = L2derivSymm,
                             L2derivDistrSymm = L2derivDistrSymm, Finfo = model@center@FisherInfo, 
                             trafo = model@center@param@trafo, z.start = z.start, A.start = A.start, 
@@ -86,13 +86,14 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
 ## and asymptotic under-/overshoot risk
 ###############################################################################
 setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
-    function(model, risk, upper = 1e4, maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE){
+    function(model, risk, biastype = symmetricBias(), upper = 1e4, maxiter = 50, 
+             tol = .Machine$double.eps^0.4, warn = TRUE){
         L2derivDistr <- model@center@L2derivDistr[[1]]
         if((length(model@center@L2derivDistr) == 1) & is(L2derivDistr, "UnivariateDistribution")){
             ow <- options("warn")
             options(warn = -1)
             res <- getInfRobIC(L2deriv = L2derivDistr, 
-                        neighbor = model@neighbor, risk = risk, 
+                        neighbor = model@neighbor, risk = risk, biastype = biastype, 
                         symm = model@center@L2derivDistrSymm[[1]],
                         Finfo = model@center@FisherInfo, trafo = model@center@param@trafo, 
                         upper = upper, maxiter = maxiter, tol = tol, warn = warn)

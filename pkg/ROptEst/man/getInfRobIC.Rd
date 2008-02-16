@@ -4,8 +4,7 @@
 \alias{getInfRobIC,UnivariateDistribution,asCov,ContNeighborhood-method}
 \alias{getInfRobIC,UnivariateDistribution,asCov,TotalVarNeighborhood-method}
 \alias{getInfRobIC,RealRandVariable,asCov,ContNeighborhood-method}
-\alias{getInfRobIC,UnivariateDistribution,asBias,ContNeighborhood-method}
-\alias{getInfRobIC,UnivariateDistribution,asBias,TotalVarNeighborhood-method}
+\alias{getInfRobIC,UnivariateDistribution,asBias,UncondNeighborhood-method}
 \alias{getInfRobIC,RealRandVariable,asBias,ContNeighborhood-method}
 \alias{getInfRobIC,UnivariateDistribution,asHampel,UncondNeighborhood-method}
 \alias{getInfRobIC,RealRandVariable,asHampel,ContNeighborhood-method}
@@ -28,28 +27,25 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 
 \S4method{getInfRobIC}{RealRandVariable,asCov,ContNeighborhood}(L2deriv, risk, neighbor, Distr, Finfo, trafo)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asBias,ContNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
-
-\S4method{getInfRobIC}{UnivariateDistribution,asBias,TotalVarNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
+\S4method{getInfRobIC}{UnivariateDistribution,asBias,UncondNeighborhood}(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 
 \S4method{getInfRobIC}{RealRandVariable,asBias,ContNeighborhood}(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
+\S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 
-\S4method{getInfRobIC}{RealRandVariable,asHampel,ContNeighborhood}(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
+\S4method{getInfRobIC}{RealRandVariable,asHampel,ContNeighborhood}(L2deriv, risk, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
+\S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 
-\S4method{getInfRobIC}{RealRandVariable,asGRisk,ContNeighborhood}(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
+\S4method{getInfRobIC}{RealRandVariable,asGRisk,ContNeighborhood}(L2deriv, risk, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
+\S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 }
 \arguments{
@@ -58,6 +54,7 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
   \item{risk}{ object of class \code{"RiskType"}. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{\dots}{ additional parameters. }
+  \item{biastype}{ object of class \code{"BiasType"}. }
   \item{Distr}{ object of class \code{"Distribution"}. }
   \item{symm}{ logical: indicating symmetry of \code{L2deriv}. }
   \item{DistrSymm}{ object of class \code{"DistributionSymmetry"}. }
@@ -93,12 +90,7 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
     (\eqn{k > 1}) where the underlying distribution is univariate. }
 
   \item{L2deriv = "UnivariateDistribution", risk = "asBias", 
-        neighbor = "ContNeighborhood"}{ 
-    computes the bias optimal influence curve for L2 differentiable 
-    parametric families with unknown one-dimensional parameter. }
-
-  \item{L2deriv = "UnivariateDistribution", risk = "asBias", 
-        neighbor = "TotalVarNeighborhood"}{ 
+        neighbor = "UncondNeighborhood"}{ 
     computes the bias optimal influence curve for L2 differentiable 
     parametric families with unknown one-dimensional parameter. }
 
@@ -137,16 +129,22 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
     asymptotic under-/overshoot risk. }
 }}
 \references{
-  Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. \bold{8}: 106--115.
+  Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. \bold{8}: 106-115.
 
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
+
+  Ruckdeschel, P. and Rieder, H. (2004) Optimal Influence Curves for
+  General Loss Functions. Statistics & Decisions \bold{22}: 201-223.
+
+  Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+  Mathematical Methods in Statistics \emph{14}(1), 105-131.
 
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{InfRobModel-class}}}
+\seealso{\code{\link[RobAStBase]{InfRobModel-class}}}
 %\examples{}
 \concept{influence curve}
 \keyword{}

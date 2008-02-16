@@ -13,11 +13,11 @@
 \usage{
 getFiRisk(risk, Distr, neighbor, ...)
 
-\S4method{getFiRisk}{fiUnOvShoot,Norm,ContNeighborhood}(risk, Distr, neighbor, 
-            clip, stand, sampleSize, Algo, cont)
+\S4method{getFiRisk}{fiUnOvShoot,Norm,ContNeighborhood}(risk, Distr, 
+          neighbor, clip, stand, sampleSize, Algo, cont)
 
-\S4method{getFiRisk}{fiUnOvShoot,Norm,TotalVarNeighborhood}(risk, Distr, neighbor, 
-            clip, stand, sampleSize, Algo, cont)
+\S4method{getFiRisk}{fiUnOvShoot,Norm,TotalVarNeighborhood}(risk, Distr, 
+          neighbor, clip, stand, sampleSize, Algo, cont)
 }
 \arguments{
   \item{risk}{ object of class \code{"RiskType"}. }
@@ -56,7 +56,7 @@ getFiRisk(risk, Distr, neighbor, ...)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{fiRisk-class}}}
+\seealso{\code{\link[distrMod]{fiRisk-class}}}
 %\examples{}
 \concept{finite-sample risk}
 \concept{risk}

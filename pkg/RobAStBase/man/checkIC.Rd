@@ -27,7 +27,7 @@ checkIC(IC, L2Fam, ...)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{L2ParamFamily-class}}, \code{\link{IC-class}}}
+\seealso{\code{\link[distrMod]{L2ParamFamily-class}}, \code{\link{IC-class}}}
 \examples{
 IC1 <- new("IC")
 checkIC(IC1)

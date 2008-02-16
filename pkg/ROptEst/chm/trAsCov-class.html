@@ -65,7 +65,7 @@ Bayreuth: Dissertation.
 <h3>See Also</h3>
 
 <p>
-<code><a href="asRisk-class.html">asRisk-class</a></code>, <code><a href="trAsCov.html">trAsCov</a></code>
+<code><a onclick="findlink('distrMod', 'asRisk-class.html')" style="text-decoration: underline; color: blue; cursor: hand">asRisk-class</a></code>, <code><a onclick="findlink('distrMod', 'trAsCov.html')" style="text-decoration: underline; color: blue; cursor: hand">trAsCov</a></code>
 </p>
 
 
@@ -75,8 +75,17 @@ Bayreuth: Dissertation.
 new("trAsCov")
 </pre>
 
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
 
-<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
 
 </body></html>

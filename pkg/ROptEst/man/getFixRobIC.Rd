@@ -13,7 +13,7 @@
 getFixRobIC(Distr, risk, neighbor, ...)
 
 \S4method{getFixRobIC}{Norm,fiUnOvShoot,UncondNeighborhood}(Distr, risk, neighbor, 
-            sampleSize, upper, maxiter, tol, warn, Algo, cont)
+          sampleSize, upper, maxiter, tol, warn, Algo, cont)
 }
 \arguments{
   \item{Distr}{ object of class \code{"Distribution"}. }
@@ -45,7 +45,7 @@ getFixRobIC(Distr, risk, neighbor, ...)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{FixRobModel-class}}}
+\seealso{\code{\link[RobAStBase]{FixRobModel-class}}}
 %\examples{}
 \concept{influence curve}
 \keyword{}

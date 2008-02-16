@@ -3,9 +3,31 @@
 ###############################################################################
 setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution", 
                                    risk = "asBias", 
+                                   neighbor = "UncondNeighborhood"),
+    function(L2deriv, risk, neighbor, biastype = symmetricBias(), symm, 
+             Finfo, trafo, upper, maxiter, tol, warn){
+        
+        minmaxBias(L2deriv, neighbor, biastype, symm, 
+                   Finfo, trafo, upper, maxiter, tol, warn)
+    })
+setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable", 
+                                   risk = "asBias", 
                                    neighbor = "ContNeighborhood"),
-    function(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn){
+    function(L2deriv, risk, neighbor, biastype = symmetricBias(), 
+             Distr, DistrSymm, L2derivSymm, L2derivDistrSymm, Finfo, 
+             z.start, A.start, trafo, upper, 
+             maxiter, tol, warn){                
+        minmaxBias(L2deriv, neighbor, biastype, 
+             Distr, DistrSymm, L2derivSymm, L2derivDistrSymm, Finfo, 
+             z.start, A.start, trafo, upper, 
+             maxiter, tol, warn)
+    })
+
+setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution", 
+                                   neighbor = "ContNeighborhood",
+                                   biastype = "BiasType"),
+    function(L2deriv, neighbor, biastype = symmetricBias(), symm, 
+             Finfo, trafo, upper, maxiter, tol, warn){
         zi <- sign(as.vector(trafo))
         A <- as.matrix(zi)
         z <- q(L2deriv)(0.5)
@@ -26,10 +48,11 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
 
         return(list(A = A, a = zi*z, b = b, d = d, risk = Risk, info = info))    
     })
-setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution", 
-                                   risk = "asBias", 
-                                   neighbor = "TotalVarNeighborhood"),
-    function(L2deriv, risk, neighbor, symm, Finfo, trafo, 
+setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution", 
+                                   neighbor = "TotalVarNeighborhood",
+                                   biastype = "BiasType"),
+    function(L2deriv, neighbor, biastype = symmetricBias(),
+             symm, Finfo, trafo, 
              upper, maxiter, tol, warn){
         zi <- sign(as.vector(trafo))
         A <- as.matrix(zi)
@@ -50,11 +73,12 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
 
         return(list(A = A, a = a, b = b, d = 1, risk = Risk, info = info))
     })
-setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable", 
-                                   risk = "asBias", 
-                                   neighbor = "ContNeighborhood"),
-    function(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, 
+setMethod("minmaxBias", signature(L2deriv = "RealRandVariable", 
+                                   neighbor = "ContNeighborhood", 
+                                   biastype = "BiasType"),
+    function(L2deriv, neighbor, biastype = symmetricBias(), 
+             Distr, DistrSymm, L2derivSymm, L2derivDistrSymm, Finfo, 
+             z.start, A.start, trafo, upper, 
              maxiter, tol, warn){                
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
         if(is.null(A.start)) A.start <- trafo
@@ -103,3 +127,72 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         return(list(A = A, a = a, b = b, d = d, risk = Risk, info = info))
     })
+
+setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution", 
+                                   neighbor = "ContNeighborhood", 
+                                   biastype = "asymmetricBias"),
+    function(L2deriv, neighbor, biastype, symm, 
+             Finfo, trafo, upper, maxiter, tol, warn){                
+        nu1 <- nu(biastype)[1]
+        nu2 <- nu(biastype)[2]
+        zi <- sign(as.vector(trafo))
+        A <- as.matrix(zi)
+        z <- q(L2deriv)(nu1/(nu1+nu2))
+        b <- zi*as.vector(trafo)/E(L2deriv, function(x, z){(x - z)*(x>z)/nu2 +
+                 (z-x)*(z>x)/nu1}, z = z)
+
+        b1 <- b / nu1
+        b2 <- b / nu2
+
+        p <- p(L2deriv)(z)
+
+        if(is(L2deriv, "AbscontDistribution"))
+            ws0 <- 0
+        else
+            ws0 <- d(L2deriv)(z)
+        if(ws0 > 0)
+            d <- (-b2*(1-p)+b1*(p-ws0))/ws0/b
+        else
+            d <- 0
+
+        info <- c("minimum asymptotic bias (lower case) solution")
+        asCov <- b2^2*(1-p)+b1^2*(p-ws0) + b^2*d^2*ws0
+        Risk <- list(asBias = b, asCov = asCov)
+
+        return(list(A = A, a = zi*z, b = b, d = d, risk = Risk, info = info))
+           })
+
+setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution", 
+                                   neighbor = "ContNeighborhood", 
+                                   biastype = "asymmetricBias"),
+    function(L2deriv, neighbor, biastype, symm, 
+             Finfo, trafo, upper, maxiter, tol, warn){                
+        nu1 <- nu(biastype)[1]
+        nu2 <- nu(biastype)[2]
+        zi <- sign(as.vector(trafo))
+        A <- as.matrix(zi)
+        z <- q(L2deriv)(nu1/(nu1+nu2))
+        b <- zi*as.vector(trafo)/E(L2deriv, function(x, z){(x - z)*(x>z)/nu2 +
+                 (z-x)*(z>x)/nu1}, z = z)
+
+        b1 <- b / nu1
+        b2 <- b / nu2
+
+        p <- p(L2deriv)(z)
+
+        if(is(L2deriv, "AbscontDistribution"))
+            ws0 <- 0
+        else
+            ws0 <- d(L2deriv)(z)
+        if(ws0 > 0)
+            d <- (-b2*(1-p)+b1*(p-ws0))/ws0/b
+        else
+            d <- 0
+
+        info <- c("minimum asymptotic bias (lower case) solution")
+        asCov <- b2^2*(1-p)+b1^2*(p-ws0) + b^2*d^2*ws0
+        Risk <- list(asBias = b, asCov = asCov)
+
+        return(list(A = A, a = zi*z, b = b, d = d, risk = Risk, info = info))
+           })
+           

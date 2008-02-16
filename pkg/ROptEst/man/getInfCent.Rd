@@ -1,9 +1,11 @@
 \name{getInfCent}
 \alias{getInfCent}
 \alias{getInfCent-methods}
-\alias{getInfCent,UnivariateDistribution,ContNeighborhood-method}
-\alias{getInfCent,UnivariateDistribution,TotalVarNeighborhood-method}
-\alias{getInfCent,RealRandVariable,ContNeighborhood-method}
+\alias{getInfCent,UnivariateDistribution,ContNeighborhood,BiasType-method}
+\alias{getInfCent,UnivariateDistribution,TotalVarNeighborhood,BiasType-method}
+\alias{getInfCent,RealRandVariable,ContNeighborhood,BiasType-method}
+\alias{getInfCent,UnivariateDistribution,ContNeighborhood,onesidedBias-method}
+\alias{getInfCent,UnivariateDistribution,ContNeighborhood,asymmetricBias-method}
 
 \title{Generic Function for the Computation of the Optimal Centering Constant/Lower Clipping Bound}
 \description{
@@ -14,18 +16,28 @@
   compute optimally robust ICs.
 }
 \usage{
-getInfCent(L2deriv, neighbor, ...)
+getInfCent(L2deriv, neighbor, biastype, ...)
 
-\S4method{getInfCent}{UnivariateDistribution,ContNeighborhood}(L2deriv, neighbor, clip, cent, tol.z, symm, trafo)
+\S4method{getInfCent}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, 
+     neighbor, biastype = symmetricBias(), clip, cent, tol.z, symm, trafo)
 
-\S4method{getInfCent}{UnivariateDistribution,TotalVarNeighborhood}(L2deriv, neighbor, clip, cent, tol.z, symm, trafo)
+\S4method{getInfCent}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(L2deriv, 
+     neighbor, biastype = symmetricBias(), clip, cent, tol.z, symm, trafo)
 
-\S4method{getInfCent}{RealRandVariable,ContNeighborhood}(L2deriv, neighbor, z.comp, stand, cent, clip)
+\S4method{getInfCent}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, 
+     neighbor, biastype = symmetricBias(), z.comp, stand, cent, clip)
+
+\S4method{getInfCent}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv, 
+     neighbor, biastype = positiveBias(), clip, cent, tol.z, symm, trafo)
+
+\S4method{getInfCent}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(L2deriv, 
+     neighbor, biastype = asymmetricBias(), clip, cent, tol.z, symm, trafo)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
     of probability measures. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
+  \item{biastype}{ object of class \code{"BiasType"} }
   \item{\dots}{ additional parameters. }
   \item{clip}{ optimal clipping bound. }
   \item{cent}{ optimal centering constant. }
@@ -40,24 +52,34 @@ getInfCent(L2deriv, neighbor, ...)
 \value{The optimal centering constant is computed.}
 \section{Methods}{
 \describe{
-  \item{L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood"}{ 
-    computation of optimal centering constant. }
+  \item{L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "BiasType"}{ 
+    computation of optimal centering constant for symmetric bias. }
 
-  \item{L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood"}{ 
-    computation of optimal lower clipping bound. }
+  \item{L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", biastype = "BiasType"}{ 
+    computation of optimal lower clipping bound for symmetric bias. }
 
-  \item{L2deriv = "RealRandVariable", neighbor = "ContNeighborhood"}{ 
-    computation of optimal centering constant. }
+  \item{L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", biastype = "BiasType"}{ 
+    computation of optimal centering constant for symmetric bias. }
+
+  \item{L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "onesidedBias"}{ 
+    computation of optimal centering constant for onesided bias. }
+
+  \item{L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "asymmetricBias"}{ 
+    computation of optimal centering constant for asymmetric bias. }
 }}
 \references{
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 
+  Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+  Mathematical Methods in Statistics \emph{14}(1), 105-131.
+
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 }
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de},
+        Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}}
 %\note{}
-\seealso{\code{\link{ContIC-class}}, \code{\link{TotalVarIC-class}}}
+\seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link[RobAStBase]{TotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
 \keyword{}

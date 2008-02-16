@@ -30,9 +30,13 @@ risk for a probability model.
 <pre>
 optRisk(model, risk, ...)
 
+## S4 method for signature 'L2ParamFamily, asCov':
+optRisk(model, risk)
+
 ## S4 method for signature 'InfRobModel, asRisk':
-optRisk(model, risk, z.start = NULL, A.start = NULL, upper = 1e4, 
-             maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE)
+optRisk(model, risk, biastype = symmetricBias(),
+                   z.start = NULL, A.start = NULL, upper = 1e4, 
+                   maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE)
 
 ## S4 method for signature 'FixRobModel, fiUnOvShoot':
 optRisk(model, risk, sampleSize, upper = 1e4, maxiter = 50, 
@@ -52,6 +56,9 @@ object of class <code>RiskType</code> </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters </td></tr>
+<tr valign="top"><td><code>biastype</code></td>
+<td>
+object of class <code>BiasType</code> </td></tr>
 <tr valign="top"><td><code>z.start</code></td>
 <td>
 initial value for the centering constant. </td></tr>
@@ -138,7 +145,7 @@ Bayreuth: Dissertation.
 <h3>See Also</h3>
 
 <p>
-<code><a href="RiskType-class.html">RiskType-class</a></code>
+<code><a onclick="findlink('distrMod', 'RiskType-class.html')" style="text-decoration: underline; color: blue; cursor: hand">RiskType-class</a></code>
 </p>
 
 
@@ -148,8 +155,17 @@ Bayreuth: Dissertation.
 optRisk(model = NormLocationScaleFamily(), risk = asCov())
 </pre>
 
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
 
-<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
 
 </body></html>

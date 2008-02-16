@@ -1,0 +1,89 @@
+getIneffDiff             package:ROptEst             R Documentation
+
+_G_e_n_e_r_i_c _F_u_n_c_t_i_o_n _f_o_r _t_h_e _C_o_m_p_u_t_a_t_i_o_n _o_f _I_n_e_f_f_i_c_i_e_n_c_y _D_i_f_f_e_r_e_n_c_e_s
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Generic function for the computation of inefficiency differencies.
+     This function is rarely called directly. It is used to compute the
+     radius minimax IC and the least favorable radius.
+
+_U_s_a_g_e:
+
+     getIneffDiff(radius, L2Fam, neighbor, risk, biastype, ...)
+
+     ## S4 method for signature 'numeric, L2ParamFamily,
+     ##   UncondNeighborhood, asMSE, BiasType':
+     getIneffDiff(
+               radius, L2Fam, neighbor, risk, biastype = symmetricBias(), loRad, upRad, 
+                 loRisk, upRisk, z.start = NULL, A.start = NULL, upper.b, MaxIter, eps, warn)
+
+_A_r_g_u_m_e_n_t_s:
+
+  radius: neighborhood radius. 
+
+   L2Fam: L2-differentiable family of probability measures. 
+
+neighbor: object of class '"Neighborhood"'. 
+
+    risk: object of class '"RiskType"'. 
+
+biastype: object of class '"BiasType"'. 
+
+     ...: additional parameters 
+
+   loRad: the lower end point of the interval to be searched. 
+
+   upRad: the upper end point of the interval to be searched. 
+
+  loRisk: the risk at the lower end point of the interval. 
+
+  upRisk: the risk at the upper end point of the interval. 
+
+ z.start: initial value for the centering constant. 
+
+ A.start: initial value for the standardizing matrix. 
+
+ upper.b: upper bound for the optimal clipping bound. 
+
+ MaxIter: the maximum number of iterations 
+
+     eps: the desired accuracy (convergence tolerance).
+
+    warn: logical: print warnings. 
+
+_V_a_l_u_e:
+
+     The inefficieny difference between the left and the right margin
+     of a given radius interval is computed.
+
+_M_e_t_h_o_d_s:
+
+     _r_a_d_i_u_s = "_n_u_m_e_r_i_c", _L_2_F_a_m = "_L_2_P_a_r_a_m_F_a_m_i_l_y",  _n_e_i_g_h_b_o_r = "_U_n_c_o_n_d_N_e_i_g_h_b_o_r_h_o_o_d", _r_i_s_k = "_a_s_M_S_E", _b_i_a_s_t_y_p_e = "_B_i_a_s_T_y_p_e": 
+          computes difference of asymptotic MSE-inefficiency for the
+          boundaries of a given radius interval.
+
+_A_u_t_h_o_r(_s):
+
+     Matthias Kohl Matthias.Kohl@stamats.de, Peter Ruckdeschel
+     Peter.Ruckdeschel@uni-bayreuth.de
+
+_R_e_f_e_r_e_n_c_e_s:
+
+     Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not
+     Knowing the Radius. Submitted. Appeared as discussion paper Nr.
+     81.  SFB 373 (Quantification and Simulation of Economic
+     Processes), Humboldt University, Berlin; also available under
+     <URL:
+     www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf>
+
+     Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence
+     Curves. Mathematical Methods in Statistics _14_(1), 105-131.
+
+     Kohl, M. (2005) _Numerical Contributions to the Asymptotic Theory
+     of Robustness_.  Bayreuth: Dissertation.
+
+_S_e_e _A_l_s_o:
+
+     'radiusMinimaxIC', 'leastFavorableRadius'
+

@@ -1,0 +1,41 @@
+trFiCov-class            package:ROptEst            R Documentation
+
+_T_r_a_c_e _o_f _f_i_n_i_t_e-_s_a_m_p_l_e _c_o_v_a_r_i_a_n_c_e
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Class of trace of finite-sample covariance.
+
+_O_b_j_e_c_t_s _f_r_o_m _t_h_e _C_l_a_s_s:
+
+     Objects can be created by calls of the form 'new("trFiCov", ...)'.
+     More frequently they are created via the generating function 
+     'trFiCov'.
+
+_S_l_o_t_s:
+
+     '_t_y_p_e': Object of class '"character"': “trace of finite-sample
+          covariance”. 
+
+_E_x_t_e_n_d_s:
+
+     Class '"fiRisk"', directly.
+      Class '"RiskType"', by class '"fiRisk"'.
+
+_A_u_t_h_o_r(_s):
+
+     Matthias Kohl Matthias.Kohl@stamats.de
+
+_R_e_f_e_r_e_n_c_e_s:
+
+     Ruckdeschel, P. and Kohl, M. (2005) How to approximate  the finite
+     sample risk of M-estimators.
+
+_S_e_e _A_l_s_o:
+
+     'fiRisk-class', 'trFiCov'
+
+_E_x_a_m_p_l_e_s:
+
+     new("trFiCov")
+

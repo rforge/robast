@@ -11,10 +11,8 @@
 <param name="keyword" value="R:   getRiskIC,IC,asCov,missing,L2ParamFamily-method">
 <param name="keyword" value="R:   getRiskIC,IC,trAsCov,missing,missing-method">
 <param name="keyword" value="R:   getRiskIC,IC,trAsCov,missing,L2ParamFamily-method">
-<param name="keyword" value="R:   getRiskIC,IC,asBias,ContNeighborhood,missing-method">
-<param name="keyword" value="R:   getRiskIC,IC,asBias,ContNeighborhood,L2ParamFamily-method">
-<param name="keyword" value="R:   getRiskIC,IC,asBias,TotalVarNeighborhood,missing-method">
-<param name="keyword" value="R:   getRiskIC,IC,asBias,TotalVarNeighborhood,L2ParamFamily-method">
+<param name="keyword" value="R:   getRiskIC,IC,asBias,UncondNeighborhood,missing-method">
+<param name="keyword" value="R:   getRiskIC,IC,asBias,UncondNeighborhood,L2ParamFamily-method">
 <param name="keyword" value="R:   getRiskIC,IC,asMSE,UncondNeighborhood,missing-method">
 <param name="keyword" value="R:   getRiskIC,IC,asMSE,UncondNeighborhood,L2ParamFamily-method">
 <param name="keyword" value="R:   getRiskIC,TotalVarIC,asUnOvShoot,UncondNeighborhood,missing-method">
@@ -53,29 +51,21 @@ getRiskIC(IC, risk, tol = .Machine$double.eps^0.25)
 ##   L2ParamFamily':
 getRiskIC(IC, risk, L2Fam, tol = .Machine$double.eps^0.25)
 
-## S4 method for signature 'IC, asBias, ContNeighborhood,
+## S4 method for signature 'IC, asBias, UncondNeighborhood,
 ##   missing':
-getRiskIC(IC, risk, neighbor, tol = .Machine$double.eps^0.25)
+getRiskIC(IC, risk, neighbor, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
 
-## S4 method for signature 'IC, asBias, ContNeighborhood,
+## S4 method for signature 'IC, asBias, UncondNeighborhood,
 ##   L2ParamFamily':
-getRiskIC(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
-
-## S4 method for signature 'IC, asBias,
-##   TotalVarNeighborhood, missing':
-getRiskIC(IC, risk, neighbor, tol = .Machine$double.eps^0.25)
-
-## S4 method for signature 'IC, asBias,
-##   TotalVarNeighborhood, L2ParamFamily':
-getRiskIC(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
+getRiskIC(IC, risk, neighbor, L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
 
 ## S4 method for signature 'IC, asMSE, UncondNeighborhood,
 ##   missing':
-getRiskIC(IC, risk, neighbor, tol = .Machine$double.eps^0.25)
+getRiskIC(IC, risk, neighbor, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
 
 ## S4 method for signature 'IC, asMSE, UncondNeighborhood,
 ##   L2ParamFamily':
-getRiskIC(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
+getRiskIC(IC, risk, neighbor, L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
 
 ## S4 method for signature 'TotalVarIC, asUnOvShoot,
 ##   UncondNeighborhood, missing':
@@ -109,6 +99,9 @@ object of class <code>"L2ParamFamily"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters </td></tr>
+<tr valign="top"><td><code>biastype</code></td>
+<td>
+object of class <code>"BiasType"</code>. </td></tr>
 <tr valign="top"><td><code>tol</code></td>
 <td>
 the desired accuracy (convergence tolerance).</td></tr>
@@ -219,11 +212,20 @@ of M-estimators on Neighborhoods.
 <h3>See Also</h3>
 
 <p>
-<code><a href="getRiskIC.html">getRiskIC-methods</a></code>, <code><a href="InfRobModel-class.html">InfRobModel-class</a></code>
+<code><a href="getRiskIC.html">getRiskIC-methods</a></code>, <code><a onclick="findlink('RobAStBase', 'InfRobModel-class.html')" style="text-decoration: underline; color: blue; cursor: hand">InfRobModel-class</a></code>
 </p>
 
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
 
-<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
 
 </body></html>

@@ -2,8 +2,10 @@
 ## centering constant for asymptotic MSE and asymptotic Hampel risk 
 ###############################################################################
 setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
-                                  neighbor = "ContNeighborhood"),
-    function(L2deriv, neighbor, clip, cent, tol.z, symm, trafo){
+                                  neighbor = "ContNeighborhood",
+                                  biastype = "BiasType"),
+    function(L2deriv, neighbor, biastype = symmetricBias(), 
+             clip, cent, tol.z, symm, trafo){
         if(symm) return(0)
 
         z.fct <- function(z, c0, D1){
@@ -16,8 +18,10 @@ setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
                     c0=clip, D1=L2deriv)$root)
     })
 setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
-                                  neighbor = "TotalVarNeighborhood"),
-    function(L2deriv, neighbor, clip, cent, tol.z, symm, trafo){
+                                  neighbor = "TotalVarNeighborhood",
+                                  biastype = "BiasType"),
+    function(L2deriv, neighbor, biastype = symmetricBias(), 
+             clip, cent, tol.z, symm, trafo){
         if(symm) return(-clip/2)
 
         D1 <- sign(as.vector(trafo))*L2deriv
@@ -31,8 +35,10 @@ setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
                     c0 = clip, D1 = D1)$root)
     })
 setMethod("getInfCent", signature(L2deriv = "RealRandVariable",
-                                  neighbor = "ContNeighborhood"),
-    function(L2deriv, neighbor, Distr, z.comp, stand, cent, clip){
+                                  neighbor = "ContNeighborhood",
+                                  biastype = "BiasType"),
+    function(L2deriv, neighbor, biastype = symmetricBias(), 
+             Distr, z.comp, stand, cent, clip){
         integrand1 <- function(x, L2, clip, cent, stand){
             X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
             Y <- apply(X, 2, "%*%", t(stand)) 
@@ -62,4 +68,46 @@ setMethod("getInfCent", signature(L2deriv = "RealRandVariable",
         }
 
         return(res2/res1)
+    })
+###############################################################################
+## centering constant for asymptotic one-sided MSE and asymptotic one-sided Hampel risk
+###############################################################################
+setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
+                                  neighbor = "ContNeighborhood",
+                                  biastype = "onesidedBias"),
+    function(L2deriv, neighbor, biastype = positiveBias(), clip, cent, tol.z, symm, trafo){
+        if (sign(biastype)> 0){
+        z.fct <- function(z, c0, D1){
+            return(c0 - (z+c0)*p(D1)(z+c0) + m1df(D1, z+c0))
+        }
+        lower <- q(L2deriv)(getdistrOption("TruncQuantile"))
+        upper <- 0
+        }else{
+        z.fct <- function(z, c0, D1){
+            return(- z + (z-c0)*p(D1)(z-c0) - m1df(D1, z-c0))
+        }
+        lower <- 0
+        upper <- q(L2deriv)(1-getdistrOption("TruncQuantile"))
+        }
+        return(uniroot(z.fct, lower = lower, upper = upper, tol = tol.z,
+                    c0=clip, D1=L2deriv)$root)
+    })
+
+setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
+                                  neighbor = "ContNeighborhood",
+                                  biastype = "asymmetricBias"),
+    function(L2deriv, neighbor, biastype = asymmetricBias(), clip, cent, tol.z, symm, trafo){
+        nu1 <- nu(biastype)[1]
+        nu2 <- nu(biastype)[2]
+
+        z.fct <- function(z, c0, D1){
+            return(c0/nu2 + (z-c0/nu1)*p(D1)(z-c0/nu1) -
+                   (z+c0/nu2)*p(D1)(z+c0/nu2) + m1df(D1, z+c0/nu2) -
+                   m1df(D1, z-c0/nu1))
+        }
+        lower <- q(L2deriv)(getdistrOption("TruncQuantile"))
+        upper <- q(L2deriv)(1-getdistrOption("TruncQuantile"))
+
+        return(uniroot(z.fct, lower = lower, upper = upper, tol = tol.z,
+                    c0=clip, D1=L2deriv)$root)
     })

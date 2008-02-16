@@ -28,7 +28,7 @@ rarely called directly. It is used to compute optimally robust ICs.
 <h3>Usage</h3>
 
 <pre>
-getFixClip(clip, Distr, risk, neighbor, ...)
+getFixClip(clip, Distr, risk, neighbor,  ...)
 
 ## S4 method for signature 'numeric, Norm, fiUnOvShoot,
 ##   ContNeighborhood':
@@ -96,11 +96,20 @@ Bayreuth: Dissertation.
 <h3>See Also</h3>
 
 <p>
-<code><a href="ContIC-class.html">ContIC-class</a></code>, <code><a href="TotalVarIC-class.html">TotalVarIC-class</a></code>
+<code><a onclick="findlink('RobAStBase', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, <code><a onclick="findlink('RobAStBase', 'TotalVarIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">TotalVarIC-class</a></code>
 </p>
 
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
 
-<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
 
 </body></html>

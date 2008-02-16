@@ -1,0 +1,95 @@
+installing R.css in C:/rtest/RobASt/pkg/ROptEst.Rcheck
+
+
+---------- Making package ROptEst ------------
+  adding build stamp to DESCRIPTION
+  installing NAMESPACE file and metadata
+  installing R files
+  installing inst files
+  preparing package ROptEst for lazy loading
+Loading required package: distr
+Warning: package 'distr' was built under R version 2.6.1
+Loading required package: startupmsg
+:startupmsg> Utilities for start-up messages (version 0.5)
+
+:startupmsg> For more information see ?"startupmsg", NEWS("startupmsg")
+:startupmsg> 
+
+:distr> Object orientated implementation of distributions (version 2.0)
+
+:distr> Attention: Arithmetics on distribution objects are understood as
+:distr> operations on corresponding random variables (r.v.s); see distrARITH().
+:distr> Some functions from package 'stats' are intentionally masked
+:distr> ---see distrMASK().
+:distr> Note that global options are controlled by distroptions()
+:distr> ---c.f. ?"distroptions".
+
+:distr> For more information see ?"distr", NEWS("distr"), as well as
+:distr>   http://distr.r-forge.r-project.org/
+:distr> Package "distrDoc" provides a vignette to this package as well as
+:distr> to several extension packages; try vignette("distr").
+:distr> 
+
+Loading required package: distrEx
+Loading required package: evd
+:distrEx> Extensions of package distr (version 2.0)
+
+:distrEx> Note: Packages "e1071", "moments", "fBasics" should be attached
+:distrEx> /before/ package "distrEx". See distrExMASK().
+
+:distrEx> For more information see ?"distrEx", NEWS("distrEx"), as well as
+:distrEx>   http://distr.r-forge.r-project.org/
+:distrEx> Package "distrDoc" provides a vignette to this package as well as
+:distrEx> to several related packages; try vignette("distr").
+:distrEx> 
+
+Loading required package: distrMod
+Loading required package: RandVar
+:RandVar> Implementation of random variables (version 0.6.2)
+
+:RandVar> For more information see ?"RandVar", as well as
+:RandVar>   
+:RandVar> http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/RandVar.html
+:RandVar> This package also includes a vignette; try vignette("RandVar").
+:RandVar> 
+
+:distrMod> Object orientated implementation of probability models (version 2.0)
+
+:distrMod> For more information see ?"distrMod", as well as
+:distrMod>   http://distr.r-forge.r-project.org/
+:distrMod> Package "distrDoc" provides a vignette to this package as well as
+:distrMod> to several related packages; try vignette("distr").
+:distrMod> 
+
+Loading required package: RobAStBase
+  installing man source files
+  installing indices
+  installing help
+ >>> Building/Updating help pages for package 'ROptEst'
+     Formats: text html latex example chm 
+  getAsRisk                         text    html    latex
+  getBiasIC                         text    html    latex
+  getFiRisk                         text    html    latex
+  getFixClip                        text    html    latex
+  getFixRobIC                       text    html    latex
+  getIneffDiff                      text    html    latex
+  getInfCent                        text    html    latex
+  getInfClip                        text    html    latex
+  getInfGamma                       text    html    latex
+  getInfRobIC                       text    html    latex
+  getInfStand                       text    html    latex
+  getL1normL2deriv                  text    html    latex   example
+  getL2normL2deriv                  text    html    latex   example
+  getRiskIC                         text    html    latex
+  leastFavorableRadius              text    html    latex   example
+  locMEstimator                     text    html    latex
+  lowerCaseRadius                   text    html    latex   example
+  minmaxBias                        text    html    latex
+  optIC                             text    html    latex   example
+  optRisk                           text    html    latex   example
+  radiusMinimaxIC                   text    html    latex   example
+  trAsCov-class                     text    html    latex   example
+  trFiCov-class                     text    html    latex   example
+  adding MD5 sums
+
+* DONE (ROptEst)

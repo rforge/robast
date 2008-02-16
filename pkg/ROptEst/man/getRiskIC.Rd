@@ -5,10 +5,8 @@
 \alias{getRiskIC,IC,asCov,missing,L2ParamFamily-method}
 \alias{getRiskIC,IC,trAsCov,missing,missing-method}
 \alias{getRiskIC,IC,trAsCov,missing,L2ParamFamily-method}
-\alias{getRiskIC,IC,asBias,ContNeighborhood,missing-method}
-\alias{getRiskIC,IC,asBias,ContNeighborhood,L2ParamFamily-method}
-\alias{getRiskIC,IC,asBias,TotalVarNeighborhood,missing-method}
-\alias{getRiskIC,IC,asBias,TotalVarNeighborhood,L2ParamFamily-method}
+\alias{getRiskIC,IC,asBias,UncondNeighborhood,missing-method}
+\alias{getRiskIC,IC,asBias,UncondNeighborhood,L2ParamFamily-method}
 \alias{getRiskIC,IC,asMSE,UncondNeighborhood,missing-method}
 \alias{getRiskIC,IC,asMSE,UncondNeighborhood,L2ParamFamily-method}
 \alias{getRiskIC,TotalVarIC,asUnOvShoot,UncondNeighborhood,missing-method}
@@ -30,17 +28,13 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
 
 \S4method{getRiskIC}{IC,trAsCov,missing,L2ParamFamily}(IC, risk, L2Fam, tol = .Machine$double.eps^0.25)
 
-\S4method{getRiskIC}{IC,asBias,ContNeighborhood,missing}(IC, risk, neighbor, tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,missing}(IC, risk, neighbor, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
 
-\S4method{getRiskIC}{IC,asBias,ContNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
 
-\S4method{getRiskIC}{IC,asBias,TotalVarNeighborhood,missing}(IC, risk, neighbor, tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,missing}(IC, risk, neighbor, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
 
-\S4method{getRiskIC}{IC,asBias,TotalVarNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
-
-\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,missing}(IC, risk, neighbor, tol = .Machine$double.eps^0.25)
-
-\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
 
 \S4method{getRiskIC}{TotalVarIC,asUnOvShoot,UncondNeighborhood,missing}(IC, risk, neighbor)
 
@@ -54,6 +48,7 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{L2Fam}{ object of class \code{"L2ParamFamily"}. }
   \item{\dots}{ additional parameters }
+  \item{biastype}{ object of class \code{"BiasType"}. }
   \item{tol}{ the desired accuracy (convergence tolerance).}  
   \item{sampleSize}{ integer: sample size. }
   \item{Algo}{ "A" or "B". }
@@ -121,7 +116,7 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 \note{This generic function is still under construction.}
-\seealso{\code{\link{getRiskIC-methods}}, \code{\link{InfRobModel-class}}}
+\seealso{\code{\link{getRiskIC-methods}}, \code{\link[RobAStBase]{InfRobModel-class}}}
 %\examples{}
 \concept{influence curve}
 \keyword{}

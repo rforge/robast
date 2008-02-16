@@ -25,7 +25,7 @@ ContIC(name, CallL2Fam = call("L2ParamFamily"),
       parametric family. }
   \item{Curve}{ object of class \code{"EuclRandVarList"} }
   \item{Risks}{ object of class \code{"list"}: 
-      list of risks; cf. \code{\link{RiskType-class}}. }
+      list of risks; cf. \code{\link[distrMod]{RiskType-class}}. }
   \item{Infos}{ matrix of characters with two columns 
     named \code{method} and \code{message}: additional informations. }
   \item{clip}{ positive real: clipping bound. }

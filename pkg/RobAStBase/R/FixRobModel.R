@@ -1,5 +1,7 @@
 ## Generating function
-FixRobModel <- function(center = ParamFamily(), neighbor = ContNeighborhood()){
+FixRobModel <- function(center = ParamFamily(modifyParam = 
+                                        function(theta) Norm(mean = theta)), 
+                        neighbor = ContNeighborhood()){
     if(!is(neighbor, "UncondNeighborhood"))
         stop("'neighbor' is no unconditional neighborhood")
     if(any(neighbor@radius < 0 || neighbor@radius > 1))

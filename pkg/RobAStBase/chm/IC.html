@@ -1,0 +1,124 @@
+<html><head><title>Generating function for IC-class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>IC(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   IC">
+<param name="keyword" value=" Generating function for IC-class">
+</object>
+
+
+<h2>Generating function for IC-class</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generates an object of class <code>"IC"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+IC(name, Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}), 
+                                        Domain = Reals())), 
+   Risks, Infos, CallL2Fam = call("L2ParamFamily"))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+Object of class <code>"character"</code>. </td></tr>
+<tr valign="top"><td><code>CallL2Fam</code></td>
+<td>
+object of class <code>"call"</code>:
+creates an object of the underlying L2-differentiable 
+parametric family. </td></tr>
+<tr valign="top"><td><code>Curve</code></td>
+<td>
+object of class <code>"EuclRandVarList"</code>. </td></tr>
+<tr valign="top"><td><code>Risks</code></td>
+<td>
+object of class <code>"list"</code>: 
+list of risks; cf. <code><a onclick="findlink('distrMod', 'RiskType-class.html')" style="text-decoration: underline; color: blue; cursor: hand">RiskType-class</a></code>. </td></tr>
+<tr valign="top"><td><code>Infos</code></td>
+<td>
+matrix of characters with two columns 
+named <code>method</code> and <code>message</code>: additional informations. </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"IC"</code></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Hampel et al. (1986) <EM>Robust Statistics</EM>. 
+The Approach Based on Influence Functions. New York: Wiley.
+</p>
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="IC-class.html">IC-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+IC1 &lt;- IC()
+plot(IC1)
+
+## The function is currently defined as
+IC &lt;- function(name, Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x})), 
+               Domain = Reals()), Risks, Infos, CallL2Fam = call("L2ParamFamily")){
+    if(missing(name))
+        name &lt;- "square integrable (partial) influence curve"
+    if(missing(Risks))
+        Risks &lt;- list()
+    if(missing(Infos))
+        Infos &lt;- matrix(c(character(0),character(0)), ncol=2,
+                     dimnames=list(character(0), c("method", "message")))
+    return(new("IC", name = name, Curve = Curve, Risks = Risks,
+               Infos = Infos, CallL2Fam = CallL2Fam))
+}
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

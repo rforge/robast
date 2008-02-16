@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Generic Function for the Computation of the Optimal Centering Constant/Lower Clipping Bound</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="../../R.css">
+</head><body>
+
+<table width="100%" summary="page for getInfCent {ROptEst}"><tr><td>getInfCent {ROptEst}</td><td align="right">R Documentation</td></tr></table>
+<h2>Generic Function for the Computation of the Optimal Centering Constant/Lower Clipping Bound</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for the computation of the optimal centering constant
+(contamination neighborhoods) respectively, of the optimal lower clipping
+bound (total variation neighborhood).
+This function is rarely called directly. It is used to 
+compute optimally robust ICs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+getInfCent(L2deriv, neighbor, biastype, ...)
+
+## S4 method for signature 'UnivariateDistribution,
+##   ContNeighborhood, BiasType':
+getInfCent(L2deriv, 
+     neighbor, biastype = symmetricBias(), clip, cent, tol.z, symm, trafo)
+
+## S4 method for signature 'UnivariateDistribution,
+##   TotalVarNeighborhood, BiasType':
+getInfCent(L2deriv, 
+     neighbor, biastype = symmetricBias(), clip, cent, tol.z, symm, trafo)
+
+## S4 method for signature 'RealRandVariable,
+##   ContNeighborhood, BiasType':
+getInfCent(L2deriv, 
+     neighbor, biastype = symmetricBias(), z.comp, stand, cent, clip)
+
+## S4 method for signature 'UnivariateDistribution,
+##   ContNeighborhood, onesidedBias':
+getInfCent(L2deriv, 
+     neighbor, biastype = positiveBias(), clip, cent, tol.z, symm, trafo)
+
+## S4 method for signature 'UnivariateDistribution,
+##   ContNeighborhood, asymmetricBias':
+getInfCent(L2deriv, 
+     neighbor, biastype = asymmetricBias(), clip, cent, tol.z, symm, trafo)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>L2deriv</code></td>
+<td>
+L2-derivative of some L2-differentiable family 
+of probability measures. </td></tr>
+<tr valign="top"><td><code>neighbor</code></td>
+<td>
+object of class <code>"Neighborhood"</code>. </td></tr>
+<tr valign="top"><td><code>biastype</code></td>
+<td>
+object of class <code>"BiasType"</code> </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional parameters. </td></tr>
+<tr valign="top"><td><code>clip</code></td>
+<td>
+optimal clipping bound. </td></tr>
+<tr valign="top"><td><code>cent</code></td>
+<td>
+optimal centering constant. </td></tr>
+<tr valign="top"><td><code>stand</code></td>
+<td>
+standardizing matrix. </td></tr>
+<tr valign="top"><td><code>tol.z</code></td>
+<td>
+the desired accuracy (convergence tolerance). </td></tr>
+<tr valign="top"><td><code>symm</code></td>
+<td>
+logical: indicating symmetry of <code>L2deriv</code>. </td></tr>
+<tr valign="top"><td><code>trafo</code></td>
+<td>
+matrix: transformation of the parameter. </td></tr>
+<tr valign="top"><td><code>z.comp</code></td>
+<td>
+logical vector: indication which components of the 
+centering constant have to be computed. </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+The optimal centering constant is computed.</p>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "BiasType"</dt><dd>computation of optimal centering constant for symmetric bias. </dd>
+
+
+<dt>L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", biastype = "BiasType"</dt><dd>computation of optimal lower clipping bound for symmetric bias. </dd>
+
+
+<dt>L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", biastype = "BiasType"</dt><dd>computation of optimal centering constant for symmetric bias. </dd>
+
+
+<dt>L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "onesidedBias"</dt><dd>computation of optimal centering constant for onesided bias. </dd>
+
+
+<dt>L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "asymmetricBias"</dt><dd>computation of optimal centering constant for asymmetric bias. </dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@uni-bayreuth.de">Peter.Ruckdeschel@uni-bayreuth.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+Mathematical Methods in Statistics <EM>14</EM>(1), 105-131.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="../../RobAStBase/html/ContIC-class.html">ContIC-class</a></code>, <code><a href="../../RobAStBase/html/TotalVarIC-class.html">TotalVarIC-class</a></code>
+</p>
+
+
+
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

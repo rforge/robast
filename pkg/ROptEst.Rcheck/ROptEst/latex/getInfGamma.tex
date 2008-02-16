@@ -1,0 +1,117 @@
+\HeaderA{getInfGamma}{Generic Function for the Computation of the Optimal Clipping Bound}{getInfGamma}
+\aliasA{getInfGamma,RealRandVariable,asMSE,ContNeighborhood,BiasType-method}{getInfGamma}{getInfGamma,RealRandVariable,asMSE,ContNeighborhood,BiasType.Rdash.method}
+\aliasA{getInfGamma,UnivariateDistribution,asGRisk,TotalVarNeighborhood,BiasType-method}{getInfGamma}{getInfGamma,UnivariateDistribution,asGRisk,TotalVarNeighborhood,BiasType.Rdash.method}
+\aliasA{getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,asymmetricBias-method}{getInfGamma}{getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,asymmetricBias.Rdash.method}
+\aliasA{getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,BiasType-method}{getInfGamma}{getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,BiasType.Rdash.method}
+\aliasA{getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,onesidedBias-method}{getInfGamma}{getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,onesidedBias.Rdash.method}
+\aliasA{getInfGamma,UnivariateDistribution,asUnOvShoot,ContNeighborhood,BiasType-method}{getInfGamma}{getInfGamma,UnivariateDistribution,asUnOvShoot,ContNeighborhood,BiasType.Rdash.method}
+\aliasA{getInfGamma-methods}{getInfGamma}{getInfGamma.Rdash.methods}
+\begin{Description}\relax
+Generic function for the computation of the optimal clipping bound.
+This function is rarely called directly. It is called by \code{getInfClip} 
+to compute optimally robust ICs.
+\end{Description}
+\begin{Usage}
+\begin{verbatim}
+getInfGamma(L2deriv, risk, neighbor, biastype, ...)
+
+## S4 method for signature 'UnivariateDistribution, asMSE,
+##   ContNeighborhood, BiasType':
+getInfGamma(L2deriv, 
+     risk, neighbor, biastype = symmetricBias(), cent, clip)
+
+## S4 method for signature 'UnivariateDistribution,
+##   asGRisk, TotalVarNeighborhood, BiasType':
+getInfGamma(L2deriv, 
+     risk, neighbor, biastype = symmetricBias(), cent, clip)
+
+## S4 method for signature 'RealRandVariable, asMSE,
+##   ContNeighborhood, BiasType':
+getInfGamma(L2deriv, 
+     risk, neighbor, biastype = symmetricBias(), Distr, stand, cent, clip)
+
+## S4 method for signature 'UnivariateDistribution,
+##   asUnOvShoot, ContNeighborhood, BiasType':
+getInfGamma(L2deriv, 
+     risk, neighbor, biastype = symmetricBias(), cent, clip)
+
+## S4 method for signature 'UnivariateDistribution, asMSE,
+##   ContNeighborhood, onesidedBias':
+getInfGamma(L2deriv, 
+     risk, neighbor, biastype = positiveBias(), cent, clip)
+
+## S4 method for signature 'UnivariateDistribution, asMSE,
+##   ContNeighborhood, asymmetricBias':
+getInfGamma(L2deriv, 
+    risk, neighbor, biastype  = asymmetricBias(), cent, clip)
+\end{verbatim}
+\end{Usage}
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{L2deriv}] L2-derivative of some L2-differentiable family 
+of probability measures. 
+\item[\code{risk}] object of class \code{"RiskType"}. 
+\item[\code{neighbor}] object of class \code{"Neighborhood"}. 
+\item[\code{biastype}] object of class \code{"BiasType"} 
+\item[\code{...}] additional parameters 
+\item[\code{cent}] optimal centering constant. 
+\item[\code{clip}] optimal clipping bound. 
+\item[\code{stand}] standardizing matrix. 
+\item[\code{Distr}] object of class \code{"Distribution"}. 
+\end{ldescription}
+\end{Arguments}
+\begin{Details}\relax
+The function is used in case of asymptotic G-risks; confer
+Ruckdeschel and Rieder (2004).
+\end{Details}
+\begin{Section}{Methods}
+\describe{
+\item[L2deriv = "UnivariateDistribution", risk = "asMSE", 
+neighbor = "ContNeighborhood", 
+biastype = "BiasType"] used by \code{getInfClip} for symmetric bias. 
+
+\item[L2deriv = "UnivariateDistribution", risk = "asGRisk", 
+neighbor = "TotalVarNeighborhood", 
+biastype = "BiasType"] used by \code{getInfClip} for symmetric bias. 
+
+\item[L2deriv = "RealRandVariable", risk = "asMSE", 
+neighbor = "ContNeighborhood", 
+biastype = "BiasType"] used by \code{getInfClip} for symmetric bias. 
+
+\item[L2deriv = "UnivariateDistribution", risk = "asUnOvShoot", 
+neighbor = "ContNeighborhood", 
+biastype = "BiasType"] used by \code{getInfClip} for symmetric bias. 
+
+\item[L2deriv = "UnivariateDistribution", risk = "asMSE", 
+neighbor = "ContNeighborhood", 
+biastype = "onesidedBias"] used by \code{getInfClip} for onesided bias. 
+
+\item[L2deriv = "UnivariateDistribution", risk = "asMSE", 
+neighbor = "ContNeighborhood", 
+biastype = "asymmetricBias"] used by \code{getInfClip} for asymmetric bias. 
+}
+\end{Section}
+\begin{Author}\relax
+Matthias Kohl \email{Matthias.Kohl@stamats.de},
+Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}
+\end{Author}
+\begin{References}\relax
+Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. \bold{8}: 106--115.
+
+Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
+
+Ruckdeschel, P. and Rieder, H. (2004) Optimal Influence Curves for
+General Loss Functions. Statistics \& Decisions \emph{22}, 201-223.
+
+Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+Mathematical Methods in Statistics \emph{14}(1), 105-131.
+
+Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
+Bayreuth: Dissertation.
+\end{References}
+\begin{SeeAlso}\relax
+\code{\LinkA{asGRisk-class}{asGRisk.Rdash.class}}, \code{\LinkA{asMSE-class}{asMSE.Rdash.class}},
+\code{\LinkA{asUnOvShoot-class}{asUnOvShoot.Rdash.class}}, \code{\LinkA{ContIC-class}{ContIC.Rdash.class}}, 
+\code{\LinkA{TotalVarIC-class}{TotalVarIC.Rdash.class}}
+\end{SeeAlso}
+

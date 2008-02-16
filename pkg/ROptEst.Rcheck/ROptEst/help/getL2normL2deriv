@@ -1,0 +1,33 @@
+getL2normL2deriv           package:ROptEst           R Documentation
+
+_C_a_l_c_u_l_a_t_i_o_n _o_f _L_2 _n_o_r_m _o_f _L_2_d_e_r_i_v_a_t_i_v_e
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Function to calculate the L2 norm of the L2derivative in a smooth
+     parametric model.
+
+_U_s_a_g_e:
+
+     getL2normL2deriv(aFinfo, cent, ...)
+
+_A_r_g_u_m_e_n_t_s:
+
+  aFinfo: trace of the Fisher information
+
+    cent: centering
+
+     ...: further arguments (not used at the moment)
+
+_V_a_l_u_e:
+
+     L2 norm of the L2derivative
+
+_A_u_t_h_o_r(_s):
+
+     Peter Ruckdeschel Peter.Ruckdeschel@uni-bayreuth.de
+
+_E_x_a_m_p_l_e_s:
+
+     ##
+

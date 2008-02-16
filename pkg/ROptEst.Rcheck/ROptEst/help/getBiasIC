@@ -1,0 +1,100 @@
+getBiasIC              package:ROptEst              R Documentation
+
+_G_e_n_e_r_i_c _f_u_n_c_t_i_o_n _f_o_r _t_h_e _c_o_m_p_u_t_a_t_i_o_n _o_f _t_h_e _a_s_y_m_p_t_o_t_i_c _b_i_a_s _f_o_r _a_n _I_C
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Generic function for the computation of the asymptotic bias for an
+     IC.
+
+_U_s_a_g_e:
+
+     getBiasIC(IC, neighbor, L2Fam, biastype, ...)
+
+     ## S4 method for signature 'IC, ContNeighborhood, missing,
+     ##   BiasType':
+     getBiasIC(IC, neighbor, 
+               biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+
+     ## S4 method for signature 'IC, ContNeighborhood,
+     ##   L2ParamFamily, BiasType':
+     getBiasIC(IC, neighbor, 
+               L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+
+     ## S4 method for signature 'IC, TotalVarNeighborhood,
+     ##   missing, BiasType':
+     getBiasIC(IC, neighbor, 
+               biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+
+     ## S4 method for signature 'IC, TotalVarNeighborhood,
+     ##   L2ParamFamily, BiasType':
+     getBiasIC(IC, neighbor, 
+               L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+
+_A_r_g_u_m_e_n_t_s:
+
+      IC: object of class '"InfluenceCurve"' 
+
+neighbor: object of class '"Neighborhood"'. 
+
+   L2Fam: object of class '"L2ParamFamily"'. 
+
+biastype: object of class '"BiasType"'. 
+
+     ...: additional parameters 
+
+     tol: the desired accuracy (convergence tolerance).
+
+_D_e_t_a_i_l_s:
+
+     To make sure that the results are valid, it is recommended to
+     include an additional check of the IC properties of 'IC'  using
+     'checkIC'.
+
+_V_a_l_u_e:
+
+     The asymptotic bias of an IC is computed.
+
+_M_e_t_h_o_d_s:
+
+
+     _I_C = "_I_C", _r_i_s_k = "_a_s_B_i_a_s", _n_e_i_g_h_b_o_r = "_C_o_n_t_N_e_i_g_h_b_o_r_h_o_o_d", _L_2_F_a_m = "_m_i_s_s_i_n_g",  _b_i_a_s_t_y_p_e = "_B_i_a_s_T_y_p_e" 
+          asymptotic bias of 'IC' in case of convex contamination
+          neighborhoods  and symmetric bias. 
+
+     _I_C = "_I_C", _r_i_s_k = "_a_s_B_i_a_s", _n_e_i_g_h_b_o_r = "_C_o_n_t_N_e_i_g_h_b_o_r_h_o_o_d", _L_2_F_a_m = "_m_i_s_s_i_n_g",  _b_i_a_s_t_y_p_e = "_B_i_a_s_T_y_p_e" 
+          asymptotic bias of 'IC' under 'L2Fam'  in case of convex
+          contamination neighborhoods and symmetric bias. 
+
+     _I_C = "_I_C", _r_i_s_k = "_a_s_B_i_a_s", _n_e_i_g_h_b_o_r = "_T_o_t_a_l_V_a_r_N_e_i_g_h_b_o_r_h_o_o_d", _L_2_F_a_m = "_m_i_s_s_i_n_g",  _b_i_a_s_t_y_p_e = "_B_i_a_s_T_y_p_e" 
+          asymptotic bias of 'IC' in case of total variation
+          neighborhoods  and symmetric bias. 
+
+     _I_C = "_I_C", _r_i_s_k = "_a_s_B_i_a_s", _n_e_i_g_h_b_o_r = "_T_o_t_a_l_V_a_r_N_e_i_g_h_b_o_r_h_o_o_d", _L_2_F_a_m = "_m_i_s_s_i_n_g",  _b_i_a_s_t_y_p_e = "_B_i_a_s_T_y_p_e" 
+          asymptotic bias of 'IC' under 'L2Fam'  in case of total
+          variation neighborhoods and symmetric bias. 
+
+_N_o_t_e:
+
+     This generic function is still under construction.
+
+_A_u_t_h_o_r(_s):
+
+     Matthias Kohl Matthias.Kohl@stamats.de, Peter Ruckdeschel
+     Peter.Ruckdeschel@uni-bayreuth.de
+
+_R_e_f_e_r_e_n_c_e_s:
+
+     Rieder, H. (1994) _Robust Asymptotic Statistics_. New York:
+     Springer.
+
+     Kohl, M. (2005) _Numerical Contributions to the Asymptotic Theory
+     of Robustness_.  Bayreuth: Dissertation.
+
+     Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence
+     Curves. Mathematical Methods in Statistics _14_(1), 105-131.
+
+_S_e_e _A_l_s_o:
+
+     'getRiskIC-methods', 'InfRobModel-class'
+

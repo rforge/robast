@@ -1,0 +1,102 @@
+\HeaderA{minmaxBias}{Generic Function for the Computation of Bias-Optimally Robust ICs}{minmaxBias}
+\aliasA{minmaxBias,RealRandVariable,ContNeighborhood,BiasType-method}{minmaxBias}{minmaxBias,RealRandVariable,ContNeighborhood,BiasType.Rdash.method}
+\aliasA{minmaxBias,UnivariateDistribution,ContNeighborhood,asymmetricBias-method}{minmaxBias}{minmaxBias,UnivariateDistribution,ContNeighborhood,asymmetricBias.Rdash.method}
+\aliasA{minmaxBias,UnivariateDistribution,ContNeighborhood,BiasType-method}{minmaxBias}{minmaxBias,UnivariateDistribution,ContNeighborhood,BiasType.Rdash.method}
+\aliasA{minmaxBias,UnivariateDistribution,TotalVarNeighborhood,BiasType-method}{minmaxBias}{minmaxBias,UnivariateDistribution,TotalVarNeighborhood,BiasType.Rdash.method}
+\aliasA{minmaxBias-methods}{minmaxBias}{minmaxBias.Rdash.methods}
+\begin{Description}\relax
+Generic function for the computation of bias-optimally robust ICs 
+in case of infinitesimal robust models. This function is 
+rarely called directly.
+\end{Description}
+\begin{Usage}
+\begin{verbatim}
+minmaxBias(L2deriv, neighbor, biastype, ...)
+
+## S4 method for signature 'UnivariateDistribution,
+##   ContNeighborhood, BiasType':
+minmaxBias(L2deriv, neighbor, biastype = symmetricBias(), symm, Finfo, trafo, 
+             upper, maxiter, tol, warn)
+
+## S4 method for signature 'UnivariateDistribution,
+##   ContNeighborhood, asymmetricBias':
+minmaxBias(L2deriv, neighbor, biastype = asymmetricBias(), symm, Finfo, trafo, 
+             upper, maxiter, tol, warn)
+
+## S4 method for signature 'UnivariateDistribution,
+##   TotalVarNeighborhood, BiasType':
+minmaxBias(L2deriv, neighbor, biastype = symmetricBias(), symm, Finfo, trafo, 
+             upper, maxiter, tol, warn)
+
+## S4 method for signature 'RealRandVariable,
+##   ContNeighborhood, BiasType':
+minmaxBias(L2deriv, neighbor, biastype = symmetricBias(), Distr, DistrSymm, L2derivSymm, 
+             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
+
+\end{verbatim}
+\end{Usage}
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{L2deriv}] L2-derivative of some L2-differentiable family 
+of probability measures. 
+\item[\code{neighbor}] object of class \code{"Neighborhood"}. 
+\item[\code{biastype}] object of class \code{"BiasType"}. 
+\item[\code{...}] additional parameters. 
+\item[\code{Distr}] object of class \code{"Distribution"}. 
+\item[\code{symm}] logical: indicating symmetry of \code{L2deriv}. 
+\item[\code{DistrSymm}] object of class \code{"DistributionSymmetry"}. 
+\item[\code{L2derivSymm}] object of class \code{"FunSymmList"}. 
+\item[\code{L2derivDistrSymm}] object of class \code{"DistrSymmList"}. 
+\item[\code{Finfo}] Fisher information matrix. 
+\item[\code{z.start}] initial value for the centering constant. 
+\item[\code{A.start}] initial value for the standardizing matrix. 
+\item[\code{trafo}] matrix: transformation of the parameter. 
+\item[\code{upper}] upper bound for the optimal clipping bound. 
+\item[\code{maxiter}] the maximum number of iterations. 
+\item[\code{tol}] the desired accuracy (convergence tolerance).
+\item[\code{warn}] logical: print warnings. 
+\end{ldescription}
+\end{Arguments}
+\begin{Value}
+The bias-optimally robust IC is computed.
+\end{Value}
+\begin{Section}{Methods}
+\describe{
+\item[L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", 
+biastype = "BiasType"] computes the bias optimal influence curve for symmetric bias for L2 differentiable 
+parametric families with unknown one-dimensional parameter. 
+
+\item[L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", 
+biastype = "asymmetricBias"] computes the bias optimal influence curve for asymmetric bias for L2 differentiable 
+parametric families with unknown one-dimensional parameter. 
+
+\item[L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", 
+biastype = "BiasType"] computes the bias optimal influence curve for symmetric bias for L2 differentiable 
+parametric families with unknown one-dimensional parameter. 
+
+\item[L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", 
+biastype = "BiasType"] computes the bias optimal influence curve for symmetric bias for L2 differentiable 
+parametric families with unknown \eqn{k}{}-dimensional parameter 
+(\eqn{k > 1}{}) where the underlying distribution is univariate. 
+
+}
+\end{Section}
+\begin{Author}\relax
+Matthias Kohl \email{Matthias.Kohl@stamats.de},
+Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}
+\end{Author}
+\begin{References}\relax
+Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. \bold{8}: 106--115.
+
+Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
+
+Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+Mathematical Methods in Statistics \emph{14}(1), 105-131.
+
+Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
+Bayreuth: Dissertation.
+\end{References}
+\begin{SeeAlso}\relax
+\code{\LinkA{InfRobModel-class}{InfRobModel.Rdash.class}}
+\end{SeeAlso}
+

@@ -1,0 +1,70 @@
+\HeaderA{getFiRisk}{Generic Function for Computation of Finite-Sample Risks}{getFiRisk}
+\aliasA{getFiRisk,fiUnOvShoot,Norm,ContNeighborhood-method}{getFiRisk}{getFiRisk,fiUnOvShoot,Norm,ContNeighborhood.Rdash.method}
+\aliasA{getFiRisk,fiUnOvShoot,Norm,TotalVarNeighborhood-method}{getFiRisk}{getFiRisk,fiUnOvShoot,Norm,TotalVarNeighborhood.Rdash.method}
+\aliasA{getFiRisk-methods}{getFiRisk}{getFiRisk.Rdash.methods}
+\begin{Description}\relax
+Generic function for the computation of finite-sample risks.
+This function is rarely called directly. It is used by 
+other functions.
+\end{Description}
+\begin{Usage}
+\begin{verbatim}
+getFiRisk(risk, Distr, neighbor, ...)
+
+## S4 method for signature 'fiUnOvShoot, Norm,
+##   ContNeighborhood':
+getFiRisk(risk, Distr, 
+          neighbor, clip, stand, sampleSize, Algo, cont)
+
+## S4 method for signature 'fiUnOvShoot, Norm,
+##   TotalVarNeighborhood':
+getFiRisk(risk, Distr, 
+          neighbor, clip, stand, sampleSize, Algo, cont)
+\end{verbatim}
+\end{Usage}
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{risk}] object of class \code{"RiskType"}. 
+\item[\code{Distr}] object of class \code{"Distribution"}. 
+\item[\code{neighbor}] object of class \code{"Neighborhood"}. 
+\item[\code{...}] additional parameters. 
+\item[\code{clip}] positive real: clipping bound 
+\item[\code{stand}] standardizing constant/matrix. 
+\item[\code{sampleSize}] integer: sample size. 
+\item[\code{Algo}] "A" or "B". 
+\item[\code{cont}] "left" or "right". 
+\end{ldescription}
+\end{Arguments}
+\begin{Details}\relax
+The computation of the finite-sample under-/overshoot risk
+is based on FFT. For more details we refer to Section 11.3 of Kohl (2005).
+\end{Details}
+\begin{Value}
+The finite-sample risk is computed.
+\end{Value}
+\begin{Section}{Methods}
+\describe{
+\item[risk = "fiUnOvShoot", Distr = "Norm", neighbor = "ContNeighborhood"] computes finite-sample under-/overshoot risk in methods for 
+function \code{getFixRobIC}. 
+
+\item[risk = "fiUnOvShoot", Distr = "Norm", neighbor = "TotalVarNeighborhood"] computes finite-sample under-/overshoot risk in methods for 
+function \code{getFixRobIC}. 
+}
+\end{Section}
+\begin{Author}\relax
+Matthias Kohl \email{Matthias.Kohl@stamats.de}
+\end{Author}
+\begin{References}\relax
+Huber, P.J. (1968) Robust Confidence Limits. Z. Wahrscheinlichkeitstheor.
+Verw. Geb. \bold{10}:269--278.
+
+Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
+Bayreuth: Dissertation.
+
+Ruckdeschel, P. and Kohl, M. (2005) Computation of the Finite Sample Risk 
+of M-estimators on Neighborhoods.
+\end{References}
+\begin{SeeAlso}\relax
+\code{\LinkA{fiRisk-class}{fiRisk.Rdash.class}}
+\end{SeeAlso}
+

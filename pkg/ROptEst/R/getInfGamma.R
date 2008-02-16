@@ -3,8 +3,9 @@
 ###############################################################################
 setMethod("getInfGamma", signature(L2deriv = "UnivariateDistribution",
                                    risk = "asMSE", 
-                                   neighbor = "ContNeighborhood"),
-    function(L2deriv, risk, neighbor, cent, clip){
+                                   neighbor = "ContNeighborhood",
+                                   biastype = "BiasType"),
+    function(L2deriv, risk, neighbor, biastype = symmetricBias(), cent, clip){
         c1 <- cent - clip
         c2 <- cent + clip
         return(m1df(L2deriv, c2) + m1df(L2deriv, c1) 
@@ -16,14 +17,17 @@ setMethod("getInfGamma", signature(L2deriv = "UnivariateDistribution",
 ###############################################################################
 setMethod("getInfGamma", signature(L2deriv = "UnivariateDistribution",
                                    risk = "asGRisk", 
-                                   neighbor = "TotalVarNeighborhood"),
-    function(L2deriv, risk, neighbor, cent, clip){
+                                   neighbor = "TotalVarNeighborhood",
+                                   biastype = "BiasType"),
+    function(L2deriv, risk, neighbor, biastype = symmetricBias(), cent, clip){
         return(m1df(L2deriv, cent+clip) + (cent+clip)*(1-p(L2deriv)(cent+clip)))
     })
+
 setMethod("getInfGamma", signature(L2deriv = "RealRandVariable",
                                    risk = "asMSE", 
-                                   neighbor = "ContNeighborhood"),
-    function(L2deriv, risk, neighbor, Distr, stand, cent, clip){
+                                   neighbor = "ContNeighborhood",
+                                   biastype = "BiasType"),
+    function(L2deriv, risk, neighbor, biastype = symmetricBias(), Distr, stand, cent, clip){
         integrandG <- function(x, L2, stand, cent, clip){ 
             X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
             Y <- apply(X, 2, "%*%", t(stand)) 
@@ -41,7 +45,42 @@ setMethod("getInfGamma", signature(L2deriv = "RealRandVariable",
 ###############################################################################
 setMethod("getInfGamma", signature(L2deriv = "UnivariateDistribution",
                                    risk = "asUnOvShoot", 
-                                   neighbor = "ContNeighborhood"),
-    function(L2deriv, risk, neighbor, cent, clip){
+                                   neighbor = "ContNeighborhood",
+                                   biastype = "BiasType"),
+    function(L2deriv, risk, neighbor, biastype = symmetricBias(), cent, clip){
         return(2*(m1df(L2deriv, cent+clip) + (cent+clip)*(1-p(L2deriv)(cent+clip))))
     })
+
+###############################################################################
+## gamma in case of asymptotic one-sided convex asymptotic risk
+###############################################################################
+setMethod("getInfGamma", signature(L2deriv = "UnivariateDistribution",
+                                   risk = "asMSE",
+                                   neighbor = "ContNeighborhood",
+                                   biastype = "onesidedBias"),
+    function(L2deriv, risk, neighbor, biastype = positiveBias(), cent, clip){
+        c1 <- cent - clip 
+        c2 <- cent + clip 
+        if (sign(biastype)<0) 
+           return (m1df(L2deriv, c1) -c1*p(L2deriv)(c1))
+        else 
+           return (m1df(L2deriv, c2) +c2*(1-p(L2deriv)(c2)))
+    })
+
+###############################################################################
+## gamma in case of a asymmetric asymptotic risk
+###############################################################################
+setMethod("getInfGamma", signature(L2deriv = "UnivariateDistribution",
+                                   risk = "asMSE",
+                                   neighbor = "ContNeighborhood",
+                                   biastype = "asymmetricBias"),
+    function(L2deriv, risk, neighbor, biastype = asymmetricBias(), cent, clip){
+        nu1 <- nu(biastype)[1]
+        nu2 <- nu(biastype)[2]
+
+        c1 <- cent - clip/nu1
+        c2 <- cent + clip/nu2
+        return(m1df(L2deriv, c2)/nu2 + m1df(L2deriv, c1)/nu1
+                    - c1*p(L2deriv)(c1)/nu1 + c2*(1-p(L2deriv)(c2))/nu2)
+    })
+

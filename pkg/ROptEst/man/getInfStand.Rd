@@ -1,9 +1,11 @@
 \name{getInfStand}
 \alias{getInfStand}
 \alias{getInfStand-methods}
-\alias{getInfStand,UnivariateDistribution,ContNeighborhood-method}
-\alias{getInfStand,UnivariateDistribution,TotalVarNeighborhood-method}
-\alias{getInfStand,RealRandVariable,ContNeighborhood-method}
+\alias{getInfStand,UnivariateDistribution,ContNeighborhood,BiasType-method}
+\alias{getInfStand,UnivariateDistribution,TotalVarNeighborhood,BiasType-method}
+\alias{getInfStand,RealRandVariable,ContNeighborhood,BiasType-method}
+\alias{getInfStand,UnivariateDistribution,ContNeighborhood,onesidedBias-method}
+\alias{getInfStand,UnivariateDistribution,ContNeighborhood,asymmetricBias-method}
 
 \title{ Generic Function for the Computation of the Standardizing Matrix }
 \description{
@@ -12,18 +14,28 @@
   is rarely called directly. It is used to compute optimally robust ICs.
 }
 \usage{
-getInfStand(L2deriv, neighbor, ...)
+getInfStand(L2deriv, neighbor, biastype, ...)
 
-\S4method{getInfStand}{UnivariateDistribution,ContNeighborhood}(L2deriv, neighbor, clip, cent, trafo)
+\S4method{getInfStand}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, 
+     neighbor, biastype = symmetricBias(), clip, cent, trafo)
 
-\S4method{getInfStand}{UnivariateDistribution,TotalVarNeighborhood}(L2deriv, neighbor, clip, cent, trafo)
+\S4method{getInfStand}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(L2deriv, 
+     neighbor, biastype = symmetricBias(), clip, cent, trafo)
 
-\S4method{getInfStand}{UnivariateDistribution,ContNeighborhood}(L2deriv, neighbor, Distr, A.comp, stand, clip, cent, trafo)
+\S4method{getInfStand}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, 
+     neighbor, biastype = symmetricBias(), Distr, A.comp, stand, clip, cent, trafo)
+
+\S4method{getInfStand}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, 
+     neighbor, biastype = positiveBias(), clip, cent, trafo)
+
+\S4method{getInfStand}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, 
+     neighbor, biastype = asymmetricBias(), clip, cent, trafo)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
     of probability measures. }
   \item{neighbor}{ object of class \code{"Neighborhood"} }
+  \item{biastype}{ object of class \code{"BiasType"} }
   \item{\dots}{ additional parameters }
   \item{clip}{ optimal clipping bound. }
   \item{cent}{ optimal centering constant. }
@@ -37,24 +49,39 @@ getInfStand(L2deriv, neighbor, ...)
 \value{The standardizing matrix is computed.}
 \section{Methods}{
 \describe{
-  \item{L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood"}{ 
-    computes standardizing matrix. }
+  \item{L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", 
+        biastype = "BiasType"}{ 
+    computes standardizing matrix for symmetric bias. }
 
-  \item{L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood"}{ 
-    computes standardizing matrix. }
+  \item{L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", 
+        biastype = "BiasType"}{ 
+    computes standardizing matrix for symmetric bias. }
 
-  \item{L2deriv = "RealRandVariable", neighbor = "ContNeighborhood"}{ 
-    computes standardizing matrix. }
+  \item{L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", 
+        biastype = "BiasType"}{ 
+    computes standardizing matrix for symmetric bias. }
+
+  \item{L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", 
+        biastype = "onesidedBias"}{ 
+    computes standardizing matrix for onesided bias. }
+
+  \item{L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", 
+        biastype = "asymmetricBias"}{ 
+    computes standardizing matrix for asymmetric bias. }
 }}
 \references{
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 
+  Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+  Mathematical Methods in Statistics \emph{14}(1), 105-131.
+
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 }
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de},
+        Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}}
 %\note{}
-\seealso{\code{\link{ContIC-class}}, \code{\link{TotalVarIC-class}}}
+\seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link[RobAStBase]{TotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
 \keyword{}

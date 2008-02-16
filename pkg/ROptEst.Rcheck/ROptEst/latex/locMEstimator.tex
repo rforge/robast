@@ -1,0 +1,49 @@
+\HeaderA{locMEstimator}{Generic function for the computation of location M estimators}{locMEstimator}
+\aliasA{locMEstimator,numeric,InfluenceCurve-method}{locMEstimator}{locMEstimator,numeric,InfluenceCurve.Rdash.method}
+\aliasA{locMEstimator-methods}{locMEstimator}{locMEstimator.Rdash.methods}
+\begin{Description}\relax
+Generic function for the computation of location M estimators.
+\end{Description}
+\begin{Usage}
+\begin{verbatim}
+locMEstimator(x, IC, ...)
+
+## S4 method for signature 'numeric, InfluenceCurve':
+locMEstimator(x, IC, eps = .Machine$double.eps^0.5)
+\end{verbatim}
+\end{Usage}
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{x}] sample 
+\item[\code{IC}] object of class \code{"InfluenceCurve"} 
+\item[\code{...}] additional parameters 
+\item[\code{eps}] the desired accuracy (convergence tolerance). 
+\end{ldescription}
+\end{Arguments}
+\begin{Value}
+Returns a list with component
+\begin{ldescription}
+\item[\code{loc}] M estimator of location 
+\end{ldescription}
+\end{Value}
+\begin{Section}{Methods}
+\describe{
+\item[x = "numeric", IC = "InfluenceCurve"] univariate location. 
+}
+\end{Section}
+\begin{Author}\relax
+Matthias Kohl \email{Matthias.Kohl@stamats.de}
+\end{Author}
+\begin{References}\relax
+Huber, P.J. (1964) Robust estimation of a location parameter. 
+Ann. Math. Stat. \bold{35}: 73--101.
+
+Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
+
+Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
+Bayreuth: Dissertation.
+\end{References}
+\begin{SeeAlso}\relax
+\code{\LinkA{InfluenceCurve-class}{InfluenceCurve.Rdash.class}}
+\end{SeeAlso}
+

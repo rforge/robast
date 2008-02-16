@@ -37,7 +37,7 @@ locMEstimator(x, IC, ...)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{InfluenceCurve-class}}}
+\seealso{\code{\link[RobAStBase]{InfluenceCurve-class}}}
 %\examples{}
 \concept{M estimator}
 \concept{estimator}

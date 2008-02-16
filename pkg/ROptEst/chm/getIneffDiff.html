@@ -7,7 +7,7 @@
 <table width="100%"><tr><td>getIneffDiff(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   getIneffDiff">
 <param name="keyword" value="R:   getIneffDiff-methods">
-<param name="keyword" value="R:   getIneffDiff,numeric,L2ParamFamily,UncondNeighborhood,asMSE-method">
+<param name="keyword" value="R:   getIneffDiff,numeric,L2ParamFamily,UncondNeighborhood,asMSE,BiasType-method">
 <param name="keyword" value=" Generic Function for the Computation of Inefficiency Differences">
 </object>
 
@@ -27,11 +27,12 @@ the radius minimax IC and the least favorable radius.
 <h3>Usage</h3>
 
 <pre>
-getIneffDiff(radius, L2Fam, neighbor, risk, ...)
+getIneffDiff(radius, L2Fam, neighbor, risk, biastype, ...)
 
 ## S4 method for signature 'numeric, L2ParamFamily,
-##   UncondNeighborhood, asMSE':
-getIneffDiff(radius, L2Fam, neighbor, risk, loRad, upRad, 
+##   UncondNeighborhood, asMSE, BiasType':
+getIneffDiff(
+          radius, L2Fam, neighbor, risk, biastype = symmetricBias(), loRad, upRad, 
             loRisk, upRisk, z.start = NULL, A.start = NULL, upper.b, MaxIter, eps, warn)
 </pre>
 
@@ -51,6 +52,9 @@ object of class <code>"Neighborhood"</code>. </td></tr>
 <tr valign="top"><td><code>risk</code></td>
 <td>
 object of class <code>"RiskType"</code>. </td></tr>
+<tr valign="top"><td><code>biastype</code></td>
+<td>
+object of class <code>"BiasType"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters </td></tr>
@@ -96,14 +100,15 @@ the right margin of a given radius interval is computed.</p>
 
 <dl>
 <dt>radius = "numeric", L2Fam = "L2ParamFamily", 
-neighbor = "UncondNeighborhood", risk = "asMSE":</dt><dd>computes difference of asymptotic MSE&ndash;inefficiency for
+neighbor = "UncondNeighborhood", risk = "asMSE", biastype = "BiasType":</dt><dd>computes difference of asymptotic MSE&ndash;inefficiency for
 the boundaries of a given radius interval.</dd>
 </dl>
 
 <h3>Author(s)</h3>
 
 <p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@uni-bayreuth.de">Peter.Ruckdeschel@uni-bayreuth.de</a>
 </p>
 
 
@@ -115,6 +120,10 @@ the Radius. Submitted. Appeared as discussion paper Nr. 81.
 SFB 373 (Quantification and Simulation of Economic Processes),
 Humboldt University, Berlin; also available under
 <a href="www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf">www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf</a>
+</p>
+<p>
+Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+Mathematical Methods in Statistics <EM>14</EM>(1), 105-131.
 </p>
 <p>
 Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
@@ -130,6 +139,6 @@ Bayreuth: Dissertation.
 
 
 
-<hr><div align="center">[Package <em>ROptEst</em> version 0.5.0 <a href="00Index.html">Index]</a></div>
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
 
 </body></html>
