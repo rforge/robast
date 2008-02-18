@@ -1,13 +1,13 @@
-This is pdfTeX, Version 3.141592-1.40.4 (MiKTeX 2.6) (preloaded format=pdflatex 2007.10.2)  15 FEB 2008 13:27
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.12.8)  18 FEB 2008 06:03
 entering extended mode
-**C:/rtest/RobASt/pkg/RandVar/inst/doc/RandVar.tex
-(C:\rtest\RobASt\pkg\RandVar\inst\doc\RandVar.tex
-LaTeX2e <2005/12/01>
-Babel <v3.8g> and hyphenation patterns for english, dumylang, nohyphenation, ge
-rman, ngerman, spanish, french, italian, polish, swedish, loaded.
-("C:\Programme\MiKTeX 2.6\tex\latex\base\article.cls"
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**\nonstopmode \input /home/btm722/arbeit/Rpackages/RForge/robast/pkg/RandVar/i
+nst/doc/RandVar.tex
+(/home/btm722/arbeit/Rpackages/RForge/robast/pkg/RandVar/inst/doc/RandVar.tex
+(/usr/share/texmf-texlive/tex/latex/base/article.cls
 Document Class: article 2005/09/16 v1.4f Standard LaTeX document class
-("C:\Programme\MiKTeX 2.6\tex\latex\base\size11.clo"
+(/usr/share/texmf-texlive/tex/latex/base/size11.clo
 File: size11.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
 )
 \c@part=\count79
@@ -21,9 +21,11 @@ File: size11.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) ("C:\Programme\MiKTeX 2.6\tex\latex\geometry\geometry.sty"
+)
+(/usr/share/texmf-texlive/tex/latex/geometry/geometry.sty
 Package: geometry 2002/07/08 v3.2 Page Geometry
-("C:\Programme\MiKTeX 2.6\tex\latex\graphics\keyval.sty"
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks14
 )
@@ -35,104 +37,108 @@ Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \Gm@odd@mp=\dimen105
 \Gm@even@mp=\dimen106
 \Gm@dimlist=\toks15
-("C:\Programme\MiKTeX 2.6\tex\latex\geometry\geometry.cfg")) ("C:\Programme\MiK
-TeX 2.6\tex\latex\graphics\color.sty"
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/color.sty
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
-("C:\Programme\MiKTeX 2.6\tex\latex\00miktex\color.cfg"
+
+(/etc/texmf/tex/latex/config/color.cfg
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
-("C:\Programme\MiKTeX 2.6\tex\latex\graphics\pdftex.def"
-File: pdftex.def 2007/06/12 v0.04h Graphics/color for pdfTeX
+
+(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2007/01/08 v0.04d Graphics/color for pdfTeX
 \Gread@gobject=\count90
-)) ("C:\Programme\MiKTeX 2.6\tex\generic\oberdiek\ifpdf.sty"
-Package: ifpdf 2007/09/09 v1.5 Provides the ifpdf switch (HO)
+))
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2006/02/20 v1.4 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in pdf mode detected.
-) ("C:\Programme\MiKTeX 2.6\tex\latex\hyperref\hyperref.sty"
-Package: hyperref 2007/06/14 v6.76i Hypertext links for LaTeX
-("C:\Programme\MiKTeX 2.6\tex\latex\oberdiek\hycolor.sty"
-Package: hycolor 2007/04/11 v1.1 Code for color options of hyperref/bookmark (H
-O)
 )
+(/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2007/02/07 v6.75r Hypertext links for LaTeX
 \@linkdim=\dimen107
 \Hy@linkcounter=\count91
 \Hy@pagecounter=\count92
-("C:\Programme\MiKTeX 2.6\tex\latex\hyperref\pd1enc.def"
-File: pd1enc.def 2007/06/14 v6.76i Hyperref: PDFDocEncoding definition (HO)
-) ("C:\Programme\MiKTeX 2.6\tex\generic\oberdiek\etexcmds.sty"
-Package: etexcmds 2007/09/09 v1.1 Providing prefix for e-TeX command names (HO)
 
-("C:\Programme\MiKTeX 2.6\tex\generic\oberdiek\infwarerr.sty"
-Package: infwarerr 2007/09/09 v1.2 Providing info/warning/message (HO)
-)) ("C:\Programme\MiKTeX 2.6\tex\latex\00miktex\hyperref.cfg"
+(/usr/share/texmf-texlive/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2007/02/07 v6.75r Hyperref: PDFDocEncoding definition (HO)
+)
+(/etc/texmf/tex/latex/config/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
-) ("C:\Programme\MiKTeX 2.6\tex\latex\oberdiek\kvoptions.sty"
-Package: kvoptions 2007/06/11 v2.7 Connects package keyval with LaTeX options (
+)
+(/usr/share/texmf-texlive/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2006/08/22 v2.4 Connects package keyval with LaTeX options (
 HO)
 )
-Package hyperref Info: Option `bookmarks' set `true' on input line 2537.
-Package hyperref Info: Option `colorlinks' set `true' on input line 2537.
+Package hyperref Info: Option `bookmarks' set `true' on input line 2238.
+Package hyperref Info: Option `colorlinks' set `true' on input line 2238.
+Package hyperref Info: Option `raiselinks' set `true' on input line 2238.
+Package hyperref Info: Option `plainpages' set `true' on input line 2238.
+Package hyperref Info: Hyper figures OFF on input line 2288.
+Package hyperref Info: Link nesting OFF on input line 2293.
+Package hyperref Info: Hyper index ON on input line 2296.
+Package hyperref Info: Plain pages ON on input line 2301.
+Package hyperref Info: Backreferencing ON on input line 2306.
 
-Package hyperref Warning: Option `pagecolor' is not available anymore.
-
-Package hyperref Info: Option `raiselinks' set `true' on input line 2537.
-Package hyperref Info: Option `plainpages' set `true' on input line 2537.
-Package hyperref Info: Hyper figures OFF on input line 2571.
-Package hyperref Info: Link nesting OFF on input line 2576.
-Package hyperref Info: Hyper index ON on input line 2579.
-Package hyperref Info: Plain pages ON on input line 2584.
-Package hyperref Info: Backreferencing ON on input line 2589.
 Implicit mode ON; LaTeX internals redefined
-Package hyperref Info: Bookmarks ON on input line 2741.
-("C:\Programme\MiKTeX 2.6\tex\latex\hyperref\backref.sty"
+Package hyperref Info: Bookmarks ON on input line 2444.
+(/usr/share/texmf-texlive/tex/latex/hyperref/backref.sty
 Package: backref 2006/10/06 v1.27 Bibliographical back referencing
-) ("C:\Programme\MiKTeX 2.6\tex\latex\ltxmisc\url.sty"
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
 \Urlmuskip=\muskip10
 Package: url 2005/06/27  ver 3.2  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 2909.
+LaTeX Info: Redefining \url on input line 2599.
 \Fld@menulength=\count93
 \Field@Width=\dimen108
 \Fld@charsize=\dimen109
 \Choice@toks=\toks16
 \Field@toks=\toks17
-Package hyperref Info: Hyper figures OFF on input line 3393.
-Package hyperref Info: Link nesting OFF on input line 3398.
-Package hyperref Info: Hyper index ON on input line 3401.
-Package hyperref Info: backreferencing ON on input line 3406.
-Package hyperref Info: Link coloring ON on input line 3411.
+Package hyperref Info: Hyper figures OFF on input line 3102.
+Package hyperref Info: Link nesting OFF on input line 3107.
+Package hyperref Info: Hyper index ON on input line 3110.
+Package hyperref Info: backreferencing ON on input line 3115.
+Package hyperref Info: Link coloring ON on input line 3120.
 \Hy@abspage=\count94
 \c@Item=\count95
 \c@Hfootnote=\count96
 )
 *hyperref using driver hpdftex*
-("C:\Programme\MiKTeX 2.6\tex\latex\hyperref\hpdftex.def"
-File: hpdftex.def 2007/06/14 v6.76i Hyperref driver for pdfTeX
+(/usr/share/texmf-texlive/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2007/02/07 v6.75r Hyperref driver for pdfTeX
 \Fld@listcount=\count97
-) (c:\Programme\R\R-2.6.0rc\share\texmf\Sweave.sty
+)
+(/home/btm722/RTOP/R-2-6-branch/share/texmf/Sweave.sty
 
-LaTeX Warning: You have requested package `c:/Programme/R/R-2.6.0rc/share/texmf
-/Sweave',
+LaTeX Warning: You have requested package `/home/btm722/RTOP/R-2-6-branch/share
+/texmf/Sweave',
                but the package provides `Sweave'.
 
 Package: Sweave 
-("C:\Programme\MiKTeX 2.6\tex\latex\base\ifthen.sty"
+(/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
-) ("C:\Programme\MiKTeX 2.6\tex\latex\graphics\graphicx.sty"
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
-("C:\Programme\MiKTeX 2.6\tex\latex\graphics\graphics.sty"
+
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
 Package: graphics 2006/02/20 v1.0o Standard LaTeX Graphics (DPC,SPQR)
-("C:\Programme\MiKTeX 2.6\tex\latex\graphics\trig.sty"
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
-) ("C:\Programme\MiKTeX 2.6\tex\latex\00miktex\graphics.cfg"
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
 File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 )
 Package graphics Info: Driver file: pdftex.def on input line 90.
 )
 \Gin@req@height=\dimen110
 \Gin@req@width=\dimen111
-) ("C:\Programme\MiKTeX 2.6\tex\latex\fancyvrb\fancyvrb.sty"
+)
+(/usr/share/texmf-texlive/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 1998/07/17
+
 Style option: `fancyvrb' v2.6, with DG/SPQR fixes <1998/07/17> (tvz)
 \FV@CodeLineNo=\count98
 \FV@InFile=\read1
@@ -140,11 +146,13 @@ Style option: `fancyvrb' v2.6, with DG/SPQR fixes <1998/07/17> (tvz)
 \c@FancyVerbLine=\count99
 \FV@StepNumber=\count100
 \FV@OutFile=\write3
+
 No file fancyvrb.cfg.
-) ("C:\Programme\MiKTeX 2.6\tex\latex\upquote\upquote.sty"
+) (/home/btm722/RTOP/R-2-6-branch/share/texmf/upquote.sty
 Package: upquote 2003/08/11 v1.1 Covington's upright-quote modification to verb
 atim and verb
-("C:\Programme\MiKTeX 2.6\tex\latex\base\textcomp.sty"
+
+(/usr/share/texmf-texlive/tex/latex/base/textcomp.sty
 Package: textcomp 2005/09/27 v1.99g Standard LaTeX package
 Package textcomp Info: Sub-encoding information:
 (textcomp)               5 = only ISO-Adobe without \textcurrency
@@ -158,7 +166,8 @@ Package textcomp Info: Sub-encoding information:
 (textcomp)             Family '?' is the default used for unknown fonts.
 (textcomp)             See the documentation for details.
 Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 71.
-("C:\Programme\MiKTeX 2.6\tex\latex\base\ts1enc.def"
+
+(/usr/share/texmf-texlive/tex/latex/base/ts1enc.def
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 )
 LaTeX Info: Redefining \oldstylenums on input line 266.
@@ -209,23 +218,31 @@ Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 323.
 Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 324.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 325.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 326.
-)) ("C:\Programme\MiKTeX 2.6\tex\latex\base\fontenc.sty"
+))
+(/usr/share/texmf-texlive/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
-("C:\Programme\MiKTeX 2.6\tex\latex\base\t1enc.def"
+
+(/usr/share/texmf-texlive/tex/latex/base/t1enc.def
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
-)) ("C:\Programme\MiKTeX 2.6\tex\latex\ae\ae.sty"
+))
+(/usr/share/texmf-texlive/tex/latex/ae/ae.sty
 Package: ae 2001/02/12 1.3 Almost European Computer Modern
-("C:\Programme\MiKTeX 2.6\tex\latex\base\fontenc.sty"
+
+(/usr/share/texmf-texlive/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
-("C:\Programme\MiKTeX 2.6\tex\latex\base\t1enc.def"
+
+(/usr/share/texmf-texlive/tex/latex/base/t1enc.def
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
 )
 LaTeX Font Info:    Try loading font information for T1+aer on input line 100.
-("C:\Programme\MiKTeX 2.6\tex\latex\ae\t1aer.fd"
+
+(/usr/share/texmf-texlive/tex/latex/ae/t1aer.fd
 File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
-)))) (RandVar.aux)
+)))) (./RandVar.aux)
+\openout1 = `RandVar.aux'.
+
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
 LaTeX Font Info:    ... okay on input line 30.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
@@ -242,7 +259,8 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 30.
 LaTeX Font Info:    ... okay on input line 30.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 30.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 30.
-("C:\Programme\MiKTeX 2.6\tex\latex\base\ts1cmr.fd"
+
+(/usr/share/texmf-texlive/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 30.
@@ -285,32 +303,25 @@ driver: pdftex
 
 (1in=72.27pt, 1cm=28.45pt)
 -----------------------
-("C:\Programme\MiKTeX 2.6\tex\context\base\supp-pdf.tex"
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count101
-\scratchdimen=\dimen112
-\scratchbox=\box27
-\nofMPsegments=\count102
-\nofMParguments=\count103
-\MPscratchCnt=\count104
-\MPscratchDim=\dimen113
-\MPnumerator=\count105
-\everyMPtoPDFconversion=\toks18
-)
 Package hyperref Info: Link coloring ON on input line 30.
-("C:\Programme\MiKTeX 2.6\tex\latex\hyperref\nameref.sty"
-Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
-("C:\Programme\MiKTeX 2.6\tex\latex\oberdiek\refcount.sty"
+
+(/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
+Package: nameref 2006/12/27 v2.28 Cross-referencing by name of section
+
+(/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
 Package: refcount 2006/02/20 v3.0 Data extraction from references (HO)
 )
-\c@section@level=\count106
+\c@section@level=\count101
 )
 LaTeX Info: Redefining \ref on input line 30.
 LaTeX Info: Redefining \pageref on input line 30.
-(RandVar.out) (RandVar.out)
+ (./RandVar.out)
+(./RandVar.out)
 \@outlinefile=\write4
+\openout4 = `RandVar.out'.
+
 LaTeX Font Info:    Try loading font information for T1+aett on input line 39.
-("C:\Programme\MiKTeX 2.6\tex\latex\ae\t1aett.fd"
+ (/usr/share/texmf-texlive/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -319,11 +330,14 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 39.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 39.
-(RandVar.toc)
-\tf@toc=\write5
-[1
 
-{psfonts.map}]
+(./RandVar.toc)
+\tf@toc=\write5
+\openout5 = `RandVar.toc'.
+
+ [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
 (hyperref)                removing `\<def>-command' on input line 50.
@@ -380,7 +394,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 71.
 <RandVariable.pdf, id=39, 353.32pt x 533.995pt>
 File: RandVariable.pdf Graphic file (type pdf)
-<use RandVariable.pdf> [2
+ <use RandVariable.pdf> [2
 
 ]
 Underfull \hbox (badness 1867) in paragraph at lines 115--115
@@ -388,9 +402,11 @@ Underfull \hbox (badness 1867) in paragraph at lines 115--115
 
  []
 
-[3 <RandVariable.pdf>] [4] [5] [6] [7] [8] (RandVar.brf)
+[3 <./RandVariable.pdf>] [4] [5] [6] [7] [8] (./RandVar.brf)
 \tf@brf=\write6
-[9]
+\openout6 = `RandVar.brf'.
+
+ [9]
 Underfull \hbox (badness 10000) in paragraph at lines 462--462
 []\T1/aer/m/n/10.95 Ruckdeschel P., Kohl M., Sta-bla T., and Cam-phausen F.  S4
 
@@ -415,29 +431,29 @@ Underfull \hbox (badness 6641) in paragraph at lines 462--462
 r.pdf  [][]2[][],
  []
 
-[10] (RandVar.aux) ) 
+[10] (./RandVar.aux) ) 
 Here is how much of TeX's memory you used:
- 4888 strings out of 95242
- 65564 string characters out of 1184291
- 119344 words of memory out of 1119877
- 7814 multiletter control sequences out of 60000
- 34947 words of font info for 79 fonts, out of 1000000 for 2000
- 34 hyphenation exceptions out of 8191
- 35i,11n,41p,292b,480s stack positions out of 5000i,500n,10000p,200000b,32768s
-<C:/Programme/MiKTeX 2.6/fonts/type1/bluesky/cm/cmbx10.pfb>
-<C:/Programme/MiKTeX 2.6/fonts/type1/bluesky/cm/cmbx12.pfb><C:/Programme/MiKTeX
- 2.6/fonts/type1/bluesky/cm/cmex10.pfb><C:/Programme/MiKTeX 2.6/fonts/type1/blu
-esky/cm/cmmi10.pfb><C:/Programme/MiKTeX 2.6/fonts/type1/bluesky/cm/cmmi6.pfb><C
-:/Programme/MiKTeX 2.6/fonts/type1/bluesky/cm/cmmi8.pfb><C:/Programme/MiKTeX 2.
-6/fonts/type1/bluesky/cm/cmr10.pfb><C:/Programme/MiKTeX 2.6/fonts/type1/bluesky
-/cm/cmr12.pfb><C:/Programme/MiKTeX 2.6/fonts/type1/bluesky/cm/cmr17.pfb><C:/Pro
-gramme/MiKTeX 2.6/fonts/type1/bluesky/cm/cmsltt10.pfb><C:/Programme/MiKTeX 2.6/
-fonts/type1/bluesky/cm/cmsy10.pfb><C:/Programme/MiKTeX 2.6/fonts/type1/bluesky/
-cm/cmti10.pfb><C:/Programme/MiKTeX 2.6/fonts/type1/bluesky/cm/cmtt10.pfb><C:/Pr
-ogramme/MiKTeX 2.6/fonts/type1/bluesky/cm/cmtt12.pfb>
-Output written on RandVar.pdf (10 pages, 121120 bytes).
+ 4177 strings out of 95062
+ 58790 string characters out of 1182216
+ 111871 words of memory out of 1500000
+ 7240 multiletter control sequences out of 10000+50000
+ 34947 words of font info for 79 fonts, out of 1200000 for 2000
+ 28 hyphenation exceptions out of 8191
+ 35i,11n,41p,340b,481s stack positions out of 5000i,500n,6000p,200000b,5000s
+</usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmbx10.p
+fb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmbx12.pfb></usr/share/texm
+f-texlive/fonts/type1/bluesky/cm/cmex10.pfb></usr/share/texmf-texlive/fonts/typ
+e1/bluesky/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmmi6
+.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmmi8.pfb></usr/share/tex
+mf-texlive/fonts/type1/bluesky/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/typ
+e1/bluesky/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmr17.
+pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmsltt10.pfb></usr/share/t
+exmf-texlive/fonts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/
+type1/bluesky/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cm
+tt10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmtt12.pfb>
+Output written on RandVar.pdf (10 pages, 121821 bytes).
 PDF statistics:
- 167 PDF objects out of 300000 (max. 8388607)
- 23 named destinations out of 300000 (max. 131072)
- 46 words of extra memory for PDF output out of 65536 (max. 10000000)
+ 167 PDF objects out of 1000 (max. 8388607)
+ 23 named destinations out of 1000 (max. 131072)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 

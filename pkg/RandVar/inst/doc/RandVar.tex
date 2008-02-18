@@ -26,7 +26,7 @@ pagecolor=darkblue,raiselinks,plainpages,pdftex]{hyperref}
 % -------------------------------------------------------------------------------
 %
 % -------------------------------------------------------------------------------
-\usepackage{c:/Programme/R/R-2.6.0rc/share/texmf/Sweave}
+\usepackage{/home/btm722/RTOP/R-2-6-branch/share/texmf/Sweave}
 \begin{document}
 % -------------------------------------------------------------------------------
 \title{RandVar: Implementation of random variables by means
@@ -145,7 +145,7 @@ we can for instance generate
 + }), Domain = Reals(), Range = Reals()))
 \end{Sinput}
 \begin{Soutput}
-An object of class "RealRandVariable" 
+An object of class “RealRandVariable” 
 length of Map:	 2 
 Domain:	Real Space with dimension 1 
 Range:	Real Space with dimension 1 
@@ -202,7 +202,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x02e7816c>
+<environment: 0x9da0aec>
 
 [[2]]
 function (x) 
@@ -217,7 +217,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x02e7816c>
+<environment: 0x9da0aec>
 \end{Soutput}
 \begin{Sinput}
 > R2 <- exp(X - 1:2)
@@ -237,7 +237,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x02fc2db4>
+<environment: 0x9e94594>
 
 [[2]]
 function (x) 
@@ -252,7 +252,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x02fc2db4>
+<environment: 0x9e94594>
 \end{Soutput}
 \begin{Sinput}
 > (Y <- RealRandVariable(Map = list(function(x) {
@@ -262,7 +262,7 @@ function (x)
 + }), Domain = Reals(), Range = Reals()))
 \end{Sinput}
 \begin{Soutput}
-An object of class "RealRandVariable" 
+An object of class “RealRandVariable” 
 length of Map:	 2 
 Domain:	Real Space with dimension 1 
 Range:	Real Space with dimension 1 
@@ -300,7 +300,7 @@ function (x)
 > (R4 <- X %*% t(Y))
 \end{Sinput}
 \begin{Soutput}
-An object of class "EuclRandMatrix" 
+An object of class “EuclRandMatrix” 
 Dim of Map:	 2 2 
 Domain:	Real Space with dimension 1 
 Range:	Euclidean Space with dimension 1 
@@ -324,7 +324,7 @@ Range:	Euclidean Space with dimension 1
 > (R5 <- M %*% R4)
 \end{Sinput}
 \begin{Soutput}
-An object of class "EuclRandMatrix" 
+An object of class “EuclRandMatrix” 
 Dim of Map:	 2 2 
 Domain:	Real Space with dimension 1 
 Range:	Real Space with dimension 1 
@@ -341,7 +341,7 @@ we can compute the (conditional) expectation of {\tt X} under {\tt D}, respectiv
 > E(object = D, fun = X)
 \end{Sinput}
 \begin{Soutput}
-[1] 2.792788e-16 9.999942e-01
+[1] 2.587378e-16 9.999942e-01
 \end{Soutput}
 \begin{Sinput}
 > E(D)
