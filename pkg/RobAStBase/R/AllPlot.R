@@ -28,7 +28,7 @@ setMethod("plot", "IC",
         IC1 <- as(diag(dims) %*% x@Curve, "EuclRandVariable")
 
         w0 <- options("warn")
-        options(warn = -1)            
+        options(warn = -1)
         opar <- par()
         nrows <- trunc(sqrt(dims))
         ncols <- ceiling(dims/nrows)
@@ -48,7 +48,7 @@ setMethod("plot", "IC",
                             "\nwith main parameter (", paste(round(L2Fam@param@main, 3), collapse = ", "),
                             ")\nand nuisance parameter (", paste(round(L2Fam@param@nuisance, 3), collapse = ", "), ")"), cex.main = 0.8)
         }
-        par(opar)    
+        par(opar)
         options(w0)
         invisible()
     })
