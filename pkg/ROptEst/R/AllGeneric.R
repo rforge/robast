@@ -1,6 +1,3 @@
-if(!isGeneric("optIC")){
-    setGeneric("optIC", function(model, risk, ...) standardGeneric("optIC"))
-}
 if(!isGeneric("getInfRobIC")){
     setGeneric("getInfRobIC", 
         function(L2deriv, risk, neighbor, ...) standardGeneric("getInfRobIC"))
