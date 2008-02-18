@@ -15,31 +15,12 @@ exportClasses("InfluenceCurve",
               "ContIC", 
               "TotalVarIC")
 exportMethods("show", 
-              "plot", 
-              "coerce", 
-              "length")
-exportMethods("type",
-              "SymmCenter")
+              "plot")
+exportMethods("type", "radius")
 exportMethods("name", "name<-", 
-              "distribution", 
-              "distrSymm",
-              "props", "props<-", "addProp<-", 
-              "main", "main<-", 
-              "nuisance", "nuisance<-", 
-              "trafo", "trafo<-", 
-              "param", 
-              "L2deriv", 
-              "L2derivSymm", 
-              "L2derivDistr", 
-              "L2derivDistrSymm", 
-              "FisherInfo", 
-              "checkL2deriv",
               "infoPlot")
-exportMethods("radius")
 exportMethods("center", "center<-", 
               "neighbor", "neighbor<-")
-exportMethods("bound", 
-              "width")
 exportMethods("Curve", 
               "Risks", "Risks<-", "addRisk<-", 
               "Infos", "Infos<-", "addInfo<-", 
@@ -53,12 +34,10 @@ exportMethods("Curve",
               "lowerCase", "lowerCase<-", 
               "neighborRadius", "neighborRadius<-", 
               "clipLo", "clipLo<-", 
-              "clipUp", "clipUp<-") 
+              "clipUp", "clipUp<-",
+              "optIC") 
 exportMethods("oneStepEstimator", 
               "locMEstimator")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 
-export("InfluenceCurve", 
-       "IC", 
-       "ContIC", 
-       "TotalVarIC")
+export("InfluenceCurve", "IC", "ContIC", "TotalVarIC")

@@ -28,7 +28,6 @@ infoPlot(object)
 \seealso{\code{\link[distrMod]{L2ParamFamily-class}}, \code{\link{IC-class}}}
 \examples{
 N <- NormLocationScaleFamily(mean=0, sd=1) 
-## require(ROptEst)
 IC1 <- optIC(model = N, risk = asCov())
 infoPlot(IC1)
 }

@@ -13,12 +13,6 @@ if(!isGeneric("neighbor")){
 if(!isGeneric("neighbor<-")){
     setGeneric("neighbor<-", function(object, value) standardGeneric("neighbor<-"))
 }
-if(!isGeneric("bound")){ 
-    setGeneric("bound", function(object) standardGeneric("bound"))
-}
-if(!isGeneric("width")){ 
-    setGeneric("width", function(object) standardGeneric("width"))
-}
 if(!isGeneric("Curve")){
     setGeneric("Curve", function(object) standardGeneric("Curve"))
 }
@@ -106,4 +100,7 @@ if(!isGeneric("locMEstimator")){
 }
 if(!isGeneric("infoPlot")){
     setGeneric("infoPlot", function(object) standardGeneric("infoPlot"))
+}
+if(!isGeneric("optIC")){
+    setGeneric("optIC", function(model, risk, ...) standardGeneric("optIC"))
 }
