@@ -1,40 +1,9 @@
 import("distr")
 import("distrEx")
+import("RandVar")
 import("distrMod")
 import("RobAStBase")
-import("RandVar")
 
-exportMethods("show", 
-              "coerce", 
-              "length")
-exportMethods("type",
-              "SymmCenter")
-exportMethods("name", "name<-", 
-              "distribution", 
-              "distrSymm",
-              "props", "props<-", "addProp<-", 
-              "main", "main<-", 
-              "nuisance", "nuisance<-", 
-              "trafo", "trafo<-", 
-              "param", 
-              "infoPlot")
-exportMethods("radius")
-exportMethods("center", "center<-", 
-              "neighbor", "neighbor<-")
-exportMethods("Curve", 
-              "Risks", "Risks<-", "addRisk<-", 
-              "Infos", "Infos<-", "addInfo<-", 
-              "CallL2Fam", "CallL2Fam<-", 
-              "generateIC", 
-              "checkIC",
-              "evalIC",
-              "clip", "clip<-", 
-              "cent", "cent<-", 
-              "stand", "stand<-", 
-              "lowerCase", "lowerCase<-", 
-              "neighborRadius", "neighborRadius<-", 
-              "clipLo", "clipLo<-", 
-              "clipUp", "clipUp<-") 
 exportMethods("optIC", 
               "getInfRobIC", 
               "getFixRobIC",
@@ -51,5 +20,6 @@ exportMethods("optIC",
               "getIneffDiff", 
               "leastFavorableRadius",
               "lowerCaseRadius",
-              "minmaxBias", "getBiasIC", "getL1normL2deriv")
+              "minmaxBias", "getBiasIC", 
+              "getL1normL2deriv")
 export("getL2normL2deriv")
