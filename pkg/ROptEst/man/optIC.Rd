@@ -1,7 +1,6 @@
 \name{optIC}
 \alias{optIC}
 \alias{optIC-methods}
-\alias{optIC,L2ParamFamily,asCov-method}
 \alias{optIC,InfRobModel,asRisk-method}
 \alias{optIC,InfRobModel,asUnOvShoot-method}
 \alias{optIC,FixRobModel,fiUnOvShoot-method}
@@ -12,8 +11,6 @@
 }
 \usage{
 optIC(model, risk, ...)
-
-\S4method{optIC}{L2ParamFamily,asCov}(model, risk)
 
 \S4method{optIC}{InfRobModel,asRisk}(model, risk, biastype = symmetricBias(), 
                  z.start = NULL, A.start = NULL, upper = 1e4, 
@@ -48,10 +45,6 @@ optIC(model, risk, ...)
 \value{Some optimally robust IC is computed.}
 \section{Methods}{
 \describe{
-  \item{model = "L2ParamFamily", risk = "asCov"}{ computes
-    classical optimal influence curve for L2 differentiable 
-    parametric families.}
-
   \item{model = "InfRobModel", risk = "asRisk"}{ 
     computes optimally robust influence curve for 
     robust models with infinitesimal neighborhoods and
