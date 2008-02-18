@@ -54,6 +54,8 @@ exportMethods("Curve",
               "neighborRadius", "neighborRadius<-", 
               "clipLo", "clipLo<-", 
               "clipUp", "clipUp<-") 
+exportMethods("oneStepEstimator", 
+              "locMEstimator")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 
 export("InfluenceCurve", 
