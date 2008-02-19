@@ -75,17 +75,17 @@ mad(x)
 
 ## 2. Kolmogorov(-Smirnov) minimum distance estimator
 ## -> we use it as initial estimate for one-step construction
-(est0 <- ksEstimator(x=x, Norm()))
+(est0 <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = KolmogorovDist))
 
 ## 3. one-step estimation: radius known
-IC1 <- rlsOptIC.AL(r = 0.5, mean = est0$mean, sd = est0$sd)
-(est1 <- oneStepEstimator(x, IC1, est0))
+IC1 <- rlsOptIC.AL(r = 0.5, mean = est0$estimate[1], sd = est0$estimate[2])
+(est1 <- oneStepEstimator(x, IC1, est0$estimate))
 
 ## 4. one-step estimation: radius unknown
 ## take least favorable radius r = 0.579
 ## cf. Table 8.1 in Kohl(2005)
-IC2 <- rlsOptIC.AL(r = 0.579, mean = est0$mean, sd = est0$sd)
-(est2 <- oneStepEstimator(x, IC2, est0))
+IC2 <- rlsOptIC.AL(r = 0.579, mean = est0$estimate[1], sd = est0$estimate[2])
+(est2 <- oneStepEstimator(x, IC2, est0$estimate))
 }
 \concept{normal location and scale}
 \concept{influence curve}

@@ -115,12 +115,16 @@ infoPlot(res2$optIC)
 ## estimator comparison
 # classical optimal (non-robust)
 c(mean(x), sd(x))
+
 # most robust
 c(median(x), mad(x))
+
 # Kolmogorov(-Smirnov) minimum distance estimator (robust)
-ksEstimator(x, distribution = Norm())
+MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = KolmogorovDist)
+
 # optimally robust (amount of gross errors known)
 c(res1$mean, res1$sd)
+
 # optimally robust (amount of gross errors unknown)
 c(res2$mean, res2$sd)
 
