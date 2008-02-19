@@ -52,7 +52,7 @@ getInfRobIC(L2deriv, risk, neighbor, Distr, Finfo, trafo)
 
 ## S4 method for signature 'UnivariateDistribution, asBias,
 ##   UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
+getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 
 ## S4 method for signature 'RealRandVariable, asBias,
@@ -62,27 +62,27 @@ getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm,
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asHampel, UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
+getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 
 ## S4 method for signature 'RealRandVariable, asHampel,
 ##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
+getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asGRisk, UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
+getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 
 ## S4 method for signature 'RealRandVariable, asGRisk,
 ##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
+getInfRobIC(L2deriv, risk, neighbor,  Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asUnOvShoot, UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
+getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 </pre>
 
@@ -103,9 +103,6 @@ object of class <code>"Neighborhood"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters. </td></tr>
-<tr valign="top"><td><code>biastype</code></td>
-<td>
-object of class <code>"BiasType"</code>. </td></tr>
 <tr valign="top"><td><code>Distr</code></td>
 <td>
 object of class <code>"Distribution"</code>. </td></tr>

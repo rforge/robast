@@ -4,6 +4,8 @@
 \alias{getAsRisk,asMSE,UnivariateDistribution,Neighborhood,BiasType-method}
 \alias{getAsRisk,asMSE,EuclRandVariable,Neighborhood,BiasType-method}
 \alias{getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,BiasType-method}
+\alias{getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,onesidedBias-method}
+\alias{getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,asymmetricBias-method}
 \alias{getAsRisk,asBias,UnivariateDistribution,TotalVarNeighborhood,BiasType-method}
 \alias{getAsRisk,asBias,RealRandVariable,ContNeighborhood,BiasType-method}
 \alias{getAsRisk,asCov,UnivariateDistribution,ContNeighborhood,BiasType-method}
@@ -28,6 +30,10 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
 \S4method{getAsRisk}{asMSE,EuclRandVariable,Neighborhood,BiasType}(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo)
 
 \S4method{getAsRisk}{asBias,UnivariateDistribution,ContNeighborhood,BiasType}(risk, L2deriv, neighbor, biastype, trafo)
+
+\S4method{getAsRisk}{asBias,UnivariateDistribution,ContNeighborhood,onesidedBias}(risk, L2deriv, neighbor, biastype, trafo)
+
+\S4method{getAsRisk}{asBias,UnivariateDistribution,ContNeighborhood,asymmetricBias}(risk, L2deriv, neighbor, biastype, trafo)
 
 \S4method{getAsRisk}{asBias,UnivariateDistribution,TotalVarNeighborhood,BiasType}(risk, L2deriv, neighbor, biastype, trafo)
 
@@ -82,6 +88,12 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
   \item{risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "BiasType":}{ 
     computes standardized asymptotic bias in methods for function \code{getInfRobIC}. }
 
+  \item{risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "onesidedBias":}{ 
+    computes standardized asymptotic bias in methods for function \code{getInfRobIC}. }
+
+  \item{risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "asymmetricBias":}{ 
+    computes standardized asymptotic bias in methods for function \code{getInfRobIC}. }
+
   \item{risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", biastype = "BiasType":}{ 
     computes standardized asymptotic bias in methods for function \code{getInfRobIC}. }
 
@@ -117,7 +129,10 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 
   Ruckdeschel, P. and Rieder, H. (2004) Optimal Influence Curves for
-  General Loss Functions. Statistics & Decisions (submitted).
+  General Loss Functions. Statistics & Decisions \emph{22}, 201-223.
+
+  Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+  Mathematical Methods in Statistics \emph{14}(1), 105-131.
 
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.

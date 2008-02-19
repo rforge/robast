@@ -30,9 +30,8 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
 ## S4 method for signature 'L2ParamFamily,
 ##   UncondNeighborhood, asGRisk':
 radiusMinimaxIC(
-        L2Fam, neighbor, risk, biastype = symmetricBias(),
-        loRad, upRad, z.start = NULL, A.start = NULL, upper = 1e5, 
-        maxiter = 100, tol = .Machine$double.eps^0.4, warn = FALSE)
+        L2Fam, neighbor, risk, loRad, upRad, z.start = NULL, A.start = NULL, 
+        upper = 1e5, maxiter = 100, tol = .Machine$double.eps^0.4, warn = FALSE)
 </pre>
 
 
@@ -51,9 +50,6 @@ object of class <code>"RiskType"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters. </td></tr>
-<tr valign="top"><td><code>biastype</code></td>
-<td>
-object of class <code>"BiasType"</code>. </td></tr>
 <tr valign="top"><td><code>loRad</code></td>
 <td>
 the lower end point of the interval to be searched. </td></tr>
@@ -101,6 +97,10 @@ Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@uni-bayreuth.de">Peter.Ruckd
 
 <h3>References</h3>
 
+<p>
+Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
+the Radius. Statistical Methods and Applications <EM>17</EM>(1) 13-40.
+</p>
 <p>
 Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
 the Radius. Submitted. Appeared as discussion paper Nr. 81. 

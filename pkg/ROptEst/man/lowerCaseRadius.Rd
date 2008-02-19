@@ -1,8 +1,10 @@
 \name{lowerCaseRadius}
 \alias{lowerCaseRadius}
 \alias{lowerCaseRadius-methods}
-\alias{lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,BiasType-method}
-\alias{lowerCaseRadius,L2ParamFamily,TotalVarNeighborhood,asMSE,BiasType-method}
+\alias{lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,ANY-method}
+\alias{lowerCaseRadius,L2ParamFamily,TotalVarNeighborhood,asMSE,ANY-method}
+\alias{lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,onesidedBias-method}
+\alias{lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,asymmetricBias-method}
 
 \title{Computation of the lower case radius}
 \description{
@@ -32,6 +34,16 @@ lowerCaseRadius(L2Fam, neighbor, risk, biastype, ...)
         biastype = "BiasType"}{
     lower case radius for risk \code{"asMSE"} in case of \code{"TotalVarNeighborhood"};
     (argument biastype is just for signature reasons).}
+
+  \item{L2Fam = "L2ParamFamily", neighbor = "ContNeighborhood", risk = "asMSE",
+        biastype = "onesidedBias"}{
+    lower case radius for risk \code{"asMSE"} in case of \code{"ContNeighborhood"}
+    for onesided bias.}
+
+  \item{L2Fam = "L2ParamFamily", neighbor = "ContNeighborhood", risk = "asMSE",
+        biastype = "asymmetricBias"}{
+    lower case radius for risk \code{"asMSE"} in case of \code{"ContNeighborhood"}
+    for asymmetric bias.}
 }}
 \references{
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 

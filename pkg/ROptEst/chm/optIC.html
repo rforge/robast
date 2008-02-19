@@ -7,7 +7,6 @@
 <table width="100%"><tr><td>optIC(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   optIC">
 <param name="keyword" value="R:   optIC-methods">
-<param name="keyword" value="R:   optIC,L2ParamFamily,asCov-method">
 <param name="keyword" value="R:   optIC,InfRobModel,asRisk-method">
 <param name="keyword" value="R:   optIC,InfRobModel,asUnOvShoot-method">
 <param name="keyword" value="R:   optIC,FixRobModel,fiUnOvShoot-method">
@@ -30,16 +29,13 @@ Generic function for the computation of optimally robust ICs.
 <pre>
 optIC(model, risk, ...)
 
-## S4 method for signature 'L2ParamFamily, asCov':
-optIC(model, risk)
-
 ## S4 method for signature 'InfRobModel, asRisk':
-optIC(model, risk, biastype = symmetricBias(), 
+optIC(model, risk, 
                  z.start = NULL, A.start = NULL, upper = 1e4, 
              maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE)
 
 ## S4 method for signature 'InfRobModel, asUnOvShoot':
-optIC(model, risk, biastype = symmetricBias(), 
+optIC(model, risk, 
                  upper = 1e4, maxiter = 50, 
                  tol = .Machine$double.eps^0.4, warn = TRUE)
 
@@ -61,9 +57,6 @@ object of class <code>"RiskType"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters. </td></tr>
-<tr valign="top"><td><code>biastype</code></td>
-<td>
-object of class <code>"BiasType"</code> </td></tr>
 <tr valign="top"><td><code>z.start</code></td>
 <td>
 initial value for the centering constant. </td></tr>
@@ -111,11 +104,6 @@ Some optimally robust IC is computed.</p>
 <h3>Methods</h3>
 
 <dl>
-<dt>model = "L2ParamFamily", risk = "asCov"</dt><dd>computes
-classical optimal influence curve for L2 differentiable 
-parametric families.</dd>
-
-
 <dt>model = "InfRobModel", risk = "asRisk"</dt><dd>computes optimally robust influence curve for 
 robust models with infinitesimal neighborhoods and
 various asymptotic risks. </dd>

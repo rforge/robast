@@ -38,6 +38,9 @@ if(!isGeneric("getRiskIC")){
     setGeneric("getRiskIC", 
         function(IC, risk,  neighbor, L2Fam, ...) standardGeneric("getRiskIC"))
 }
+if(!isGeneric("optIC")){
+    setGeneric("optIC", function(model, risk,  ...) standardGeneric("optIC"))
+}
 if(!isGeneric("optRisk")){
     setGeneric("optRisk", function(model, risk,  ...) standardGeneric("optRisk"))
 }
@@ -46,7 +49,7 @@ if(!isGeneric("radiusMinimaxIC")){
             standardGeneric("radiusMinimaxIC"))
 }
 if(!isGeneric("getIneffDiff")){
-    setGeneric("getIneffDiff", function(radius, L2Fam, neighbor, risk,  biastype, ...) 
+    setGeneric("getIneffDiff", function(radius, L2Fam, neighbor, risk, ...) 
             standardGeneric("getIneffDiff"))
 }
 if(!isGeneric("leastFavorableRadius")){
@@ -54,7 +57,8 @@ if(!isGeneric("leastFavorableRadius")){
             standardGeneric("leastFavorableRadius"))
 }
 if(!isGeneric("lowerCaseRadius")){
-    setGeneric("lowerCaseRadius", function(L2Fam, neighbor, risk,  biastype, ...) standardGeneric("lowerCaseRadius"))
+    setGeneric("lowerCaseRadius", function(L2Fam, neighbor, risk,  biastype, ...) 
+    standardGeneric("lowerCaseRadius"))
 }
 if(!isGeneric("minmaxBias")){
     setGeneric("minmaxBias", 
@@ -66,5 +70,9 @@ if(!isGeneric("getL1normL2deriv")){
 }
 if(!isGeneric("getBiasIC")){
     setGeneric("getBiasIC", 
-        function(IC, neighbor, L2Fam, biastype, ...) standardGeneric("getBiasIC"))
+        function(IC, neighbor, ...) standardGeneric("getBiasIC"))
+}
+if(!isGeneric(".evalBiasIC")){
+    setGeneric(".evalBiasIC", 
+        function(IC, neighbor, biastype, ...) standardGeneric("getBiasIC"))
 }

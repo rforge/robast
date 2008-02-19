@@ -30,7 +30,7 @@ leastFavorableRadius(L2Fam, neighbor, risk, ...)
 ## S4 method for signature 'L2ParamFamily,
 ##   UncondNeighborhood, asGRisk':
 leastFavorableRadius(
-          L2Fam, neighbor, risk, biastype = symmetricBias(), rho, upRad = 1, 
+          L2Fam, neighbor, risk, rho, upRad = 1, 
             z.start = NULL, A.start = NULL, upper = 100, maxiter = 100, 
             tol = .Machine$double.eps^0.4, warn = FALSE)
 </pre>
@@ -51,9 +51,6 @@ object of class <code>"RiskType"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters </td></tr>
-<tr valign="top"><td><code>biastype</code></td>
-<td>
-object of class <code>"BiasType"</code>. </td></tr>
 <tr valign="top"><td><code>upRad</code></td>
 <td>
 the upper end point of the radius interval to be searched. </td></tr>

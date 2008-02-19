@@ -4,8 +4,9 @@
 setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution", 
                                    risk = "asGRisk", 
                                    neighbor = "UncondNeighborhood"),
-    function(L2deriv, risk, neighbor, biastype = symmetricBias(), symm, Finfo, trafo, 
+    function(L2deriv, risk, neighbor, symm, Finfo, trafo, 
             upper, maxiter, tol, warn){
+        biastype <- biastype(risk)
         radius <- neighbor@radius
         if(identical(all.equal(radius, 0), TRUE)){
             if(warn) cat("'radius == 0' => (classical) optimal IC\n", 
@@ -30,15 +31,12 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             iter <- iter + 1
             z.old <- z
             c0.old <- c0
-
-upper = sqrt((Finfo+z^2)/((1+neighbor@radius^2)^2-1))
-
             c0 <- try(uniroot(getInfClip, 
+        lower = .Machine$double.eps^0.75, 
+        upper = upper, 
 ## new
-lower = getL1normL2deriv(L2deriv = L2deriv, cent = z)/ (1 + neighbor@radius^2), 
-        #lower = .Machine$double.eps^0.75, 
-upper = sqrt( ( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) ), 
-        ##   upper = upper, 
+#lower = getL1normL2deriv(L2deriv = L2deriv, cent = z)/ (1 + neighbor@radius^2), 
+#upper = sqrt( ( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) ), 
 ##
                         tol = tol, L2deriv = L2deriv, risk = risk, 
                         neighbor = neighbor,  biastype = biastype,
@@ -49,13 +47,12 @@ upper = sqrt( ( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) ),
                              "'radius >= maximum radius' for the given risk?\n",
                              "=> the minimum asymptotic bias (lower case) solution is returned\n")
                 res <- getInfRobIC(L2deriv = L2deriv, risk = asBias(), 
-                                neighbor = neighbor,  biastype = biastype,
-                                Finfo = Finfo, 
+                                neighbor = neighbor, Finfo = Finfo, 
                                 symm = symm, trafo = trafo, upper = upper, 
                                 maxiter = maxiter, tol = tol, warn = warn)
                 Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
-                                   biastype = biastype,
-                                   clip = res$b, cent = res$a, stand = res$A, trafo = trafo)
+                                  biastype = biastype,  clip = res$b, cent = res$a, 
+                                  stand = res$A, trafo = trafo)
                 res$risk <- c(Risk, res$risk)
                 return(res)
             }
@@ -75,7 +72,8 @@ upper = sqrt( ( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) ),
         a <- as.vector(A)*z
         b <- abs(as.vector(A))*c0
         Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
-                           biastype = biastype, clip = b, cent = a, stand = A, trafo = trafo)
+                          biastype = biastype, clip = b, cent = a, stand = A, 
+                          trafo = trafo)
         Risk <- c(Risk, list(asBias = b))
 
         return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info))    
@@ -83,10 +81,10 @@ upper = sqrt( ( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) ),
 setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable", 
                                    risk = "asGRisk", 
                                    neighbor = "ContNeighborhood"),
-    function(L2deriv, risk, neighbor, biastype = symmetricBias(), 
-             Distr, DistrSymm, L2derivSymm, 
+    function(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, trafo, z.start, A.start, upper, 
              maxiter, tol, warn){
+        biastype <- biastype(risk)
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
         if(is.null(A.start)) A.start <- trafo
 
@@ -97,7 +95,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             res <- getInfRobIC(L2deriv = L2deriv, risk = asCov(), neighbor = neighbor, 
                                Distr = Distr, Finfo = Finfo, trafo = trafo)
             Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
-                               biastype = biastype, clip = res$b, cent = res$a, stand = res$A, trafo = trafo)
+                              biastype = biastype, clip = res$b, cent = res$a, 
+                              stand = res$A, trafo = trafo)
             res$risk <- c(Risk, res$risk)
             return(res)
         }
@@ -132,13 +131,14 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             A.old <- A
             b <- try(uniroot(getInfClip, 
             
+        lower = .Machine$double.eps^0.75, 
+        upper = upper, 
 ## new
-lower = getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A, 
-                         Distr = Distr)/(1+neighbor@radius^2),
-upper = sqrt( sum( diag(A%*%Finfo%*%t(A)) + (A%*%z)^2) / 
-              ((1 + neighbor@radius^2)^2-1)),
-##
-                        
+#lower = getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A, 
+#                         Distr = Distr)/(1+neighbor@radius^2),
+#upper = sqrt( sum( diag(A%*%Finfo%*%t(A)) + (A%*%z)^2) / 
+#              ((1 + neighbor@radius^2)^2-1)),
+##                     
                          tol = tol, L2deriv = L2deriv, risk = risk, 
                          biastype = biastype, Distr = Distr, neighbor = neighbor, 
                          stand = A, cent = z, trafo = trafo)$root, silent = TRUE)
@@ -149,14 +149,13 @@ upper = sqrt( sum( diag(A%*%Finfo%*%t(A)) + (A%*%z)^2) /
                              "If 'no' => Try again with modified starting values ",
                              "'z.start' and 'A.start'\n")
                 res <- getInfRobIC(L2deriv = L2deriv, risk = asBias(), 
-                                neighbor = neighbor,  biastype = biastype,
-                                Distr = Distr, DistrSymm = DistrSymm,
+                                neighbor = neighbor, Distr = Distr, DistrSymm = DistrSymm,
                                 L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm,
                                 z.start = z.start, A.start = A.start, trafo = trafo, 
                                 upper = upper, maxiter = maxiter, tol = tol, warn = warn)
                 Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
-                                   biastype = biastype, clip = res$b, cent = res$a, 
-                                   stand = res$A, trafo = trafo)
+                                  biastype = biastype, clip = res$b, cent = res$a, stand = res$A, 
+                                  trafo = trafo)
                 res$risk <- c(Risk, res$risk)
                 return(res)
             }
@@ -177,8 +176,8 @@ upper = sqrt( sum( diag(A%*%Finfo%*%t(A)) + (A%*%z)^2) /
         a <- as.vector(A %*% z)
         info <- paste("optimally robust IC for", sQuote(class(risk)[1]))
         Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
-                           biastype = biastype, 
-                           clip = b, cent = a, stand = A, trafo = trafo)
+                          biastype = biastype, clip = b, cent = a, stand = A, 
+                          trafo = trafo)
         Risk <- c(Risk, list(asBias = b))
 
         return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info))    

@@ -34,7 +34,7 @@ optRisk(model, risk, ...)
 optRisk(model, risk)
 
 ## S4 method for signature 'InfRobModel, asRisk':
-optRisk(model, risk, biastype = symmetricBias(),
+optRisk(model, risk,
                    z.start = NULL, A.start = NULL, upper = 1e4, 
                    maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE)
 
@@ -56,9 +56,6 @@ object of class <code>RiskType</code> </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters </td></tr>
-<tr valign="top"><td><code>biastype</code></td>
-<td>
-object of class <code>BiasType</code> </td></tr>
 <tr valign="top"><td><code>z.start</code></td>
 <td>
 initial value for the centering constant. </td></tr>

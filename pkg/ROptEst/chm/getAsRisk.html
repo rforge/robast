@@ -10,6 +10,8 @@
 <param name="keyword" value="R:   getAsRisk,asMSE,UnivariateDistribution,Neighborhood,BiasType-method">
 <param name="keyword" value="R:   getAsRisk,asMSE,EuclRandVariable,Neighborhood,BiasType-method">
 <param name="keyword" value="R:   getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,BiasType-method">
+<param name="keyword" value="R:   getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,onesidedBias-method">
+<param name="keyword" value="R:   getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,asymmetricBias-method">
 <param name="keyword" value="R:   getAsRisk,asBias,UnivariateDistribution,TotalVarNeighborhood,BiasType-method">
 <param name="keyword" value="R:   getAsRisk,asBias,RealRandVariable,ContNeighborhood,BiasType-method">
 <param name="keyword" value="R:   getAsRisk,asCov,UnivariateDistribution,ContNeighborhood,BiasType-method">
@@ -50,6 +52,14 @@ getAsRisk(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo)
 
 ## S4 method for signature 'asBias, UnivariateDistribution,
 ##   ContNeighborhood, BiasType':
+getAsRisk(risk, L2deriv, neighbor, biastype, trafo)
+
+## S4 method for signature 'asBias, UnivariateDistribution,
+##   ContNeighborhood, onesidedBias':
+getAsRisk(risk, L2deriv, neighbor, biastype, trafo)
+
+## S4 method for signature 'asBias, UnivariateDistribution,
+##   ContNeighborhood, asymmetricBias':
 getAsRisk(risk, L2deriv, neighbor, biastype, trafo)
 
 ## S4 method for signature 'asBias, UnivariateDistribution,
@@ -162,6 +172,12 @@ function <code>getInfRobIC</code>. </dd>
 <dt>risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "BiasType":</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobIC</code>. </dd>
 
 
+<dt>risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "onesidedBias":</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobIC</code>. </dd>
+
+
+<dt>risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "asymmetricBias":</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobIC</code>. </dd>
+
+
 <dt>risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", biastype = "BiasType":</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobIC</code>. </dd>
 
 
@@ -207,7 +223,11 @@ Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
 </p>
 <p>
 Ruckdeschel, P. and Rieder, H. (2004) Optimal Influence Curves for
-General Loss Functions. Statistics &amp; Decisions (submitted).
+General Loss Functions. Statistics &amp; Decisions <EM>22</EM>, 201-223.
+</p>
+<p>
+Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+Mathematical Methods in Statistics <EM>14</EM>(1), 105-131.
 </p>
 <p>
 Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 

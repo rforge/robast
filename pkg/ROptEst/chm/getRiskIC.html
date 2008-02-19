@@ -53,19 +53,19 @@ getRiskIC(IC, risk, L2Fam, tol = .Machine$double.eps^0.25)
 
 ## S4 method for signature 'IC, asBias, UncondNeighborhood,
 ##   missing':
-getRiskIC(IC, risk, neighbor, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+getRiskIC(IC, risk, neighbor, tol = .Machine$double.eps^0.25)
 
 ## S4 method for signature 'IC, asBias, UncondNeighborhood,
 ##   L2ParamFamily':
-getRiskIC(IC, risk, neighbor, L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+getRiskIC(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
 
 ## S4 method for signature 'IC, asMSE, UncondNeighborhood,
 ##   missing':
-getRiskIC(IC, risk, neighbor, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+getRiskIC(IC, risk, neighbor,  tol = .Machine$double.eps^0.25)
 
 ## S4 method for signature 'IC, asMSE, UncondNeighborhood,
 ##   L2ParamFamily':
-getRiskIC(IC, risk, neighbor, L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+getRiskIC(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
 
 ## S4 method for signature 'TotalVarIC, asUnOvShoot,
 ##   UncondNeighborhood, missing':
@@ -99,9 +99,6 @@ object of class <code>"L2ParamFamily"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters </td></tr>
-<tr valign="top"><td><code>biastype</code></td>
-<td>
-object of class <code>"BiasType"</code>. </td></tr>
 <tr valign="top"><td><code>tol</code></td>
 <td>
 the desired accuracy (convergence tolerance).</td></tr>

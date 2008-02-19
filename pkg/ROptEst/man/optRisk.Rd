@@ -15,7 +15,7 @@ optRisk(model, risk, ...)
 
 \S4method{optRisk}{L2ParamFamily,asCov}(model, risk)
 
-\S4method{optRisk}{InfRobModel,asRisk}(model, risk, biastype = symmetricBias(),
+\S4method{optRisk}{InfRobModel,asRisk}(model, risk,
                    z.start = NULL, A.start = NULL, upper = 1e4, 
                    maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE)
 
@@ -26,7 +26,6 @@ optRisk(model, risk, ...)
   \item{model}{ probability model }
   \item{risk}{ object of class \code{RiskType} }
   \item{\dots}{ additional parameters }
-  \item{biastype}{ object of class \code{BiasType} }
   \item{z.start}{ initial value for the centering constant. }
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{upper}{ upper bound for the optimal clipping bound. }

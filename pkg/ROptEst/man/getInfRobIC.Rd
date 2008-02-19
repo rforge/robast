@@ -27,25 +27,25 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 
 \S4method{getInfRobIC}{RealRandVariable,asCov,ContNeighborhood}(L2deriv, risk, neighbor, Distr, Finfo, trafo)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asBias,UncondNeighborhood}(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
+\S4method{getInfRobIC}{UnivariateDistribution,asBias,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 
 \S4method{getInfRobIC}{RealRandVariable,asBias,ContNeighborhood}(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
+\S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 
-\S4method{getInfRobIC}{RealRandVariable,asHampel,ContNeighborhood}(L2deriv, risk, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
+\S4method{getInfRobIC}{RealRandVariable,asHampel,ContNeighborhood}(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
+\S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 
-\S4method{getInfRobIC}{RealRandVariable,asGRisk,ContNeighborhood}(L2deriv, risk, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
+\S4method{getInfRobIC}{RealRandVariable,asGRisk,ContNeighborhood}(L2deriv, risk, neighbor,  Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(L2deriv, risk, neighbor, biastype, symm, Finfo, trafo, 
+\S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
 }
 \arguments{
@@ -54,7 +54,6 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
   \item{risk}{ object of class \code{"RiskType"}. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{\dots}{ additional parameters. }
-  \item{biastype}{ object of class \code{"BiasType"}. }
   \item{Distr}{ object of class \code{"Distribution"}. }
   \item{symm}{ logical: indicating symmetry of \code{L2deriv}. }
   \item{DistrSymm}{ object of class \code{"DistributionSymmetry"}. }

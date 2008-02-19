@@ -18,7 +18,15 @@
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,asymmetricBias-method">
+<param name="Local" value="getAsRisk.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,BiasType-method">
+<param name="Local" value="getAsRisk.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,onesidedBias-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -70,19 +78,7 @@
 <param name="Local" value="getBiasIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getBiasIC,IC,ContNeighborhood,L2ParamFamily,BiasType-method">
-<param name="Local" value="getBiasIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getBiasIC,IC,ContNeighborhood,missing,BiasType-method">
-<param name="Local" value="getBiasIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getBiasIC,IC,TotalVarNeighborhood,L2ParamFamily,BiasType-method">
-<param name="Local" value="getBiasIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getBiasIC,IC,TotalVarNeighborhood,missing,BiasType-method">
+<param name="Name" value="getBiasIC,IC,UncondNeighborhood-method">
 <param name="Local" value="getBiasIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -138,7 +134,7 @@
 <param name="Local" value="getIneffDiff.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getIneffDiff,numeric,L2ParamFamily,UncondNeighborhood,asMSE,BiasType-method">
+<param name="Name" value="getIneffDiff,numeric,L2ParamFamily,UncondNeighborhood,asMSE-method">
 <param name="Local" value="getIneffDiff.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -410,11 +406,19 @@
 <param name="Local" value="lowerCaseRadius.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,BiasType-method">
+<param name="Name" value="lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,ANY-method">
 <param name="Local" value="lowerCaseRadius.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="lowerCaseRadius,L2ParamFamily,TotalVarNeighborhood,asMSE,BiasType-method">
+<param name="Name" value="lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,asymmetricBias-method">
+<param name="Local" value="lowerCaseRadius.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,onesidedBias-method">
+<param name="Local" value="lowerCaseRadius.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="lowerCaseRadius,L2ParamFamily,TotalVarNeighborhood,asMSE,ANY-method">
 <param name="Local" value="lowerCaseRadius.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -462,10 +466,6 @@
 <param name="Local" value="optIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="optIC,L2ParamFamily,asCov-method">
-<param name="Local" value="optIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="optIC-methods">
 <param name="Local" value="optIC.html">
 </OBJECT>
@@ -500,14 +500,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="radiusMinimaxIC-methods">
 <param name="Local" value="radiusMinimaxIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="trAsCov-class">
-<param name="Local" value="trAsCov-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="trFiCov-class">
-<param name="Local" value="trFiCov-class.html">
 </OBJECT>
 </UL>
 <LI> <OBJECT type="text/sitemap">
@@ -585,14 +577,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic Function for the Computation of the Standardizing Matrix ">
 <param name="Local" value="getInfStand.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Trace of asymptotic covariance">
-<param name="Local" value="trAsCov-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Trace of finite-sample covariance">
-<param name="Local" value="trFiCov-class.html">
 </OBJECT>
 </UL>
 </UL>

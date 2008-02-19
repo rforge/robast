@@ -4,8 +4,9 @@
 setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution", 
                                    risk = "asUnOvShoot", 
                                    neighbor = "UncondNeighborhood"),
-    function(L2deriv, risk, neighbor, biastype = symmetricBias(), symm, Finfo, trafo, 
+    function(L2deriv, risk, neighbor, symm, Finfo, trafo, 
             upper, maxiter, tol, warn){
+        biastype <- biastype(risk)
         radius <- neighbor@radius
         if(identical(all.equal(radius, 0), TRUE)){
             if(warn) cat("'radius == 0' => (classical) optimal IC\n", 
@@ -14,8 +15,8 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                         neighbor = TotalVarNeighborhood(radius = neighbor@radius),  
                         Finfo = Finfo, trafo = trafo)
             Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,  
-                              biastype = biastype, 
-                              clip = res$b, cent = res$a, stand = res$A, trafo = trafo)
+                              biastype = biastype, clip = res$b, cent = res$a, 
+                              stand = res$A, trafo = trafo)
             res$risk <- c(Risk, res$risk)
             return(res)
         }
@@ -92,11 +93,12 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                 if(warn) cat("The IC algorithm did not converge!\n", 
                              "=> the minimum asymptotic bias (lower case) solution is returned\n")
                 res <- getInfRobIC(L2deriv = L2deriv, risk = asBias(), 
-                                neighbor = neighbor,  biastype = biastype, Finfo = Finfo, 
+                                neighbor = neighbor, Finfo = Finfo, 
                                 symm = symm, trafo = trafo, upper = upper, 
                                 maxiter = maxiter, tol = tol, warn = warn)
                 Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
-                                  clip = res$b, cent = res$a, stand = res$A, trafo = trafo)
+                                  biastype = biastype, clip = res$b, cent = res$a, 
+                                  stand = res$A, trafo = trafo)
                 res$risk <- c(Risk, res$risk)
                 return(res)
             }
@@ -116,7 +118,8 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
         a <- as.vector(A)*z
         b <- abs(as.vector(A))*c0
         Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
-                           biastype = biastype, clip = b, cent = a, stand = A, trafo = trafo)
+                          biastype = biastype, clip = b, cent = a, stand = A, 
+                          trafo = trafo)
 
         return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info))    
     })

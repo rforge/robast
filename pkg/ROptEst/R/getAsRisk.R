@@ -176,12 +176,58 @@ setMethod("getAsRisk", signature(risk = "asUnOvShoot",
     })
 
 ###############################################################################
+## asymptotic onesided bias
+###############################################################################
+setMethod("getAsRisk", signature(risk = "asBias",
+                                 L2deriv = "UnivariateDistribution",
+                                 neighbor = "ContNeighborhood", biastype = "onesidedBias"),
+    function(risk, L2deriv, neighbor, biastype, trafo){
+
+        D1 <- L2deriv
+        if(!is(D1, "DiscreteDistribution")) 
+            return(list(asBias = 0, warn = gettext("not attained by IC")))
+
+        sign <- sign(biastype)
+        w0 <- options("warn")
+        options(warn = -1)
+        
+        l <- length(support(L2deriv))
+        if (sign>0)
+           {z0 <- support(L2deriv)[1]; deltahat <- support(L2deriv)[2]-z0}
+        else
+           {z0 <- support(L2deriv)[l]; deltahat <- z0-support(L2deriv)[l-1]}
+
+        bias <- abs(as.vector(trafo))/abs(z0)
+        return(list(asBias = bias))
+    })
+
+###############################################################################
+## asymptotic asymmetric bias
+###############################################################################
+
+setMethod("getAsRisk", signature(risk = "asBias",
+                                 L2deriv = "UnivariateDistribution",
+                                 neighbor = "ContNeighborhood", 
+                                 biastype = "asymmetricBias"),
+    function(risk, L2deriv, neighbor, biastype, trafo){
+        nu1 <- nu(biastype)[1]
+        nu2 <- nu(biastype)[2]
+        num <- nu2/(nu1+nu2)        
+        z <- q(L2deriv)(num)
+        Int <- E(L2deriv, function(x, m){abs(x-m)}, m = z)
+        omega <- 2/(Int/nu1+Int/nu2)
+        bias <- abs(as.vector(trafo))*omega
+        return(list(asBias = bias))
+    })
+
+###############################################################################
 ## asymptotic semivariance
 ###############################################################################
 
 setMethod("getAsRisk", signature(risk = "asSemivar",
                                  L2deriv = "UnivariateDistribution",
-                                 neighbor = "Neighborhood", biastype = "onesidedBias"),
+                                 neighbor = "Neighborhood", 
+                                 biastype = "onesidedBias"),
     function(risk, L2deriv, neighbor, biastype = positiveBias(), 
              clip, cent, stand, trafo){
         A <- as.vector(stand)*as.vector(trafo)

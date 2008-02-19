@@ -28,13 +28,13 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
 
 \S4method{getRiskIC}{IC,trAsCov,missing,L2ParamFamily}(IC, risk, L2Fam, tol = .Machine$double.eps^0.25)
 
-\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,missing}(IC, risk, neighbor, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,missing}(IC, risk, neighbor, tol = .Machine$double.eps^0.25)
 
-\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
 
-\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,missing}(IC, risk, neighbor, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,missing}(IC, risk, neighbor,  tol = .Machine$double.eps^0.25)
 
-\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
 
 \S4method{getRiskIC}{TotalVarIC,asUnOvShoot,UncondNeighborhood,missing}(IC, risk, neighbor)
 
@@ -48,7 +48,6 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{L2Fam}{ object of class \code{"L2ParamFamily"}. }
   \item{\dots}{ additional parameters }
-  \item{biastype}{ object of class \code{"BiasType"}. }
   \item{tol}{ the desired accuracy (convergence tolerance).}  
   \item{sampleSize}{ integer: sample size. }
   \item{Algo}{ "A" or "B". }

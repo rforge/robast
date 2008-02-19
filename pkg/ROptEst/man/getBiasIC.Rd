@@ -1,37 +1,26 @@
 \name{getBiasIC}
 \alias{getBiasIC}
 \alias{getBiasIC-methods}
-\alias{getBiasIC,IC,ContNeighborhood,missing,BiasType-method}
-\alias{getBiasIC,IC,ContNeighborhood,L2ParamFamily,BiasType-method}
-\alias{getBiasIC,IC,TotalVarNeighborhood,missing,BiasType-method}
-\alias{getBiasIC,IC,TotalVarNeighborhood,L2ParamFamily,BiasType-method}
+\alias{getBiasIC,IC,UncondNeighborhood-method}
 
 \title{Generic function for the computation of the asymptotic bias for an IC}
 \description{
   Generic function for the computation of the asymptotic bias for an IC.
 }
 \usage{
-getBiasIC(IC, neighbor, L2Fam, biastype, ...)
+getBiasIC(IC, neighbor, ...)
 
+\S4method{getBiasIC}{IC,UncondNeighborhood}(IC, neighbor, L2Fam, 
+                     biastype = symmetricBias(), 
+                     tol = .Machine$double.eps^0.25)
 
-\S4method{getBiasIC}{IC,ContNeighborhood,missing,BiasType}(IC, neighbor, 
-          biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
-
-\S4method{getBiasIC}{IC,ContNeighborhood,L2ParamFamily,BiasType}(IC, neighbor, 
-          L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
-
-\S4method{getBiasIC}{IC,TotalVarNeighborhood,missing,BiasType}(IC, neighbor, 
-          biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
-
-\S4method{getBiasIC}{IC,TotalVarNeighborhood,L2ParamFamily,BiasType}(IC, neighbor, 
-          L2Fam, biastype = symmetricBias(), tol = .Machine$double.eps^0.25)
 }
 \arguments{
   \item{IC}{ object of class \code{"InfluenceCurve"} }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
-  \item{L2Fam}{ object of class \code{"L2ParamFamily"}. }
-  \item{biastype}{ object of class \code{"BiasType"}. }
   \item{\dots}{ additional parameters }
+  \item{L2Fam}{ object of class \code{"L2ParamFamily"} or missing. }
+  \item{biastype}{ object of class \code{"BiasType"}. }
   \item{tol}{ the desired accuracy (convergence tolerance).}  
 }
 \details{To make sure that the results are valid, it is recommended
@@ -41,21 +30,9 @@ getBiasIC(IC, neighbor, L2Fam, biastype, ...)
 \section{Methods}{
 \describe{
 
-  \item{IC = "IC", risk = "asBias", neighbor = "ContNeighborhood", L2Fam = "missing", 
-        biastype = "BiasType"}{ asymptotic bias of \code{IC} in case of convex contamination neighborhoods 
-    and symmetric bias. }
+  \item{IC = "IC", neighbor = "UncondNeighborhood":}{
+   asymptotic bias of \code{IC} in case of unconditional neighborhoods. }
 
-  \item{IC = "IC", risk = "asBias", neighbor = "ContNeighborhood", L2Fam = "missing", 
-        biastype = "BiasType"}{ asymptotic bias of \code{IC} under \code{L2Fam} 
-        in case of convex contamination neighborhoods and symmetric bias. }
-
-  \item{IC = "IC", risk = "asBias", neighbor = "TotalVarNeighborhood", L2Fam = "missing", 
-        biastype = "BiasType"}{ asymptotic bias of \code{IC} in case of total variation neighborhoods 
-    and symmetric bias. }
-
-  \item{IC = "IC", risk = "asBias", neighbor = "TotalVarNeighborhood", L2Fam = "missing", 
-        biastype = "BiasType"}{ asymptotic bias of \code{IC} under \code{L2Fam} 
-        in case of total variation neighborhoods and symmetric bias. }
 }}
 \references{
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.

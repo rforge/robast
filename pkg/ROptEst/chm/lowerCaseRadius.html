@@ -7,8 +7,10 @@
 <table width="100%"><tr><td>lowerCaseRadius(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   lowerCaseRadius">
 <param name="keyword" value="R:   lowerCaseRadius-methods">
-<param name="keyword" value="R:   lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,BiasType-method">
-<param name="keyword" value="R:   lowerCaseRadius,L2ParamFamily,TotalVarNeighborhood,asMSE,BiasType-method">
+<param name="keyword" value="R:   lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,ANY-method">
+<param name="keyword" value="R:   lowerCaseRadius,L2ParamFamily,TotalVarNeighborhood,asMSE,ANY-method">
+<param name="keyword" value="R:   lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,onesidedBias-method">
+<param name="keyword" value="R:   lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,asymmetricBias-method">
 <param name="keyword" value=" Computation of the lower case radius">
 </object>
 
@@ -67,6 +69,16 @@ for symmetric bias.</dd>
 <dt>L2Fam = "L2ParamFamily", neighbor = "TotalVarNeighborhood", risk = "asMSE",
 biastype = "BiasType"</dt><dd>lower case radius for risk <code>"asMSE"</code> in case of <code>"TotalVarNeighborhood"</code>;
 (argument biastype is just for signature reasons).</dd>
+
+
+<dt>L2Fam = "L2ParamFamily", neighbor = "ContNeighborhood", risk = "asMSE",
+biastype = "onesidedBias"</dt><dd>lower case radius for risk <code>"asMSE"</code> in case of <code>"ContNeighborhood"</code>
+for onesided bias.</dd>
+
+
+<dt>L2Fam = "L2ParamFamily", neighbor = "ContNeighborhood", risk = "asMSE",
+biastype = "asymmetricBias"</dt><dd>lower case radius for risk <code>"asMSE"</code> in case of <code>"ContNeighborhood"</code>
+for asymmetric bias.</dd>
 </dl>
 
 <h3>Author(s)</h3>

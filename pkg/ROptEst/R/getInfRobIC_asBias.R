@@ -4,24 +4,23 @@
 setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution", 
                                    risk = "asBias", 
                                    neighbor = "UncondNeighborhood"),
-    function(L2deriv, risk, neighbor, biastype = symmetricBias(), symm, 
-             Finfo, trafo, upper, maxiter, tol, warn){
-        
-        minmaxBias(L2deriv, neighbor, biastype, symm, 
+    function(L2deriv, risk, neighbor, symm, Finfo, trafo, upper, maxiter, 
+             tol, warn){
+        minmaxBias(L2deriv, neighbor, biastype(risk), symm, 
                    Finfo, trafo, upper, maxiter, tol, warn)
     })
 setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable", 
                                    risk = "asBias", 
                                    neighbor = "ContNeighborhood"),
-    function(L2deriv, risk, neighbor, biastype = symmetricBias(), 
-             Distr, DistrSymm, L2derivSymm, L2derivDistrSymm, Finfo, 
-             z.start, A.start, trafo, upper, 
+    function(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
+             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, 
              maxiter, tol, warn){                
-        minmaxBias(L2deriv, neighbor, biastype, 
+        minmaxBias(L2deriv, neighbor, biastype(risk), 
              Distr, DistrSymm, L2derivSymm, L2derivDistrSymm, Finfo, 
              z.start, A.start, trafo, upper, 
              maxiter, tol, warn)
     })
+
 
 setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution", 
                                    neighbor = "ContNeighborhood",
@@ -48,6 +47,7 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
 
         return(list(A = A, a = zi*z, b = b, d = d, risk = Risk, info = info))    
     })
+
 setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution", 
                                    neighbor = "TotalVarNeighborhood",
                                    biastype = "BiasType"),
@@ -73,6 +73,7 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
 
         return(list(A = A, a = a, b = b, d = 1, risk = Risk, info = info))
     })
+
 setMethod("minmaxBias", signature(L2deriv = "RealRandVariable", 
                                    neighbor = "ContNeighborhood", 
                                    biastype = "BiasType"),

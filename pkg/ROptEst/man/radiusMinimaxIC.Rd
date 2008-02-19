@@ -11,16 +11,14 @@
 radiusMinimaxIC(L2Fam, neighbor, risk, ...)
 
 \S4method{radiusMinimaxIC}{L2ParamFamily,UncondNeighborhood,asGRisk}(
-        L2Fam, neighbor, risk, biastype = symmetricBias(),
-        loRad, upRad, z.start = NULL, A.start = NULL, upper = 1e5, 
-        maxiter = 100, tol = .Machine$double.eps^0.4, warn = FALSE)
+        L2Fam, neighbor, risk, loRad, upRad, z.start = NULL, A.start = NULL, 
+        upper = 1e5, maxiter = 100, tol = .Machine$double.eps^0.4, warn = FALSE)
 }
 \arguments{
   \item{L2Fam}{ L2-differentiable family of probability measures. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{risk}{ object of class \code{"RiskType"}. }
   \item{\dots}{ additional parameters. }
-  \item{biastype}{ object of class \code{"BiasType"}. }
   \item{loRad}{ the lower end point of the interval to be searched. }
   \item{upRad}{ the upper end point of the interval to be searched. }
   \item{z.start}{ initial value for the centering constant. }
@@ -38,6 +36,9 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
     computation of the radius minimax IC for an L2 differentiable parametric family. }
 }}
 \references{ 
+  Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
+  the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
+
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
   the Radius. Submitted. Appeared as discussion paper Nr. 81. 
   SFB 373 (Quantification and Simulation of Economic Processes),
