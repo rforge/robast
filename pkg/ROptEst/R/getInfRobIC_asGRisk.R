@@ -26,17 +26,17 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             S <- symm@SymmCenter == 0
         else
             S <- FALSE
-                
+
         repeat{
             iter <- iter + 1
             z.old <- z
             c0.old <- c0
             c0 <- try(uniroot(getInfClip, 
-        lower = .Machine$double.eps^0.75, 
-        upper = upper, 
 ## new
 #lower = getL1normL2deriv(L2deriv = L2deriv, cent = z)/ (1 + neighbor@radius^2), 
+                        lower = .Machine$double.eps^0.75, 
 #upper = sqrt( ( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) ), 
+                        upper = upper, 
 ##
                         tol = tol, L2deriv = L2deriv, risk = risk, 
                         neighbor = neighbor,  biastype = biastype,
@@ -67,7 +67,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             }
         }
         info <- paste("optimally robust IC for", sQuote(class(risk)[1]))
-        A <- getInfStand(L2deriv = L2deriv, neighbor = neighbor, 
+        A <- getInfStand(L2deriv = L2deriv, neighbor = neighbor,
                      biastype = biastype, clip = c0, cent = z, trafo = trafo)
         a <- as.vector(A)*z
         b <- abs(as.vector(A))*c0
@@ -76,7 +76,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                           trafo = trafo)
         Risk <- c(Risk, list(asBias = b))
 
-        return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info))    
+        return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info))
     })
 setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable", 
                                    risk = "asGRisk", 
@@ -130,15 +130,12 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             b.old <- b
             A.old <- A
             b <- try(uniroot(getInfClip, 
-            
-        lower = .Machine$double.eps^0.75, 
-        upper = upper, 
 ## new
-#lower = getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A, 
-#                         Distr = Distr)/(1+neighbor@radius^2),
-#upper = sqrt( sum( diag(A%*%Finfo%*%t(A)) + (A%*%z)^2) / 
-#              ((1 + neighbor@radius^2)^2-1)),
-##                     
+#lower = getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A, Distr = Distr)/(1+neighbor@radius^2),
+#upper = sqrt( sum( diag(A%*%Finfo%*%t(A)) + (A%*%z)^2) / ((1 + neighbor@radius^2)^2-1)),
+                         lower = .Machine$double.eps^0.75, 
+                         upper = upper, 
+##
                          tol = tol, L2deriv = L2deriv, risk = risk, 
                          biastype = biastype, Distr = Distr, neighbor = neighbor, 
                          stand = A, cent = z, trafo = trafo)$root, silent = TRUE)
