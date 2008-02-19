@@ -1,18 +1,18 @@
 ###############################################################################
-# computation of bias
+## computation of bias
 ###############################################################################
 .Tu1rlsGetbias <- function(x, a){
     A.loc <- 1/(2*a*dnorm(a)*(a^2 - 15) + (a^4 - 6*a^2 + 15)*(2*pnorm(a)-1))
     A.sc <- 1/(2*A.loc*integrate(f = function(x, a0){ 2*x^2*(a0^2-x^2)*(a0^2-3*x^2)*dnorm(x) }, 
                 lower = 0, upper = a, rel.tol = .Machine$double.eps^0.5, a0 = a)$value)
-    
+
     return(sqrt(x^2*(pmax((a^2-x^2),0))^4*A.loc^2 
                 + (x^2*pmax((a^2-x^2),0)^2*A.loc - 1)^2*A.sc^2))
 }
 
 
 ###############################################################################
-# computation of asymptotic variance
+## computation of asymptotic variance
 ###############################################################################
 .Tu1rlsGetvar <- function(a){
     A.loc <- 1/(2*a*dnorm(a)*(a^2 - 15) + (a^4 - 6*a^2 + 15)*(2*pnorm(a)-1))
@@ -28,7 +28,7 @@
 }
 
 ###############################################################################
-# computation of maximum asymptotic MSE
+## computation of maximum asymptotic MSE
 ###############################################################################
 .Tu1rlsGetmse <- function(a, r){
     x <- seq(from = 0, to = a, by = 0.01)
@@ -40,12 +40,12 @@
     else
         b <- optimize(f=.Tu1rlsGetbias, lower=x[index-1], upper=x[index+1], 
                     maximum=TRUE, tol=.Machine$double.eps^0.5, a=a)$objective
-    
+
     return(.Tu1rlsGetvar(a = a) + r^2*b^2)
 }
 
 ###############################################################################
-# optimal IC
+## optimal IC
 ###############################################################################
 rlsOptIC.Tu1 <- function(r, aUp = 10, delta = 1e-6){
     res <- optimize(f = .Tu1rlsGetmse, lower = 1e-4, upper = aUp, 
@@ -57,8 +57,8 @@ rlsOptIC.Tu1 <- function(r, aUp = 10, delta = 1e-6){
                 lower = 0, upper = a, rel.tol = .Machine$double.eps^0.5, a0 = a)$value)
 
     x <- seq(from = 0, to = a, by = 0.01)
-    bias <- sapply(x, .Tu1rlsGetbias, a = a)  
-    index <- which.max(bias)  
+    bias <- sapply(x, .Tu1rlsGetbias, a = a)
+    index <- which.max(bias)
     if(index==length(x))
         b <- optimize(f=.Tu1rlsGetbias, lower=x[index-1], upper=x[index], 
                     maximum=TRUE, tol=.Machine$double.eps^0.5, a=a)$objective
@@ -72,7 +72,7 @@ rlsOptIC.Tu1 <- function(r, aUp = 10, delta = 1e-6){
     fct2 <- function(x){ A.sc*(A.loc*x^2*(a^2 - x^2)^2*(abs(x) < a) - 1) }
     body(fct2) <- substitute({ A.sc*(A.loc*x^2*(a^2 - x^2)^2*(abs(x) < a) - 1) },
                         list(a = a, A.loc = A.loc, A.sc = A.sc))
-    
+
     return(IC(name = "IC of Tu1 type", 
               Curve = EuclRandVarList(RealRandVariable(Map = list(fct1, fct2), Domain = Reals())),
               Risks = list(asMSE = res$objective, asBias = b, asCov = res$objective - r^2*b^2), 

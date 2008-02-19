@@ -1,13 +1,13 @@
 ###############################################################################
-# optimal psi function
+## optimal psi function
 ###############################################################################
 lsHu1.chi <- function(x, k){ 
-    beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)    
+    beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)
     return(pmin(x^2, k^2) - beta.k) 
 }
 
 ###############################################################################
-# computation of bias
+## computation of bias
 ###############################################################################
 .Hu1rlsGetbias <- function(x, k){
     beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)
@@ -17,7 +17,7 @@ lsHu1.chi <- function(x, k){
 
 
 ###############################################################################
-# computation of asymptotic variance
+## computation of asymptotic variance
 ###############################################################################
 .Hu1rlsGetvar <- function(k){
     beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)
@@ -31,7 +31,7 @@ lsHu1.chi <- function(x, k){
 
 
 ###############################################################################
-# computation of maximum asymptotic MSE
+## computation of maximum asymptotic MSE
 ###############################################################################
 .Hu1rlsGetmse <- function(k, r){
     beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)
@@ -48,12 +48,12 @@ lsHu1.chi <- function(x, k){
 
 
 ###############################################################################
-# optimal IC
+## optimal IC
 ###############################################################################
 rlsOptIC.Hu1 <- function(r, kUp = 2.5, delta = 1e-6){
     res <- optimize(f = .Hu1rlsGetmse, lower = 1e-4, upper = kUp, 
                 tol = delta, r = r)
-                                                                        
+
     k <- res$minimum
     beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)
     A.loc <- 1/(2*pnorm(k)-1)
@@ -70,7 +70,7 @@ rlsOptIC.Hu1 <- function(r, kUp = 2.5, delta = 1e-6){
     fct2 <- function(x){ A.sc*(pmin(x^2, k^2) - beta.k) }
     body(fct2) <- substitute({ A.sc*(pmin(x^2, k^2) - beta.k) },
                         list(k = k, beta.k = beta.k, A.sc = A.sc))
-    
+
     return(IC(name = "IC of Hu1 type", 
               Curve = EuclRandVarList(RealRandVariable(Map = list(fct1, fct2), Domain = Reals())),
               Risks = list(asMSE = res$objective, asBias = bias, asCov = res$objective - r^2*bias^2), 

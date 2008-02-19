@@ -1,5 +1,5 @@
 ###############################################################################
-# computation of bias
+## computation of bias
 ###############################################################################
 .Ha4rlsGetbias <- function(x, k, a, b, c0){
     beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)
@@ -11,7 +11,7 @@
 
 
 ###############################################################################
-# computation of asymptotic variance
+## computation of asymptotic variance
 ###############################################################################
 .Ha4rlsGetvar <- function(a, b, c0, k){
     h1 <- 2*(-a*dnorm(a) + pnorm(a) - 0.5 + a^2*(pnorm(b)-pnorm(a)) 
@@ -24,13 +24,13 @@
     beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)
     E.psi.4 <- 3*(2*pnorm(k)-1) - 2*(k^3+3*k)*dnorm(k) + 2*k^4*pnorm(-k)
     Var.sc <- (E.psi.4 - beta.k^2)/(2*(2*pnorm(k) - 1) - 4*k*dnorm(k))^2
-    
+
     return(Var.loc+Var.sc)
 }
 
 
 ###############################################################################
-# computation of maximum asymptotic MSE
+## computation of maximum asymptotic MSE
 ###############################################################################
 .Ha4rlsGetmse <- function(abc0k, r, MAX){
     a <- abc0k[1]; b <- abc0k[2]; c0 <- abc0k[3]; k <- abc0k[4]
@@ -47,12 +47,12 @@
                 .Ha4rlsGetbias(x = c0, k = k, a = a, b = b, c0 = c0), 
                 .Ha4rlsGetbias(x = sqrt(beta.k), k = k, a = a, b = b, c0 = c0), 
                 .Ha4rlsGetbias(x = k, k = k, a = a, b = b, c0 = c0))
-    
+
     return(Var + r^2*bias^2)
 }
 
 ###############################################################################
-# optimal IC
+## optimal IC
 ###############################################################################
 rlsOptIC.Ha4 <- function(r, a.start = 0.25, b.start = 2.5, c.start = 5.0, 
                         k.start = 1.0, delta = 1e-6, MAX = 100){
@@ -79,7 +79,7 @@ rlsOptIC.Ha4 <- function(r, a.start = 0.25, b.start = 2.5, c.start = 5.0,
     fct2 <- function(x){ A.sc*(pmin(x^2, k^2) - beta.k) }
     body(fct2) <- substitute({ A.sc*(pmin(x^2, k^2) - beta.k) },
                         list(k = k, beta.k = beta.k, A.sc = A.sc))
-    
+
     return(IC(name = "IC of Ha4 type", 
               Curve = EuclRandVarList(RealRandVariable(Map = list(fct1, fct2), Domain = Reals())),
               Risks = list(asMSE = res$value, asBias = bias, asCov = res$value - r^2*bias^2), 

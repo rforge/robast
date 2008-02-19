@@ -1,5 +1,5 @@
 ###############################################################################
-# Computation of C_1
+## Computation of C_1
 ###############################################################################
 .MrlsGetC1 <- function(gg){
     integrandC1 <- function(x, gg){ dnorm(x)/(1+gg^2*x^2) }
@@ -9,7 +9,7 @@
 
 
 ###############################################################################
-# Computation of C_3 
+## Computation of C_3 
 ###############################################################################
 .MrlsGetC3 <- function(gg){
     integrandC3 <- function(x, gg){ dnorm(x)*x^4/(1+gg^2*x^2) }
@@ -21,20 +21,20 @@
 
 
 ###############################################################################
-# weight function
+## weight function
 ###############################################################################
 .MrlsGetw <- function(x, gg, b, a1, a3){
     gvct <- (a1*x + a3*x^3)/sqrt(1 + gg^2*x^2)
     bvct <- sqrt(b^2 - gg^2/(1 + gg^2*x^2))
     absgvct <- abs(gvct)    
     ind1 <- (absgvct < bvct)
-    
+
     return(ind1 + (1-ind1)*bvct/absgvct)
 }
 
 
 ###############################################################################
-# psi function
+## psi function
 ###############################################################################
 .MrlsGetpsi <- function(x, gg, b, a1, a3){
     gvct <- (a1*x + a3*x^3)/sqrt(1+gg^2*x^2)
@@ -45,7 +45,7 @@
 
 
 ###############################################################################
-# computation of r
+## computation of r
 ###############################################################################
 .MrlsGetr <- function(b, r, gg, a1, a3){
     integrandr <- function(x, gg, b, a1, a3){
@@ -65,19 +65,19 @@
 
 
 ###############################################################################
-# computation of a1 und a3 
+## computation of a1 und a3 
 ###############################################################################
 .MrlsGeta1a3 <- function(gg, b, a1, a3){
     C1 <- .MrlsGetC1(gg = gg)
     C3 <- .MrlsGetC3(gg = gg)
-    
+
     integrand1 <- function(x, gg, b, a1, a3){
         dnorm(x)*x^2*.MrlsGetw(x, gg, b, a1, a3)/(1+gg^2*x^2)
     }
     Int1 <- 2*integrate(integrand1, lower = 0, upper = Inf, 
                 rel.tol = .Machine$double.eps^0.5, gg = gg, b = b, 
                 a1 = a1, a3 = a3)$value
-        
+
     integrand2 <- function(x, gg, b, a1, a3){
         dnorm(x)*x^4*.MrlsGetw(x, gg, b, a1, a3)/(1+gg^2*x^2)
     }
@@ -91,17 +91,17 @@
     Int3 <- 2*integrate(integrand3, lower = 0, upper = Inf,
                 rel.tol = .Machine$double.eps^0.5, gg = gg, b = b, 
                 a1 = a1, a3 = a3)$value
-        
+
     D1 <- Int1*Int3 - Int2^2
     a1 <- (Int3*C1 + Int2*C3)/D1
     a3 <- (Int2*C1 + Int1*C3)/D1
-        
+
     return(list(a1 = a1, a3 = a3))
 }
 
 
 ###############################################################################
-# computation of b, a1 and a3
+## computation of b, a1 and a3
 ###############################################################################
 .MrlsGetba1a3 <- function(r, gg, a1.start, a3.start, bUp, delta, itmax, check){
     a1 <- a1.start; a3 <- a3.start
@@ -110,7 +110,7 @@
             a1 = a1, a3 = a3)$root, silent = TRUE)
     if(!is.numeric(b)) b <- gg
 
-    iter <- 0    
+    iter <- 0
     repeat{
         iter <- iter + 1
         if(iter > itmax){
@@ -120,21 +120,20 @@
             return(c(NA, NA, NA))
         }
         a1.old <- a1; a3.old <- a3; b.old <- b
-        
+
         a1a3 <- .MrlsGeta1a3(gg = gg, b = b, a1 = a1, a3 = a3)
         a1 <- a1a3$a1; a3 <- a1a3$a3
-        
+
         b <- try(uniroot(.MrlsGetr, lower = gg, upper = bUp, 
                 tol = .Machine$double.eps^0.5, r =r, gg = gg, 
                 a1 = a1, a3 = a3)$root, silent = TRUE)
         if(!is.numeric(b)) b <- gg
-        
+
         if(max(abs(b-b.old), abs(a1-a1.old), abs(a3-a3.old)) < delta)
-            break                    
+            break
     }
 
-    if(check) # check constraints
-    {        
+    if(check){ # check constraints
         integrand1 <- function(x, gg, b, a1, a3){
             x*.MrlsGetpsi(x, gg, b, a1, a3)*dnorm(x)
         }
@@ -160,23 +159,23 @@
 
 
 ###############################################################################
-# computation of asymptotic variance \Ew|\rho|^2
+## computation of asymptotic variance \Ew|\rho|^2
 ###############################################################################
-.MrlsGetvar <- function(gg, b, a1, a3){    
+.MrlsGetvar <- function(gg, b, a1, a3){
     C1 <- .MrlsGetC1(gg = gg)
-    
+
     integrandVar <- function(x, gg, b, a1, a3){
         dnorm(x)*(a1*x + a3*x^3)^2*.MrlsGetw(x, gg, b, a1, a3)^2/(1+gg^2*x^2)
     }
     Int <- integrate(integrandVar, lower = 0, upper = Inf,
                 rel.tol = .Machine$double.eps^0.5, gg = gg, b = b, 
                 a1 = a1, a3 = a3)$value
-    
+
     return(2*Int + gg^2*C1)
 }
 
 ###############################################################################
-# computation of maximum asymptotic MSE
+## computation of maximum asymptotic MSE
 ###############################################################################
 .MrlsGetmse <- function(gg, r, a1.start, a3.start, bUp, delta, itmax, check){
     ba1a3 <- .MrlsGetba1a3(r = r, gg = gg, a1.start = a1.start, a3.start = a3.start, 
@@ -185,14 +184,14 @@
 
     Var <- .MrlsGetvar(gg = gg, b = b, a1 = a1, a3 = a3)
     mse <- Var + r^2*b^2
-    
+
 #    cat("current gamma:\t", gg, "\tcurrent MSE:\t", mse, "\n")
     return(mse)
 }
 
 
 ###############################################################################
-# optimal IC
+## optimal IC
 ###############################################################################
 rlsOptIC.M <- function(r, ggLo = 0.5, ggUp = 1.5, a1.start = 0.75, a3.start = 0.25, 
                      bUp = 1000, delta = 1e-5, itmax = 100, check = FALSE){
@@ -206,7 +205,7 @@ rlsOptIC.M <- function(r, ggLo = 0.5, ggUp = 1.5, a1.start = 0.75, a3.start = 0.
 
     a1 <- ba1a3$a1; a3 <- ba1a3$a3; b <- ba1a3$b
     gg <- res$minimum
-    
+
     w <- .MrlsGetw
     fct1 <- function(x){ 
         wfct <- w 

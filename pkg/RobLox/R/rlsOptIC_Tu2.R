@@ -1,5 +1,5 @@
 ###############################################################################
-# computation of bias
+## computation of bias
 ###############################################################################
 .Tu2rlsGetbias <- function(x, a, k){
     beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)
@@ -9,7 +9,7 @@
 }
 
 ###############################################################################
-# computation of asymptotic variance
+## computation of asymptotic variance
 ###############################################################################
 .Tu2rlsGetvar <- function(a, k){
     h1 <- 2*integrate(f = function(x, a0){ x^2*(a0^2-x^2)^4*dnorm(x) }, lower = 0, 
@@ -24,26 +24,26 @@
 }
 
 ###############################################################################
-# computation of maximum asymptotic MSE
+## computation of maximum asymptotic MSE
 ###############################################################################
 .Tu2rlsGetmse <- function(ak, r, MAX){
     a <- ak[1]; k <- ak[2]
-    
+
     # constraints
     if(a < 0 || k < 0) return(MAX)
 
-    beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)    
+    beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)
     b <- max(.Tu2rlsGetbias(x = 0, a = a, k = k), 
              .Tu2rlsGetbias(x = a, a = a, k = k), 
              .Tu2rlsGetbias(x = a/sqrt(5), a = a, k = k), 
              .Tu2rlsGetbias(x = k, a = a, k = k), 
              .Tu2rlsGetbias(x = sqrt(beta.k), a = a, k = k))
-    
+
     return(.Tu2rlsGetvar(a = a, k = k) + r^2*b^2)
 }
 
 ###############################################################################
-# optimal IC
+## optimal IC
 ###############################################################################
 rlsOptIC.Tu2 <- function(r, a.start = 5, k.start = 1.5, delta = 1e-6, MAX = 100){
     res <- optim(c(a.start, k.start), .Tu2rlsGetmse, method = "Nelder-Mead", 
@@ -52,7 +52,7 @@ rlsOptIC.Tu2 <- function(r, a.start = 5, k.start = 1.5, delta = 1e-6, MAX = 100)
     a <- res$par[1]; k <- res$par[2]
     A.loc <- 1/(2*a*dnorm(a)*(a^2 - 15) + (a^4 - 6*a^2 + 15)*(2*pnorm(a)-1))
 
-    beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)    
+    beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)
     bias <- max(.Tu2rlsGetbias(x = 0, a = a, k = k), 
                 .Tu2rlsGetbias(x = a, a = a, k = k), 
                 .Tu2rlsGetbias(x = a/sqrt(5), a = a, k = k), 

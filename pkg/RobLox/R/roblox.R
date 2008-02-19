@@ -1,14 +1,14 @@
 ###############################################################################
-# computation of radius-minimax IC
+## computation of radius-minimax IC
 ###############################################################################
 .getlsInterval <- function(r, rlo, rup, mean, sd, delta, A.loc.start, 
-                           a.sc.start, A.sc.start, bUp, itmax){    
+                           a.sc.start, A.sc.start, bUp, itmax){
     Ab <- rlsOptIC.AL(r = r, mean = mean, sd = sd, A.loc.start = A.loc.start, 
                       a.sc.start = a.sc.start, A.sc.start = A.sc.start, 
                       bUp = bUp, delta = delta, itmax = itmax, computeIC = FALSE)
 
     if(rlo == 0){
-        efflo <- (sum(diag(Ab$A)) - Ab$b^2*r^2)/(1.5*sd^2)        
+        efflo <- (sum(diag(Ab$A)) - Ab$b^2*r^2)/(1.5*sd^2)
     }else{
         Ablo <- rlsOptIC.AL(r = rlo, mean = mean, sd = sd, A.loc.start = A.loc.start, 
                             a.sc.start = a.sc.start, A.sc.start = A.sc.start, 
@@ -20,10 +20,10 @@
                         a.sc.start = a.sc.start, A.sc.start = A.sc.start, 
                         bUp = bUp, delta = delta, itmax = itmax, computeIC = FALSE)
     effup <- (sum(diag(Ab$A)) - Ab$b^2*(r^2 - rup^2))/sum(diag(Abup$A))
-    
+
     return(effup-efflo)
 }
-.getlInterval <- function(r, rlo, rup, mean, sd, bUp){    
+.getlInterval <- function(r, rlo, rup, mean, sd, bUp){
     Ab <- rlOptIC(r = r, mean = mean, sd = sd, bUp = bUp, computeIC = FALSE)
 
     if(rlo == 0){
@@ -35,10 +35,10 @@
 
     Abup <- rlOptIC(r = rup, mean = mean, sd = sd, bUp = bUp, computeIC = FALSE)
     effup <- (Ab$A - Ab$b^2*(r^2 - rup^2))/Abup$A
-    
+
     return(effup-efflo)
 }
-.getsInterval <- function(r, rlo, rup, mean, sd, delta, bUp, itmax){    
+.getsInterval <- function(r, rlo, rup, mean, sd, delta, bUp, itmax){
     Ab <- rsOptIC(r = r, mean = mean, sd = sd, bUp = bUp, delta = delta, 
                   itmax = itmax, computeIC = FALSE)
 
@@ -53,11 +53,11 @@
     Abup <- rsOptIC(r = rup, mean = mean, sd = sd, bUp = bUp, delta = delta, 
                       itmax = itmax, computeIC = FALSE)
     effup <- (Ab$A - Ab$b^2*(r^2 - rup^2))/Abup$A
-    
+
     return(effup-efflo)
 }
 ###############################################################################
-# optimally robust estimator for normal location and/or scale
+## optimally robust estimator for normal location and/or scale
 ###############################################################################
 roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "ksMD", 
                    tol = 1e-6, A.loc.start = 1, a.sc.start = 0, A.sc.start = 0.5, 
@@ -86,7 +86,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "ksMD",
     }
     if((initial.est != "ksMD") && (initial.est != "med"))
         stop("invalid 'initial.est'")
-    
+
     if(missing(mean) & missing(sd)){
         if(!is.numeric(A.loc.start) || !is.numeric(a.sc.start) || !is.numeric(A.sc.start))
             stop("Starting values 'A.loc.start', 'a.sc.start' and 'A.sc.start' have to be numeric")
@@ -133,7 +133,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "ksMD",
                                A.sc.start = A.sc.start, bUp = bUp, delta = tol, 
                                itmax = itmax)
             if(rlo == 0){
-                ineff <- (sum(diag(stand(IC1))) - clip(IC1)^2*r^2)/(1.5*sd^2)        
+                ineff <- (sum(diag(stand(IC1))) - clip(IC1)^2*r^2)/(1.5*sd^2)
             }else{
                 Ablo <- rlsOptIC.AL(r = rlo, mean = mean, sd = sd, A.loc.start = A.loc.start, 
                                     a.sc.start = a.sc.start, A.sc.start = A.sc.start, 
@@ -254,4 +254,4 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "ksMD",
             }
         }
     }
-}   
+}

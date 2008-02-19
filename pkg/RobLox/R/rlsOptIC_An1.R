@@ -1,10 +1,10 @@
 ###############################################################################
-# psi function
+## psi function
 ###############################################################################
 lsAn1.psi <- function(x, a){ sin(x/a)*(abs(x) < a*pi) }
 
 ###############################################################################
-# chi function
+## chi function
 ###############################################################################
 lsAn1.chi <- function(x, a){ 
     A.loc <- 1/(2*integrate(f = function(x, a0){cos(x/a0)*dnorm(x)/a0}, lower = 0, 
@@ -14,7 +14,7 @@ lsAn1.chi <- function(x, a){
 }
 
 ###############################################################################
-# computation of bias
+## computation of bias
 ###############################################################################
 .An1rlsGetbias <- function(x, a){
     A.loc <- 1/(2*integrate(f = function(x, a0){cos(x/a0)*dnorm(x)/a0}, lower = 0, 
@@ -24,13 +24,13 @@ lsAn1.chi <- function(x, a){
     Int2 <- integrate(f = function(x, a0){x^2*cos(x/a0)/a0*dnorm(x)}, lower = 0, 
                     upper = a*pi, rel.tol = .Machine$double.eps^0.5, a0 = a)$value
     A.sc <- 1/(2*A.loc*(Int1 + Int2))
-            
+
     return(sqrt(A.loc^2*(sin(x/a)*(abs(x) < a*pi))^2 
                 + A.sc^2*(A.loc*x*sin(x/a)*(abs(x) < a*pi) - 1)^2))
 }
 
 ###############################################################################
-# computation of asymptotic variance
+## computation of asymptotic variance
 ###############################################################################
 .An1rlsGetvar <- function(a){
     A.loc <- 1/(2*integrate(f = function(x, a0){cos(x/a0)*dnorm(x)/a0}, lower = 0, 
@@ -50,11 +50,11 @@ lsAn1.chi <- function(x, a){
 }
 
 ###############################################################################
-# computation of maximum asymptotic MSE
+## computation of maximum asymptotic MSE
 ###############################################################################
 .An1rlsGetmse <- function(a, r){
     Var <- .An1rlsGetvar(a = a)
-    
+
     x <- seq(from=0, to=a*pi, by = 0.01)
     bias <- sapply(x, .An1rlsGetbias, a = a)  
     index <- which.max(bias)  
@@ -66,7 +66,7 @@ lsAn1.chi <- function(x, a){
 }
 
 ###############################################################################
-# optimal IC
+## optimal IC
 ###############################################################################
 rlsOptIC.An1 <- function(r, aUp = 2.5, delta = 1e-6){
     res <- optimize(f = .An1rlsGetmse, lower = 1e-4, upper = aUp, 
@@ -94,7 +94,7 @@ rlsOptIC.An1 <- function(r, aUp = 2.5, delta = 1e-6){
     fct2 <- function(x){ A.sc*(A.loc*x*sin(x/a)*(abs(x) < a*pi) - 1) }
     body(fct2) <- substitute({ A.sc*(A.loc*x*sin(x/a)*(abs(x) < a*pi) - 1) },
                         list(a = a, A.loc = A.loc, A.sc = A.sc))
-    
+
     return(IC(name = "IC of An1 type", 
               Curve = EuclRandVarList(RealRandVariable(Map = list(fct1, fct2), Domain = Reals())),
               Risks = list(asMSE = res$objective, asBias = b, asCov = res$objective - r^2*b^2), 

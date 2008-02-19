@@ -1,12 +1,12 @@
 ###############################################################################
-# psi function
+## psi function
 ###############################################################################
 .Hu2arlsGetpsi <- function(x, k1, k2){
     return(sign(x)*pmax(k1,pmin(abs(x),k2)))
 }
 
 ###############################################################################
-# computation of bias
+## computation of bias
 ###############################################################################
 .Hu2arlsGetbias <- function(x, k1, k2){
     beta.k12 <- (k1^2*(2*pnorm(k1) - 1) - 2*(k2*dnorm(k2)-k1*dnorm(k1)) 
@@ -18,7 +18,7 @@
 
 
 ###############################################################################
-# computation of asymptotic variance
+## computation of asymptotic variance
 ###############################################################################
 .Hu2arlsGetvar <- function(k1, k2){
     beta.k12 <- (k1^2*(2*pnorm(k1) - 1) - 2*(k2*dnorm(k2) - k1*dnorm(k1)) 
@@ -34,7 +34,7 @@
 }
 
 ###############################################################################
-# computation of maximum asymptotic MSE
+## computation of maximum asymptotic MSE
 ###############################################################################
 .Hu2arlsGetmse <- function(k12, r, MAX){
     k1 <- k12[1]; k2 <- k12[2]
@@ -60,7 +60,7 @@
 }
 
 ###############################################################################
-# optimal IC
+## optimal IC
 ###############################################################################
 rlsOptIC.Hu2a <- function(r, k1.start = 0.25, k2.start = 2.5, delta = 1e-6, MAX = 100){
     res <- optim(c(k1.start, k2.start), .Hu2arlsGetmse, method = "Nelder-Mead", 
@@ -86,7 +86,7 @@ rlsOptIC.Hu2a <- function(r, k1.start = 0.25, k2.start = 2.5, delta = 1e-6, MAX 
     fct2 <- function(x){ A.sc*(pmax(k1,pmin(abs(x),k2))^2 - beta.k12) }
     body(fct2) <- substitute({ A.sc*(pmax(k1,pmin(abs(x),k2))^2 - beta.k12) },
                         list(k1 = k1, k2 = k2, beta.k12 = beta.k12, A.sc = A.sc))
-    
+
     return(IC(name = "IC of Hu2a type", 
               Curve = EuclRandVarList(RealRandVariable(Map = list(fct1, fct2), Domain = Reals())),
               Risks = list(asMSE = res$value, asBias = bias, asCov = res$value - r^2*bias^2), 

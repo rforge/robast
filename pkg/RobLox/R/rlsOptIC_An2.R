@@ -1,5 +1,5 @@
 ###############################################################################
-# computation of bias
+## computation of bias
 ###############################################################################
 .An2rlsGetbias <- function(x, a, k){
     beta.k <- 2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*pnorm(-k)
@@ -12,7 +12,7 @@
 }
 
 ###############################################################################
-# computation of asymptotic variance
+## computation of asymptotic variance
 ###############################################################################
 .An2rlsGetvar <- function(a, k){
     h1 <- 2*integrate(f=function(x, a0){ sin(x/a0)^2*dnorm(x) }, lower = 0, 
@@ -29,11 +29,11 @@
 }
 
 ###############################################################################
-# computation of maximum asymptotic MSE
+## computation of maximum asymptotic MSE
 ###############################################################################
 .An2rlsGetmse <- function(ak, r, MAX){
     a <- ak[1]; k <- ak[2]
-    
+
     # constraints
     if(a < 0 || k < 0) return(MAX)
 
@@ -50,14 +50,14 @@
 }
 
 ###############################################################################
-# optimal IC
+## optimal IC
 ###############################################################################
 rlsOptIC.An2 <- function(r, a.start = 1.5, k.start = 1.5, delta = 1e-6, MAX = 100){
     res <- optim(c(a.start, k.start), .An2rlsGetmse, method = "Nelder-Mead", 
                 control = list(reltol=delta), r = r, MAX = MAX)
 
     a <- res$par[1]; k <- res$par[2]
-    
+
     A.loc <- 1/(2*integrate(f = function(x, a0){ cos(x/a0)*dnorm(x)/a0 }, 
                     lower = 0, upper = a*pi, rel.tol = .Machine$double.eps^0.5, 
                     a0 = a)$value)

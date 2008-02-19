@@ -1,5 +1,5 @@
 ###############################################################################
-# chi function
+## chi function
 ###############################################################################
 lsHu2.chi <- function(x, c0){
     beta.c0 <- 2*pnorm(c0) - 1 - 2*c0*dnorm(c0) + 2*c0^2*pnorm(-c0)
@@ -7,7 +7,7 @@ lsHu2.chi <- function(x, c0){
 }
 
 ###############################################################################
-# Computation of bias
+## Computation of bias
 ###############################################################################
 .Hu2rlsGetbias <- function(x, k, c0){
     beta.c0 <- 2*pnorm(c0) - 1 - 2*c0*dnorm(c0) + 2*c0^2*pnorm(-c0)
@@ -17,46 +17,46 @@ lsHu2.chi <- function(x, c0){
 
 
 ###############################################################################
-# computation of asymptotic variance
+## computation of asymptotic variance
 ###############################################################################
 .Hu2rlsGetvar <- function(k, c0){
     beta.c0 <- 2*pnorm(c0) - 1 - 2*c0*dnorm(c0) + 2*c0^2*pnorm(-c0)
     Var.loc <- (2*pnorm(k) - 1 - 2*k*dnorm(k) + 2*k^2*(1-pnorm(k)))/(2*pnorm(k)-1)^2
-    
+
     hilf <- 3*(2*pnorm(c0)-1) - 2*c0^3*dnorm(c0) - 6*c0*dnorm(c0) + 2*c0^4*pnorm(-c0)
     Var.sc <- (hilf - beta.c0^2)/(2*(2*pnorm(c0) - 1) - 4*c0*dnorm(c0))^2
-    
+
     return(Var.loc + Var.sc)
 }
 
 ###############################################################################
-# computation of maximum asymptotic MSE
+## computation of maximum asymptotic MSE
 ###############################################################################
 .Hu2rlsGetmse <- function(kc0, r, MAX){
     k <- kc0[1]; c0 <- kc0[2]
-    
+
     # constraints for k, c0
     if(k < 0 || c0 < 0) return(MAX)
 
     beta.c0 <- 2*pnorm(c0) - 1 - 2*c0*dnorm(c0) + 2*c0^2*pnorm(-c0)
     A.loc <- 1/(2*pnorm(k)-1)
     A.sc <- 1/(2*(2*pnorm(c0) - 1) - 4*c0*dnorm(c0))
-    
+
     bias <- max(.Hu2rlsGetbias(x = 0, k = k, c0 = c0), 
                 .Hu2rlsGetbias(x = k, k = k, c0 = c0), 
                 .Hu2rlsGetbias(x = c0, k = k, c0 = c0), 
                 .Hu2rlsGetbias(x = sqrt(beta.c0), k = k, c0 = c0), 
                 .Hu2rlsGetbias(x = sqrt(max(0, beta.c0-0.5*A.loc^2/A.sc^2)), 
                                 k = k, c0 = c0))
-    
+
     Var <- .Hu2rlsGetvar(k = k, c0 = c0)
-    
+
     return(Var + r^2*bias^2)
 }
 
 
 ###############################################################################
-# optimal IC
+## optimal IC
 ###############################################################################
 rlsOptIC.Hu2 <- function(r, k.start = 1.5, c.start = 1.5, delta = 1e-6, MAX = 100){
     res <- optim(c(k.start, c.start), .Hu2rlsGetmse, method = "Nelder-Mead", 
@@ -81,7 +81,7 @@ rlsOptIC.Hu2 <- function(r, k.start = 1.5, c.start = 1.5, delta = 1e-6, MAX = 10
     fct2 <- function(x){ A.sc*(pmin(x^2, c0^2) - beta.c0) }
     body(fct2) <- substitute({ A.sc*(pmin(x^2, c0^2) - beta.c0) },
                         list(c0 = c0, beta.c0 = beta.c0, A = A.sc))
-    
+
     return(IC(name = "IC of Hu2 type", 
               Curve = EuclRandVarList(RealRandVariable(Map = list(fct1, fct2), Domain = Reals())),
               Risks = list(asMSE = res$value, asBias = bias, asCov = res$value - r^2*bias^2), 

@@ -1,5 +1,5 @@
 ###############################################################################
-# psi function
+## psi function
 ###############################################################################
 .MM2rlsGetpsi <- function(x, c0){
     Ind1 <- (abs(x) <= 0.8*c0); Ind2 <- (abs(x) <= 1.0*c0)
@@ -9,7 +9,7 @@
 }
 
 ###############################################################################
-# chi function
+## chi function
 ###############################################################################
 .MM2rlsGetchi <- function(x, d){
     Ind1 <- (abs(x) <= d)
@@ -17,7 +17,7 @@
 }
 
 ###############################################################################
-# computation of bias
+## computation of bias
 ###############################################################################
 .MM2rlsGetbias <- function(x, c0, d, A.loc, beta.d, A.sc){
     return(sqrt(A.loc^2*.MM2rlsGetpsi(x = x, c0 = c0)^2 
@@ -26,7 +26,7 @@
 
 
 ###############################################################################
-# computation of asymptotic variance
+## computation of asymptotic variance
 ###############################################################################
 .MM2rlsGetvar <- function(c0, d){
     A.loc <- 1/(2*integrate(f = function(x, c0){ x*.MM2rlsGetpsi(x = x, c0 = c0)*dnorm(x) }, 
@@ -45,16 +45,16 @@
     Var.sc <- A.sc^2*(2*integrate(f = function(x, d){ .MM2rlsGetchi(x = x, d = d)^2*dnorm(x) }, 
                     lower = 0, upper = Inf, rel.tol = .Machine$double.eps^0.5, 
                     d = d)$value - beta.d^2)
-        
+
     return(Var.loc + Var.sc)
 }
 
 ###############################################################################
-# computation of maximum asymptotic MSE
+## computation of maximum asymptotic MSE
 ###############################################################################
 .MM2rlsGetmse <- function(c0d, r, MAX){
     c0 <- c0d[1]; d <- c0d[2]
-    
+
     # constraints
     if(c0 < 0 || d < 0) return(MAX)
 
@@ -87,12 +87,12 @@
                         tol = .Machine$double.eps^0.5, c0=c0, d=d, A.loc = A.loc, 
                         beta.d = beta.d, A.sc = A.sc)$objective
     }
-    
+
     return(.MM2rlsGetvar(c0 = c0, d = d) + r^2*b1^2)
 }
 
 ###############################################################################
-# optimal IC
+## optimal IC
 ###############################################################################
 rlsOptIC.MM2 <- function(r, c.start = 1.5, d.start = 2.0, delta = 1e-6, MAX = 100){
     res <- optim(c(c.start, d.start), .MM2rlsGetmse, method = "Nelder-Mead", 
@@ -112,8 +112,8 @@ rlsOptIC.MM2 <- function(r, c.start = 1.5, d.start = 2.0, delta = 1e-6, MAX = 10
 
     x <- seq(from=0, to=max(c0,d), by = 0.01)
     bias <- sapply(x, .MM2rlsGetbias, c0 = c0, d = d, A.loc = A.loc, 
-                    beta.d = beta.d, A.sc = A.sc)  
-    index <- which.max(bias)  
+                    beta.d = beta.d, A.sc = A.sc)
+    index <- which.max(bias)
 
     if(index==length(x))
         b1 <- optimize(f=.MM2rlsGetbias, lower=x[index-1], upper=x[index], maximum=TRUE, 
