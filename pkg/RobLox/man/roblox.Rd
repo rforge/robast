@@ -9,7 +9,7 @@
   respectively.
 }
 \usage{
-roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "ksMD", 
+roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med", 
        tol = 1e-06, A.loc.start = 1, a.sc.start = 0, A.sc.start = 0.5, 
        bUp = 1000, itmax = 100, returnIC = FALSE)
 }
@@ -70,17 +70,20 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "ksMD",
   if 'returnIC' is 'TRUE' the list also contains
   \item{optIC}{ object of class \code{"ContIC"}; optimally robust IC }
 }
-\references{ 
+\references{
+  Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
+  Bayreuth: Dissertation.
+
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
+
+  Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
+  the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
   the Radius. Submitted. Appeared as discussion paper Nr. 81. 
   SFB 373 (Quantification and Simulation of Economic Processes),
   Humboldt University, Berlin; also available under
   \url{www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf}
-
-  Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
-  Bayreuth: Dissertation.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
