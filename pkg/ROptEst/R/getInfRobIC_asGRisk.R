@@ -33,10 +33,10 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             c0.old <- c0
             c0 <- try(uniroot(getInfClip, 
 ## new
-#lower = getL1normL2deriv(L2deriv = L2deriv, cent = z)/ (1 + neighbor@radius^2), 
-                        lower = .Machine$double.eps^0.75, 
-#upper = sqrt( ( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) ), 
-                        upper = upper, 
+lower = getL1normL2deriv(L2deriv = L2deriv, cent = z)/ (1 + neighbor@radius^2), 
+upper = sqrt( ( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) ), 
+#                        lower = .Machine$double.eps^0.75, 
+#                        upper = upper, 
 ##
                         tol = tol, L2deriv = L2deriv, risk = risk, 
                         neighbor = neighbor,  biastype = biastype,
@@ -131,10 +131,10 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             A.old <- A
             b <- try(uniroot(getInfClip, 
 ## new
-#lower = getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A, Distr = Distr)/(1+neighbor@radius^2),
-#upper = sqrt( sum( diag(A%*%Finfo%*%t(A)) + (A%*%z)^2) / ((1 + neighbor@radius^2)^2-1)),
-                         lower = .Machine$double.eps^0.75, 
-                         upper = upper, 
+lower = getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A, Distr = Distr)/(1+neighbor@radius^2),
+upper = sqrt( sum( diag(A%*%Finfo%*%t(A)) + (A%*%z)^2) / ((1 + neighbor@radius^2)^2-1)),
+#                         lower = .Machine$double.eps^0.75, 
+#                         upper = upper, 
 ##
                          tol = tol, L2deriv = L2deriv, risk = risk, 
                          biastype = biastype, Distr = Distr, neighbor = neighbor, 
