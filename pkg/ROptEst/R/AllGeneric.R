@@ -74,5 +74,5 @@ if(!isGeneric("getBiasIC")){
 }
 if(!isGeneric(".evalBiasIC")){
     setGeneric(".evalBiasIC", 
-        function(IC, neighbor, biastype, ...) standardGeneric("getBiasIC"))
+        function(IC, neighbor, biastype, ...) standardGeneric(".evalBiasIC"))
 }
