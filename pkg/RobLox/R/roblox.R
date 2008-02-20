@@ -40,7 +40,7 @@
     }else{
         A1up <- .getA1.locsc(rup)
         A2up <- .getA2.locsc(rup)
-        effup <- (A1 + A2 - b^2*(r^2 - rlo^2))/(A1up + A2up)
+        effup <- (A1 + A2 - b^2*(r^2 - rup^2))/(A1up + A2up)
     }
 
     return(effup-efflo)
@@ -115,20 +115,20 @@
 ###############################################################################
 ## optimally robust estimator for normal location and/or scale
 ###############################################################################
-roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med", 
+roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, 
                    tol = 1e-6, A.loc.start = 1, a.sc.start = 0, A.sc.start = 0.5, 
                    bUp = 1000, itmax = 100, returnIC = FALSE){
 
     if(missing(x))
         stop("'x' is missing with no default")
-    if(missing(eps) & missing(eps.lower) & missing(eps.upper)){
+    if(missing(eps) && missing(eps.lower) && missing(eps.upper)){
         eps.lower <- 0
         eps.upper <- 0.5
     }
     if(missing(eps)){
-        if(!missing(eps.lower) & missing(eps.upper))
+        if(!missing(eps.lower) && missing(eps.upper))
             eps.upper <- 0.5
-        if(missing(eps.lower) & !missing(eps.upper))
+        if(missing(eps.lower) && !missing(eps.upper))
             eps.lower <- 0
         if(!is.numeric(eps.lower) || !is.numeric(eps.upper) || eps.lower >= eps.upper) 
             stop("'eps.lower' < 'eps.upper' is not fulfilled")
@@ -140,26 +140,19 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med",
         if((eps < 0) || (eps > 0.5))
             stop("'eps' has to be in (0, 0.5]")
     }
-    if((initial.est != "ksMD") && (initial.est != "med"))
-        stop("invalid 'initial.est'")
 
-    if(missing(mean) & missing(sd)){
+    if(missing(mean) && missing(sd)){
         if(!is.numeric(A.loc.start) || !is.numeric(a.sc.start) || !is.numeric(A.sc.start))
             stop("Starting values 'A.loc.start', 'a.sc.start' and 'A.sc.start' have to be numeric")
 
-        if(initial.est == "ksMD"){
-            KSdist <- function(param, x){
-                if(param[2] <= 0) return(Inf)
-                return(ks.test(x, "pnorm", mean = param[1], sd = param[2])$statistic)
-            }
-            res <- optim(c(0, 1), f = KSdist, method = "Nelder-Mead", 
-                         control=list(reltol = tol), x = x)$par
-            mean <- res[1]
-            sd <- res[2]
-        }
-        if(initial.est == "med"){
+        if(missing(initial.est)){
             mean <- median(x, na.rm = TRUE)
             sd <- mad(x, na.rm = TRUE)
+        }else{
+            if(!is.numeric(initial.est) || length(initial.est) != 2)
+              stop("'initial.est' needs to be a numeric vector of length 2 or missing")
+            mean <- initial.est[1]
+            sd <- initial.est[2]
         }
 
         if(!missing(eps)){
@@ -176,7 +169,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med",
                 A <- sd^2*diag(c(.getA1.locsc(r), .getA2.locsc(r)))
                 a <- sd*c(0, .geta.locsc(r))
                 b <- sd*.getb.locsc(r)
-                mse <- sd^2*(a1 + a3)
+                mse <- sum(diag(A))
                 IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                   L2Fam = NormLocationScaleFamily(mean = mean, sd = sd), 
                                   res = list(A = A, a = a, b = b, d = NULL, 
@@ -192,7 +185,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med",
             sqrtn <- sqrt(length(x))
             rlo <- sqrtn*eps.lower
             rup <- sqrtn*eps.upper
-            r <- uniroot(.getlsInterval, lower = rlo+1e-5, upper = rup, 
+            r <- uniroot(.getlsInterval, lower = rlo+1e-8, upper = rup, 
                          tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup,
                          mean = mean, sd = sd, delta = tol, A.loc.start = A.loc.start, 
                          a.sc.start = a.sc.start, A.sc.start = A.sc.start,
@@ -206,11 +199,12 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med",
                 A <- sd^2*diag(c(.getA1.locsc(r), .getA2.locsc(r)))
                 a <- sd*c(0, .geta.locsc(r))
                 b <- sd*.getb.locsc(r)
-                mse <- sd^2*(a1 + a3)
+                mse <- sum(diag(A))
                 IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                   L2Fam = NormLocationScaleFamily(mean = mean, sd = sd), 
                                   res = list(A = A, a = a, b = b, d = NULL, 
-                                      risk = list(asMSE = mse, asBias = b, asCov = mse - r^2*b^2)))
+                                      risk = list(asMSE = mse, asBias = b, asCov = mse - r^2*b^2), 
+                                      info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
             }
             if(rlo == 0){
                 ineff <- (sum(diag(stand(IC1))) - clip(IC1)^2*r^2)/(1.5*sd^2)
@@ -240,14 +234,13 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med",
         }
     }else{
         if(missing(mean)){
-            if(initial.est == "ksMD"){
-                KSdist.mean <- function(mean, x, sd){
-                    return(ks.test(x, "pnorm", mean = mean, sd = sd)$statistic)
-                }
-                mean <- optimize(f = KSdist.mean, interval = c(min(x), max(x)), 
-                            tol = tol, x = x, sd = sd)$minimum
+            if(missing(initial.est)){
+                mean <- median(x, na.rm = TRUE)
+            }else{
+                if(!is.numeric(initial.est) || length(initial.est) != 1)
+                    stop("'initial.est' needs to be a numeric vector of length 1 or missing")
+                mean <- initial.est
             }
-            if(initial.est == "med") mean <- median(x, na.rm = TRUE)
 
             if(!missing(eps)){
                 r <- sqrt(length(x))*eps
@@ -274,7 +267,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med",
                 sqrtn <- sqrt(length(x))
                 rlo <- sqrtn*eps.lower
                 rup <- sqrtn*eps.upper
-                r <- uniroot(.getlInterval, lower = rlo+1e-5, upper = rup, 
+                r <- uniroot(.getlInterval, lower = rlo+1e-8, upper = rup, 
                          tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup,
                          mean = mean, sd = sd, bUp = bUp)$root
                 if(r > 80){
@@ -285,7 +278,8 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med",
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormLocationFamily(mean = mean, sd = sd), 
                                       res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
-                                          risk = list(asMSE = A, asBias = b, asCov = A - r^2*b^2)))
+                                          risk = list(asMSE = A, asBias = b, asCov = A - r^2*b^2), 
+                                          info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
                 }
                 if(rlo == 0){
                     ineff <- (as.vector(stand(IC1)) - clip(IC1)^2*r^2)/sd^2
@@ -312,15 +306,13 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med",
             }
         }
         if(missing(sd)){
-            if(initial.est == "ksMD"){
-                KSdist.sd <- function(sd, x, mean){
-                    return(ks.test(x, "pnorm", mean = mean, sd = sd)$statistic)
-                }
-                sd <- optimize(f = KSdist.sd, 
-                            interval = c(.Machine$double.eps^0.5, max(x)-min(x)), 
-                            tol = tol, x = x, mean = mean)$minimum
+            if(missing(initial.est)){ 
+                sd <- mad(x, na.rm = TRUE)
+            }else{
+                if(!is.numeric(initial.est) || length(initial.est) != 1)
+                    stop("'initial.est' needs to be a numeric vector of length 1 or missing")
+                sd <- initial.est
             }
-            if(initial.est == "med") sd <- mad(x, na.rm = TRUE)
 
             if(!missing(eps)){
                 r <- sqrt(length(x))*eps
@@ -349,7 +341,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med",
                 sqrtn <- sqrt(length(x))
                 rlo <- sqrtn*eps.lower
                 rup <- sqrtn*eps.upper
-                r <- uniroot(.getsInterval, lower = rlo+1e-5, upper = rup, 
+                r <- uniroot(.getsInterval, lower = rlo+1e-8, upper = rup, 
                          tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup,
                          mean = mean, sd = sd, delta = tol, bUp = bUp, 
                          itmax = itmax)$root
@@ -363,7 +355,8 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med",
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormScaleFamily(mean = mean, sd = sd), 
                                       res = list(A = as.matrix(A), a = a, b = b, d = NULL, 
-                                                risk = list(asMSE = A, asBias = b, asCov = A - r^2*b^2)))
+                                                risk = list(asMSE = A, asBias = b, asCov = A - r^2*b^2), 
+                                                info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
                 }
                 if(rlo == 0){
                     ineff <- (as.vector(stand(IC1)) - clip(IC1)^2*r^2)/(0.5*sd^2)

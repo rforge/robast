@@ -9,7 +9,7 @@
   respectively.
 }
 \usage{
-roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med", 
+roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, 
        tol = 1e-06, A.loc.start = 1, a.sc.start = 0, A.sc.start = 0.5, 
        bUp = 1000, itmax = 100, returnIC = FALSE)
 }
@@ -23,10 +23,8 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med",
         lower bound for the amount of gross errors. See details below }
   \item{eps.upper}{ positive real (\code{eps.lower} <= \code{eps.upper} <= 0.5): 
         upper bound for the amount of gross errors. See details below }
-  \item{initial.est}{ indicates which initial estimate should be used. Must be 
-        one of \code{"ksMD"} or \code{"med"}. In case \code{"ksMD"} the 
-        Kolmogorov(-Smirnov) minimum distance estimator and in case \code{"med"}
-        median and/or mad are computed, respectively. }
+  \item{initial.est}{ initial estimate for \code{mean} and/or \code{sd}. If missing 
+        median and/or MAD are used. }
   \item{tol}{ the desired accuracy (convergence tolerance). }
   \item{A.loc.start}{ positive real: starting value for 
     the standardizing constant of the location part. }
@@ -41,25 +39,29 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est = "med",
 }
 \details{
   Computes the optimally robust estimator for location with scale specified,
-  scale with location specified, or both if neither is specified.
-  
+  scale with location specified, or both if neither is specified. The computation
+  uses a one-step construction with an appropriate initial estimate for location
+  or scale or location and scale, respectively. Valid candidates are e.g. 
+  median and/or MAD (default) as well as Kolmogorov(-Smirnov) or von Mises minimum 
+  distance estimators; cf. Rieder (1994) and Kohl (2005).
+
   If the amount of gross errors (contamination) is known, it can be 
   specified by \code{eps}. The radius of the corresponding infinitesimal 
   contamination neighborhood is obtained by multiplying \code{eps} 
   by the square root of the sample size. 
-  
+
   If the amount of gross errors (contamination) is unknown, try to find a 
   rough estimate for the amount of gross errors, such that it lies 
   between \code{eps.lower} and \code{eps.upper}.
-  
+
   In case \code{eps.lower} is specified and \code{eps.upper} is missing, 
   \code{eps.upper} is set to 0.5. In case \code{eps.upper} is specified and
   \code{eps.lower} is missing, \code{eps.lower} is set to 0.
-  
+
   If neither \code{eps} nor \code{eps.lower} and/or \code{eps.upper} is 
   specified, \code{eps.lower} and \code{eps.upper} are set to 0 and 0.5, 
   respectively.
-  
+
   If \code{eps} is missing, the radius-minimax estimator in sense of 
   Rieder et al. (2001), respectively Section 2.2 of Kohl (2005) is returned.
 }
@@ -122,15 +124,23 @@ c(mean(x), sd(x))
 # most robust
 c(median(x), mad(x))
 
-# Kolmogorov(-Smirnov) minimum distance estimator (robust)
-MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = KolmogorovDist)
-
 # optimally robust (amount of gross errors known)
 c(res1$mean, res1$sd)
 
 # optimally robust (amount of gross errors unknown)
 c(res2$mean, res2$sd)
 
+# Kolmogorov(-Smirnov) minimum distance estimator (robust)
+(ks.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = KolmogorovDist))
+
+# optimally robust (amount of gross errors known)
+roblox(x, eps = 0.05, initial.est = ks.est$estimate)
+
+# von Mises minimum distance estimator (robust)
+(vM.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = vonMisesDist))
+
+# optimally robust (amount of gross errors known)
+roblox(x, eps = 0.05, initial.est = vM.est$estimate)
 }
 \concept{normal location}
 \concept{normal scale}
