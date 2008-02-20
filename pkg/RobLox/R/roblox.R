@@ -221,9 +221,9 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                 }
             }
             Infos(IC1) <- matrix(c(rep("roblox", 3), 
-                             paste("radius-minimax IC for radius interval [", 
-                               round(rlo, 3), ", ", round(rup, 3), "]", sep = ""),
-                             paste("least favorable radius: ", round(r, 3), sep = ""),
+                             paste("radius-minimax IC for contamination interval [", 
+                               round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                             paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
                              paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                              ncol = 2, dimnames = list(NULL, c("method", "message")))
             robEst <- oneStepEstimator(x, IC1, c(mean, sd))
@@ -293,9 +293,9 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                     }
                 }
                 Infos(IC1) <- matrix(c(rep("roblox", 3), 
-                             paste("radius-minimax IC for radius interval [", 
-                               round(rlo, 3), ", ", round(rup, 3), "]", sep = ""),
-                             paste("least favorable radius: ", round(r, 3), sep = ""),
+                             paste("radius-minimax IC for contamination interval [", 
+                               round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                             paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
                              paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                              ncol = 2, dimnames = list(NULL, c("method", "message")))
                 robEst <- oneStepEstimator(x, IC1, mean)
@@ -371,9 +371,9 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                     }
                 }
                 Infos(IC1) <- matrix(c(rep("roblox", 3), 
-                             paste("radius-minimax IC for radius interval [", 
-                               round(rlo, 3), ", ", round(rup, 3), "]", sep = ""),
-                             paste("least favorable radius: ", round(r, 3), sep = ""),
+                             paste("radius-minimax IC for contamination interval [", 
+                               round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                             paste("least favorable radius: ", round(r/sqrtn, 3), sep = ""),
                              paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                              ncol = 2, dimnames = list(NULL, c("method", "message")))
                 robEst <- oneStepEstimator(x, IC1, sd)
