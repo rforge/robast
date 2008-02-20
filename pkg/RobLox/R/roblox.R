@@ -2,10 +2,10 @@
 ## computation of radius-minimax IC
 ## using predefined functions included in "sysdata.rda"
 ###############################################################################
-.getlsInterval <- function(r, rlo, rup, mean, sd, delta, A.loc.start, 
-                           a.sc.start, A.sc.start, bUp, itmax){
+.getlsInterval <- function(r, rlo, rup, delta, A.loc.start, a.sc.start, 
+                           A.sc.start, bUp, itmax){
     if(r > 80){
-        Ab <- rlsOptIC.AL(r = r, mean = mean, sd = sd, A.loc.start = A.loc.start, 
+        Ab <- rlsOptIC.AL(r = r, mean = 0, sd = 1, A.loc.start = A.loc.start, 
                           a.sc.start = a.sc.start, A.sc.start = A.sc.start, 
                           bUp = bUp, delta = delta, itmax = itmax, computeIC = FALSE)
         A1 <- Ab$A[1,1]
@@ -18,10 +18,10 @@
     }
 
     if(rlo == 0){
-        efflo <- (A1 + A2 - b^2*r^2)/(1.5*sd^2)
+        efflo <- (A1 + A2 - b^2*r^2)/1.5
     }else{
         if(rlo > 80){
-            Ablo <- rlsOptIC.AL(r = rlo, mean = mean, sd = sd, A.loc.start = A.loc.start, 
+            Ablo <- rlsOptIC.AL(r = rlo, mean = 0, sd = 1, A.loc.start = A.loc.start, 
                                 a.sc.start = a.sc.start, A.sc.start = A.sc.start, 
                                 bUp = bUp, delta = delta, itmax = itmax, computeIC = FALSE)
             efflo <- (A1 + A2 - b^2*(r^2 - rlo^2))/sum(diag(Ablo$A))
@@ -33,7 +33,7 @@
     }
 
     if(rup > 80){
-        Abup <- rlsOptIC.AL(r = rup, mean = mean, sd = sd, A.loc.start = A.loc.start, 
+        Abup <- rlsOptIC.AL(r = rup, mean = 0, sd = 1, A.loc.start = A.loc.start, 
                             a.sc.start = a.sc.start, A.sc.start = A.sc.start, 
                             bUp = bUp, delta = delta, itmax = itmax, computeIC = FALSE)
         effup <- (A1 + A2 - b^2*(r^2 - rup^2))/sum(diag(Abup$A))
@@ -45,9 +45,9 @@
 
     return(effup-efflo)
 }
-.getlInterval <- function(r, rlo, rup, mean, sd, bUp){
+.getlInterval <- function(r, rlo, rup, bUp){
     if(r > 80){
-        Ab <- rlOptIC(r = r, mean = mean, sd = sd, bUp = bUp, computeIC = FALSE)
+        Ab <- rlOptIC(r = r, mean = 0, sd = 1, bUp = bUp, computeIC = FALSE)
         A <- Ab$A
         b <- Ab$b
     }else{
@@ -56,10 +56,10 @@
     }
 
     if(rlo == 0){
-        efflo <- (A - b^2*r^2)/sd^2
+        efflo <- A - b^2*r^2
     }else{
         if(rlo > 80){
-            Ablo <- rlOptIC(r = rlo, mean = mean, sd = sd, bUp = bUp, computeIC = FALSE)
+            Ablo <- rlOptIC(r = rlo, mean = 0, sd = 1, bUp = bUp, computeIC = FALSE)
             efflo <- (Ab$A - Ab$b^2*(r^2 - rlo^2))/Ablo$A
         }else{
             Alo <- .getA.loc(rlo)
@@ -68,7 +68,7 @@
     }
 
     if(rup > 80){
-        Abup <- rlOptIC(r = rup, mean = mean, sd = sd, bUp = bUp, computeIC = FALSE)
+        Abup <- rlOptIC(r = rup, mean = 0, sd = 1, bUp = bUp, computeIC = FALSE)
         effup <- (Ab$A - Ab$b^2*(r^2 - rup^2))/Abup$A
     }else{
         Aup <- .getA.loc(rup)
@@ -77,9 +77,9 @@
 
     return(effup-efflo)
 }
-.getsInterval <- function(r, rlo, rup, mean, sd, delta, bUp, itmax){
+.getsInterval <- function(r, rlo, rup, delta, bUp, itmax){
     if(r > 80){
-        Ab <- rsOptIC(r = r, mean = mean, sd = sd, bUp = bUp, delta = delta, 
+        Ab <- rsOptIC(r = r, mean = 0, sd = 1, bUp = bUp, delta = delta, 
                       itmax = itmax, computeIC = FALSE)
         A <- Ab$A
         b <- Ab$b
@@ -89,10 +89,10 @@
     }
 
     if(rlo == 0){
-        efflo <- (A - b^2*r^2)/(0.5*sd^2)
+        efflo <- (A - b^2*r^2)/0.5
     }else{
         if(rlo > 80){
-            Ablo <- rsOptIC(r = rlo, mean = mean, sd = sd, bUp = bUp, delta = delta, 
+            Ablo <- rsOptIC(r = rlo, mean = 0, sd = 1, bUp = bUp, delta = delta, 
                             itmax = itmax, computeIC = FALSE)
             efflo <- (A - b^2*(r^2 - rlo^2))/Ablo$A
         }else{
@@ -102,7 +102,7 @@
     }
 
     if(rup > 80){
-        Abup <- rsOptIC(r = rup, mean = mean, sd = sd, bUp = bUp, delta = delta, 
+        Abup <- rsOptIC(r = rup, mean = 0, sd = 1, bUp = bUp, delta = delta, 
                         itmax = itmax, computeIC = FALSE)
         effup <- (A - b^2*(r^2 - rup^2))/Abup$A
     }else{
@@ -187,9 +187,8 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
             rup <- sqrtn*eps.upper
             r <- uniroot(.getlsInterval, lower = rlo+1e-8, upper = rup, 
                          tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup,
-                         mean = mean, sd = sd, delta = tol, A.loc.start = A.loc.start, 
-                         a.sc.start = a.sc.start, A.sc.start = A.sc.start,
-                         bUp = bUp, itmax = itmax)$root
+                         delta = tol, A.loc.start = A.loc.start, a.sc.start = a.sc.start, 
+                         A.sc.start = A.sc.start, bUp = bUp, itmax = itmax)$root
             if(r > 80){
                 IC1 <- rlsOptIC.AL(r = r, mean = mean, sd = sd, 
                                    A.loc.start = A.loc.start, a.sc.start = a.sc.start, 
@@ -215,8 +214,8 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                                         bUp = bUp, delta = tol, itmax = itmax, computeIC = FALSE)
                     ineff <- (sum(diag(stand(IC1))) - clip(IC1)^2*(r^2 - rlo^2))/sum(diag(Ablo$A))
                 }else{
-                    A1lo <- .getA1.locsc(rlo)
-                    A2lo <- .getA2.locsc(rlo)
+                    A1lo <- sd^2*.getA1.locsc(rlo)
+                    A2lo <- sd^2*.getA2.locsc(rlo)
                     ineff <- (sum(diag(stand(IC1))) - clip(IC1)^2*(r^2 - rlo^2))/(A1lo + A2lo)
                 }
             }
@@ -250,8 +249,8 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                                            "optimally robust IC for AL estimators and 'asMSE'"), 
                                          ncol = 2, dimnames = list(NULL, c("method", "message")))
                 }else{
-                    A <- .getA.loc(r)
-                    b <- .getb.loc(r)
+                    A <- sd^2*.getA.loc(r)
+                    b <- sd*.getb.loc(r)
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormLocationFamily(mean = mean, sd = sd), 
                                       res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
@@ -268,13 +267,12 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                 rlo <- sqrtn*eps.lower
                 rup <- sqrtn*eps.upper
                 r <- uniroot(.getlInterval, lower = rlo+1e-8, upper = rup, 
-                         tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup,
-                         mean = mean, sd = sd, bUp = bUp)$root
+                         tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup, bUp = bUp)$root
                 if(r > 80){
                     IC1 <- rlOptIC(r = r, mean = mean, sd = sd, bUp = bUp)
                 }else{
-                    A <- .getA.loc(r)
-                    b <- .getb.loc(r)
+                    A <- sd^2*.getA.loc(r)
+                    b <- sd*.getb.loc(r)
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormLocationFamily(mean = mean, sd = sd), 
                                       res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
@@ -288,7 +286,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                         Ablo <- rlOptIC(r = rlo, mean = mean, sd = sd, bUp = bUp, computeIC = FALSE)
                         ineff <- (as.vector(stand(IC1)) - clip(IC1)^2*(r^2 - rlo^2))/Ablo$A
                     }else{
-                        Alo <- .getA.loc(rlo)
+                        Alo <- sd^2*.getA.loc(rlo)
                         ineff <- (as.vector(stand(IC1)) - clip(IC1)^2*(r^2 - rlo^2))/Alo
                     }
                 }
@@ -323,9 +321,9 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                                            "optimally robust IC for AL estimators and 'asMSE'"), 
                                          ncol = 2, dimnames = list(NULL, c("method", "message")))
                 }else{
-                    A <- .getA.sc(r)
-                    a <- .geta.sc(r)
-                    b <- .getb.sc(r)
+                    A <- sd^2*.getA.sc(r)
+                    a <- sd*.geta.sc(r)
+                    b <- sd*.getb.sc(r)
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormScaleFamily(mean = mean, sd = sd), 
                                       res = list(A = as.matrix(A), a = a, b = b, d = NULL, 
@@ -343,15 +341,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                 rup <- sqrtn*eps.upper
                 r <- uniroot(.getsInterval, lower = rlo+1e-8, upper = rup, 
                          tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup,
-                         mean = mean, sd = sd, delta = tol, bUp = bUp, 
-                         itmax = itmax)$root
+                         delta = tol, bUp = bUp, itmax = itmax)$root
                 if(r > 80){
                     IC1 <- rsOptIC(r = r, mean = mean, sd = sd, bUp = bUp, 
                                    delta = tol, itmax = itmax)
                 }else{
-                    A <- .getA.sc(r)
-                    a <- .geta.sc(r)
-                    b <- .getb.sc(r)
+                    A <- sd^2*.getA.sc(r)
+                    a <- sd*.geta.sc(r)
+                    b <- sd*.getb.sc(r)
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormScaleFamily(mean = mean, sd = sd), 
                                       res = list(A = as.matrix(A), a = a, b = b, d = NULL, 
@@ -366,7 +363,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                                         itmax = itmax, computeIC = FALSE)
                         ineff <- (as.vector(stand(IC1)) - clip(IC1)^2*(r^2 - rlo^2))/Ablo$A
                     }else{
-                        Alo <- .getA.sc(rlo)
+                        Alo <- sd^2*.getA.sc(rlo)
                         ineff <- (as.vector(stand(IC1)) - clip(IC1)^2*(r^2 - rlo^2))/Alo
                     }
                 }
