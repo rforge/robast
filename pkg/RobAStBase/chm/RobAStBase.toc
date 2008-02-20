@@ -378,6 +378,18 @@
 <param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="optIC">
+<param name="Local" value="optIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="optIC,L2ParamFamily,asCov-method">
+<param name="Local" value="optIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="optIC-methods">
+<param name="Local" value="optIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="plot,IC-method">
 <param name="Local" value="IC-class.html">
 </OBJECT>
@@ -545,6 +557,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic function for the computation of one-step estimators">
 <param name="Local" value="oneStepEstimator.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Generic function for the computation of optimally robust ICs">
+<param name="Local" value="optIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic function for the generation of influence curves">

@@ -31,13 +31,18 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             iter <- iter + 1
             z.old <- z
             c0.old <- c0
+            ## new
+            lower0 <- getL1normL2deriv(L2deriv = L2deriv, cent = z) / 
+                                      (1 + neighbor@radius^2)
+            upper0 <- sqrt( ( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) )
+            if (!is.null(upper)|(iter == 1)) 
+                    {lower <- .Machine$double.eps^0.75
+                }else{ lower <- lower0; upper <- upper0}
+            ##
             c0 <- try(uniroot(getInfClip, 
-## new
-lower = getL1normL2deriv(L2deriv = L2deriv, cent = z)/ (1 + neighbor@radius^2), 
-upper = sqrt( ( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) ), 
-#                        lower = .Machine$double.eps^0.75, 
-#                        upper = upper, 
-##
+                  ## new
+                        lower = lower, upper = upper,
+                  ##
                         tol = tol, L2deriv = L2deriv, risk = risk, 
                         neighbor = neighbor,  biastype = biastype,
                         cent = z, symm = S, 
@@ -86,7 +91,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
              maxiter, tol, warn){
         biastype <- biastype(risk)
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
-        if(is.null(A.start)) A.start <- trafo
+        if(is.null(A.start)) A.start <- trafo %*% solve(Finfo)
 
         radius <- neighbor@radius
         if(identical(all.equal(radius, 0), TRUE)){
@@ -129,13 +134,19 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             z.old <- z
             b.old <- b
             A.old <- A
+            ## new
+            lower0 <- getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A, 
+                                       Distr = Distr)/(1+neighbor@radius^2)
+            upper0 <- sqrt( sum( diag(A%*%Finfo%*%t(A)) + (A%*%z)^2) / 
+                          ((1 + neighbor@radius^2)^2-1))
+            if (!is.null(upper)|(iter == 1)) 
+                    {lower <- .Machine$double.eps^0.75
+                }else{ lower <- lower0; upper <- upper0}
+            ##
             b <- try(uniroot(getInfClip, 
-## new
-lower = getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A, Distr = Distr)/(1+neighbor@radius^2),
-upper = sqrt( sum( diag(A%*%Finfo%*%t(A)) + (A%*%z)^2) / ((1 + neighbor@radius^2)^2-1)),
-#                         lower = .Machine$double.eps^0.75, 
-#                         upper = upper, 
-##
+                  ## new
+                         lower = lower, upper = upper,
+                  ##
                          tol = tol, L2deriv = L2deriv, risk = risk, 
                          biastype = biastype, Distr = Distr, neighbor = neighbor, 
                          stand = A, cent = z, trafo = trafo)$root, silent = TRUE)
