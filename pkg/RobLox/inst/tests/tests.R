@@ -5,7 +5,7 @@
 library(RobLox)
 
 ## sample
-x <- rnorm(10000, mean = -2, sd = 300)
+x <- rnorm(10000, mean = -2, sd = 3)
 
 ## location and scale, radius unknown
 res1 <- roblox(x, returnIC = TRUE)
