@@ -91,7 +91,7 @@
     return(effup-efflo)
 }
 .onestep.loc <- function(x, initial.est, A, b, sd){
-    u <- A*(x-initial.est)/sd
+    u <- A*(x-initial.est)/sd^2
     IC <- mean(u*pmin(1, b/abs(u)), na.rm = TRUE)
     return(initial.est + IC)
 }
