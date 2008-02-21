@@ -137,10 +137,10 @@ c(res2$mean, res2$sd)
 roblox(x, eps = 0.05, initial.est = ks.est$estimate)
 
 # Cramer von Mises minimum distance estimator (robust)
-(vM.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = CvMDist))
+(CvM.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = CvMDist))
 
 # optimally robust (amount of gross errors known)
-roblox(x, eps = 0.05, initial.est = vM.est$estimate)
+roblox(x, eps = 0.05, initial.est = CvM.est$estimate)
 }
 \concept{normal location}
 \concept{normal scale}
