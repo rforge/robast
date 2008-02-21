@@ -9,7 +9,7 @@
   respectively.
 }
 \usage{
-roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, 
+roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
        tol = 1e-06, A.loc.start = 1, a.sc.start = 0, A.sc.start = 0.5, 
        bUp = 1000, itmax = 100, returnIC = FALSE)
 }
@@ -25,6 +25,7 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
         upper bound for the amount of gross errors. See details below }
   \item{initial.est}{ initial estimate for \code{mean} and/or \code{sd}. If missing 
         median and/or MAD are used. }
+  \item{k}{ positive integer. k-step is used to compute the optimally robust estimator.}
   \item{tol}{ the desired accuracy (convergence tolerance). }
   \item{A.loc.start}{ positive real: starting value for 
     the standardizing constant of the location part. }
@@ -40,7 +41,7 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
 \details{
   Computes the optimally robust estimator for location with scale specified,
   scale with location specified, or both if neither is specified. The computation
-  uses a one-step construction with an appropriate initial estimate for location
+  uses a k-step construction with an appropriate initial estimate for location
   or scale or location and scale, respectively. Valid candidates are e.g. 
   median and/or MAD (default) as well as Kolmogorov(-Smirnov) or von Mises minimum 
   distance estimators; cf. Rieder (1994) and Kohl (2005).
