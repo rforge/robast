@@ -136,8 +136,8 @@ c(res2$mean, res2$sd)
 # optimally robust (amount of gross errors known)
 roblox(x, eps = 0.05, initial.est = ks.est$estimate)
 
-# von Mises minimum distance estimator (robust)
-(vM.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = vonMisesDist))
+# Cramer von Mises minimum distance estimator (robust)
+(vM.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = CvMDist))
 
 # optimally robust (amount of gross errors known)
 roblox(x, eps = 0.05, initial.est = vM.est$estimate)
