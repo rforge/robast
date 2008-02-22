@@ -216,3 +216,7 @@ system.time(rowRoblox(X, eps = 0.02))
 
 system.time(apply(X, 1, roblox))
 system.time(rowRoblox(X))
+M <- apply(X, 1, median)
+S <- apply(X, 1, mad)
+init <- cbind(M, S)
+system.time(rowRoblox(X, initial.est = init))
