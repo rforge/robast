@@ -2,8 +2,7 @@
 ## computation of radius-minimax IC
 ## using predefined functions included in "sysdata.rda"
 ###############################################################################
-.getlsInterval <- function(r, rlo, rup, delta, A.loc.start, a.sc.start, 
-                           A.sc.start, bUp, itmax){
+.getlsInterval <- function(r, rlo, rup){
     if(r > 10){
         b <- 1.618128043
         const <- 1.263094656
@@ -37,7 +36,7 @@
 
     return(effup-efflo)
 }
-.getlInterval <- function(r, rlo, rup, bUp){
+.getlInterval <- function(r, rlo, rup){
     if(r > 10){
         b <- sqrt(pi/2)
         A <- b^2*(1+r^2)
@@ -63,7 +62,7 @@
 
     return(effup-efflo)
 }
-.getsInterval <- function(r, rlo, rup, delta, bUp, itmax){
+.getsInterval <- function(r, rlo, rup){
     if(r > 10){
         b <- 1/(4*qnorm(0.75)*dnorm(qnorm(0.75)))
         A <- b^2*(1+r^2)
@@ -90,6 +89,11 @@
 
     return(effup-efflo)
 }
+
+
+###############################################################################
+## computation of k-step construction
+###############################################################################
 .onestep.loc <- function(x, initial.est, A, b, sd){
     u <- A*(x-initial.est)/sd^2
     IC <- mean(u*pmin(1, b/abs(u)), na.rm = TRUE)
@@ -147,13 +151,13 @@
         return(est)
     }
 }
+
+
 ###############################################################################
 ## optimally robust estimator for normal location and/or scale
 ###############################################################################
-roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
-                   tol = 1e-6, A.loc.start = 1, a.sc.start = 0, A.sc.start = 0.5, 
-                   bUp = 1000, itmax = 100, returnIC = FALSE){
-
+roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, 
+                   returnIC = FALSE){
     if(missing(x))
         stop("'x' is missing with no default")
     if(missing(eps) && missing(eps.lower) && missing(eps.upper)){
@@ -165,11 +169,15 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
             eps.upper <- 0.5
         if(missing(eps.lower) && !missing(eps.upper))
             eps.lower <- 0
+        if(length(eps.lower) != 1 || length(eps.upper) != 1)
+            stop("'eps.lower' and 'eps.upper' have to be of length 1")
         if(!is.numeric(eps.lower) || !is.numeric(eps.upper) || eps.lower >= eps.upper) 
             stop("'eps.lower' < 'eps.upper' is not fulfilled")
         if((eps.lower < 0) || (eps.upper > 0.5))
             stop("'eps.lower' and 'eps.upper' have to be in [0, 0.5]")
     }else{
+        if(length(eps) != 1)
+            stop("'eps' has to be of length 1")
         if(eps == 0)
             stop("'eps = 0'! => use functions 'mean' and 'sd' for estimation")
         if((eps < 0) || (eps > 0.5))
@@ -184,9 +192,6 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
     k <- as.integer(k)
 
     if(missing(mean) && missing(sd)){
-        if(!is.numeric(A.loc.start) || !is.numeric(a.sc.start) || !is.numeric(A.sc.start))
-            stop("Starting values 'A.loc.start', 'a.sc.start' and 'A.sc.start' have to be numeric")
-
         if(missing(initial.est)){
             mean <- median(x, na.rm = TRUE)
             sd <- mad(x, na.rm = TRUE)
@@ -231,9 +236,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 r <- (rlo + rup)/2
             }else{
                 r <- uniroot(.getlsInterval, lower = rlo+1e-8, upper = rup, 
-                             tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup,
-                             delta = tol, A.loc.start = A.loc.start, a.sc.start = a.sc.start, 
-                             A.sc.start = A.sc.start, bUp = bUp, itmax = itmax)$root
+                             tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup)$root
             }
             if(r > 10){
                 b <- sd*1.618128043
@@ -275,7 +278,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
                 return(list(optIC = IC1, mean = robEst[1], sd = robEst[2]))
             }else
-                return(list(mean = robEst[1], sd = robEst[2]))
+                return(list(mean = robEst[1], sd = robEst[2], 
+                            "contamination interval" = round(c(eps.lower, eps.upper), 3), 
+                            "least favorable contamination" = round(r/sqrtn, 3),
+                            "maximum MSE-inefficiency" = round(ineff, 3)))
         }
     }else{
         if(missing(mean)){
@@ -314,7 +320,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     r <- (rlo+rup)/2
                 }else{
                     r <- uniroot(.getlInterval, lower = rlo+1e-8, upper = rup, 
-                                 tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup, bUp = bUp)$root
+                                 tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup)$root
                 }
                 if(r > 10){
                     b <- sd*sqrt(pi/2)
@@ -348,7 +354,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
                     return(list(optIC = IC1, mean = robEst, sd = sd))
                 }else
-                    return(list(mean = robEst, sd = sd))
+                    return(list(mean = robEst, sd = sd, 
+                                "contamination interval" = round(c(eps.lower, eps.upper), 3), 
+                                "least favorable contamination" = round(r/sqrtn, 3),
+                                "maximum MSE-inefficiency" = round(ineff, 3)))
             }
         }
         if(missing(sd)){
@@ -389,8 +398,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     r <- (rlo+rup)/2
                 }else{
                     r <- uniroot(.getsInterval, lower = rlo+1e-8, upper = rup, 
-                             tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup,
-                             delta = tol, bUp = bUp, itmax = itmax)$root
+                             tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup)$root
                 }
                 if(r > 10){
                     b <- sd/(4*qnorm(0.75)*dnorm(qnorm(0.75)))
@@ -426,7 +434,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
                     return(list(optIC = IC1, mean = mean, sd = robEst))
                 }else
-                    return(list(mean = mean, sd = robEst))
+                    return(list(mean = mean, sd = robEst, 
+                                "contamination interval" = round(c(eps.lower, eps.upper), 3), 
+                                "least favorable contamination" = round(r/sqrtn, 3),
+                                "maximum MSE-inefficiency" = round(ineff, 3)))
             }
         }
     }

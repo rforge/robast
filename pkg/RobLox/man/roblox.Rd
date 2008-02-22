@@ -9,9 +9,7 @@
   respectively.
 }
 \usage{
-roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
-       tol = 1e-06, A.loc.start = 1, a.sc.start = 0, A.sc.start = 0.5, 
-       bUp = 1000, itmax = 100, returnIC = FALSE)
+roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FALSE)
 }
 \arguments{
   \item{x}{ vector \code{x} of data values }
@@ -26,16 +24,6 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
   \item{initial.est}{ initial estimate for \code{mean} and/or \code{sd}. If missing 
         median and/or MAD are used. }
   \item{k}{ positive integer. k-step is used to compute the optimally robust estimator.}
-  \item{tol}{ the desired accuracy (convergence tolerance). }
-  \item{A.loc.start}{ positive real: starting value for 
-    the standardizing constant of the location part. }
-  \item{a.sc.start}{ real: starting value for centering
-    constant of the scale part. }
-  \item{A.sc.start}{ positive real: starting value for 
-    the standardizing constant of the scale part. }
-  \item{bUp}{ positive real: the upper end point of the 
-    interval to be searched for the clipping bound b. }
-  \item{itmax}{ the maximum number of iterations. }
   \item{returnIC}{ logical: should IC be returned. See details below. }
 }
 \details{
@@ -70,8 +58,14 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
   list of location and scale estimates
   \item{mean }{Description of 'comp1'}
   \item{sd }{Description of 'comp2'}
+
   if 'returnIC' is 'TRUE' the list also contains
   \item{optIC}{ object of class \code{"ContIC"}; optimally robust IC }
+
+  if 'returnIC' is 'FALSE' an 'eps' is missing the list also contains
+  \item{contamination interval}{ interval for the amount of gross errors }
+  \item{least favorable contamination}{ amount of gross errors used for the computations }
+  \item{maximum MSE-inefficiency}{ maximum (asymptotic) MSE-inefficiency }
 }
 \references{
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
