@@ -62,7 +62,7 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
   if 'returnIC' is 'TRUE' the list also contains
   \item{optIC}{ object of class \code{"ContIC"}; optimally robust IC }
 
-  if 'returnIC' is 'FALSE' an 'eps' is missing the list also contains
+  if 'returnIC' is 'FALSE' and 'eps' is missing the list also contains
   \item{contamination interval}{ interval for the amount of gross errors }
   \item{least favorable contamination}{ amount of gross errors used for the computations }
   \item{maximum MSE-inefficiency}{ maximum (asymptotic) MSE-inefficiency }
