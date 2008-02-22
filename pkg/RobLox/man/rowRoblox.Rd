@@ -1,20 +1,22 @@
-\name{roblox}
-\alias{roblox}
+\name{rowRoblox and colRoblox}
+\alias{rowRoblox}
+\alias{colRoblox}
 \title{Optimally robust estimator for location and/or scale}
 \description{
-  The function \code{roblox} computes the optimally robust estimator
-  and corresponding IC for normal location und/or scale and 
+  The functions \code{rowRoblox} and \code{colRoblox} compute 
+  the optimally robust estimator for normal location und/or scale and 
   (convex) contamination neighborhoods. The definition of 
   these estimators can be found in Rieder (1994) or Kohl (2005),
   respectively.
 }
 \usage{
-roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FALSE)
+rowRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
+colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
 }
 \arguments{
-  \item{x}{ vector \code{x} of data values }
-  \item{mean}{ specified mean.}
-  \item{sd}{ specified standard deviation.}
+  \item{x}{ matrix \code{x} of data values }
+  \item{mean}{ specified mean. See details below. }
+  \item{sd}{ specified standard deviation. See details below. }
   \item{eps}{ positive real (0 < \code{eps} <= 0.5): amount of gross errors. 
         See details below. }
   \item{eps.lower}{ positive real (0 <= \code{eps.lower} <= \code{eps.upper}): 
@@ -24,7 +26,6 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
   \item{initial.est}{ initial estimate for \code{mean} and/or \code{sd}. If missing 
         median and/or MAD are used. }
   \item{k}{ positive integer. k-step is used to compute the optimally robust estimator.}
-  \item{returnIC}{ logical: should IC be returned. See details below. }
 }
 \details{
   Computes the optimally robust estimator for location with scale specified,
@@ -33,6 +34,11 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
   or scale or location and scale, respectively. Valid candidates are e.g. 
   median and/or MAD (default) as well as Kolmogorov(-Smirnov) or von Mises minimum 
   distance estimators; cf. Rieder (1994) and Kohl (2005).
+
+  These functions are optimized for the situation where one has a matrix 
+  and wants to compute the optimally robust estimator for every row, 
+  respectively column of this matrix. In particular, the amount of cross
+  errors is assumed to be constant for all rows, respectively columns.
 
   If the amount of gross errors (contamination) is known, it can be 
   specified by \code{eps}. The radius of the corresponding infinitesimal 
@@ -53,16 +59,18 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
 
   If \code{eps} is missing, the radius-minimax estimator in sense of 
   Rieder et al. (2001), respectively Section 2.2 of Kohl (2005) is returned.
+
+  In case of location, respectively scale one additionally has to specify
+  \code{sd}, respectively \code{mean} where \code{sd} and \code{mean} can
+  be a single number, i.e., identical for all rows, respectively columns,
+  or a vector, i.e., different for all rows, respectively columns.
 }
 \value{
   list of location and scale estimates
-  \item{mean }{ (estimated) mean}
-  \item{sd }{ (estimated) sd }
+  \item{mean }{ (estimated) means }
+  \item{sd }{ (estimated) sds }
 
-  if 'returnIC' is 'TRUE' the list also contains
-  \item{optIC}{ object of class \code{"ContIC"}; optimally robust IC }
-
-  if 'returnIC' is 'FALSE' and 'eps' is missing the list also contains
+  if 'eps' is missing the list also contains
   \item{contamination interval}{ interval for the amount of gross errors }
   \item{least favorable contamination}{ amount of gross errors used for the computations }
   \item{maximum MSE-inefficiency}{ maximum (asymptotic) MSE-inefficiency }
@@ -84,58 +92,32 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link[ROptEst]{ContIC-class}}, \code{\link{rlOptIC}}, 
-         \code{\link{rsOptIC}}, \code{\link{rlsOptIC.AL}}}
+\seealso{\code{\link{roblox}}}
 \examples{
-ind <- rbinom(100, size=1, prob=0.05) 
-x <- rnorm(100, mean=ind*3, sd=(1-ind) + ind*9)
+ind <- rbinom(200, size=1, prob=0.05) 
+X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
+rowRoblox(X)
+rowRoblox(X, k = 3)
+rowRoblox(X, eps = 0.05)
+rowRoblox(X, eps = 0.05, k = 3)
 
-## amount of gross errors known
-res1 <- roblox(x, eps = 0.05, returnIC = TRUE)
-res1$mean
-res1$sd
-res1$optIC
-checkIC(res1$optIC)
-Risks(res1$optIC)
-Infos(res1$optIC)
-plot(res1$optIC)
-infoPlot(res1$optIC)
+X1 <- t(X)
+colRoblox(X1)
+colRoblox(X1, k = 3)
+colRoblox(X1, eps = 0.05)
+colRoblox(X1, eps = 0.05, k = 3)
 
-## amount of gross errors unknown
-res2 <- roblox(x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
-res2$mean
-res2$sd
-res2$optIC
-checkIC(res2$optIC)
-Risks(res2$optIC)
-Infos(res2$optIC)
-plot(res2$optIC)
-infoPlot(res2$optIC)
+X2 <- rbind(rnorm(100, mean = -2, sd = 3), rnorm(100, mean = -1, sd = 4))
+rowRoblox(X2, sd = c(3, 4))
+rowRoblox(X2, eps = 0.03, sd = c(3, 4))
+rowRoblox(X2, sd = c(3, 4), k = 4)
+rowRoblox(X2, eps = 0.03, sd = c(3, 4), k = 4)
 
-## estimator comparison
-# classical optimal (non-robust)
-c(mean(x), sd(x))
-
-# most robust
-c(median(x), mad(x))
-
-# optimally robust (amount of gross errors known)
-c(res1$mean, res1$sd)
-
-# optimally robust (amount of gross errors unknown)
-c(res2$mean, res2$sd)
-
-# Kolmogorov(-Smirnov) minimum distance estimator (robust)
-(ks.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = KolmogorovDist))
-
-# optimally robust (amount of gross errors known)
-roblox(x, eps = 0.05, initial.est = ks.est$estimate)
-
-# Cramer von Mises minimum distance estimator (robust)
-(CvM.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = CvMDist))
-
-# optimally robust (amount of gross errors known)
-roblox(x, eps = 0.05, initial.est = CvM.est$estimate)
+X3 <- cbind(rnorm(100, mean = -2, sd = 3), rnorm(100, mean = 1, sd = 2))
+colRoblox(X3, mean = c(-2, 1))
+colRoblox(X3, eps = 0.02, mean = c(-2, 1))
+colRoblox(X3, mean = c(-2, 1), k = 4)
+colRoblox(X3, eps = 0.02, mean = c(-2, 1), k = 4)
 }
 \concept{normal location}
 \concept{normal scale}

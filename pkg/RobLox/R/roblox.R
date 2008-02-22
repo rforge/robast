@@ -108,7 +108,7 @@
 }
 .onestep.sc <- function(x, initial.est, A, a, b, mean){
     v <- A*(((x-mean)/initial.est)^2-1)/initial.est - a
-    IC <- mean(v*pmin(1, b/abs(v)))
+    IC <- mean(v*pmin(1, b/abs(v)), na.rm = TRUE)
     return(initial.est + IC)
 }
 .kstep.sc <- function(x, initial.est, A, a, b, mean, k){
@@ -132,7 +132,7 @@
     u <- A1*(x-mean)/sd^2
     v <- A2*(((x-mean)/sd)^2-1)/sd - a[2]
     w <- pmin(1, b/sqrt(u^2 + v^2))
-    IC <- c(mean(u*w), mean(v*w))
+    IC <- c(mean(u*w, na.rm = TRUE), mean(v*w, na.rm = TRUE))
     return(initial.est + IC)
 }
 .kstep.locsc <- function(x, initial.est, A1, A2, a, b, mean, k){

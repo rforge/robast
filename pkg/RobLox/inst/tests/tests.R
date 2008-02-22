@@ -73,3 +73,146 @@ system.time(for(i in 1:100) roblox(x))
 system.time(for(i in 1:100) roblox(x, k = 2))
 system.time(for(i in 1:100) roblox(x, k = 5))
 system.time(for(i in 1:100) roblox(x, returnIC = TRUE))
+
+
+## Samples
+X <- matrix(rnorm(200, mean = -2, sd = 3), nrow = 2)
+X1 <- rbind(rnorm(100, mean = -2, sd = 3), rnorm(100, mean = -1, sd = 4))
+
+## location: rowRoblox
+apply(X, 1, roblox, sd = 3)
+rowRoblox(X, sd = 3)
+apply(X, 1, roblox, eps = 0.06, sd = 3)
+rowRoblox(X, eps = 0.06, sd = 3)
+
+apply(X, 1, roblox, sd = 3, k = 3)
+rowRoblox(X, sd = c(3, 3), k = 3)
+apply(X, 1, roblox, eps = 0.06, sd = 3, k = 3)
+rowRoblox(X, eps = 0.06, sd = 3, k = 3)
+
+roblox(X1[1,], sd = 3)
+roblox(X1[2,], sd = 4)
+rowRoblox(X1, sd = c(3, 4))
+roblox(X1[1,], eps = 0.06, sd = 3)
+roblox(X1[2,], eps = 0.06, sd = 4)
+rowRoblox(X1, eps = 0.06, sd = c(3, 4))
+
+roblox(X1[1,], sd = 3, k = 4)
+roblox(X1[2,], sd = 4, k = 4)
+rowRoblox(X1, sd = c(3, 4), k = 4)
+roblox(X1[1,], eps = 0.06, sd = 3, k = 4)
+roblox(X1[2,], eps = 0.06, sd = 4, k = 4)
+rowRoblox(X1, eps = 0.06, sd = c(3, 4), k = 4)
+
+
+## scale: rowRoblox
+apply(X, 1, roblox, mean = -2)
+rowRoblox(X, mean = -2)
+apply(X, 1, roblox, eps = 0.049, mean = -2)
+rowRoblox(X, eps = 0.049, mean = -2)
+
+apply(X, 1, roblox, mean = -2, k = 3)
+rowRoblox(X, mean = c(-2, -2), k = 3)
+apply(X, 1, roblox, eps = 0.049, mean = -2, k = 3)
+rowRoblox(X, eps = 0.049, mean = c(-2, -2), k = 3)
+
+roblox(X1[1,], mean = -2)
+roblox(X1[2,], mean = -1)
+rowRoblox(X1, mean = c(-2, -1))
+roblox(X1[1,], eps = 0.049, mean = -2)
+roblox(X1[2,], eps = 0.049, mean = -1)
+rowRoblox(X1, eps = 0.049, mean = c(-2, -1))
+
+roblox(X1[1,], mean = -2, k = 4)
+roblox(X1[2,], mean = -1, k = 4)
+rowRoblox(X1, mean = c(-2, -1), k = 4)
+roblox(X1[1,], eps = 0.049, mean = -2, k = 4)
+roblox(X1[2,], eps = 0.049, mean = -1, k = 4)
+rowRoblox(X1, eps = 0.049, mean = c(-2, -1), k = 4)
+
+## location and scale: rowRoblox
+apply(X, 1, roblox)
+rowRoblox(X)
+apply(X, 1, roblox, eps = 0.057)
+rowRoblox(X, eps = 0.057)
+
+apply(X, 1, roblox, k = 3)
+rowRoblox(X, k = 3)
+apply(X, 1, roblox, eps = 0.057, k = 3)
+rowRoblox(X, eps = 0.057, k = 3)
+
+
+## Samples
+X <- t(X)
+X1 <- t(X1)
+
+## location: colRoblox
+apply(X, 2, roblox, sd = 3)
+colRoblox(X, sd = 3)
+apply(X, 2, roblox, eps = 0.06, sd = 3)
+colRoblox(X, eps = 0.06, sd = 3)
+
+apply(X, 2, roblox, sd = 3, k = 3)
+colRoblox(X, sd = c(3, 3), k = 3)
+apply(X, 2, roblox, eps = 0.06, sd = 3, k = 3)
+colRoblox(X, eps = 0.06, sd = 3, k = 3)
+
+roblox(X1[,1], sd = 3)
+roblox(X1[,2], sd = 4)
+colRoblox(X1, sd = c(3, 4))
+roblox(X1[,1], eps = 0.06, sd = 3)
+roblox(X1[,2], eps = 0.06, sd = 4)
+colRoblox(X1, eps = 0.06, sd = c(3, 4))
+
+roblox(X1[,1], sd = 3, k = 4)
+roblox(X1[,2], sd = 4, k = 4)
+colRoblox(X1, sd = c(3, 4), k = 4)
+roblox(X1[,1], eps = 0.06, sd = 3, k = 4)
+roblox(X1[,2], eps = 0.06, sd = 4, k = 4)
+colRoblox(X1, eps = 0.06, sd = c(3, 4), k = 4)
+
+
+## scale: colRoblox
+apply(X, 2, roblox, mean = -2)
+colRoblox(X, mean = -2)
+apply(X, 2, roblox, eps = 0.049, mean = -2)
+colRoblox(X, eps = 0.049, mean = -2)
+
+apply(X, 2, roblox, mean = -2, k = 3)
+colRoblox(X, mean = c(-2, -2), k = 3)
+apply(X, 2, roblox, eps = 0.049, mean = -2, k = 3)
+colRoblox(X, eps = 0.049, mean = c(-2, -2), k = 3)
+
+roblox(X1[,1], mean = -2)
+roblox(X1[,2], mean = -1)
+colRoblox(X1, mean = c(-2, -1))
+roblox(X1[,1], eps = 0.049, mean = -2)
+roblox(X1[,2], eps = 0.049, mean = -1)
+colRoblox(X1, eps = 0.049, mean = c(-2, -1))
+
+roblox(X1[,1], mean = -2, k = 4)
+roblox(X1[,2], mean = -1, k = 4)
+colRoblox(X1, mean = c(-2, -1), k = 4)
+roblox(X1[,1], eps = 0.049, mean = -2, k = 4)
+roblox(X1[,2], eps = 0.049, mean = -1, k = 4)
+colRoblox(X1, eps = 0.049, mean = c(-2, -1), k = 4)
+
+## location and scale: colRoblox
+apply(X, 2, roblox)
+colRoblox(X)
+apply(X, 2, roblox, eps = 0.057)
+colRoblox(X, eps = 0.057)
+
+apply(X, 2, roblox, k = 3)
+colRoblox(X, k = 3)
+apply(X, 2, roblox, eps = 0.057, k = 3)
+colRoblox(X, eps = 0.057, k = 3)
+
+
+## some timings
+X <- matrix(rnorm(1e5, mean = -1, sd = 3), ncol = 100)
+system.time(apply(X, 1, roblox, eps = 0.02))
+system.time(rowRoblox(X, eps = 0.02))
+
+system.time(apply(X, 1, roblox))
+system.time(rowRoblox(X))

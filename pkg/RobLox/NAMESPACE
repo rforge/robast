@@ -18,4 +18,6 @@ export(rlsOptIC.AL,
        rlsOptIC.MM2,
        rlOptIC,
        rsOptIC,
-       roblox)
+       roblox,
+       rowRoblox,
+       colRoblox)
