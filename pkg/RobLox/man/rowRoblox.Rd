@@ -67,14 +67,11 @@ colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
   or a vector, i.e., different for all rows, respectively columns.
 }
 \value{
-  list of location and scale estimates
-  \item{mean }{ (estimated) means }
-  \item{sd }{ (estimated) sds }
-
-  if \code{eps} is missing the list also contains
-  \item{contamination interval}{ interval for the amount of gross errors }
-  \item{least favorable contamination}{ amount of gross errors used for the computations }
-  \item{maximum MSE-inefficiency}{ maximum (asymptotic) MSE-inefficiency }
+  An object of S3-class \code{"ALEstimate"} which inherits from 
+  class \code{"Estimate"}, a list with components
+  \item{estimate }{ location and/or scale estimates }
+  \item{steps }{ number of k-steps used to compute the estimates }
+  \item{Infos }{ additional information about the estimates }
 }
 \references{
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 

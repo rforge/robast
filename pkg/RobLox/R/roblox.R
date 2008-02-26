@@ -207,11 +207,16 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
         if(missing(initial.est)){
             mean <- median(x, na.rm = TRUE)
             sd <- mad(x, na.rm = TRUE)
+            if(sd == 0)
+                stop("'mad(x, na.rm = TRUE) == 0' => cannot compute a valid initial estimate, 
+                      please specify one via 'initial.est'")
         }else{
             if(!is.numeric(initial.est) || length(initial.est) != 2)
               stop("'initial.est' needs to be a numeric vector of length 2 or missing")
             mean <- initial.est[1]
             sd <- initial.est[2]
+            if(initial.est <= 0)
+                stop("initial estimate for scale <= 0 which is no valid scale estimate")
         }
 
         if(!missing(eps)){

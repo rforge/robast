@@ -113,11 +113,16 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
         if(missing(initial.est)){
             mean <- apply(x, 1, median, na.rm = TRUE)
             sd <- apply(x, 1, mad, na.rm = TRUE)
+            if(any(sd == 0))
+                stop("'mad(x, na.rm = TRUE) == 0' => cannot compute a valid initial estimate, 
+                      please specify one via 'initial.est'")
         }else{
             if(nrow(initial.est) != nrow(x) || ncol(initial.est) != 2)
               stop("'initial.est' has wrong dimension")
             mean <- initial.est[,1]
             sd <- initial.est[,2]
+            if(any(sd <= 0))
+                stop("initial estimate for scale <= 0 which is no valid scale estimate")
         }
 
         if(!missing(eps)){
@@ -139,7 +144,12 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
             robEst <- .kstep.locsc.matrix(x = x, initial.est = cbind(mean, sd), 
                                           A1 = A1, A2 = A2, a = a, b = b, k = k)
             colnames(robEst) <- c("mean", "sd")
-            return(list(mean = robEst[,1], sd = robEst[,2]))
+            Info.matrix <- matrix(c("roblox", 
+                                    paste("optimally robust estimates for contamination 'eps' =", round(eps, 3),
+                                          "and 'asMSE'")),
+                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
+            return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
+                             class = c("ALEstimate", "Estimate")))
         }else{
             sqrtn <- sqrt(ncol(x))
             rlo <- sqrtn*eps.lower
@@ -177,13 +187,20 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
             }
             robEst <- .kstep.locsc.matrix(x = x, initial.est = cbind(mean, sd), 
                                           A1 = A1, A2 = A2, a = a, b = b, k = k)
-            return(list(mean = robEst[,1], sd = robEst[,2], 
-                        "contamination interval" = round(c(eps.lower, eps.upper), 3), 
-                        "least favorable contamination" = round(r/sqrtn, 3),
-                        "maximum MSE-inefficiency" = round(ineff[1], 3)))
+            colnames(robEst) <- c("mean", "sd")
+            Info.matrix <- matrix(c(rep("roblox", 3), 
+                                  paste("radius-minimax estimates for contamination interval [", 
+                                    round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                  paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                  paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
+            return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
+                             class = c("ALEstimate", "Estimate")))
         }
     }else{
         if(missing(mean)){
+            if(any(sd <= 0))
+                stop("'sd' has to be positive")
             if(missing(initial.est)){
                 mean <- apply(x, 1, median, na.rm = TRUE)
             }else{
@@ -204,7 +221,13 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                     b <- sd*.getb.loc(r)
                 }
                 robEst <- .kstep.loc.matrix(x = x, initial.est = mean, A = A, b = b, sd = sd, k = k)
-                return(list(mean = robEst, sd = sd))
+                names(robEst) <- c("mean")
+                Info.matrix <- matrix(c("roblox", 
+                                        paste("optimally robust estimates for contamination 'eps' =", round(eps, 3),
+                                              "and 'asMSE'")),
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
+                                 class = c("ALEstimate", "Estimate")))
             }else{
                 sqrtn <- sqrt(ncol(x))
                 rlo <- sqrtn*eps.lower
@@ -233,21 +256,31 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                     }
                 }
                 robEst <- .kstep.loc.matrix(x = x, initial.est = mean, A = A, b = b, sd = sd, k = k)
-                return(list(mean = robEst, sd = sd, 
-                            "contamination interval" = round(c(eps.lower, eps.upper), 3), 
-                            "least favorable contamination" = round(r/sqrtn, 3),
-                            "maximum MSE-inefficiency" = round(ineff[1], 3)))
+                names(robEst) <- c("mean")
+                Info.matrix <- matrix(c(rep("roblox", 3), 
+                                      paste("radius-minimax estimates for contamination interval [", 
+                                        round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                      paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                      paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
+                                 class = c("ALEstimate", "Estimate")))
             }
         }
         if(missing(sd)){
             if(missing(initial.est)){ 
                 sd <- apply(x, 1, mad, na.rm = TRUE)
+                if(any(sd == 0))
+                  stop("'mad(x, na.rm = TRUE) == 0' => cannot compute a valid initial estimate, 
+                       please specify one via 'initial.est'")
             }else{
                 if(!is.numeric(mean) || (length(mean) != 1 && length(mean) != nrow(x)))
                     stop("'mean' has wrong dimension")
                 if(!is.numeric(initial.est) || length(initial.est) != nrow(x))
                     stop("'initial.est' has wrong dimension")
                 sd <- initial.est
+                if(any(initial.est <= 0))
+                  stop("'initial.est <= 0'; i.e., is no valid scale estimate")
             }
 
             if(!missing(eps)){
@@ -262,7 +295,13 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                     b <- sd*.getb.sc(r)
                 }
                 robEst <- .kstep.sc.matrix(x = x, initial.est = sd, A = A, a = a, b = b, mean = mean, k = k)
-                return(list(mean = mean, sd = robEst))
+                names(robEst) <- c("sd")
+                Info.matrix <- matrix(c("roblox", 
+                                        paste("optimally robust estimates for contamination 'eps' =", round(eps, 3),
+                                              "and 'asMSE'")),
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
+                                 class = c("ALEstimate", "Estimate")))
             }else{
                 sqrtn <- sqrt(ncol(x))
                 rlo <- sqrtn*eps.lower
@@ -293,10 +332,15 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                     }
                 }
                 robEst <- .kstep.sc.matrix(x = x, initial.est = sd, A = A, a = a, b = b, mean = mean, k = k)
-                return(list(mean = mean, sd = robEst, 
-                            "contamination interval" = round(c(eps.lower, eps.upper), 3), 
-                            "least favorable contamination" = round(r/sqrtn, 3),
-                            "maximum MSE-inefficiency" = round(ineff[1], 3)))
+                names(robEst) <- c("sd")
+                Info.matrix <- matrix(c(rep("roblox", 3), 
+                                      paste("radius-minimax estimates for contamination interval [", 
+                                        round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                      paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                      paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
+                                 class = c("ALEstimate", "Estimate")))
             }
         }
     }
