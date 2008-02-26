@@ -113,7 +113,7 @@ setMethod("imageDistr", signature(RandVar = "EuclRandVarList",
         for(i in 1:nrvalues1){
             for(j in 1:length(RandVar[[i]])){
                 comp <- comp + 1
-                res[[comp]] <- RandVar[[i]]@Map[[j]](distr)
+                res[[comp]] <-  .getImageDistr(f = RandVar[[i]]@Map[[j]], distr)
             }
         }
 

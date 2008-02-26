@@ -327,8 +327,7 @@ setMethod("imageDistr", signature(RandVar = "EuclRandVariable",
         nrvalues <- length(RandVar)
         res <- vector(mode = "list", length = nrvalues)
         for(i in 1:nrvalues)
-            res[[i]] <- RandVar@Map[[i]](distr)
-
+            res[[i]] <- .getImageDistr(f = RandVar@Map[[i]], distr)
         return(new("DistrList", res))
     })
 

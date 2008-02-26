@@ -1,0 +1,132 @@
+<html><head><title>Computation of the optimally robust IC for AL estimators</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>rlOptIC(RobLox)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   rlOptIC">
+<param name="keyword" value=" Computation of the optimally robust IC for AL estimators">
+</object>
+
+
+<h2>Computation of the optimally robust IC for AL estimators</h2>
+
+
+<h3>Description</h3>
+
+<p>
+The function <code>rlOptIC</code> computes the optimally robust IC for 
+AL estimators in case of normal location and (convex) contamination 
+neighborhoods. The definition of these estimators can be found 
+in Rieder (1994) or Kohl (2005), respectively.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+rlOptIC(r, mean = 0, sd = 1, bUp = 1000, computeIC = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>r</code></td>
+<td>
+non-negative real: neighborhood radius. </td></tr>
+<tr valign="top"><td><code>mean</code></td>
+<td>
+specified mean.</td></tr>
+<tr valign="top"><td><code>sd</code></td>
+<td>
+specified standard deviation.</td></tr>
+<tr valign="top"><td><code>bUp</code></td>
+<td>
+positive real: the upper end point of the 
+interval to be searched for the clipping bound b. </td></tr>
+<tr valign="top"><td><code>computeIC</code></td>
+<td>
+logical: should IC be computed. See details below. </td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+If 'computeIC' is 'FALSE' only the Lagrange multipliers 'A', 'a', and
+'b' contained in the optimally robust IC are computed.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+If 'computeIC' is 'TRUE' an object of class <code>"ContIC"</code> is returned, 
+otherwise a list of Lagrane multipliers
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>A</code></td>
+<td>
+standardizing constant </td></tr>
+<tr valign="top"><td><code>a</code></td>
+<td>
+centering constant; always '= 0' is this symmetric setup </td></tr>
+<tr valign="top"><td><code>b</code></td>
+<td>
+optimal clipping bound </td></tr>
+</table>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('ROptEst', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, <code><a href="roblox.html">roblox</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+IC1 &lt;- rlOptIC(r = 0.1)
+distrExOptions("ErelativeTolerance" = 1e-12)
+checkIC(IC1)
+distrExOptions("ErelativeTolerance" = .Machine$double.eps^0.25) # default
+Risks(IC1)
+cent(IC1)
+clip(IC1)
+stand(IC1)
+plot(IC1)
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>RobLox</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

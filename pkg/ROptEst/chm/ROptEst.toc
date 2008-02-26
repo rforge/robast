@@ -390,18 +390,6 @@
 <param name="Local" value="leastFavorableRadius.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="locMEstimator">
-<param name="Local" value="locMEstimator.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="locMEstimator,numeric,InfluenceCurve-method">
-<param name="Local" value="locMEstimator.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="locMEstimator-methods">
-<param name="Local" value="locMEstimator.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="lowerCaseRadius">
 <param name="Local" value="lowerCaseRadius.html">
 </OBJECT>
@@ -541,10 +529,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic Function for the Computation of Least Favorable Radii">
 <param name="Local" value="leastFavorableRadius.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic function for the computation of location M estimators">
-<param name="Local" value="locMEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic function for the computation of optimally robust ICs">
