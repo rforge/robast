@@ -12,9 +12,10 @@
 roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FALSE)
 }
 \arguments{
-  \item{x}{ vector \code{x} of data values }
-  \item{mean}{ specified mean.}
-  \item{sd}{ specified standard deviation.}
+  \item{x}{ vector \code{x} of data values, may also be a matrix or data.frame
+        with one row, respectively one column/(numeric) variable. }
+  \item{mean}{ specified mean. }
+  \item{sd}{ specified standard deviation which has to be positive. }
   \item{eps}{ positive real (0 < \code{eps} <= 0.5): amount of gross errors. 
         See details below. }
   \item{eps.lower}{ positive real (0 <= \code{eps.lower} <= \code{eps.upper}): 
@@ -23,7 +24,7 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
         upper bound for the amount of gross errors. See details below. }
   \item{initial.est}{ initial estimate for \code{mean} and/or \code{sd}. If missing 
         median and/or MAD are used. }
-  \item{k}{ positive integer. k-step is used to compute the optimally robust estimator.}
+  \item{k}{ positive integer. k-step is used to compute the optimally robust estimator. }
   \item{returnIC}{ logical: should IC be returned. See details below. }
 }
 \details{
@@ -55,17 +56,14 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
   Rieder et al. (2001), respectively Section 2.2 of Kohl (2005) is returned.
 }
 \value{
-  list of location and scale estimates
-  \item{mean }{ (estimated) mean}
-  \item{sd }{ (estimated) sd }
+  An object of S3-class \code{"ALEstimate"} which inherits from 
+  class \code{"Estimate"}, a list with components
+  \item{estimate }{ location and/or scale estimate }
+  \item{steps }{ number of k-steps used to compute the estimate }
+  \item{Infos }{ additional information about the estimate }
 
-  if 'returnIC' is 'TRUE' the list also contains
+  if \code{returnIC} is \code{TRUE} the list also contains
   \item{optIC}{ object of class \code{"ContIC"}; optimally robust IC }
-
-  if 'returnIC' is 'FALSE' and 'eps' is missing the list also contains
-  \item{contamination interval}{ interval for the amount of gross errors }
-  \item{least favorable contamination}{ amount of gross errors used for the computations }
-  \item{maximum MSE-inefficiency}{ maximum (asymptotic) MSE-inefficiency }
 }
 \references{
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 

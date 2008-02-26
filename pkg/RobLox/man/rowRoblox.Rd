@@ -14,9 +14,10 @@ rowRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
 colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
 }
 \arguments{
-  \item{x}{ matrix \code{x} of data values }
+  \item{x}{ matrix or data.frame of (numeric) data values. }
   \item{mean}{ specified mean. See details below. }
-  \item{sd}{ specified standard deviation. See details below. }
+  \item{sd}{ specified standard deviation which has to be positive. 
+             See also details below. }
   \item{eps}{ positive real (0 < \code{eps} <= 0.5): amount of gross errors. 
         See details below. }
   \item{eps.lower}{ positive real (0 <= \code{eps.lower} <= \code{eps.upper}): 
@@ -70,7 +71,7 @@ colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
   \item{mean }{ (estimated) means }
   \item{sd }{ (estimated) sds }
 
-  if 'eps' is missing the list also contains
+  if \code{eps} is missing the list also contains
   \item{contamination interval}{ interval for the amount of gross errors }
   \item{least favorable contamination}{ amount of gross errors used for the computations }
   \item{maximum MSE-inefficiency}{ maximum (asymptotic) MSE-inefficiency }

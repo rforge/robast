@@ -70,9 +70,13 @@
 rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1){
     if(missing(x))
         stop("'x' is missing with no default")
-    x <- as.matrix(x)
+    if(is.data.frame(x))
+        x <- data.matrix(x)
+    else
+        x <- as.matrix(x)
     if(!is.matrix(x))
-        stop("'x' has to be a matrix resp. convertable to a matrix by 'as.matrix'")
+        stop("'x' has to be a matrix resp. convertable to a matrix by 'as.matrix'
+              or 'data.matrix'")
 
     if(missing(eps) && missing(eps.lower) && missing(eps.upper)){
         eps.lower <- 0
@@ -134,6 +138,7 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
             }
             robEst <- .kstep.locsc.matrix(x = x, initial.est = cbind(mean, sd), 
                                           A1 = A1, A2 = A2, a = a, b = b, k = k)
+            colnames(robEst) <- c("mean", "sd")
             return(list(mean = robEst[,1], sd = robEst[,2]))
         }else{
             sqrtn <- sqrt(ncol(x))

@@ -160,6 +160,18 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                    returnIC = FALSE){
     if(missing(x))
         stop("'x' is missing with no default")
+    if(!is.numeric(x)){
+        if(is.data.frame(x))
+            x <- data.matrix(x)
+        else
+            x <- as.matrix(x)
+        if(!is.matrix(x))
+            stop("'x' has to be a numeric vector resp. a matrix or data.frame
+                  with one row resp. column/(numeric) variable")
+        if(ncol(x) > 1 & nrow(x) > 1)
+            stop("number of rows and columns/variables > 1. Please, do use 'rowRoblox'
+                  resp. 'colRoblox'.")
+    }
     if(missing(eps) && missing(eps.lower) && missing(eps.upper)){
         eps.lower <- 0
         eps.upper <- 0.5
@@ -219,15 +231,22 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 mse <- A1 + A2
             }
             robEst <- .kstep.locsc(x = x, initial.est = c(mean, sd), A1 = A1, A2 = A2, a = a, b = b, k = k)
+            names(robEst) <- c("mean", "sd")
+            Info.matrix <- matrix(c("roblox", 
+                                    paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
+                                          "and 'asMSE'")),
+                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
             if(returnIC){
                 IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                   L2Fam = NormLocationScaleFamily(mean = mean, sd = sd), 
                                   res = list(A = diag(c(A1, A2)), a = a, b = b, d = NULL, 
                                       risk = list(asMSE = mse, asBias = b, asCov = mse - r^2*b^2), 
                                       info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
-                return(list(optIC = IC1, mean = robEst[1], sd = robEst[2]))
+                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1), 
+                                 class = c("ALEstimate", "Estimate")))
             }else
-                return(list(mean = robEst[1], sd = robEst[2]))
+                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
+                                 class = c("ALEstimate", "Estimate")))
         }else{
             sqrtn <- sqrt(length(x))
             rlo <- sqrtn*eps.lower
@@ -264,6 +283,13 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 }
             }
             robEst <- .kstep.locsc(x = x, initial.est = c(mean, sd), A1 = A1, A2 = A2, a = a, b = b, k = k)
+            names(robEst) <- c("mean", "sd")
+            Info.matrix <- matrix(c(rep("roblox", 3), 
+                                  paste("radius-minimax estimate for contamination interval [", 
+                                    round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                  paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                  paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
             if(returnIC){
                 IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                   L2Fam = NormLocationScaleFamily(mean = mean, sd = sd), 
@@ -271,20 +297,21 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                       risk = list(asMSE = mse, asBias = b, asCov = mse - r^2*b^2), 
                                       info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
                 Infos(IC1) <- matrix(c(rep("roblox", 3), 
-                                 paste("radius-minimax IC for contamination interval [", 
-                                   round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
-                                 paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
-                                 paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
-                                 ncol = 2, dimnames = list(NULL, c("method", "message")))
-                return(list(optIC = IC1, mean = robEst[1], sd = robEst[2]))
+                                      paste("radius-minimax IC for contamination interval [", 
+                                        round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                      paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                      paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
+                                 class = c("ALEstimate", "Estimate")))
             }else
-                return(list(mean = robEst[1], sd = robEst[2], 
-                            "contamination interval" = round(c(eps.lower, eps.upper), 3), 
-                            "least favorable contamination" = round(r/sqrtn, 3),
-                            "maximum MSE-inefficiency" = round(ineff, 3)))
+                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
+                                 class = c("ALEstimate", "Estimate")))
         }
     }else{
         if(missing(mean)){
+            if(sd <= 0)
+                stop("'sd' has to be positive")
             if(missing(initial.est)){
                 mean <- median(x, na.rm = TRUE)
             }else{
@@ -303,15 +330,22 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     b <- sd*.getb.loc(r)
                 }
                 robEst <- .kstep.loc(x = x, initial.est = mean, A = A, b = b, sd = sd, k = k)
+                names(robEst) <- "mean"
+                Info.matrix <- matrix(c("roblox", 
+                                        paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
+                                              "and 'asMSE'")),
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
                 if(returnIC){
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormLocationFamily(mean = mean, sd = sd), 
                                       res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
                                           risk = list(asMSE = A, asBias = b, asCov = b^2), 
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
-                    return(list(optIC = IC1, mean = robEst, sd = sd))
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
+                                 class = c("ALEstimate", "Estimate")))
                 }else
-                    return(list(mean = robEst, sd = sd))
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix),
+                                 class = c("ALEstimate", "Estimate")))
             }else{
                 sqrtn <- sqrt(length(x))
                 rlo <- sqrtn*eps.lower
@@ -340,6 +374,13 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     }
                 }
                 robEst <- .kstep.loc(x = x, initial.est = mean, A = A, b = b, sd = sd, k = k)
+                names(robEst) <- "mean"
+                Info.matrix <- matrix(c(rep("roblox", 3), 
+                                      paste("radius-minimax estimate for contamination interval [", 
+                                        round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                      paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                      paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
                 if(returnIC){
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormLocationFamily(mean = mean, sd = sd), 
@@ -352,21 +393,25 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                  paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
                                  paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
-                    return(list(optIC = IC1, mean = robEst, sd = sd))
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
+                                 class = c("ALEstimate", "Estimate")))
                 }else
-                    return(list(mean = robEst, sd = sd, 
-                                "contamination interval" = round(c(eps.lower, eps.upper), 3), 
-                                "least favorable contamination" = round(r/sqrtn, 3),
-                                "maximum MSE-inefficiency" = round(ineff, 3)))
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix),
+                                 class = c("ALEstimate", "Estimate")))
             }
         }
         if(missing(sd)){
             if(missing(initial.est)){ 
                 sd <- mad(x, na.rm = TRUE)
+                if(sd == 0)
+                  stop("'mad(x, na.rm = TRUE) == 0' => cannot compute a valid initial estimate, 
+                       please specify one via 'initial.est'")
             }else{
                 if(!is.numeric(initial.est) || length(initial.est) != 1)
                     stop("'initial.est' needs to be a numeric vector of length 1 or missing")
                 sd <- initial.est
+                if(initial.est <= 0)
+                  stop("'initial.est <= 0'; i.e., is no valid scale estimate")
             }
 
             if(!missing(eps)){
@@ -381,15 +426,22 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     b <- sd*.getb.sc(r)
                 }
                 robEst <- .kstep.sc(x = x, initial.est = sd, A = A, a = a, b = b, mean = mean, k = k)
+                names(robEst) <- "sd"
+                Info.matrix <- matrix(c("roblox", 
+                                        paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
+                                              "and 'asMSE'")),
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
                 if(returnIC){
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormScaleFamily(mean = mean, sd = sd), 
                                       res = list(A = as.matrix(A), a = a, b = b, d = NULL, 
                                           risk = list(asMSE = A, asBias = b, asCov = b^2), 
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
-                    return(list(optIC = IC1, mean = mean, sd = robEst))
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
+                                 class = c("ALEstimate", "Estimate")))
                 }else
-                    return(list(mean = mean, sd = robEst))
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix),
+                                 class = c("ALEstimate", "Estimate")))
             }else{
                 sqrtn <- sqrt(length(x))
                 rlo <- sqrtn*eps.lower
@@ -420,6 +472,13 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     }
                 }
                 robEst <- .kstep.sc(x = x, initial.est = sd, A = A, a = a, b = b, mean = mean, k = k)
+                names(robEst) <- "sd"
+                Info.matrix <- matrix(c(rep("roblox", 3), 
+                                      paste("radius-minimax estimate for contamination interval [", 
+                                        round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                      paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                      paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
                 if(returnIC){
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormScaleFamily(mean = mean, sd = sd), 
@@ -432,13 +491,18 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                  paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
                                  paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
-                    return(list(optIC = IC1, mean = mean, sd = robEst))
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
+                                 class = c("ALEstimate", "Estimate")))
                 }else
-                    return(list(mean = mean, sd = robEst, 
-                                "contamination interval" = round(c(eps.lower, eps.upper), 3), 
-                                "least favorable contamination" = round(r/sqrtn, 3),
-                                "maximum MSE-inefficiency" = round(ineff, 3)))
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix),
+                                 class = c("ALEstimate", "Estimate")))
             }
         }
     }
+}
+print.ALEstimate <- function(x, digits = getOption("digits"), ...){
+  print(x$estimate)
+  if(!is.null(x$Infos)){
+    print(x$Infos)
+  }
 }
