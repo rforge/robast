@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.12.8)  27 FEB 2008 07:51
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.12.8)  27 FEB 2008 18:47
 entering extended mode
  file:line:error style messages enabled.
  %&-line parsing enabled.
@@ -451,7 +451,7 @@ pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmsltt10.pfb></usr/share/t
 exmf-texlive/fonts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/
 type1/bluesky/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cm
 tt10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmtt12.pfb>
-Output written on RandVar.pdf (10 pages, 121833 bytes).
+Output written on RandVar.pdf (10 pages, 121832 bytes).
 PDF statistics:
  167 PDF objects out of 1000 (max. 8388607)
  23 named destinations out of 1000 (max. 131072)
