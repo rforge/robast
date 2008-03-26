@@ -4,8 +4,7 @@
 setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution", 
                                    risk = "asGRisk", 
                                    neighbor = "UncondNeighborhood"),
-    function(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-            upper, maxiter, tol, warn){
+    function(L2deriv, risk, neighbor, symm, Finfo, trafo, upper, maxiter, tol, warn){
         biastype <- biastype(risk)
         radius <- neighbor@radius
         if(identical(all.equal(radius, 0), TRUE)){
@@ -51,7 +50,8 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                 if(warn) cat("The IC algorithm did not converge!\n", 
                              "'radius >= maximum radius' for the given risk?\n",
                              "=> the minimum asymptotic bias (lower case) solution is returned\n")
-                res <- getInfRobIC(L2deriv = L2deriv, risk = asBias(), 
+                res <- getInfRobIC(L2deriv = L2deriv, risk = asBias(biastype = biastype(risk),
+                                                              normtype = normtype(risk)), 
                                 neighbor = neighbor, Finfo = Finfo, 
                                 symm = symm, trafo = trafo, upper = upper, 
                                 maxiter = maxiter, tol = tol, warn = warn)
@@ -81,15 +81,27 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                           trafo = trafo)
         Risk <- c(Risk, list(asBias = b))
 
-        return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info))
+        w <- new("HampelWeight")
+        cent(w) <- z
+        stand(w) <- A
+        clip(w) <- b
+        
+        weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
+                               normtype = normtype(risk))
+
+        return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info, w = w,
+                    biastype = biastype, normtype = normtype(risk)))
     })
 setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable", 
                                    risk = "asGRisk", 
                                    neighbor = "ContNeighborhood"),
     function(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, trafo, z.start, A.start, upper, 
-             maxiter, tol, warn){
+             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, 
+             z.start, A.start, upper, maxiter, 
+             tol, warn){
         biastype <- biastype(risk)
+        normtype <- normtype(risk)
+        
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
         if(is.null(A.start)) A.start <- trafo %*% solve(Finfo)
 
@@ -125,6 +137,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             }
         A.comp[col(A.comp) < row(A.comp)] <- A.comp[col(A.comp) > row(A.comp)]
 
+        w <- new("HampelWeight")
         z <- z.start
         A <- A.start
         b <- 0
@@ -134,6 +147,16 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             z.old <- z
             b.old <- b
             A.old <- A
+            ##
+            cent(w) <- z 
+            stand(w) <- A 
+            
+            normtype <- update(normtype = normtype, FI = Finfo, 
+                   L2 = L2deriv, stand = A, cent = z, clip = b,
+                   Distr = Distr, norm = fct(normtype))
+
+            weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
+                                   normtype = normtype)
             ## new
             lower0 <- getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A, 
                                        Distr = Distr)/(1+neighbor@radius^2)
@@ -156,7 +179,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                              "=> the minimum asymptotic bias (lower case) solution is returned\n",
                              "If 'no' => Try again with modified starting values ",
                              "'z.start' and 'A.start'\n")
-                res <- getInfRobIC(L2deriv = L2deriv, risk = asBias(), 
+                res <- getInfRobIC(L2deriv = L2deriv, risk =  asBias(biastype = biastype(risk),
+                                                              normtype = normtype(risk)), 
                                 neighbor = neighbor, Distr = Distr, DistrSymm = DistrSymm,
                                 L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm,
                                 z.start = z.start, A.start = A.start, trafo = trafo, 
@@ -167,12 +191,18 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                 res$risk <- c(Risk, res$risk)
                 return(res)
             }
+            clip(w) <- b
+            normtype <- update(normtype = normtype, FI = Finfo, 
+                   L2 = L2deriv, stand = A, cent = z, clip = b,
+                   Distr = Distr, norm = fct(normtype))
+
+            weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
+                                   normtype = normtype)
             z <- getInfCent(L2deriv = L2deriv, neighbor = neighbor,  biastype = biastype,
-                            Distr = Distr, z.comp = z.comp, stand = A, cent = z, clip = b)
+                            Distr = Distr, z.comp = z.comp, stand = A, cent = z, clip = b, w = w)
             A <- getInfStand(L2deriv = L2deriv, neighbor = neighbor, 
                          biastype = biastype, Distr = Distr, A.comp = A.comp, 
-                         stand = A, clip = b, cent = z, 
-                        trafo = trafo)
+                         stand = A, clip = b, cent = z, w = w, trafo = trafo)
             prec <- max(abs(b-b.old), max(abs(A-A.old)), max(abs(z-z.old)))
             cat("current precision in IC algo:\t", prec, "\n")
             if(prec < tol) break
@@ -181,6 +211,16 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                 break
             }
         }
+        if (onesetLM){
+            cent(w) <- z 
+            stand(w) <- A 
+            normtype <- update(normtype = normtype, FI = Finfo, 
+                   L2 = L2deriv, stand = A, cent = z, clip = b,
+                   Distr = Distr, norm = fct(normtype))
+
+            weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
+                                   normtype = normtype)
+        }
         a <- as.vector(A %*% z)
         info <- paste("optimally robust IC for", sQuote(class(risk)[1]))
         Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
@@ -188,5 +228,6 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                           trafo = trafo)
         Risk <- c(Risk, list(asBias = b))
 
-        return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info))    
+        return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info, w = w, 
+                    biastype = biastype, normtype = normtype))    
     })

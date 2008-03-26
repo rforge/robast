@@ -26,6 +26,18 @@
 <param name="Local" value="InfluenceCurve-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="BdStWeight-class">
+<param name="Local" value="BdStWeight-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="biastype,ContIC-method">
+<param name="Local" value="ContIC-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="BoundedWeight-class">
+<param name="Local" value="BoundedWeight-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CallL2Fam">
 <param name="Local" value="IC-class.html">
 </OBJECT>
@@ -58,12 +70,20 @@
 <param name="Local" value="ContIC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cent,HampelWeight-method">
+<param name="Local" value="HampelWeight-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="cent<-">
 <param name="Local" value="ContIC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="cent<-,ContIC-method">
 <param name="Local" value="ContIC-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cent<-,HampelWeight-method">
+<param name="Local" value="HampelWeight-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="center">
@@ -98,12 +118,20 @@
 <param name="Local" value="ContIC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="clip,BoundedWeight-method">
+<param name="Local" value="BoundedWeight-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="clip,ContIC-method">
 <param name="Local" value="ContIC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="clip<-">
 <param name="Local" value="ContIC-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="clip<-,BoundedWeight-method">
+<param name="Local" value="BoundedWeight-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="clip<-,ContIC-method">
@@ -202,6 +230,46 @@
 <param name="Local" value="TotalVarIC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="generateIC.fct">
+<param name="Local" value="generateICfct.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="generateIC.fct,UncondNeighborhood,L2ParamFamily-method">
+<param name="Local" value="generateICfct.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="generateIC.fct-methods">
+<param name="Local" value="generateICfct.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getweight">
+<param name="Local" value="getweight.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getweight,BdStWeight,TotalVarNeighborhood,BiasType-method">
+<param name="Local" value="getweight.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getweight,HampelWeight,ContNeighborhood,asymmetricBias-method">
+<param name="Local" value="getweight.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getweight,HampelWeight,ContNeighborhood,BiasType-method">
+<param name="Local" value="getweight.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getweight,HampelWeight,ContNeighborhood,onesidedBias-method">
+<param name="Local" value="getweight.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getweight-methods">
+<param name="Local" value="getweight.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="HampelWeight-class">
+<param name="Local" value="HampelWeight-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="IC">
 <param name="Local" value="IC.html">
 </OBJECT>
@@ -286,20 +354,76 @@
 <param name="Local" value="TotalVarIC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="makeIC">
+<param name="Local" value="makeIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="makeIC,IC,L2ParamFamily-method">
+<param name="Local" value="makeIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="makeIC,IC,missing-method">
+<param name="Local" value="makeIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="makeIC-methods">
+<param name="Local" value="makeIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Map,InfluenceCurve-method">
 <param name="Local" value="InfluenceCurve-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="minbiasweight">
+<param name="Local" value="getweight.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="minbiasweight,BdStWeight,TotalVarNeighborhood,BiasType-method">
+<param name="Local" value="getweight.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="minbiasweight,HampelWeight,ContNeighborhood,asymmetricBias-method">
+<param name="Local" value="getweight.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="minbiasweight,HampelWeight,ContNeighborhood,BiasType-method">
+<param name="Local" value="getweight.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="minbiasweight,HampelWeight,ContNeighborhood,onesidedBias-method">
+<param name="Local" value="getweight.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="minbiasweight-methods">
+<param name="Local" value="getweight.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="name,InfluenceCurve-method">
 <param name="Local" value="InfluenceCurve-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="name,RobAStControl-method">
+<param name="Local" value="RobAStControl-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="name,RobModel-method">
 <param name="Local" value="RobModel-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="name,RobWeight-method">
+<param name="Local" value="RobWeight-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="name<-,InfluenceCurve-method">
 <param name="Local" value="InfluenceCurve-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="name<-,RobAStControl-method">
+<param name="Local" value="RobAStControl-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="name<-,RobWeight-method">
+<param name="Local" value="RobWeight-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="neighbor">
@@ -352,6 +476,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="neighborRadius<-,TotalVarIC-method">
 <param name="Local" value="TotalVarIC-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="normtype,ContIC-method">
+<param name="Local" value="ContIC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="oneStepEstimator">
@@ -422,8 +550,16 @@
 <param name="Local" value="InfluenceCurve-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="RobAStControl-class">
+<param name="Local" value="RobAStControl-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="RobModel-class">
 <param name="Local" value="RobModel-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="RobWeight-class">
+<param name="Local" value="RobWeight-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="show,ContIC-method">
@@ -458,6 +594,10 @@
 <param name="Local" value="ContIC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="stand,BdStWeight-method">
+<param name="Local" value="BdStWeight-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="stand,ContIC-method">
 <param name="Local" value="ContIC-class.html">
 </OBJECT>
@@ -468,6 +608,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="stand<-">
 <param name="Local" value="ContIC-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="stand<-,BdStWeight-method">
+<param name="Local" value="BdStWeight-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="stand<-,ContIC-method">
@@ -501,6 +645,30 @@
 <param name="Name" value="UncondNeighborhood-class">
 <param name="Local" value="UncondNeighborhood-class.html">
 </OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="weight">
+<param name="Local" value="RobWeight-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="weight,ContIC-method">
+<param name="Local" value="ContIC-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="weight,RobWeight-method">
+<param name="Local" value="RobWeight-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="weight,TotalVarIC-method">
+<param name="Local" value="TotalVarIC-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="weight<-">
+<param name="Local" value="RobWeight-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="weight<-,RobWeight-method">
+<param name="Local" value="RobWeight-class.html">
+</OBJECT>
 </UL>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Package RobAStBase:  Titles">
@@ -509,6 +677,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Contamination Neighborhood">
 <param name="Local" value="ContNeighborhood-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Control classes in package RobAStBase">
+<param name="Local" value="RobAStControl-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generating function for ContIC-class">
@@ -543,12 +715,20 @@
 <param name="Local" value="TotalVarNeighborhood.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Generating weights">
+<param name="Local" value="getweight.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic Function for Checking ICs">
 <param name="Local" value="checkIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic function for evaluating ICs">
 <param name="Local" value="evalIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Generic Function for making ICs consistent at a possibly different model">
+<param name="Local" value="makeIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic function for the computation of location M estimators">
@@ -597,6 +777,22 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Robust model with infinitesimal (unconditional) neighborhood">
 <param name="Local" value="InfRobModel-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Robust Weight classes">
+<param name="Local" value="RobWeight-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Robust Weight classes for bounded weights">
+<param name="Local" value="BoundedWeight-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Robust Weight classes for bounded, standardized weights">
+<param name="Local" value="BdStWeight-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Robust Weight classes for weights of Hampel type">
+<param name="Local" value="HampelWeight-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Total variation neighborhood">

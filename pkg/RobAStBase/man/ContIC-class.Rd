@@ -22,6 +22,9 @@
 \alias{stand,ContIC-method}
 \alias{stand<-}
 \alias{stand<-,ContIC-method}
+\alias{weight,ContIC-method}
+\alias{biastype,ContIC-method}
+\alias{normtype,ContIC-method}
 \alias{generateIC,ContNeighborhood,L2ParamFamily-method}
 \alias{show,ContIC-method}
 
@@ -65,6 +68,13 @@
     \item{\code{stand}:}{ object of class \code{"matrix"}:
       standardizing matrix. }
 
+    \item{\code{weight}:}{ object of class \code{"HampelWeight"}:
+      weight function }
+    \item{\code{biastype}:}{ object of class \code{"BiasType"}:
+      bias type (symmetric/onsided/asymmetric) }
+    \item{\code{normtype}:}{ object of class \code{"NormType"}:
+      norm type (Euclidean, information/self-standardized)}
+
     \item{\code{lowerCase}:}{ object of class \code{"OptionalNumeric"}:
       optional constant for lower case solution. }
 
@@ -100,6 +110,12 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
     \item{stand<-}{\code{signature(object = "ContIC")}:
       replacement function for slot \code{stand}. }
 
+    \item{weight}{\code{signature(object = "ContIC")}: 
+      accessor function for slot \code{weight}. }
+    \item{biastype}{\code{signature(object = "ContIC")}: 
+      accessor function for slot \code{biastype}. }
+    \item{normtype}{\code{signature(object = "ContIC")}: 
+      accessor function for slot \code{normtype}. }
     \item{lowerCase}{\code{signature(object = "ContIC")}: 
       accessor function for slot \code{lowerCase}. }
 

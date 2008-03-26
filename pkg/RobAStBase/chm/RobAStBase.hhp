@@ -12,12 +12,15 @@ Title=R Help for package RobAStBase
 
 [FILES]
 00Index.html
+BdStWeight-class.html
+BoundedWeight-class.html
 ContIC-class.html
 ContIC.html
 ContNeighborhood-class.html
 ContNeighborhood.html
 FixRobModel-class.html
 FixRobModel.html
+HampelWeight-class.html
 IC-class.html
 IC.html
 InfRobModel-class.html
@@ -25,7 +28,9 @@ InfRobModel.html
 InfluenceCurve-class.html
 InfluenceCurve.html
 Neighborhood-class.html
+RobAStControl-class.html
 RobModel-class.html
+RobWeight-class.html
 TotalVarIC-class.html
 TotalVarIC.html
 TotalVarNeighborhood-class.html
@@ -34,7 +39,10 @@ UncondNeighborhood-class.html
 checkIC.html
 evalIC.html
 generateIC.html
+generateICfct.html
+getweight.html
 infoPlot.html
 locMEstimator.html
+makeIC.html
 oneStepEstimator.html
 optIC.html

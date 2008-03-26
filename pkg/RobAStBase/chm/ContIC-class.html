@@ -27,6 +27,9 @@
 <param name="keyword" value="R:   stand,ContIC-method">
 <param name="keyword" value="R:   stand<-">
 <param name="keyword" value="R:   stand<-,ContIC-method">
+<param name="keyword" value="R:   weight,ContIC-method">
+<param name="keyword" value="R:   biastype,ContIC-method">
+<param name="keyword" value="R:   normtype,ContIC-method">
 <param name="keyword" value="R:   generateIC,ContNeighborhood,L2ParamFamily-method">
 <param name="keyword" value="R:   show,ContIC-method">
 <param name="keyword" value=" Influence curve of contamination type">
@@ -93,6 +96,14 @@ centering constant. </dd>
 standardizing matrix. </dd>
 
 
+<dt><code>weight</code>:</dt><dd>object of class <code>"HampelWeight"</code>:
+weight function </dd>
+<dt><code>biastype</code>:</dt><dd>object of class <code>"BiasType"</code>:
+bias type (symmetric/onsided/asymmetric) </dd>
+<dt><code>normtype</code>:</dt><dd>object of class <code>"NormType"</code>:
+norm type (Euclidean, information/self-standardized)</dd>
+
+
 <dt><code>lowerCase</code>:</dt><dd>object of class <code>"OptionalNumeric"</code>:
 optional constant for lower case solution. </dd>
 
@@ -141,6 +152,12 @@ accessor function for slot <code>stand</code>. </dd>
 replacement function for slot <code>stand</code>. </dd>
 
 
+<dt>weight</dt><dd><code>signature(object = "ContIC")</code>: 
+accessor function for slot <code>weight</code>. </dd>
+<dt>biastype</dt><dd><code>signature(object = "ContIC")</code>: 
+accessor function for slot <code>biastype</code>. </dd>
+<dt>normtype</dt><dd><code>signature(object = "ContIC")</code>: 
+accessor function for slot <code>normtype</code>. </dd>
 <dt>lowerCase</dt><dd><code>signature(object = "ContIC")</code>: 
 accessor function for slot <code>lowerCase</code>. </dd>
 

@@ -2,7 +2,7 @@
 TotalVarIC <- function(name, CallL2Fam = call("L2ParamFamily"),
                     Curve = EuclRandVarList(RealRandVariable(Map = c(function(x){x}), Domain = Reals())), 
                     Risks, Infos, clipLo = -Inf, clipUp = Inf, stand = as.matrix(1),
-                    lowerCase = NULL, neighborRadius = 0){
+                    lowerCase = NULL, neighborRadius = 0, w = new("BdStWeight")){
     if(missing(name))
         name <- "IC of total variation type"
     if(missing(Risks))
@@ -30,6 +30,7 @@ TotalVarIC <- function(name, CallL2Fam = call("L2ParamFamily"),
     IC1@stand <- stand
     IC1@lowerCase <- lowerCase
     IC1@neighborRadius <- neighborRadius
+    IC1@weight <- w
 
     return(IC1)
 }
@@ -42,25 +43,9 @@ setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood",
         A <- res$A
         a <- sign(as.vector(A))*res$a
         b <- res$b
+        w <- res$w
         ICfct <- vector(mode = "list", length = 1)
         Y <- as(A %*% L2Fam@L2deriv, "EuclRandVariable")
-        if(!is.null(res$d)){
-            a <- as.vector(A)*a
-            ICfct[[1]] <- function(x){ ind1 <- (Y(x) > 0); ind2 <- (Y(x) < 0)
-                                       (a+b)*ind1 + a*ind2 }
-            body(ICfct[[1]]) <- substitute({ ind1 <- (Y(x) > 0); ind2 <- (Y(x) < 0)
-                                             (a+b)*ind1 + a*ind2 },
-                                             list(Y = Y@Map[[1]], a = a, b = b))
-        }else{
-            if((a == -Inf)&&(b == Inf)){
-                ICfct[[1]]<- function(x){ Y(x) }
-                body(ICfct[[1]]) <- substitute({ Y(x) }, list(Y = Y@Map[[1]]))
-            }else{
-                ICfct[[1]] <- function(x){ min(max(a, Y(x)), a+b) }
-                body(ICfct[[1]]) <- substitute({ min(max(a, Y(x)), a+b) },
-                                                 list(Y = Y@Map[[1]], a = a, b = b))
-            }
-        }
         if((a == -Inf) & (b == Inf))
             clipUp <- Inf
         else
@@ -81,13 +66,13 @@ setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood",
                                 L2derivDistrSymm = L2Fam@L2derivDistrSymm,
                                 FisherInfo = L2Fam@FisherInfo,
                                 FisherInfo.fct = L2Fam@FisherInfo.fct),
-                Curve = EuclRandVarList(EuclRandVariable(Map = ICfct, Domain = Y@Domain, 
-                            Range = Y@Range)),
+                Curve = generateIC.fct(neighbor, L2Fam, res),
                 clipUp = clipUp,
                 clipLo = a,
                 stand = A,
                 lowerCase = res$d, 
-                neighborRadius = neighbor@radius,
+                weight = w,
+                neighborRadius = neighbor@radius,           
                 Risks = res$risk,
                 Infos = matrix(res$info, ncol = 2, 
                             dimnames = list(character(0), c("method", "message")))))
@@ -97,6 +82,7 @@ setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood",
 setMethod("clipLo", "TotalVarIC", function(object) object@clipLo)
 setMethod("clipUp", "TotalVarIC", function(object) object@clipUp)
 setMethod("stand", "TotalVarIC", function(object) object@stand)
+setMethod("weight", "TotalVarIC", function(object) object@weight)
 setMethod("lowerCase", "TotalVarIC", function(object) object@lowerCase)
 setMethod("neighborRadius", "TotalVarIC", function(object) object@neighborRadius)
 

@@ -4,6 +4,7 @@
 \alias{lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,ANY-method}
 \alias{lowerCaseRadius,L2ParamFamily,TotalVarNeighborhood,asMSE,ANY-method}
 \alias{lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,onesidedBias-method}
+\alias{lowerCaseRadius,UnivariateDistribution,ContNeighborhood,asMSE,onesidedBias-method}
 \alias{lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,asymmetricBias-method}
 
 \title{Computation of the lower case radius}
@@ -44,6 +45,10 @@ lowerCaseRadius(L2Fam, neighbor, risk, biastype, ...)
         biastype = "asymmetricBias"}{
     lower case radius for risk \code{"asMSE"} in case of \code{"ContNeighborhood"}
     for asymmetric bias.}
+
+  \item{L2Fam = "UnivariateDistribution", neighbor = "ContNeighborhood", risk = "asMSE",
+        biastype = "onesidedBias"}{ used only internally; 
+    trick to be able to call lower case radius from within minmax bias solver}
 }}
 \references{
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 

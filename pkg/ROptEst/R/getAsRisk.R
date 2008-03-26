@@ -116,22 +116,64 @@ setMethod("getAsRisk", signature(risk = "asCov",
 setMethod("getAsRisk", signature(risk = "asCov",
                                  L2deriv = "RealRandVariable",
                                  neighbor = "ContNeighborhood", biastype = "BiasType"),
-    function(risk, L2deriv, neighbor, biastype = symmetricBias(), Distr, clip, cent, stand){
-        Y <- as(stand %*% L2deriv - cent, "EuclRandVariable")
-        absY <- sqrt(Y %*% Y)
-        
-        nrvalues <- nrow(stand)
-        ICfct <- vector(mode = "list", length = nrvalues)
-        for(i in 1:nrvalues){
-            ICfct[[i]] <- function(x){ Yi(x)*pmin(1, b/absY(x)) }
-            body(ICfct[[i]]) <- substitute({ Yi(x)*pmin(1, b/absY(x)) },
-                                    list(Yi = Y@Map[[i]], absY = absY@Map[[1]], b = clip))
-        }
-        IC <- RealRandVariable(Map = ICfct, Domain = Y@Domain, Range = Y@Range)
-        Cov <- matrix(E(Distr, IC %*% t(IC)), ncol = nrvalues)
+    function(risk, L2deriv, neighbor, biastype = symmetricBias(), Distr, clip, cent, 
+             stand, norm = EuclideanNorm){
 
-        return(list(asCov = Cov))
-    })
+                 return(list(asCov = .asCovMB(L2deriv, stand, cent, clip, Distr, 
+                             norm = norm)))
+        })
+
+
+#        Y <- as(stand %*% L2deriv - cent, "EuclRandVariable")
+#        absY <- sqrt(Y %*% Y)
+#        
+#        nrvalues <- nrow(stand)
+#        ICfct <- vector(mode = "list", length = nrvalues)
+#        for(i in 1:nrvalues){
+#            ICfct[[i]] <- function(x){ Yi(x)*pmin(1, b/absY(x)) }
+#            body(ICfct[[i]]) <- substitute({ Yi(x)*pmin(1, b/absY(x)) },
+#                                    list(Yi = Y@Map[[i]], absY = absY@Map[[1]], b = clip))
+#        }
+#        IC <- RealRandVariable(Map = ICfct, Domain = Y@Domain, Range = Y@Range)
+#        Cov <- matrix(E(Distr, IC %*% t(IC)), ncol = nrvalues)
+#
+#        return(list(asCov = Cov))
+#    })
+
+### helping function
+
+.asCovMB <- function(L2, stand, cent, clip, Distr, norm){                 
+                 p <- nrow(stand)
+                 idx <- matrix(1:p^2,p,p)
+                 idx <- idx[col(idx)<=row(idx)]
+                 Cv <- matrix(0,p,p)
+
+                 if (clip == 0){
+                     Cv[idx] <- E(object = Distr, fun = function(x){
+                                X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
+                                Y <- stand %*% X
+                                norm0 <- norm(Y)                      
+                                ind <- 1-.eq(norm0)                   
+                                Y0 <- Y*ind/(norm0+1-ind)
+                                Y02 <- apply(Y0,2,function(x)x%*%t(x))[idx,]
+                                }, useApply = FALSE)
+                 }else{
+                    Cv[idx] <- E(object = Distr, fun = function(x){
+                               X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
+                               Y <- stand %*% X
+                               norm0 <- norm(Y)                      
+                               ind2 <- (norm0 < b/2)
+                               norm1 <- ind2*clip/2 + (1-ind2)*norm0
+                               ind1 <- (norm0 < b)
+                               ind1 + (1-ind1)*clip/norm1
+                               Y0 <- Y*ind1
+                               Y02 <- apply(Y0,2,function(x)x%*%t(x))[idx,]
+                       }, useApply = FALSE)
+                 }
+                 dCv <- diag(Cv)
+                 return(PosSemDefSymmMatrix(Cv + t(Cv) - dCv))
+        }
+
 
 ###############################################################################
 ## trace of asymptotic covariance

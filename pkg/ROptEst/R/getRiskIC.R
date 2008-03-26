@@ -13,18 +13,6 @@ setMethod("getRiskIC", signature(IC = "IC",
 
         bias <- E(L2Fam, IC1)
         Cov <- E(L2Fam, IC1 %*% t(IC1))
-
-        slots = slotNames(L2Fam@distribution@param)
-        slots = slots[slots != "name"]
-        nrvalues = length(slots)
-        if (nrvalues > 0) {
-            values = numeric(nrvalues)
-            for (i in 1:nrvalues) 
-                values[i] = attributes(attributes(L2Fam@distribution)$param)[[slots[i]]]
-
-            paramstring = paste("(", paste(values, collapse = ", "), ")", sep = "")
-        }
-        distr <- paste(class(L2Fam@distribution)[1], paramstring, sep = "")
         
         prec <- checkIC(IC, out = FALSE)
         if(prec > tol)
@@ -32,8 +20,9 @@ setMethod("getRiskIC", signature(IC = "IC",
                     "\nThis is larger than the specified 'tol' ",
                     "=> the result may be wrong")
         
-        return(list(asCov = list(distribution = distr, value = Cov - bias %*% t(bias))))
+        return(list(asCov = list(distribution = .getDistr(L2Fam), value = Cov - bias %*% t(bias))))
     })
+
 setMethod("getRiskIC", signature(IC = "IC", 
                                  risk = "asCov",
                                  neighbor = "missing",
@@ -48,25 +37,13 @@ setMethod("getRiskIC", signature(IC = "IC",
         bias <- E(L2Fam, IC1)
         Cov <- E(L2Fam, IC1 %*% t(IC1))
 
-        slots = slotNames(L2Fam@distribution@param)
-        slots = slots[slots != "name"]
-        nrvalues = length(slots)
-        if (nrvalues > 0) {
-            values = numeric(nrvalues)
-            for (i in 1:nrvalues) 
-                values[i] = attributes(attributes(L2Fam@distribution)$param)[[slots[i]]]
-
-            paramstring = paste("(", paste(values, collapse = ", "), ")", sep = "")
-        }
-        distr <- paste(class(L2Fam@distribution)[1], paramstring, sep = "")
-
         prec <- checkIC(IC, L2Fam, out = FALSE)
         if(prec > tol)
             warning("The maximum deviation from the exact IC properties is", prec, 
                     "\nThis is larger than the specified 'tol' ",
                     "=> the result may be wrong")
 
-        return(list(asCov = list(distribution = distr, value = Cov - bias %*% t(bias))))
+        return(list(asCov = list(distribution = .getDistr(L2Fam), value = Cov - bias %*% t(bias))))
     })
 
 ###############################################################################
@@ -116,14 +93,14 @@ setMethod("getRiskIC", signature(IC = "IC",
                                  neighbor = "UncondNeighborhood",
                                  L2Fam = "missing"),
     function(IC, risk, neighbor, tol = .Machine$double.eps^0.25){
-             getBiasIC(IC, neighbor, biastype(risk), tol)
+             getBiasIC(IC, neighbor, biastype(risk), normtype(risk), tol)
     })
 setMethod("getRiskIC", signature(IC = "IC",
                                  risk = "asBias",
                                  neighbor = "UncondNeighborhood",
                                  L2Fam = "L2ParamFamily"),
     function(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25){
-             getBiasIC(IC, neighbor, L2Fam, biastype(risk), tol)
+             getBiasIC(IC, neighbor, L2Fam, biastype(risk), normtype(risk), tol)
     })
 ###############################################################################
 ## asymptotic MSE
@@ -139,18 +116,6 @@ setMethod("getRiskIC", signature(IC = "IC",
         trCov <- getRiskIC(IC = IC, risk = trAsCov())
         Bias <- getRiskIC(IC = IC, risk = asBias(), neighbor = neighbor)
 
-        L2Fam <- eval(IC@CallL2Fam)
-        slots = slotNames(L2Fam@distribution@param)
-        slots = slots[slots != "name"]
-        nrvalues = length(slots)
-        if (nrvalues > 0) {
-            values = numeric(nrvalues)
-            for (i in 1:nrvalues) 
-                values[i] = attributes(attributes(L2Fam@distribution)$param)[[slots[i]]]
-
-            paramstring = paste("(", paste(values, collapse = ", "), ")", sep = "")
-        }
-        distr <- paste(class(L2Fam@distribution)[1], paramstring, sep = "")
         nghb <- paste(neighbor@type, "with radius", neighbor@radius)
 
         prec <- checkIC(IC, out = FALSE)
@@ -159,7 +124,8 @@ setMethod("getRiskIC", signature(IC = "IC",
                     "\nThis is larger than the specified 'tol' ",
                     "=> the result may be wrong")
 
-        return(list(asMSE = list(distribution = distr, neighborhood = nghb,
+        return(list(asMSE = list(distribution = .getDistr(eval(IC@CallL2Fam)), 
+                                 neighborhood = nghb,
                                  value = trCov$trAsCov$value + rad^2*Bias$asBias$value^2)))
     })
 setMethod("getRiskIC", signature(IC = "IC", 
@@ -177,25 +143,16 @@ setMethod("getRiskIC", signature(IC = "IC",
         Bias <- getRiskIC(IC = IC, risk = asBias(), neighbor = neighbor, L2Fam = L2Fam, 
                           biastype = biastype(risk))
 
-        slots = slotNames(L2Fam@distribution@param)
-        slots = slots[slots != "name"]
-        nrvalues = length(slots)
-        if (nrvalues > 0) {
-            values = numeric(nrvalues)
-            for (i in 1:nrvalues) 
-                values[i] = attributes(attributes(L2Fam@distribution)$param)[[slots[i]]]
-
-            paramstring = paste("(", paste(values, collapse = ", "), ")", sep = "")
-        }
-        distr <- paste(class(L2Fam@distribution)[1], paramstring, sep = "")
-
         prec <- checkIC(IC, L2Fam, out = FALSE)
         if(prec > tol)
             warning("The maximum deviation from the exact IC properties is", prec, 
                     "\nThis is larger than the specified 'tol' ",
                     "=> the result may be wrong")
 
-        return(list(asMSE = list(distribution = distr, neighborhood = neighbor@type,
+        nghb <- paste(neighbor@type, "with radius", neighbor@radius)
+
+        return(list(asMSE = list(distribution = .getDistr(L2Fam), 
+                                 neighborhood = nghb,
                                  radius = neighbor@radius, 
                                  value = trCov$trAsCov$value + rad^2*Bias$asBias$value^2)))
     })
@@ -269,20 +226,10 @@ setMethod("getRiskIC", signature(IC = "TotalVarIC",
                   + m2df(L2deriv, g0+c0) - m2df(L2deriv, g0))
         erg <- pnorm(-risk@width*s)
 
-        slots = slotNames(L2Fam@distribution@param)
-        slots = slots[slots != "name"]
-        nrvalues = length(slots)
-        if (nrvalues > 0) {
-            values = numeric(nrvalues)
-            for (i in 1:nrvalues) 
-                values[i] = attributes(attributes(L2Fam@distribution)$param)[[slots[i]]]
-
-            paramstring = paste("(", paste(values, collapse = ", "), ")", sep = "")
-        }
-        distr <- paste(class(L2Fam@distribution)[1], paramstring, sep = "")
         nghb <- paste(neighbor@type, "with radius", neighbor@radius)
 
-        return(list(asUnOvShoot = list(distribution = distr, neighborhood = nghb, value = erg)))
+        return(list(asUnOvShoot = list(distribution = .getDistr(L2Fam), 
+                    neighborhood = nghb, value = erg)))
     })
 ###############################################################################
 ## finite-sample under-/overshoot risk
@@ -381,21 +328,10 @@ setMethod("getRiskIC", signature(IC = "IC",
             }
         }
 
-        L2Fam <- eval(IC@CallL2Fam)
-        slots = slotNames(L2Fam@distribution@param)
-        slots = slots[slots != "name"]
-        nrvalues = length(slots)
-        if (nrvalues > 0) {
-            values = numeric(nrvalues)
-            for (i in 1:nrvalues) 
-                values[i] = attributes(attributes(L2Fam@distribution)$param)[[slots[i]]]
-
-            paramstring = paste("(", paste(values, collapse = ", "), ")", sep = "")
-        }
-        distr <- paste(class(L2Fam@distribution)[1], paramstring, sep = "")
         nghb <- paste(neighbor@type, "with radius", neighbor@radius)
 
-        return(list(fiUnOvShoot = list(distribution = distr, neighborhood = nghb, value = erg)))
+        return(list(fiUnOvShoot = list(distribution = .getDistr(eval(IC@CallL2Fam)), 
+                    neighborhood = nghb, value = erg)))
     })
 setMethod("getRiskIC", signature(IC = "IC", 
                                  risk = "fiUnOvShoot",
@@ -491,21 +427,10 @@ setMethod("getRiskIC", signature(IC = "IC",
             }
         }
 
-        L2Fam <- eval(IC@CallL2Fam)
-        slots = slotNames(L2Fam@distribution@param)
-        slots = slots[slots != "name"]
-        nrvalues = length(slots)
-        if (nrvalues > 0) {
-            values = numeric(nrvalues)
-            for (i in 1:nrvalues) 
-                values[i] = attributes(attributes(L2Fam@distribution)$param)[[slots[i]]]
-
-            paramstring = paste("(", paste(values, collapse = ", "), ")", sep = "")
-        }
-        distr <- paste(class(L2Fam@distribution)[1], paramstring, sep = "")
         nghb <- paste(neighbor@type, "with radius", neighbor@radius)
 
-        return(list(fiUnOvShoot = list(distribution = distr, neighborhood = nghb, value = erg)))
+        return(list(fiUnOvShoot = list(distribution = .getDistr(eval(IC@CallL2Fam)), 
+                    neighborhood = nghb, value = erg)))
     })
 
 
@@ -515,7 +440,7 @@ setMethod("getRiskIC", signature(IC = "IC",
 setMethod("getBiasIC", signature(IC = "IC",
                                  neighbor = "UncondNeighborhood"),
     function(IC, neighbor, L2Fam, biastype = symmetricBias(), 
-             tol = .Machine$double.eps^0.25){
+             normtype = NormType(), tol = .Machine$double.eps^0.25){
         if(missing(L2Fam)) 
            {misF <- TRUE; L2Fam <- eval(IC@CallL2Fam)}
         D1 <- L2Fam@distribution
@@ -526,19 +451,7 @@ setMethod("getBiasIC", signature(IC = "IC",
         x <- as.matrix(x[!duplicated(x),])  
 
         Bias <- .evalBiasIC(IC = IC, neighbor = neighbor, biastype = biastype, 
-                            x = x, trafo = L2Fam@param@trafo)
-
-        slots <- slotNames(L2Fam@distribution@param)
-        slots <- slots[slots != "name"]
-        nrvalues <- length(slots)
-        if (nrvalues > 0) {
-            values <- numeric(nrvalues)
-            for (i in 1:nrvalues) 
-                values[i] <- attributes(attributes(L2Fam@distribution)$param)[[slots[i]]]
-
-            paramstring <- paste("(", paste(values, collapse = ", "), ")", sep = "")
-        }
-        distr <- paste(class(L2Fam@distribution)[1], paramstring, sep = "")
+                            normtype = normtype, x = x, trafo = L2Fam@param@trafo)
 
         prec <- if(misF) checkIC(IC, out = FALSE) else 
                          checkIC(IC, L2Fam, out = FALSE) 
@@ -547,23 +460,52 @@ setMethod("getBiasIC", signature(IC = "IC",
                     "\nThis is larger than the specified 'tol' ",
                     "=> the result may be wrong")
 
-        return(list(asBias = list(distribution = distr, neighborhood = neighbor@type, value = Bias)))
+        return(list(asBias = list(distribution = .getDistr(L2Fam), 
+                    neighborhood = neighbor@type, value = Bias)))
     })
 
+setMethod("getBiasIC", signature(IC = "ContIC",
+                                 neighbor = "UncondNeighborhood"),
+    function(IC, neighbor, L2Fam, biastype = symmetricBias(), 
+             normtype = NormType(), tol = .Machine$double.eps^0.25){
+        if(missing(L2Fam)) 
+           {misF <- TRUE; L2Fam <- eval(IC@CallL2Fam)}
+        D1 <- L2Fam@distribution
+        if(dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
+            stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
+        
+        x <- as.matrix(r(D1)(1e5))
+        x <- as.matrix(x[!duplicated(x),])  
+
+        Bias <- .evalBiasIC(IC = IC, neighbor = neighbor, biastype = biastype, 
+                            normtype = normtype, x = x, trafo = L2Fam@param@trafo)
+
+
+        prec <- if(misF) checkIC(IC, out = FALSE) else 
+                         checkIC(IC, L2Fam, out = FALSE) 
+        if(prec > tol)
+            warning("The maximum deviation from the exact IC properties is", prec, 
+                    "\nThis is larger than the specified 'tol' ",
+                    "=> the result may be wrong")
+
+        return(list(asBias = list(distribution = .getDistr(L2Fam), 
+                    neighborhood = neighbor@type, value = Bias)))
+    })
 
 setMethod(".evalBiasIC", signature(IC = "IC",
                                  neighbor = "ContNeighborhood",
                                  biastype = "BiasType"),
-    function(IC, neighbor, biastype, x, trafo){
-        IC1 <- as(diag(dimension(IC@Curve)) %*% IC@Curve, "EuclRandVariable")
-        absIC1 <- sqrt(IC1 %*% IC1)
-        return(max(evalRandVar(absIC1, x)))}
+    function(IC, neighbor, biastype, normtype, x, trafo){
+        ICx <- evalRandVar(as(diag(dimension(IC@Curve)) %*% IC@Curve, 
+                            "EuclRandVariable"),x)
+        
+        return(max(fct(normtype)(ICx)))}
     )
 
 setMethod(".evalBiasIC", signature(IC = "IC",
                                  neighbor = "TotalVarNeighborhood",
                                  biastype = "BiasType"),
-    function(IC, neighbor, biastype, x, trafo){
+    function(IC, neighbor, biastype, normtype, x, trafo){
         if(nrow(trafo) > 1)
             stop("not yet implemented for dimension > 1")
         IC1 <- as(diag(nrow(trafo)) %*% IC@Curve, "EuclRandVariable")
@@ -595,3 +537,17 @@ setMethod(".evalBiasIC", signature(IC = "IC",
         return(max(res)/nu(biastype)[2] - 
                min(res)/nu(biastype)[1])}
     )
+
+.getDistr <- function(L2Fam){
+        slots <- slotNames(L2Fam@distribution@param)
+        slots <- slots[slots != "name"]
+        nrvalues <- length(slots)
+        if (nrvalues > 0) {
+            values = numeric(nrvalues)
+            for (i in 1:nrvalues) 
+                values[i] <- attributes(attributes(L2Fam@distribution)$param)[[slots[i]]]
+
+            paramstring <- paste("(", paste(values, collapse = ", "), ")", sep = "")
+        }
+        distr <- paste(class(L2Fam@distribution)[1], paramstring, sep = "")
+}

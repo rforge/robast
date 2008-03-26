@@ -16,7 +16,7 @@ TotalVarIC(name, CallL2Fam = call("L2ParamFamily"),
            Curve = EuclRandVarList(RealRandVariable(Map = c(function(x) {x}), 
                                                     Domain = Reals())), 
            Risks, Infos, clipLo = -Inf, clipUp = Inf, stand = as.matrix(1), 
-           lowerCase = NULL, neighborRadius = 0)
+           lowerCase = NULL, neighborRadius = 0, w = new("BdStWeight"))
 }
 \arguments{
   \item{name}{ object of class \code{"character"}. }
@@ -31,6 +31,7 @@ TotalVarIC(name, CallL2Fam = call("L2ParamFamily"),
   \item{clipLo}{ negative real: lower clipping bound. }
   \item{clipUp}{ positive real: lower clipping bound. }
   \item{stand}{ matrix: standardizing matrix }
+  \item{w}{ BdStWeight: weight object}
   \item{lowerCase}{ optional constant for lower case solution. }
   \item{neighborRadius}{ radius of the corresponding (unconditional) 
     contamination neighborhood. }

@@ -17,6 +17,7 @@
 \alias{show,TotalVarIC-method}
 \alias{stand,TotalVarIC-method}
 \alias{stand<-,TotalVarIC-method}
+\alias{weight,TotalVarIC-method}
 \alias{generateIC,TotalVarNeighborhood,L2ParamFamily-method}
 
 \title{Influence curve of total variation type}
@@ -59,6 +60,9 @@
     \item{\code{stand}:}{ object of class \code{"matrix"}:
       standardizing matrix. }
 
+    \item{\code{weight}:}{ object of class \code{"BdStWeight"}:
+      weight function }
+
     \item{\code{neighborRadius}:}{ object of class \code{"numeric"}:
       radius of the corresponding (unconditional) contamination 
       neighborhood. }
@@ -90,6 +94,9 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
 
     \item{stand<-}{\code{signature(object = "TotalVarIC")}:
       replacement function for slot \code{stand}. }
+
+    \item{weight}{\code{signature(object = "TotalVarIC")}: 
+      accessor function for slot \code{weight}. }
 
     \item{neighborRadius}{\code{signature(object = "TotalVarIC")}: 
       accessor function for slot \code{neighborRadius}. }

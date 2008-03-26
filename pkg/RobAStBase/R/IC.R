@@ -20,7 +20,7 @@ IC <- function(name, Curve = EuclRandVarList(RealRandVariable(Map = list(functio
         stop("'Infos' must have two columns")
 
     L2Fam <- eval(CallL2Fam)
-    trafo <- L2Fam@param@trafo
+    trafo <- trafo(L2Fam@param)
     if(nrow(trafo) != dimension(Curve))
         stop("wrong dimension of 'Curve'")
     if(dimension(Domain(L2Fam@L2deriv[[1]])) != dimension(Domain(Curve[[1]])))
@@ -50,7 +50,7 @@ setReplaceMethod("CallL2Fam", "IC",
 setMethod("checkIC", signature(IC = "IC", L2Fam = "missing"), 
     function(IC, out = TRUE){ 
         L2Fam <- eval(IC@CallL2Fam)
-        trafo <- L2Fam@param@trafo
+        trafo <- trafo(L2Fam@param)
         IC1 <- as(diag(nrow(trafo)) %*% IC@Curve, "EuclRandVariable")
 
         cent <- E(L2Fam, IC1)
@@ -76,7 +76,7 @@ setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
         if(dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
-        trafo <- L2Fam@param@trafo
+        trafo <- trafo(L2Fam@param)
         IC1 <- as(diag(dimension(IC@Curve)) %*% IC@Curve, "EuclRandVariable")
         cent <- E(D1, IC1)
         if(out)
@@ -96,6 +96,7 @@ setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
 
         return(prec)
     })
+
 ## evaluate IC
 setMethod("evalIC", signature(IC = "IC", x = "numeric"), 
     function(IC, x){ 
@@ -123,4 +124,45 @@ setMethod("evalIC", signature(IC = "IC", x = "matrix"),
             return(t(evalRandVar(Curve, x)[,,1]))
         else
             return(evalRandVar(Curve, x)[,,1])
+    })
+
+## make some L2function a pIC at a model
+setMethod("makeIC", signature(IC = "IC", L2Fam = "missing"), 
+    function(IC){ 
+        L2Fam <- eval(IC@CallL2Fam)
+        trafo <- trafo(L2Fam@param)
+        IC1 <- as(diag(nrow(trafo)) %*% IC@Curve, "EuclRandVariable")
+
+        cent <- E(L2Fam, IC1)
+
+        dims <- length(L2Fam@param)
+        L2deriv <- as(diag(dims) %*% L2Fam@L2deriv, "EuclRandVariable")
+        E1 <- matrix(E(L2Fam, as(IC1 %*% t(L2deriv),"EuclRandVariable")),
+                     nrow(trafo),dims)
+        stand <- trafo %*% solve(E1) 
+        return(IC(name = name(IC),                            
+               Curve = as(stand %*% (L2Fam@L2deriv - cent), "EuclRandVariable"), 
+               Risks="", Infos="", CallL2Fam = call(L2Fam)))
+    })
+
+## make some L2function a pIC at a model
+setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"), 
+    function(IC, L2Fam){ 
+        D1 <- L2Fam@distribution
+        if(dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
+            stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
+
+        trafo <- trafo(L2Fam@param)
+        IC1 <- as(diag(dimension(IC@Curve)) %*% IC@Curve, "EuclRandVariable")
+        cent <- E(D1, IC1)
+
+        dims <- length(L2Fam@param)
+        L2deriv <- as(diag(dims) %*% L2Fam@L2deriv, "EuclRandVariable")
+
+        E1 <- matrix(E(L2Fam, as(IC1 %*% t(L2deriv),"EuclRandVariable")),
+                     nrow(trafo),dims)
+        stand <- trafo %*% solve(E1) 
+        return(IC(name = name(IC),                            
+               Curve = as(stand %*% (L2Fam@L2deriv - cent), "EuclRandVariable"), 
+               Risks="", Infos="", CallL2Fam = call(L2Fam)))
     })

@@ -16,7 +16,8 @@ ContIC(name, CallL2Fam = call("L2ParamFamily"),
        Curve = EuclRandVarList(RealRandVariable(Map = c(function(x){x}), 
                                                 Domain = Reals())), 
        Risks, Infos, clip = Inf, cent = 0, stand = as.matrix(1), 
-       lowerCase = NULL, neighborRadius = 0)
+       lowerCase = NULL, neighborRadius = 0, w = new("HampelWeight"),
+       normtype = NormType(), biastype = symmetricBias())
 }
 \arguments{
   \item{name}{ object of class \code{"character"}. }
@@ -31,9 +32,12 @@ ContIC(name, CallL2Fam = call("L2ParamFamily"),
   \item{clip}{ positive real: clipping bound. }
   \item{cent}{ real: centering constant }
   \item{stand}{ matrix: standardizing matrix }
+  \item{w}{ HampelWeight: weight object}
   \item{lowerCase}{ optional constant for lower case solution. }
   \item{neighborRadius}{ radius of the corresponding (unconditional) 
     contamination neighborhood. }
+  \item{biastype}{ BiasType: type of the bias}
+  \item{normtype}{ NormType: type of the norm}
 }
 %\details{}
 \value{Object of class \code{"ContIC"}}

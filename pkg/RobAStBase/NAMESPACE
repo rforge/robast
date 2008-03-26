@@ -14,6 +14,8 @@ exportClasses("InfluenceCurve",
               "IC", 
               "ContIC", 
               "TotalVarIC")
+exportClasses("RobAStControl", "RobWeight", "BoundedWeight",
+              "BdStWeight", "HampelWeight") 
 exportMethods("show", 
               "plot")
 exportMethods("type", "radius")
@@ -38,6 +40,14 @@ exportMethods("Curve",
               "optIC") 
 exportMethods("oneStepEstimator", 
               "locMEstimator")
+exportMethods("weight", "weight<-", 
+              "clip", "clip<-", 
+              "stand", "stand<-", 
+              "cent", "cent<-", 
+              "getweight", "minbiasweight", 
+              "generateIC.fct",
+              "makeIC")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 
 export("InfluenceCurve", "IC", "ContIC", "TotalVarIC")
+export("EuclideanNorm", "QuadFormNorm")

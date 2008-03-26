@@ -49,6 +49,9 @@ if(!isGeneric("checkIC")){
 if(!isGeneric("evalIC")){
     setGeneric("evalIC", function(IC, x) standardGeneric("evalIC"))
 }
+if(!isGeneric("makeIC")){
+    setGeneric("makeIC", function(IC, L2Fam, ...) standardGeneric("makeIC"))
+}
 if(!isGeneric("clip")){
     setGeneric("clip", function(object) standardGeneric("clip"))
 }
@@ -103,4 +106,51 @@ if(!isGeneric("infoPlot")){
 }
 if(!isGeneric("optIC")){
     setGeneric("optIC", function(model, risk, ...) standardGeneric("optIC"))
+}
+
+
+if(!isGeneric("weight")){
+    setGeneric("weight",
+        function(object, ...) standardGeneric("weight"))
+}
+if(!isGeneric("weight<-")){
+    setGeneric("weight<-",
+        function(object, value,  ...) standardGeneric("weight<-"))
+}
+if(!isGeneric("clip")){
+    setGeneric("clip",
+        function(object, ...) standardGeneric("clip"))
+}
+if(!isGeneric("clip<-")){
+    setGeneric("clip<-",
+        function(object, value, ...) standardGeneric("clip<-"))
+}
+if(!isGeneric("stand")){
+    setGeneric("stand",
+        function(object, ...) standardGeneric("stand"))
+}
+if(!isGeneric("stand<-")){
+    setGeneric("stand<-",
+        function(object, value, ...) standardGeneric("stand<-"))
+}
+if(!isGeneric("cent")){
+    setGeneric("cent",
+        function(object, ...) standardGeneric("cent"))
+}
+if(!isGeneric("cent<-")){
+    setGeneric("cent<-",
+        function(object, value, ...) standardGeneric("cent<-"))
+}
+
+if(!isGeneric("getweight")){
+    setGeneric("getweight",
+        function(Weight, neighbor, biastype, ...) standardGeneric("getweight"))
+}
+
+if(!isGeneric("minbiasweight")){
+    setGeneric("minbiasweight",
+        function(Weight, neighbor, biastype, ...) standardGeneric("minbiasweight"))
+}
+if(!isGeneric("generateIC.fct")){
+    setGeneric("generateIC.fct", function(neighbor, L2Fam, ...) standardGeneric("generateIC.fct"))
 }

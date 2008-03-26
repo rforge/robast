@@ -14,11 +14,13 @@
 
 <p align="center">
 <a href="#A">A</a>
+<a href="#B">B</a>
 <a href="#C">C</a>
 <a href="#D">D</a>
 <a href="#E">E</a>
 <a href="#F">F</a>
 <a href="#G">G</a>
+<a href="#H">H</a>
 <a href="#I">I</a>
 <a href="#L">L</a>
 <a href="#M">M</a>
@@ -29,6 +31,7 @@
 <a href="#S">S</a>
 <a href="#T">T</a>
 <a href="#U">U</a>
+<a href="#W">W</a>
 </p>
 <table width="100%">
 </table>
@@ -40,6 +43,17 @@
 <td>Influence curve</td></tr>
 <tr><td width="25%"><a href="InfluenceCurve-class.html">addRisk&lt;-,InfluenceCurve-method</a></td>
 <td>Influence curve</td></tr>
+</table>
+
+<h2><a name="B">-- B --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="BdStWeight-class.html">BdStWeight-class</a></td>
+<td>Robust Weight classes for bounded, standardized weights</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">biastype,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="BoundedWeight-class.html">BoundedWeight-class</a></td>
+<td>Robust Weight classes for bounded weights</td></tr>
 </table>
 
 <h2><a name="C">-- C --</a></h2>
@@ -59,8 +73,12 @@
 <td>Influence curve of contamination type</td></tr>
 <tr><td width="25%"><a href="ContIC-class.html">cent,ContIC-method</a></td>
 <td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="HampelWeight-class.html">cent,HampelWeight-method</a></td>
+<td>Robust Weight classes for weights of Hampel type</td></tr>
 <tr><td width="25%"><a href="ContIC-class.html">cent&lt;-,ContIC-method</a></td>
 <td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="HampelWeight-class.html">cent&lt;-,HampelWeight-method</a></td>
+<td>Robust Weight classes for weights of Hampel type</td></tr>
 <tr><td width="25%"><a href="RobModel-class.html">center</a></td>
 <td>Robust model</td></tr>
 <tr><td width="25%"><a href="RobModel-class.html">center,RobModel-method</a></td>
@@ -75,8 +93,12 @@
 <td>Influence curve</td></tr>
 <tr><td width="25%"><a href="ContIC-class.html">clip</a></td>
 <td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="BoundedWeight-class.html">clip,BoundedWeight-method</a></td>
+<td>Robust Weight classes for bounded weights</td></tr>
 <tr><td width="25%"><a href="ContIC-class.html">clip,ContIC-method</a></td>
 <td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="BoundedWeight-class.html">clip&lt;-,BoundedWeight-method</a></td>
+<td>Robust Weight classes for bounded weights</td></tr>
 <tr><td width="25%"><a href="ContIC-class.html">clip&lt;-,ContIC-method</a></td>
 <td>Influence curve of contamination type</td></tr>
 <tr><td width="25%"><a href="TotalVarIC-class.html">clipLo</a></td>
@@ -141,6 +163,31 @@
 <td>Influence curve of contamination type</td></tr>
 <tr><td width="25%"><a href="TotalVarIC-class.html">generateIC,TotalVarNeighborhood,L2ParamFamily-method</a></td>
 <td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="generateICfct.html">generateIC.fct</a></td>
+<td>Generic Function for making ICs consistent at a possibly different model</td></tr>
+<tr><td width="25%"><a href="generateICfct.html">generateIC.fct,UncondNeighborhood,L2ParamFamily-method</a></td>
+<td>Generic Function for making ICs consistent at a possibly different model</td></tr>
+<tr><td width="25%"><a href="generateICfct.html">generateIC.fct-methods</a></td>
+<td>Generic Function for making ICs consistent at a possibly different model</td></tr>
+<tr><td width="25%"><a href="getweight.html">getweight</a></td>
+<td>Generating weights</td></tr>
+<tr><td width="25%"><a href="getweight.html">getweight,BdStWeight,TotalVarNeighborhood,BiasType-method</a></td>
+<td>Generating weights</td></tr>
+<tr><td width="25%"><a href="getweight.html">getweight,HampelWeight,ContNeighborhood,asymmetricBias-method</a></td>
+<td>Generating weights</td></tr>
+<tr><td width="25%"><a href="getweight.html">getweight,HampelWeight,ContNeighborhood,BiasType-method</a></td>
+<td>Generating weights</td></tr>
+<tr><td width="25%"><a href="getweight.html">getweight,HampelWeight,ContNeighborhood,onesidedBias-method</a></td>
+<td>Generating weights</td></tr>
+<tr><td width="25%"><a href="getweight.html">getweight-methods</a></td>
+<td>Generating weights</td></tr>
+</table>
+
+<h2><a name="H">-- H --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="HampelWeight-class.html">HampelWeight-class</a></td>
+<td>Robust Weight classes for weights of Hampel type</td></tr>
 </table>
 
 <h2><a name="I">-- I --</a></h2>
@@ -194,8 +241,28 @@
 <h2><a name="M">-- M --</a></h2>
 
 <table width="100%">
+<tr><td width="25%"><a href="makeIC.html">makeIC</a></td>
+<td>Generic Function for making ICs consistent at a possibly different model</td></tr>
+<tr><td width="25%"><a href="makeIC.html">makeIC,IC,L2ParamFamily-method</a></td>
+<td>Generic Function for making ICs consistent at a possibly different model</td></tr>
+<tr><td width="25%"><a href="makeIC.html">makeIC,IC,missing-method</a></td>
+<td>Generic Function for making ICs consistent at a possibly different model</td></tr>
+<tr><td width="25%"><a href="makeIC.html">makeIC-methods</a></td>
+<td>Generic Function for making ICs consistent at a possibly different model</td></tr>
 <tr><td width="25%"><a href="InfluenceCurve-class.html">Map,InfluenceCurve-method</a></td>
 <td>Influence curve</td></tr>
+<tr><td width="25%"><a href="getweight.html">minbiasweight</a></td>
+<td>Generating weights</td></tr>
+<tr><td width="25%"><a href="getweight.html">minbiasweight,BdStWeight,TotalVarNeighborhood,BiasType-method</a></td>
+<td>Generating weights</td></tr>
+<tr><td width="25%"><a href="getweight.html">minbiasweight,HampelWeight,ContNeighborhood,asymmetricBias-method</a></td>
+<td>Generating weights</td></tr>
+<tr><td width="25%"><a href="getweight.html">minbiasweight,HampelWeight,ContNeighborhood,BiasType-method</a></td>
+<td>Generating weights</td></tr>
+<tr><td width="25%"><a href="getweight.html">minbiasweight,HampelWeight,ContNeighborhood,onesidedBias-method</a></td>
+<td>Generating weights</td></tr>
+<tr><td width="25%"><a href="getweight.html">minbiasweight-methods</a></td>
+<td>Generating weights</td></tr>
 </table>
 
 <h2><a name="N">-- N --</a></h2>
@@ -203,10 +270,18 @@
 <table width="100%">
 <tr><td width="25%"><a href="InfluenceCurve-class.html">name,InfluenceCurve-method</a></td>
 <td>Influence curve</td></tr>
+<tr><td width="25%"><a href="RobAStControl-class.html">name,RobAStControl-method</a></td>
+<td>Control classes in package RobAStBase</td></tr>
 <tr><td width="25%"><a href="RobModel-class.html">name,RobModel-method</a></td>
 <td>Robust model</td></tr>
+<tr><td width="25%"><a href="RobWeight-class.html">name,RobWeight-method</a></td>
+<td>Robust Weight classes</td></tr>
 <tr><td width="25%"><a href="InfluenceCurve-class.html">name&lt;-,InfluenceCurve-method</a></td>
 <td>Influence curve</td></tr>
+<tr><td width="25%"><a href="RobAStControl-class.html">name&lt;-,RobAStControl-method</a></td>
+<td>Control classes in package RobAStBase</td></tr>
+<tr><td width="25%"><a href="RobWeight-class.html">name&lt;-,RobWeight-method</a></td>
+<td>Robust Weight classes</td></tr>
 <tr><td width="25%"><a href="RobModel-class.html">neighbor</a></td>
 <td>Robust model</td></tr>
 <tr><td width="25%"><a href="RobModel-class.html">neighbor,RobModel-method</a></td>
@@ -229,6 +304,8 @@
 <td>Influence curve of contamination type</td></tr>
 <tr><td width="25%"><a href="TotalVarIC-class.html">neighborRadius&lt;-,TotalVarIC-method</a></td>
 <td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">normtype,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
 </table>
 
 <h2><a name="O">-- O --</a></h2>
@@ -276,8 +353,12 @@
 <td>Influence curve</td></tr>
 <tr><td width="25%"><a href="InfluenceCurve-class.html">Risks&lt;-,InfluenceCurve-method</a></td>
 <td>Influence curve</td></tr>
+<tr><td width="25%"><a href="RobAStControl-class.html">RobAStControl-class</a></td>
+<td>Control classes in package RobAStBase</td></tr>
 <tr><td width="25%"><a href="RobModel-class.html">RobModel-class</a></td>
 <td>Robust model</td></tr>
+<tr><td width="25%"><a href="RobWeight-class.html">RobWeight-class</a></td>
+<td>Robust Weight classes</td></tr>
 </table>
 
 <h2><a name="S">-- S --</a></h2>
@@ -299,10 +380,14 @@
 <td>Influence curve of total variation type</td></tr>
 <tr><td width="25%"><a href="ContIC-class.html">stand</a></td>
 <td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="BdStWeight-class.html">stand,BdStWeight-method</a></td>
+<td>Robust Weight classes for bounded, standardized weights</td></tr>
 <tr><td width="25%"><a href="ContIC-class.html">stand,ContIC-method</a></td>
 <td>Influence curve of contamination type</td></tr>
 <tr><td width="25%"><a href="TotalVarIC-class.html">stand,TotalVarIC-method</a></td>
 <td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="BdStWeight-class.html">stand&lt;-,BdStWeight-method</a></td>
+<td>Robust Weight classes for bounded, standardized weights</td></tr>
 <tr><td width="25%"><a href="ContIC-class.html">stand&lt;-,ContIC-method</a></td>
 <td>Influence curve of contamination type</td></tr>
 <tr><td width="25%"><a href="TotalVarIC-class.html">stand&lt;-,TotalVarIC-method</a></td>
@@ -329,5 +414,20 @@
 <table width="100%">
 <tr><td width="25%"><a href="UncondNeighborhood-class.html">UncondNeighborhood-class</a></td>
 <td>Unconditional neighborhood</td></tr>
+</table>
+
+<h2><a name="W">-- W --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="RobWeight-class.html">weight</a></td>
+<td>Robust Weight classes</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">weight,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="RobWeight-class.html">weight,RobWeight-method</a></td>
+<td>Robust Weight classes</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">weight,TotalVarIC-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="RobWeight-class.html">weight&lt;-,RobWeight-method</a></td>
+<td>Robust Weight classes</td></tr>
 </table>
 </body></html>

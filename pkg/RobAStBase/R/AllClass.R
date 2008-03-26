@@ -50,6 +50,22 @@ setClass("InfRobModel",
                     stop("'radius' has to be in [0, Inf]")
                 else return(TRUE)
             })
+# Weights
+setClass("RobAStControl", representation(name ="character"),
+          contains = "VIRTUAL")
+          
+setClass("RobWeight", representation(name = "character", weight = "function"), 
+          prototype(name = "some weight", weight = function(x) 1))
+setClass("BoundedWeight", representation(clip = "numeric"), 
+          prototype(clip = 1), contains = "RobWeight")
+setClass("BdStWeight", representation(stand = "matrix"), 
+          prototype(stand = matrix(1)), contains = "BoundedWeight")
+setClass("HampelWeight", representation(cent = "numeric"), 
+          prototype(cent = 0), contains = "BdStWeight")
+
+
+
+
 # Influence curve/function with domain: EuclideanSpace
 setClass("InfluenceCurve", 
             representation(name = "character", 
@@ -94,7 +110,10 @@ setClass("ContIC",
                            cent = "numeric",
                            stand = "matrix",
                            lowerCase = "OptionalNumeric",
-                           neighborRadius = "numeric"), 
+                           neighborRadius = "numeric",
+                           weight = "HampelWeight",
+                           biastype = "BiasType",
+                           normtype = "NormType"), 
             prototype(name = "IC of contamination type",
                       Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}), 
                                                     Domain = Reals())),
@@ -104,7 +123,8 @@ setClass("ContIC",
                       CallL2Fam = call("L2ParamFamily"),
                       clip = Inf, cent = 0, stand = as.matrix(1),
                       lowerCase = NULL,
-                      neighborRadius = 0),
+                      neighborRadius = 0, weight = new("HampelWeight"),
+                      biastype = symmetricBias(), NormType = NormType()),
             contains = "IC",
             validity = function(object){
                 if(any(object@neighborRadius < 0)) # radius vector?!
@@ -127,7 +147,8 @@ setClass("TotalVarIC",
                            clipUp = "numeric",
                            stand = "matrix",
                            lowerCase = "OptionalNumeric",
-                           neighborRadius = "numeric"),
+                           neighborRadius = "numeric",
+                           weight = "BdStWeight"),
             prototype(name = "IC of total variation type",
                       Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}),
                                                                Domain = Reals())),
@@ -137,7 +158,7 @@ setClass("TotalVarIC",
                       CallL2Fam = call("L2ParamFamily"),
                       clipLo = -Inf, clipUp = Inf, stand = as.matrix(1),
                       lowerCase = NULL,
-                      neighborRadius = 0),
+                      neighborRadius = 0, weight = new("BdStWeight")),
             contains = "IC",
             validity = function(object){
                 if(any(object@neighborRadius < 0)) # radius vector?!
@@ -151,3 +172,5 @@ setClass("TotalVarIC",
                     stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
                 return(TRUE)
             })
+
+

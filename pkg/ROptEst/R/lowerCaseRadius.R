@@ -118,6 +118,35 @@ setMethod("lowerCaseRadius", signature(L2Fam = "L2ParamFamily",
        return(rad)
     })
 
+# trick to make it callable from minmaxBias
+setMethod("lowerCaseRadius", signature(L2Fam = "UnivariateDistribution",
+                                       neighbor = "ContNeighborhood",
+                                       risk = "asMSE",
+                                       biastype = "onesidedBias"),
+    function(L2Fam, neighbor, risk, biastype){
+
+        L2deriv <- D1 <- L2Fam
+        if(!is(D1, "DiscreteDistribution")) stop("not yet implemented")
+
+        sign <- sign(biastype)
+        w0 <- options("warn")
+        options(warn = -1)
+        
+        l <- length(support(L2deriv))
+        if (sign>0)
+           {z0 <- support(L2deriv)[1]; deltahat <- support(L2deriv)[2]-z0
+        }else{
+            z0 <- support(L2deriv)[l]; deltahat <- z0-support(L2deriv)[l-1]}
+        p0 <- d(L2deriv)(z0)   
+        
+        rad <- sqrt((abs(z0)/deltahat-(1-p0))/p0)
+        names(rad) <- "lower case radius"
+
+       options(w0)
+       return(rad)
+    })
+
+
  setMethod("lowerCaseRadius", signature(L2Fam = "L2ParamFamily",
                                        neighbor = "ContNeighborhood",
                                        risk = "asMSE",
@@ -195,3 +224,4 @@ setMethod("lowerCaseRadius", signature(L2Fam = "L2ParamFamily",
        options(w0)
        return(rad)            
     })
+

@@ -34,6 +34,10 @@ if(!isGeneric("getInfStand")){
     setGeneric("getInfStand", 
         function(L2deriv,  neighbor, biastype, ...) standardGeneric("getInfStand"))
 }
+if(!isGeneric("getInfV")){
+    setGeneric("getInfV", 
+        function(L2deriv,  neighbor, biastype, ...) standardGeneric("getInfV"))
+}
 if(!isGeneric("getRiskIC")){
     setGeneric("getRiskIC", 
         function(IC, risk,  neighbor, L2Fam, ...) standardGeneric("getRiskIC"))

@@ -33,7 +33,7 @@ TotalVarIC(name, CallL2Fam = call("L2ParamFamily"),
            Curve = EuclRandVarList(RealRandVariable(Map = c(function(x) {x}), 
                                                     Domain = Reals())), 
            Risks, Infos, clipLo = -Inf, clipUp = Inf, stand = as.matrix(1), 
-           lowerCase = NULL, neighborRadius = 0)
+           lowerCase = NULL, neighborRadius = 0, w = new("BdStWeight"))
 </pre>
 
 
@@ -68,6 +68,9 @@ positive real: lower clipping bound. </td></tr>
 <tr valign="top"><td><code>stand</code></td>
 <td>
 matrix: standardizing matrix </td></tr>
+<tr valign="top"><td><code>w</code></td>
+<td>
+BdStWeight: weight object</td></tr>
 <tr valign="top"><td><code>lowerCase</code></td>
 <td>
 optional constant for lower case solution. </td></tr>

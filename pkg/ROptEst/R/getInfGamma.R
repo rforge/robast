@@ -27,11 +27,12 @@ setMethod("getInfGamma", signature(L2deriv = "RealRandVariable",
                                    risk = "asMSE", 
                                    neighbor = "ContNeighborhood",
                                    biastype = "BiasType"),
-    function(L2deriv, risk, neighbor, biastype = symmetricBias(), Distr, stand, cent, clip){
+    function(L2deriv, risk, neighbor, biastype = symmetricBias(), Distr, 
+             stand, cent, clip){
         integrandG <- function(x, L2, stand, cent, clip){ 
             X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
-            Y <- apply(X, 2, "%*%", t(stand)) 
-            res <- sqrt(colSums(Y^2)) - clip
+            Y <- stand %*% X
+            res <- norm(risk)(Y) - clip
 
             return((res > 0)*res)
         }

@@ -2,7 +2,8 @@
 ContIC <- function(name, CallL2Fam = call("L2ParamFamily"),
                    Curve = EuclRandVarList(RealRandVariable(Map = c(function(x){x}), Domain = Reals())), 
                    Risks, Infos, clip = Inf, cent = 0, stand = as.matrix(1), 
-                   lowerCase = NULL, neighborRadius = 0){
+                   lowerCase = NULL, neighborRadius = 0, w = new("HampelWeight"),
+                   normtype = NormType(), biastype = symmetricBias()){
     if(missing(name))
         name <- "IC of contamination type"
     if(missing(Risks))
@@ -35,6 +36,9 @@ ContIC <- function(name, CallL2Fam = call("L2ParamFamily"),
     contIC@stand <- stand
     contIC@lowerCase <- lowerCase
     contIC@neighborRadius <- neighborRadius
+    contIC@weight <- w
+    contIC@biastype <- biastype
+    contIC@normtype <- normtype
 
     return(contIC)
 #    return(new("ContIC", name = name, Curve = Curve, Risks = Risks, Infos = Infos,
@@ -42,8 +46,8 @@ ContIC <- function(name, CallL2Fam = call("L2ParamFamily"),
 #               lowerCase = lowerCase, neighborRadius = neighborRadius))
 }
 
-## generate IC
-## for internal use only!
+
+
 setMethod("generateIC", signature(neighbor = "ContNeighborhood", 
                                   L2Fam = "L2ParamFamily"),
     function(neighbor, L2Fam, res){
@@ -51,40 +55,9 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
         a <- res$a
         b <- res$b
         d <- res$d
-        nrvalues <- nrow(A)
-        ICfct <- vector(mode = "list", length = nrvalues)
-        Y <- as(A %*% L2Fam@L2deriv - a, "EuclRandVariable")
-        if(nrvalues == 1){
-            if(!is.null(d)){
-                ICfct[[1]] <- function(x){ 
-                                    ind <- (Y(x) != 0) 
-                                    b*(ind*Y(x)/(ind*absY(x) + (1-ind)) + zi*(1-ind)*d)
-                              }
-                body(ICfct[[1]]) <- substitute(
-                                        { ind <- (Y(x) != 0) 
-                                          b*(ind*Y(x)/(ind*absY(x) + (1-ind)) + zi*(1-ind)*d) },
-                                        list(Y = Y@Map[[1]], absY = abs(Y)@Map[[1]], b = b, d = d, 
-                                             zi = sign(L2Fam@param@trafo)))
-            }else{
-                ICfct[[1]] <- function(x){ Y(x)*pmin(1, b/absY(x)) }
-                body(ICfct[[1]]) <- substitute({ Y(x)*pmin(1, b/absY(x)) },
-                                                 list(Y = Y@Map[[1]], absY = abs(Y)@Map[[1]], b = b))
-            }
-        }else{
-            absY <- sqrt(Y %*% Y)
-            if(!is.null(d))
-                for(i in 1:nrvalues){
-                    ICfct[[i]] <- function(x){ ind <- (Yi(x) != 0) ; ind*b*Yi(x)/absY(x) + (1-ind)*d }
-                    body(ICfct[[i]]) <- substitute({ ind <- (Yi(x) != 0) ; ind*b*Yi(x)/absY(x) + (1-ind)*d },
-                                                 list(Yi = Y@Map[[i]], absY = absY@Map[[1]], b = b, d = d[i]))
-                }
-            else
-                for(i in 1:nrvalues){
-                    ICfct[[i]] <- function(x){ Yi(x)*pmin(1, b/absY(x)) }
-                    body(ICfct[[i]]) <- substitute({ Yi(x)*pmin(1, b/absY(x)) },
-                                                 list(Yi = Y@Map[[i]], absY = absY@Map[[1]], b = b))
-                }
-        }
+        normtype <-  res$normtype
+        biastype <-  res$biastype
+        w <- res$w        
         return(ContIC(
                 name = "IC of contamination type", 
                 CallL2Fam = call("L2ParamFamily", 
@@ -101,22 +74,27 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
                                 L2derivDistrSymm = L2Fam@L2derivDistrSymm,
                                 FisherInfo = L2Fam@FisherInfo,
                                 FisherInfo.fct = L2Fam@FisherInfo.fct),
-                Curve = EuclRandVarList(EuclRandVariable(Map = ICfct, Domain = Y@Domain, 
-                                         Range = Y@Range)),
+                Curve = generateIC.fct(neighbor, L2Fam, res),
                 clip = b,
                 cent = a,
                 stand = A,
                 lowerCase = d,
+                w = w,
                 neighborRadius = neighbor@radius,
+                normtype = normtype,
+                biastype = biastype,
                 Risks = res$risk,
                 Infos = matrix(res$info, ncol = 2, 
                             dimnames = list(character(0), c("method", "message")))))
     })
 
 ## Access methods
+setMethod("biastype", "ContIC", function(object) object@biastype)
+setMethod("normtype", "ContIC", function(object) object@normtype)
 setMethod("clip", "ContIC", function(object) object@clip)
 setMethod("cent", "ContIC", function(object) object@cent)
 setMethod("stand", "ContIC", function(object) object@stand)
+setMethod("weight", "ContIC", function(object) object@weight)
 setMethod("lowerCase", "ContIC", function(object) object@lowerCase)
 setMethod("neighborRadius", "ContIC", function(object) object@neighborRadius)
 

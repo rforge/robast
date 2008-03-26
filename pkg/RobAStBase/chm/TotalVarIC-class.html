@@ -22,6 +22,7 @@
 <param name="keyword" value="R:   show,TotalVarIC-method">
 <param name="keyword" value="R:   stand,TotalVarIC-method">
 <param name="keyword" value="R:   stand<-,TotalVarIC-method">
+<param name="keyword" value="R:   weight,TotalVarIC-method">
 <param name="keyword" value="R:   generateIC,TotalVarNeighborhood,L2ParamFamily-method">
 <param name="keyword" value=" Influence curve of total variation type">
 </object>
@@ -87,6 +88,10 @@ upper clipping bound. </dd>
 standardizing matrix. </dd>
 
 
+<dt><code>weight</code>:</dt><dd>object of class <code>"BdStWeight"</code>:
+weight function </dd>
+
+
 <dt><code>neighborRadius</code>:</dt><dd>object of class <code>"numeric"</code>:
 radius of the corresponding (unconditional) contamination 
 neighborhood. </dd>
@@ -129,6 +134,10 @@ accessor function for slot <code>stand</code>. </dd>
 
 <dt>stand&lt;-</dt><dd><code>signature(object = "TotalVarIC")</code>:
 replacement function for slot <code>stand</code>. </dd>
+
+
+<dt>weight</dt><dd><code>signature(object = "TotalVarIC")</code>: 
+accessor function for slot <code>weight</code>. </dd>
 
 
 <dt>neighborRadius</dt><dd><code>signature(object = "TotalVarIC")</code>: 

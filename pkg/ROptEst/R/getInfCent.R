@@ -34,34 +34,26 @@ setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
         return(uniroot(g.fct, lower = lower, upper = upper, tol = tol.z, 
                     c0 = clip, D1 = D1)$root)
     })
+
 setMethod("getInfCent", signature(L2deriv = "RealRandVariable",
                                   neighbor = "ContNeighborhood",
                                   biastype = "BiasType"),
     function(L2deriv, neighbor, biastype = symmetricBias(), 
-             Distr, z.comp, stand, cent, clip){
-        integrand1 <- function(x, L2, clip, cent, stand){
-            X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
-            Y <- apply(X, 2, "%*%", t(stand)) 
-            h.vct <- sqrt(colSums(Y^2))
-            ind2 <- (h.vct < clip/2)
-            h.vct <- ind2*clip/2 + (1-ind2)*h.vct
-            ind1 <- (h.vct < clip)
-
-            return(ind1 + (1-ind1)*clip/h.vct)
+             Distr, z.comp, w){
+        integrand1 <- function(x){
+            weight(w)(evalRandVar(L2deriv, as.matrix(x)) [,,1]) 
         }
-        integrand2 <- function(x, L2.i, L2, clip, cent, stand){
-            return(L2.i(x)*integrand1(x = x, L2 = L2, clip = clip, cent = cent, stand = stand))
+        integrand2 <- function(x, L2.i){
+            return(L2.i(x)*integrand1(x))
         }
 
-        res1 <- E(object = Distr, fun = integrand1, L2 = L2deriv, clip = clip, 
-                  cent = cent, stand = stand, useApply = FALSE)
+        res1 <- E(object = Distr, fun = integrand1, useApply = FALSE)
         nrvalues <- length(L2deriv)
         res2 <- numeric(nrvalues)
         for(i in 1:nrvalues){
             if(z.comp[i]){
-                res2[i] <- E(object = Distr, fun = integrand2, L2.i = L2deriv@Map[[i]], 
-                             L2 = L2deriv, clip = clip, cent = cent, stand = stand,
-                             useApply = FALSE)
+                 res2[i] <- E(object = Distr, fun = integrand2, 
+                              L2.i = L2deriv@Map[[i]], useApply = FALSE)
             }else{            
                 res2[i] <- 0
             }
