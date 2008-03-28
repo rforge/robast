@@ -20,8 +20,13 @@ setMethod("getAsRisk", signature(risk = "asMSE",
     function(risk, L2deriv, neighbor, biastype, clip = NULL, cent = NULL, stand, trafo){
         if(!is.finite(neighbor@radius))
             mse <- Inf
-        else
-            mse <- sum(diag(stand %*% t(trafo)))
+        else{
+            p <- nrow(trafo)
+            std <- if(is(normtype(risk),"QFNorm")) 
+                      QuadForm(normtype(risk)) else diag(p)
+                        
+            mse <- sum(diag( std %*% stand %*% t(trafo)))
+        }
         return(list(asMSE = mse))
     })
 

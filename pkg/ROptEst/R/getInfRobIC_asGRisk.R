@@ -203,10 +203,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                 z.start = z.start, A.start = A.start, trafo = trafo, 
                                 maxiter = maxiter, tol = tol)
                 Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
-                                  biastype = biastype, Distr = Distr,  
-                                  cent = res$a, stand = res$A, 
-                                  V.comp =  matrix(TRUE, ncol = nrow(res$A), 
-                                            nrow = nrow(res$A)), w = res$w)
+                                  biastype = biastype, clip = NULL,   
+                                  cent = res$a, stand = res$A, trafo = trafo)
                 res$risk <- c(Risk, res$risk)
                 return(res)
             }
