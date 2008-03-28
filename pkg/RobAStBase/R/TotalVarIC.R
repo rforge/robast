@@ -81,10 +81,6 @@ setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood",
 ## Access methods
 setMethod("clipLo", "TotalVarIC", function(object) object@clipLo)
 setMethod("clipUp", "TotalVarIC", function(object) object@clipUp)
-setMethod("stand", "TotalVarIC", function(object) object@stand)
-setMethod("weight", "TotalVarIC", function(object) object@weight)
-setMethod("lowerCase", "TotalVarIC", function(object) object@lowerCase)
-setMethod("neighborRadius", "TotalVarIC", function(object) object@neighborRadius)
 
 ## Replace methods
 setReplaceMethod("clipLo", "TotalVarIC", 
@@ -133,15 +129,6 @@ setReplaceMethod("lowerCase", "TotalVarIC",
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("lowerCase<-", "The slot 'lowerCase' has been changed")
         addInfo(object) <- c("lowerCase<-", "The entries in 'Risks' and 'Infos' may be wrong")
-        object
-    })
-setReplaceMethod("neighborRadius", "TotalVarIC", 
-    function(object, value){ 
-        object@neighborRadius <- value
-        if(any(value < 0)) # radius vector?!
-            stop("'value' has to be in [0, Inf]")
-        addInfo(object) <- c("neighborRadius<-", "The slot 'neighborRadius' has been changed")
-        addInfo(object) <- c("neighborRadius<-", "The entries in 'Risks' and 'Infos' may be wrong")
         object
     })
 setReplaceMethod("CallL2Fam", "TotalVarIC",

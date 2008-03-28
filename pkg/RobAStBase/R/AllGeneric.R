@@ -154,3 +154,15 @@ if(!isGeneric("minbiasweight")){
 if(!isGeneric("generateIC.fct")){
     setGeneric("generateIC.fct", function(neighbor, L2Fam, ...) standardGeneric("generateIC.fct"))
 }
+if(!isGeneric("getRiskIC")){
+    setGeneric("getRiskIC", 
+        function(IC, risk,  neighbor, L2Fam, ...) standardGeneric("getRiskIC"))
+}
+if(!isGeneric("getBiasIC")){
+    setGeneric("getBiasIC", 
+        function(IC, neighbor, ...) standardGeneric("getBiasIC"))
+}
+if(!isGeneric(".evalBiasIC")){
+    setGeneric(".evalBiasIC", 
+        function(IC, neighbor, biastype, ...) standardGeneric(".evalBiasIC"))
+}

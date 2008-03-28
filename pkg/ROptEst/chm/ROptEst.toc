@@ -14,7 +14,11 @@
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getAsRisk,asBias,RealRandVariable,ContNeighborhood,BiasType-method">
+<param name="Name" value="getAsRisk,asBias,RealRandVariable,ContNeighborhood,ANY-method">
+<param name="Local" value="getAsRisk.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,ANY-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -22,35 +26,31 @@
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,BiasType-method">
-<param name="Local" value="getAsRisk.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,onesidedBias-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getAsRisk,asBias,UnivariateDistribution,TotalVarNeighborhood,BiasType-method">
+<param name="Name" value="getAsRisk,asBias,UnivariateDistribution,TotalVarNeighborhood,ANY-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getAsRisk,asCov,RealRandVariable,ContNeighborhood,BiasType-method">
+<param name="Name" value="getAsRisk,asCov,RealRandVariable,ContNeighborhood,ANY-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getAsRisk,asCov,UnivariateDistribution,ContNeighborhood,BiasType-method">
+<param name="Name" value="getAsRisk,asCov,UnivariateDistribution,ContNeighborhood,ANY-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getAsRisk,asCov,UnivariateDistribution,TotalVarNeighborhood,BiasType-method">
+<param name="Name" value="getAsRisk,asCov,UnivariateDistribution,TotalVarNeighborhood,ANY-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getAsRisk,asMSE,EuclRandVariable,Neighborhood,BiasType-method">
+<param name="Name" value="getAsRisk,asMSE,EuclRandVariable,Neighborhood,ANY-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getAsRisk,asMSE,UnivariateDistribution,Neighborhood,BiasType-method">
+<param name="Name" value="getAsRisk,asMSE,UnivariateDistribution,Neighborhood,ANY-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -58,15 +58,15 @@
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getAsRisk,asUnOvShoot,UnivariateDistribution,UncondNeighborhood,BiasType-method">
+<param name="Name" value="getAsRisk,asUnOvShoot,UnivariateDistribution,UncondNeighborhood,ANY-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getAsRisk,trAsCov,RealRandVariable,ContNeighborhood,BiasType-method">
+<param name="Name" value="getAsRisk,trAsCov,RealRandVariable,ContNeighborhood,ANY-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getAsRisk,trAsCov,UnivariateDistribution,UncondNeighborhood,BiasType-method">
+<param name="Name" value="getAsRisk,trAsCov,UnivariateDistribution,UncondNeighborhood,ANY-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -78,7 +78,7 @@
 <param name="Local" value="getBiasIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getBiasIC,IC,UncondNeighborhood-method">
+<param name="Name" value="getBiasIC,HampIC,UncondNeighborhood-method">
 <param name="Local" value="getBiasIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -306,6 +306,34 @@
 <param name="Local" value="getInfStand.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getInfV">
+<param name="Local" value="getInfV.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getInfV,RealRandVariable,ContNeighborhood,BiasType-method">
+<param name="Local" value="getInfV.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getInfV,UnivariateDistribution,ContNeighborhood,asymmetricBias-method">
+<param name="Local" value="getInfV.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getInfV,UnivariateDistribution,ContNeighborhood,BiasType-method">
+<param name="Local" value="getInfV.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getInfV,UnivariateDistribution,ContNeighborhood,onesidedBias-method">
+<param name="Local" value="getInfV.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getInfV,UnivariateDistribution,TotalVarNeighborhood,BiasType-method">
+<param name="Local" value="getInfV.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getInfV-methods">
+<param name="Local" value="getInfV.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getL1normL2deriv">
 <param name="Local" value="getL1normL2deriv.html">
 </OBJECT>
@@ -330,47 +358,11 @@
 <param name="Local" value="getRiskIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getRiskIC,IC,asBias,UncondNeighborhood,L2ParamFamily-method">
+<param name="Name" value="getRiskIC,HampIC,asCov,missing,L2ParamFamily-method">
 <param name="Local" value="getRiskIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getRiskIC,IC,asBias,UncondNeighborhood,missing-method">
-<param name="Local" value="getRiskIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getRiskIC,IC,asCov,missing,L2ParamFamily-method">
-<param name="Local" value="getRiskIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getRiskIC,IC,asCov,missing,missing-method">
-<param name="Local" value="getRiskIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getRiskIC,IC,asMSE,UncondNeighborhood,L2ParamFamily-method">
-<param name="Local" value="getRiskIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getRiskIC,IC,asMSE,UncondNeighborhood,missing-method">
-<param name="Local" value="getRiskIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getRiskIC,IC,fiUnOvShoot,ContNeighborhood,missing-method">
-<param name="Local" value="getRiskIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getRiskIC,IC,fiUnOvShoot,TotalVarNeighborhood,missing-method">
-<param name="Local" value="getRiskIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getRiskIC,IC,trAsCov,missing,L2ParamFamily-method">
-<param name="Local" value="getRiskIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getRiskIC,IC,trAsCov,missing,missing-method">
-<param name="Local" value="getRiskIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getRiskIC,TotalVarIC,asUnOvShoot,UncondNeighborhood,missing-method">
+<param name="Name" value="getRiskIC,HampIC,asCov,missing,missing-method">
 <param name="Local" value="getRiskIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -410,6 +402,10 @@
 <param name="Local" value="lowerCaseRadius.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="lowerCaseRadius,UnivariateDistribution,ContNeighborhood,asMSE,onesidedBias-method">
+<param name="Local" value="lowerCaseRadius.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="lowerCaseRadius-methods">
 <param name="Local" value="lowerCaseRadius.html">
 </OBJECT>
@@ -427,6 +423,10 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="minmaxBias,UnivariateDistribution,ContNeighborhood,BiasType-method">
+<param name="Local" value="minmaxBias.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="minmaxBias,UnivariateDistribution,ContNeighborhood,onesidedBias-method">
 <param name="Local" value="minmaxBias.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -489,6 +489,26 @@
 <param name="Name" value="radiusMinimaxIC-methods">
 <param name="Local" value="radiusMinimaxIC.html">
 </OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="updateNorm">
+<param name="Local" value="updateNorm-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="updateNorm,InfoNorm-method">
+<param name="Local" value="updateNorm-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="updateNorm,NormType-method">
+<param name="Local" value="updateNorm-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="updateNorm,SelfNorm-method">
+<param name="Local" value="updateNorm-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="updateNorm-methods">
+<param name="Local" value="updateNorm-methods.html">
+</OBJECT>
 </UL>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Package ROptEst:  Titles">
@@ -543,6 +563,10 @@
 <param name="Local" value="getBiasIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Generic Function for the Computation of the asymptotic Variance of a Hampel type IC">
+<param name="Local" value="getInfV.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic function for the computation of the minimal risk">
 <param name="Local" value="optRisk.html">
 </OBJECT>
@@ -561,6 +585,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic Function for the Computation of the Standardizing Matrix ">
 <param name="Local" value="getInfStand.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Methods for Function updateNorm in Package `ROptEst' ">
+<param name="Local" value="updateNorm-methods.html">
 </OBJECT>
 </UL>
 </UL>

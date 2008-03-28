@@ -17,19 +17,19 @@
 getInfStand(L2deriv, neighbor, biastype, ...)
 
 \S4method{getInfStand}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, 
-     neighbor, biastype = symmetricBias(), clip, cent, trafo)
+     neighbor, biastype, clip, cent, trafo)
 
 \S4method{getInfStand}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(L2deriv, 
-     neighbor, biastype = symmetricBias(), clip, cent, trafo)
+     neighbor, biastype, clip, cent, trafo)
 
 \S4method{getInfStand}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, 
-     neighbor, biastype = symmetricBias(), Distr, A.comp, stand, clip, cent, trafo)
+     neighbor, biastype, Distr, A.comp, stand, clip, cent, trafo, w)
 
 \S4method{getInfStand}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, 
-     neighbor, biastype = positiveBias(), clip, cent, trafo)
+     neighbor, biastype, clip, cent, trafo)
 
 \S4method{getInfStand}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, 
-     neighbor, biastype = asymmetricBias(), clip, cent, trafo)
+     neighbor, biastype, clip, cent, trafo)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
@@ -44,6 +44,7 @@ getInfStand(L2deriv, neighbor, biastype, ...)
   \item{trafo}{ matrix: transformation of the parameter. }  
   \item{A.comp}{ matrix: indication which components of the standardizing
     matrix have to be computed. }
+  \item{w}{object of class \code{RobWeight}; current weight}  
 }
 %\details{}
 \value{The standardizing matrix is computed.}

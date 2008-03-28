@@ -38,27 +38,27 @@ getInfCent(L2deriv, neighbor, biastype, ...)
 ## S4 method for signature 'UnivariateDistribution,
 ##   ContNeighborhood, BiasType':
 getInfCent(L2deriv, 
-     neighbor, biastype = symmetricBias(), clip, cent, tol.z, symm, trafo)
+     neighbor, biastype, clip, cent, tol.z, symm, trafo)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   TotalVarNeighborhood, BiasType':
 getInfCent(L2deriv, 
-     neighbor, biastype = symmetricBias(), clip, cent, tol.z, symm, trafo)
+     neighbor, biastype, clip, cent, tol.z, symm, trafo)
 
 ## S4 method for signature 'RealRandVariable,
 ##   ContNeighborhood, BiasType':
 getInfCent(L2deriv, 
-     neighbor, biastype = symmetricBias(), z.comp, stand, cent, clip)
+     neighbor, biastype, z.comp, stand, cent, clip, w)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   ContNeighborhood, onesidedBias':
 getInfCent(L2deriv, 
-     neighbor, biastype = positiveBias(), clip, cent, tol.z, symm, trafo)
+     neighbor, biastype, clip, cent, tol.z, symm, trafo)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   ContNeighborhood, asymmetricBias':
 getInfCent(L2deriv, 
-     neighbor, biastype = asymmetricBias(), clip, cent, tol.z, symm, trafo)
+     neighbor, biastype, clip, cent, tol.z, symm, trafo)
 </pre>
 
 
@@ -100,6 +100,9 @@ matrix: transformation of the parameter. </td></tr>
 <td>
 logical vector: indication which components of the 
 centering constant have to be computed. </td></tr>
+<tr valign="top"><td><code>w</code></td>
+<td>
+object of class <code>RobWeight</code>; current weight</td></tr>
 </table>
 
 <h3>Value</h3>

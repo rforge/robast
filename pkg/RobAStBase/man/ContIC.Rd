@@ -49,7 +49,7 @@ ContIC(name, CallL2Fam = call("L2ParamFamily"),
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{IC-class}}, \code{\link{ContIC}}}
+\seealso{\code{\link{IC-class}}, \code{\link{ContIC}} , \code{\link{HampIC-class}}}
 \examples{
 IC1 <- ContIC()
 plot(IC1)

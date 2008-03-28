@@ -15,21 +15,10 @@
 <param name="keyword" value="R:   clip,ContIC-method">
 <param name="keyword" value="R:   clip<-">
 <param name="keyword" value="R:   clip<-,ContIC-method">
-<param name="keyword" value="R:   lowerCase">
-<param name="keyword" value="R:   lowerCase,ContIC-method">
 <param name="keyword" value="R:   lowerCase<-">
 <param name="keyword" value="R:   lowerCase<-,ContIC-method">
-<param name="keyword" value="R:   neighborRadius">
-<param name="keyword" value="R:   neighborRadius,ContIC-method">
-<param name="keyword" value="R:   neighborRadius<-">
-<param name="keyword" value="R:   neighborRadius<-,ContIC-method">
-<param name="keyword" value="R:   stand">
-<param name="keyword" value="R:   stand,ContIC-method">
 <param name="keyword" value="R:   stand<-">
 <param name="keyword" value="R:   stand<-,ContIC-method">
-<param name="keyword" value="R:   weight,ContIC-method">
-<param name="keyword" value="R:   biastype,ContIC-method">
-<param name="keyword" value="R:   normtype,ContIC-method">
 <param name="keyword" value="R:   generateIC,ContNeighborhood,L2ParamFamily-method">
 <param name="keyword" value="R:   show,ContIC-method">
 <param name="keyword" value=" Influence curve of contamination type">
@@ -116,7 +105,8 @@ neighborhood. </dd>
 <h3>Extends</h3>
 
 <p>
-Class <code>"IC"</code>, directly.<br>
+Class <code>"HampIC"</code>, directly.<br>
+Class <code>"IC"</code>, by class <code>"HampIC"</code>.<br>
 Class <code>"InfluenceCurve"</code>, by class <code>"IC"</code>.
 </p>
 
@@ -144,34 +134,12 @@ accessor function for slot <code>clip</code>. </dd>
 replacement function for slot <code>clip</code>. </dd>
 
 
-<dt>stand</dt><dd><code>signature(object = "ContIC")</code>: 
-accessor function for slot <code>stand</code>. </dd>
-
-
 <dt>stand&lt;-</dt><dd><code>signature(object = "ContIC")</code>:
 replacement function for slot <code>stand</code>. </dd>
 
 
-<dt>weight</dt><dd><code>signature(object = "ContIC")</code>: 
-accessor function for slot <code>weight</code>. </dd>
-<dt>biastype</dt><dd><code>signature(object = "ContIC")</code>: 
-accessor function for slot <code>biastype</code>. </dd>
-<dt>normtype</dt><dd><code>signature(object = "ContIC")</code>: 
-accessor function for slot <code>normtype</code>. </dd>
-<dt>lowerCase</dt><dd><code>signature(object = "ContIC")</code>: 
-accessor function for slot <code>lowerCase</code>. </dd>
-
-
 <dt>lowerCase&lt;-</dt><dd><code>signature(object = "ContIC")</code>: 
 replacement function for slot <code>lowerCase</code>. </dd>
-
-
-<dt>neighborRadius</dt><dd><code>signature(object = "ContIC")</code>: 
-accessor function for slot <code>neighborRadius</code>. </dd>
-
-
-<dt>neighborRadius&lt;-</dt><dd><code>signature(object = "ContIC")</code>: 
-replacement function for slot <code>neighborRadius</code>. </dd>
 
 
 <dt>generateIC</dt><dd><code>signature(neighbor = "ContNeighborhood", L2Fam = "L2ParamFamily")</code>:
@@ -202,7 +170,7 @@ Bayreuth: Dissertation.
 <h3>See Also</h3>
 
 <p>
-<code><a href="IC-class.html">IC-class</a></code>, <code><a href="ContIC.html">ContIC</a></code>
+<code><a href="IC-class.html">IC-class</a></code>, <code><a href="ContIC.html">ContIC</a></code> <code><a href="HampIC-class.html">HampIC-class</a></code>
 </p>
 
 

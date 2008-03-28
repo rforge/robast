@@ -27,11 +27,11 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 
 \S4method{getInfRobIC}{RealRandVariable,asCov,ContNeighborhood}(L2deriv, risk, neighbor, Distr, Finfo, trafo)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asBias,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
+\S4method{getInfRobIC}{UnivariateDistribution,asBias,UncondNeighborhood}(L2deriv, risk, neighbor, symm, trafo, 
+             maxiter, tol)
 
-\S4method{getInfRobIC}{RealRandVariable,asBias,ContNeighborhood}(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
+\S4method{getInfRobIC}{RealRandVariable,asBias,ContNeighborhood}(L2deriv, risk, neighbor, Distr,  
+             L2derivDistrSymm, z.start, A.start, trafo, maxiter, tol)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)

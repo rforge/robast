@@ -10,6 +10,7 @@
 <param name="keyword" value="R:   lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,ANY-method">
 <param name="keyword" value="R:   lowerCaseRadius,L2ParamFamily,TotalVarNeighborhood,asMSE,ANY-method">
 <param name="keyword" value="R:   lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,onesidedBias-method">
+<param name="keyword" value="R:   lowerCaseRadius,UnivariateDistribution,ContNeighborhood,asMSE,onesidedBias-method">
 <param name="keyword" value="R:   lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,asymmetricBias-method">
 <param name="keyword" value=" Computation of the lower case radius">
 </object>
@@ -79,6 +80,11 @@ for onesided bias.</dd>
 <dt>L2Fam = "L2ParamFamily", neighbor = "ContNeighborhood", risk = "asMSE",
 biastype = "asymmetricBias"</dt><dd>lower case radius for risk <code>"asMSE"</code> in case of <code>"ContNeighborhood"</code>
 for asymmetric bias.</dd>
+
+
+<dt>L2Fam = "UnivariateDistribution", neighbor = "ContNeighborhood", risk = "asMSE",
+biastype = "onesidedBias"</dt><dd>used only internally; 
+trick to be able to call lower case radius from within minmax bias solver</dd>
 </dl>
 
 <h3>Author(s)</h3>

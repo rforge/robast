@@ -18,22 +18,22 @@
 getInfGamma(L2deriv, risk, neighbor, biastype, ...)
 
 \S4method{getInfGamma}{UnivariateDistribution,asMSE,ContNeighborhood,BiasType}(L2deriv, 
-     risk, neighbor, biastype = symmetricBias(), cent, clip)
+     risk, neighbor, biastype, cent, clip)
 
 \S4method{getInfGamma}{UnivariateDistribution,asGRisk,TotalVarNeighborhood,BiasType}(L2deriv, 
-     risk, neighbor, biastype = symmetricBias(), cent, clip)
+     risk, neighbor, biastype, cent, clip)
 
 \S4method{getInfGamma}{RealRandVariable,asMSE,ContNeighborhood,BiasType}(L2deriv, 
-     risk, neighbor, biastype = symmetricBias(), Distr, stand, cent, clip)
+     risk, neighbor, biastype, Distr, stand, cent, clip)
 
 \S4method{getInfGamma}{UnivariateDistribution,asUnOvShoot,ContNeighborhood,BiasType}(L2deriv, 
-     risk, neighbor, biastype = symmetricBias(), cent, clip)
+     risk, neighbor, biastype, cent, clip)
 
 \S4method{getInfGamma}{UnivariateDistribution,asMSE,ContNeighborhood,onesidedBias}(L2deriv, 
-     risk, neighbor, biastype = positiveBias(), cent, clip)
+     risk, neighbor, biastype, cent, clip)
 
 \S4method{getInfGamma}{UnivariateDistribution,asMSE,ContNeighborhood,asymmetricBias}(L2deriv, 
-    risk, neighbor, biastype  = asymmetricBias(), cent, clip)
+    risk, neighbor, biastype, cent, clip)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 

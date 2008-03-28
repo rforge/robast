@@ -42,6 +42,18 @@ getweight(Weight, neighbor, biastype, normtype)
 ## S4 method for signature 'HampelWeight, ContNeighborhood,
 ##   BiasType':
 minbiasweight(Weight, neighbor, biastype, normtype)
+## S4 method for signature 'HampelWeight, ContNeighborhood,
+##   onesidedBias':
+getweight(Weight, neighbor, biastype, ...)
+## S4 method for signature 'HampelWeight, ContNeighborhood,
+##   onesidedBias':
+minbiasweight(Weight, neighbor, biastype,...)
+## S4 method for signature 'HampelWeight, ContNeighborhood,
+##   asymmetricBias':
+getweight(Weight, neighbor, biastype, ...)
+## S4 method for signature 'HampelWeight, ContNeighborhood,
+##   asymmetricBias':
+minbiasweight(Weight, neighbor, biastype,...)
 </pre>
 
 
@@ -63,6 +75,9 @@ Object of class <code>"BiasType"</code>. </td></tr>
 <tr valign="top"><td><code>normtype</code></td>
 <td>
 Object of class <code>"NormType"</code> &mdash; only for signature <code>HampelWeight,ContNeighborhood,BiasType</code>. </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+possibly additional (unused) arguments &mdash; like in a call to the less specific methods.</td></tr>
 </table>
 
 <h3>Details</h3>

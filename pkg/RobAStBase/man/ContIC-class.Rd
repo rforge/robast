@@ -10,21 +10,10 @@
 \alias{clip,ContIC-method}
 \alias{clip<-}
 \alias{clip<-,ContIC-method}
-\alias{lowerCase}
-\alias{lowerCase,ContIC-method}
 \alias{lowerCase<-}
 \alias{lowerCase<-,ContIC-method}
-\alias{neighborRadius}
-\alias{neighborRadius,ContIC-method}
-\alias{neighborRadius<-}
-\alias{neighborRadius<-,ContIC-method}
-\alias{stand}
-\alias{stand,ContIC-method}
 \alias{stand<-}
 \alias{stand<-,ContIC-method}
-\alias{weight,ContIC-method}
-\alias{biastype,ContIC-method}
-\alias{normtype,ContIC-method}
 \alias{generateIC,ContNeighborhood,L2ParamFamily-method}
 \alias{show,ContIC-method}
 
@@ -84,7 +73,8 @@
   }
 }
 \section{Extends}{
-Class \code{"IC"}, directly.\cr
+Class \code{"HampIC"}, directly.\cr
+Class \code{"IC"}, by class \code{"HampIC"}.\cr
 Class \code{"InfluenceCurve"}, by class \code{"IC"}.
 }
 \section{Methods}{
@@ -104,29 +94,11 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
     \item{clip<-}{\code{signature(object = "ContIC")}: 
       replacement function for slot \code{clip}. }
 
-    \item{stand}{\code{signature(object = "ContIC")}: 
-      accessor function for slot \code{stand}. }
-
     \item{stand<-}{\code{signature(object = "ContIC")}:
       replacement function for slot \code{stand}. }
 
-    \item{weight}{\code{signature(object = "ContIC")}: 
-      accessor function for slot \code{weight}. }
-    \item{biastype}{\code{signature(object = "ContIC")}: 
-      accessor function for slot \code{biastype}. }
-    \item{normtype}{\code{signature(object = "ContIC")}: 
-      accessor function for slot \code{normtype}. }
-    \item{lowerCase}{\code{signature(object = "ContIC")}: 
-      accessor function for slot \code{lowerCase}. }
-
     \item{lowerCase<-}{\code{signature(object = "ContIC")}: 
       replacement function for slot \code{lowerCase}. }
-
-    \item{neighborRadius}{\code{signature(object = "ContIC")}: 
-      accessor function for slot \code{neighborRadius}. }
-
-    \item{neighborRadius<-}{\code{signature(object = "ContIC")}: 
-      replacement function for slot \code{neighborRadius}. }
 
     \item{generateIC}{\code{signature(neighbor = "ContNeighborhood", L2Fam = "L2ParamFamily")}:
       generate an object of class \code{"ContIC"}. Rarely called directly. }
@@ -142,7 +114,7 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{IC-class}}, \code{\link{ContIC}}}
+\seealso{\code{\link{IC-class}}, \code{\link{ContIC}} \code{\link{HampIC-class}}}
 \examples{
 IC1 <- new("ContIC")
 plot(IC1)

@@ -2,11 +2,12 @@
 \docType{class}
 \alias{RobWeight-class}
 \alias{name,RobWeight-method}
-\alias{weight,RobWeight-method}
 \alias{name<-,RobWeight-method}
+\alias{weight,RobWeight-method}
+\alias{weight}
+\alias{weight<--methods}
 \alias{weight<-,RobWeight-method}
 \alias{weight<-}
-\alias{weight}
 
 \title{Robust Weight classes}
 \description{Classes for robust weights.}
@@ -28,11 +29,10 @@
       replacement function for slot \code{name}. }
 
     \item{weight}{\code{signature(object = "RobWeight")}: 
-      accessor function for slot \code{name}. }
+      accessor function for slot \code{weight}. }
 
-    \item{weight<-}{\code{signature(object = "RobWeight", value = "function")}: 
+    \item{weight<-}{\code{signature(object = "RobWeight", value = "ANY")}: 
       replacement function for slot \code{weight}. }
-
   }
 }
 \references{

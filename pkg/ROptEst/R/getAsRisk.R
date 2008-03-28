@@ -1,22 +1,23 @@
 ###############################################################################
 ## asymptotic MSE
-###############################################################################
+###############################################################################           
 setMethod("getAsRisk", signature(risk = "asMSE",
                                  L2deriv = "UnivariateDistribution",
-                                 neighbor = "Neighborhood", biastype = "BiasType"),
-    function(risk, L2deriv, neighbor, biastype = symmetricBias(), 
-             clip = NULL, cent = NULL, stand, trafo){
+                                 neighbor = "Neighborhood", 
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype, clip = NULL, cent = NULL, stand, trafo){
         if(!is.finite(neighbor@radius))
             mse <- Inf
         else
             mse <- as.vector(stand)*as.vector(trafo)
         return(list(asMSE = mse))
     })
+
 setMethod("getAsRisk", signature(risk = "asMSE",
                                  L2deriv = "EuclRandVariable",
-                                 neighbor = "Neighborhood", biastype = "BiasType"),
-    function(risk, L2deriv, neighbor, biastype = symmetricBias(), 
-             clip = NULL, cent = NULL, stand, trafo){
+                                 neighbor = "Neighborhood", 
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype, clip = NULL, cent = NULL, stand, trafo){
         if(!is.finite(neighbor@radius))
             mse <- Inf
         else
@@ -29,8 +30,9 @@ setMethod("getAsRisk", signature(risk = "asMSE",
 ###############################################################################
 setMethod("getAsRisk", signature(risk = "asBias",
                                  L2deriv = "UnivariateDistribution",
-                                 neighbor = "ContNeighborhood", biastype = "BiasType"),
-    function(risk, L2deriv, neighbor, biastype = symmetricBias(), trafo){
+                                 neighbor = "ContNeighborhood", 
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype, trafo){
         z <- q(L2deriv)(0.5)                                
         bias <- abs(as.vector(trafo))/E(L2deriv, function(x, z){abs(x - z)}, 
                                         useApply = FALSE, z = z)
@@ -39,49 +41,26 @@ setMethod("getAsRisk", signature(risk = "asBias",
     })
 setMethod("getAsRisk", signature(risk = "asBias",
                                  L2deriv = "UnivariateDistribution",
-                                 neighbor = "TotalVarNeighborhood", biastype = "BiasType"),
-    function(risk, L2deriv, neighbor, biastype = symmetricBias(), trafo){
+                                 neighbor = "TotalVarNeighborhood", 
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype,  trafo){
         bias <- abs(as.vector(trafo))/(-m1df(L2deriv, 0))
 
         return(list(asBias = bias))
     })
 setMethod("getAsRisk", signature(risk = "asBias",
                                  L2deriv = "RealRandVariable",
-                                 neighbor = "ContNeighborhood", biastype = "BiasType"),
-    function(risk, L2deriv, neighbor, biastype = symmetricBias(), Distr, 
-             L2derivDistrSymm, trafo, 
-             z.start, A.start,  maxiter, tol){                
-        if(is.null(z.start)) z.start <- numeric(ncol(trafo))
-        if(is.null(A.start)) A.start <- trafo
-
-        abs.fct <- function(x, L2, stand, cent){
-            X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
-            Y <- apply(X, 2, "%*%", t(stand)) 
-
-            return(sqrt(colSums(Y^2)))
-        }
-        bmin.fct <- function(param, L2deriv, Distr, trafo, z.comp){
-            p <- nrow(trafo)
-            k <- ncol(trafo)
-            A <- matrix(param[1:(p*k)], ncol=k, nrow=p)
-            z <- numeric(k)
-            z[z.comp] <- param[(p*k+1):length(param)]
-
-            return(E(object = Distr, fun = abs.fct, L2 = L2deriv, stand = A, 
-                     cent = z, useApply = FALSE)/sum(diag(A %*% t(trafo))))
-        }
+                                 neighbor = "ContNeighborhood", 
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype, Distr, 
+             L2derivDistrSymm, trafo, z.start, A.start,  maxiter, tol){                
         
-        nrvalues <- length(L2deriv)
-        z.comp <- rep(TRUE, nrvalues)
-        for(i in 1:nrvalues)
-            if(is(L2derivDistrSymm[[i]], "SphericalSymmetry"))
-                if(L2derivDistrSymm[[i]]@SymmCenter == 0)
-                    z.comp[i] <- FALSE
-
-        A.vec <- as.vector(A.start)
-        erg <- optim(c(A.vec, z.start[z.comp]), bmin.fct, method = "Nelder-Mead", 
-                    control = list(reltol = tol, maxit = 100*maxiter), 
-                    L2deriv = L2deriv, Distr = Distr, trafo = trafo, z.comp = z.comp)
+        normtype <- normtype(risk)
+        biastype <- biastype(risk)
+        eerg <- .LowerCaseMultivariate(L2deriv, neighbor, biastype,
+             normtype, Distr, L2derivDistrSymm, trafo, z.start,
+             A.start, maxiter, tol)
+        erg <- eerg$erg
         bias <- 1/erg$value
         
         return(list(asBias = bias))
@@ -92,38 +71,47 @@ setMethod("getAsRisk", signature(risk = "asBias",
 ###############################################################################
 setMethod("getAsRisk", signature(risk = "asCov",
                                  L2deriv = "UnivariateDistribution",
-                                 neighbor = "ContNeighborhood", biastype = "BiasType"),
-    function(risk, L2deriv, neighbor, biastype = symmetricBias(), clip, cent, stand){
-        c0 <- clip/abs(as.vector(stand))
-        D1 <- L2deriv - cent/as.vector(stand)
-        Cov <- (clip^2*(p(D1)(-c0) + 1 - p(D1)(c0))
-                + as.vector(stand)^2*(m2df(D1, c0) - m2df(D1, -c0)))
-
-        return(list(asCov = Cov))
+                                 neighbor = "ContNeighborhood", 
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype, clip, cent, stand){
+#        c0 <- clip/abs(as.vector(stand))
+#        D1 <- L2deriv - cent/as.vector(stand)
+#        Cov <- (clip^2*(p(D1)(-c0) + 1 - p(D1)(c0))
+#                + as.vector(stand)^2*(m2df(D1, c0) - m2df(D1, -c0)))
+        return(list(asCov = 
+        getInfV(L2deriv, neighbor, biastype(risk), clip/abs(as.vector(stand)), 
+                cent/abs(as.vector(stand)), abs(as.vector(stand)))
+               ))
     })
 setMethod("getAsRisk", signature(risk = "asCov",
                                  L2deriv = "UnivariateDistribution",
-                                 neighbor = "TotalVarNeighborhood", biastype = "BiasType"),
-    function(risk, L2deriv, neighbor, biastype = symmetricBias(), clip, cent, stand){
-        g0 <- cent/abs(as.vector(stand))
-        c0 <- clip/abs(as.vector(stand))
-        Cov <- (abs(as.vector(stand))^2*(g0^2*p(L2deriv)(g0) 
-                + (g0+c0)^2*(1 - p(L2deriv)(g0+c0))
-                + m2df(L2deriv, g0+c0) - m2df(L2deriv, g0)))
+                                 neighbor = "TotalVarNeighborhood", 
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype, clip, cent, stand){
+#        g0 <- cent/abs(as.vector(stand))
+#        c0 <- clip/abs(as.vector(stand))
+#        Cov <- (abs(as.vector(stand))^2*(g0^2*p(L2deriv)(g0) 
+#                + (g0+c0)^2*(1 - p(L2deriv)(g0+c0))
+#                + m2df(L2deriv, g0+c0) - m2df(L2deriv, g0)))
+#        return(list(asCov = Cov))
+        return(list(asCov = 
+        getInfV(L2deriv, neighbor, biastype(risk), clip/abs(as.vector(stand)), 
+                cent/abs(as.vector(stand)), abs(as.vector(stand)))
+               ))
 
-        return(list(asCov = Cov))
     })
 setMethod("getAsRisk", signature(risk = "asCov",
                                  L2deriv = "RealRandVariable",
-                                 neighbor = "ContNeighborhood", biastype = "BiasType"),
-    function(risk, L2deriv, neighbor, biastype = symmetricBias(), Distr, clip, cent, 
-             stand, norm = EuclideanNorm){
-
-                 return(list(asCov = .asCovMB(L2deriv, stand, cent, clip, Distr, 
-                             norm = norm)))
+                                 neighbor = "ContNeighborhood", 
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype, Distr, cent, 
+             stand, V.comp =  matrix(TRUE, ncol = nrow(stand), nrow = nrow(stand)), 
+             w){
+        return(getInfV(L2deriv = L2deriv, neighbor = neighbor, 
+                       biastype = biastype(risk), Distr = Distr, 
+                       V.comp = V.comp, cent = cent, 
+                       stand = stand, w = w))
         })
-
-
 #        Y <- as(stand %*% L2deriv - cent, "EuclRandVariable")
 #        absY <- sqrt(Y %*% Y)
 #        
@@ -140,39 +128,6 @@ setMethod("getAsRisk", signature(risk = "asCov",
 #        return(list(asCov = Cov))
 #    })
 
-### helping function
-
-.asCovMB <- function(L2, stand, cent, clip, Distr, norm){                 
-                 p <- nrow(stand)
-                 idx <- matrix(1:p^2,p,p)
-                 idx <- idx[col(idx)<=row(idx)]
-                 Cv <- matrix(0,p,p)
-
-                 if (clip == 0){
-                     Cv[idx] <- E(object = Distr, fun = function(x){
-                                X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
-                                Y <- stand %*% X
-                                norm0 <- norm(Y)                      
-                                ind <- 1-.eq(norm0)                   
-                                Y0 <- Y*ind/(norm0+1-ind)
-                                Y02 <- apply(Y0,2,function(x)x%*%t(x))[idx,]
-                                }, useApply = FALSE)
-                 }else{
-                    Cv[idx] <- E(object = Distr, fun = function(x){
-                               X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
-                               Y <- stand %*% X
-                               norm0 <- norm(Y)                      
-                               ind2 <- (norm0 < b/2)
-                               norm1 <- ind2*clip/2 + (1-ind2)*norm0
-                               ind1 <- (norm0 < b)
-                               ind1 + (1-ind1)*clip/norm1
-                               Y0 <- Y*ind1
-                               Y02 <- apply(Y0,2,function(x)x%*%t(x))[idx,]
-                       }, useApply = FALSE)
-                 }
-                 dCv <- diag(Cv)
-                 return(PosSemDefSymmMatrix(Cv + t(Cv) - dCv))
-        }
 
 
 ###############################################################################
@@ -180,19 +135,21 @@ setMethod("getAsRisk", signature(risk = "asCov",
 ###############################################################################
 setMethod("getAsRisk", signature(risk = "trAsCov",
                                  L2deriv = "UnivariateDistribution",
-                                 neighbor = "UncondNeighborhood", biastype = "BiasType"),
-    function(risk, L2deriv, neighbor, biastype = symmetricBias(), clip, cent, stand){
+                                 neighbor = "UncondNeighborhood", 
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype, clip, cent, stand){
         Cov <- getAsRisk(risk = asCov(), L2deriv = L2deriv, neighbor = neighbor,
-                         biastype = biastype, clip = clip, cent = cent, stand = stand)$asCov
+                         biastype = biastype(risk), clip = clip, cent = cent, stand = stand)$asCov
 
         return(list(trAsCov = as.vector(Cov)))
     })
 setMethod("getAsRisk", signature(risk = "trAsCov",
                                  L2deriv = "RealRandVariable",
-                                 neighbor = "ContNeighborhood", biastype = "BiasType"),
-    function(risk, L2deriv, neighbor, biastype = symmetricBias(), Distr, clip, cent, stand){
+                                 neighbor = "ContNeighborhood", 
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype, Distr, clip, cent, stand){
         Cov <- getAsRisk(risk = asCov(), L2deriv = L2deriv, neighbor = neighbor,
-                         biastype = biastype, Distr = Distr, clip = clip, 
+                         biastype = biastype(risk), Distr = Distr, clip = clip, 
                          cent = cent, stand = stand)$asCov
 
         return(list(trAsCov = sum(diag(Cov))))
@@ -203,8 +160,9 @@ setMethod("getAsRisk", signature(risk = "trAsCov",
 ###############################################################################
 setMethod("getAsRisk", signature(risk = "asUnOvShoot",
                                  L2deriv = "UnivariateDistribution",
-                                 neighbor = "UncondNeighborhood", biastype = "BiasType"),
-    function(risk, L2deriv, neighbor, biastype = symmetricBias(), clip, cent, stand, trafo){
+                                 neighbor = "UncondNeighborhood", 
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo){
         if(identical(all.equal(neighbor@radius, 0), TRUE))
             return(list(asUnOvShoot = pnorm(-risk@width/sqrt(as.vector(stand)))))
         
@@ -222,7 +180,8 @@ setMethod("getAsRisk", signature(risk = "asUnOvShoot",
 ###############################################################################
 setMethod("getAsRisk", signature(risk = "asBias",
                                  L2deriv = "UnivariateDistribution",
-                                 neighbor = "ContNeighborhood", biastype = "onesidedBias"),
+                                 neighbor = "ContNeighborhood", 
+                                 biastype = "onesidedBias"),
     function(risk, L2deriv, neighbor, biastype, trafo){
 
         D1 <- L2deriv
@@ -270,7 +229,7 @@ setMethod("getAsRisk", signature(risk = "asSemivar",
                                  L2deriv = "UnivariateDistribution",
                                  neighbor = "Neighborhood", 
                                  biastype = "onesidedBias"),
-    function(risk, L2deriv, neighbor, biastype = positiveBias(), 
+    function(risk, L2deriv, neighbor, biastype, 
              clip, cent, stand, trafo){
         A <- as.vector(stand)*as.vector(trafo)
         r <- neighbor@radius

@@ -2,6 +2,7 @@
 \alias{minmaxBias}
 \alias{minmaxBias-methods}
 \alias{minmaxBias,UnivariateDistribution,ContNeighborhood,BiasType-method}
+\alias{minmaxBias,UnivariateDistribution,ContNeighborhood,onesidedBias-method}
 \alias{minmaxBias,UnivariateDistribution,ContNeighborhood,asymmetricBias-method}
 \alias{minmaxBias,UnivariateDistribution,TotalVarNeighborhood,BiasType-method}
 \alias{minmaxBias,RealRandVariable,ContNeighborhood,BiasType-method}
@@ -15,17 +16,20 @@
 \usage{
 minmaxBias(L2deriv, neighbor, biastype, ...)
 
-\S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype = symmetricBias(), symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
+\S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype, symm, trafo, 
+             maxiter, tol)
 
-\S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(L2deriv, neighbor, biastype = asymmetricBias(), symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
+\S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(L2deriv, neighbor, biastype, symm, trafo, 
+             maxiter, tol)
 
-\S4method{minmaxBias}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(L2deriv, neighbor, biastype = symmetricBias(), symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
+\S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv, neighbor, biastype, symm, trafo, 
+             maxiter, tol)
 
-\S4method{minmaxBias}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype = symmetricBias(), Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
+\S4method{minmaxBias}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(L2deriv, neighbor, biastype, symm, trafo, 
+             maxiter, tol)
+
+\S4method{minmaxBias}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype, Distr, 
+             L2derivDistrSymm, z.start, A.start, trafo, maxiter, tol)
 
 }
 \arguments{
@@ -36,17 +40,12 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
   \item{\dots}{ additional parameters. }
   \item{Distr}{ object of class \code{"Distribution"}. }
   \item{symm}{ logical: indicating symmetry of \code{L2deriv}. }
-  \item{DistrSymm}{ object of class \code{"DistributionSymmetry"}. }
-  \item{L2derivSymm}{ object of class \code{"FunSymmList"}. }
   \item{L2derivDistrSymm}{ object of class \code{"DistrSymmList"}. }
-  \item{Finfo}{ Fisher information matrix. }
   \item{z.start}{ initial value for the centering constant. }
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{trafo}{ matrix: transformation of the parameter. }
-  \item{upper}{ upper bound for the optimal clipping bound. }
   \item{maxiter}{ the maximum number of iterations. }
   \item{tol}{ the desired accuracy (convergence tolerance).}
-  \item{warn}{ logical: print warnings. }
 }
 %\details{}
 \value{The bias-optimally robust IC is computed.}

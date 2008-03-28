@@ -38,10 +38,6 @@ if(!isGeneric("getInfV")){
     setGeneric("getInfV", 
         function(L2deriv,  neighbor, biastype, ...) standardGeneric("getInfV"))
 }
-if(!isGeneric("getRiskIC")){
-    setGeneric("getRiskIC", 
-        function(IC, risk,  neighbor, L2Fam, ...) standardGeneric("getRiskIC"))
-}
 if(!isGeneric("optIC")){
     setGeneric("optIC", function(model, risk,  ...) standardGeneric("optIC"))
 }
@@ -72,11 +68,6 @@ if(!isGeneric("getL1normL2deriv")){
     setGeneric("getL1normL2deriv", 
         function(L2deriv, ...) standardGeneric("getL1normL2deriv"))
 }
-if(!isGeneric("getBiasIC")){
-    setGeneric("getBiasIC", 
-        function(IC, neighbor, ...) standardGeneric("getBiasIC"))
-}
-if(!isGeneric(".evalBiasIC")){
-    setGeneric(".evalBiasIC", 
-        function(IC, neighbor, biastype, ...) standardGeneric(".evalBiasIC"))
+if(!isGeneric("updateNorm")){
+    setGeneric("updateNorm", function(normtype, ...) standardGeneric("updateNorm"))
 }

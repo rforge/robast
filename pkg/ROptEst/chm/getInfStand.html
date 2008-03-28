@@ -36,27 +36,27 @@ getInfStand(L2deriv, neighbor, biastype, ...)
 ## S4 method for signature 'UnivariateDistribution,
 ##   ContNeighborhood, BiasType':
 getInfStand(L2deriv, 
-     neighbor, biastype = symmetricBias(), clip, cent, trafo)
+     neighbor, biastype, clip, cent, trafo)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   TotalVarNeighborhood, BiasType':
 getInfStand(L2deriv, 
-     neighbor, biastype = symmetricBias(), clip, cent, trafo)
+     neighbor, biastype, clip, cent, trafo)
 
 ## S4 method for signature 'RealRandVariable,
 ##   ContNeighborhood, BiasType':
 getInfStand(L2deriv, 
-     neighbor, biastype = symmetricBias(), Distr, A.comp, stand, clip, cent, trafo)
+     neighbor, biastype, Distr, A.comp, stand, clip, cent, trafo, w)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   ContNeighborhood, BiasType':
 getInfStand(L2deriv, 
-     neighbor, biastype = positiveBias(), clip, cent, trafo)
+     neighbor, biastype, clip, cent, trafo)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   ContNeighborhood, BiasType':
 getInfStand(L2deriv, 
-     neighbor, biastype = asymmetricBias(), clip, cent, trafo)
+     neighbor, biastype, clip, cent, trafo)
 </pre>
 
 
@@ -95,6 +95,9 @@ matrix: transformation of the parameter. </td></tr>
 <td>
 matrix: indication which components of the standardizing
 matrix have to be computed. </td></tr>
+<tr valign="top"><td><code>w</code></td>
+<td>
+object of class <code>RobWeight</code>; current weight</td></tr>
 </table>
 
 <h3>Value</h3>

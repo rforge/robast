@@ -4,7 +4,7 @@
 setMethod("getInfStand", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "ContNeighborhood",
                                    biastype = "BiasType"),
-    function(L2deriv, neighbor, biastype = symmetricBias(), clip, cent, trafo){
+    function(L2deriv, neighbor, biastype, clip, cent, trafo){
         c1 <- cent - clip
         c2 <- cent + clip
         return(trafo/(m2df(L2deriv, c2) - m2df(L2deriv, c1)
@@ -13,7 +13,7 @@ setMethod("getInfStand", signature(L2deriv = "UnivariateDistribution",
 setMethod("getInfStand", signature(L2deriv = "UnivariateDistribution",
                                   neighbor = "TotalVarNeighborhood",
                                   biastype = "BiasType"),
-    function(L2deriv, neighbor, biastype = symmetricBias(), clip, cent, trafo){
+    function(L2deriv, neighbor, biastype, clip, cent, trafo){
         D1 <- sign(as.vector(trafo))*L2deriv
         return(trafo/(m2df(D1, cent+clip) - m2df(D1, cent) + cent*m1df(D1, cent) 
                 - (cent+clip)*m1df(D1, cent+clip)))
@@ -21,7 +21,7 @@ setMethod("getInfStand", signature(L2deriv = "UnivariateDistribution",
 setMethod("getInfStand", signature(L2deriv = "RealRandVariable",
                                    neighbor = "ContNeighborhood",
                                    biastype = "BiasType"),
-    function(L2deriv, neighbor, biastype = symmetricBias(), 
+    function(L2deriv, neighbor, biastype, 
              Distr, A.comp, cent, trafo, w){
         w.fct <- function(x){
             weight(w)(evalRandVar(L2deriv, as.matrix(x)) [,,1]) 
@@ -50,7 +50,7 @@ setMethod("getInfStand", signature(L2deriv = "RealRandVariable",
 setMethod("getInfStand", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "ContNeighborhood",
                                    biastype = "onesidedBias"),
-    function(L2deriv, neighbor, biastype = positiveBias(), clip, cent, trafo){
+    function(L2deriv, neighbor, biastype, clip, cent, trafo){
         c1 <- if (sign(biastype)<0) cent - clip else -Inf
         c2 <- if (sign(biastype)>0) cent + clip else Inf
         m1 <- if (sign(biastype)<0) m2df(L2deriv, c1) else 0
@@ -66,7 +66,7 @@ setMethod("getInfStand", signature(L2deriv = "UnivariateDistribution",
 setMethod("getInfStand", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "ContNeighborhood",
                                    biastype = "asymmetricBias"),
-    function(L2deriv, neighbor, biastype = asymmetricBias(), clip, cent, trafo){
+    function(L2deriv, neighbor, biastype, clip, cent, trafo){
         nu1 <- nu(biastype)[1]
         nu2 <- nu(biastype)[2]
         c1 <- cent - clip/nu1

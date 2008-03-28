@@ -8,9 +8,10 @@ setMethod("generateIC.fct", signature(neighbor = "UncondNeighborhood", L2Fam = "
         d <- res$d
         w <- weight(res$w)
         nrvalues <- nrow(A)
+        dim <- ncol(A)
         ICfct <- vector(mode = "list", length = nrvalues)
         Y <- as(A %*% L2Fam@L2deriv - a, "EuclRandVariable")
-        L <- as(L2Fam@L2deriv, "EuclRandVariable")
+        L <- as(diag(dim)%*%L2Fam@L2deriv, "EuclRandVariable")
         if(nrvalues == 1){
             if(!is.null(d)){
                 ICfct[[1]] <- function(x){}

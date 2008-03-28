@@ -13,7 +13,7 @@
      cent, ...)
 
 \S4method{getL1normL2deriv}{UnivariateDistribution}(L2deriv, 
-     cent, stand, Distr, ...)
+     cent, stand, Distr, normtype, ...)
 
 }
 %\details{}
@@ -22,7 +22,8 @@
   \item{cent}{centering Lagrange Multiplier}
   \item{stand}{standardizing Lagrange Multiplier}
   \item{Distr}{distribution of the L2derivative}
-  \item{...}{further arguments (not used at the moment)}
+  \item{normtype}{object of class \code{NormType}; the norm under which we work}
+  \item{\dots}{further arguments (not used at the moment)}
 }
 
 \value{L1 norm of the L2derivative}

@@ -1,19 +1,19 @@
 \name{getAsRisk}
 \alias{getAsRisk}
 \alias{getAsRisk-methods}
-\alias{getAsRisk,asMSE,UnivariateDistribution,Neighborhood,BiasType-method}
-\alias{getAsRisk,asMSE,EuclRandVariable,Neighborhood,BiasType-method}
-\alias{getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,BiasType-method}
+\alias{getAsRisk,asMSE,UnivariateDistribution,Neighborhood,ANY-method}
+\alias{getAsRisk,asMSE,EuclRandVariable,Neighborhood,ANY-method}
+\alias{getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,ANY-method}
 \alias{getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,onesidedBias-method}
 \alias{getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,asymmetricBias-method}
-\alias{getAsRisk,asBias,UnivariateDistribution,TotalVarNeighborhood,BiasType-method}
-\alias{getAsRisk,asBias,RealRandVariable,ContNeighborhood,BiasType-method}
-\alias{getAsRisk,asCov,UnivariateDistribution,ContNeighborhood,BiasType-method}
-\alias{getAsRisk,asCov,UnivariateDistribution,TotalVarNeighborhood,BiasType-method}
-\alias{getAsRisk,asCov,RealRandVariable,ContNeighborhood,BiasType-method}
-\alias{getAsRisk,trAsCov,UnivariateDistribution,UncondNeighborhood,BiasType-method}
-\alias{getAsRisk,trAsCov,RealRandVariable,ContNeighborhood,BiasType-method}
-\alias{getAsRisk,asUnOvShoot,UnivariateDistribution,UncondNeighborhood,BiasType-method}
+\alias{getAsRisk,asBias,UnivariateDistribution,TotalVarNeighborhood,ANY-method}
+\alias{getAsRisk,asBias,RealRandVariable,ContNeighborhood,ANY-method}
+\alias{getAsRisk,asCov,UnivariateDistribution,ContNeighborhood,ANY-method}
+\alias{getAsRisk,asCov,UnivariateDistribution,TotalVarNeighborhood,ANY-method}
+\alias{getAsRisk,asCov,RealRandVariable,ContNeighborhood,ANY-method}
+\alias{getAsRisk,trAsCov,UnivariateDistribution,UncondNeighborhood,ANY-method}
+\alias{getAsRisk,trAsCov,RealRandVariable,ContNeighborhood,ANY-method}
+\alias{getAsRisk,asUnOvShoot,UnivariateDistribution,UncondNeighborhood,ANY-method}
 \alias{getAsRisk,asSemivar,UnivariateDistribution,Neighborhood,onesidedBias-method}
 
 \title{Generic Function for Computation of Asymptotic Risks}
@@ -25,32 +25,32 @@
 \usage{
 getAsRisk(risk, L2deriv, neighbor, biastype, ...)
 
-\S4method{getAsRisk}{asMSE,UnivariateDistribution,Neighborhood,BiasType}(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo)
+\S4method{getAsRisk}{asMSE,UnivariateDistribution,Neighborhood,ANY}(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo)
 
-\S4method{getAsRisk}{asMSE,EuclRandVariable,Neighborhood,BiasType}(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo, norm = EuclideanNorm)
+\S4method{getAsRisk}{asMSE,EuclRandVariable,Neighborhood,ANY}(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo, norm = EuclideanNorm)
 
-\S4method{getAsRisk}{asBias,UnivariateDistribution,ContNeighborhood,BiasType}(risk, L2deriv, neighbor, biastype, trafo)
+\S4method{getAsRisk}{asBias,UnivariateDistribution,ContNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, trafo)
 
 \S4method{getAsRisk}{asBias,UnivariateDistribution,ContNeighborhood,onesidedBias}(risk, L2deriv, neighbor, biastype, trafo)
 
 \S4method{getAsRisk}{asBias,UnivariateDistribution,ContNeighborhood,asymmetricBias}(risk, L2deriv, neighbor, biastype, trafo)
 
-\S4method{getAsRisk}{asBias,UnivariateDistribution,TotalVarNeighborhood,BiasType}(risk, L2deriv, neighbor, biastype, trafo)
+\S4method{getAsRisk}{asBias,UnivariateDistribution,TotalVarNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, trafo)
 
-\S4method{getAsRisk}{asBias,RealRandVariable,ContNeighborhood,BiasType}(risk, L2deriv, neighbor, biastype, Distr, L2derivDistrSymm, trafo, 
+\S4method{getAsRisk}{asBias,RealRandVariable,ContNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, Distr, L2derivDistrSymm, trafo, 
              z.start, A.start, maxiter, tol, norm = EuclideanNorm)
 
-\S4method{getAsRisk}{asCov,UnivariateDistribution,ContNeighborhood,BiasType}(risk, L2deriv, neighbor, biastype, clip, cent, stand)
+\S4method{getAsRisk}{asCov,UnivariateDistribution,ContNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, clip, cent, stand)
 
-\S4method{getAsRisk}{asCov,UnivariateDistribution,TotalVarNeighborhood,BiasType}(risk, L2deriv, neighbor, biastype, clip, cent, stand)
+\S4method{getAsRisk}{asCov,UnivariateDistribution,TotalVarNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, clip, cent, stand)
 
-\S4method{getAsRisk}{asCov,RealRandVariable,ContNeighborhood,BiasType}(risk, L2deriv, neighbor, biastype, Distr, clip, cent, stand, norm = EuclideanNorm)
+\S4method{getAsRisk}{asCov,RealRandVariable,ContNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, Distr, clip, cent, stand, norm = EuclideanNorm)
 
-\S4method{getAsRisk}{trAsCov,UnivariateDistribution,UncondNeighborhood,BiasType}(risk, L2deriv, neighbor, biastype, clip, cent, stand)
+\S4method{getAsRisk}{trAsCov,UnivariateDistribution,UncondNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, clip, cent, stand)
 
-\S4method{getAsRisk}{trAsCov,RealRandVariable,ContNeighborhood,BiasType}(risk, L2deriv, neighbor, biastype, Distr, clip, cent, stand, norm = EuclideanNorm)
+\S4method{getAsRisk}{trAsCov,RealRandVariable,ContNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, Distr, clip, cent, stand, norm = EuclideanNorm)
 
-\S4method{getAsRisk}{asUnOvShoot,UnivariateDistribution,UncondNeighborhood,BiasType}(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo)
+\S4method{getAsRisk}{asUnOvShoot,UnivariateDistribution,UncondNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo)
 
 \S4method{getAsRisk}{asSemivar,UnivariateDistribution,Neighborhood,onesidedBias}(risk, L2deriv, neighbor, biastype, 
     clip, cent, stand, trafo)
@@ -60,7 +60,7 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
   \item{L2deriv}{ L2-derivative of some L2-differentiable family
     of probability distributions. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
-  \item{biastype}{ object of class \code{"BiasType"}. }
+  \item{biastype}{ object of class \code{"ANY"}. }
   \item{\dots}{ additional parameters. }
   \item{clip}{ optimal clipping bound. }
   \item{cent}{ optimal centering constant. }
@@ -78,15 +78,15 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
 \value{The asymptotic risk is computed.}
 \section{Methods}{
 \describe{
-  \item{risk = "asMSE", L2deriv = "UnivariateDistribution", neighbor = "Neighborhood", biastype = "BiasType":}{
+  \item{risk = "asMSE", L2deriv = "UnivariateDistribution", neighbor = "Neighborhood", biastype = "ANY":}{
     computes asymptotic mean square error in methods for
     function \code{getInfRobIC}. }
 
-  \item{risk = "asMSE", L2deriv = "EuclRandVariable", neighbor = "Neighborhood", biastype = "BiasType":}{ 
+  \item{risk = "asMSE", L2deriv = "EuclRandVariable", neighbor = "Neighborhood", biastype = "ANY":}{ 
     computes asymptotic mean square error in methods for
     function \code{getInfRobIC}. }
 
-  \item{risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "BiasType":}{ 
+  \item{risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "ANY":}{ 
     computes standardized asymptotic bias in methods for function \code{getInfRobIC}. }
 
   \item{risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "onesidedBias":}{ 
@@ -95,30 +95,30 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
   \item{risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "asymmetricBias":}{ 
     computes standardized asymptotic bias in methods for function \code{getInfRobIC}. }
 
-  \item{risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", biastype = "BiasType":}{ 
+  \item{risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", biastype = "ANY":}{ 
     computes standardized asymptotic bias in methods for function \code{getInfRobIC}. }
 
-  \item{risk = "asBias", L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", biastype = "BiasType":}{ 
+  \item{risk = "asBias", L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", biastype = "ANY":}{ 
     computes standardized asymptotic bias in methods for function \code{getInfRobIC}. }
 
-  \item{risk = "asCov", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "BiasType":}{ 
+  \item{risk = "asCov", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "ANY":}{ 
     computes asymptotic covariance in methods for function \code{getInfRobIC}. }
 
-  \item{risk = "asCov", L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", biastype = "BiasType":}{ 
+  \item{risk = "asCov", L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", biastype = "ANY":}{ 
     computes asymptotic covariance in methods for function \code{getInfRobIC}. }
 
-  \item{risk = "asCov", L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", biastype = "BiasType":}{ 
+  \item{risk = "asCov", L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", biastype = "ANY":}{ 
     computes asymptotic covariance in methods for function \code{getInfRobIC}. }
 
-  \item{risk = "trAsCov", L2deriv = "UnivariateDistribution", neighbor = "UncondNeighborhood", biastype = "BiasType":}{ 
+  \item{risk = "trAsCov", L2deriv = "UnivariateDistribution", neighbor = "UncondNeighborhood", biastype = "ANY":}{ 
     computes trace of asymptotic covariance in methods 
     for function \code{getInfRobIC}. }
 
-  \item{risk = "trAsCov", L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", biastype = "BiasType":}{ 
+  \item{risk = "trAsCov", L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", biastype = "ANY":}{ 
     computes trace of asymptotic covariance in methods for 
     function \code{getInfRobIC}. }
 
-  \item{risk = "asUnOvShoot", L2deriv = "UnivariateDistribution", neighbor = "UncondNeighborhood", biastype = "BiasType":}{ 
+  \item{risk = "asUnOvShoot", L2deriv = "UnivariateDistribution", neighbor = "UncondNeighborhood", biastype = "ANY":}{ 
     computes asymptotic under-/overshoot risk in methods for 
     function \code{getInfRobIC}. }
 

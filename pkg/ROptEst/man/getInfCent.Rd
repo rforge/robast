@@ -19,19 +19,19 @@
 getInfCent(L2deriv, neighbor, biastype, ...)
 
 \S4method{getInfCent}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, 
-     neighbor, biastype = symmetricBias(), clip, cent, tol.z, symm, trafo)
+     neighbor, biastype, clip, cent, tol.z, symm, trafo)
 
 \S4method{getInfCent}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(L2deriv, 
-     neighbor, biastype = symmetricBias(), clip, cent, tol.z, symm, trafo)
+     neighbor, biastype, clip, cent, tol.z, symm, trafo)
 
 \S4method{getInfCent}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, 
-     neighbor, biastype = symmetricBias(), z.comp, stand, cent, clip)
+     neighbor, biastype, z.comp, stand, cent, clip, w)
 
 \S4method{getInfCent}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv, 
-     neighbor, biastype = positiveBias(), clip, cent, tol.z, symm, trafo)
+     neighbor, biastype, clip, cent, tol.z, symm, trafo)
 
 \S4method{getInfCent}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(L2deriv, 
-     neighbor, biastype = asymmetricBias(), clip, cent, tol.z, symm, trafo)
+     neighbor, biastype, clip, cent, tol.z, symm, trafo)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
@@ -47,6 +47,7 @@ getInfCent(L2deriv, neighbor, biastype, ...)
   \item{trafo}{ matrix: transformation of the parameter. }
   \item{z.comp}{ logical vector: indication which components of the 
     centering constant have to be computed. }
+  \item{w}{object of class \code{RobWeight}; current weight}  
 }
 %\details{}
 \value{The optimal centering constant is computed.}

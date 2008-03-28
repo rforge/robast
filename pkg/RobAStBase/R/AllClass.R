@@ -104,16 +104,42 @@ setClass("IC", representation(CallL2Fam = "call"),
 
                 return(TRUE)
             })
+# HampIC -- common mother class to ContIC and TotalVarIC 
+setClass("HampIC", 
+            representation(stand = "matrix",
+                           lowerCase = "OptionalNumeric",
+                           neighborRadius = "numeric",
+                           weight = "RobWeight",
+                           biastype = "BiasType",
+                           normtype = "NormType"), 
+            prototype(name = "IC of total-var or contamination type",
+                      Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}), 
+                                                    Domain = Reals())),
+                      Risks = list(),  weight = new("RobWeight"),
+                      Infos = matrix(c(character(0),character(0)), ncol=2,
+                                dimnames=list(character(0), c("method", "message"))),
+                      CallL2Fam = call("L2ParamFamily"),
+                      stand = as.matrix(1),
+                      lowerCase = NULL,
+                      neighborRadius = 0, 
+                      biastype = symmetricBias(), 
+                      NormType = NormType()),
+            contains = "IC",
+            validity = function(object){
+                if(any(object@neighborRadius < 0)) # radius vector?!
+                    stop("'neighborRadius' has to be in [0, Inf]")
+                if(!is.null(object@lowerCase))
+                    if(length(object@lowerCase) != nrow(object@stand))
+                        stop("length of 'lowerCase' != nrow of standardizing matrix")
+                L2Fam <- eval(object@CallL2Fam)
+                if(!identical(dim(L2Fam@param@trafo), dim(object@stand)))
+                    stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
+                return(TRUE)
+            })
 # (partial) influence curve of contamination type
 setClass("ContIC", 
             representation(clip = "numeric",
-                           cent = "numeric",
-                           stand = "matrix",
-                           lowerCase = "OptionalNumeric",
-                           neighborRadius = "numeric",
-                           weight = "HampelWeight",
-                           biastype = "BiasType",
-                           normtype = "NormType"), 
+                           cent = "numeric"), 
             prototype(name = "IC of contamination type",
                       Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}), 
                                                     Domain = Reals())),
@@ -125,7 +151,7 @@ setClass("ContIC",
                       lowerCase = NULL,
                       neighborRadius = 0, weight = new("HampelWeight"),
                       biastype = symmetricBias(), NormType = NormType()),
-            contains = "IC",
+            contains = "HampIC",
             validity = function(object){
                 if(any(object@neighborRadius < 0)) # radius vector?!
                     stop("'neighborRadius' has to be in [0, Inf]")
@@ -137,6 +163,8 @@ setClass("ContIC",
                     if(length(object@lowerCase) != nrow(object@stand))
                         stop("length of 'lowerCase' != nrow of standardizing matrix")
                 L2Fam <- eval(object@CallL2Fam)
+                if(!is(weight,"HampelWeight")) 
+                    stop("Weight has to be of class 'HampelWeight'")
                 if(!identical(dim(L2Fam@param@trafo), dim(object@stand)))
                     stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
                 return(TRUE)
@@ -144,11 +172,7 @@ setClass("ContIC",
 # (partial) influence curve of total variation type
 setClass("TotalVarIC",
             representation(clipLo = "numeric",
-                           clipUp = "numeric",
-                           stand = "matrix",
-                           lowerCase = "OptionalNumeric",
-                           neighborRadius = "numeric",
-                           weight = "BdStWeight"),
+                           clipUp = "numeric"),
             prototype(name = "IC of total variation type",
                       Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}),
                                                                Domain = Reals())),
@@ -159,7 +183,7 @@ setClass("TotalVarIC",
                       clipLo = -Inf, clipUp = Inf, stand = as.matrix(1),
                       lowerCase = NULL,
                       neighborRadius = 0, weight = new("BdStWeight")),
-            contains = "IC",
+            contains = "HampIC",
             validity = function(object){
                 if(any(object@neighborRadius < 0)) # radius vector?!
                     stop("'neighborRadius' has to be in [0, Inf]")
@@ -168,6 +192,8 @@ setClass("TotalVarIC",
                 if((length(object@clipLo) != 1) && (length(object@clipLo) != length(object@Curve)))
                     stop("length of upper clipping bound != 1 and != length of 'Curve'")
                 L2Fam <- eval(object@CallL2Fam)
+                if(!is(weight,"BdStWeight")) 
+                    stop("Weight has to be of class 'BdStWeight'")
                 if(!identical(dim(L2Fam@param@trafo), dim(object@stand)))
                     stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
                 return(TRUE)

@@ -8,6 +8,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
              upper, maxiter, tol, warn){
         biastype <- biastype(risk)
         normtype <- normtype(risk)
+
         A <- trafo / E(L2deriv, function(x){x^2})
         b <- risk@bound
 
@@ -63,7 +64,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
         info <- paste("optimally robust IC for 'asHampel' with bound =", round(b,3))
         a <- as.vector(A)*z
         Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor, 
-                       biastype = biastype, clip = c0, cent = z, stand = stand)
+                       biastype = biastype, clip = c0, cent = z, stand = A)
         
         # getAsRisk(risk = asHampel(), L2deriv = L2deriv, neighbor = neighbor, 
         #          biastype = biastype, clip = b, cent = a, stand = A)$asCov
@@ -90,6 +91,10 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         biastype <- biastype(risk)
         normtype <- normtype(risk)
+
+        FI <- solve(trafo%*%solve(Finfo)%*%t(trafo))
+        if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") ) 
+           {QuadForm(normtype) <- PosSemDefSymmMatrix(FI); normtype(risk) <- normtype}
 
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
         if(is.null(A.start)) A.start <- trafo
@@ -157,19 +162,19 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             A.old <- A
             cent(w) <- z 
             stand(w) <- A 
-            normtype <- update(normtype = normtype, FI = Finfo, 
-                   L2 = L2deriv, stand = A, cent = z, clip = b,
-                   Distr = Distr, norm = fct(normtype))
+            normtype(risk) <- normtype <- updateNorm(normtype = normtype, FI = FI, 
+                   L2 = L2deriv, neighbor = neighbor, biastype = biastype,
+                   Distr = Distr, V.comp = A.comp, cent = z, stand = A, w = w)
 
             weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
                                    normtype = normtype)
 
-            z <- getInfCent(L2deriv = L2deriv, neighbor = neighbor,  biastype = biastype,
-                            Distr = Distr, z.comp = z.comp, stand = A, cent = z, clip = b, 
+            z <- getInfCent(L2deriv = L2deriv, neighbor = neighbor,  
+                            biastype = biastype, Distr = Distr, z.comp = z.comp, 
                             w = w)
-            A <- getInfStand(L2deriv = L2deriv, neighbor = neighbor,  biastype = biastype, 
-                             clip = b, cent = z,  A.comp = A.comp, trafo = trafo, 
-                             Distr = Distr, stand = A, w = w)
+            A <- getInfStand(L2deriv = L2deriv, neighbor = neighbor, 
+                         biastype = biastype, Distr = Distr, A.comp = A.comp, 
+                         cent = z, trafo = trafo, w = w)
             prec <- max(max(abs(A-A.old)), max(abs(z-z.old)))
             cat("current precision in IC algo:\t", prec, "\n")
             if(prec < tol) break
@@ -181,9 +186,9 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         if (onesetLM){
             cent(w) <- z 
             stand(w) <- A 
-            normtype <- update(normtype = normtype, FI = Finfo, 
-                   L2 = L2deriv, stand = A, cent = z, clip = b,
-                   Distr = Distr, norm = fct(normtype))
+            normtype(risk) <- normtype <- updateNorm(normtype = normtype, FI = FI, 
+                   L2 = L2deriv, neighbor = neighbor, biastype = biastype,
+                   Distr = Distr, V.comp = A.comp, cent = z, stand = A, w = w)
 
             weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
                                    normtype = normtype)
@@ -191,12 +196,14 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         info <- paste("optimally robust IC for 'asHampel' with bound =", round(b,3))
         a <- as.vector(A %*% z)
         Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor, 
-                       biastype = biastype, clip = c0, cent = z, stand = stand,
-                       Distr = Distr, V.comp = A.comp, w = w)
+                       biastype = biastype, Distr = Distr, 
+                       V.comp = A.comp, cent = a, 
+                       stand = A, w = w)
         #getAsRisk(risk = asCov(), L2deriv = L2deriv, neighbor = neighbor, 
         #          biastype = biastype, Distr = Distr, clip = b, cent = a, 
         #          stand = A)$asCov
-        Risk <- list(trAsCov = sum(diag(Cov)), asCov = Cov, asBias = b, asMSE = sum(diag(Cov)) + neighbor@radius^2*b^2)
+        Risk <- list(trAsCov = sum(diag(Cov)), asCov = Cov, asBias = b, 
+                     asMSE = sum(diag(Cov)) + neighbor@radius^2*b^2)
 
         return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info, 
                     w = w, biastype = biastype, normtype = normtype))

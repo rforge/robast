@@ -5,7 +5,7 @@ setMethod("getInfClip", signature(clip = "numeric",
                                   L2deriv = "UnivariateDistribution",
                                   risk = "asMSE", 
                                   neighbor = "ContNeighborhood"),
-    function(clip, L2deriv, risk, neighbor, biastype = symmetricBias(), 
+    function(clip, L2deriv, risk, neighbor, biastype, 
              cent, symm, trafo){
         return(neighbor@radius^2*clip + 
                getInfGamma(L2deriv = L2deriv, risk = risk, 
@@ -15,7 +15,7 @@ setMethod("getInfClip", signature(clip = "numeric",
                                   L2deriv = "UnivariateDistribution",
                                   risk = "asMSE", 
                                   neighbor = "TotalVarNeighborhood"),
-    function(clip, L2deriv, risk, neighbor, biastype = symmetricBias(), 
+    function(clip, L2deriv, risk, neighbor, biastype, 
              cent, symm, trafo){
         if(symm){
             return(neighbor@radius^2*clip + 
@@ -31,7 +31,7 @@ setMethod("getInfClip", signature(clip = "numeric",
                                   L2deriv = "EuclRandVariable",
                                   risk = "asMSE", 
                                   neighbor = "ContNeighborhood"),
-    function(clip, L2deriv, risk, neighbor, biastype = symmetricBias(), 
+    function(clip, L2deriv, risk, neighbor, biastype, 
              Distr, stand, cent, trafo){
         return(neighbor@radius^2*clip + 
                 getInfGamma(L2deriv = L2deriv, risk = risk, neighbor = neighbor, 
@@ -46,7 +46,7 @@ setMethod("getInfClip", signature(clip = "numeric",
                                   L2deriv = "UnivariateDistribution",
                                   risk = "asUnOvShoot", 
                                   neighbor = "UncondNeighborhood"),
-    function(clip, L2deriv, risk, neighbor, biastype = symmetricBias(), 
+    function(clip, L2deriv, risk, neighbor, biastype, 
              cent, symm, trafo){
         if(symm){
             return(neighbor@radius/risk@width + 

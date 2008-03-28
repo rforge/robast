@@ -3,7 +3,7 @@
 \alias{getInfV-methods}
 \alias{getInfV,UnivariateDistribution,ContNeighborhood,BiasType-method}
 \alias{getInfV,UnivariateDistribution,TotalVarNeighborhood,BiasType-method}
-\alias{getInfV,EuclRandVariable,ContNeighborhood,BiasType-method}
+\alias{getInfV,RealRandVariable,ContNeighborhood,BiasType-method}
 \alias{getInfV,UnivariateDistribution,ContNeighborhood,onesidedBias-method}
 \alias{getInfV,UnivariateDistribution,ContNeighborhood,asymmetricBias-method}
 
@@ -14,17 +14,32 @@
   directly. It is used to compute optimally robust ICs.
 }
 \usage{
-getInfV(L2deriv, neighbor, biastype, clip, cent, stand)
+getInfV(L2deriv, neighbor, biastype, ...)
+\S4method{getInfV}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, 
+         neighbor, biastype, clip, cent, stand)
+\S4method{getInfV}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(L2deriv, 
+         neighbor, biastype, clip, cent, stand)
+\S4method{getInfV}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, 
+         neighbor, biastype, Distr, V.comp, cent, stand, 
+         w)
+\S4method{getInfV}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv, 
+         neighbor, biastype, clip, cent, stand)
+\S4method{getInfV}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(L2deriv, 
+         neighbor, biastype, clip, cent, stand)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
     of probability measures. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
-  \item{\dots}{ additional parameters. }
   \item{biastype}{ object of class \code{"BiasType"} }
+  \item{\dots}{ additional parameters. }
   \item{clip}{ positive real: clipping bound }
   \item{cent}{ optimal centering constant. }
   \item{stand}{ standardizing matrix. }
+  \item{Distr}{ standardizing matrix. }
+  \item{V.comp}{ matrix: indication which components of the standardizing
+    matrix have to be computed. }
+  \item{w}{object of class \code{RobWeight}; current weight}  
 }
 %\details{}
 \value{The asymptotic variance of an ALE to IC of Hampel type is computed.}
@@ -39,8 +54,7 @@ getInfV(L2deriv, neighbor, biastype, clip, cent, stand)
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 }
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de},
-        Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}}
+\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}}
 %\note{}
 \seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link[RobAStBase]{TotalVarIC-class}}}
 %\examples{}

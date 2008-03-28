@@ -1,6 +1,7 @@
 ## Generating function
 ContIC <- function(name, CallL2Fam = call("L2ParamFamily"),
-                   Curve = EuclRandVarList(RealRandVariable(Map = c(function(x){x}), Domain = Reals())), 
+                   Curve = EuclRandVarList(RealRandVariable(Map = c(function(x){x}), 
+                                           Domain = Reals())), 
                    Risks, Infos, clip = Inf, cent = 0, stand = as.matrix(1), 
                    lowerCase = NULL, neighborRadius = 0, w = new("HampelWeight"),
                    normtype = NormType(), biastype = symmetricBias()){
@@ -89,14 +90,9 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
     })
 
 ## Access methods
-setMethod("biastype", "ContIC", function(object) object@biastype)
-setMethod("normtype", "ContIC", function(object) object@normtype)
+
 setMethod("clip", "ContIC", function(object) object@clip)
 setMethod("cent", "ContIC", function(object) object@cent)
-setMethod("stand", "ContIC", function(object) object@stand)
-setMethod("weight", "ContIC", function(object) object@weight)
-setMethod("lowerCase", "ContIC", function(object) object@lowerCase)
-setMethod("neighborRadius", "ContIC", function(object) object@neighborRadius)
 
 ## replace methods
 setReplaceMethod("clip", "ContIC", 
@@ -145,15 +141,6 @@ setReplaceMethod("lowerCase", "ContIC",
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("lowerCase<-", "The slot 'lowerCase' has been changed")
         addInfo(object) <- c("lowerCase<-", "The entries in 'Risks' and 'Infos' may be wrong")
-        object
-    })
-setReplaceMethod("neighborRadius", "ContIC", 
-    function(object, value){ 
-        object@neighborRadius <- value
-        if(any(value < 0)) # radius vector?!
-            stop("'value' has to be in [0, Inf]")
-        addInfo(object) <- c("neighborRadius<-", "The slot 'neighborRadius' has been changed")
-        addInfo(object) <- c("neighborRadius<-", "The entries in 'Risks' and 'Infos' may be wrong")
         object
     })
 setReplaceMethod("CallL2Fam", "ContIC",

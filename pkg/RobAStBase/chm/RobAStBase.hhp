@@ -20,6 +20,7 @@ ContNeighborhood-class.html
 ContNeighborhood.html
 FixRobModel-class.html
 FixRobModel.html
+HampIC-class.html
 HampelWeight-class.html
 IC-class.html
 IC.html
@@ -40,9 +41,12 @@ checkIC.html
 evalIC.html
 generateIC.html
 generateICfct.html
+getBiasIC.html
+getRiskIC.html
 getweight.html
 infoPlot.html
+internals.html
 locMEstimator.html
-makeIC.html
+makeIC-methods.html
 oneStepEstimator.html
 optIC.html

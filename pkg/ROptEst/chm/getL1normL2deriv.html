@@ -32,7 +32,7 @@ getL1normL2deriv(L2deriv,
 
 ## S4 method for signature 'UnivariateDistribution':
 getL1normL2deriv(L2deriv, 
-     cent, stand, Distr, ...)
+     cent, stand, Distr, normtype, ...)
 
 </pre>
 
@@ -52,6 +52,9 @@ standardizing Lagrange Multiplier</td></tr>
 <tr valign="top"><td><code>Distr</code></td>
 <td>
 distribution of the L2derivative</td></tr>
+<tr valign="top"><td><code>normtype</code></td>
+<td>
+object of class <code>NormType</code>; the norm under which we work</td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 further arguments (not used at the moment)</td></tr>

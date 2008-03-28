@@ -23,4 +23,5 @@ exportMethods("optIC",
               "lowerCaseRadius",
               "minmaxBias", "getBiasIC", 
               "getL1normL2deriv")
+exportMethods("updateNorm")
 export("getL2normL2deriv")

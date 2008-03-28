@@ -23,6 +23,7 @@ getInfClip.html
 getInfGamma.html
 getInfRobIC.html
 getInfStand.html
+getInfV.html
 getL1normL2deriv.html
 getL2normL2deriv.html
 getRiskIC.html
@@ -32,3 +33,4 @@ minmaxBias.html
 optIC.html
 optRisk.html
 radiusMinimaxIC.html
+updateNorm-methods.html

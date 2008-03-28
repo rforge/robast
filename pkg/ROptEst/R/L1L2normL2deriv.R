@@ -7,11 +7,11 @@ setMethod("getL1normL2deriv", signature(L2deriv = "UnivariateDistribution"),
     })
 
 setMethod("getL1normL2deriv", signature(L2deriv = "RealRandVariable"),
-    function(L2deriv, cent, stand, Distr, ...){
+    function(L2deriv, cent, stand, Distr, normtype, ...){
         integrandG <- function(x, L2, stand, cent){
             X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
             Y <- apply(X, 2, "%*%", t(stand))
-            res <- sqrt(colSums(Y^2))
+            res <- fct(normtype)(Y)
             return((res > 0)*res)
         }
 

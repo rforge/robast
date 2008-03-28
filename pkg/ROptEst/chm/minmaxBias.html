@@ -8,6 +8,7 @@
 <param name="keyword" value="R:   minmaxBias">
 <param name="keyword" value="R:   minmaxBias-methods">
 <param name="keyword" value="R:   minmaxBias,UnivariateDistribution,ContNeighborhood,BiasType-method">
+<param name="keyword" value="R:   minmaxBias,UnivariateDistribution,ContNeighborhood,onesidedBias-method">
 <param name="keyword" value="R:   minmaxBias,UnivariateDistribution,ContNeighborhood,asymmetricBias-method">
 <param name="keyword" value="R:   minmaxBias,UnivariateDistribution,TotalVarNeighborhood,BiasType-method">
 <param name="keyword" value="R:   minmaxBias,RealRandVariable,ContNeighborhood,BiasType-method">
@@ -34,23 +35,28 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   ContNeighborhood, BiasType':
-minmaxBias(L2deriv, neighbor, biastype = symmetricBias(), symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
+minmaxBias(L2deriv, neighbor, biastype, symm, trafo, 
+             maxiter, tol)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   ContNeighborhood, asymmetricBias':
-minmaxBias(L2deriv, neighbor, biastype = asymmetricBias(), symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
+minmaxBias(L2deriv, neighbor, biastype, symm, trafo, 
+             maxiter, tol)
+
+## S4 method for signature 'UnivariateDistribution,
+##   ContNeighborhood, onesidedBias':
+minmaxBias(L2deriv, neighbor, biastype, symm, trafo, 
+             maxiter, tol)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   TotalVarNeighborhood, BiasType':
-minmaxBias(L2deriv, neighbor, biastype = symmetricBias(), symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
+minmaxBias(L2deriv, neighbor, biastype, symm, trafo, 
+             maxiter, tol)
 
 ## S4 method for signature 'RealRandVariable,
 ##   ContNeighborhood, BiasType':
-minmaxBias(L2deriv, neighbor, biastype = symmetricBias(), Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
+minmaxBias(L2deriv, neighbor, biastype, Distr, 
+             L2derivDistrSymm, z.start, A.start, trafo, maxiter, tol)
 
 </pre>
 
@@ -77,18 +83,9 @@ object of class <code>"Distribution"</code>. </td></tr>
 <tr valign="top"><td><code>symm</code></td>
 <td>
 logical: indicating symmetry of <code>L2deriv</code>. </td></tr>
-<tr valign="top"><td><code>DistrSymm</code></td>
-<td>
-object of class <code>"DistributionSymmetry"</code>. </td></tr>
-<tr valign="top"><td><code>L2derivSymm</code></td>
-<td>
-object of class <code>"FunSymmList"</code>. </td></tr>
 <tr valign="top"><td><code>L2derivDistrSymm</code></td>
 <td>
 object of class <code>"DistrSymmList"</code>. </td></tr>
-<tr valign="top"><td><code>Finfo</code></td>
-<td>
-Fisher information matrix. </td></tr>
 <tr valign="top"><td><code>z.start</code></td>
 <td>
 initial value for the centering constant. </td></tr>
@@ -98,18 +95,12 @@ initial value for the standardizing matrix. </td></tr>
 <tr valign="top"><td><code>trafo</code></td>
 <td>
 matrix: transformation of the parameter. </td></tr>
-<tr valign="top"><td><code>upper</code></td>
-<td>
-upper bound for the optimal clipping bound. </td></tr>
 <tr valign="top"><td><code>maxiter</code></td>
 <td>
 the maximum number of iterations. </td></tr>
 <tr valign="top"><td><code>tol</code></td>
 <td>
 the desired accuracy (convergence tolerance).</td></tr>
-<tr valign="top"><td><code>warn</code></td>
-<td>
-logical: print warnings. </td></tr>
 </table>
 
 <h3>Value</h3>

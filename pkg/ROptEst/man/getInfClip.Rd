@@ -24,7 +24,7 @@ getInfClip(clip, L2deriv, risk, neighbor, ...)
 
 \S4method{getInfClip}{numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfClip}{numeric,UnivariateDistribution,asSemivar,ContNeighborhood}(clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
+\S4method{getInfClip}{numeric,UnivariateDistribution,asSemivar,ContNeighborhood}(clip, L2deriv, risk, neighbor, cent, symm, trafo)
 }
 \arguments{
   \item{clip}{ positive real: clipping bound }

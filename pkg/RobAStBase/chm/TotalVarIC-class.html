@@ -15,14 +15,9 @@
 <param name="keyword" value="R:   clipUp,TotalVarIC-method">
 <param name="keyword" value="R:   clipUp<-">
 <param name="keyword" value="R:   clipUp<-,TotalVarIC-method">
-<param name="keyword" value="R:   lowerCase,TotalVarIC-method">
 <param name="keyword" value="R:   lowerCase<-,TotalVarIC-method">
-<param name="keyword" value="R:   neighborRadius,TotalVarIC-method">
-<param name="keyword" value="R:   neighborRadius<-,TotalVarIC-method">
 <param name="keyword" value="R:   show,TotalVarIC-method">
-<param name="keyword" value="R:   stand,TotalVarIC-method">
 <param name="keyword" value="R:   stand<-,TotalVarIC-method">
-<param name="keyword" value="R:   weight,TotalVarIC-method">
 <param name="keyword" value="R:   generateIC,TotalVarNeighborhood,L2ParamFamily-method">
 <param name="keyword" value=" Influence curve of total variation type">
 </object>
@@ -100,7 +95,8 @@ neighborhood. </dd>
 <h3>Extends</h3>
 
 <p>
-Class <code>"IC"</code>, directly.<br>
+Class <code>"HampIC"</code>, directly.<br>
+Class <code>"IC"</code>, by class <code>"HampIC"</code>.<br>
 Class <code>"InfluenceCurve"</code>, by class <code>"IC"</code>.
 </p>
 
@@ -128,24 +124,8 @@ accessor function for slot <code>clipUp</code>. </dd>
 replacement function for slot <code>clipUp</code>. </dd>
 
 
-<dt>stand</dt><dd><code>signature(object = "TotalVarIC")</code>: 
-accessor function for slot <code>stand</code>. </dd>
-
-
 <dt>stand&lt;-</dt><dd><code>signature(object = "TotalVarIC")</code>:
 replacement function for slot <code>stand</code>. </dd>
-
-
-<dt>weight</dt><dd><code>signature(object = "TotalVarIC")</code>: 
-accessor function for slot <code>weight</code>. </dd>
-
-
-<dt>neighborRadius</dt><dd><code>signature(object = "TotalVarIC")</code>: 
-accessor function for slot <code>neighborRadius</code>. </dd>
-
-
-<dt>neighborRadius&lt;-</dt><dd><code>signature(object = "TotalVarIC")</code>: 
-replacement function for slot <code>neighborRadius</code>. </dd>
 
 
 <dt>generateIC</dt><dd><code>signature(neighbor = "TotalVarNeighborhood", L2Fam = "L2ParamFamily")</code>:
@@ -176,7 +156,7 @@ Bayreuth: Dissertation.
 <h3>See Also</h3>
 
 <p>
-<code><a href="IC-class.html">IC-class</a></code>, <code><a href="ContIC.html">ContIC</a></code>
+<code><a href="IC-class.html">IC-class</a></code>, <code><a href="ContIC.html">ContIC</a></code>, <code><a href="HampIC-class.html">HampIC-class</a></code>
 </p>
 
 

@@ -50,8 +50,8 @@
 <table width="100%">
 <tr><td width="25%"><a href="BdStWeight-class.html">BdStWeight-class</a></td>
 <td>Robust Weight classes for bounded, standardized weights</td></tr>
-<tr><td width="25%"><a href="ContIC-class.html">biastype,ContIC-method</a></td>
-<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="HampIC-class.html">biastype,HampIC-method</a></td>
+<td>Influence curve of Hampel type</td></tr>
 <tr><td width="25%"><a href="BoundedWeight-class.html">BoundedWeight-class</a></td>
 <td>Robust Weight classes for bounded weights</td></tr>
 </table>
@@ -169,6 +169,38 @@
 <td>Generic Function for making ICs consistent at a possibly different model</td></tr>
 <tr><td width="25%"><a href="generateICfct.html">generateIC.fct-methods</a></td>
 <td>Generic Function for making ICs consistent at a possibly different model</td></tr>
+<tr><td width="25%"><a href="getBiasIC.html">getBiasIC</a></td>
+<td>Generic function for the computation of the asymptotic bias for an IC</td></tr>
+<tr><td width="25%"><a href="getBiasIC.html">getBiasIC,IC,UncondNeighborhood-method</a></td>
+<td>Generic function for the computation of the asymptotic bias for an IC</td></tr>
+<tr><td width="25%"><a href="getBiasIC.html">getBiasIC-methods</a></td>
+<td>Generic function for the computation of the asymptotic bias for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asBias,UncondNeighborhood,L2ParamFamily-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asBias,UncondNeighborhood,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asCov,missing,L2ParamFamily-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asCov,missing,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asMSE,UncondNeighborhood,L2ParamFamily-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asMSE,UncondNeighborhood,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,fiUnOvShoot,ContNeighborhood,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,fiUnOvShoot,TotalVarNeighborhood,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,trAsCov,missing,L2ParamFamily-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,trAsCov,missing,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,TotalVarIC,asUnOvShoot,UncondNeighborhood,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC-methods</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
 <tr><td width="25%"><a href="getweight.html">getweight</a></td>
 <td>Generating weights</td></tr>
 <tr><td width="25%"><a href="getweight.html">getweight,BdStWeight,TotalVarNeighborhood,BiasType-method</a></td>
@@ -188,6 +220,8 @@
 <table width="100%">
 <tr><td width="25%"><a href="HampelWeight-class.html">HampelWeight-class</a></td>
 <td>Robust Weight classes for weights of Hampel type</td></tr>
+<tr><td width="25%"><a href="HampIC-class.html">HampIC-class</a></td>
+<td>Influence curve of Hampel type</td></tr>
 </table>
 
 <h2><a name="I">-- I --</a></h2>
@@ -226,12 +260,10 @@
 <td>Generic function for the computation of location M estimators</td></tr>
 <tr><td width="25%"><a href="locMEstimator.html">locMEstimator-methods</a></td>
 <td>Generic function for the computation of location M estimators</td></tr>
-<tr><td width="25%"><a href="ContIC-class.html">lowerCase</a></td>
-<td>Influence curve of contamination type</td></tr>
-<tr><td width="25%"><a href="ContIC-class.html">lowerCase,ContIC-method</a></td>
-<td>Influence curve of contamination type</td></tr>
-<tr><td width="25%"><a href="TotalVarIC-class.html">lowerCase,TotalVarIC-method</a></td>
-<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="HampIC-class.html">lowerCase</a></td>
+<td>Influence curve of Hampel type</td></tr>
+<tr><td width="25%"><a href="HampIC-class.html">lowerCase,HampIC-method</a></td>
+<td>Influence curve of Hampel type</td></tr>
 <tr><td width="25%"><a href="ContIC-class.html">lowerCase&lt;-,ContIC-method</a></td>
 <td>Influence curve of contamination type</td></tr>
 <tr><td width="25%"><a href="TotalVarIC-class.html">lowerCase&lt;-,TotalVarIC-method</a></td>
@@ -241,13 +273,13 @@
 <h2><a name="M">-- M --</a></h2>
 
 <table width="100%">
-<tr><td width="25%"><a href="makeIC.html">makeIC</a></td>
+<tr><td width="25%"><a href="makeIC-methods.html">makeIC</a></td>
 <td>Generic Function for making ICs consistent at a possibly different model</td></tr>
-<tr><td width="25%"><a href="makeIC.html">makeIC,IC,L2ParamFamily-method</a></td>
+<tr><td width="25%"><a href="makeIC-methods.html">makeIC,IC,L2ParamFamily-method</a></td>
 <td>Generic Function for making ICs consistent at a possibly different model</td></tr>
-<tr><td width="25%"><a href="makeIC.html">makeIC,IC,missing-method</a></td>
+<tr><td width="25%"><a href="makeIC-methods.html">makeIC,IC,missing-method</a></td>
 <td>Generic Function for making ICs consistent at a possibly different model</td></tr>
-<tr><td width="25%"><a href="makeIC.html">makeIC-methods</a></td>
+<tr><td width="25%"><a href="makeIC-methods.html">makeIC-methods</a></td>
 <td>Generic Function for making ICs consistent at a possibly different model</td></tr>
 <tr><td width="25%"><a href="InfluenceCurve-class.html">Map,InfluenceCurve-method</a></td>
 <td>Influence curve</td></tr>
@@ -294,18 +326,14 @@
 <td>Robust model</td></tr>
 <tr><td width="25%"><a href="Neighborhood-class.html">Neighborhood-class</a></td>
 <td>Neighborhood</td></tr>
-<tr><td width="25%"><a href="ContIC-class.html">neighborRadius</a></td>
-<td>Influence curve of contamination type</td></tr>
-<tr><td width="25%"><a href="ContIC-class.html">neighborRadius,ContIC-method</a></td>
-<td>Influence curve of contamination type</td></tr>
-<tr><td width="25%"><a href="TotalVarIC-class.html">neighborRadius,TotalVarIC-method</a></td>
-<td>Influence curve of total variation type</td></tr>
-<tr><td width="25%"><a href="ContIC-class.html">neighborRadius&lt;-,ContIC-method</a></td>
-<td>Influence curve of contamination type</td></tr>
-<tr><td width="25%"><a href="TotalVarIC-class.html">neighborRadius&lt;-,TotalVarIC-method</a></td>
-<td>Influence curve of total variation type</td></tr>
-<tr><td width="25%"><a href="ContIC-class.html">normtype,ContIC-method</a></td>
-<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="HampIC-class.html">neighborRadius</a></td>
+<td>Influence curve of Hampel type</td></tr>
+<tr><td width="25%"><a href="HampIC-class.html">neighborRadius,HampIC-method</a></td>
+<td>Influence curve of Hampel type</td></tr>
+<tr><td width="25%"><a href="HampIC-class.html">neighborRadius&lt;-,HampIC-method</a></td>
+<td>Influence curve of Hampel type</td></tr>
+<tr><td width="25%"><a href="HampIC-class.html">normtype,HampIC-method</a></td>
+<td>Influence curve of Hampel type</td></tr>
 </table>
 
 <h2><a name="O">-- O --</a></h2>
@@ -378,14 +406,12 @@
 <td>Neighborhood</td></tr>
 <tr><td width="25%"><a href="TotalVarIC-class.html">show,TotalVarIC-method</a></td>
 <td>Influence curve of total variation type</td></tr>
-<tr><td width="25%"><a href="ContIC-class.html">stand</a></td>
-<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="HampIC-class.html">stand</a></td>
+<td>Influence curve of Hampel type</td></tr>
 <tr><td width="25%"><a href="BdStWeight-class.html">stand,BdStWeight-method</a></td>
 <td>Robust Weight classes for bounded, standardized weights</td></tr>
-<tr><td width="25%"><a href="ContIC-class.html">stand,ContIC-method</a></td>
-<td>Influence curve of contamination type</td></tr>
-<tr><td width="25%"><a href="TotalVarIC-class.html">stand,TotalVarIC-method</a></td>
-<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="HampIC-class.html">stand,HampIC-method</a></td>
+<td>Influence curve of Hampel type</td></tr>
 <tr><td width="25%"><a href="BdStWeight-class.html">stand&lt;-,BdStWeight-method</a></td>
 <td>Robust Weight classes for bounded, standardized weights</td></tr>
 <tr><td width="25%"><a href="ContIC-class.html">stand&lt;-,ContIC-method</a></td>
@@ -421,13 +447,13 @@
 <table width="100%">
 <tr><td width="25%"><a href="RobWeight-class.html">weight</a></td>
 <td>Robust Weight classes</td></tr>
-<tr><td width="25%"><a href="ContIC-class.html">weight,ContIC-method</a></td>
-<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="HampIC-class.html">weight,HampIC-method</a></td>
+<td>Influence curve of Hampel type</td></tr>
 <tr><td width="25%"><a href="RobWeight-class.html">weight,RobWeight-method</a></td>
 <td>Robust Weight classes</td></tr>
-<tr><td width="25%"><a href="TotalVarIC-class.html">weight,TotalVarIC-method</a></td>
-<td>Influence curve of total variation type</td></tr>
 <tr><td width="25%"><a href="RobWeight-class.html">weight&lt;-,RobWeight-method</a></td>
+<td>Robust Weight classes</td></tr>
+<tr><td width="25%"><a href="RobWeight-class.html">weight&lt;--methods</a></td>
 <td>Robust Weight classes</td></tr>
 </table>
 </body></html>

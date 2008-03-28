@@ -10,14 +10,9 @@
 \alias{clipUp,TotalVarIC-method}
 \alias{clipUp<-}
 \alias{clipUp<-,TotalVarIC-method}
-\alias{lowerCase,TotalVarIC-method}
 \alias{lowerCase<-,TotalVarIC-method}
-\alias{neighborRadius,TotalVarIC-method}
-\alias{neighborRadius<-,TotalVarIC-method}
 \alias{show,TotalVarIC-method}
-\alias{stand,TotalVarIC-method}
 \alias{stand<-,TotalVarIC-method}
-\alias{weight,TotalVarIC-method}
 \alias{generateIC,TotalVarNeighborhood,L2ParamFamily-method}
 
 \title{Influence curve of total variation type}
@@ -69,7 +64,8 @@
   }
 }
 \section{Extends}{
-Class \code{"IC"}, directly.\cr
+Class \code{"HampIC"}, directly.\cr
+Class \code{"IC"}, by class \code{"HampIC"}.\cr
 Class \code{"InfluenceCurve"}, by class \code{"IC"}.
 }
 \section{Methods}{
@@ -89,20 +85,8 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
     \item{clipUp<-}{\code{signature(object = "TotalVarIC")}: 
       replacement function for slot \code{clipUp}. }
 
-    \item{stand}{\code{signature(object = "TotalVarIC")}: 
-      accessor function for slot \code{stand}. }
-
     \item{stand<-}{\code{signature(object = "TotalVarIC")}:
       replacement function for slot \code{stand}. }
-
-    \item{weight}{\code{signature(object = "TotalVarIC")}: 
-      accessor function for slot \code{weight}. }
-
-    \item{neighborRadius}{\code{signature(object = "TotalVarIC")}: 
-      accessor function for slot \code{neighborRadius}. }
-
-    \item{neighborRadius<-}{\code{signature(object = "TotalVarIC")}: 
-      replacement function for slot \code{neighborRadius}. }
 
     \item{generateIC}{\code{signature(neighbor = "TotalVarNeighborhood", L2Fam = "L2ParamFamily")}:
       generate an object of class \code{"TotalVarIC"}. Rarely called directly. }
@@ -118,7 +102,7 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{IC-class}}, \code{\link{ContIC}}}
+\seealso{\code{\link{IC-class}}, \code{\link{ContIC}}, \code{\link{HampIC-class}}}
 \examples{
 IC1 <- new("TotalVarIC")
 plot(IC1)

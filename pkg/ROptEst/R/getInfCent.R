@@ -4,7 +4,7 @@
 setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
                                   neighbor = "ContNeighborhood",
                                   biastype = "BiasType"),
-    function(L2deriv, neighbor, biastype = symmetricBias(), 
+    function(L2deriv, neighbor, biastype, 
              clip, cent, tol.z, symm, trafo){
         if(symm) return(0)
 
@@ -20,7 +20,7 @@ setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
 setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
                                   neighbor = "TotalVarNeighborhood",
                                   biastype = "BiasType"),
-    function(L2deriv, neighbor, biastype = symmetricBias(), 
+    function(L2deriv, neighbor, biastype, 
              clip, cent, tol.z, symm, trafo){
         if(symm) return(-clip/2)
 
@@ -38,8 +38,7 @@ setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
 setMethod("getInfCent", signature(L2deriv = "RealRandVariable",
                                   neighbor = "ContNeighborhood",
                                   biastype = "BiasType"),
-    function(L2deriv, neighbor, biastype = symmetricBias(), 
-             Distr, z.comp, w){
+    function(L2deriv, neighbor, biastype, Distr, z.comp, w){
         integrand1 <- function(x){
             weight(w)(evalRandVar(L2deriv, as.matrix(x)) [,,1]) 
         }
@@ -67,7 +66,7 @@ setMethod("getInfCent", signature(L2deriv = "RealRandVariable",
 setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
                                   neighbor = "ContNeighborhood",
                                   biastype = "onesidedBias"),
-    function(L2deriv, neighbor, biastype = positiveBias(), clip, cent, tol.z, symm, trafo){
+    function(L2deriv, neighbor, biastype, clip, cent, tol.z, symm, trafo){
         if (sign(biastype)> 0){
         z.fct <- function(z, c0, D1){
             return(c0 - (z+c0)*p(D1)(z+c0) + m1df(D1, z+c0))
@@ -88,7 +87,7 @@ setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
 setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
                                   neighbor = "ContNeighborhood",
                                   biastype = "asymmetricBias"),
-    function(L2deriv, neighbor, biastype = asymmetricBias(), clip, cent, tol.z, symm, trafo){
+    function(L2deriv, neighbor, biastype, clip, cent, tol.z, symm, trafo){
         nu1 <- nu(biastype)[1]
         nu2 <- nu(biastype)[2]
 

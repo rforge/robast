@@ -21,8 +21,8 @@ setReplaceMethod("cent", "HampelWeight", function(object,value)
 
 setMethod("weight", "RobWeight", function(object) object@weight)
 
-setReplaceMethod("weight", "RobWeight", function(object,value) 
-                 {object@weight <- value; object})
+setReplaceMethod("weight", "RobWeight", function(object,value)
+        {object@weight <- value; object})
 
 setMethod("getweight",
           signature(Weight = "HampelWeight", neighbor = "ContNeighborhood",
@@ -46,7 +46,7 @@ setMethod("getweight",
 setMethod("getweight",
           signature(Weight = "HampelWeight", neighbor = "ContNeighborhood",
                     biastype = "onesidedBias"),#  norm = "missing"),
-          function(Weight, neighbor, biastype)
+          function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
                 b <- clip(Weight)
                 z <- cent(Weight)
@@ -61,7 +61,7 @@ setMethod("getweight",
 setMethod(getweight,
           signature(Weight = "HampelWeight", neighbor = "ContNeighborhood",
                     biastype = "asymmetricBias"),# norm = "missing"),
-          function(Weight, neighbor, biastype)
+          function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
                 b <- clip(Weight)
                 b1 <- b/nu(biastype)[1]
@@ -80,7 +80,7 @@ setMethod(getweight,
 setMethod(getweight,
           signature(Weight = "BdStWeight", neighbor = "TotalVarNeighborhood",
                     biastype = "BiasType"),#  norm = "missing"),
-          function(Weight, neighbor, biastype)
+          function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
                 b <- clip(Weight)
                 a <- A * cent(Weight)
@@ -115,7 +115,7 @@ setMethod(minbiasweight,
 setMethod(minbiasweight,
           signature(Weight = "HampelWeight", neighbor = "ContNeighborhood",
                     biastype = "asymmetricBias"),#  norm = "missing"),
-          function(Weight, neighbor, biastype)
+          function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
                 b <- clip(Weight)
                 b1 <- b/nu(biastype)[1]
@@ -135,7 +135,7 @@ setMethod(minbiasweight,
 setMethod(minbiasweight,
           signature(Weight = "HampelWeight", neighbor = "ContNeighborhood",
                     biastype = "onesidedBias"),#  norm = "missing"),
-          function(Weight, neighbor, biastype)
+          function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
                 b <- clip(Weight)
                 z <- cent(Weight)
@@ -152,7 +152,7 @@ setMethod(minbiasweight,
 setMethod(minbiasweight,
           signature(Weight = "BdStWeight", neighbor = "TotalVarNeighborhood",
                     biastype = "BiasType"),#  norm = "missing"),
-          function(Weight, neighbor, biastype)
+          function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
                 b <- clip(Weight)
                 a <- A * cent(Weight)
