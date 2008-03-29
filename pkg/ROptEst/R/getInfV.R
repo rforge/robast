@@ -92,9 +92,10 @@ setMethod("getInfV", signature(L2deriv = "UnivariateDistribution",
         nu2 <- nu(biastype)[2]
         c1 <- cent - clip/nu1
         c2 <- cent + clip/nu2
-        return(stand^2*(m2df(L2deriv, c2) - m2df(L2deriv, c1)
-                + 2 * cent *(m1df(L2deriv, c1) - m1df(L2deriv, c2))
-                + cent^2 * (p(L2deriv)(c2) -p(L2deriv)(c1))
-                + clip^2 * (1-p(L2deriv)(c2)/nu2^2 +p(L2deriv)(c1)/nu1^2)
-                ))
+        V0 <- m2df(L2deriv, c2) - m2df(L2deriv, c1)
+        V1 <- m1df(L2deriv, c2) - m1df(L2deriv, c1)
+        V2 <- p(L2deriv)(c2) -p(L2deriv)(c1)
+        V3 <- (1-p(L2deriv)(c2))/nu2^2 +p(L2deriv)(c1)/nu1^2
+        V <- stand^2*( V0 - 2 * cent * V1 + cent^2 * V2 + clip^2 * V3)
+        return(V)
     })

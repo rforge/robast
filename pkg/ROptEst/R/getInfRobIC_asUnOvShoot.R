@@ -92,7 +92,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             if(!is.numeric(c0)){
                 if(warn) cat("The IC algorithm did not converge!\n", 
                              "=> the minimum asymptotic bias (lower case) solution is returned\n")
-                res <- getInfRobIC(L2deriv = L2deriv, risk = asBias(), 
+                res <- getInfRobIC(L2deriv = L2deriv, risk = asBias(biastype = biastype), 
                                 neighbor = neighbor, Finfo = Finfo, 
                                 symm = symm, trafo = trafo, upper = upper, 
                                 maxiter = maxiter, tol = tol, warn = warn)

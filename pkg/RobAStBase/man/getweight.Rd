@@ -20,19 +20,20 @@
 \usage{
 getweight(Weight, neighbor, biastype, ...)
 minbiasweight(Weight, neighbor, biastype, ...)
-\S4method{getweight}{HampelWeight,ContNeighborhood,BiasType}(Weight, neighbor, biastype, normtype)
-\S4method{minbiasweight}{HampelWeight,ContNeighborhood,BiasType}(Weight, neighbor, biastype, normtype)
+\S4method{getweight}{HampelWeight,ContNeighborhood,BiasType}(Weight, neighbor, biastype, normW)
+\S4method{minbiasweight}{HampelWeight,ContNeighborhood,BiasType}(Weight, neighbor, biastype, normW)
 \S4method{getweight}{HampelWeight,ContNeighborhood,onesidedBias}(Weight, neighbor, biastype, ...)
-\S4method{minbiasweight}{HampelWeight,ContNeighborhood,onesidedBias}(Weight, neighbor, biastype,...)
+\S4method{minbiasweight}{HampelWeight,ContNeighborhood,onesidedBias}(Weight, neighbor, biastype, ...)
 \S4method{getweight}{HampelWeight,ContNeighborhood,asymmetricBias}(Weight, neighbor, biastype, ...)
-\S4method{minbiasweight}{HampelWeight,ContNeighborhood,asymmetricBias}(Weight, neighbor, biastype,...)
+\S4method{minbiasweight}{HampelWeight,ContNeighborhood,asymmetricBias}(Weight, neighbor, biastype, ...)
+\S4method{getweight}{BdStWeight,TotalVarNeighborhood,BiasType}(Weight, neighbor, biastype, ...)
+\S4method{minbiasweight}{BdStWeight,TotalVarNeighborhood,BiasType}(Weight, neighbor, biastype, ...)
 }
 \arguments{
-  \item{\dots}{ additional arguments }
   \item{Weight}{ Object of class \code{"RobWeight"}. }
   \item{neighbor}{ Object of class \code{"Neighborhood"}. }
   \item{biastype}{ Object of class \code{"BiasType"}. }
-  \item{normtype}{ Object of class \code{"NormType"} --- only for signature \code{HampelWeight,ContNeighborhood,BiasType}. }
+  \item{normW}{ Object of class \code{"NormType"} --- only for signature \code{HampelWeight,ContNeighborhood,BiasType}. }
   \item{\dots}{possibly additional (unused) arguments --- like in a call to the less specific methods.} 
 }
 %\details{}

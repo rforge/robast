@@ -22,12 +22,33 @@ setMethod("infoPlot", "IC",
 
             trafo <- L2Fam@param@trafo
             dims <- nrow(trafo)
+            
+            QFc <- diag(dims)
+            if(is(object,"ContIC") & dims>1 )
+               {if (is(normtype(object),"QFNorm")) QFc <- QuadForm(normtype(object))
+                QFc0 <- solve( trafo %*% solve(L2Fam@FisherInfo) %*% t(trafo ))
+                if (is(normtype(object),"SelfNorm")|is(normtype(object),"InfoNorm")) 
+                    QFc <- QFc0
+               }
+            print(QFc)
+            QFc.5 <- sqrt(PosSemDefSymmMatrix(QFc))
+            print(QFc.5)
+
             classIC <- as(trafo %*% solve(L2Fam@FisherInfo) %*% L2Fam@L2deriv, "EuclRandVariable")
-            absInfoClass <- classIC %*% classIC
+            absInfoClass <- t(classIC) %*% QFc %*% classIC
             absInfoClass <- sapply(x.vec, absInfoClass@Map[[1]])
+
+            QF <- diag(dims)
+            if(is(object,"ContIC") & dims>1 )
+               {if (is(normtype(object),"QFNorm")) QF <- QuadForm(normtype(object))}
+            print(QF)
+            QF.5 <- sqrt(PosSemDefSymmMatrix(QF))
+            print(QF.5)
+
             IC1 <- as(diag(dims) %*% object@Curve, "EuclRandVariable")
-            absInfo <- IC1 %*% IC1
+            absInfo <- t(IC1) %*% QF %*% IC1
             absInfo <- sapply(x.vec, absInfo@Map[[1]])
+
             plot(x.vec, absInfoClass, type = plty, lty = "dashed", 
                  ylim = c(0, 2*max(absInfo, na.rm = TRUE)), xlab = "x", 
                  ylab = "absolute information", col = grey(0.5))
@@ -52,11 +73,15 @@ setMethod("infoPlot", "IC",
                 opar <- par()
                 get(getOption("device"))()
                 par(mfrow = c(nrows, ncols))
+                IC1.i.5 <- QF.5%*%IC1
+                classIC.i.5 <- QFc.5%*%classIC
                 for(i in 1:dims){
-                    y.vec <- sapply(x.vec, IC1@Map[[i]])^2/absInfo
+                    y.vec <- sapply(x.vec, IC1.i.5@Map[[i]])^2/absInfo
                     plot(x.vec, y.vec, type = plty, lty = lty, lwd = 2,
                          xlab = "x", ylab = "relative information", ylim = c(0, 1.1))
-                    lines(x.vec, sapply(x.vec, classIC@Map[[i]])^2/absInfoClass, type = plty, 
+
+                    yc.vec <- sapply(x.vec, classIC.i.5@Map[[i]])^2/absInfoClass
+                    lines(x.vec, yc.vec, type = plty, 
                           lty = "dashed", col = grey(0.5))
                     legend(max(x.vec), 1.1, xjust = 1, cex = 0.6, 
                            legend = c("class. opt. IC"), lty = "dashed", col = c(grey(0.5)))

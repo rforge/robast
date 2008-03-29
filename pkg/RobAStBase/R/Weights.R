@@ -27,13 +27,13 @@ setReplaceMethod("weight", "RobWeight", function(object,value)
 setMethod("getweight",
           signature(Weight = "HampelWeight", neighbor = "ContNeighborhood",
                     biastype = "BiasType"),# normtype = "NormType"),
-          function(Weight, neighbor, biastype, normtype)
+          function(Weight, neighbor, biastype, normW)
                {A <- stand(Weight)
                 b <- clip(Weight)
                 z <- cent(Weight)
                 function(x){
                    y <- A%*%(x-z)
-                   norm0 <- fct(normtype)(y) 
+                   norm0 <- fct(normW)(y) 
                    ind2 <- (norm0 < b/2)
                    norm1 <- ind2*b/2 + (1-ind2)*norm0
                    ind1 <- (norm0 < b)
@@ -83,9 +83,8 @@ setMethod(getweight,
           function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
                 b <- clip(Weight)
-                a <- A * cent(Weight)
-                b1 <- a
-                b2 <- b + a
+                b1 <- -b[1]
+                b2 <- b[2]
                 function(x){
                    y <- A*x
                    norm1 <- pmax(-y,b1/2)
@@ -98,13 +97,13 @@ setMethod(getweight,
 setMethod(minbiasweight,
           signature(Weight = "HampelWeight", neighbor = "ContNeighborhood",
                     biastype = "BiasType"),#  norm = "NormType"),
-          function(Weight, neighbor, biastype, normtype)
+          function(Weight, neighbor, biastype, normW)
                {A <- stand(Weight)
                 b <- clip(Weight)
                 z <- cent(Weight)
                 function(x){
                    y <- A%*%(x-z)
-                   norm0 <- fct(normtype)(y) 
+                   norm0 <- fct(normW)(y) 
                    ind <- 1-.eq(norm0)                   
                    ind*b/(norm0+1-ind)
                    }
@@ -118,16 +117,15 @@ setMethod(minbiasweight,
           function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
                 b <- clip(Weight)
-                b1 <- b/nu(biastype)[1]
-                b2 <- b/nu(biastype)[2]
+                b1 <- -b[1]
+                b2 <- b[2]
                 z <- cent(Weight)
                 function(x){
                    y <- A*(x-z)
-                   norm1 <- abs(y[y>0]) 
-                   norm2 <- abs(y[y<0])
-                   ind1 <- 1-.eq(norm1)                   
-                   ind2 <- 1-.eq(norm2)                   
-                   ind1*b1/(norm1+1-ind1) + ind2*b2/(norm2+1-ind2)
+                   indp <- (y>0)
+                   ind0 <- .eq(y)
+                   indm <- (y<0)                                                         
+                   indm*b1/(y+ind0) + indp*b2/(y+ind0)
                    }
                 }
           )
@@ -141,9 +139,9 @@ setMethod(minbiasweight,
                 z <- cent(Weight)
                 function(x){
                    y <- A*(x-z)
-                   norm1 <- abs(y[y * sign(biastype)>0]) 
-                   ind1 <- 1-.eq(norm1)                   
-                   ind1*b1/(norm1+1-ind1)
+                   ind <- (y*sign(biastype) >0)
+                   ind0 <- .eq(y)
+                   ind*b/(y+ind0)+(1-ind)
                    }
                 }
           )
@@ -151,20 +149,18 @@ setMethod(minbiasweight,
 
 setMethod(minbiasweight,
           signature(Weight = "BdStWeight", neighbor = "TotalVarNeighborhood",
-                    biastype = "BiasType"),#  norm = "missing"),
+                    biastype = "BiasType"),
           function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
                 b <- clip(Weight)
-                a <- A * cent(Weight)
-                b1 <- a
-                b2 <- b + a
+                b1 <- b[1]
+                b2 <- b[2]
                 function(x){
                    y <- A*x
-                   norm1 <- abs(y[y>0]) 
-                   norm2 <- abs(y[y<0])
-                   ind1 <- 1-.eq(norm1)                   
-                   ind2 <- 1-.eq(norm2)                   
-                   ind1*b1/(norm1+1-ind1) + ind2*b2/(norm2+1-ind2)
+                   indp <- (y>0)
+                   ind0 <- .eq(y)
+                   indm <- (y<0)                                                         
+                   indm*b1/(y+ind0) + indp*b2/(y+ind0)
                    }
                 }
           )

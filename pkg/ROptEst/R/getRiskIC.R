@@ -7,7 +7,7 @@ setMethod("getRiskIC", signature(IC = "HampIC",
                                  L2Fam = "missing"),
     function(IC, risk){
         L2Fam <- eval(IC@CallL2Fam)
-        getRiskIC(IC, risk, L2Fam)
+        getRiskIC(IC = IC, risk = risk, L2Fam = L2Fam)
     })
 
 setMethod("getRiskIC", signature(IC = "HampIC", 
@@ -16,7 +16,7 @@ setMethod("getRiskIC", signature(IC = "HampIC",
                                  L2Fam = "missing"),
     function(IC, risk, L2Fam){
         Cov <- IC@Risks[["asCov"]]        
-        return(list(asCov = list(distribution = .getDistr(IC@L2Fam), value = Cov)))
+        return(list(asCov = list(distribution = .getDistr(L2Fam), value = Cov)))
     })
 
 
@@ -25,10 +25,11 @@ setMethod("getRiskIC", signature(IC = "HampIC",
 ###############################################################################
 setMethod("getBiasIC", signature(IC = "HampIC",
                                  neighbor = "UncondNeighborhood"),
-    function(IC, neighbor, L2Fam){
+    function(IC, neighbor, L2Fam,...){
         if(missing(L2Fam)) 
-           {misF <- TRUE; L2Fam <- eval(IC@CallL2Fam)}
-
+           {misF <- TRUE; 
+            L2Fam <- eval(IC@CallL2Fam)}
+        print(L2Fam)
         return(list(asBias = list(distribution = .getDistr(L2Fam), 
                     neighborhood = neighbor@type, value = IC@Risks[["asBias"]])))
     })

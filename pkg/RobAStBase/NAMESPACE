@@ -41,12 +41,10 @@ exportMethods("Curve",
 exportMethods("oneStepEstimator", 
               "locMEstimator")
 exportMethods("weight", "weight<-", 
-              "clip", "clip<-", 
-              "stand", "stand<-", 
-              "cent", "cent<-", 
-              "getweight", "minbiasweight", 
+              "getweight", 
+              "minbiasweight", 
               "generateIC.fct",
-              "makeIC")
+              "makeIC", "normtype", "biastype")
 exportMethods("getRiskIC")
 exportMethods("getBiasIC")
 export("ContNeighborhood", "TotalVarNeighborhood") 

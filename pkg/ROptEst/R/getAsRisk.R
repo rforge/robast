@@ -57,19 +57,25 @@ setMethod("getAsRisk", signature(risk = "asBias",
                                  L2deriv = "RealRandVariable",
                                  neighbor = "ContNeighborhood", 
                                  biastype = "ANY"),
-    function(risk, L2deriv, neighbor, biastype, Distr, 
+    function(risk, L2deriv, neighbor, biastype, Distr, DistrSymm, L2derivSymm,
              L2derivDistrSymm, trafo, z.start, A.start,  maxiter, tol){                
         
         normtype <- normtype(risk)
         biastype <- biastype(risk)
+
+        comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
+        z.comp <- comp$"z.comp"
+        A.comp <- comp$"A.comp"
+        
         eerg <- .LowerCaseMultivariate(L2deriv, neighbor, biastype,
-             normtype, Distr, L2derivDistrSymm, trafo, z.start,
-             A.start, maxiter, tol)
+             normtype, Distr, trafo, z.start,
+             A.start, z.comp = z.comp, A.comp = A.comp,  maxiter, tol)
         erg <- eerg$erg
         bias <- 1/erg$value
         
         return(list(asBias = bias))
     })
+
 
 ###############################################################################
 ## asymptotic covariance

@@ -68,8 +68,8 @@ getAsRisk(risk, L2deriv, neighbor, biastype, trafo)
 
 ## S4 method for signature 'asBias, RealRandVariable,
 ##   ContNeighborhood, ANY':
-getAsRisk(risk, L2deriv, neighbor, biastype, Distr, L2derivDistrSymm, trafo, 
-             z.start, A.start, maxiter, tol, norm = EuclideanNorm)
+getAsRisk(risk, L2deriv, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
+             L2derivDistrSymm, trafo, z.start, A.start, maxiter, tol, norm = EuclideanNorm)
 
 ## S4 method for signature 'asCov, UnivariateDistribution,
 ##   ContNeighborhood, ANY':
@@ -136,6 +136,12 @@ matrix: transformation of the parameter. </td></tr>
 <tr valign="top"><td><code>Distr</code></td>
 <td>
 object of class <code>"Distribution"</code>. </td></tr>
+<tr valign="top"><td><code>DistrSymm</code></td>
+<td>
+object of class <code>"DistributionSymmetry"</code>. </td></tr>
+<tr valign="top"><td><code>L2derivSymm</code></td>
+<td>
+object of class <code>"FunSymmList"</code>. </td></tr>
 <tr valign="top"><td><code>L2derivDistrSymm</code></td>
 <td>
 object of class <code>"DistrSymmList"</code>. </td></tr>

@@ -93,14 +93,17 @@ setMethod("getRiskIC", signature(IC = "IC",
                                  neighbor = "UncondNeighborhood",
                                  L2Fam = "missing"),
     function(IC, risk, neighbor, tol = .Machine$double.eps^0.25){
-             getBiasIC(IC, neighbor, biastype(risk), normtype(risk), tol)
+             getBiasIC(IC = IC, neighbor = neighbor, 
+             biastype = biastype(risk), normtype = normtype(risk), tol = tol)
     })
 setMethod("getRiskIC", signature(IC = "IC",
                                  risk = "asBias",
                                  neighbor = "UncondNeighborhood",
                                  L2Fam = "L2ParamFamily"),
     function(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25){
-             getBiasIC(IC, neighbor, L2Fam, biastype(risk), normtype(risk), tol)
+             getBiasIC(IC = IC, neighbor = neighbor, L2Fam = L2Fam, 
+                       biastype = biastype(risk), normtype = normtype(risk), 
+                       tol = tol)
     })
 ###############################################################################
 ## asymptotic MSE
@@ -110,10 +113,11 @@ setMethod("getRiskIC", signature(IC = "IC",
                                  neighbor = "UncondNeighborhood",
                                  L2Fam = "missing"),
     function(IC, risk, neighbor, tol = .Machine$double.eps^0.25){
-        L2fam <- eval(IC@CallL2Fam)
+        L2Fam <- eval(IC@CallL2Fam)
         getRiskIC(IC = IC, risk = risk, neighbor = neighbor,
                   L2Fam = L2Fam, tol = tol)
     })
+
 setMethod("getRiskIC", signature(IC = "IC",
                                  risk = "asMSE",
                                  neighbor = "UncondNeighborhood",
@@ -126,8 +130,7 @@ setMethod("getRiskIC", signature(IC = "IC",
         if(rad == Inf) return(Inf)
 
         trCov <- getRiskIC(IC = IC, risk = trAsCov(), L2Fam = L2Fam)
-        Bias <- getRiskIC(IC = IC, risk = asBias(), neighbor = neighbor, L2Fam = L2Fam,
-                          biastype = biastype(risk))
+        Bias <- getRiskIC(IC = IC, risk = asBias(), neighbor = neighbor, L2Fam = L2Fam)
 
         prec <- checkIC(IC, L2Fam, out = FALSE)
         if(prec > tol)

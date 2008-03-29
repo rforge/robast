@@ -27,12 +27,30 @@ Risks(N0.IC1)
 plot(N0.IC1)
 infoPlot(N0.IC1)
 
+system.time(N0.IC1.i <- optIC(model = N0.Rob1, risk = asMSE(normtype=InfoNorm())), gcFirst = TRUE)
+checkIC(N0.IC1.i)
+Risks(N0.IC1.i)
+plot(N0.IC1.i)
+infoPlot(N0.IC1.i)
+
+system.time(N0.IC1.s <- optIC(model = N0.Rob1, risk = asMSE(normtype=SelfNorm())), gcFirst = TRUE)
+checkIC(N0.IC1.s)
+Risks(N0.IC1.s)
+plot(N0.IC1.s)
+infoPlot(N0.IC1.s)
+
 # lower case solutions
 (N0.IC2 <- optIC(model = N0.Rob1, risk = asBias(), tol = 1e-10))
 checkIC(N0.IC2)
 Risks(N0.IC2)
 plot(N0.IC2)
 infoPlot(N0.IC2)
+
+(N0.IC2.i <- optIC(model = N0.Rob1, risk = asBias(normtype=InfoNorm()), tol = 1e-10))
+checkIC(N0.IC2.i)
+Risks(N0.IC2.i)
+plot(N0.IC2.i)
+infoPlot(N0.IC2.i)
 
 # Hampel solution
 (N0.IC3 <- optIC(model = N0.Rob1, risk = asHampel(bound = clip(N0.IC1))))
@@ -49,6 +67,13 @@ checkIC(N0.IC4)
 Risks(N0.IC4)
 plot(N0.IC4) 
 infoPlot(N0.IC4)
+
+(N0.IC4.i <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(), 
+                risk=asMSE(normtype=InfoNorm()), loRad=0, upRad=Inf))
+checkIC(N0.IC4.i)
+Risks(N0.IC4.i)
+plot(N0.IC4.i) 
+infoPlot(N0.IC4.i)
 
 # least favorable radius
 # (may take quite some time!)

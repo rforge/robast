@@ -33,7 +33,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             ## new
             lower0 <- getL1normL2deriv(L2deriv = L2deriv, cent = z) / 
                                       (1 + neighbor@radius^2)
-            upper0 <- sqrt( ( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) )
+            upper0 <- sqrt( as.numeric( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) )
             if (!is.null(upper)|(iter == 1)) 
                     {lower <- .Machine$double.eps^0.75
                 }else{ lower <- lower0; upper <- upper0}
@@ -80,17 +80,23 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                           biastype = biastype, clip = b, cent = a, stand = A, 
                           trafo = trafo)
         Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor, 
-                       biastype = biastype, clip = b/A, cent = z, stand = A)
+                       biastype = biastype, clip = c0, cent = z, stand = A)
                        
         Risk <- c(Risk, list(asBias = b, asCov = Cov))
 
-        w <- new("HampelWeight")
-        cent(w) <- z
-        stand(w) <- A
-        clip(w) <- b
+        if(is(neighbor,"ContNeighborhood"))
+           {w <- new("HampelWeight")
+            clip(w) <- b
+            cent(w) <- z 
+            stand(w) <- A
+           }else{  
+            w <- new("BdStWeight")
+            clip(w) <- c(0,b)+a
+            stand(w) <- A
+           } 
         
         weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
-                               normtype = normtype(risk))
+                               normW = NormType())
 
         return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info, w = w,
                     biastype = biastype, normtype = normtype(risk)))
@@ -113,7 +119,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         FI <- solve(trafo%*%solve(Finfo)%*%t(trafo))
         if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") ) 
-           {QuadForm(normtype) <- PosSemDefSymmMatrix(FI); normtype(risk) <- normtype}
+           {QuadForm(normtype) <- PosSemDefSymmMatrix(FI); 
+            normtype(risk) <- normtype}
         
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
         if(is.null(A.start)) A.start <- trafo %*% solve(Finfo)
@@ -130,25 +137,12 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             res$risk <- c(Risk, res$risk)
             return(res)
         }
-        nrvalues <- length(L2deriv)
-        z.comp <- rep(TRUE, nrvalues)
-        A.comp <- matrix(TRUE, ncol = nrvalues, nrow = nrvalues)
-        for(i in 1:nrvalues){
-            if(is(L2derivDistrSymm[[i]], "SphericalSymmetry"))
-                if(L2derivDistrSymm[[i]]@SymmCenter == 0)
-                    z.comp[i] <- FALSE
-        }
-        for(i in 1:(nrvalues-1))
-            for(j in (i+1):nrvalues){
-                if(is(DistrSymm, "SphericalSymmetry")){
-                    if((is(L2derivSymm[[i]], "OddSymmetric") & is(L2derivSymm[[j]], "EvenSymmetric"))
-                       | (is(L2derivSymm[[j]], "OddSymmetric") & is(L2derivSymm[[i]], "EvenSymmetric")))
-                        if((L2derivSymm[[i]]@SymmCenter == L2derivSymm[[j]]@SymmCenter)
-                           & (L2derivSymm[[i]]@SymmCenter == DistrSymm@SymmCenter))
-                            A.comp[i,j] <- FALSE
-                }
-            }
-        A.comp[col(A.comp) < row(A.comp)] <- A.comp[col(A.comp) > row(A.comp)]
+
+        comp <- .getComp(L2deriv, DistrSymm, L2derivSymm,
+             L2derivDistrSymm)
+             
+        z.comp <- comp$"z.comp"
+        A.comp <- comp$"A.comp"
 
         w <- new("HampelWeight")
         z <- z.start
@@ -163,14 +157,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             ##
             cent(w) <- z 
             stand(w) <- A 
-            
-            if ((iter == 1)||is(normtype,"SelfNorm"))
-               {normtype(risk) <- normtype <- updateNorm(normtype = normtype, 
-                   FI = FI, L2 = L2deriv, neighbor = neighbor, biastype = biastype,
-                   Distr = Distr, V.comp = A.comp, cent = z, stand = A, w = w)}
-            
-            weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
-                                   normtype = normtype)
+
             ## new
             lower0 <- getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A, 
                                        Distr = Distr, normtype = normtype)/(1+neighbor@radius^2)
@@ -181,7 +168,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                     {lower <- .Machine$double.eps^0.75; 
                      if(is.null(upper)) upper <- 10*upper0
                 }else{ lower <- lower0; upper <- upper0}
-            print(c(iter, lower,upper, lower0, upper0))
+
+
             ##
             b <- try(uniroot(getInfClip, 
                   ## new
@@ -202,27 +190,33 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                 neighbor = neighbor, Distr = Distr, L2derivDistrSymm = L2derivDistrSymm,
                                 z.start = z.start, A.start = A.start, trafo = trafo, 
                                 maxiter = maxiter, tol = tol)
-                Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
+                             normtype(risk) <- res$normtype
+                             Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
                                   biastype = biastype, clip = NULL,   
                                   cent = res$a, stand = res$A, trafo = trafo)
                 res$risk <- c(Risk, res$risk)
                 return(res)
             }
             clip(w) <- b
-            
-            if (is(normtype,"SelfNorm"))
-                {normtype(risk) <- normtype <- updateNorm(normtype = normtype, 
-                   FI = FI, L2 = L2deriv, neighbor = neighbor, biastype = biastype,
-                   Distr = Distr, V.comp = A.comp, cent = z, stand = A, w = w)}
+
 
             weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
-                                   normtype = normtype)
+                                   normW = normtype)
+            
+
             z <- getInfCent(L2deriv = L2deriv, neighbor = neighbor,  
                             biastype = biastype, Distr = Distr, z.comp = z.comp, 
                             w = w)
             A <- getInfStand(L2deriv = L2deriv, neighbor = neighbor, 
                          biastype = biastype, Distr = Distr, A.comp = A.comp, 
                          cent = z, trafo = trafo, w = w)
+
+            normtype.old <- normtype
+
+            if (is(normtype,"SelfNorm"))
+                {normtype(risk) <- normtype <- updateNorm(normtype = normtype, 
+                   L2 = L2deriv, neighbor = neighbor, biastype = biastype,
+                   Distr = Distr, V.comp = A.comp, cent = z, stand = A, w = w)}
 
             prec <- max(abs(b-b.old), max(abs(A-A.old)), max(abs(z-z.old)))
             cat("current precision in IC algo:\t", prec, "\n")
@@ -235,14 +229,10 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         if (onesetLM){
             cent(w) <- z 
             stand(w) <- A 
-            if (is(normtype,"SelfNorm"))
-                {normtype(risk) <- normtype <- updateNorm(normtype = normtype, 
-                 FI = FI, L2 = L2deriv, neighbor = neighbor, biastype = biastype,
-                   Distr = Distr, V.comp = A.comp, cent = z, stand = A, w = w)}
-
             weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
-                                   normtype = normtype)
-        }
+                                   normW = normtype)
+        } else normtype <- normtype.old
+    
         a <- as.vector(A %*% z)
         info <- paste("optimally robust IC for", sQuote(class(risk)[1]))
         Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 

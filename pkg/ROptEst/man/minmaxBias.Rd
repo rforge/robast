@@ -29,7 +29,7 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
              maxiter, tol)
 
 \S4method{minmaxBias}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype, Distr, 
-             L2derivDistrSymm, z.start, A.start, trafo, maxiter, tol)
+             L2derivDistrSymm, z.start, A.start,  z.comp, A.comp, trafo, maxiter, tol)
 
 }
 \arguments{
@@ -43,6 +43,8 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
   \item{L2derivDistrSymm}{ object of class \code{"DistrSymmList"}. }
   \item{z.start}{ initial value for the centering constant. }
   \item{A.start}{ initial value for the standardizing matrix. }
+  \item{z.comp}{ \code{logical} indicator which indices need to be computed and which are 0 due to symmetry. }
+  \item{A.comp}{ \code{matrix} of \code{logical} indicator which indices need to be computed and which are 0 due to symmetry.}
   \item{trafo}{ matrix: transformation of the parameter. }
   \item{maxiter}{ the maximum number of iterations. }
   \item{tol}{ the desired accuracy (convergence tolerance).}

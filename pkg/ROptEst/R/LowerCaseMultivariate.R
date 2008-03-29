@@ -1,65 +1,67 @@
 .LowerCaseMultivariate <- function(L2deriv, neighbor, biastype,
-             normtype, Distr, L2derivDistrSymm, trafo, z.start,
-             A.start, maxiter, tol){
+             normtype, Distr, trafo, z.start,
+             A.start, z.comp, A.comp, maxiter, tol){
 
         w <- new("HampelWeight")
 
-
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
         if(is.null(A.start)) A.start <- trafo
+        if(is.null(A.comp)) 
+           A.comp <- matrix(TRUE, nrow = nrow(trafo), ncol = ncol(trafo))
+        if(is.null(z.comp)) 
+           z.comp <- rep(TRUE, nrow(trafo))
 
+        lA.comp <- sum(A.comp)
+        
         abs.fct <- function(x, L2, stand, cent, normtype){
             X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
             Y <- stand %*% X
             return(fct(normtype)(Y))
         }
 
-        bmin.fct <- function(param, L2deriv, Distr, trafo, z.comp){
+        bmin.fct <- function(param, L2deriv, Distr, trafo){
             p <- nrow(trafo)
             k <- ncol(trafo)
-            A <- matrix(param[1:(p*k)], ncol=k, nrow=p)
+            A <- matrix(0, ncol = k, nrow = p)
+            A[A.comp] <- param[1:lA.comp]
             z <- numeric(k)
-            z[z.comp] <- param[(p*k+1):length(param)]
-
-            if (is(normtype,"SelfNorm")){
-               w0 <- w
-               cent(w0) <- z
-               stand(w0) <- A
-               weight(w0) <- minbiasweight(w0, neighbor = neighbor,
+            z[z.comp] <- param[(lA.comp+1):length(param)]
+            
+#            if(is(normtype,"SelfNorm")) 
+#               A <- A/max(A)
+            
+            w0 <- w
+            cent(w0) <- z
+            stand(w0) <- A
+            weight(w0) <- minbiasweight(w0, neighbor = neighbor,
                                            biastype = biastype,
-                                           normtype = normtype)
-               w <<- w0
+                                           normW = normtype)
+            w <<- w0
+            if (is(normtype,"SelfNorm")){
                normtype  <<- updateNorm(normtype = normtype, L2 = L2deriv,
                                         neighbor = neighbor, biastype = biastype,
-                                        Distr = Distr, V.comp = matrix(TRUE, p,p),
-                                        cent = z, stand = A,  w = w,  ...)
-
+                                        Distr = Distr, V.comp = A.comp,
+                                        cent = z, stand = A,  w = w0)
                }
 
             E1 <- E(object = Distr, fun = abs.fct, L2 = L2deriv, stand = A,
                      cent = z, normtype = normtype, useApply = FALSE)
             stA <- if (is(normtype,"QFnorm"))
                        QuadForm(normtype)%*%A else A
-
-            return(E1/sum(diag(stA %*% t(trafo))))
+            erg <- E1/sum(diag(stA %*% t(trafo)))
+            clip(w0) <- 1/erg
+            w <<- w0
+            return(erg)
         }
 
-        nrvalues <- length(L2deriv)
-        z.comp <- rep(TRUE, nrvalues)
-        for(i in 1:nrvalues)
-            if(is(L2derivDistrSymm[[i]], "SphericalSymmetry"))
-                if(L2derivDistrSymm[[i]]@SymmCenter == 0)
-                    z.comp[i] <- FALSE
-
-        A.vec <- as.vector(A.start)
+        A.vec <- as.vector(A.start[A.comp])
+        p.vec <- c(A.vec, z.start[z.comp])
         force(normtype)
-
-        erg <- optim(c(A.vec, z.start[z.comp]), bmin.fct, method = "Nelder-Mead",
+        erg <- optim(p.vec, bmin.fct, method = "Nelder-Mead",
                     control = list(reltol = tol, maxit = 100*maxiter),
-                    L2deriv = L2deriv, Distr = Distr, trafo = trafo, z.comp = z.comp)
+                    L2deriv = L2deriv, Distr = Distr, trafo = trafo)
 
-        return(list(erg=erg, w=w, normtype = normtype))
+        return(list(erg=erg, w=w, normtype = normtype, z.comp = z.comp))
     }
-
 
 

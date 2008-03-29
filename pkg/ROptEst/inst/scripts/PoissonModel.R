@@ -34,6 +34,16 @@ checkIC(IC1)
 Risks(IC1)
 plot(IC1)
 
+(IC1.p <- optIC(model=RobP1, risk=asMSE(biastype=positiveBias())))
+checkIC(IC1.p)
+Risks(IC1.p)
+plot(IC1.p)
+
+(IC1.a <- optIC(model=RobP1, risk=asMSE(biastype=asymmetricBias(nu = c(1,0.2)))))
+checkIC(IC1.a)
+Risks(IC1.a)
+plot(IC1.a)
+
 (IC2 <- optIC(model=RobP2, risk=asMSE()))
 checkIC(IC2)
 Risks(IC2)
@@ -45,6 +55,17 @@ plot(IC2)
 checkIC(IC3)
 Risks(IC3)
 plot(IC3)
+
+(IC3.p <- optIC(model=RobP1, risk=asBias(biastype=positiveBias())))
+checkIC(IC3.p)
+Risks(IC3.p)
+plot(IC3.p)
+
+(IC3.a <- optIC(model=RobP1, risk=asBias(biastype=asymmetricBias(nu = c(1,0.2)))))
+checkIC(IC3.a)
+Risks(IC3.a)
+plot(IC3.a)
+
 
 (IC4 <- optIC(model=RobP2, risk=asBias()))
 checkIC(IC4)
@@ -69,6 +90,18 @@ plot(IC6)
 checkIC(IC7)
 Risks(IC7)
 plot(IC7)
+
+(IC7.p <- radiusMinimaxIC(L2Fam=P, neighbor=ContNeighborhood(), 
+                risk=asMSE(biastype=positiveBias()), loRad=0, upRad=0.5))
+checkIC(IC7.p)
+Risks(IC7.p)
+plot(IC7.p)
+
+(IC7.a <- radiusMinimaxIC(L2Fam=P, neighbor=ContNeighborhood(), 
+                risk=asMSE(biastype=asymmetricBias(nu = c(1,0.2))), loRad=0, upRad=0.5))
+checkIC(IC7.a)
+Risks(IC7.a)
+plot(IC7.a)
 
 (IC8 <- radiusMinimaxIC(L2Fam=P, neighbor=TotalVarNeighborhood(), 
                 risk=asMSE(), loRad=0, upRad=Inf))

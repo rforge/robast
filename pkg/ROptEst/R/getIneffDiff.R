@@ -21,7 +21,6 @@ setMethod("getIneffDiff", signature(radius = "numeric",
             else
                 ineffUp <- (as.vector(res$A)*trafo - res$b^2*(radius^2-upRad^2))/upRisk
             assign("ineff", ineffUp, envir = sys.frame(which = -4))
-
             return(ineffUp - ineffLo)
         }else{
             if(is(L2Fam@distribution, "UnivariateDistribution")){
@@ -45,6 +44,7 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                     }
                 }
                 trafo <- L2Fam@param@trafo
+                p <- nrow(trafo)
                 neighbor@radius <- radius
                 res <- getInfRobIC(L2deriv = L2deriv, neighbor = neighbor, risk = risk, 
                             Distr = L2Fam@distribution, DistrSymm = L2Fam@distrSymm, 
@@ -52,11 +52,17 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                             Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
                             A.start = A.start, upper = upper.b, maxiter = MaxIter, 
                             tol = eps, warn = warn)
-                ineffLo <- (sum(diag(res$A%*%t(trafo))) - res$b^2*(radius^2-loRad^2))/loRisk
+                normtype(risk) <- res$normtype
+                std <- if(is(normtype(risk),"QFNorm")) QuadForm(normtype(risk)) else diag(p)
+                
+
+                ineffLo <- (sum(diag(std%*%res$A%*%t(trafo))) - 
+                            res$b^2*(radius^2-loRad^2))/loRisk
                 if(upRad == Inf)
                     ineffUp <- res$b^2/upRisk
                 else
-                    ineffUp <- (sum(diag(res$A%*%t(trafo))) - res$b^2*(radius^2-upRad^2))/upRisk
+                    ineffUp <- (sum(diag(std%*%res$A%*%t(trafo))) - 
+                                res$b^2*(radius^2-upRad^2))/upRisk
                 assign("ineff", ineffUp, envir = sys.frame(which = -4))
                 cat("current radius:\t", radius, "\tMSE-inefficiency difference:\t", ineffUp - ineffLo, "\n")
 

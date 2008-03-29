@@ -56,7 +56,7 @@ minmaxBias(L2deriv, neighbor, biastype, symm, trafo,
 ## S4 method for signature 'RealRandVariable,
 ##   ContNeighborhood, BiasType':
 minmaxBias(L2deriv, neighbor, biastype, Distr, 
-             L2derivDistrSymm, z.start, A.start, trafo, maxiter, tol)
+             L2derivDistrSymm, z.start, A.start,  z.comp, A.comp, trafo, maxiter, tol)
 
 </pre>
 
@@ -92,6 +92,12 @@ initial value for the centering constant. </td></tr>
 <tr valign="top"><td><code>A.start</code></td>
 <td>
 initial value for the standardizing matrix. </td></tr>
+<tr valign="top"><td><code>z.comp</code></td>
+<td>
+<code>logical</code> indicator which indices need to be computed and which are 0 due to symmetry. </td></tr>
+<tr valign="top"><td><code>A.comp</code></td>
+<td>
+<code>matrix</code> of <code>logical</code> indicator which indices need to be computed and which are 0 due to symmetry.</td></tr>
 <tr valign="top"><td><code>trafo</code></td>
 <td>
 matrix: transformation of the parameter. </td></tr>

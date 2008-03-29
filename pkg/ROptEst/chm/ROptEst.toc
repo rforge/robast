@@ -494,14 +494,6 @@
 <param name="Local" value="updateNorm-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="updateNorm,InfoNorm-method">
-<param name="Local" value="updateNorm-methods.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="updateNorm,NormType-method">
-<param name="Local" value="updateNorm-methods.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="updateNorm,SelfNorm-method">
 <param name="Local" value="updateNorm-methods.html">
 </OBJECT>

@@ -37,8 +37,8 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
 
 \S4method{getAsRisk}{asBias,UnivariateDistribution,TotalVarNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, trafo)
 
-\S4method{getAsRisk}{asBias,RealRandVariable,ContNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, Distr, L2derivDistrSymm, trafo, 
-             z.start, A.start, maxiter, tol, norm = EuclideanNorm)
+\S4method{getAsRisk}{asBias,RealRandVariable,ContNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
+             L2derivDistrSymm, trafo, z.start, A.start, maxiter, tol, norm = EuclideanNorm)
 
 \S4method{getAsRisk}{asCov,UnivariateDistribution,ContNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, clip, cent, stand)
 
@@ -67,6 +67,8 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
   \item{stand}{ standardizing matrix. }
   \item{trafo}{ matrix: transformation of the parameter. }
   \item{Distr}{ object of class \code{"Distribution"}. }
+  \item{DistrSymm}{ object of class \code{"DistributionSymmetry"}. }
+  \item{L2derivSymm}{ object of class \code{"FunSymmList"}. }
   \item{L2derivDistrSymm}{ object of class \code{"DistrSymmList"}. }
   \item{z.start}{ initial value for the centering constant. }
   \item{A.start}{ initial value for the standardizing matrix. }

@@ -38,31 +38,34 @@ getweight(Weight, neighbor, biastype, ...)
 minbiasweight(Weight, neighbor, biastype, ...)
 ## S4 method for signature 'HampelWeight, ContNeighborhood,
 ##   BiasType':
-getweight(Weight, neighbor, biastype, normtype)
+getweight(Weight, neighbor, biastype, normW)
 ## S4 method for signature 'HampelWeight, ContNeighborhood,
 ##   BiasType':
-minbiasweight(Weight, neighbor, biastype, normtype)
+minbiasweight(Weight, neighbor, biastype, normW)
 ## S4 method for signature 'HampelWeight, ContNeighborhood,
 ##   onesidedBias':
 getweight(Weight, neighbor, biastype, ...)
 ## S4 method for signature 'HampelWeight, ContNeighborhood,
 ##   onesidedBias':
-minbiasweight(Weight, neighbor, biastype,...)
+minbiasweight(Weight, neighbor, biastype, ...)
 ## S4 method for signature 'HampelWeight, ContNeighborhood,
 ##   asymmetricBias':
 getweight(Weight, neighbor, biastype, ...)
 ## S4 method for signature 'HampelWeight, ContNeighborhood,
 ##   asymmetricBias':
-minbiasweight(Weight, neighbor, biastype,...)
+minbiasweight(Weight, neighbor, biastype, ...)
+## S4 method for signature 'BdStWeight,
+##   TotalVarNeighborhood, BiasType':
+getweight(Weight, neighbor, biastype, ...)
+## S4 method for signature 'BdStWeight,
+##   TotalVarNeighborhood, BiasType':
+minbiasweight(Weight, neighbor, biastype, ...)
 </pre>
 
 
 <h3>Arguments</h3>
 
 <table summary="R argblock">
-<tr valign="top"><td><code>...</code></td>
-<td>
-additional arguments </td></tr>
 <tr valign="top"><td><code>Weight</code></td>
 <td>
 Object of class <code>"RobWeight"</code>. </td></tr>
@@ -72,7 +75,7 @@ Object of class <code>"Neighborhood"</code>. </td></tr>
 <tr valign="top"><td><code>biastype</code></td>
 <td>
 Object of class <code>"BiasType"</code>. </td></tr>
-<tr valign="top"><td><code>normtype</code></td>
+<tr valign="top"><td><code>normW</code></td>
 <td>
 Object of class <code>"NormType"</code> &mdash; only for signature <code>HampelWeight,ContNeighborhood,BiasType</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
