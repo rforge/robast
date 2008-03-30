@@ -46,7 +46,6 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                   L2deriv = L2Fam@L2derivDistr[[1]], 
                                   neighbor = neighbor, biastype = biastype, 
                                   trafo = L2Fam@param@trafo,
-                                  Finfo = L2Fam@FisherInfo, 
                                   warn = warn)$asBias
                 upRisk <- bmin^2
             }else{
@@ -156,7 +155,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                 trafo = trafo, z.start = z.start, 
                                 A.start = A.start, 
                                 maxiter = maxiter, tol = tol,
-                                Finfo = L2Fam@FisherInfo, warn = warn)
+                                warn = warn)
                     bmin <- biasR$asBias
                     upNorm <- biasR$normtype
                     upRisk <- bmin^2

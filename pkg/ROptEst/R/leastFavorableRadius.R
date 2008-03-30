@@ -52,7 +52,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                 L2deriv = L2Fam@L2derivDistr[[1]], 
                                 neighbor = neighbor, biastype = biastype, 
                                 trafo = L2Fam@param@trafo, symm = L2Fam@L2derivSymm[[1]],
-                                Finfo = L2Fam@FisherInfo, warn = warn)
+                                warn = warn)
                     upRisk <- bmin^2
                 }else{
                     neighbor@radius <- upRad
@@ -151,7 +151,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                 trafo = trafo, z.start = z.start, 
                                 A.start = A.start, 
                                 maxiter = maxiter, tol = tol, 
-                                Finfo = L2Fam@FisherInfo, warn = warn)
+                                warn = warn)
                         bmin <- biasR$asBias
                         upRisk <- bmin^2
                         upNorm <- biasR$normtype
