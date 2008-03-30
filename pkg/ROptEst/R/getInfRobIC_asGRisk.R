@@ -136,7 +136,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") ) 
            {QuadForm(normtype) <- PosSemDefSymmMatrix(FI); 
             normtype(risk) <- normtype}
-        QF <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(nrow(A.start))
+        QF <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(nrow(trafo))
         
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
         if(is.null(A.start)) A.start <- trafo %*% solve(Finfo)

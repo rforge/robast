@@ -166,3 +166,6 @@ if(!isGeneric(".evalBiasIC")){
     setGeneric(".evalBiasIC", 
         function(IC, neighbor, biastype, ...) standardGeneric(".evalBiasIC"))
 }
+if(!isGeneric("comparePlot")){
+    setGeneric("comparePlot", function(obj1,obj2,...) standardGeneric("comparePlot"))
+}

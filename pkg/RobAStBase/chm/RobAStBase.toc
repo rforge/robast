@@ -178,6 +178,18 @@
 <param name="Local" value="TotalVarIC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="comparePlot">
+<param name="Local" value="comparePlot.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="comparePlot,IC,IC-method">
+<param name="Local" value="comparePlot.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="comparePlot-methods">
+<param name="Local" value="comparePlot.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ContIC">
 <param name="Local" value="ContIC.html">
 </OBJECT>
@@ -738,6 +750,10 @@
 <param name="Name" value="Package RobAStBase:  Titles">
 </OBJECT>
 <UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Compare - Plots">
+<param name="Local" value="comparePlot.html">
+</OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Contamination Neighborhood">
 <param name="Local" value="ContNeighborhood-class.html">

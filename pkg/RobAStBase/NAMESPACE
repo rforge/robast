@@ -47,6 +47,7 @@ exportMethods("weight", "weight<-",
               "makeIC", "normtype", "biastype")
 exportMethods("getRiskIC")
 exportMethods("getBiasIC")
+exportMethods("comparePlot")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 
 export("InfluenceCurve", "IC", "ContIC", "TotalVarIC")

@@ -1,0 +1,104 @@
+<html><head><title>Compare - Plots</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>comparePlot-methods(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   comparePlot">
+<param name="keyword" value="R:   comparePlot-methods">
+<param name="keyword" value="R:   comparePlot,IC,IC-method">
+<param name="keyword" value=" Compare - Plots">
+</object>
+
+
+<h2>Compare - Plots</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Plots 2-4 influence curves to the same model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+comparePlot(obj1, obj2, ... )
+## S4 method for signature 'IC, IC':
+comparePlot(obj1, obj2, obj3 = NULL, obj4 = NULL, ... )
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>obj1</code></td>
+<td>
+object of class <code>"InfluenceCurve"</code> </td></tr>
+<tr valign="top"><td><code>obj2</code></td>
+<td>
+object of class <code>"InfluenceCurve"</code> to be compared with <code>obj1</code></td></tr>
+<tr valign="top"><td><code>obj3</code></td>
+<td>
+optional: object of class <code>"InfluenceCurve"</code> to be compared with <code>obj1</code></td></tr>
+<tr valign="top"><td><code>obj4</code></td>
+<td>
+optional: object of class <code>"InfluenceCurve"</code> to be compared with <code>obj1</code></td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+further arguments to be passed to <code>plot</code></td></tr>
+</table>
+
+<h3>Author(s)</h3>
+
+<p>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@uni-bayreuth.de">Peter.Ruckdeschel@uni-bayreuth.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('distrMod', 'L2ParamFamily-class.html')" style="text-decoration: underline; color: blue; cursor: hand">L2ParamFamily-class</a></code>, <code><a href="IC-class.html">IC-class</a></code>, <code><a onclick="findlink('base', 'plot.html')" style="text-decoration: underline; color: blue; cursor: hand">plot</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if(require(ROptEst)){
+
+N0 &lt;- NormLocationScaleFamily(mean=0, sd=1) 
+N0.Rob1 &lt;- InfRobModel(center = N0, neighbor = ContNeighborhood(radius = 0.5))
+
+IC1 &lt;- optIC(model = N0, risk = asCov())
+IC2 &lt;- optIC(model = N0.Rob1, risk = asMSE())
+
+comparePlot(IC1,IC2)
+}
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>
