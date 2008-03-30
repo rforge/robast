@@ -29,7 +29,7 @@ getBiasIC(IC, neighbor, ...)
 
 ## S4 method for signature 'IC, UncondNeighborhood':
 getBiasIC(IC, neighbor, L2Fam, biastype = symmetricBias(),
-             normtype = NormType(), tol = .Machine$double.eps^0.25)
+             normtype = NormType(), tol = .Machine$double.eps^0.25, numbeval = 1e5)
 </pre>
 
 
@@ -57,6 +57,9 @@ object of class <code>"NormType"</code></td></tr>
 <tr valign="top"><td><code>tol</code></td>
 <td>
 the desired accuracy (convergence tolerance).</td></tr>
+<tr valign="top"><td><code>numbeval</code></td>
+<td>
+number of evalation points.</td></tr>
 </table>
 
 <h3>Details</h3>

@@ -58,6 +58,7 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
         d <- res$d
         normtype <-  res$normtype
         biastype <-  res$biastype
+        if(is.null(res$w)) res$w <- new("HampelWeight")
         w <- res$w        
         return(ContIC(
                 name = "IC of contamination type", 

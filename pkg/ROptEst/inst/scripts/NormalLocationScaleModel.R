@@ -75,6 +75,15 @@ Risks(N0.IC4.i)
 plot(N0.IC4.i) 
 infoPlot(N0.IC4.i)
 
+## takes extremely long time:
+(N0.IC4.s <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(), 
+                risk=asMSE(normtype=SelfNorm()), loRad=0, upRad=Inf))
+checkIC(N0.IC4.s)
+Risks(N0.IC4.s)
+plot(N0.IC4.s) 
+infoPlot(N0.IC4.s)
+
+
 # least favorable radius
 # (may take quite some time!)
 #N0.r.rho1 <- leastFavorableRadius(L2Fam=N0, neighbor=ContNeighborhood(),

@@ -4,14 +4,17 @@
 setMethod("getBiasIC", signature(IC = "IC",
                                  neighbor = "UncondNeighborhood"),
     function(IC, neighbor, L2Fam, biastype = symmetricBias(),
-             normtype = NormType(), tol = .Machine$double.eps^0.25){
+             normtype = NormType(), tol = .Machine$double.eps^0.25,
+             numbeval = 1e5){
+
+        misF <- FALSE
         if(missing(L2Fam))
            {misF <- TRUE; L2Fam <- eval(IC@CallL2Fam)}
         D1 <- L2Fam@distribution
         if(dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
-        x <- as.matrix(r(D1)(1e5))
+        x <- as.matrix(r(D1)(numbeval))
         x <- as.matrix(x[!duplicated(x),])
 
         Bias <- .evalBiasIC(IC = IC, neighbor = neighbor, biastype = biastype,
@@ -23,7 +26,6 @@ setMethod("getBiasIC", signature(IC = "IC",
             warning("The maximum deviation from the exact IC properties is", prec,
                     "\nThis is larger than the specified 'tol' ",
                     "=> the result may be wrong")
-
         return(list(asBias = list(distribution = .getDistr(L2Fam),
                     neighborhood = neighbor@type, value = Bias)))
     })
@@ -36,8 +38,7 @@ setMethod(".evalBiasIC", signature(IC = "IC",
                                  biastype = "BiasType"),
     function(IC, neighbor, biastype, normtype, x, trafo){
         ICx <- evalRandVar(as(diag(dimension(IC@Curve)) %*% IC@Curve,
-                            "EuclRandVariable"),x)
-
+                            "EuclRandVariable"),x)[,,1]
         return(max(fct(normtype)(ICx)))}
     )
 

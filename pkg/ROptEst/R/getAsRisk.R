@@ -58,22 +58,32 @@ setMethod("getAsRisk", signature(risk = "asBias",
                                  neighbor = "ContNeighborhood", 
                                  biastype = "ANY"),
     function(risk, L2deriv, neighbor, biastype, Distr, DistrSymm, L2derivSymm,
-             L2derivDistrSymm, trafo, z.start, A.start,  maxiter, tol){                
+             L2derivDistrSymm, trafo, z.start, A.start,  maxiter, tol, warn){                
         
         normtype <- normtype(risk)
         biastype <- biastype(risk)
 
+        if(is(normtype,"SelfNorm")){
+                warntxt <- paste(gettext(
+                "Using self-standardization, there are problems with the existence\n"
+                               ),gettext(
+                "of a minmax Bias IC. Instead we return a lower bound.\n"
+                               ))
+                if(warn) cat(warntxt)
+                return(list(asBias = sqrt(nrow(trafo))))        
+        }
         comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
         z.comp <- comp$"z.comp"
         A.comp <- comp$"A.comp"
         
-        eerg <- .LowerCaseMultivariate(L2deriv, neighbor, biastype,
-             normtype, Distr, trafo, z.start,
-             A.start, z.comp = z.comp, A.comp = A.comp,  maxiter, tol)
+        eerg <- .LowerCaseMultivariate(L2deriv = L2deriv, neighbor = neighbor, 
+             biastype = biastype, normtype = normtype, Distr = Distr, 
+             trafo = trafo, z.start = z.start, A.start, z.comp = z.comp, 
+             A.comp = A.comp,  maxiter = maxiter, tol = tol)
         erg <- eerg$erg
         bias <- 1/erg$value
         
-        return(list(asBias = bias))
+        return(list(asBias = bias, normtype = eerg$normtype))
     })
 
 
@@ -158,12 +168,15 @@ setMethod("getAsRisk", signature(risk = "trAsCov",
                                  L2deriv = "RealRandVariable",
                                  neighbor = "ContNeighborhood", 
                                  biastype = "ANY"),
-    function(risk, L2deriv, neighbor, biastype, Distr, clip, cent, stand){
+    function(risk, L2deriv, neighbor, biastype, Distr, clip, cent, stand, normtype){
         Cov <- getAsRisk(risk = asCov(), L2deriv = L2deriv, neighbor = neighbor,
                          biastype = biastype(risk), Distr = Distr, clip = clip, 
                          cent = cent, stand = stand)$asCov
 
-        return(list(trAsCov = sum(diag(Cov))))
+        p <- nrow(stand)
+        std <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(p)
+        
+        return(list(trAsCov = sum(diag(std%*%Cov))))
     })
 
 ###############################################################################

@@ -14,6 +14,13 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             res <- getInfRobIC(L2deriv = L2deriv, risk = asCov(), 
                         neighbor = TotalVarNeighborhood(radius = neighbor@radius),  
                         Finfo = Finfo, trafo = trafo)
+            if(is(neighbor, "ContNeighborhoood"))
+              {
+                res.c <- getInfRobIC(L2deriv = L2deriv, risk = asCov(), 
+                         neighbor = ContNeighborhood(radius = neighbor@radius),  
+                         Finfo = Finfo, trafo = trafo)
+                res$risk <- res.c$risk
+              }
             Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,  
                               biastype = biastype, clip = res$b, cent = res$a, 
                               stand = res$A, trafo = trafo)

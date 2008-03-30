@@ -12,10 +12,18 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                          "in sense of Cramer-Rao bound is returned\n")
             res <- getInfRobIC(L2deriv = L2deriv, risk = asCov(), 
                         neighbor = neighbor, Finfo = Finfo, trafo = trafo)
+            res <- c(res, list(biastype = biastype, normtype = NormType()))
             Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
                               biastype = biastype, clip = res$b, cent = res$a, 
                               stand = res$A, trafo = trafo)
             res$risk <- c(Risk, res$risk)
+            Cov <- res$risk$asCov
+            res$risk$asBias <- list(value = b, biastype = biastype, 
+                                   normtype = NormType(), 
+                                   neighbortype = class(neighbor))                      
+            res$risk$asMSE <- list(value = Cov + radius^2*b^2, 
+                                   r = radius,
+                                   at = neighbor)
             return(res)
         }
         z <- 0
@@ -82,7 +90,14 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
         Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor, 
                        biastype = biastype, clip = c0, cent = z, stand = A)
                        
-        Risk <- c(Risk, list(asBias = b, asCov = Cov))
+        Risk <- c(Risk, list(asCov = Cov,  
+                     asBias = list(value = b, biastype = biastype, 
+                                   normtype = normtype(risk), 
+                                   neighbortype = class(neighbor)), 
+                     trAsCov = list(value = Cov, normtype = normtype(risk)),
+                     asMSE = list(value = Cov + radius^2*b^2, 
+                                  r = radius,
+                                  at = neighbor)))
 
         if(is(neighbor,"ContNeighborhood"))
            {w <- new("HampelWeight")
@@ -121,6 +136,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") ) 
            {QuadForm(normtype) <- PosSemDefSymmMatrix(FI); 
             normtype(risk) <- normtype}
+        QF <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(nrow(A))
         
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
         if(is.null(A.start)) A.start <- trafo %*% solve(Finfo)
@@ -130,11 +146,22 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             if(warn) cat("'radius == 0' => (classical) optimal IC\n", 
                          "in sense of Cramer-Rao bound is returned\n")
             res <- getInfRobIC(L2deriv = L2deriv, risk = asCov(), neighbor = neighbor, 
-                               Distr = Distr, Finfo = Finfo, trafo = trafo)
+                               Distr = Distr, Finfo = Finfo, trafo = trafo, 
+                               QuadForm = QF)
+            res <- c(res, list(biastype = biastype, normtype = normtype))
             Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
                               biastype = biastype, cent = res$a, 
                               stand = res$A, trafo = trafo)
             res$risk <- c(Risk, res$risk)
+            trAsCov <- sum(diag(QF%*%res$risk$asCov)); 
+            r <- neighbor@radius
+            res$risk$trAsCov <- list(value = trAsCov, normtype = normtype)
+            res$risk$asBias <- list(value = b, biastype = biastype, 
+                                   normtype = normtype, 
+                                   neighbortype = class(neighbor))                      
+            res$risk$asMSE <- list(value = trAsCov + r^2*b^2, 
+                                   r = r,
+                                   at = neighbor)
             return(res)
         }
 
@@ -161,9 +188,11 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             ## new
             lower0 <- getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A, 
                                        Distr = Distr, normtype = normtype)/(1+neighbor@radius^2)
+
             QF <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(nrow(A))
             upper0 <- sqrt( (sum( diag(QF%*%A%*%Finfo%*%t(A))) + t(A%*%z)%*%QF%*%(A%*%z)) / 
                           ((1 + neighbor@radius^2)^2-1))
+
             if (!is.null(upper)|(iter == 1)) 
                     {lower <- .Machine$double.eps^0.75; 
                      if(is.null(upper)) upper <- 10*upper0
@@ -187,9 +216,10 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                              res <- getInfRobIC(L2deriv = L2deriv, 
                                         risk =  asBias(biastype = biastype(risk),
                                                        normtype = normtype(risk)), 
-                                neighbor = neighbor, Distr = Distr, L2derivDistrSymm = L2derivDistrSymm,
-                                z.start = z.start, A.start = A.start, trafo = trafo, 
-                                maxiter = maxiter, tol = tol)
+                                    neighbor = neighbor, Distr = Distr, DistrSymm = DistrSymm,
+                                    L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm,
+                                    z.start = z.start, A.start = A.start, trafo = trafo, 
+                                    maxiter = maxiter, tol = tol, warn = warn, Finfo = Finfo)
                              normtype(risk) <- res$normtype
                              Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
                                   biastype = biastype, clip = NULL,   
@@ -216,7 +246,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             if (is(normtype,"SelfNorm"))
                 {normtype(risk) <- normtype <- updateNorm(normtype = normtype, 
                    L2 = L2deriv, neighbor = neighbor, biastype = biastype,
-                   Distr = Distr, V.comp = A.comp, cent = z, stand = A, w = w)}
+                   Distr = Distr, V.comp = A.comp, cent = as.vector(A %*% z), 
+                   stand = A, w = w)}
 
             prec <- max(abs(b-b.old), max(abs(A-A.old)), max(abs(z-z.old)))
             cat("current precision in IC algo:\t", prec, "\n")
@@ -242,7 +273,19 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                        biastype = biastype, Distr = Distr, 
                        V.comp = A.comp, cent = a, 
                        stand = A, w = w)
-        Risk <- c(Risk, list(asBias = b, asCov = Cov))
+  
+        QF <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(nrow(A))
+
+        trAsCov <- sum(diag(QF%*%Cov))
+        Risk <- c(Risk, list(asCov = Cov,  
+                     asBias = list(value = b, biastype = biastype, 
+                                   normtype = normtype, 
+                                   neighbortype = class(neighbor)), 
+                     trAsCov = list(value = trAsCov, 
+                                   normtype = normtype),
+                     asMSE = list(value = trAsCov + radius^2*b^2, 
+                                  r = radius,
+                                  at = neighbor)))
 
         return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info, w = w, 
                     biastype = biastype, normtype = normtype))    

@@ -14,7 +14,8 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
 
 \S4method{getIneffDiff}{numeric,L2ParamFamily,UncondNeighborhood,asMSE}(
           radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
-          z.start = NULL, A.start = NULL, upper.b, MaxIter, eps, warn)
+          z.start = NULL, A.start = NULL, upper.b, MaxIter, eps, warn,
+          loNorm = NULL, upNorm = NULL)
 }
 \arguments{
   \item{radius}{ neighborhood radius. }
@@ -32,6 +33,12 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
   \item{MaxIter}{ the maximum number of iterations }
   \item{eps}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }  
+  \item{loNorm}{object of class \code{"NormType"}; used in selfstandardization
+                to evaluate the bias of the current IC in the norm of the lower 
+                bound}  
+  \item{upNorm}{object of class \code{"NormType"}; used in selfstandardization
+                to evaluate the bias of the current IC in the norm of the upper 
+                bound}  
 }
 %\details{}
 \value{The inefficieny difference between the left and

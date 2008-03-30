@@ -44,7 +44,8 @@ setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood",
         A <- res$A
         clipLo <- sign(as.vector(A))*res$a
         b <- res$b
-        w <- res$w
+        if(is.null(res$w)) res$w <- new("BdStWeight") 
+        w <- res$w 
         ICfct <- vector(mode = "list", length = 1)
         Y <- as(A %*% L2Fam@L2deriv, "EuclRandVariable")
         if((clipLo == -Inf) & (b == Inf))

@@ -6,7 +6,8 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                                     neighbor = "UncondNeighborhood",
                                     risk = "asMSE"),
     function(radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
-             z.start = NULL, A.start = NULL, upper.b, MaxIter, eps, warn){
+             z.start = NULL, A.start = NULL, upper.b, MaxIter, eps, warn,
+             loNorm = NULL, upNorm = NULL){
         L2derivDim <- numberOfMaps(L2Fam@L2deriv)
         if(L2derivDim == 1){
             neighbor@radius <- radius
@@ -53,16 +54,33 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                             A.start = A.start, upper = upper.b, maxiter = MaxIter, 
                             tol = eps, warn = warn)
                 normtype(risk) <- res$normtype
-                std <- if(is(normtype(risk),"QFNorm")) QuadForm(normtype(risk)) else diag(p)
-                
+                std <- if(is(normtype(risk),"QFNorm")) QuadForm(normtype(risk)) else diag(p)                
 
+                biasLo <- biasUp <- res$b
+
+                if(is(normtype(risk),"SelfNorm")){
+                   IC <- generateIC(neighbor = neighbor, L2Fam = L2Fam, res = res)
+                   biasLoE <- getBiasIC(IC = as(IC, "IC"), neighbor = neighbor, L2Fam = L2Fam, 
+                                       biastype = symmetricBias(),
+                                       normtype = loNorm, tol = eps, 
+                                       numbeval = 1e4)
+                   biasLo <- biasLoE$asBias$value
+                   biasUpE <- getBiasIC(IC = as(IC, "IC"), neighbor = neighbor, L2Fam = L2Fam, 
+                                       biastype = symmetricBias(),
+                                       normtype = upNorm, tol = eps, 
+                                       numbeval = 1e4)
+                   biasUp <- biasUpE$asBias$value
+                   ineffLo <- (p+biasLo^2*loRad^2)/loRisk
+                   ineffUp <- if(upRad == Inf) biasUp^2/upRisk else
+                                   (p+biasUp^2*upRad^2)/upRisk
+                }else{
                 ineffLo <- (sum(diag(std%*%res$A%*%t(trafo))) - 
-                            res$b^2*(radius^2-loRad^2))/loRisk
+                            biasLo^2*(radius^2-loRad^2))/loRisk
                 if(upRad == Inf)
-                    ineffUp <- res$b^2/upRisk
+                    ineffUp <- biasUp^2/upRisk
                 else
                     ineffUp <- (sum(diag(std%*%res$A%*%t(trafo))) - 
-                                res$b^2*(radius^2-upRad^2))/upRisk
+                                biasUp^2*(radius^2-upRad^2))/upRisk}
                 assign("ineff", ineffUp, envir = sys.frame(which = -4))
                 cat("current radius:\t", radius, "\tMSE-inefficiency difference:\t", ineffUp - ineffLo, "\n")
 

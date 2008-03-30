@@ -5,21 +5,57 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    risk = "asBias", 
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, symm, trafo, maxiter, 
-             tol, ...){
-        minmaxBias(L2deriv, neighbor, biastype(risk), symm, 
-                   trafo, maxiter, tol)
+             tol, warn, Finfo, ...){
+        erg <- minmaxBias(L2deriv = L2deriv, neighbor = neighbor, 
+                   biastype = biastype(risk), symm = symm, 
+                   trafo = trafo, maxiter = maxiter, 
+                   tol = tol, warn = warn, Finfo = Finfo)
+        asCov <- erg$risk$asCov
+        b <- erg$risk$asBias$value
+        r <- neighbor@radius^2
+        erg$risk <- c(erg$risk, 
+                    list(trAsCov = list(value = asCov, normtype = NormType()),
+                         asMSE = list(value = asCov + r^2*b^2, 
+                                      r = r,
+                                      at = neighbor)))
+       return(erg)              
     })
 setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable", 
                                    risk = "asBias", 
                                    neighbor = "ContNeighborhood"),
     function(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, z.start, 
-             A.start, Finfo, trafo, maxiter, tol, ...){                
+             A.start, Finfo, trafo, maxiter, tol, warn, ...){                
 
         normtype <- normtype(risk)
+        if(is(normtype,"SelfNorm")){
+                warntxt <- paste(gettext(
+                "Using self-standardization, there are problems with the existence\n"
+                               ),gettext(
+                "of a minmax Bias IC. Instead we compute the optimal MSE-solution\n"
+                               ),gettext(
+                "to a large radius (r = 10)\n"
+                               ))
+                if(warn) cat(warntxt)
+                neighbor@radius <- 10
+                res <- getInfRobIC(L2deriv = L2deriv, 
+                        risk = asMSE(normtype = normtype), 
+                        neighbor = neighbor, Distr = Distr, 
+                        DistrSymm = DistrSymm, L2derivSymm = L2derivSymm, 
+                        L2derivDistrSymm = L2derivDistrSymm, Finfo = Finfo, 
+                        trafo = trafo, onesetLM = FALSE, z.start = z.start, 
+                        A.start = A.start, upper = 1e4, maxiter = maxiter, 
+                        tol = tol, warn = warn)
+                res$risk$asBias <- list(value = sqrt(nrow(trafo)), 
+                                       biastype = symmetricBias(), 
+                                       normtype = normtype, 
+                                       neighbortype = class(neighbor),
+                                       remark = gettext("value is only a bound"))
+                return(res)
+        }
         
         FI <- solve(trafo%*%solve(Finfo)%*%t(trafo))
-        if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") ) 
+        if(is(normtype,"InfoNorm")) 
            {QuadForm(normtype) <- PosSemDefSymmMatrix(FI); 
             normtype(risk) <- normtype}
 
@@ -37,11 +73,15 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
     })
 
 
+###############################################################################
+## helper function minmaxBias
+###############################################################################
+
 setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution", 
                                    neighbor = "ContNeighborhood",
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, symm, 
-             trafo, maxiter, tol){
+             trafo, maxiter, tol, warn, Finfo){
         zi <- sign(as.vector(trafo))
         A <- as.matrix(zi)
         z <- q(L2deriv)(0.5)
@@ -58,14 +98,17 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
         
         info <- c("minimum asymptotic bias (lower case) solution")
         asCov <- b^2*(1-ws0) + b^2*d^2*ws0
-        Risk <- list(asBias = b, asCov = asCov)
+        Risk <- list(asBias = list(value = b, biastype = biastype, 
+                                       normtype = NormType(), 
+                                       neighbortype = class(neighbor)), 
+                     asCov = asCov)
 
         w <- new("HampelWeight")
         cent(w) <- z
         stand(w) <- A
         clip(w) <- b
         weight(w) <- minbiasweight(w, neighbor = neighbor, biastype = biastype,
-                       normW= NormType())
+                       normW = NormType())
 
         return(list(A = A, a = zi*z, b = b, d = d, risk = Risk, info = info, 
                     w = w, biastype = biastype, normtype = NormType()))    
@@ -74,9 +117,8 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
 setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution", 
                                    neighbor = "TotalVarNeighborhood",
                                    biastype = "BiasType"),
-    function(L2deriv, neighbor, biastype,
-             symm, trafo, 
-             maxiter, tol){
+    function(L2deriv, neighbor, biastype, symm, trafo, 
+             maxiter, tol, warn, Finfo){
         zi <- sign(as.vector(trafo))
         A <- as.matrix(zi)
         b <- zi*as.vector(trafo)/(-m1df(L2deriv, 0))
@@ -92,7 +134,11 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
             a <- -b*(p0-ws0)/(1-ws0)
             
         info <- c("minimum asymptotic bias (lower case) solution")
-        Risk <- list(asCov = a^2*(p0-ws0) + (zi*a+b)^2*(1-p0), asBias = b)
+        asCov <- a^2*(p0-ws0) + (zi*a+b)^2*(1-p0)
+        Risk <- list(asBias = list(value = b, biastype = biastype, 
+                                       normtype = NormType(), 
+                                       neighbortype = class(neighbor)), 
+                     asCov = asCov)
 
         w <- new("BdStWeight")
         stand(w) <- A
@@ -126,14 +172,32 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
         z[z.comp] <- param[(lA.comp+1):length(param)]
         a <- as.vector(A %*% z)
         d <- numeric(p)
+
+        # to be done: 
         # computation of 'd', in case 'L2derivDistr' not abs. cont.
         
-        info <- c("minimum asymptotic bias (lower case) solution")
-        Risk <- list(asBias = b)
-
         w <- eerg$w
         normtype <- eerg$normtype
-        
+
+        Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor, 
+                       biastype = biastype, Distr = Distr, 
+                       V.comp = A.comp, cent = a, 
+                       stand = A, w = w)
+
+        std <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(p)
+
+        info <- c("minimum asymptotic bias (lower case) solution")
+        trAsCov <- sum(diag(std%*%Cov))
+        r <- neighbor@radius
+        asMSE <- r^2 * b^2 + trAsCov
+        Risk <- list(asBias = list(value = b, biastype = biastype, 
+                                   normtype = normtype, 
+                                   neighbortype = class(neighbor)), 
+                     asCov = Cov,
+                     trAsCov = list(value = trAsCov, normtype = normtype),
+                     asMSE = list(value = r^2 * b^2 + trAsCov, 
+                                  r = r,
+                                  at = neighbor))        
         return(list(A = A, a = a, b = b, d = d, risk = Risk, info = info, 
                     w = w, biastype = biastype, normtype = normtype))
     })
@@ -142,7 +206,7 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "ContNeighborhood", 
                                    biastype = "asymmetricBias"),
     function(L2deriv, neighbor, biastype, symm, 
-             trafo, maxiter, tol){                
+             trafo, maxiter, tol, warn, Finfo){                
         nu1 <- nu(biastype)[1]
         nu2 <- nu(biastype)[2]
         zi <- sign(as.vector(trafo))
@@ -167,7 +231,10 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
 
         info <- c("minimum asymptotic bias (lower case) solution")
         asCov <- b2^2*(1-p)+b1^2*(p-ws0) + b^2*d^2*ws0
-        Risk <- list(asBias = b, asCov = asCov)
+        Risk <- list(asBias = list(value = b, biastype = biastype, 
+                                       normtype = NormType(), 
+                                       neighbortype = class(neighbor)), 
+                     asCov = asCov)
 
         w <- new("HampelWeight")
         cent(w) <- z
@@ -183,15 +250,26 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "ContNeighborhood", 
                                    biastype = "onesidedBias"),
     function(L2deriv, neighbor, biastype, symm, 
-             trafo, maxiter, tol){                
+             trafo, maxiter, tol, warn, Finfo){                
         infotxt <- c("minimum asymptotic bias (lower case) solution")
         noIC <- function(){
-                warntxt <- gettext("There exists no IC attaining the infimal maxBias.")
-                warning(warntxt)
-                return(list(A = matrix(1), a = 1, d = 0, b = 0,
-                       Risk = list(asBias = 0, asCov = 0, warning = warntxt),
-                       info = infotxt, w = NULL, biastype = biastype, 
-                       normtype = NormType()))}
+                warntxt <- paste(gettext(
+                "There exists no IC attaining the infimal maxBias.\n"),
+                                 gettext(
+                "Instead we issue an IC with a very small Bias bound (starting with\n"), 
+                                 gettext(
+                "'tol'+ w_inf, w_inf = -1/inf_P psi or 1/sup_P psi).\n"
+                                         ))
+                w <- if(sign(biastype)>0) -1/q(L2deriv)(0) else 1/q(L2deriv)(1)
+                if(warn) cat(warntxt)
+                bd <- tol + w
+                while (!is.list(try(
+                res <- getInfRobIC(L2deriv = L2deriv, 
+                        risk = asHampel(bound = bd, biastype = biastype), 
+                        neighbor = neighbor, Finfo = Finfo, trafo = trafo, tol = tol,
+                        warn = warn, noLow = TRUE, symm = symm, maxiter = maxiter),
+                silent = TRUE))) bd <- bd * 1.5        
+                return(res)}
         if(is(L2deriv, "DiscreteDistribution"))
            { if(is.finite(lowerCaseRadius(L2deriv, neighbor, risk = asMSE(), biastype)))
                 {
@@ -217,7 +295,10 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
                  b0 <- abs(1/z0)
                  d0  <- 0 
                  asCov <- v1^2*(1-p0)+v2^2*p0
-                 Risk0 <- list(asBias = b0, asCov = asCov)
+                 Risk0 <- list(asBias = list(value = b0, biastype = biastype, 
+                               normtype = NormType(), 
+                               neighbortype = class(neighbor)), 
+                               asCov = asCov)
                  A0 <- matrix(A0,1,1)
                  
                  w <- new("HampelWeight")

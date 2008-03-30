@@ -12,7 +12,7 @@ setMethod("optRisk", signature(model = "L2ParamFamily", risk = "asCov"),
 setMethod("optRisk", signature(model = "InfRobModel", risk = "asRisk"),
     function(model, risk, 
              z.start = NULL, A.start = NULL, upper = 1e4, 
-             maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE){
+             maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE, noLow = FALSE){
         L2derivDim <- numberOfMaps(model@center@L2deriv)
         if(L2derivDim == 1){
             ow <- options("warn")
@@ -21,7 +21,8 @@ setMethod("optRisk", signature(model = "InfRobModel", risk = "asRisk"),
                         neighbor = model@neighbor, risk = risk,
                         symm = model@center@L2derivDistrSymm[[1]],
                         Finfo = model@center@FisherInfo, trafo = model@center@param@trafo, 
-                        upper = upper, maxiter = maxiter, tol = tol, warn = warn)
+                        upper = upper, maxiter = maxiter, tol = tol, warn = warn,
+                        noLow = noLow)
             options(ow)     
             return(res$risk)
         }else{

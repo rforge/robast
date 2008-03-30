@@ -11,7 +11,7 @@
 getBiasIC(IC, neighbor, ...)
 
 \S4method{getBiasIC}{IC,UncondNeighborhood}(IC, neighbor, L2Fam, biastype = symmetricBias(),
-             normtype = NormType(), tol = .Machine$double.eps^0.25)
+             normtype = NormType(), tol = .Machine$double.eps^0.25, numbeval = 1e5)
 }
 \arguments{
   \item{IC}{ object of class \code{"InfluenceCurve"} }
@@ -21,6 +21,7 @@ getBiasIC(IC, neighbor, ...)
   \item{biastype}{object of class \code{"BiasType"}}
   \item{normtype}{object of class \code{"NormType"}}
   \item{tol}{ the desired accuracy (convergence tolerance).}
+  \item{numbeval}{number of evalation points.}
 }
 \details{}
 \value{The bias of the IC is computed.}

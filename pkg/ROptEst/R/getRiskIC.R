@@ -31,7 +31,7 @@ setMethod("getBiasIC", signature(IC = "HampIC",
             L2Fam <- eval(IC@CallL2Fam)}
         print(L2Fam)
         return(list(asBias = list(distribution = .getDistr(L2Fam), 
-                    neighborhood = neighbor@type, value = IC@Risks[["asBias"]])))
+                    neighborhood = neighbor@type, value = IC@Risks$asBias$value)))
     })
 
 

@@ -17,7 +17,7 @@ optRisk(model, risk, ...)
 
 \S4method{optRisk}{InfRobModel,asRisk}(model, risk,
                    z.start = NULL, A.start = NULL, upper = 1e4, 
-                   maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE)
+                   maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE, noLow = FALSE)
 
 \S4method{optRisk}{FixRobModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, maxiter = 50, 
              tol = .Machine$double.eps^0.4, warn = TRUE, Algo = "A", cont = "left")
@@ -35,6 +35,7 @@ optRisk(model, risk, ...)
   \item{sampleSize}{ integer: sample size. }
   \item{Algo}{ "A" or "B". }
   \item{cont}{ "left" or "right". }
+  \item{noLow}{ logical: is lower case to be computed? }
 }
 \details{ In case of the finite-sample risk \code{"fiUnOvShoot"} one can choose
   between two algorithms for the computation of this risk where the least favorable

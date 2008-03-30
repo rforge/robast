@@ -48,22 +48,23 @@ getInfRobIC(L2deriv, risk, neighbor, Finfo, trafo)
 
 ## S4 method for signature 'RealRandVariable, asCov,
 ##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Distr, Finfo, trafo)
+getInfRobIC(L2deriv, risk, neighbor, Distr, Finfo, trafo, 
+                       QuadForm = diag(nrow(trafo)))
 
 ## S4 method for signature 'UnivariateDistribution, asBias,
 ##   UncondNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, symm, trafo, 
-             maxiter, tol)
+             maxiter, tol, warn, Finfo)
 
 ## S4 method for signature 'RealRandVariable, asBias,
 ##   ContNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, z.start, A.start, Finfo, trafo, maxiter, tol)
+             L2derivDistrSymm, z.start, A.start, Finfo, trafo, maxiter, tol, warn)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asHampel, UncondNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
+             upper, maxiter, tol, warn, noLow = FALSE)
 
 ## S4 method for signature 'RealRandVariable, asHampel,
 ##   ContNeighborhood':
@@ -142,6 +143,14 @@ the desired accuracy (convergence tolerance).</td></tr>
 <tr valign="top"><td><code>warn</code></td>
 <td>
 logical: print warnings. </td></tr>
+<tr valign="top"><td><code>noLow</code></td>
+<td>
+logical: is lower case to be computed? </td></tr>
+<tr valign="top"><td><code>QuadForm</code></td>
+<td>
+matrix of (or which may coerced to) class 
+<code>PosSemDefSymmMatrix</code> for use of different 
+(standardizing) norm </td></tr>
 </table>
 
 <h3>Value</h3>

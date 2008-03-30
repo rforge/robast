@@ -71,7 +71,3 @@ if(!isGeneric("getL1normL2deriv")){
 if(!isGeneric("updateNorm")){
     setGeneric("updateNorm", function(normtype, ...) standardGeneric("updateNorm"))
 }
-if(!isGeneric("getBiasIC")){
-    setGeneric("getBiasIC", 
-        function(L2deriv, neighbor, biastype, ...) standardGeneric("minmaxBias"))
-}

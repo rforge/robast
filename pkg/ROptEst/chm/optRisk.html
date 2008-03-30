@@ -36,7 +36,7 @@ optRisk(model, risk)
 ## S4 method for signature 'InfRobModel, asRisk':
 optRisk(model, risk,
                    z.start = NULL, A.start = NULL, upper = 1e4, 
-                   maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE)
+                   maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE, noLow = FALSE)
 
 ## S4 method for signature 'FixRobModel, fiUnOvShoot':
 optRisk(model, risk, sampleSize, upper = 1e4, maxiter = 50, 
@@ -83,6 +83,9 @@ integer: sample size. </td></tr>
 <tr valign="top"><td><code>cont</code></td>
 <td>
 "left" or "right". </td></tr>
+<tr valign="top"><td><code>noLow</code></td>
+<td>
+logical: is lower case to be computed? </td></tr>
 </table>
 
 <h3>Details</h3>

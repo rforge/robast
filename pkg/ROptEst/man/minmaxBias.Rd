@@ -17,19 +17,19 @@
 minmaxBias(L2deriv, neighbor, biastype, ...)
 
 \S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype, symm, trafo, 
-             maxiter, tol)
+             maxiter, tol, Finfo)
 
 \S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(L2deriv, neighbor, biastype, symm, trafo, 
-             maxiter, tol)
+             maxiter, tol, warn, Finfo)
 
 \S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv, neighbor, biastype, symm, trafo, 
-             maxiter, tol)
+             maxiter, tol, warn, Finfo)
 
 \S4method{minmaxBias}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(L2deriv, neighbor, biastype, symm, trafo, 
-             maxiter, tol)
+             maxiter, tol, warn, Finfo)
 
 \S4method{minmaxBias}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype, Distr, 
-             L2derivDistrSymm, z.start, A.start,  z.comp, A.comp, trafo, maxiter, tol)
+             L2derivDistrSymm, z.start, A.start,  z.comp, A.comp, trafo, maxiter, tol, warn)
 
 }
 \arguments{
@@ -48,6 +48,8 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
   \item{trafo}{ matrix: transformation of the parameter. }
   \item{maxiter}{ the maximum number of iterations. }
   \item{tol}{ the desired accuracy (convergence tolerance).}
+  \item{warn}{ logical: print warnings. }
+  \item{Finfo}{ Fisher information matrix. }
 }
 %\details{}
 \value{The bias-optimally robust IC is computed.}
