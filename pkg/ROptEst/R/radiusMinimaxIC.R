@@ -45,8 +45,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                 bmin <- getAsRisk(risk = asBias(biastype = biastype), 
                                   L2deriv = L2Fam@L2derivDistr[[1]], 
                                   neighbor = neighbor, biastype = biastype, 
-                                  trafo = L2Fam@param@trafo,
-                                  warn = warn)$asBias
+                                  trafo = L2Fam@param@trafo)$asBias
                 upRisk <- bmin^2
             }else{
                 neighbor@radius <- upRad

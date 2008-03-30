@@ -30,7 +30,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             return(res)
         }
 
-        if(! noLow)
+        if(!noLow)
         {res <- getInfRobIC(L2deriv = L2deriv, risk = asBias(biastype = biastype), 
                            neighbor = neighbor, symm = symm,  
                            trafo = trafo, maxiter = maxiter, tol = tol, Finfo = Finfo,

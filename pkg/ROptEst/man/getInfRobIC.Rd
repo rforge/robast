@@ -41,7 +41,7 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
              L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
+             upper, maxiter, tol, warn, noLow = FALSE)
 
 \S4method{getInfRobIC}{RealRandVariable,asGRisk,ContNeighborhood}(L2deriv, risk, neighbor,  Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)

@@ -78,7 +78,7 @@ checkIC(IC5)
 Risks(IC5)
 plot(IC5)
 
-(IC6 <- optIC(model=RobP2, risk=asHampel(bound=Risks(IC2)$asBias), maxiter = 200))
+(IC6 <- optIC(model=RobP2, risk=asHampel(bound=Risks(IC2)$asBias$value), maxiter = 200))
 checkIC(IC6)
 Risks(IC6)
 plot(IC6)
