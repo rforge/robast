@@ -21,8 +21,8 @@ pagecolor=darkblue,raiselinks,plainpages,pdftex]{hyperref}
 % -------------------------------------------------------------------------------
 \newcommand{\code}[1]{{\tt #1}}
 \newcommand{\pkg}[1]{{\tt "#1"}}
-\newcommand{\pkgversion}{{\tt 1.8}}
-\newcommand{\pkgExversion}{{\tt 0.4-4}}
+\newcommand{\pkgversion}{{\tt 2.0}}
+\newcommand{\pkgExversion}{{\tt 0.6.2}}
 % -------------------------------------------------------------------------------
 %
 % -------------------------------------------------------------------------------

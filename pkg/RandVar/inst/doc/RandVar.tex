@@ -21,12 +21,12 @@ pagecolor=darkblue,raiselinks,plainpages,pdftex]{hyperref}
 % -------------------------------------------------------------------------------
 \newcommand{\code}[1]{{\tt #1}}
 \newcommand{\pkg}[1]{{\tt "#1"}}
-\newcommand{\pkgversion}{{\tt 1.8}}
-\newcommand{\pkgExversion}{{\tt 0.4-4}}
+\newcommand{\pkgversion}{{\tt 2.0}}
+\newcommand{\pkgExversion}{{\tt 0.6.2}}
 % -------------------------------------------------------------------------------
 %
 % -------------------------------------------------------------------------------
-\usepackage{/home/btm722/RTOP/R-2-6-branch/share/texmf/Sweave}
+\usepackage{/home/btm722/RTOP/R-2-7-branch/share/texmf/Sweave}
 \begin{document}
 % -------------------------------------------------------------------------------
 \title{RandVar: Implementation of random variables by means
@@ -202,7 +202,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x9eb0190>
+<environment: 0x8cd175c>
 
 [[2]]
 function (x) 
@@ -217,7 +217,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x9eb0190>
+<environment: 0x8cd175c>
 \end{Soutput}
 \begin{Sinput}
 > R2 <- exp(X - 1:2)
@@ -237,7 +237,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x9c4e540>
+<environment: 0x90d97e4>
 
 [[2]]
 function (x) 
@@ -252,7 +252,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x9c4e540>
+<environment: 0x90d97e4>
 \end{Soutput}
 \begin{Sinput}
 > (Y <- RealRandVariable(Map = list(function(x) {
