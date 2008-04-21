@@ -5,23 +5,9 @@ setMethod("getRiskIC", signature(IC = "IC",
                                  risk = "asCov",
                                  neighbor = "missing",
                                  L2Fam = "missing"),
-    function(IC, risk, tol = .Machine$double.eps^0.25){
-        L2Fam <- eval(IC@CallL2Fam)
-
-        trafo <- L2Fam@param@trafo
-        IC1 <- as(diag(nrow(trafo)) %*% IC@Curve, "EuclRandVariable")
-
-        bias <- E(L2Fam, IC1)
-        Cov <- E(L2Fam, IC1 %*% t(IC1))
-
-        prec <- checkIC(IC, out = FALSE)
-        if(prec > tol)
-            warning("The maximum deviation from the exact IC properties is", prec,
-                    "\nThis is larger than the specified 'tol' ",
-                    "=> the result may be wrong")
-
-        return(list(asCov = list(distribution = .getDistr(L2Fam), value = Cov - bias %*% t(bias))))
-    })
+    function(IC, risk, tol = .Machine$double.eps^0.25)
+        getRiskIC(IC = IC, risk = risk,  L2Fam = eval(IC@CallL2Fam),
+                  tol = tol))
 
 setMethod("getRiskIC", signature(IC = "IC",
                                  risk = "asCov",
@@ -54,17 +40,10 @@ setMethod("getRiskIC", signature(IC = "IC",
                                  neighbor = "missing",
                                  L2Fam = "missing"),
     function(IC, risk, tol = .Machine$double.eps^0.25){
-        trCov <- getRiskIC(IC, risk = asCov())$asCov
-        trCov$value <- sum(diag(trCov$value))
-
-        prec <- checkIC(IC, out = FALSE)
-        if(prec > tol)
-            warning("The maximum deviation from the exact IC properties is", prec,
-                    "\nThis is larger than the specified 'tol' ",
-                    "=> the result may be wrong")
-
-        return(list(trAsCov = trCov))
+        getRiskIC(IC = IC, risk = risk,  L2Fam = eval(IC@CallL2Fam),
+                  tol = tol)
     })
+
 setMethod("getRiskIC", signature(IC = "IC",
                                  risk = "trAsCov",
                                  neighbor = "missing",
@@ -73,8 +52,8 @@ setMethod("getRiskIC", signature(IC = "IC",
         if(dimension(Domain(IC@Curve[[1]])) != dimension(img(L2Fam@distribution)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
-        trCov <- getRiskIC(IC, risk = asCov(), L2Fam = L2Fam)$asCov
-        trCov$value <- sum(diag(trCov$value))
+        trCov <- getRiskIC(IC, risk = asCov(), L2Fam = L2Fam)$trCov        
+        trCov$value <- sum(diag(std %*% trCov$value))
 
         prec <- checkIC(IC, L2Fam, out = FALSE)
         if(prec > tol)

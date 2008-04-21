@@ -58,7 +58,7 @@ setMethod("getweight",
                 }
           )
 
-setMethod(getweight,
+setMethod("getweight",
           signature(Weight = "HampelWeight", neighbor = "ContNeighborhood",
                     biastype = "asymmetricBias"),# norm = "missing"),
           function(Weight, neighbor, biastype, ...)
@@ -77,7 +77,7 @@ setMethod(getweight,
           )
 
 
-setMethod(getweight,
+setMethod("getweight",
           signature(Weight = "BdStWeight", neighbor = "TotalVarNeighborhood",
                     biastype = "BiasType"),#  norm = "missing"),
           function(Weight, neighbor, biastype, ...)
@@ -94,7 +94,7 @@ setMethod(getweight,
                 }
           )
 
-setMethod(minbiasweight,
+setMethod("minbiasweight",
           signature(Weight = "HampelWeight", neighbor = "ContNeighborhood",
                     biastype = "BiasType"),#  norm = "NormType"),
           function(Weight, neighbor, biastype, normW)
@@ -111,7 +111,7 @@ setMethod(minbiasweight,
           )
 
 
-setMethod(minbiasweight,
+setMethod("minbiasweight",
           signature(Weight = "HampelWeight", neighbor = "ContNeighborhood",
                     biastype = "asymmetricBias"),#  norm = "missing"),
           function(Weight, neighbor, biastype, ...)
@@ -130,7 +130,7 @@ setMethod(minbiasweight,
                 }
           )
 
-setMethod(minbiasweight,
+setMethod("minbiasweight",
           signature(Weight = "HampelWeight", neighbor = "ContNeighborhood",
                     biastype = "onesidedBias"),#  norm = "missing"),
           function(Weight, neighbor, biastype, ...)
@@ -147,7 +147,7 @@ setMethod(minbiasweight,
           )
 
 
-setMethod(minbiasweight,
+setMethod("minbiasweight",
           signature(Weight = "BdStWeight", neighbor = "TotalVarNeighborhood",
                     biastype = "BiasType"),
           function(Weight, neighbor, biastype, ...)

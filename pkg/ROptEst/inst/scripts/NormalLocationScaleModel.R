@@ -39,6 +39,7 @@ Risks(N0.IC1.s)
 plot(N0.IC1.s)
 infoPlot(N0.IC1.s)
 
+comparePlot(N0.IC1,N0.IC1.i,N0.IC1.s)
 # lower case solutions
 (N0.IC2 <- optIC(model = N0.Rob1, risk = asBias(), tol = 1e-10))
 checkIC(N0.IC2)

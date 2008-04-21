@@ -78,7 +78,7 @@ Risks(G0.IC4)
 (G0.IC5 <- optIC(model=G0.Rob1, risk=asHampel(bound=clip(G0.IC1))))
 checkIC(G0.IC5)
 Risks(G0.IC5)
-(G0.IC6 <- optIC(model=G0.Rob2, risk=asHampel(bound=Risks(G0.IC2)$asBias), maxiter = 100))
+(G0.IC6 <- optIC(model=G0.Rob2, risk=asHampel(bound=Risks(G0.IC2)$asBias$value), maxiter = 100))
 checkIC(G0.IC6)
 Risks(G0.IC6)
 
