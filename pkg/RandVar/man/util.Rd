@@ -20,8 +20,7 @@
 %\references{}
 \author{Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}}
 %\note{}
-\examples{
-}
+%\examples{}
 \concept{image distribution}
 \concept{random variable}
 \keyword{internal}
