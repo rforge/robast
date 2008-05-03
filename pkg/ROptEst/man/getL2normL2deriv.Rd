@@ -14,7 +14,7 @@
 }
 
 \value{L2 norm of the L2derivative}
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}}
+\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
 \examples{
 ##

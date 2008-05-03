@@ -33,7 +33,7 @@ These functions are used internally by package RobAStBase.}
 
 
 \author{
-  Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}
+  Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}
   }
 
 \keyword{internal}

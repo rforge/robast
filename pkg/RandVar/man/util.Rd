@@ -18,7 +18,7 @@
   \code{x} according to \code{distr}; uses \code{RtoDPQ} then;
   does not check whether \code{f(distr)} has point masses}
 %\references{}
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}}
+\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
 %\examples{}
 \concept{image distribution}

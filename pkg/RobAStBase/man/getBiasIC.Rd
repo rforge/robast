@@ -58,7 +58,7 @@ getBiasIC(IC, neighbor, ...)
   Ruckdeschel, P. and Kohl, M. (2005) Computation of the Finite Sample Bias
   of M-estimators on Neighborhoods.
 }
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}}
+\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 \note{This generic function is still under construction.}
 \seealso{\code{\link{getRiskIC-methods}}, \code{\link{InfRobModel-class}}}
 %\examples{}

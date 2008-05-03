@@ -50,7 +50,7 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
   Ruckdeschel, P. and Kohl, M. (2005) Computation of the Finite Sample Risk
   of M-estimators on Neighborhoods.
 }
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@uni-bayreuth.de}}
+\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 \note{This generic function is still under construction.}
 \seealso{\code{\link[ROptEst]{getRiskIC-methods}}, \code{\link[RobAStBase]{InfRobModel-class}}}
 %\examples{}
