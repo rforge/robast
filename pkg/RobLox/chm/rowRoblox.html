@@ -38,13 +38,14 @@ colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
 <table summary="R argblock">
 <tr valign="top"><td><code>x</code></td>
 <td>
-matrix <code>x</code> of data values </td></tr>
+matrix or data.frame of (numeric) data values. </td></tr>
 <tr valign="top"><td><code>mean</code></td>
 <td>
 specified mean. See details below. </td></tr>
 <tr valign="top"><td><code>sd</code></td>
 <td>
-specified standard deviation. See details below. </td></tr>
+specified standard deviation which has to be positive. 
+See also details below. </td></tr>
 <tr valign="top"><td><code>eps</code></td>
 <td>
 positive real (0 &lt; <code>eps</code> &lt;= 0.5): amount of gross errors. 
@@ -118,24 +119,19 @@ or a vector, i.e., different for all rows, respectively columns.
 <h3>Value</h3>
 
 <p>
-list of location and scale estimates
+An object of S3-class <code>"ALEstimate"</code> which inherits from 
+class <code>"Estimate"</code>, a list with components
 </p>
 <table summary="R argblock">
-<tr valign="top"><td><code>mean </code></td>
+<tr valign="top"><td><code>estimate </code></td>
 <td>
-(estimated) means </td></tr>
-<tr valign="top"><td><code>sd </code></td>
+location and/or scale estimates </td></tr>
+<tr valign="top"><td><code>steps </code></td>
 <td>
-(estimated) sds </td></tr>
-<tr valign="top"><td><code>contamination interval</code></td>
+number of k-steps used to compute the estimates </td></tr>
+<tr valign="top"><td><code>Infos </code></td>
 <td>
-interval for the amount of gross errors </td></tr>
-<tr valign="top"><td><code>least favorable contamination</code></td>
-<td>
-amount of gross errors used for the computations </td></tr>
-<tr valign="top"><td><code>maximum MSE-inefficiency</code></td>
-<td>
-maximum (asymptotic) MSE-inefficiency </td></tr>
+additional information about the estimates </td></tr>
 </table>
 
 <h3>Author(s)</h3>
