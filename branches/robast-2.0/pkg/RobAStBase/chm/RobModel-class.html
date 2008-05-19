@@ -1,0 +1,98 @@
+<html><head><title>Robust model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>RobModel-class(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   RobModel-class">
+<param name="keyword" value="R:   center">
+<param name="keyword" value="R:   center,RobModel-method">
+<param name="keyword" value="R:   center<-">
+<param name="keyword" value="R:   center<-,RobModel-method">
+<param name="keyword" value="R:   name,RobModel-method">
+<param name="keyword" value="R:   neighbor">
+<param name="keyword" value="R:   neighbor,RobModel-method">
+<param name="keyword" value="R:   neighbor<-">
+<param name="keyword" value="R:   neighbor<-,RobModel-method">
+<param name="keyword" value=" Robust model">
+</object>
+
+
+<h2>Robust model</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Class of robust models. A robust model consists 
+of  family of probability measures <code>center</code> and a 
+neighborhood <code>neighbor</code> about this family.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>
+A virtual Class: No objects may be created from it.
+</p>
+
+
+<h3>Slots</h3>
+
+<dl>
+<dt><code>center</code>:</dt><dd>Object of class <code>"ProbFamily"</code> </dd>
+<dt><code>neighbor</code>:</dt><dd>Object of class <code>"Neighborhood"</code></dd>
+</dl>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>center</dt><dd><code>signature(object = "RobModel")</code>: 
+accessor function for slot <code>center</code>. </dd>
+<dt>center&lt;-</dt><dd><code>signature(object = "RobModel")</code>: 
+replacement function for slot <code>center</code>. </dd>
+<dt>neighbor</dt><dd><code>signature(object = "RobModel")</code>: 
+accessor function for slot <code>neighbor</code>. </dd>
+<dt>neighbor&lt;-</dt><dd><code>signature(object = "RobModel")</code>: 
+replacement function for slot <code>neighbor</code>. </dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('distrMod', 'ProbFamily-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ProbFamily-class</a></code>, <code><a href="Neighborhood-class.html">Neighborhood-class</a></code>
+</p>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

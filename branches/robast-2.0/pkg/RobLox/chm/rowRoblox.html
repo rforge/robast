@@ -1,0 +1,206 @@
+<html><head><title>Optimally robust estimator for location and/or scale</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>rowRoblox and colRoblox(RobLox)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   rowRoblox">
+<param name="keyword" value="R:   colRoblox">
+<param name="keyword" value=" Optimally robust estimator for location and/or scale">
+</object>
+
+
+<h2>Optimally robust estimator for location and/or scale</h2>
+
+
+<h3>Description</h3>
+
+<p>
+The functions <code>rowRoblox</code> and <code>colRoblox</code> compute 
+the optimally robust estimator for normal location und/or scale and 
+(convex) contamination neighborhoods. The definition of 
+these estimators can be found in Rieder (1994) or Kohl (2005),
+respectively.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+rowRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
+colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+matrix or data.frame of (numeric) data values. </td></tr>
+<tr valign="top"><td><code>mean</code></td>
+<td>
+specified mean. See details below. </td></tr>
+<tr valign="top"><td><code>sd</code></td>
+<td>
+specified standard deviation which has to be positive. 
+See also details below. </td></tr>
+<tr valign="top"><td><code>eps</code></td>
+<td>
+positive real (0 &lt; <code>eps</code> &lt;= 0.5): amount of gross errors. 
+See details below. </td></tr>
+<tr valign="top"><td><code>eps.lower</code></td>
+<td>
+positive real (0 &lt;= <code>eps.lower</code> &lt;= <code>eps.upper</code>): 
+lower bound for the amount of gross errors. See details below. </td></tr>
+<tr valign="top"><td><code>eps.upper</code></td>
+<td>
+positive real (<code>eps.lower</code> &lt;= <code>eps.upper</code> &lt;= 0.5): 
+upper bound for the amount of gross errors. See details below. </td></tr>
+<tr valign="top"><td><code>initial.est</code></td>
+<td>
+initial estimate for <code>mean</code> and/or <code>sd</code>. If missing 
+median and/or MAD are used. </td></tr>
+<tr valign="top"><td><code>k</code></td>
+<td>
+positive integer. k-step is used to compute the optimally robust estimator.</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+Computes the optimally robust estimator for location with scale specified,
+scale with location specified, or both if neither is specified. The computation
+uses a k-step construction with an appropriate initial estimate for location
+or scale or location and scale, respectively. Valid candidates are e.g. 
+median and/or MAD (default) as well as Kolmogorov(-Smirnov) or von Mises minimum 
+distance estimators; cf. Rieder (1994) and Kohl (2005).
+</p>
+<p>
+These functions are optimized for the situation where one has a matrix 
+and wants to compute the optimally robust estimator for every row, 
+respectively column of this matrix. In particular, the amount of cross
+errors is assumed to be constant for all rows, respectively columns.
+</p>
+<p>
+If the amount of gross errors (contamination) is known, it can be 
+specified by <code>eps</code>. The radius of the corresponding infinitesimal 
+contamination neighborhood is obtained by multiplying <code>eps</code> 
+by the square root of the sample size. 
+</p>
+<p>
+If the amount of gross errors (contamination) is unknown, try to find a 
+rough estimate for the amount of gross errors, such that it lies 
+between <code>eps.lower</code> and <code>eps.upper</code>.
+</p>
+<p>
+In case <code>eps.lower</code> is specified and <code>eps.upper</code> is missing, 
+<code>eps.upper</code> is set to 0.5. In case <code>eps.upper</code> is specified and
+<code>eps.lower</code> is missing, <code>eps.lower</code> is set to 0.
+</p>
+<p>
+If neither <code>eps</code> nor <code>eps.lower</code> and/or <code>eps.upper</code> is 
+specified, <code>eps.lower</code> and <code>eps.upper</code> are set to 0 and 0.5, 
+respectively.
+</p>
+<p>
+If <code>eps</code> is missing, the radius-minimax estimator in sense of 
+Rieder et al. (2001), respectively Section 2.2 of Kohl (2005) is returned.
+</p>
+<p>
+In case of location, respectively scale one additionally has to specify
+<code>sd</code>, respectively <code>mean</code> where <code>sd</code> and <code>mean</code> can
+be a single number, i.e., identical for all rows, respectively columns,
+or a vector, i.e., different for all rows, respectively columns.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+An object of S3-class <code>"ALEstimate"</code> which inherits from 
+class <code>"Estimate"</code>, a list with components
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>estimate </code></td>
+<td>
+location and/or scale estimates </td></tr>
+<tr valign="top"><td><code>steps </code></td>
+<td>
+number of k-steps used to compute the estimates </td></tr>
+<tr valign="top"><td><code>Infos </code></td>
+<td>
+additional information about the estimates </td></tr>
+</table>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
+the Radius. Statistical Methods and Applications <EM>17</EM>(1) 13-40.
+</p>
+<p>
+Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
+the Radius. Submitted. Appeared as discussion paper Nr. 81. 
+SFB 373 (Quantification and Simulation of Economic Processes),
+Humboldt University, Berlin; also available under
+<a href="www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf">www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="roblox.html">roblox</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+ind &lt;- rbinom(200, size=1, prob=0.05) 
+X &lt;- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
+rowRoblox(X)
+rowRoblox(X, k = 3)
+rowRoblox(X, eps = 0.05)
+rowRoblox(X, eps = 0.05, k = 3)
+
+X1 &lt;- t(X)
+colRoblox(X1)
+colRoblox(X1, k = 3)
+colRoblox(X1, eps = 0.05)
+colRoblox(X1, eps = 0.05, k = 3)
+
+X2 &lt;- rbind(rnorm(100, mean = -2, sd = 3), rnorm(100, mean = -1, sd = 4))
+rowRoblox(X2, sd = c(3, 4))
+rowRoblox(X2, eps = 0.03, sd = c(3, 4))
+rowRoblox(X2, sd = c(3, 4), k = 4)
+rowRoblox(X2, eps = 0.03, sd = c(3, 4), k = 4)
+
+X3 &lt;- cbind(rnorm(100, mean = -2, sd = 3), rnorm(100, mean = 1, sd = 2))
+colRoblox(X3, mean = c(-2, 1))
+colRoblox(X3, eps = 0.02, mean = c(-2, 1))
+colRoblox(X3, mean = c(-2, 1), k = 4)
+colRoblox(X3, eps = 0.02, mean = c(-2, 1), k = 4)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>RobLox</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

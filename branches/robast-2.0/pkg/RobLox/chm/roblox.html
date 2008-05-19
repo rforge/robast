@@ -1,0 +1,233 @@
+<html><head><title>Optimally robust estimator for location and/or scale</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>roblox(RobLox)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   roblox">
+<param name="keyword" value=" Optimally robust estimator for location and/or scale">
+</object>
+
+
+<h2>Optimally robust estimator for location and/or scale</h2>
+
+
+<h3>Description</h3>
+
+<p>
+The function <code>roblox</code> computes the optimally robust estimator
+and corresponding IC for normal location und/or scale and 
+(convex) contamination neighborhoods. The definition of 
+these estimators can be found in Rieder (1994) or Kohl (2005),
+respectively.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+vector <code>x</code> of data values, may also be a matrix or data.frame
+with one row, respectively one column/(numeric) variable. </td></tr>
+<tr valign="top"><td><code>mean</code></td>
+<td>
+specified mean. </td></tr>
+<tr valign="top"><td><code>sd</code></td>
+<td>
+specified standard deviation which has to be positive. </td></tr>
+<tr valign="top"><td><code>eps</code></td>
+<td>
+positive real (0 &lt; <code>eps</code> &lt;= 0.5): amount of gross errors. 
+See details below. </td></tr>
+<tr valign="top"><td><code>eps.lower</code></td>
+<td>
+positive real (0 &lt;= <code>eps.lower</code> &lt;= <code>eps.upper</code>): 
+lower bound for the amount of gross errors. See details below. </td></tr>
+<tr valign="top"><td><code>eps.upper</code></td>
+<td>
+positive real (<code>eps.lower</code> &lt;= <code>eps.upper</code> &lt;= 0.5): 
+upper bound for the amount of gross errors. See details below. </td></tr>
+<tr valign="top"><td><code>initial.est</code></td>
+<td>
+initial estimate for <code>mean</code> and/or <code>sd</code>. If missing 
+median and/or MAD are used. </td></tr>
+<tr valign="top"><td><code>k</code></td>
+<td>
+positive integer. k-step is used to compute the optimally robust estimator. </td></tr>
+<tr valign="top"><td><code>returnIC</code></td>
+<td>
+logical: should IC be returned. See details below. </td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+Computes the optimally robust estimator for location with scale specified,
+scale with location specified, or both if neither is specified. The computation
+uses a k-step construction with an appropriate initial estimate for location
+or scale or location and scale, respectively. Valid candidates are e.g. 
+median and/or MAD (default) as well as Kolmogorov(-Smirnov) or von Mises minimum 
+distance estimators; cf. Rieder (1994) and Kohl (2005).
+</p>
+<p>
+If the amount of gross errors (contamination) is known, it can be 
+specified by <code>eps</code>. The radius of the corresponding infinitesimal 
+contamination neighborhood is obtained by multiplying <code>eps</code> 
+by the square root of the sample size. 
+</p>
+<p>
+If the amount of gross errors (contamination) is unknown, try to find a 
+rough estimate for the amount of gross errors, such that it lies 
+between <code>eps.lower</code> and <code>eps.upper</code>.
+</p>
+<p>
+In case <code>eps.lower</code> is specified and <code>eps.upper</code> is missing, 
+<code>eps.upper</code> is set to 0.5. In case <code>eps.upper</code> is specified and
+<code>eps.lower</code> is missing, <code>eps.lower</code> is set to 0.
+</p>
+<p>
+If neither <code>eps</code> nor <code>eps.lower</code> and/or <code>eps.upper</code> is 
+specified, <code>eps.lower</code> and <code>eps.upper</code> are set to 0 and 0.5, 
+respectively.
+</p>
+<p>
+If <code>eps</code> is missing, the radius-minimax estimator in sense of 
+Rieder et al. (2001), respectively Section 2.2 of Kohl (2005) is returned.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+An object of S3-class <code>"ALEstimate"</code> which inherits from 
+class <code>"Estimate"</code>, a list with components
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>estimate </code></td>
+<td>
+location and/or scale estimate </td></tr>
+<tr valign="top"><td><code>steps </code></td>
+<td>
+number of k-steps used to compute the estimate </td></tr>
+<tr valign="top"><td><code>Infos </code></td>
+<td>
+additional information about the estimate </td></tr>
+<tr valign="top"><td><code>optIC</code></td>
+<td>
+object of class <code>"ContIC"</code>; optimally robust IC </td></tr>
+</table>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
+the Radius. Statistical Methods and Applications <EM>17</EM>(1) 13-40.
+</p>
+<p>
+Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
+the Radius. Submitted. Appeared as discussion paper Nr. 81. 
+SFB 373 (Quantification and Simulation of Economic Processes),
+Humboldt University, Berlin; also available under
+<a href="www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf">www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('ROptEst', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, <code><a href="rlOptIC.html">rlOptIC</a></code>, 
+<code><a href="rsOptIC.html">rsOptIC</a></code>, <code><a href="rlsOptIC.AL.html">rlsOptIC.AL</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+ind &lt;- rbinom(100, size=1, prob=0.05) 
+x &lt;- rnorm(100, mean=ind*3, sd=(1-ind) + ind*9)
+
+## amount of gross errors known
+res1 &lt;- roblox(x, eps = 0.05, returnIC = TRUE)
+res1$mean
+res1$sd
+res1$optIC
+checkIC(res1$optIC)
+Risks(res1$optIC)
+Infos(res1$optIC)
+plot(res1$optIC)
+infoPlot(res1$optIC)
+
+## amount of gross errors unknown
+res2 &lt;- roblox(x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
+res2$mean
+res2$sd
+res2$optIC
+checkIC(res2$optIC)
+Risks(res2$optIC)
+Infos(res2$optIC)
+plot(res2$optIC)
+infoPlot(res2$optIC)
+
+## estimator comparison
+# classical optimal (non-robust)
+c(mean(x), sd(x))
+
+# most robust
+c(median(x), mad(x))
+
+# optimally robust (amount of gross errors known)
+c(res1$mean, res1$sd)
+
+# optimally robust (amount of gross errors unknown)
+c(res2$mean, res2$sd)
+
+# Kolmogorov(-Smirnov) minimum distance estimator (robust)
+(ks.est &lt;- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = KolmogorovDist))
+
+# optimally robust (amount of gross errors known)
+roblox(x, eps = 0.05, initial.est = ks.est$estimate)
+
+# Cramer von Mises minimum distance estimator (robust)
+(CvM.est &lt;- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = CvMDist))
+
+# optimally robust (amount of gross errors known)
+roblox(x, eps = 0.05, initial.est = CvM.est$estimate)
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>RobLox</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>
