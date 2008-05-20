@@ -127,7 +127,7 @@ x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532),
 (est0 <- mean(x))
 
 ## 1. Kolmogorov(-Smirnov) minimum distance estimator
-(est1 <- ksEstimator(x=x, Pois()))
+(est1 <- MDEstimator(x=x, PoisFamily(), distance = KolmogorovDist))
 
 ## 2. one-step estimation: radius interval
 ## 2.1 small amount of contamination < 2%

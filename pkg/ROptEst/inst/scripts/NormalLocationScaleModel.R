@@ -96,7 +96,7 @@ ind <- rbinom(100, size=1, prob=0.05)
 x <- rnorm(100, mean=0, sd=(1-ind) + ind*9)
 
 ## 2. Kolmogorov(-Smirnov) minimum distance estimator
-(est0 <- ksEstimator(x=x, Norm()))
+(est0 <- MDEstimator(x=x, NormLocationScaleFamily(), distance = KolmogorovDist))
 
 ## 3. one-step estimation: radius known
 N1 <- NormLocationScaleFamily(mean=est0$mean, sd=est0$sd)
