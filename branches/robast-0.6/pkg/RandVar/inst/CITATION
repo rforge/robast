@@ -1,0 +1,13 @@
+citHeader("To cite package RandVar in publications use:")
+
+citEntry(entry="phdthesis",
+         title = "Numerical Contributions to the Asymptotic Theory of Robustness",
+         author = personList(as.person("M. Kohl")),
+         language = "English",
+         year = 2005,
+         school = "University of Bayreuth",
+         type = "Dissertation",
+         address = "Bayreuth",
+         url = "http://opus.ub.uni-bayreuth.de/volltexte/2006/195/",
+         pdf = "http://www.stamats.de/ThesisMKohl.pdf",
+textVersion = paste("Kohl, M., (2005).", "Numerical Contributions to the Asymptotic Theory of Robustness.", "Dissertation,", "University of Bayreuth."))

@@ -1,0 +1,94 @@
+<html><head><title>Generic Function for making ICs consistent at a possibly different model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>generateIC.fct-methods(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   generateIC.fct">
+<param name="keyword" value="R:   generateIC.fct-methods">
+<param name="keyword" value="R:   generateIC.fct,UncondNeighborhood,L2ParamFamily-method">
+<param name="keyword" value=" Generic Function for making ICs consistent at a possibly different model">
+</object>
+
+
+<h2>Generic Function for making ICs consistent at a possibly different model</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for providing centering and Fisher consistency of ICs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+generateIC.fct(neighbor, L2Fam, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>neighbor</code></td>
+<td>
+object of class <code>"UncondNeighborhood"</code> </td></tr>
+<tr valign="top"><td><code>L2Fam</code></td>
+<td>
+L2-differentiable family of probability measures; may be missing. </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional parameters </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+An IC at the model.</p>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>generateIC.fct</dt><dd><code>signature(IC = "UncondNeighborhood", L2Fam = "L2ParamFamily"</code>: ...</dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>.
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('distrMod', 'L2ParamFamily-class.html')" style="text-decoration: underline; color: blue; cursor: hand">L2ParamFamily-class</a></code>, <code><a href="IC-class.html">IC-class</a></code>
+</p>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

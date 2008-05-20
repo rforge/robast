@@ -1,0 +1,513 @@
+###############################################################################
+## computation of radius-minimax IC
+## using predefined functions included in "sysdata.rda"
+###############################################################################
+.getlsInterval <- function(r, rlo, rup){
+    if(r > 10){
+        b <- 1.618128043
+        const <- 1.263094656
+        A2 <- b^2*(1+r^2)/(1+const)
+        A1 <- const*A2
+    }else{
+        A1 <- .getA1.locsc(r)
+        A2 <- .getA2.locsc(r)
+        b <- .getb.locsc(r)
+    }
+
+    if(rlo == 0){
+        efflo <- (A1 + A2 - b^2*r^2)/1.5
+    }else{
+        A1lo <- .getA1.locsc(rlo)
+        A2lo <- .getA2.locsc(rlo)
+        efflo <- (A1 + A2 - b^2*(r^2 - rlo^2))/(A1lo + A2lo)
+    }
+
+    if(rup > 10){
+        bup <- 1.618128043
+        const.up <- 1.263094656
+        A2up <- bup^2*(1+rup^2)/(1+const.up)
+        A1up <- const.up*A2up
+        effup <- (A1 + A2 - b^2*(r^2 - rup^2))/(A1up + A2up)
+    }else{
+        A1up <- .getA1.locsc(rup)
+        A2up <- .getA2.locsc(rup)
+        effup <- (A1 + A2 - b^2*(r^2 - rup^2))/(A1up + A2up)
+    }
+
+    return(effup-efflo)
+}
+.getlInterval <- function(r, rlo, rup){
+    if(r > 10){
+        b <- sqrt(pi/2)
+        A <- b^2*(1+r^2)
+    }else{
+        A <- .getA.loc(r)
+        b <- .getb.loc(r)
+    }
+
+    if(rlo == 0){
+        efflo <- A - b^2*r^2
+    }else{
+        Alo <- .getA.loc(rlo)
+        efflo <- (A - b^2*(r^2 - rlo^2))/Alo
+    }
+
+    if(rup > 10){
+        Aup <- pi/2*(1+rup^2)
+        effup <- (A - b^2*(r^2 - rup^2))/Aup
+    }else{
+        Aup <- .getA.loc(rup)
+        effup <- (A - b^2*(r^2 - rup^2))/Aup
+    }
+
+    return(effup-efflo)
+}
+.getsInterval <- function(r, rlo, rup){
+    if(r > 10){
+        b <- 1/(4*qnorm(0.75)*dnorm(qnorm(0.75)))
+        A <- b^2*(1+r^2)
+    }else{
+        A <- .getA.sc(r)
+        b <- .getb.sc(r)
+    }
+
+    if(rlo == 0){
+        efflo <- (A - b^2*r^2)/0.5
+    }else{
+        Alo <- .getA.sc(rlo)
+        efflo <- (A - b^2*(r^2 - rlo^2))/Alo
+    }
+
+    if(rup > 10){
+        bup <- 1/(4*qnorm(0.75)*dnorm(qnorm(0.75)))
+        Aup <- bup^2*(1+rup^2)
+        effup <- (A - b^2*(r^2 - rup^2))/Aup
+    }else{
+        Aup <- .getA.sc(rup)
+        effup <- (A - b^2*(r^2 - rup^2))/Aup
+    }
+
+    return(effup-efflo)
+}
+
+
+###############################################################################
+## computation of k-step construction
+###############################################################################
+.onestep.loc <- function(x, initial.est, A, b, sd){
+    u <- A*(x-initial.est)/sd^2
+    IC <- mean(u*pmin(1, b/abs(u)), na.rm = TRUE)
+    return(initial.est + IC)
+}
+.kstep.loc <- function(x, initial.est, A, b, sd, k){
+    est <- initial.est
+    for(i in 1:k){
+        est <- .onestep.loc(x = x, initial.est = est, A = A, b = b, sd = sd)
+    }
+    return(est)
+}
+.onestep.sc <- function(x, initial.est, A, a, b, mean){
+    v <- A*(((x-mean)/initial.est)^2-1)/initial.est - a
+    IC <- mean(v*pmin(1, b/abs(v)), na.rm = TRUE)
+    return(initial.est + IC)
+}
+.kstep.sc <- function(x, initial.est, A, a, b, mean, k){
+    est <- .onestep.sc(x = x, initial.est = initial.est, A = A, a = a, b = b, mean = mean)
+    if(k == 1){
+        return(est)
+    }else{
+        for(i in 2:k){
+            A <- est^2*A/initial.est^2
+            a <- est*a/initial.est
+            b <- est*b/initial.est
+            initial.est <- est
+            est <- .onestep.sc(x = x, initial.est = est, A = A, a = a, b = b, mean = mean)
+        }
+        return(est)
+    }
+}
+.onestep.locsc <- function(x, initial.est, A1, A2, a, b){
+    mean <- initial.est[1]
+    sd <- initial.est[2]
+    u <- A1*(x-mean)/sd^2
+    v <- A2*(((x-mean)/sd)^2-1)/sd - a[2]
+    w <- pmin(1, b/sqrt(u^2 + v^2))
+    IC <- c(mean(u*w, na.rm = TRUE), mean(v*w, na.rm = TRUE))
+    return(initial.est + IC)
+}
+.kstep.locsc <- function(x, initial.est, A1, A2, a, b, mean, k){
+    est <- .onestep.locsc(x = x, initial.est = initial.est, A1 = A1, A2 = A2, a = a, b = b)
+    if(k == 1){
+        return(est)
+    }else{
+        for(i in 2:k){
+            A1 <- est[2]^2*A1/initial.est[2]^2
+            A2 <- est[2]^2*A2/initial.est[2]^2
+            a <- est[2]*a/initial.est[2]
+            b <- est[2]*b/initial.est[2]
+            initial.est <- est
+            est <- .onestep.locsc(x = x, initial.est = est, A1 = A1, A2 = A2, a = a, b = b)
+        }
+        return(est)
+    }
+}
+
+
+###############################################################################
+## optimally robust estimator for normal location and/or scale
+###############################################################################
+roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, 
+                   returnIC = FALSE){
+    if(missing(x))
+        stop("'x' is missing with no default")
+    if(!is.numeric(x)){
+        if(is.data.frame(x))
+            x <- data.matrix(x)
+        else
+            x <- as.matrix(x)
+        if(!is.matrix(x))
+            stop("'x' has to be a numeric vector resp. a matrix or data.frame
+                  with one row resp. column/(numeric) variable")
+        if(ncol(x) > 1 & nrow(x) > 1)
+            stop("number of rows and columns/variables > 1. Please, do use 'rowRoblox'
+                  resp. 'colRoblox'.")
+    }
+    if(missing(eps) && missing(eps.lower) && missing(eps.upper)){
+        eps.lower <- 0
+        eps.upper <- 0.5
+    }
+    if(missing(eps)){
+        if(!missing(eps.lower) && missing(eps.upper))
+            eps.upper <- 0.5
+        if(missing(eps.lower) && !missing(eps.upper))
+            eps.lower <- 0
+        if(length(eps.lower) != 1 || length(eps.upper) != 1)
+            stop("'eps.lower' and 'eps.upper' have to be of length 1")
+        if(!is.numeric(eps.lower) || !is.numeric(eps.upper) || eps.lower >= eps.upper) 
+            stop("'eps.lower' < 'eps.upper' is not fulfilled")
+        if((eps.lower < 0) || (eps.upper > 0.5))
+            stop("'eps.lower' and 'eps.upper' have to be in [0, 0.5]")
+    }else{
+        if(length(eps) != 1)
+            stop("'eps' has to be of length 1")
+        if(eps == 0)
+            stop("'eps = 0'! => use functions 'mean' and 'sd' for estimation")
+        if((eps < 0) || (eps > 0.5))
+            stop("'eps' has to be in (0, 0.5]")
+    }
+    if(k < 1){
+      stop("'k' has to be some positive integer value")
+    }
+    if(length(k) != 1){
+      stop("'k' has to be of length 1")
+    }
+    k <- as.integer(k)
+
+    if(missing(mean) && missing(sd)){
+        if(missing(initial.est)){
+            mean <- median(x, na.rm = TRUE)
+            sd <- mad(x, na.rm = TRUE)
+            if(sd == 0)
+                stop("'mad(x, na.rm = TRUE) == 0' => cannot compute a valid initial estimate, 
+                      please specify one via 'initial.est'")
+        }else{
+            if(!is.numeric(initial.est) || length(initial.est) != 2)
+              stop("'initial.est' needs to be a numeric vector of length 2 or missing")
+            mean <- initial.est[1]
+            sd <- initial.est[2]
+            if(sd <= 0)
+                stop("initial estimate for scale <= 0 which is no valid scale estimate")
+        }
+
+        if(!missing(eps)){
+            r <- sqrt(length(x))*eps
+            if(r > 10){
+                b <- sd*1.618128043
+                const <- 1.263094656
+                A2 <- b^2*(1+r^2)/(1+const)
+                A1 <- const*A2
+                a <- c(0, -0.6277527697*A2/sd)
+                mse <- A1 + A2
+            }else{
+                A1 <- sd^2*.getA1.locsc(r)
+                A2 <- sd^2*.getA2.locsc(r)
+                a <- sd*c(0, .geta.locsc(r))
+                b <- sd*.getb.locsc(r)
+                mse <- A1 + A2
+            }
+            robEst <- .kstep.locsc(x = x, initial.est = c(mean, sd), A1 = A1, A2 = A2, a = a, b = b, k = k)
+            names(robEst) <- c("mean", "sd")
+            Info.matrix <- matrix(c("roblox", 
+                                    paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
+                                          "and 'asMSE'")),
+                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
+            if(returnIC){
+                IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
+                                  L2Fam = NormLocationScaleFamily(mean = mean, sd = sd), 
+                                  res = list(A = diag(c(A1, A2)), a = a, b = b, d = NULL, 
+                                      risk = list(asMSE = mse, asBias = b, asCov = mse - r^2*b^2), 
+                                      info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
+                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1), 
+                                 class = c("ALEstimate", "Estimate")))
+            }else
+                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
+                                 class = c("ALEstimate", "Estimate")))
+        }else{
+            sqrtn <- sqrt(length(x))
+            rlo <- sqrtn*eps.lower
+            rup <- sqrtn*eps.upper
+            if(rlo > 10){
+                r <- (rlo + rup)/2
+            }else{
+                r <- uniroot(.getlsInterval, lower = rlo+1e-8, upper = rup, 
+                             tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup)$root
+            }
+            if(r > 10){
+                b <- sd*1.618128043
+                const <- 1.263094656
+                A2 <- b^2*(1+r^2)/(1+const)
+                A1 <- const*A2
+                a <- c(0, -0.6277527697*A2/sd)
+                mse <- A1 + A2
+            }else{
+                A1 <- sd^2*.getA1.locsc(r)
+                A2 <- sd^2*.getA2.locsc(r)
+                a <- sd*c(0, .geta.locsc(r))
+                b <- sd*.getb.locsc(r)
+                mse <- A1 + A2
+            }
+            if(rlo == 0){
+                ineff <- (A1 + A2 - b^2*r^2)/(1.5*sd^2)
+            }else{
+                if(rlo > 10){
+                    ineff <- 1
+                }else{
+                    A1lo <- sd^2*.getA1.locsc(rlo)
+                    A2lo <- sd^2*.getA2.locsc(rlo)
+                    ineff <- (A1 + A2 - b^2*(r^2 - rlo^2))/(A1lo + A2lo)
+                }
+            }
+            robEst <- .kstep.locsc(x = x, initial.est = c(mean, sd), A1 = A1, A2 = A2, a = a, b = b, k = k)
+            names(robEst) <- c("mean", "sd")
+            Info.matrix <- matrix(c(rep("roblox", 3), 
+                                  paste("radius-minimax estimate for contamination interval [", 
+                                    round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                  paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                  paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
+            if(returnIC){
+                IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
+                                  L2Fam = NormLocationScaleFamily(mean = mean, sd = sd), 
+                                  res = list(A = diag(c(A1, A2)), a = a, b = b, d = NULL, 
+                                      risk = list(asMSE = mse, asBias = b, asCov = mse - r^2*b^2), 
+                                      info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
+                Infos(IC1) <- matrix(c(rep("roblox", 3), 
+                                      paste("radius-minimax IC for contamination interval [", 
+                                        round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                      paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                      paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
+                                 class = c("ALEstimate", "Estimate")))
+            }else
+                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
+                                 class = c("ALEstimate", "Estimate")))
+        }
+    }else{
+        if(missing(mean)){
+            if(sd <= 0)
+                stop("'sd' has to be positive")
+            if(missing(initial.est)){
+                mean <- median(x, na.rm = TRUE)
+            }else{
+                if(!is.numeric(initial.est) || length(initial.est) != 1)
+                    stop("'initial.est' needs to be a numeric vector of length 1 or missing")
+                mean <- initial.est
+            }
+
+            if(!missing(eps)){
+                r <- sqrt(length(x))*eps
+                if(r > 10){
+                    b <- sd*sqrt(pi/2)
+                    A <- b^2*(1+r^2)
+                }else{
+                    A <- sd^2*.getA.loc(r)
+                    b <- sd*.getb.loc(r)
+                }
+                robEst <- .kstep.loc(x = x, initial.est = mean, A = A, b = b, sd = sd, k = k)
+                names(robEst) <- "mean"
+                Info.matrix <- matrix(c("roblox", 
+                                        paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
+                                              "and 'asMSE'")),
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                if(returnIC){
+                    IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
+                                      L2Fam = NormLocationFamily(mean = mean, sd = sd), 
+                                      res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
+                                          risk = list(asMSE = A, asBias = b, asCov = b^2), 
+                                          info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
+                                 class = c("ALEstimate", "Estimate")))
+                }else
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix),
+                                 class = c("ALEstimate", "Estimate")))
+            }else{
+                sqrtn <- sqrt(length(x))
+                rlo <- sqrtn*eps.lower
+                rup <- sqrtn*eps.upper
+                if(rlo > 10){ 
+                    r <- (rlo+rup)/2
+                }else{
+                    r <- uniroot(.getlInterval, lower = rlo+1e-8, upper = rup, 
+                                 tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup)$root
+                }
+                if(r > 10){
+                    b <- sd*sqrt(pi/2)
+                    A <- b^2*(1+r^2)
+                }else{
+                    A <- sd^2*.getA.loc(r)
+                    b <- sd*.getb.loc(r)
+                }
+                if(rlo == 0){
+                    ineff <- (A - b^2*r^2)/sd^2
+                }else{
+                    if(rlo > 10){
+                        ineff <- 1
+                    }else{
+                        Alo <- sd^2*.getA.loc(rlo)
+                        ineff <- (A - b^2*(r^2 - rlo^2))/Alo
+                    }
+                }
+                robEst <- .kstep.loc(x = x, initial.est = mean, A = A, b = b, sd = sd, k = k)
+                names(robEst) <- "mean"
+                Info.matrix <- matrix(c(rep("roblox", 3), 
+                                      paste("radius-minimax estimate for contamination interval [", 
+                                        round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                      paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                      paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                if(returnIC){
+                    IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
+                                      L2Fam = NormLocationFamily(mean = mean, sd = sd), 
+                                      res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
+                                          risk = list(asMSE = A, asBias = b, asCov = b^2), 
+                                          info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
+                    Infos(IC1) <- matrix(c(rep("roblox", 3), 
+                                 paste("radius-minimax IC for contamination interval [", 
+                                   round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                 paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                 paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                 ncol = 2, dimnames = list(NULL, c("method", "message")))
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
+                                 class = c("ALEstimate", "Estimate")))
+                }else
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix),
+                                 class = c("ALEstimate", "Estimate")))
+            }
+        }
+        if(missing(sd)){
+            if(missing(initial.est)){ 
+                sd <- mad(x, na.rm = TRUE)
+                if(sd == 0)
+                  stop("'mad(x, na.rm = TRUE) == 0' => cannot compute a valid initial estimate, 
+                       please specify one via 'initial.est'")
+            }else{
+                if(!is.numeric(initial.est) || length(initial.est) != 1)
+                    stop("'initial.est' needs to be a numeric vector of length 1 or missing")
+                sd <- initial.est
+                if(initial.est <= 0)
+                  stop("'initial.est <= 0'; i.e., is no valid scale estimate")
+            }
+
+            if(!missing(eps)){
+                r <- sqrt(length(x))*eps
+                if(r > 10){
+                    b <- sd/(4*qnorm(0.75)*dnorm(qnorm(0.75)))
+                    A <- b^2*(1+r^2)
+                    a <- (qnorm(0.75)^2 - 1)/sd*A
+                }else{
+                    A <- sd^2*.getA.sc(r)
+                    a <- sd*.geta.sc(r)
+                    b <- sd*.getb.sc(r)
+                }
+                robEst <- .kstep.sc(x = x, initial.est = sd, A = A, a = a, b = b, mean = mean, k = k)
+                names(robEst) <- "sd"
+                Info.matrix <- matrix(c("roblox", 
+                                        paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
+                                              "and 'asMSE'")),
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                if(returnIC){
+                    IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
+                                      L2Fam = NormScaleFamily(mean = mean, sd = sd), 
+                                      res = list(A = as.matrix(A), a = a, b = b, d = NULL, 
+                                          risk = list(asMSE = A, asBias = b, asCov = b^2), 
+                                          info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
+                                 class = c("ALEstimate", "Estimate")))
+                }else
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix),
+                                 class = c("ALEstimate", "Estimate")))
+            }else{
+                sqrtn <- sqrt(length(x))
+                rlo <- sqrtn*eps.lower
+                rup <- sqrtn*eps.upper
+                if(rlo > 10){
+                    r <- (rlo+rup)/2
+                }else{
+                    r <- uniroot(.getsInterval, lower = rlo+1e-8, upper = rup, 
+                             tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup)$root
+                }
+                if(r > 10){
+                    b <- sd/(4*qnorm(0.75)*dnorm(qnorm(0.75)))
+                    A <- b^2*(1+r^2)
+                    a <- (qnorm(0.75)^2 - 1)/sd*A
+                }else{
+                    A <- sd^2*.getA.sc(r)
+                    a <- sd*.geta.sc(r)
+                    b <- sd*.getb.sc(r)
+                }
+                if(rlo == 0){
+                    ineff <- (A - b^2*r^2)/(0.5*sd^2)
+                }else{
+                    if(rlo > 10){
+                        ineff <- 1
+                    }else{
+                        Alo <- sd^2*.getA.sc(rlo)
+                        ineff <- (A - b^2*(r^2 - rlo^2))/Alo
+                    }
+                }
+                robEst <- .kstep.sc(x = x, initial.est = sd, A = A, a = a, b = b, mean = mean, k = k)
+                names(robEst) <- "sd"
+                Info.matrix <- matrix(c(rep("roblox", 3), 
+                                      paste("radius-minimax estimate for contamination interval [", 
+                                        round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                      paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                      paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                if(returnIC){
+                    IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
+                                      L2Fam = NormScaleFamily(mean = mean, sd = sd), 
+                                      res = list(A = as.matrix(A), a = a, b = b, d = NULL, 
+                                          risk = list(asMSE = A, asBias = b, asCov = b^2), 
+                                          info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
+                    Infos(IC1) <- matrix(c(rep("roblox", 3), 
+                                 paste("radius-minimax IC for contamination interval [", 
+                                   round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                 paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                 paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                 ncol = 2, dimnames = list(NULL, c("method", "message")))
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
+                                 class = c("ALEstimate", "Estimate")))
+                }else
+                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix),
+                                 class = c("ALEstimate", "Estimate")))
+            }
+        }
+    }
+}
+print.ALEstimate <- function(x, digits = getOption("digits"), ...){
+  print(x$estimate)
+  if(!is.null(x$Infos)){
+    print(x$Infos)
+  }
+}

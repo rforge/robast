@@ -1,0 +1,85 @@
+<html><head><title>Generating function for RealRandVariable-class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>RealRandVariable(RandVar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   RealRandVariable">
+<param name="keyword" value=" Generating function for RealRandVariable-class">
+</object>
+
+
+<h2>Generating function for RealRandVariable-class</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generates an object of class <code>"RealRandVariable"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+RealRandVariable(Map = list(function(x) {1}), Domain = NULL, Range)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>Map</code></td>
+<td>
+list of functions forming the map. </td></tr>
+<tr valign="top"><td><code>Domain</code></td>
+<td>
+domain of <code>Map</code>: object of 
+class <code>"OptionalrSpace"</code>. </td></tr>
+<tr valign="top"><td><code>Range</code></td>
+<td>
+range of <code>Map</code>: object of 
+class <code>"Reals"</code>. </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"RealRandVariable"</code></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="RealRandVariable-class.html">RealRandVariable-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+RealRandVariable(Map = list(function(x){x}), Domain = Reals())
+
+## The function is currently defined as
+function(Map = list(function(x){1}), Domain = NULL, Range) {
+    if(missing(Range)) Range &lt;- Reals()
+    if(!is(Range, "Reals"))
+        stop("'Range' has to be of class 'Reals'")
+
+    return(new("RealRandVariable", Map = Map, 
+               Domain = Domain, Range = Reals()))
+}
+</pre>
+
+
+
+<hr><div align="center">[Package <em>RandVar</em> version 0.6.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

@@ -1,0 +1,134 @@
+<html><head><title>Computation of the optimally robust IC for M estimators</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>rlsOptIC.M(RobLox)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   rlsOptIC.M">
+<param name="keyword" value=" Computation of the optimally robust IC for M estimators">
+</object>
+
+
+<h2>Computation of the optimally robust IC for M estimators</h2>
+
+
+<h3>Description</h3>
+
+<p>
+The function <code>rlsOptIC.M</code> computes the optimally robust IC for 
+M estimators in case of normal location with unknown scale and 
+(convex) contamination neighborhoods. The definition of 
+these estimators can be found in Section 8.3 of Kohl (2005).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+rlsOptIC.M(r, ggLo = 0.5, ggUp = 1.5, a1.start = 0.75, a3.start = 0.25, 
+           bUp = 1000, delta = 1e-05, itmax = 100, check = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>r</code></td>
+<td>
+non-negative real: neighborhood radius. </td></tr>
+<tr valign="top"><td><code>ggLo</code></td>
+<td>
+non-negative real: the lower end point of the interval to be searched 
+for <i>gamma</i>. </td></tr>
+<tr valign="top"><td><code>ggUp</code></td>
+<td>
+positive real: the upper end point of the interval to be searched 
+for <i>gamma</i>. </td></tr>
+<tr valign="top"><td><code>a1.start</code></td>
+<td>
+real: starting value for <i>alpha_1</i>. </td></tr>
+<tr valign="top"><td><code>a3.start</code></td>
+<td>
+real: starting value for <i>alpha_3</i>. </td></tr>
+<tr valign="top"><td><code>bUp</code></td>
+<td>
+positive real: upper bound used in the 
+computation of the optimal clipping bound b. </td></tr>
+<tr valign="top"><td><code>delta</code></td>
+<td>
+the desired accuracy (convergence tolerance). </td></tr>
+<tr valign="top"><td><code>itmax</code></td>
+<td>
+the maximum number of iterations. </td></tr>
+<tr valign="top"><td><code>check</code></td>
+<td>
+logical. Should constraints be checked. </td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+The optimal values of the tuning constants <i>alpha_1</i>, 
+<i>alpha_3</i>, b and <i>gamma</i> can be read off 
+from the slot <code>Infos</code> of the resulting IC.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"IC"</code></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Huber, P.J. (1981) <EM>Robust Statistics</EM>. New York: Wiley.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('ROptEst', 'IC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">IC-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+IC1 &lt;- rlsOptIC.M(r = 0.1, check = TRUE)
+distrExOptions("ErelativeTolerance" = 1e-12)
+checkIC(IC1, NormLocationScaleFamily())
+distrExOptions("ErelativeTolerance" = .Machine$double.eps^0.25)
+Risks(IC1)
+Infos(IC1)
+plot(IC1)
+infoPlot(IC1)
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>RobLox</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>
