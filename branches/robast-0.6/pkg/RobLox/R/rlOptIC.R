@@ -10,11 +10,20 @@ rlOptIC <- function(r, mean = 0, sd = 1, bUp = 1000, computeIC = TRUE){
     A <- sd^2*A1
 
     if(computeIC){
+        w <- new("HampelWeight")
+        clip(w) <- b
+        cent(w) <- 0
+        stand(w) <- as.matrix(A)
+        weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
+                               biastype = symmetricBias(), 
+                               normW = NormType())
+
         return(generateIC(neighbor = ContNeighborhood(radius = r), 
                     L2Fam = NormLocationFamily(mean = mean, sd = sd), 
                     res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
                                risk = list(asMSE = A, asBias = b, asCov = A - r^2*b^2), 
-                               info = c("rlOptIC", "optimally robust IC for AL estimators and 'asMSE'"))))
+                               info = c("rlOptIC", "optimally robust IC for AL estimators and 'asMSE'"),
+                               w = w, biastype = symmetricBias(), normtype = NormType())))
     }else{
         return(list(A = A, a = 0, b = b))
     }

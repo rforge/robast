@@ -90,8 +90,7 @@ x <- rnorm(100, mean=ind*3, sd=(1-ind) + ind*9)
 
 ## amount of gross errors known
 res1 <- roblox(x, eps = 0.05, returnIC = TRUE)
-res1$mean
-res1$sd
+res1$estimate
 res1$optIC
 checkIC(res1$optIC)
 Risks(res1$optIC)
@@ -101,8 +100,7 @@ infoPlot(res1$optIC)
 
 ## amount of gross errors unknown
 res2 <- roblox(x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
-res2$mean
-res2$sd
+res2$estimate
 res2$optIC
 checkIC(res2$optIC)
 Risks(res2$optIC)
@@ -118,10 +116,10 @@ c(mean(x), sd(x))
 c(median(x), mad(x))
 
 # optimally robust (amount of gross errors known)
-c(res1$mean, res1$sd)
+res1$estimate
 
 # optimally robust (amount of gross errors unknown)
-c(res2$mean, res2$sd)
+res2$estimate
 
 # Kolmogorov(-Smirnov) minimum distance estimator (robust)
 (ks.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = KolmogorovDist))

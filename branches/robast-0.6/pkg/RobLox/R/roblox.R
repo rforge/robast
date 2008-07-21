@@ -242,11 +242,19 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                           "and 'asMSE'")),
                                   ncol = 2, dimnames = list(NULL, c("method", "message")))
             if(returnIC){
+                w <- new("HampelWeight")
+                clip(w) <- b
+                cent(w) <- a/A2
+                stand(w) <- diag(c(A1, A2))
+                weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
+                                       biastype = symmetricBias(), 
+                                       normW = NormType())
                 IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                   L2Fam = NormLocationScaleFamily(mean = mean, sd = sd), 
                                   res = list(A = diag(c(A1, A2)), a = a, b = b, d = NULL, 
                                       risk = list(asMSE = mse, asBias = b, asCov = mse - r^2*b^2), 
-                                      info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
+                                      info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
+                                      w = w, biastype = symmetricBias(), normtype = NormType()))
                 return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1), 
                                  class = c("ALEstimate", "Estimate")))
             }else
@@ -296,11 +304,19 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                   paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                   ncol = 2, dimnames = list(NULL, c("method", "message")))
             if(returnIC){
+                w <- new("HampelWeight")
+                clip(w) <- b
+                cent(w) <- a/A2
+                stand(w) <- diag(c(A1, A2))
+                weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
+                                       biastype = symmetricBias(), 
+                                       normW = NormType())
                 IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                   L2Fam = NormLocationScaleFamily(mean = mean, sd = sd), 
                                   res = list(A = diag(c(A1, A2)), a = a, b = b, d = NULL, 
                                       risk = list(asMSE = mse, asBias = b, asCov = mse - r^2*b^2), 
-                                      info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
+                                      info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
+                                      w = w, biastype = symmetricBias(), normtype = NormType()))
                 Infos(IC1) <- matrix(c(rep("roblox", 3), 
                                       paste("radius-minimax IC for contamination interval [", 
                                         round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
@@ -341,11 +357,19 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                               "and 'asMSE'")),
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
                 if(returnIC){
+                    w <- new("HampelWeight")
+                    clip(w) <- b
+                    cent(w) <- 0
+                    stand(w) <- A
+                    weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
+                                       biastype = symmetricBias(), 
+                                       normW = NormType())
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormLocationFamily(mean = mean, sd = sd), 
                                       res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
                                           risk = list(asMSE = A, asBias = b, asCov = b^2), 
-                                          info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
+                                          info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
+                                          w = w, biastype = symmetricBias(), normtype = NormType()))
                     return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
                                  class = c("ALEstimate", "Estimate")))
                 }else
@@ -387,11 +411,19 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                       paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
                 if(returnIC){
+                    w <- new("HampelWeight")
+                    clip(w) <- b
+                    cent(w) <- 0
+                    stand(w) <- A
+                    weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
+                                       biastype = symmetricBias(), 
+                                       normW = NormType())
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormLocationFamily(mean = mean, sd = sd), 
                                       res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
                                           risk = list(asMSE = A, asBias = b, asCov = b^2), 
-                                          info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
+                                          info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
+                                          w = w, biastype = symmetricBias(), normtype = NormType()))
                     Infos(IC1) <- matrix(c(rep("roblox", 3), 
                                  paste("radius-minimax IC for contamination interval [", 
                                    round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
@@ -437,11 +469,19 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                               "and 'asMSE'")),
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
                 if(returnIC){
+                    w <- new("HampelWeight")
+                    clip(w) <- b
+                    cent(w) <- a/A
+                    stand(w) <- A
+                    weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
+                                       biastype = symmetricBias(), 
+                                       normW = NormType())
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormScaleFamily(mean = mean, sd = sd), 
                                       res = list(A = as.matrix(A), a = a, b = b, d = NULL, 
                                           risk = list(asMSE = A, asBias = b, asCov = b^2), 
-                                          info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
+                                          info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
+                                          w = w, biastype = symmetricBias(), normtype = NormType()))
                     return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
                                  class = c("ALEstimate", "Estimate")))
                 }else
@@ -485,11 +525,19 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                       paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
                 if(returnIC){
+                    w <- new("HampelWeight")
+                    clip(w) <- b
+                    cent(w) <- a/A
+                    stand(w) <- A
+                    weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
+                                       biastype = symmetricBias(), 
+                                       normW = NormType())
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                       L2Fam = NormScaleFamily(mean = mean, sd = sd), 
                                       res = list(A = as.matrix(A), a = a, b = b, d = NULL, 
                                           risk = list(asMSE = A, asBias = b, asCov = b^2), 
-                                          info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'")))
+                                          info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
+                                          w = w, biastype = symmetricBias(), normtype = NormType()))
                     Infos(IC1) <- matrix(c(rep("roblox", 3), 
                                  paste("radius-minimax IC for contamination interval [", 
                                    round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
