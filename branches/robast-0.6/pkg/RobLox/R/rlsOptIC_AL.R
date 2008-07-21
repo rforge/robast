@@ -129,7 +129,7 @@ rlsOptIC.AL <- function(r, mean = 0, sd = 1, A.loc.start = 1, a.sc.start = 0,
     if(computeIC){
         w <- new("HampelWeight")
         clip(w) <- b
-        cent(w) <- c(0, a2)
+        cent(w) <- c(0, a2-1)
         stand(w) <- A
         weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                biastype = symmetricBias(), 

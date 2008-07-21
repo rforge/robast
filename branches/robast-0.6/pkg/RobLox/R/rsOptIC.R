@@ -64,7 +64,7 @@ rsOptIC <- function(r, mean = 0, sd = 1, bUp = 1000, delta = 1e-6, itmax = 100,
     if(computeIC){
         w <- new("HampelWeight")
         clip(w) <- b
-        cent(w) <- z
+        cent(w) <- z-1
         stand(w) <- as.matrix(A)
         weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                biastype = symmetricBias(), 
