@@ -331,6 +331,8 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
         }
     }else{
         if(missing(mean)){
+            if(length(sd) != 1)
+                stop("'sd' has length != 1")
             if(sd <= 0)
                 stop("'sd' has to be positive")
             if(missing(initial.est)){
@@ -438,6 +440,8 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
             }
         }
         if(missing(sd)){
+            if(length(mean) != 1)
+                stop("mean has length != 1")
             if(missing(initial.est)){ 
                 sd <- mad(x, na.rm = TRUE)
                 if(sd == 0)
