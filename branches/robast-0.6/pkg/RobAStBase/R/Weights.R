@@ -1,28 +1,40 @@
-.eq <-function(x,y = 0*x, tol = 1e-7) abs(x-y)<tol
-
 setMethod("name", "RobWeight", function(object) object@name)
-setReplaceMethod("name", "RobWeight", function(object,value) 
-                  {object@name <- value; object})
+setReplaceMethod("name", "RobWeight", 
+    function(object, value){
+        object@name <- value
+        object
+    })
 
 
 setMethod("clip", "BoundedWeight", function(object) object@clip)
-setReplaceMethod("clip", "BoundedWeight", function(object,value) 
-                   {object@clip <- value; object})
+setReplaceMethod("clip", "BoundedWeight", 
+    function(object, value){
+        object@clip <- value
+        object
+    })
 
 
 setMethod("stand", "BdStWeight", function(object) object@stand)
-setReplaceMethod("stand", "BdStWeight", function(object,value) 
-                  {object@stand <- value; object})
+setReplaceMethod("stand", "BdStWeight", 
+    function(object, value){
+        object@stand <- value
+        object
+    })
 
 
 setMethod("cent", "HampelWeight", function(object) object@cent)
-setReplaceMethod("cent", "HampelWeight", function(object,value) 
-                   {object@cent <- value; object})
+setReplaceMethod("cent", "HampelWeight", 
+    function(object, value){
+        object@cent <- value
+        object
+    })
 
 setMethod("weight", "RobWeight", function(object) object@weight)
-
-setReplaceMethod("weight", "RobWeight", function(object,value)
-        {object@weight <- value; object})
+setReplaceMethod("weight", "RobWeight", 
+    function(object, value){
+        object@weight <- value
+        object
+    })
 
 setMethod("getweight",
           signature(Weight = "HampelWeight", neighbor = "ContNeighborhood",

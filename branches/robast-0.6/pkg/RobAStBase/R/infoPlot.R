@@ -22,7 +22,7 @@ setMethod("infoPlot", "IC",
 
             trafo <- L2Fam@param@trafo
             dims <- nrow(trafo)
-            
+
             QFc <- diag(dims)
             if(is(object,"ContIC") & dims>1 )
                {if (is(normtype(object),"QFNorm")) QFc <- QuadForm(normtype(object))
@@ -67,7 +67,7 @@ setMethod("infoPlot", "IC",
                 w0 <- options("warn")
                 options(warn = -1)
                 opar <- par()
-                get(getOption("device"))()
+                devNew()
                 par(mfrow = c(nrows, ncols))
                 IC1.i.5 <- QF.5%*%IC1
                 classIC.i.5 <- QFc.5%*%classIC

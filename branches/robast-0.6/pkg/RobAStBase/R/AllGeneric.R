@@ -115,7 +115,7 @@ if(!isGeneric("weight")){
 }
 if(!isGeneric("weight<-")){
     setGeneric("weight<-",
-        function(object, value,  ...) standardGeneric("weight<-"))
+        function(object, value, ...) standardGeneric("weight<-"))
 }
 if(!isGeneric("clip")){
     setGeneric("clip",
