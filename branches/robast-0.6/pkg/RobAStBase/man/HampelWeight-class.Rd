@@ -31,8 +31,10 @@ Class \code{"BdStWeight"}, directly.
       accessor function for slot \code{cent}. }
 
     \item{cent<-}{\code{signature(object = "HampelWeight", value = "matrix")}:
-      replacement function for slot \code{cent}. }
-
+      replacement function for slot \code{cent}. This replacement method 
+      should be used with great care, as the slot \code{weight} is not
+      simultaneously updated and hence, this may lead to inconsistent
+      objects. }
   }
 }
 \references{

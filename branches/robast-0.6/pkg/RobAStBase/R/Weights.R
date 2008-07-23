@@ -116,7 +116,7 @@ setMethod("minbiasweight",
                 function(x){
                    y <- A%*%(x-z)
                    norm0 <- fct(normW)(y) 
-                   ind <- 1-.eq(norm0)                   
+                   ind <- 1-.eq(norm0)
                    ind*b/(norm0+1-ind)
                    }
                 }
@@ -136,7 +136,7 @@ setMethod("minbiasweight",
                    y <- A*(x-z)
                    indp <- (y>0)
                    ind0 <- .eq(y)
-                   indm <- (y<0)                                                         
+                   indm <- (y<0)
                    indm*b1/(y+ind0) + indp*b2/(y+ind0)
                    }
                 }
@@ -171,7 +171,7 @@ setMethod("minbiasweight",
                    y <- A*x
                    indp <- (y>0)
                    ind0 <- .eq(y)
-                   indm <- (y<0)                                                         
+                   indm <- (y<0)
                    indm*b1/(y+ind0) + indp*b2/(y+ind0)
                    }
                 }

@@ -29,8 +29,10 @@ Class \code{"BoundedWeight"}, directly.
       accessor function for slot \code{stand}. }
 
     \item{stand<-}{\code{signature(object = "BdStWeight", value = "matrix")}:
-      replacement function for slot \code{stand}. }
-
+      replacement function for slot \code{stand}. This replacement method 
+      should be used with great care, as the slot \code{weight} is not
+      simultaneously updated and hence, this may lead to inconsistent
+      objects.}
   }
 }
 \references{
