@@ -119,7 +119,7 @@ setReplaceMethod("cent", "ContIC",
         stopifnot(is.numeric(value))
         L2Fam <- eval(object@CallL2Fam)
         w <- object@weight
-        cent(w) <- value
+        cent(w) <- as.vector(solve(object@stand) %*% value)
         weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = object@neighborRadius), 
                                biastype = object@biastype, 
                                normW = object@normtype)
