@@ -29,9 +29,16 @@ setMethod("getFixRobIC", signature(Distr = "Norm",
         a <- -A*c0
         b <- 2*A*c0
 
+        w <- new("BdStWeight")
+        clip(w) <- c(0,b)+a
+        stand(w) <- as.matrix(A)
+        weight(w) <- getweight(w, neighbor = TotalVarNeighborhood(radius = neighbor@radius), 
+                               biastype = symmetricBias(), normW = NormType())
+
         Risk <- getFiRisk(risk = risk, Distr = Distr, neighbor = neighbor, 
                           clip = c0, stand = A, sampleSize = sampleSize, 
                           Algo = Algo, cont = cont)
 
-        return(list(A = as.matrix(A), a = a, b = b, d = NULL, risk = Risk, info = info))    
+        return(list(A = as.matrix(A), a = a, b = b, d = NULL, risk = Risk, info = info, w = w,
+                    biastype = symmetricBias(), normtype = NormType()))
     })
