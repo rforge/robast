@@ -16,7 +16,7 @@ plot(N0)  # plot of Norm(mean = 0, sd = 1) and L_2 derivative
 checkL2deriv(N0)
 
 
-# classical optimal IC
+## classical optimal IC
 LN1.IC0 <- optIC(model = LN1, risk = asCov())
 LN1.IC0       # show IC
 plot(LN1.IC0) # plot IC
@@ -29,7 +29,7 @@ checkIC(N0.IC0)
 Risks(N0.IC0)
 
 
-# L_2 family + infinitesimal neighborhood
+## L_2 family + infinitesimal neighborhood
 LN1.Rob1 <- InfRobModel(center = LN1, neighbor = ContNeighborhood(radius = 0.5))
 LN1.Rob1     # show LN1.Rob1
 LN1.Rob2 <- InfRobModel(center = LN1, neighbor = TotalVarNeighborhood(radius = 0.25))
@@ -38,7 +38,7 @@ N0.Rob1     # show N0.Rob1
 N0.Rob2 <- InfRobModel(center = N0, neighbor = TotalVarNeighborhood(radius = 0.25))
 
 
-# MSE solution
+## MSE solution
 LN1.IC1 <- optIC(model=LN1.Rob1, risk=asMSE())
 checkIC(LN1.IC1)
 Risks(LN1.IC1)
@@ -74,7 +74,7 @@ clipUp(N0.IC2)
 stand(N0.IC2)
 
 
-# lower case solutions
+## lower case solutions
 LN1.IC3 <- optIC(model=LN1.Rob1, risk=asBias())
 checkIC(LN1.IC3)
 Risks(LN1.IC3)
@@ -96,7 +96,7 @@ Risks(N0.IC4)
 plot(N0.IC4)
 
 
-# Hampel solution
+## Hampel solution
 LN1.IC5 <- optIC(model=LN1.Rob1, risk=asHampel(bound=clip(LN1.IC1)))
 checkIC(LN1.IC5)
 Risks(LN1.IC5)
@@ -117,7 +117,7 @@ checkIC(N0.IC6)
 Risks(N0.IC6)
 plot(N0.IC6)
 
-# radius minimax IC
+## radius minimax IC
 (LN1.IC7 <- radiusMinimaxIC(L2Fam=LN1, neighbor=ContNeighborhood(), 
                 risk=asMSE(), loRad=0, upRad=0.5))
 checkIC(LN1.IC7)
@@ -125,7 +125,7 @@ Risks(LN1.IC7)
 plot(LN1.IC7)
 
 (N0.IC7 <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(), 
-                risk=asMSE(), loRad=0.1, upRad=0.5))
+                risk=asMSE(), loRad=0, upRad=0.5))
 checkIC(N0.IC7)
 Risks(N0.IC7)
 plot(N0.IC7)
@@ -143,8 +143,8 @@ Risks(N0.IC8)
 plot(N0.IC8)
 
 
-# least favorable radius
-# (may take quite some time!)
+## least favorable radius
+## (may take quite some time!)
 (LN1.r.rho1 <- leastFavorableRadius(L2Fam=LN1, neighbor=ContNeighborhood(),
                     risk=asMSE(), rho=0.5))
 (N0.r.rho1 <- leastFavorableRadius(L2Fam=N0, neighbor=ContNeighborhood(),
