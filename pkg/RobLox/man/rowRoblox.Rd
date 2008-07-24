@@ -33,8 +33,10 @@ colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
   scale with location specified, or both if neither is specified. The computation
   uses a k-step construction with an appropriate initial estimate for location
   or scale or location and scale, respectively. Valid candidates are e.g. 
-  median and/or MAD (default) as well as Kolmogorov(-Smirnov) or von Mises minimum 
-  distance estimators; cf. Rieder (1994) and Kohl (2005).
+  median and/or MAD (default) as well as Kolmogorov(-Smirnov) or Cram\'er von 
+  Mises minimum distance estimators; cf. Rieder (1994) and Kohl (2005). In case 
+  package Biobase from Bioconductor is installed as is suggested, 
+  median and/or MAD are computed using function \code{rowMedians}.
 
   These functions are optimized for the situation where one has a matrix 
   and wants to compute the optimally robust estimator for every row, 
@@ -44,7 +46,7 @@ colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
   If the amount of gross errors (contamination) is known, it can be 
   specified by \code{eps}. The radius of the corresponding infinitesimal 
   contamination neighborhood is obtained by multiplying \code{eps} 
-  by the square root of the sample size. 
+  by the square root of the sample size.
 
   If the amount of gross errors (contamination) is unknown, try to find a 
   rough estimate for the amount of gross errors, such that it lies 
@@ -64,7 +66,8 @@ colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
   In case of location, respectively scale one additionally has to specify
   \code{sd}, respectively \code{mean} where \code{sd} and \code{mean} can
   be a single number, i.e., identical for all rows, respectively columns,
-  or a vector, i.e., different for all rows, respectively columns.
+  or a vector with length identical to the number of rows, respectively 
+  columns.
 }
 \value{
   An object of S3-class \code{"ALEstimate"} which inherits from 

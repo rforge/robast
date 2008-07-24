@@ -25,8 +25,10 @@ Class \code{"RobWeight"}, directly.
       accessor function for slot \code{clip}. }
 
     \item{clip<-}{\code{signature(object = "BoundedWeight", value = "numeric")}:
-      replacement function for slot \code{clip}. }
-
+      replacement function for slot \code{clip}. This replacement method 
+      should be used with great care, as the slot \code{weight} is not
+      simultaneously updated and hence, this may lead to inconsistent
+      objects. }
   }
 }
 \references{

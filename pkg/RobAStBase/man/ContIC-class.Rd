@@ -59,8 +59,10 @@
 
     \item{\code{weight}:}{ object of class \code{"HampelWeight"}:
       weight function }
+
     \item{\code{biastype}:}{ object of class \code{"BiasType"}:
       bias type (symmetric/onsided/asymmetric) }
+
     \item{\code{normtype}:}{ object of class \code{"NormType"}:
       norm type (Euclidean, information/self-standardized)}
 

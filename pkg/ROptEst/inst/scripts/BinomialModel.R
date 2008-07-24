@@ -27,7 +27,7 @@ RobB1     # show RobB1
 (RobB2 <- InfRobModel(center = B, neighbor = TotalVarNeighborhood(radius = 0.5)))
 
 ## MSE solution
-system.time(IC1 <- optIC(model=RobB1, risk=asMSE()), gcFirst = TRUE)
+system.time(IC1 <- optIC(model=RobB1, risk=asMSE()))
 IC1
 checkIC(IC1)
 Risks(IC1)
@@ -42,7 +42,7 @@ addRisk(IC1) <- list(Cov1, mse1, bias1)
 Risks(IC1)
 plot(IC1)
 
-system.time(IC2 <- optIC(model=RobB2, risk=asMSE()), gcFirst = TRUE)
+system.time(IC2 <- optIC(model=RobB2, risk=asMSE()))
 IC2
 checkIC(IC2)
 Risks(IC2)
@@ -80,14 +80,14 @@ plot(IC6)
 
 ## radius minimax IC
 system.time(IC7 <- radiusMinimaxIC(L2Fam=B, neighbor=ContNeighborhood(), 
-                        risk=asMSE(), loRad=0, upRad=1), gcFirst = TRUE)
+                        risk=asMSE(), loRad=0, upRad=1))
 IC7
 checkIC(IC7)
 Risks(IC7)
 plot(IC7)
 
 system.time(IC8 <- radiusMinimaxIC(L2Fam=B, neighbor=TotalVarNeighborhood(), 
-                        risk=asMSE(), loRad=0, upRad=1), gcFirst = TRUE)
+                        risk=asMSE(), loRad=0, upRad=1))
 IC8
 checkIC(IC8)
 Risks(IC8)
@@ -97,10 +97,10 @@ plot(IC8)
 ## least favorable radius
 ## (may take quite some time!)
 system.time(r.rho1 <- leastFavorableRadius(L2Fam=B, neighbor=ContNeighborhood(),
-                    risk=asMSE(), rho=0.5), gcFirst = TRUE)
+                    risk=asMSE(), rho=0.5))
 r.rho1
 system.time(r.rho2 <- leastFavorableRadius(L2Fam=B, neighbor=TotalVarNeighborhood(),
-                    risk=asMSE(), rho=0.5), gcFirst = TRUE)
+                    risk=asMSE(), rho=0.5))
 r.rho2
 
 ## one-step estimation
@@ -109,24 +109,24 @@ ind <- rbinom(100, size=1, prob=0.05)
 x <- rbinom(100, size=25, prob=(1-ind)*0.25 + ind*0.75)
 
 ## 2. Kolmogorov(-Smirnov) minimum distance estimator
-(est0 <- ksEstimator(x=x, Binom(size=25), param = "prob"))
+(est0 <- MDEstimator(x=x, BinomFamily(size=25), interval = c(0, 1)))
 
 ## 3. one-step estimation: radius known
-RobB3 <- InfRobModel(center=BinomFamily(size=25, prob=est0$prob), 
+RobB3 <- InfRobModel(center=BinomFamily(size=25, prob=est0$estimate),
                 neighbor=ContNeighborhood(radius=0.5))
 IC9 <- optIC(model=RobB3, risk=asMSE())
-(est1 <- oneStepEstimator(x, IC=IC9, start=est0$prob))
+(est1c <- oneStepEstimator(x, IC=IC9, start=est0$estimate))
 
-RobB4 <- InfRobModel(center=BinomFamily(size=25, prob=est0$prob), 
+RobB4 <- InfRobModel(center=BinomFamily(size=25, prob=est0$estimate),
                 neighbor=TotalVarNeighborhood(radius=0.25))
 IC10 <- optIC(model=RobB4, risk=asMSE())
-(est1 <- oneStepEstimator(x, IC=IC10, start=est0$prob))
+(est1v <- oneStepEstimator(x, IC=IC10, start=est0$estimate))
 
 ## 4. one-step estimation: radius interval
-IC11 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=est0$prob),
+IC11 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=est0$estimate),
                 neighbor=ContNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
-(est2 <- oneStepEstimator(x, IC=IC11, start=est0$prob))
+(est2c <- oneStepEstimator(x, IC=IC11, start=est0$estimate))
 
-IC12 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=est0$prob),
+IC12 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=est0$estimate),
                 neighbor=TotalVarNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
-(est2 <- oneStepEstimator(x, IC=IC12, start=est0$prob))
+(est2v <- oneStepEstimator(x, IC=IC12, start=est0$estimate))

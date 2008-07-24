@@ -124,9 +124,17 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                      biastype = biastype, clip = c0, cent = z, trafo = trafo)
         a <- as.vector(A)*z
         b <- abs(as.vector(A))*c0
+
+        w <- new("BdStWeight")
+        clip(w) <- c(0,b)+a
+        stand(w) <- A
+        weight(w) <- getweight(w, neighbor = TotalVarNeighborhood(radius = neighbor@radius), 
+                               biastype = biastype, normW = normtype(risk))
+
         Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
                           biastype = biastype, clip = b, cent = a, stand = A, 
                           trafo = trafo)
 
-        return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info))    
+        return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info, w = w,
+                    biastype = biastype, normtype = normtype(risk)))
     })

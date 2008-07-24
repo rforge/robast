@@ -59,7 +59,7 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
         normtype <-  res$normtype
         biastype <-  res$biastype
         if(is.null(res$w)) res$w <- new("HampelWeight")
-        w <- res$w        
+        w <- res$w
         return(ContIC(
                 name = "IC of contamination type", 
                 CallL2Fam = call("L2ParamFamily", 
@@ -100,8 +100,14 @@ setReplaceMethod("clip", "ContIC",
     function(object, value){ 
         stopifnot(is.numeric(value))
         L2Fam <- eval(object@CallL2Fam)
+        w <- object@weight
+        clip(w) <- value
+        weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = object@neighborRadius), 
+                               biastype = object@biastype, 
+                               normW = object@normtype)
         res <- list(A = object@stand, a = object@cent, b = value, d = object@lowerCase,
-                    risk = object@Risks, info = object@Infos)
+                    risk = object@Risks, info = object@Infos, w = w,
+                    normtype = object@normtype, biastype = object@biastype)
         object <- generateIC(neighbor = ContNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("clip<-", "The clipping bound has been changed")
@@ -112,8 +118,14 @@ setReplaceMethod("cent", "ContIC",
     function(object, value){ 
         stopifnot(is.numeric(value))
         L2Fam <- eval(object@CallL2Fam)
+        w <- object@weight
+        cent(w) <- as.vector(solve(object@stand) %*% value)
+        weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = object@neighborRadius), 
+                               biastype = object@biastype, 
+                               normW = object@normtype)
         res <- list(A = object@stand, a = value, b = object@clip, d = object@lowerCase,
-                    risk = object@Risks, info = object@Infos)
+                    risk = object@Risks, info = object@Infos, w = w,
+                    normtype = object@normtype, biastype = object@biastype)
         object <- generateIC(neighbor = ContNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("cent<-", "The centering constant has been changed")
@@ -124,8 +136,14 @@ setReplaceMethod("stand", "ContIC",
     function(object, value){ 
         stopifnot(is.matrix(value))
         L2Fam <- eval(object@CallL2Fam)
+        w <- object@weight
+        stand(w) <- value
+        weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = object@neighborRadius), 
+                               biastype = object@biastype, 
+                               normW = object@normtype)
         res <- list(A = value, a = object@cent, b = object@clip, d = object@lowerCase,
-                    risk = object@Risks, info = object@Infos)
+                    risk = object@Risks, info = object@Infos, w = w,
+                    normtype = object@normtype, biastype = object@biastype)
         object <- generateIC(neighbor = ContNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("stand<-", "The standardizing matrix has been changed")
@@ -137,7 +155,8 @@ setReplaceMethod("lowerCase", "ContIC",
         stopifnot(is.null(value)||is.numeric(value))
         L2Fam <- eval(object@CallL2Fam)
         res <- list(A = object@stand, a = object@cent, b = object@clip, d = value,
-                    risk = object@Risks, info = object@Infos)
+                    risk = object@Risks, info = object@Infos, w = object@weight,
+                    normtype = object@normtype, biastype = object@biastype)
         object <- generateIC(neighbor = ContNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("lowerCase<-", "The slot 'lowerCase' has been changed")
@@ -148,7 +167,8 @@ setReplaceMethod("CallL2Fam", "ContIC",
     function(object, value){ 
         L2Fam <- eval(value)
         res <- list(A = object@stand, a = object@cent, b = object@clip, d = object@lowerCase,
-                    risk = object@Risks, info = object@Infos)
+                    risk = object@Risks, info = object@Infos, w = object@weight,
+                    normtype = object@normtype, biastype = object@biastype)
         object <- generateIC(neighbor = ContNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("CallL2Fam<-", "The slot 'CallL2Fam' has been changed")

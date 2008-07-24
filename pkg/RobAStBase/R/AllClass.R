@@ -53,7 +53,7 @@ setClass("InfRobModel",
 # Weights
 setClass("RobAStControl", representation(name ="character"),
           contains = "VIRTUAL")
-          
+
 setClass("RobWeight", representation(name = "character", weight = "function"), 
           prototype(name = "some weight", weight = function(x) 1))
 setClass("BoundedWeight", representation(clip = "numeric"), 

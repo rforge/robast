@@ -1,28 +1,40 @@
-.eq <-function(x,y = 0*x, tol = 1e-7) abs(x-y)<tol
-
 setMethod("name", "RobWeight", function(object) object@name)
-setReplaceMethod("name", "RobWeight", function(object,value) 
-                  {object@name <- value; object})
+setReplaceMethod("name", "RobWeight", 
+    function(object, value){
+        object@name <- value
+        object
+    })
 
 
 setMethod("clip", "BoundedWeight", function(object) object@clip)
-setReplaceMethod("clip", "BoundedWeight", function(object,value) 
-                   {object@clip <- value; object})
+setReplaceMethod("clip", "BoundedWeight", 
+    function(object, value){
+        object@clip <- value
+        object
+    })
 
 
 setMethod("stand", "BdStWeight", function(object) object@stand)
-setReplaceMethod("stand", "BdStWeight", function(object,value) 
-                  {object@stand <- value; object})
+setReplaceMethod("stand", "BdStWeight", 
+    function(object, value){
+        object@stand <- value
+        object
+    })
 
 
 setMethod("cent", "HampelWeight", function(object) object@cent)
-setReplaceMethod("cent", "HampelWeight", function(object,value) 
-                   {object@cent <- value; object})
+setReplaceMethod("cent", "HampelWeight", 
+    function(object, value){
+        object@cent <- value
+        object
+    })
 
 setMethod("weight", "RobWeight", function(object) object@weight)
-
-setReplaceMethod("weight", "RobWeight", function(object,value)
-        {object@weight <- value; object})
+setReplaceMethod("weight", "RobWeight", 
+    function(object, value){
+        object@weight <- value
+        object
+    })
 
 setMethod("getweight",
           signature(Weight = "HampelWeight", neighbor = "ContNeighborhood",
@@ -104,7 +116,7 @@ setMethod("minbiasweight",
                 function(x){
                    y <- A%*%(x-z)
                    norm0 <- fct(normW)(y) 
-                   ind <- 1-.eq(norm0)                   
+                   ind <- 1-.eq(norm0)
                    ind*b/(norm0+1-ind)
                    }
                 }
@@ -124,7 +136,7 @@ setMethod("minbiasweight",
                    y <- A*(x-z)
                    indp <- (y>0)
                    ind0 <- .eq(y)
-                   indm <- (y<0)                                                         
+                   indm <- (y<0)
                    indm*b1/(y+ind0) + indp*b2/(y+ind0)
                    }
                 }
@@ -159,7 +171,7 @@ setMethod("minbiasweight",
                    y <- A*x
                    indp <- (y>0)
                    ind0 <- .eq(y)
-                   indm <- (y<0)                                                         
+                   indm <- (y<0)
                    indm*b1/(y+ind0) + indp*b2/(y+ind0)
                    }
                 }

@@ -127,11 +127,20 @@ rlsOptIC.AL <- function(r, mean = 0, sd = 1, A.loc.start = 1, a.sc.start = 0,
 
 
     if(computeIC){
+        w <- new("HampelWeight")
+        clip(w) <- b
+        cent(w) <- c(0, a2-1)
+        stand(w) <- A
+        weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
+                               biastype = symmetricBias(), 
+                               normW = NormType())
+
         return(generateIC(neighbor = ContNeighborhood(radius = r), 
                     L2Fam = NormLocationScaleFamily(mean = mean, sd = sd), 
-                    res = list(A = A, a = a, b = b, d = NULL, 
-                               risk = list(asMSE = mse, asBias = b, asCov = mse - r^2*b^2), 
-                               info = c("rlsOptIC.AL", "optimally robust IC for AL estimators and 'asMSE'"))))
+                    res = list(A = as.matrix(A), a = a, b = b, d = NULL, 
+                               risk = list(asMSE = mse, asBias = b, trAsCov = mse - r^2*b^2), 
+                               info = c("rlOptIC", "optimally robust IC for AL estimators and 'asMSE'"),
+                               w = w, biastype = symmetricBias(), normtype = NormType())))
     }else{
         return(list(A = A, a = a, b = b))
     }
