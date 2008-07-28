@@ -37,7 +37,7 @@ rlsOptIC.Hu2a(r, k1.start = 0.25, k2.start = 2.5, delta = 1e-06, MAX = 100)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link[ROptEst]{IC-class}}}
+\seealso{\code{\link[RobAStBase]{IC-class}}}
 \examples{
 IC1 <- rlsOptIC.Hu2a(r = 0.1)
 checkIC(IC1)

@@ -37,7 +37,7 @@ rlsOptIC.M(r, ggLo = 0.5, ggUp = 1.5, a1.start = 0.75, a3.start = 0.25,
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link[ROptEst]{IC-class}}}
+\seealso{\code{\link[RobAStBase]{IC-class}}}
 \examples{
 IC1 <- rlsOptIC.M(r = 0.1, check = TRUE)
 distrExOptions("ErelativeTolerance" = 1e-12)

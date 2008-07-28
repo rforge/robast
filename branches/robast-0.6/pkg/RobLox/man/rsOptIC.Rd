@@ -39,7 +39,7 @@ rsOptIC(r, mean = 0, sd = 1, bUp = 1000, delta = 1e-06, itmax = 100, computeIC =
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link[ROptEst]{ContIC-class}}, \code{\link{roblox}}}
+\seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link{roblox}}}
 \examples{
 IC1 <- rsOptIC(r = 0.1)
 distrExOptions("ErelativeTolerance" = 1e-12)

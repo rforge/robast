@@ -55,16 +55,7 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
   If \code{eps} is missing, the radius-minimax estimator in sense of 
   Rieder et al. (2001), respectively Section 2.2 of Kohl (2005) is returned.
 }
-\value{
-  An object of S3-class \code{"ALEstimate"} which inherits from 
-  class \code{"Estimate"}, a list with components
-  \item{estimate }{ location and/or scale estimate }
-  \item{steps }{ number of k-steps used to compute the estimate }
-  \item{Infos }{ additional information about the estimate }
-
-  if \code{returnIC} is \code{TRUE} the list also contains
-  \item{optIC}{ object of class \code{"ContIC"}; optimally robust IC }
-}
+\value{Object of class \code{"kStepEstimate"}. }
 \references{
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
@@ -82,31 +73,32 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link[ROptEst]{ContIC-class}}, \code{\link{rlOptIC}}, 
-         \code{\link{rsOptIC}}, \code{\link{rlsOptIC.AL}}}
+\seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link{rlOptIC}}, 
+         \code{\link{rsOptIC}}, \code{\link{rlsOptIC.AL}},
+         \code{\link[RobAStBase]{kStepEstimate-class}} }
 \examples{
 ind <- rbinom(100, size=1, prob=0.05) 
 x <- rnorm(100, mean=ind*3, sd=(1-ind) + ind*9)
 
 ## amount of gross errors known
 res1 <- roblox(x, eps = 0.05, returnIC = TRUE)
-res1$estimate
-res1$optIC
-checkIC(res1$optIC)
-Risks(res1$optIC)
-Infos(res1$optIC)
-plot(res1$optIC)
-infoPlot(res1$optIC)
+estimate(res1)
+pIC(res1)
+checkIC(pIC(res1))
+Risks(pIC(res1))
+Infos(pIC(res1))
+plot(pIC(res1))
+infoPlot(pIC(res1))
 
 ## amount of gross errors unknown
 res2 <- roblox(x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
-res2$estimate
-res2$optIC
-checkIC(res2$optIC)
-Risks(res2$optIC)
-Infos(res2$optIC)
-plot(res2$optIC)
-infoPlot(res2$optIC)
+estimate(res2)
+pIC(res2)
+checkIC(pIC(res2))
+Risks(pIC(res2))
+Infos(pIC(res2))
+plot(pIC(res2))
+infoPlot(pIC(res2))
 
 ## estimator comparison
 # classical optimal (non-robust)
@@ -116,22 +108,22 @@ c(mean(x), sd(x))
 c(median(x), mad(x))
 
 # optimally robust (amount of gross errors known)
-res1$estimate
+estimate(res1)
 
 # optimally robust (amount of gross errors unknown)
-res2$estimate
+estimate(res2)
 
 # Kolmogorov(-Smirnov) minimum distance estimator (robust)
-(ks.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = KolmogorovDist))
+(ks.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily()))
 
 # optimally robust (amount of gross errors known)
-roblox(x, eps = 0.05, initial.est = ks.est$estimate)
+roblox(x, eps = 0.05, initial.est = estimate(ks.est))
 
 # Cramer von Mises minimum distance estimator (robust)
 (CvM.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = CvMDist))
 
 # optimally robust (amount of gross errors known)
-roblox(x, eps = 0.05, initial.est = CvM.est$estimate)
+roblox(x, eps = 0.05, initial.est = estimate(CvM.est))
 }
 \concept{normal location}
 \concept{normal scale}

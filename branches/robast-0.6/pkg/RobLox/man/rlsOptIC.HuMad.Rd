@@ -30,7 +30,7 @@ rlsOptIC.HuMad(r, kUp = 2.5, delta = 1e-06)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link[ROptEst]{IC-class}}}
+\seealso{\code{\link[RobAStBase]{IC-class}}}
 \examples{
 IC1 <- rlsOptIC.HuMad(r = 0.1)
 checkIC(IC1)

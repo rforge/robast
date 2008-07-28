@@ -255,11 +255,11 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                       risk = list(asMSE = mse, asBias = b, asCov = mse - r^2*b^2), 
                                       info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
                                       w = w, biastype = symmetricBias(), normtype = NormType()))
-                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1), 
-                                 class = c("ALEstimate", "Estimate")))
+                return(new("kStepEstimate", name = "Optimally robust estimate",
+                           estimate = robEst, steps = k, pIC = IC1, Infos = Info.matrix))
             }else
-                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
-                                 class = c("ALEstimate", "Estimate")))
+                return(new("kStepEstimate", name = "Optimally robust estimate",
+                           estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
         }else{
             sqrtn <- sqrt(length(x))
             rlo <- sqrtn*eps.lower
@@ -323,11 +323,11 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                       paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
                                       paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
-                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
-                                 class = c("ALEstimate", "Estimate")))
+                return(new("kStepEstimate", name = "Optimally robust estimate",
+                           estimate = robEst, steps = k, pIC = IC1, Infos = Info.matrix))
             }else
-                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
-                                 class = c("ALEstimate", "Estimate")))
+                return(new("kStepEstimate", name = "Optimally robust estimate",
+                           estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
         }
     }else{
         if(missing(mean)){
@@ -362,7 +362,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     w <- new("HampelWeight")
                     clip(w) <- b
                     cent(w) <- 0
-                    stand(w) <- A
+                    stand(w) <- as.matrix(A)
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
@@ -372,11 +372,11 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                           risk = list(asMSE = A, asBias = b, asCov = b^2), 
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
                                           w = w, biastype = symmetricBias(), normtype = NormType()))
-                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
-                                 class = c("ALEstimate", "Estimate")))
+                    return(new("kStepEstimate", name = "Optimally robust estimate",
+                               estimate = robEst, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
-                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix),
-                                 class = c("ALEstimate", "Estimate")))
+                    return(new("kStepEstimate", name = "Optimally robust estimate",
+                               estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
             }else{
                 sqrtn <- sqrt(length(x))
                 rlo <- sqrtn*eps.lower
@@ -416,7 +416,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     w <- new("HampelWeight")
                     clip(w) <- b
                     cent(w) <- 0
-                    stand(w) <- A
+                    stand(w) <- as.matrix(A)
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
@@ -432,11 +432,11 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                  paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
                                  paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
-                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
-                                 class = c("ALEstimate", "Estimate")))
+                    return(new("kStepEstimate", name = "Optimally robust estimate",
+                               estimate = robEst, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
-                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix),
-                                 class = c("ALEstimate", "Estimate")))
+                    return(new("kStepEstimate", name = "Optimally robust estimate",
+                               estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
             }
         }
         if(missing(sd)){
@@ -476,7 +476,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     w <- new("HampelWeight")
                     clip(w) <- b
                     cent(w) <- a/A
-                    stand(w) <- A
+                    stand(w) <- as.matrix(A)
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
@@ -486,11 +486,11 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                           risk = list(asMSE = A, asBias = b, asCov = b^2), 
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
                                           w = w, biastype = symmetricBias(), normtype = NormType()))
-                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
-                                 class = c("ALEstimate", "Estimate")))
+                    return(new("kStepEstimate", name = "Optimally robust estimate",
+                               estimate = robEst, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
-                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix),
-                                 class = c("ALEstimate", "Estimate")))
+                    return(new("kStepEstimate", name = "Optimally robust estimate",
+                               estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
             }else{
                 sqrtn <- sqrt(length(x))
                 rlo <- sqrtn*eps.lower
@@ -532,7 +532,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     w <- new("HampelWeight")
                     clip(w) <- b
                     cent(w) <- a/A
-                    stand(w) <- A
+                    stand(w) <- as.matrix(A)
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
@@ -548,18 +548,12 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                  paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
                                  paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
-                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix, "optIC" = IC1),
-                                 class = c("ALEstimate", "Estimate")))
+                    return(new("kStepEstimate", name = "Optimally robust estimate",
+                               estimate = robEst, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
-                    return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix),
-                                 class = c("ALEstimate", "Estimate")))
+                    return(new("kStepEstimate", name = "Optimally robust estimate",
+                               estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
             }
         }
     }
-}
-print.ALEstimate <- function(x, digits = getOption("digits"), ...){
-  print(x$estimate)
-  if(!is.null(x$Infos)){
-    print(x$Infos)
-  }
 }

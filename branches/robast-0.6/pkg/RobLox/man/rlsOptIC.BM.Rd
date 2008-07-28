@@ -39,7 +39,7 @@ rlsOptIC.BM(r, bL.start = 2, bS.start = 1.5, delta = 1e-06, MAX = 100)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link[ROptEst]{IC-class}}}
+\seealso{\code{\link[RobAStBase]{IC-class}}}
 \examples{
 IC1 <- rlsOptIC.BM(r = 0.1)
 checkIC(IC1)
