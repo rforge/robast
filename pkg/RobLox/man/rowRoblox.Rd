@@ -1,10 +1,10 @@
 \name{rowRoblox and colRoblox}
 \alias{rowRoblox}
 \alias{colRoblox}
-\title{Optimally robust estimator for location and/or scale}
+\title{Optimally robust estimation for location and/or scale}
 \description{
   The functions \code{rowRoblox} and \code{colRoblox} compute 
-  the optimally robust estimator for normal location und/or scale and 
+  optimally robust estimates for normal location und/or scale and 
   (convex) contamination neighborhoods. The definition of 
   these estimators can be found in Rieder (1994) or Kohl (2005),
   respectively.
@@ -69,13 +69,7 @@ colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
   or a vector with length identical to the number of rows, respectively 
   columns.
 }
-\value{
-  An object of S3-class \code{"ALEstimate"} which inherits from 
-  class \code{"Estimate"}, a list with components
-  \item{estimate }{ location and/or scale estimates }
-  \item{steps }{ number of k-steps used to compute the estimates }
-  \item{Infos }{ additional information about the estimates }
-}
+\value{Object of class \code{"kStepEstimate"}. }
 \references{
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
@@ -93,7 +87,7 @@ colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{roblox}}}
+\seealso{\code{\link{roblox}}, \code{\link[RobAStBase]{kStepEstimate-class}} }
 \examples{
 ind <- rbinom(200, size=1, prob=0.05) 
 X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)

@@ -2,13 +2,13 @@
 \alias{oneStepEstimator}
 \alias{oneStepEstimator-methods}
 \alias{oneStepEstimator,numeric,InfluenceCurve,numeric-method}
-\alias{oneStepEstimator,numeric,InfluenceCurve,list-method}
 \alias{oneStepEstimator,matrix,InfluenceCurve,numeric-method}
-\alias{oneStepEstimator,matrix,InfluenceCurve,list-method}
+\alias{oneStepEstimator,numeric,InfluenceCurve,Estimate-method}
+\alias{oneStepEstimator,matrix,InfluenceCurve,Estimate-method}
 
-\title{Generic function for the computation of one-step estimators}
+\title{Generic function for the computation of one-step estimates}
 \description{
-  Generic function for the computation of one-step estimators.
+  Generic function for the computation of one-step estimates.
 }
 \usage{
 oneStepEstimator(x, IC, start)
@@ -28,11 +28,11 @@ oneStepEstimator(x, IC, start)
 \describe{
   \item{x = "numeric", IC = "InfluenceCurve", start = "numeric"}{ 
     univariate samples. }
-  \item{x = "numeric", IC = "InfluenceCurve", start = "list"}{ 
-    univariate samples. }
   \item{x = "matrix", IC = "InfluenceCurve", start = "numeric"}{ 
     multivariate samples. }
-  \item{x = "matrix", IC = "InfluenceCurve", start = "list"}{ 
+  \item{x = "matrix", IC = "InfluenceCurve", start = "Estimate"}{ 
+    multivariate samples. }
+  \item{x = "matrix", IC = "InfluenceCurve", start = "Estimate"}{ 
     multivariate samples. }
 }}
 \references{
@@ -47,4 +47,5 @@ oneStepEstimator(x, IC, start)
 %\examples{}
 \concept{one-step estimator}
 \concept{estimator}
-\keyword{}
+\keyword{univar}
+\keyword{robust}

@@ -21,4 +21,3 @@ export(rlsOptIC.AL,
        roblox,
        rowRoblox,
        colRoblox)
-S3method(print, ALEstimate)

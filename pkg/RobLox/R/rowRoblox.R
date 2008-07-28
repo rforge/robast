@@ -153,8 +153,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                                     paste("optimally robust estimates for contamination 'eps' =", round(eps, 3),
                                           "and 'asMSE'")),
                                   ncol = 2, dimnames = list(NULL, c("method", "message")))
-            return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
-                             class = c("ALEstimate", "Estimate")))
+            return(new("kStepEstimate", name = "Optimally robust estimate",
+                       estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
         }else{
             sqrtn <- sqrt(ncol(x))
             rlo <- sqrtn*eps.lower
@@ -199,8 +199,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                                   paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
                                   paste("maximum MSE-inefficiency: ", round(ineff[1], 3), sep = "")), 
                                   ncol = 2, dimnames = list(NULL, c("method", "message")))
-            return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
-                             class = c("ALEstimate", "Estimate")))
+            return(new("kStepEstimate", name = "Optimally robust estimate",
+                       estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
         }
     }else{
         if(missing(mean)){
@@ -235,8 +235,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                                         paste("optimally robust estimates for contamination 'eps' =", round(eps, 3),
                                               "and 'asMSE'")),
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
-                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
-                                 class = c("ALEstimate", "Estimate")))
+                return(new("kStepEstimate", name = "Optimally robust estimate",
+                           estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
             }else{
                 sqrtn <- sqrt(ncol(x))
                 rlo <- sqrtn*eps.lower
@@ -272,8 +272,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                                       paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
                                       paste("maximum MSE-inefficiency: ", round(ineff[1], 3), sep = "")), 
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
-                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
-                                 class = c("ALEstimate", "Estimate")))
+                return(new("kStepEstimate", name = "Optimally robust estimate",
+                           estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
             }
         }
         if(missing(sd)){
@@ -314,8 +314,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                                         paste("optimally robust estimates for contamination 'eps' =", round(eps, 3),
                                               "and 'asMSE'")),
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
-                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
-                                 class = c("ALEstimate", "Estimate")))
+                return(new("kStepEstimate", name = "Optimally robust estimate",
+                           estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
             }else{
                 sqrtn <- sqrt(ncol(x))
                 rlo <- sqrtn*eps.lower
@@ -353,8 +353,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                                       paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
                                       paste("maximum MSE-inefficiency: ", round(ineff[1], 3), sep = "")), 
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
-                return(structure(list("estimate" = robEst, "steps" = k, "Infos" = Info.matrix), 
-                                 class = c("ALEstimate", "Estimate")))
+                return(new("kStepEstimate", name = "Optimally robust estimate",
+                           estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
             }
         }
     }

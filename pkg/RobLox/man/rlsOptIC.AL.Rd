@@ -50,7 +50,7 @@ rlsOptIC.AL(r, mean = 0, sd = 1, A.loc.start = 1, a.sc.start = 0,
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link[ROptEst]{ContIC-class}}, \code{\link{roblox}}}
+\seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link{roblox}}}
 \examples{
 IC1 <- rlsOptIC.AL(r = 0.1, check = TRUE)
 distrExOptions("ErelativeTolerance" = 1e-12)
@@ -78,14 +78,14 @@ mad(x)
 (est0 <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = KolmogorovDist))
 
 ## 3. one-step estimation: radius known
-IC1 <- rlsOptIC.AL(r = 0.5, mean = est0$estimate[1], sd = est0$estimate[2])
-(est1 <- oneStepEstimator(x, IC1, est0$estimate))
+IC1 <- rlsOptIC.AL(r = 0.5, mean = estimate(est0)[1], sd = estimate(est0)[2])
+(est1 <- oneStepEstimator(x, IC1, est0))
 
 ## 4. one-step estimation: radius unknown
 ## take least favorable radius r = 0.579
 ## cf. Table 8.1 in Kohl(2005)
-IC2 <- rlsOptIC.AL(r = 0.579, mean = est0$estimate[1], sd = est0$estimate[2])
-(est2 <- oneStepEstimator(x, IC2, est0$estimate))
+IC2 <- rlsOptIC.AL(r = 0.579, mean = estimate(est0)[1], sd = estimate(est0)[2])
+(est2 <- oneStepEstimator(x, IC2, est0))
 }
 \concept{normal location and scale}
 \concept{influence curve}

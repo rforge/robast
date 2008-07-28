@@ -15,7 +15,8 @@ exportClasses("InfluenceCurve",
               "ContIC", 
               "TotalVarIC")
 exportClasses("RobAStControl", "RobWeight", "BoundedWeight",
-              "BdStWeight", "HampelWeight") 
+              "BdStWeight", "HampelWeight")
+exportClasses("ALEstimate", "kStepEstimate", "MEstimate")
 exportMethods("show", 
               "plot")
 exportMethods("type", "radius")
@@ -48,6 +49,7 @@ exportMethods("weight", "weight<-",
 exportMethods("getRiskIC")
 exportMethods("getBiasIC")
 exportMethods("comparePlot")
+exportMethods("pIC", "steps", "Mroot")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 
 export("InfluenceCurve", "IC", "ContIC", "TotalVarIC")

@@ -9,13 +9,13 @@ x <- rnorm(10000, mean = -2, sd = 3)
 
 ## location and scale, radius unknown
 res1 <- roblox(x, returnIC = TRUE)
-checkIC(res1$optIC)
+checkIC(pIC(res1))
 
 res11 <- roblox(x, returnIC = TRUE, k = 2)
-checkIC(res11$optIC)
+checkIC(pIC(res11))
 
 res12 <- roblox(x, returnIC = TRUE, k = 5)
-checkIC(res12$optIC)
+checkIC(pIC(res12))
 
 roblox(x)
 roblox(x, k = 2)
@@ -24,13 +24,13 @@ roblox(x, k = 5)
 
 ## location and scale, radius interval
 res2 <- roblox(x, eps.lower = 0.15, eps.upper = 0.3, returnIC = TRUE)
-checkIC(res2$optIC)
+checkIC(pIC(res2))
 
 res21 <- roblox(x, eps.lower = 0.15, eps.upper = 0.3, returnIC = TRUE, k = 2)
-checkIC(res21$optIC)
+checkIC(pIC(res21))
 
 res22 <- roblox(x, eps.lower = 0.15, eps.upper = 0.3, returnIC = TRUE, k = 4)
-checkIC(res22$optIC)
+checkIC(pIC(res22))
 
 roblox(x, eps.lower = 0.15, eps.upper = 0.3)
 roblox(x, eps.lower = 0.15, eps.upper = 0.3, k = 2)
@@ -39,13 +39,13 @@ roblox(x, eps.lower = 0.15, eps.upper = 0.3, k = 4)
 
 ## scale, radius interval
 res3 <- roblox(x, mean = -2, eps.lower = 0.15, eps.upper = 0.3, returnIC = TRUE)
-checkIC(res3$optIC)
+checkIC(pIC(res3))
 
 res31 <- roblox(x, mean = -2, eps.lower = 0.15, eps.upper = 0.3, returnIC = TRUE, k = 3)
-checkIC(res31$optIC)
+checkIC(pIC(res31))
 
 res32 <- roblox(x, mean = -2, eps.lower = 0.15, eps.upper = 0.3, returnIC = TRUE, k = 6)
-checkIC(res32$optIC)
+checkIC(pIC(res32))
 
 roblox(x, mean = -2, eps.lower = 0.15, eps.upper = 0.3)
 roblox(x, mean = -2, eps.lower = 0.15, eps.upper = 0.3, k = 3)
@@ -54,13 +54,13 @@ roblox(x, mean = -2, eps.lower = 0.15, eps.upper = 0.3, k = 6)
 
 ## location, radius interval
 res4 <- roblox(x, sd = 3, eps.lower = 0.15, eps.upper = 0.3, returnIC = TRUE)
-checkIC(res4$optIC)
+checkIC(pIC(res4))
 
 res41 <- roblox(x, sd = 3, eps.lower = 0.15, eps.upper = 0.3, returnIC = TRUE, k = 2)
-checkIC(res41$optIC)
+checkIC(pIC(res41))
 
 res42 <- roblox(x, sd = 3, eps.lower = 0.15, eps.upper = 0.3, returnIC = TRUE, k = 5)
-checkIC(res42$optIC)
+checkIC(pIC(res42))
 
 roblox(x, sd = 3, eps.lower = 0.15, eps.upper = 0.3)
 roblox(x, sd = 3, eps.lower = 0.15, eps.upper = 0.3, k = 2)
@@ -215,7 +215,9 @@ system.time(apply(X, 1, roblox, eps = 0.02))
 system.time(rowRoblox(X, eps = 0.02))
 
 system.time(apply(X, 1, roblox))
+## uses rowMedians of package Biobase if available
 system.time(rowRoblox(X))
+
 M <- apply(X, 1, median)
 S <- apply(X, 1, mad)
 init <- cbind(M, S)

@@ -34,7 +34,7 @@ rlsOptIC.Ha3(r, a.start = 0.25, b.start = 2.5, c.start = 5,
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link[ROptEst]{IC-class}}}
+\seealso{\code{\link[RobAStBase]{IC-class}}}
 \examples{
 IC1 <- rlsOptIC.Ha3(r = 0.1)
 checkIC(IC1)
