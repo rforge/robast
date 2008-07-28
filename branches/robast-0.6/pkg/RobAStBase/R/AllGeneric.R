@@ -25,15 +25,6 @@ if(!isGeneric("Risks<-")){
 if(!isGeneric("addRisk<-")){
     setGeneric("addRisk<-", function(object, value) standardGeneric("addRisk<-"))
 }
-if(!isGeneric("Infos")){
-    setGeneric("Infos", function(object) standardGeneric("Infos"))
-}
-if(!isGeneric("Infos<-")){
-    setGeneric("Infos<-", function(object, value) standardGeneric("Infos<-"))
-}
-if(!isGeneric("addInfo<-")){
-    setGeneric("addInfo<-", function(object, value) standardGeneric("addInfo<-"))
-}
 if(!isGeneric("CallL2Fam")){ 
     setGeneric("CallL2Fam", function(object) standardGeneric("CallL2Fam"))
 }
