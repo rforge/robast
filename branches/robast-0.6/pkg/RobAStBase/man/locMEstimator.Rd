@@ -3,9 +3,9 @@
 \alias{locMEstimator-methods}
 \alias{locMEstimator,numeric,InfluenceCurve-method}
 
-\title{Generic function for the computation of location M estimators}
+\title{Generic function for the computation of location M estimates}
 \description{
-  Generic function for the computation of location M estimators.
+  Generic function for the computation of location M estimates.
 }
 \usage{
 locMEstimator(x, IC, ...)
@@ -19,8 +19,7 @@ locMEstimator(x, IC, ...)
   \item{eps}{ the desired accuracy (convergence tolerance). }  
 }
 %\details{}
-\value{Returns a list with component
-  \item{loc}{ M estimator of location }
+\value{Object of class \code{"MEstimate"}}
 }
 \section{Methods}{
 \describe{
@@ -37,8 +36,9 @@ locMEstimator(x, IC, ...)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{InfluenceCurve-class}}}
+\seealso{\code{\link{InfluenceCurve-class}}, \code{\link{MEstimate-class}} }
 %\examples{}
 \concept{M estimator}
 \concept{estimator}
-\keyword{}
+\keyword{univar}
+\keyword{robust}

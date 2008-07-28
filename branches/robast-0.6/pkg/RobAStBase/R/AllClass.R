@@ -6,27 +6,27 @@
     require("RandVar", character = TRUE, quietly = TRUE)
 }
 
-# neighborhood
+## neighborhood
 setClass("Neighborhood",
             representation(type = "character",
                            radius = "numeric"), 
             contains = "VIRTUAL")
-# unconditional (errors-in-variables) neighborhood
+## unconditional (errors-in-variables) neighborhood
 setClass("UncondNeighborhood", contains = c("Neighborhood", "VIRTUAL"))
-# unconditional convex contamination neighborhood
+## unconditional convex contamination neighborhood
 setClass("ContNeighborhood", contains = "UncondNeighborhood",
             prototype = prototype(type = "(uncond.) convex contamination neighborhood",
                                   radius = 0))
-# unconditional total variation neighborhood
+## unconditional total variation neighborhood
 setClass("TotalVarNeighborhood", contains = "UncondNeighborhood",
             prototype = prototype(type = "(uncond.) total variation neighborhood",
                                   radius = 0))
-# robust model
+## robust model
 setClass("RobModel",
             representation(center = "ProbFamily",
                            neighbor = "Neighborhood"),
             contains = "VIRTUAL")
-# robust model with fixed (unconditional) neighborhood
+## robust model with fixed (unconditional) neighborhood
 setClass("FixRobModel",
             prototype = prototype(center = new("ParamFamily"),
                                   neighbor = new("ContNeighborhood")),
@@ -38,7 +38,7 @@ setClass("FixRobModel",
                     stop("neighborhood radius has to be in [0, 1]")
                 else return(TRUE)
             })
-# robust model with infinitesimal (unconditional) neighborhood
+## robust model with infinitesimal (unconditional) neighborhood
 setClass("InfRobModel",
             prototype = prototype(center = new("L2ParamFamily"),
                                   neighbor = new("ContNeighborhood")),
@@ -50,7 +50,7 @@ setClass("InfRobModel",
                     stop("'radius' has to be in [0, Inf]")
                 else return(TRUE)
             })
-# Weights
+## Weights
 setClass("RobAStControl", representation(name ="character"),
           contains = "VIRTUAL")
 
@@ -66,7 +66,7 @@ setClass("HampelWeight", representation(cent = "numeric"),
 
 
 
-# Influence curve/function with domain: EuclideanSpace
+## Influence curve/function with domain: EuclideanSpace
 setClass("InfluenceCurve", 
             representation(name = "character", 
                            Curve = "EuclRandVarList", 
@@ -84,7 +84,7 @@ setClass("InfluenceCurve",
                     stop("'Infos' must have two columns")
                 else TRUE
             })
-# partial incluence curve
+## partial incluence curve
 setClass("IC", representation(CallL2Fam = "call"),
             prototype(name = "square integrable (partial) influence curve",
                       Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}), 
@@ -104,7 +104,7 @@ setClass("IC", representation(CallL2Fam = "call"),
 
                 return(TRUE)
             })
-# HampIC -- common mother class to ContIC and TotalVarIC 
+## HampIC -- common mother class to ContIC and TotalVarIC 
 setClass("HampIC", 
             representation(stand = "matrix",
                            lowerCase = "OptionalNumeric",
@@ -136,7 +136,7 @@ setClass("HampIC",
                     stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
                 return(TRUE)
             })
-# (partial) influence curve of contamination type
+## (partial) influence curve of contamination type
 setClass("ContIC", 
             representation(clip = "numeric",
                            cent = "numeric"), 
@@ -169,7 +169,7 @@ setClass("ContIC",
                     stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
                 return(TRUE)
             })
-# (partial) influence curve of total variation type
+## (partial) influence curve of total variation type
 setClass("TotalVarIC",
             representation(clipLo = "numeric",
                            clipUp = "numeric"),
@@ -199,4 +199,31 @@ setClass("TotalVarIC",
                 return(TRUE)
             })
 
-
+## ALEstimate
+setClassUnion("OptionalInfluenceCurve", c("InfluenceCurve", "NULL"))
+setClass("ALEstimate", 
+         representation(pIC = "OptionalInfluenceCurve"),
+         prototype(name = "Asymptotically linear estimate",
+                   estimate = numeric(0),
+                   pIC = NULL,
+                   Infos = matrix(c(character(0),character(0)), ncol=2,
+                                  dimnames=list(character(0), c("method", "message")))),
+         contains = "Estimate")
+setClass("kStepEstimate", 
+         representation(steps = "integer"),
+         prototype(name = "k-step estimate",
+                   estimate = numeric(0),
+                   pIC = NULL,
+                   steps = integer(0),
+                   Infos = matrix(c(character(0),character(0)), ncol=2,
+                                  dimnames=list(character(0), c("method", "message")))),
+         contains = "ALEstimate")
+setClass("MEstimate", 
+         representation(Mroot = "numeric"),
+         prototype(name = "M estimate",
+                   estimate = numeric(0),
+                   pIC = NULL,
+                   Mroot = numeric(0),
+                   Infos = matrix(c(character(0),character(0)), ncol=2,
+                                  dimnames=list(character(0), c("method", "message")))),
+         contains = "ALEstimate")

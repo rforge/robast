@@ -10,7 +10,17 @@ setMethod("locMEstimator", signature(x = "numeric", IC = "InfluenceCurve"),
             return(rowSums(evalIC(IC, as.matrix(x-theta))))
         }
         res <- uniroot(f = mest, interval = c(min(x), max(x)), 
-             tol = eps, x = x, IC = IC)$root
+             tol = eps, x = x, IC = IC)
+        if(is(IC, "IC")){
+            L2Fam <- eval(CallL2Fam(IC))
+            Infos <- matrix(c("locMEstimator", 
+                            paste("Location M estimate for", name(L2Fam))))
+            colnames(Infos) <- c("method", "message")
+        }else{
+          Infos <- matrix(c(character(0),character(0)), ncol=2,
+                          dimnames=list(character(0), c("method", "message")))
+        }
 
-        return(list(loc = res))
+        new("MEstimate", name = "Location M estimate", estimate = res$root, 
+            pIC = IC, Mroot = res$f.root, Infos = Infos)
     })

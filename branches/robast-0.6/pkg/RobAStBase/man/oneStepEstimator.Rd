@@ -6,9 +6,9 @@
 \alias{oneStepEstimator,numeric,InfluenceCurve,Estimate-method}
 \alias{oneStepEstimator,matrix,InfluenceCurve,Estimate-method}
 
-\title{Generic function for the computation of one-step estimators}
+\title{Generic function for the computation of one-step estimates}
 \description{
-  Generic function for the computation of one-step estimators.
+  Generic function for the computation of one-step estimates.
 }
 \usage{
 oneStepEstimator(x, IC, start)

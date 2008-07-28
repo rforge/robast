@@ -160,3 +160,12 @@ if(!isGeneric(".evalBiasIC")){
 if(!isGeneric("comparePlot")){
     setGeneric("comparePlot", function(obj1,obj2,...) standardGeneric("comparePlot"))
 }
+if(!isGeneric("pIC")){
+    setGeneric("pIC", function(object) standardGeneric("pIC"))
+}
+if(!isGeneric("steps")){
+    setGeneric("steps", function(object) standardGeneric("steps"))
+}
+if(!isGeneric("Mroot")){
+    setGeneric("Mroot", function(object) standardGeneric("Mroot"))
+}
