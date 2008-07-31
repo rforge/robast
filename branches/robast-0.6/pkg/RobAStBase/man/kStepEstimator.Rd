@@ -1,44 +1,41 @@
-\name{oneStepEstimator}
-\alias{oneStepEstimator}
-\alias{oneStepEstimator-methods}
-\alias{oneStepEstimator,numeric,InfluenceCurve,numeric-method}
-\alias{oneStepEstimator,matrix,InfluenceCurve,numeric-method}
-\alias{oneStepEstimator,numeric,InfluenceCurve,Estimate-method}
-\alias{oneStepEstimator,matrix,InfluenceCurve,Estimate-method}
+\name{kStepEstimator}
+\alias{kStepEstimator}
+\alias{kStepEstimator-methods}
+\alias{kStepEstimator,numeric,IC,numeric-method}
+\alias{kStepEstimator,matrix,IC,numeric-method}
+\alias{kStepEstimator,numeric,IC,Estimate-method}
+\alias{kStepEstimator,matrix,IC,Estimate-method}
 
-\title{Generic function for the computation of one-step estimates}
+\title{Generic function for the computation of k-step estimates}
 \description{
-  Generic function for the computation of one-step estimates.
+  Generic function for the computation of k-step estimates.
 }
 \usage{
-oneStepEstimator(x, IC, start, ...)
+kStepEstimator(x, IC, start, ...)
 
-\S4method{oneStepEstimator}{numeric,InfluenceCurve,numeric}(x, IC, start, 
+\S4method{kStepEstimator}{numeric,IC,numeric}(x, IC, start, steps = 1L, 
     useLast = getRobAStBaseOption("kStepUseLast"))
-\S4method{oneStepEstimator}{matrix,InfluenceCurve,numeric}(x, IC, start, 
+\S4method{kStepEstimator}{matrix,IC,numeric}(x, IC, start, steps = 1L, 
     useLast = getRobAStBaseOption("kStepUseLast"))
-\S4method{oneStepEstimator}{numeric,InfluenceCurve,Estimate}(x, IC, start, 
+\S4method{kStepEstimator}{numeric,IC,Estimate}(x, IC, start, steps = 1L, 
     useLast = getRobAStBaseOption("kStepUseLast"))
-\S4method{oneStepEstimator}{matrix,InfluenceCurve,Estimate}(x, IC, start, 
+\S4method{kStepEstimator}{matrix,IC,Estimate}(x, IC, start, steps = 1L, 
     useLast = getRobAStBaseOption("kStepUseLast"))
 }
 \arguments{
   \item{x}{ sample }
-  \item{IC}{ object of class \code{"InfluenceCurve"} }
+  \item{IC}{ object of class \code{"IC"} }
   \item{start}{ initial estimate }
+  \item{steps}{ integer: number of steps }
   \item{useLast}{ which parameter estimate (initial estimate or
-    one-step estimate) shall be used to fill the slots \code{pIC},
+    k-step estimate) shall be used to fill the slots \code{pIC},
     \code{asvar} and \code{asbias} of the return value. }
-  \item{...}{ additional arguments }
+  \item{...}{ additional parameters }
 }
 \details{
   Given an initial estimation \code{start}, a sample \code{x} 
-  and an influence curve \code{IC} the corresponding one-step
+  and an influence curve \code{IC} the corresponding k-step
   estimator is computed.
-
-  In case \code{IC} is an object of class \code{"IC"}
-  the slots \code{asvar} and \code{asbias} of the return 
-  value are filled (based on the initial estimate).
 
   The default value of argument \code{useLast} is set by the
   global option \code{kStepUseLast} which by default is set to 
@@ -56,18 +53,18 @@ oneStepEstimator(x, IC, start, ...)
   of \code{IC} is filled with some function (which can be 
   used to re-compute the IC for a different parameter), the 
   computation of \code{asvar}, \code{asbias} and \code{IC} is 
-  based on the one-step estimate.
+  based on the k-step estimate.
 }
-\value{Object of class \code{"kStepEstimate"}}
+\value{Object of class \code{"kStepEstimate"}.}
 \section{Methods}{
 \describe{
-  \item{x = "numeric", IC = "InfluenceCurve", start = "numeric"}{ 
+  \item{x = "numeric", IC = "IC", start = "numeric"}{ 
     univariate samples. }
-  \item{x = "matrix", IC = "InfluenceCurve", start = "numeric"}{ 
+  \item{x = "matrix", IC = "IC", start = "numeric"}{ 
     multivariate samples. }
-  \item{x = "matrix", IC = "InfluenceCurve", start = "Estimate"}{ 
+  \item{x = "matrix", IC = "IC", start = "Estimate"}{ 
     multivariate samples. }
-  \item{x = "matrix", IC = "InfluenceCurve", start = "Estimate"}{ 
+  \item{x = "matrix", IC = "IC", start = "Estimate"}{ 
     multivariate samples. }
 }}
 \references{
@@ -78,9 +75,9 @@ oneStepEstimator(x, IC, start, ...)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{InfluenceCurve-class}}, \code{\link{kStepEstimate-class}} }
+\seealso{\code{\link{IC-class}}, \code{\link{kStepEstimate-class}} }
 %\examples{}
-\concept{one-step estimator}
+\concept{k-step estimator}
 \concept{estimator}
 \keyword{univar}
 \keyword{robust}

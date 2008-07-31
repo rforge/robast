@@ -8,8 +8,10 @@ setMethod("getBiasIC", signature(IC = "IC",
              numbeval = 1e5){
 
         misF <- FALSE
-        if(missing(L2Fam))
-           {misF <- TRUE; L2Fam <- eval(IC@CallL2Fam)}
+        if(missing(L2Fam)){
+            misF <- TRUE 
+            L2Fam <- eval(IC@CallL2Fam)
+        }
         D1 <- L2Fam@distribution
         if(dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
@@ -23,7 +25,7 @@ setMethod("getBiasIC", signature(IC = "IC",
         prec <- if(misF) checkIC(IC, out = FALSE) else
                          checkIC(IC, L2Fam, out = FALSE)
         if(prec > tol)
-            warning("The maximum deviation from the exact IC properties is", prec,
+            warning("The maximum deviation from the exact IC properties is ", prec,
                     "\nThis is larger than the specified 'tol' ",
                     "=> the result may be wrong")
         return(list(asBias = list(distribution = .getDistr(L2Fam),

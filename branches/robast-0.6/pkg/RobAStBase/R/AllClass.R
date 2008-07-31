@@ -5,6 +5,10 @@
     require("distrMod", character = TRUE, quietly = TRUE)
     require("RandVar", character = TRUE, quietly = TRUE)
 }
+.onAttach <- function(library, pkg){
+    unlockBinding(".RobAStBaseOptions", asNamespace("RobAStBase"))
+    invisible()
+}
 
 ## neighborhood
 setClass("Neighborhood",
@@ -85,14 +89,16 @@ setClass("InfluenceCurve",
                 else TRUE
             })
 ## partial incluence curve
-setClass("IC", representation(CallL2Fam = "call"),
+setClass("IC", representation(CallL2Fam = "call",
+                              modifyIC = "OptionalFunction"),
             prototype(name = "square integrable (partial) influence curve",
                       Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}), 
                                                Domain = Reals())),
                       Risks = list(),
                       Infos = matrix(c(character(0),character(0)), ncol=2,
                                 dimnames=list(character(0), c("method", "message"))),
-                      CallL2Fam = call("L2ParamFamily")),
+                      CallL2Fam = call("L2ParamFamily"),
+                      modifyIC = NULL),
             contains = "InfluenceCurve",
             validity = function(object){
                 L2Fam <- eval(object@CallL2Fam)
@@ -119,6 +125,7 @@ setClass("HampIC",
                       Infos = matrix(c(character(0),character(0)), ncol=2,
                                 dimnames=list(character(0), c("method", "message"))),
                       CallL2Fam = call("L2ParamFamily"),
+                      modifyIC = NULL,
                       stand = as.matrix(1),
                       lowerCase = NULL,
                       neighborRadius = 0, 
@@ -147,6 +154,7 @@ setClass("ContIC",
                       Infos = matrix(c(character(0),character(0)), ncol=2,
                                 dimnames=list(character(0), c("method", "message"))),
                       CallL2Fam = call("L2ParamFamily"),
+                      modifyIC = NULL,
                       clip = Inf, cent = 0, stand = as.matrix(1),
                       lowerCase = NULL,
                       neighborRadius = 0, weight = new("HampelWeight"),
@@ -180,9 +188,11 @@ setClass("TotalVarIC",
                       Infos = matrix(c(character(0),character(0)), ncol=2,
                                 dimnames=list(character(0), c("method", "message"))),
                       CallL2Fam = call("L2ParamFamily"),
+                      modifyIC = NULL,
                       clipLo = -Inf, clipUp = Inf, stand = as.matrix(1),
                       lowerCase = NULL,
-                      neighborRadius = 0, weight = new("BdStWeight")),
+                      neighborRadius = 0, weight = new("BdStWeight"),
+                      biastype = symmetricBias(), NormType = NormType()),
             contains = "HampIC",
             validity = function(object){
                 if(any(object@neighborRadius < 0)) # radius vector?!
@@ -202,10 +212,15 @@ setClass("TotalVarIC",
 ## ALEstimate
 setClassUnion("OptionalInfluenceCurve", c("InfluenceCurve", "NULL"))
 setClass("ALEstimate", 
-         representation(pIC = "OptionalInfluenceCurve"),
+         representation(pIC = "OptionalInfluenceCurve",
+                        asbias = "OptionalNumeric"),
          prototype(name = "Asymptotically linear estimate",
                    estimate = numeric(0),
+                   samplesize = numeric(0),
+                   asvar = NULL,
+                   asbias = NULL,
                    pIC = NULL,
+                   nuis.idx = NULL,
                    Infos = matrix(c(character(0),character(0)), ncol=2,
                                   dimnames=list(character(0), c("method", "message")))),
          contains = "Estimate")
@@ -213,7 +228,11 @@ setClass("kStepEstimate",
          representation(steps = "integer"),
          prototype(name = "k-step estimate",
                    estimate = numeric(0),
+                   samplesize = numeric(0),
+                   asvar = NULL,
+                   asbias = NULL,
                    pIC = NULL,
+                   nuis.idx = NULL,
                    steps = integer(0),
                    Infos = matrix(c(character(0),character(0)), ncol=2,
                                   dimnames=list(character(0), c("method", "message")))),
@@ -222,7 +241,11 @@ setClass("MEstimate",
          representation(Mroot = "numeric"),
          prototype(name = "M estimate",
                    estimate = numeric(0),
+                   samplesize = numeric(0),
+                   asvar = NULL,
+                   asbias = NULL,
                    pIC = NULL,
+                   nuis.idx = NULL,
                    Mroot = numeric(0),
                    Infos = matrix(c(character(0),character(0)), ncol=2,
                                   dimnames=list(character(0), c("method", "message")))),

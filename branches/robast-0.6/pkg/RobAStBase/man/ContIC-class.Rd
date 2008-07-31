@@ -14,6 +14,7 @@
 \alias{lowerCase<-,ContIC-method}
 \alias{stand<-}
 \alias{stand<-,ContIC-method}
+\alias{neighbor,ContIC-method}
 \alias{generateIC,ContNeighborhood,L2ParamFamily-method}
 \alias{show,ContIC-method}
 
@@ -40,6 +41,12 @@
     \item{\code{name}:}{ object of class \code{"character"} }
 
     \item{\code{Curve}:}{ object of class \code{"EuclRandVarList"}}
+
+    \item{\code{modifyIC}:}{ Object of class \code{"OptionalFunction"}:
+      function of two arguments, which are an L2 parametric family 
+      and an optional influence curve. Returns an object of 
+      class \code{"IC"}. This slot is mainly used for internal
+      computations! }
 
     \item{\code{Risks}:}{ object of class \code{"list"}: 
       list of risks; cf. \code{\link[distrMod]{RiskType-class}}. }
@@ -101,6 +108,10 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
 
     \item{lowerCase<-}{\code{signature(object = "ContIC")}: 
       replacement function for slot \code{lowerCase}. }
+
+    \item{neighbor}{\code{signature(object = "ContIC")}: 
+      generates an object of class \code{"ContNeighborhood"} with
+      radius given in slot \code{neighborRadius}. }
 
     \item{generateIC}{\code{signature(neighbor = "ContNeighborhood", L2Fam = "L2ParamFamily")}:
       generate an object of class \code{"ContIC"}. Rarely called directly. }

@@ -31,7 +31,7 @@ rsOptIC <- function(r, mean = 0, sd = 1, bUp = 1000, delta = 1e-6, itmax = 100,
                  tol = .Machine$double.eps^0.5, r = r, z = z)$root
 
     iter <- 0
-    repeat{    
+    repeat{
         iter <- iter + 1
         if(iter > itmax) 
             stop("Algorithm did not converge => increase 'itmax'!")
@@ -64,18 +64,49 @@ rsOptIC <- function(r, mean = 0, sd = 1, bUp = 1000, delta = 1e-6, itmax = 100,
     if(computeIC){
         w <- new("HampelWeight")
         clip(w) <- b
-        cent(w) <- z-1
+        cent(w) <- (z-1)/sd
         stand(w) <- as.matrix(A)
         weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                biastype = symmetricBias(), 
                                normW = NormType())
+
+        modIC <- function(L2Fam, IC){
+            ICL2Fam <- eval(CallL2Fam(IC))
+#            if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
+            if(is(distribution(L2Fam), "Norm")){
+                sdneu <- main(L2Fam)
+                sdalt <- main(ICL2Fam)
+                w <- weight(IC)
+                clip(w) <- sdneu*clip(w)/sdalt
+                cent(w) <- sdalt*cent(w)/sdneu
+                stand(w) <- sdneu^2*stand(w)/sdalt^2
+                weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = neighborRadius(IC)), 
+                               biastype = biastype(IC), 
+                               normW = normtype(IC))
+                A <- sdneu^2*stand(IC)/sdalt^2
+                b <- sdneu*clip(IC)/sdalt
+                res <- list(A = as.matrix(A), a = sdneu*cent(IC)/sdalt, b = b, d = NULL,
+                            risk = list(asMSE = A, asBias = b, asCov = A - r^2*b^2), 
+                            info = Infos(IC), w = w,
+                            normtype = normtype(IC), biastype = biastype(IC),
+                            modifyIC = modifyIC(IC))
+                IC <- generateIC(neighbor = ContNeighborhood(radius = neighborRadius(IC)),
+                                 L2Fam = L2Fam, res = res)
+                addInfo(IC) <- c("modifyIC", "The IC has been modified")
+                addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
+                return(IC)
+            }else{
+                stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
+            }
+        }
 
         return(generateIC(neighbor = ContNeighborhood(radius = r), 
                     L2Fam = NormScaleFamily(sd = sd, mean = mean), 
                     res = list(A = as.matrix(A), a = a, b = b, d = NULL, 
                                risk = list(asMSE = A, asBias = b, asCov = A - r^2*b^2), 
                                info = c("rlOptIC", "optimally robust IC for AL estimators and 'asMSE'"),
-                               w = w, biastype = symmetricBias(), normtype = NormType())))
+                               w = w, biastype = symmetricBias(), normtype = NormType(),
+                               modifyIC = modIC)))
     }else{
         return(list(A = A, a = a, b = b))
     }

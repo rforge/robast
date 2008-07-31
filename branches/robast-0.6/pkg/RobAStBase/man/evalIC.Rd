@@ -27,4 +27,4 @@ evalIC(IC, x)
 \seealso{\code{\link{IC-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

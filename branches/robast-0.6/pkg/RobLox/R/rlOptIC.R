@@ -18,12 +18,25 @@ rlOptIC <- function(r, mean = 0, sd = 1, bUp = 1000, computeIC = TRUE){
                                biastype = symmetricBias(), 
                                normW = NormType())
 
+        modIC <- function(L2Fam, IC){
+#            if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), "Norm")){
+            if(is(distribution(L2Fam), "Norm")){
+                CallL2New <- call("NormLocationFamily", 
+                                  mean = main(L2Fam))
+                CallL2Fam(IC) <- CallL2New
+                return(IC)
+            }else{
+                stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
+            }
+        }
+
         return(generateIC(neighbor = ContNeighborhood(radius = r), 
                     L2Fam = NormLocationFamily(mean = mean, sd = sd), 
                     res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
                                risk = list(asMSE = A, asBias = b, asCov = A - r^2*b^2), 
                                info = c("rlOptIC", "optimally robust IC for AL estimators and 'asMSE'"),
-                               w = w, biastype = symmetricBias(), normtype = NormType())))
+                               w = w, biastype = symmetricBias(), normtype = NormType(),
+                               modifyIC = modIC)))
     }else{
         return(list(A = A, a = 0, b = b))
     }

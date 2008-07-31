@@ -24,7 +24,7 @@ rlOptIC(r, mean = 0, sd = 1, bUp = 1000, computeIC = TRUE)
 }
 \value{
   If 'computeIC' is 'TRUE' an object of class \code{"ContIC"} is returned, 
-  otherwise a list of Lagrane multipliers
+  otherwise a list of Lagrange multipliers
   \item{A}{ standardizing constant }
   \item{a}{ centering constant; always '= 0' is this symmetric setup }
   \item{b}{ optimal clipping bound }

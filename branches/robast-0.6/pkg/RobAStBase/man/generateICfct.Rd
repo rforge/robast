@@ -30,8 +30,6 @@ generateIC.fct(neighbor, L2Fam, ...)
 \author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
 \seealso{\code{\link[distrMod]{L2ParamFamily-class}}, \code{\link{IC-class}}}
-\examples{
-%
-}
+%\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

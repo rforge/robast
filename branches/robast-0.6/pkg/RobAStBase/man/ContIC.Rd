@@ -17,7 +17,8 @@ ContIC(name, CallL2Fam = call("L2ParamFamily"),
                                                 Domain = Reals())), 
        Risks, Infos, clip = Inf, cent = 0, stand = as.matrix(1), 
        lowerCase = NULL, neighborRadius = 0, w = new("HampelWeight"),
-       normtype = NormType(), biastype = symmetricBias())
+       normtype = NormType(), biastype = symmetricBias(),
+       modifyIC = NULL)
 }
 \arguments{
   \item{name}{ object of class \code{"character"}. }
@@ -38,6 +39,11 @@ ContIC(name, CallL2Fam = call("L2ParamFamily"),
     contamination neighborhood. }
   \item{biastype}{ BiasType: type of the bias}
   \item{normtype}{ NormType: type of the norm}
+  \item{modifyIC}{ object of class \code{"OptionalFunction"}:
+    function of two arguments, which are an L2 parametric family 
+    and an optional influence curve. Returns an object of 
+    class \code{"IC"}. This function is mainly used for internal
+    computations! }
 }
 %\details{}
 \value{Object of class \code{"ContIC"}}
@@ -55,4 +61,4 @@ IC1 <- ContIC()
 plot(IC1)
 }
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

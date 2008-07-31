@@ -8,7 +8,7 @@
 \usage{
 IC(name, Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}), 
                                         Domain = Reals())), 
-   Risks, Infos, CallL2Fam = call("L2ParamFamily"))
+   Risks, Infos, CallL2Fam = call("L2ParamFamily"), modifyIC = NULL)
 }
 \arguments{
   \item{name}{ Object of class \code{"character"}. }
@@ -20,6 +20,11 @@ IC(name, Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}),
       list of risks; cf. \code{\link[distrMod]{RiskType-class}}. }
   \item{Infos}{ matrix of characters with two columns 
     named \code{method} and \code{message}: additional informations. }
+  \item{modifyIC}{ Object of class \code{"OptionalFunction"}:
+    function of two arguments, which are an L2 parametric family 
+    and an optional influence curve. Returns an object of 
+    class \code{"IC"}. This function is mainly used for internal
+    computations! }
 }
 %\details{}
 \value{Object of class \code{"IC"}}
@@ -38,20 +43,6 @@ IC(name, Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}),
 \examples{
 IC1 <- IC()
 plot(IC1)
-
-## The function is currently defined as
-IC <- function(name, Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x})), 
-               Domain = Reals()), Risks, Infos, CallL2Fam = call("L2ParamFamily")){
-    if(missing(name))
-        name <- "square integrable (partial) influence curve"
-    if(missing(Risks))
-        Risks <- list()
-    if(missing(Infos))
-        Infos <- matrix(c(character(0),character(0)), ncol=2,
-                     dimnames=list(character(0), c("method", "message")))
-    return(new("IC", name = name, Curve = Curve, Risks = Risks,
-               Infos = Infos, CallL2Fam = CallL2Fam))
-}
 }
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

@@ -98,3 +98,4 @@ new("InfluenceCurve")
 }
 \concept{influence curve}
 \keyword{classes}
+\keyword{robust}

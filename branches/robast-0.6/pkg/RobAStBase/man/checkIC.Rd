@@ -33,4 +33,4 @@ IC1 <- new("IC")
 checkIC(IC1)
 }
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

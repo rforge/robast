@@ -7,17 +7,14 @@
 \title{Control classes in package RobAStBase}
 \description{Control classes in package \pkg{RobAStBase}.}
 \section{Objects from the Class}{
+  This class is virtual; that is no objects may be created.
 }
 \section{Slots}{
-%  \describe{
-%    \item{\code{CallL2Fam}:}{Object of class \code{"call"}:
-%      creates an object of the underlying L2-differentiable 
-%      parametric family. }
-%  }
+  \describe{
+    \item{\code{name}:}{Object of class \code{"character"}:
+      name of the control object. }
+  }
 }
-%\section{Extends}{
-%Class \code{"InfluenceCurve"}, directly.
-%}
 \section{Methods}{
   \describe{
     \item{name}{\code{signature(object = "RobAStControl")}: 
@@ -39,11 +36,7 @@
 }
 \author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
-\seealso{
-%
-}
-\examples{
-%
-}
+%\seealso{}
+%\examples{}
 \concept{influence curve}
 \keyword{classes}

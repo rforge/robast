@@ -49,7 +49,8 @@ Class \code{"BoundedWeight"}, directly.
 \seealso{\code{\link{BoundedWeight-class}}, \code{\link{RobWeight-class}},
          \code{\link{IC}}, \code{\link{InfluenceCurve-class}}}
 \examples{
-%
+## prototype
+new("BdStWeight")
 }
 \concept{influence curve}
 \keyword{classes}
