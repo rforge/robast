@@ -43,12 +43,18 @@ setMethod("kStepEstimator", signature(x = "numeric",
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
-                asVar <- Risks(IC)$asCov
+                if(length(Risks(IC)$asCov) == 1)
+                    asVar <- Risks(IC)$asCov
+                else
+                    asVar <- Risks(IC)$asCov$value
             else
                 asVar <- getRiskIC(IC, risk = asCov())$asCov$value
 
             if("asBias" %in% names(Risks(IC))){
-                asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                if(length(Risks(IC)$asBias) == 1)
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                else
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias$value
             }else{
                 if(is(IC, "HampIC")){
                     r <- neighborRadius(IC)
@@ -86,12 +92,18 @@ setMethod("kStepEstimator", signature(x = "numeric",
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
-                asVar <- Risks(IC)$asCov
+                if(length(Risks(IC)$asCov) == 1)
+                    asVar <- Risks(IC)$asCov
+                else
+                    asVar <- Risks(IC)$asCov$value
             else
                 asVar <- getRiskIC(IC, risk = asCov())$asCov$value
 
             if("asBias" %in% names(Risks(IC))){
-                asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                if(length(Risks(IC)$asBias) == 1)
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                else
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias$value
             }else{
                 if(is(IC, "HampIC")){
                     r <- neighborRadius(IC)
@@ -151,12 +163,18 @@ setMethod("kStepEstimator", signature(x = "matrix",
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
-                asVar <- Risks(IC)$asCov
+                if(length(Risks(IC)$asCov) == 1)
+                    asVar <- Risks(IC)$asCov
+                else
+                    asVar <- Risks(IC)$asCov$value
             else
                 asVar <- getRiskIC(IC, risk = asCov())$asCov$value
 
             if("asBias" %in% names(Risks(IC))){
-                asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                if(length(Risks(IC)$asBias) == 1)
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                else
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias$value
             }else{
                 if(is(IC, "HampIC")){
                     r <- neighborRadius(IC)
@@ -194,12 +212,18 @@ setMethod("kStepEstimator", signature(x = "matrix",
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
-                asVar <- Risks(IC)$asCov
+                if(length(Risks(IC)$asCov) == 1)
+                    asVar <- Risks(IC)$asCov
+                else
+                    asVar <- Risks(IC)$asCov$value
             else
                 asVar <- getRiskIC(IC, risk = asCov())$asCov$value
 
             if("asBias" %in% names(Risks(IC))){
-                asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                if(length(Risks(IC)$asBias) == 1)
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                else
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias$value
             }else{
                 if(is(IC, "HampIC")){
                     r <- neighborRadius(IC)
@@ -257,12 +281,18 @@ setMethod("kStepEstimator", signature(x = "numeric",
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
-                asVar <- Risks(IC)$asCov
+                if(length(Risks(IC)$asCov) == 1)
+                    asVar <- Risks(IC)$asCov
+                else
+                    asVar <- Risks(IC)$asCov$value
             else
                 asVar <- getRiskIC(IC, risk = asCov())$asCov$value
 
             if("asBias" %in% names(Risks(IC))){
-                asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                if(length(Risks(IC)$asBias) == 1)
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                else
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias$value
             }else{
                 if(is(IC, "HampIC")){
                     r <- neighborRadius(IC)
@@ -300,12 +330,18 @@ setMethod("kStepEstimator", signature(x = "numeric",
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
-                asVar <- Risks(IC)$asCov
+                if(length(Risks(IC)$asCov) == 1)
+                    asVar <- Risks(IC)$asCov
+                else
+                    asVar <- Risks(IC)$asCov$value
             else
                 asVar <- getRiskIC(IC, risk = asCov())$asCov$value
 
             if("asBias" %in% names(Risks(IC))){
-                asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                if(length(Risks(IC)$asBias) == 1)
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                else
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias$value
             }else{
                 if(is(IC, "HampIC")){
                     r <- neighborRadius(IC)
@@ -365,12 +401,18 @@ setMethod("kStepEstimator", signature(x = "matrix",
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
-                asVar <- Risks(IC)$asCov
+                if(length(Risks(IC)$asCov) == 1)
+                    asVar <- Risks(IC)$asCov
+                else
+                    asVar <- Risks(IC)$asCov$value
             else
                 asVar <- getRiskIC(IC, risk = asCov())$asCov$value
 
             if("asBias" %in% names(Risks(IC))){
-                asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                if(length(Risks(IC)$asBias) == 1)
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                else
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias$value
             }else{
                 if(is(IC, "HampIC")){
                     r <- neighborRadius(IC)
@@ -408,12 +450,18 @@ setMethod("kStepEstimator", signature(x = "matrix",
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
-                asVar <- Risks(IC)$asCov
+                if(length(Risks(IC)$asCov) == 1)
+                    asVar <- Risks(IC)$asCov
+                else
+                    asVar <- Risks(IC)$asCov$value
             else
                 asVar <- getRiskIC(IC, risk = asCov())$asCov$value
 
             if("asBias" %in% names(Risks(IC))){
-                asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                if(length(Risks(IC)$asBias) == 1)
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias
+                else
+                    asBias <- neighborRadius(IC)*Risks(IC)$asBias$value
             }else{
                 if(is(IC, "HampIC")){
                     r <- neighborRadius(IC)
