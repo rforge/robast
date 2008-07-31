@@ -212,6 +212,7 @@ colRoblox(X, eps = 0.057, k = 3)
 ## some timings
 X <- matrix(rnorm(1e5, mean = -1, sd = 3), ncol = 100)
 system.time(apply(X, 1, roblox, eps = 0.02))
+## uses rowMedians of package Biobase if available
 system.time(rowRoblox(X, eps = 0.02))
 
 system.time(apply(X, 1, roblox))
