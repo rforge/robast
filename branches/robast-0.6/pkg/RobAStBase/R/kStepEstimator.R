@@ -63,7 +63,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
                     asBias <- NULL
                 }
             }
-            return(new("kStepEstimator", 
+            return(new("kStepEstimate", 
                        name = paste(steps, "-step estimate", sep = ""),
                        estimate = res, samplesize = length(x), asvar = asVar,
                        asbias = asBias, pIC = IC, steps = 1L, Infos = Infos))
@@ -183,7 +183,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
                     asBias <- NULL
                 }
             }
-            return(new("kStepEstimator", 
+            return(new("kStepEstimate", 
                        name = paste(steps, "-step estimate", sep = ""),
                        estimate = res, samplesize = ncol(x), asvar = asVar,
                        asbias = asBias, pIC = IC, steps = 1L, Infos = Infos))
@@ -301,7 +301,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
                     asBias <- NULL
                 }
             }
-            return(new("kStepEstimator", 
+            return(new("kStepEstimate", 
                        name = paste(steps, "-step estimate", sep = ""),
                        estimate = res, samplesize = length(x), asvar = asVar,
                        asbias = asBias, pIC = IC, steps = 1L, Infos = Infos))
@@ -421,7 +421,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
                     asBias <- NULL
                 }
             }
-            return(new("kStepEstimator", 
+            return(new("kStepEstimate", 
                        name = paste(steps, "-step estimate", sep = ""),
                        estimate = res, samplesize = ncol(x), asvar = asVar,
                        asbias = asBias, pIC = IC, steps = 1L, Infos = Infos))

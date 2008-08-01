@@ -125,24 +125,30 @@ IC10 <- optIC(model=RobB4, risk=asMSE())
 ## 3.2. k-step estimation: radius known
 IC9 <- optIC(model=RobB3, risk=asMSE())
 (est2c <- kStepEstimator(x, IC=IC9, start=est0, steps = 3L))
+checkIC(pIC(est2c))
 
 IC10 <- optIC(model=RobB4, risk=asMSE())
 (est2v <- kStepEstimator(x, IC=IC10, start=est0, steps = 3L))
+checkIC(pIC(est2v))
 
 ## 4.1. one-step estimation: radius interval
 IC11 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=estimate(est0)),
                 neighbor=ContNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
 (est3c <- oneStepEstimator(x, IC=IC11, start=est0))
+checkIC(pIC(est3c))
 
 IC12 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=estimate(est0)),
                 neighbor=TotalVarNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
 (est3v <- oneStepEstimator(x, IC=IC12, start=est0))
+checkIC(pIC(est3v))
 
 ## 4.2. k-step estimation: radius interval
 IC11 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=estimate(est0)),
                 neighbor=ContNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
 (est4c <- kStepEstimator(x, IC=IC11, start=est0, steps = 3L))
+checkIC(pIC(est4c))
 
 IC12 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=estimate(est0)),
                 neighbor=TotalVarNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
 (est4v <- kStepEstimator(x, IC=IC12, start=est0, steps = 3L))
+checkIC(pIC(est4v))
