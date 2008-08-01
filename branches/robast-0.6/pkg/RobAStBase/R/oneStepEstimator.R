@@ -37,7 +37,7 @@ setMethod("oneStepEstimator", signature(x = "numeric",
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
-                if(length(Risks(IC)$asCov) == 1)
+                if(is.matrix(Risks(IC)$asCov) || length(Risks(IC)$asCov) == 1)
                     asVar <- Risks(IC)$asCov
                 else
                     asVar <- Risks(IC)$asCov$value
@@ -106,7 +106,7 @@ setMethod("oneStepEstimator", signature(x = "matrix",
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
-                if(length(Risks(IC)$asCov) == 1)
+                if(is.matrix(Risks(IC)$asCov) || length(Risks(IC)$asCov) == 1)
                     asVar <- Risks(IC)$asCov
                 else
                     asVar <- Risks(IC)$asCov$value
@@ -174,7 +174,7 @@ setMethod("oneStepEstimator", signature(x = "numeric",
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
-                if(length(Risks(IC)$asCov) == 1)
+                if(is.matrix(Risks(IC)$asCov) || length(Risks(IC)$asCov) == 1)
                     asVar <- Risks(IC)$asCov
                 else
                     asVar <- Risks(IC)$asCov$value
@@ -244,7 +244,7 @@ setMethod("oneStepEstimator", signature(x = "matrix",
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
-                if(length(Risks(IC)$asCov) == 1)
+                if(is.matrix(Risks(IC)$asCov) || length(Risks(IC)$asCov) == 1)
                     asVar <- Risks(IC)$asCov
                 else
                     asVar <- Risks(IC)$asCov$value
