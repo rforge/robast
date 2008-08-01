@@ -59,4 +59,4 @@ radiusMinimaxIC(L2Fam=N, neighbor=ContNeighborhood(),
 }
 \concept{radius minimax influence curve}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

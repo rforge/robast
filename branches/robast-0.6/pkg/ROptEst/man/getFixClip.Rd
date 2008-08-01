@@ -46,4 +46,4 @@ getFixClip(clip, Distr, risk, neighbor,  ...)
 \seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link[RobAStBase]{TotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

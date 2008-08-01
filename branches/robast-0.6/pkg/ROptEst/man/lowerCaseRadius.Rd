@@ -66,4 +66,4 @@ lowerCaseRadius(BinomFamily(size = 10), ContNeighborhood(), asMSE())
 lowerCaseRadius(BinomFamily(size = 10), TotalVarNeighborhood(), asMSE())
 }
 \concept{lower case radius}
-\keyword{}
+\keyword{robust}

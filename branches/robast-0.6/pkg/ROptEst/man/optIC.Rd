@@ -84,4 +84,4 @@ checkIC(IC0, B)
 }
 \concept{robust influence curve}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

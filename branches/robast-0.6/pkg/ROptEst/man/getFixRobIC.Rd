@@ -48,4 +48,4 @@ getFixRobIC(Distr, risk, neighbor, ...)
 \seealso{\code{\link[RobAStBase]{FixRobModel-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

@@ -65,4 +65,4 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
 %\note{}
 \seealso{\code{\link{radiusMinimaxIC}}, \code{\link{leastFavorableRadius}}}
 %\examples{}
-\keyword{}
+\keyword{robust}

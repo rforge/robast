@@ -83,4 +83,4 @@ getInfCent(L2deriv, neighbor, biastype, ...)
 \seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link[RobAStBase]{TotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

@@ -94,4 +94,4 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
 \seealso{\code{\link[RobAStBase]{InfRobModel-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

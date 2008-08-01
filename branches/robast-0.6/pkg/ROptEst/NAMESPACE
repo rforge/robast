@@ -25,3 +25,4 @@ exportMethods("optIC",
               "getL1normL2deriv")
 exportMethods("updateNorm")
 export("getL2normL2deriv")
+export("roptest")

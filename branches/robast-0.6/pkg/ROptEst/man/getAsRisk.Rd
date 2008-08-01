@@ -77,7 +77,8 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
   \item{warn}{ logical: print warnings. }
   \item{normtype}{ object of class \code{"NormType"}. }
 }
-%\details{}
+\details{ This function is rarely called directly. It is used by 
+  other functions/methods. }
 \value{The asymptotic risk is computed.}
 \section{Methods}{
 \describe{
@@ -147,4 +148,4 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
 %\examples{}
 \concept{asymptotic risk}
 \concept{risk}
-\keyword{}
+\keyword{robust}

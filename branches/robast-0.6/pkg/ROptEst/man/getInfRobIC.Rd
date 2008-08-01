@@ -151,4 +151,4 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 \seealso{\code{\link[RobAStBase]{InfRobModel-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

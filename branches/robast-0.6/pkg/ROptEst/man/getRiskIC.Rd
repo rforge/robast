@@ -55,4 +55,4 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
 \seealso{\code{\link[ROptEst]{getRiskIC-methods}}, \code{\link[RobAStBase]{InfRobModel-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

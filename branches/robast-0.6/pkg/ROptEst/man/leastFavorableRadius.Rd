@@ -66,4 +66,4 @@ leastFavorableRadius(L2Fam=N, neighbor=ContNeighborhood(),
                      risk=asMSE(), rho=0.5)
 }
 \concept{least favorable radius}
-\keyword{}
+\keyword{robust}
