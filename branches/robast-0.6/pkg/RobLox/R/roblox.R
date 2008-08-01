@@ -204,13 +204,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
         if((eps < 0) || (eps > 0.5))
             stop("'eps' has to be in (0, 0.5]")
     }
+    if(!is.integer(k))
+        k <- as.integer(k)
     if(k < 1){
-      stop("'k' has to be some positive integer value")
+        stop("'k' has to be some positive integer value")
     }
     if(length(k) != 1){
-      stop("'k' has to be of length 1")
+        stop("'k' has to be of length 1")
     }
-    k <- as.integer(k)
 
     if(missing(mean) && missing(sd)){
         if(missing(initial.est)){
