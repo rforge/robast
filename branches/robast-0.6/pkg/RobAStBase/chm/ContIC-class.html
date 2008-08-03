@@ -19,6 +19,7 @@
 <param name="keyword" value="R:   lowerCase<-,ContIC-method">
 <param name="keyword" value="R:   stand<-">
 <param name="keyword" value="R:   stand<-,ContIC-method">
+<param name="keyword" value="R:   neighbor,ContIC-method">
 <param name="keyword" value="R:   generateIC,ContNeighborhood,L2ParamFamily-method">
 <param name="keyword" value="R:   show,ContIC-method">
 <param name="keyword" value=" Influence curve of contamination type">
@@ -64,6 +65,13 @@ parametric family. </dd>
 <dt><code>Curve</code>:</dt><dd>object of class <code>"EuclRandVarList"</code></dd>
 
 
+<dt><code>modifyIC</code>:</dt><dd>Object of class <code>"OptionalFunction"</code>:
+function of two arguments, which are an L2 parametric family 
+and an optional influence curve. Returns an object of 
+class <code>"IC"</code>. This slot is mainly used for internal
+computations! </dd>
+
+
 <dt><code>Risks</code>:</dt><dd>object of class <code>"list"</code>: 
 list of risks; cf. <code><a onclick="findlink('distrMod', 'RiskType-class.html')" style="text-decoration: underline; color: blue; cursor: hand">RiskType-class</a></code>. </dd>
 
@@ -87,8 +95,12 @@ standardizing matrix. </dd>
 
 <dt><code>weight</code>:</dt><dd>object of class <code>"HampelWeight"</code>:
 weight function </dd>
+
+
 <dt><code>biastype</code>:</dt><dd>object of class <code>"BiasType"</code>:
 bias type (symmetric/onsided/asymmetric) </dd>
+
+
 <dt><code>normtype</code>:</dt><dd>object of class <code>"NormType"</code>:
 norm type (Euclidean, information/self-standardized)</dd>
 
@@ -140,6 +152,11 @@ replacement function for slot <code>stand</code>. </dd>
 
 <dt>lowerCase&lt;-</dt><dd><code>signature(object = "ContIC")</code>: 
 replacement function for slot <code>lowerCase</code>. </dd>
+
+
+<dt>neighbor</dt><dd><code>signature(object = "ContIC")</code>: 
+generates an object of class <code>"ContNeighborhood"</code> with
+radius given in slot <code>neighborRadius</code>. </dd>
 
 
 <dt>generateIC</dt><dd><code>signature(neighbor = "ContNeighborhood", L2Fam = "L2ParamFamily")</code>:

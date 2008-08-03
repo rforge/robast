@@ -490,6 +490,10 @@
 <param name="Local" value="radiusMinimaxIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="roptest">
+<param name="Local" value="roptest.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="updateNorm">
 <param name="Local" value="updateNorm-methods.html">
 </OBJECT>
@@ -581,6 +585,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Methods for Function updateNorm in Package `ROptEst' ">
 <param name="Local" value="updateNorm-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Optimally robust estimation ">
+<param name="Local" value="roptest.html">
 </OBJECT>
 </UL>
 </UL>

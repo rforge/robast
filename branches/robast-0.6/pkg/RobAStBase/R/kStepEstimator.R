@@ -5,6 +5,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
                                       IC = "IC",
                                       start = "numeric"),
     function(x, IC, start, steps = 1L, useLast = getRobAStBaseOption("kStepUseLast")){
+        es.call <- match.call()
         if(!is.integer(steps))
           steps <- as.integer(steps)
         if(steps < 1)
@@ -64,6 +65,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
                 }
             }
             return(new("kStepEstimate", 
+                               estimate.call = es.call,
                        name = paste(steps, "-step estimate", sep = ""),
                        estimate = res, samplesize = length(x), asvar = asVar,
                        asbias = asBias, pIC = IC, steps = 1L, Infos = Infos))
@@ -113,6 +115,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
                 }
             }
             return(new("kStepEstimate", 
+                               estimate.call = es.call,
                        name = paste(steps, "-step estimate", sep = ""),
                        estimate = res, samplesize = length(x), asvar = asVar,
                        asbias = asBias, pIC = IC, steps = steps, Infos = Infos))
@@ -184,6 +187,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
                 }
             }
             return(new("kStepEstimate", 
+                               estimate.call = es.call,
                        name = paste(steps, "-step estimate", sep = ""),
                        estimate = res, samplesize = ncol(x), asvar = asVar,
                        asbias = asBias, pIC = IC, steps = 1L, Infos = Infos))
@@ -233,6 +237,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
                 }
             }
             return(new("kStepEstimate", 
+                               estimate.call = es.call,
                        name = paste(steps, "-step estimate", sep = ""),
                        estimate = res, samplesize = ncol(x), asvar = asVar,
                        asbias = asBias, pIC = IC, steps = steps, Infos = Infos))
@@ -302,6 +307,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
                 }
             }
             return(new("kStepEstimate", 
+                               estimate.call = es.call,
                        name = paste(steps, "-step estimate", sep = ""),
                        estimate = res, samplesize = length(x), asvar = asVar,
                        asbias = asBias, pIC = IC, steps = 1L, Infos = Infos))
@@ -351,6 +357,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
                 }
             }
             return(new("kStepEstimate", 
+                               estimate.call = es.call,
                        name = paste(steps, "-step estimate", sep = ""),
                        estimate = res, samplesize = length(x), asvar = asVar,
                        asbias = asBias, pIC = IC, steps = steps, Infos = Infos))
@@ -422,6 +429,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
                 }
             }
             return(new("kStepEstimate", 
+                               estimate.call = es.call,
                        name = paste(steps, "-step estimate", sep = ""),
                        estimate = res, samplesize = ncol(x), asvar = asVar,
                        asbias = asBias, pIC = IC, steps = 1L, Infos = Infos))
@@ -471,6 +479,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
                 }
             }
             return(new("kStepEstimate", 
+                               estimate.call = es.call,
                        name = paste(steps, "-step estimate", sep = ""),
                        estimate = res, samplesize = ncol(x), asvar = asVar,
                        asbias = asBias, pIC = IC, steps = steps, Infos = Infos))

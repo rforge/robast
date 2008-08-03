@@ -5,6 +5,7 @@ setMethod("oneStepEstimator", signature(x = "numeric",
                                         IC = "InfluenceCurve",
                                         start = "numeric"),
     function(x, IC, start, useLast = getRobAStBaseOption("kStepUseLast")){
+    es.call <- match.call()
         nrvalues <- dimension(IC@Curve)
         if(is.list(start)) start <- unlist(start)
         if(nrvalues != length(start))
@@ -65,6 +66,7 @@ setMethod("oneStepEstimator", signature(x = "numeric",
         }
 
         new("kStepEstimate", name = "1-step estimate", estimate = res, 
+                               estimate.call = es.call,
             samplesize = length(x), asvar = asVar, asbias = asBias, pIC = IC, 
             steps = 1L, Infos = Infos)
     })
@@ -134,6 +136,7 @@ setMethod("oneStepEstimator", signature(x = "matrix",
         }
 
         new("kStepEstimate", name = "1-step estimate", estimate = res, 
+                               estimate.call = es.call,
             samplesize = ncol(x), asvar = asVar, asbias = asBias, pIC = IC, steps = 1L, 
             Infos = Infos)
     })
@@ -202,6 +205,7 @@ setMethod("oneStepEstimator", signature(x = "numeric",
         }
 
         new("kStepEstimate", name = "1-step estimate", estimate = res, 
+                               estimate.call = es.call,
             samplesize = length(x), asvar = asVar, asbias = asBias, pIC = IC, steps = 1L, 
             Infos = Infos)
     })
@@ -272,6 +276,7 @@ setMethod("oneStepEstimator", signature(x = "matrix",
         }
 
         new("kStepEstimate", name = "1-step estimate", estimate = res, 
+                               estimate.call = es.call,
             samplesize = ncol(x), asvar = asVar, asbias = asBias, pIC = IC, steps = 1L, 
             Infos = Infos)
     })

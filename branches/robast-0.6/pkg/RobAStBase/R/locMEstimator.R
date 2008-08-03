@@ -3,6 +3,7 @@
 ###############################################################################
 setMethod("locMEstimator", signature(x = "numeric", IC = "InfluenceCurve"),
     function(x, IC, eps = .Machine$double.eps^0.5){
+    es.call <- match.call()
         if(numberOfMaps(IC@Curve) > 1)
             stop("number of Maps of 'IC' has to be 1")
 
@@ -25,8 +26,8 @@ setMethod("locMEstimator", signature(x = "numeric", IC = "InfluenceCurve"),
             colnames(Infos) <- c("method", "message")
             asvar <- NULL
         }
-
         new("MEstimate", name = "Location M estimate", estimate = res$root, 
+                               estimate.call = es.call,
             pIC = IC, Mroot = res$f.root, Infos = Infos, samplesize = length(x),
             asvar = asVar, asbias = asBias)
     })
