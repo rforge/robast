@@ -72,6 +72,7 @@
 ## Evaluate roblox on rows of a matrix
 ###############################################################################
 rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1){
+    es.call <- match.call()
     if(missing(x))
         stop("'x' is missing with no default")
     if(is.data.frame(x))
@@ -158,7 +159,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                                           "and 'asMSE'")),
                                   ncol = 2, dimnames = list(NULL, c("method", "message")))
             return(new("kStepEstimate", name = "Optimally robust estimate",
-                       estimate = robEst$est, samplesize = ncol(x), steps = k, 
+                       estimate.call = es.call, estimate = robEst$est, 
+                       samplesize = ncol(x), steps = k, 
                        pIC = NULL, Infos = Info.matrix))
 ## we need a class like "list of estimates" to set asvar and asbias consistently ...
 #            return(new("kStepEstimate", name = "Optimally robust estimate",
@@ -209,7 +211,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                                   paste("maximum MSE-inefficiency: ", round(ineff[1], 3), sep = "")), 
                                   ncol = 2, dimnames = list(NULL, c("method", "message")))
             return(new("kStepEstimate", name = "Optimally robust estimate",
-                       estimate = robEst$est, samplesize = ncol(x), steps = k, 
+                       estimate.call = es.call, estimate = robEst$est, #
+                       samplesize = ncol(x), steps = k, 
                        pIC = NULL, Infos = Info.matrix))
 ## we need a class like "list of estimates" to set asvar and asbias consistently ...
 #            return(new("kStepEstimate", name = "Optimally robust estimate",
@@ -252,7 +255,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                                               "and 'asMSE'")),
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
                 return(new("kStepEstimate", name = "Optimally robust estimate",
-                           estimate = robEst, samplesize = ncol(x), steps = k, 
+                           estimate.call = es.call, estimate = robEst, 
+                           samplesize = ncol(x), steps = k, 
                            pIC = NULL, Infos = Info.matrix))
 ## we need a class like "list of estimates" to set asvar and asbias consistently ...
 #                return(new("kStepEstimate", name = "Optimally robust estimate",
@@ -294,7 +298,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                                       paste("maximum MSE-inefficiency: ", round(ineff[1], 3), sep = "")), 
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
                 return(new("kStepEstimate", name = "Optimally robust estimate",
-                           estimate = robEst, samplesize = ncol(x), steps = k, 
+                           estimate.call = es.call, estimate = robEst, 
+                           samplesize = ncol(x), steps = k, 
                            pIC = NULL, Infos = Info.matrix))
 ## we need a class like "list of estimates" to set asvar and asbias consistently ...
 #                return(new("kStepEstimate", name = "Optimally robust estimate",
@@ -342,7 +347,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                                               "and 'asMSE'")),
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
                 return(new("kStepEstimate", name = "Optimally robust estimate",
-                           estimate = robEst$est, samplesize = ncol(x), steps = k, 
+                           estimate.call = es.call, estimate = robEst$est, 
+                           samplesize = ncol(x), steps = k, 
                            pIC = NULL, Infos = Info.matrix))
 ## we need a class like "list of estimates" to set asvar and asbias consistently ...
 #                return(new("kStepEstimate", name = "Optimally robust estimate",
@@ -387,7 +393,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                                       paste("maximum MSE-inefficiency: ", round(ineff[1], 3), sep = "")), 
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
                 return(new("kStepEstimate", name = "Optimally robust estimate",
-                           estimate = robEst$est, samplesize = ncol(x), steps = k, 
+                           estimate.call = es.call, estimate = robEst$est, 
+                           samplesize = ncol(x), steps = k, 
                            pIC = NULL, Infos = Info.matrix))
 ## we need a class like "list of estimates" to set asvar and asbias consistently ...
 #                return(new("kStepEstimate", name = "Optimally robust estimate",

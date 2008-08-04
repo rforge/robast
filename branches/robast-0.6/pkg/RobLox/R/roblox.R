@@ -308,14 +308,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                       info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
                                       w = w, biastype = symmetricBias(), normtype = NormType(),
                                       modifyIC = modIC))
-                return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call,
-                           estimate = robEst$est, samplesize = length(x), asvar = robEst$asvar,
+                return(new("kStepEstimate", name = "Optimally robust estimate", 
+                           estimate.call = es.call, estimate = robEst$est, 
+                           samplesize = length(x), asvar = robEst$asvar,
                            asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix))
             }else
-                return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call,
-                           estimate = robEst$est, samplesize = length(x), asvar = robEst$asvar,
+                return(new("kStepEstimate", name = "Optimally robust estimate", 
+                           estimate.call = es.call, estimate = robEst$est, 
+                           samplesize = length(x), asvar = robEst$asvar,
                            asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix))
         }else{
             sqrtn <- sqrt(length(x))
@@ -422,14 +422,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                       paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
                                       paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
-                return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call,
-                           estimate = robEst$est, samplesize = length(x), asvar = robEst$asvar,
+                return(new("kStepEstimate", name = "Optimally robust estimate", 
+                           estimate.call = es.call, estimate = robEst$est, 
+                           samplesize = length(x), asvar = robEst$asvar,
                            asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix))
             }else
-                return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call,
-                           estimate = robEst$est, samplesize = length(x), asvar = robEst$asvar,
+                return(new("kStepEstimate", name = "Optimally robust estimate", 
+                           estimate.call = es.call, estimate = robEst$est, 
+                           samplesize = length(x), asvar = robEst$asvar,
                            asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix))
         }
     }else{
@@ -488,15 +488,13 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                           w = w, biastype = symmetricBias(), normtype = NormType(),
                                           modifyIC = modIC))
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call,
-                               estimate = robEst, samplesize = length(x), 
-                               asvar = as.matrix(A-r^2*b^2),
+                               estimate.call = es.call, estimate = robEst, 
+                               samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
                                asbias = r*b, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call,
-                               estimate = robEst, samplesize = length(x), 
-                               asvar = as.matrix(A-r^2*b^2),
+                               estimate.call = es.call, estimate = robEst, 
+                               samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
                                asbias = r*b, steps = k, pIC = NULL, Infos = Info.matrix))
             }else{
                 sqrtn <- sqrt(length(x))
@@ -566,15 +564,13 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                  paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call,
-                               estimate = robEst, samplesize = length(x), 
-                               asvar = as.matrix(A-r^2*b^2),
+                               estimate.call = es.call, estimate = robEst, 
+                               samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
                                asbias = r*b, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call,
-                               estimate = robEst, samplesize = length(x), 
-                               asvar = as.matrix(A-r^2*b^2),
+                               estimate.call = es.call, estimate = robEst, 
+                               samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
                                asbias = r*b, steps = k, pIC = NULL, Infos = Info.matrix))
             }
         }
@@ -658,15 +654,13 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                           w = w, biastype = symmetricBias(), normtype = NormType(),
                                           modifyIC = modIC))
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call,
-                               estimate = robEst$est, samplesize = length(x), 
-                               asvar = as.matrix(robEst$A-r^2*robEst$b^2),
+                               estimate.call = es.call, estimate = robEst$est, 
+                               samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
                                asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call,
-                               estimate = robEst$est, samplesize = length(x), 
-                               asvar = as.matrix(robEst$A-r^2*robEst$b^2),
+                               estimate.call = es.call, estimate = robEst$est, 
+                               samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
                                asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix))
             }else{
                 sqrtn <- sqrt(length(x))
@@ -758,15 +752,13 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                  paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call,
-                               estimate = robEst$est, samplesize = length(x), 
-                               asvar = as.matrix(robEst$A-r^2*robEst$b^2),
+                               estimate.call = es.call, estimate = robEst$est, 
+                               samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
                                asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call,
-                               estimate = robEst$est, samplesize = length(x), 
-                               asvar = as.matrix(robEst$A-r^2*robEst$b^2),
+                               estimate.call = es.call, estimate = robEst$est, 
+                               samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
                                asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix))
             }
         }
