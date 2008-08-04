@@ -3,6 +3,7 @@
 \alias{kStepEstimate-class}
 \alias{steps}
 \alias{steps,kStepEstimate-method}
+\alias{show,kStepEstimate-method}
 
 \title{kStepEstimate-class.}
 \description{Class of asymptotically linear estimates.}
@@ -42,6 +43,8 @@ Class \code{"Estimate"}, by class \code{"ALEstimate"}
   \describe{
     \item{steps}{\code{signature(object = "kStepEstimate")}: 
       accessor function for slot \code{steps}. }
+
+    \item{show}{\code{signature(object = "kStepEstimate")} }
   }
 }
 %\references{}

@@ -3,6 +3,7 @@
 \alias{MEstimate-class}
 \alias{Mroot}
 \alias{Mroot,MEstimate-method}
+\alias{show,MEstimate-method}
 
 \title{MEstimate-class.}
 \description{Class of asymptotically linear estimates.}
@@ -42,12 +43,17 @@ Class \code{"Estimate"}, by class \code{"ALEstimate"}.
   \describe{
     \item{Mroot}{\code{signature(object = "MEstimate")}: 
       accessor function for slot \code{Mroot}. }
+
+    \item{show}{\code{signature(object = "MEstimate")} }
   }
 }
 %\references{}
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
 \seealso{\code{\link{ALEstimate-class}}}
-%\examples{}
+\examples{
+## prototype
+new("MEstimate")
+}
 \concept{estimate}
 \keyword{classes}

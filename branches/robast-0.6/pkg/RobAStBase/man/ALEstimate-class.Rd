@@ -5,6 +5,7 @@
 \alias{pIC,ALEstimate-method}
 \alias{asbias}
 \alias{asbias,ALEstimate-method}
+\alias{show,ALEstimate-method}
 
 \title{ALEstimate-class.}
 \description{Class of asymptotically linear estimates.}
@@ -39,6 +40,8 @@ Class \code{"Estimate"}, directly.
   \describe{
     \item{pIC}{\code{signature(object = "ALEstimate")}: 
       accessor function for slot \code{pIC}. }
+
+    \item{show}{\code{signature(object = "ALEstimate")} }
   }
 }
 %\references{}
