@@ -6,6 +6,7 @@ setMethod("oneStepEstimator", signature(x = "numeric",
                                         start = "numeric"),
     function(x, IC, start, useLast = getRobAStBaseOption("kStepUseLast")){
         es.call <- match.call()
+        es.call[[1]] <- as.name("oneStepEstimator")
         nrvalues <- dimension(IC@Curve)
         if(is.list(start)) start <- unlist(start)
         if(nrvalues != length(start))
@@ -74,6 +75,7 @@ setMethod("oneStepEstimator", signature(x = "matrix",
                                         start = "numeric"),
     function(x, IC, start, useLast = getRobAStBaseOption("kStepUseLast")){
         es.call <- match.call()
+        es.call[[1]] <- as.name("oneStepEstimator")
         nrvalues <- dimension(IC@Curve)
         if(is.list(start)) start <- unlist(start)
         if(nrvalues != length(start))
@@ -144,6 +146,7 @@ setMethod("oneStepEstimator", signature(x = "numeric",
                                         start = "Estimate"),
     function(x, IC, start, useLast = getRobAStBaseOption("kStepUseLast")){
         es.call <- match.call()
+        es.call[[1]] <- as.name("oneStepEstimator")
         nrvalues <- dimension(IC@Curve)
         start0 <- estimate(start)
         if(is.list(start0)) start0 <- unlist(start0)
@@ -213,6 +216,7 @@ setMethod("oneStepEstimator", signature(x = "matrix",
                                         start = "Estimate"),
     function(x, IC, start, useLast = getRobAStBaseOption("kStepUseLast")){
         es.call <- match.call()
+        es.call[[1]] <- as.name("oneStepEstimator")
         nrvalues <- dimension(IC@Curve)
         start0 <- estimate(start)
         if(is.list(start0)) start0 <- unlist(start0)

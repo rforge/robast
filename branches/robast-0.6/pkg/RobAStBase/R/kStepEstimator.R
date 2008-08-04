@@ -6,6 +6,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
                                       start = "numeric"),
     function(x, IC, start, steps = 1L, useLast = getRobAStBaseOption("kStepUseLast")){
         es.call <- match.call()
+        es.call[[1]] <- as.name("kStepEstimator")
         if(!is.integer(steps))
           steps <- as.integer(steps)
         if(steps < 1)
@@ -31,16 +32,16 @@ setMethod("kStepEstimator", signature(x = "numeric",
                 main(newParam) <- res
                 newL2Fam <- modifyModel(L2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = TRUE"))
             }else{
                 if(useLast && is(modifyIC(IC), "NULL")){
                     warning("'useLast = TRUE' only possible if slot 'modifyIC' of 'IC'
                              is filled with some function!")
-                    Infos <- rbind(Infos, c("oneStepEstimator", 
+                    Infos <- rbind(Infos, c("kStepEstimator", 
                                             "slot 'modifyIC' of 'IC' was not filled!"))
                 }
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
@@ -86,10 +87,10 @@ setMethod("kStepEstimator", signature(x = "numeric",
                 main(newParam) <- res
                 newL2Fam <- modifyModel(newL2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = TRUE"))
             }else{
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
@@ -125,6 +126,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
                                       start = "numeric"),
     function(x, IC, start, steps = 1, useLast = getRobAStBaseOption("kStepUseLast")){
         es.call <- match.call()
+        es.call[[1]] <- as.name("kStepEstimator")
         if(!is.integer(steps))
           steps <- as.integer(steps)
         if(steps < 1)
@@ -152,16 +154,16 @@ setMethod("kStepEstimator", signature(x = "matrix",
                 main(newParam) <- res
                 newL2Fam <- modifyModel(L2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = TRUE"))
             }else{
                 if(useLast && is(modifyIC(IC), "NULL")){
                     warning("'useLast = TRUE' only possible if slot 'modifyIC' of 'IC'
                              is filled with some function!")
-                    Infos <- rbind(Infos, c("oneStepEstimator", 
+                    Infos <- rbind(Infos, c("kStepEstimator", 
                                             "slot 'modifyIC' of 'IC' was not filled!"))
                 }
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
@@ -207,10 +209,10 @@ setMethod("kStepEstimator", signature(x = "matrix",
                 main(newParam) <- res
                 newL2Fam <- modifyModel(newL2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = TRUE"))
             }else{
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
@@ -245,6 +247,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
                                       start = "Estimate"),
     function(x, IC, start, steps = 1, useLast = getRobAStBaseOption("kStepUseLast")){
         es.call <- match.call()
+        es.call[[1]] <- as.name("kStepEstimator")
         if(!is.integer(steps))
           steps <- as.integer(steps)
         if(steps < 1)
@@ -271,16 +274,16 @@ setMethod("kStepEstimator", signature(x = "numeric",
                 main(newParam) <- res
                 newL2Fam <- modifyModel(L2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = TRUE"))
             }else{
                 if(useLast && is(modifyIC(IC), "NULL")){
                     warning("'useLast = TRUE' only possible if slot 'modifyIC' of 'IC'
                              is filled with some function!")
-                    Infos <- rbind(Infos, c("oneStepEstimator", 
+                    Infos <- rbind(Infos, c("kStepEstimator", 
                                             "slot 'modifyIC' of 'IC' was not filled!"))
                 }
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
@@ -326,10 +329,10 @@ setMethod("kStepEstimator", signature(x = "numeric",
                 main(newParam) <- res
                 newL2Fam <- modifyModel(newL2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = TRUE"))
             }else{
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
@@ -364,6 +367,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
                                       start = "Estimate"),
     function(x, IC, start, steps = 1, useLast = getRobAStBaseOption("kStepUseLast")){
         es.call <- match.call()
+        es.call[[1]] <- as.name("kStepEstimator")
         if(!is.integer(steps))
           steps <- as.integer(steps)
         if(steps < 1)
@@ -392,16 +396,16 @@ setMethod("kStepEstimator", signature(x = "matrix",
                 main(newParam) <- res
                 newL2Fam <- modifyModel(L2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = TRUE"))
             }else{
                 if(useLast && is(modifyIC(IC), "NULL")){
                     warning("'useLast = TRUE' only possible if slot 'modifyIC' of 'IC'
                              is filled with some function!")
-                    Infos <- rbind(Infos, c("oneStepEstimator", 
+                    Infos <- rbind(Infos, c("kStepEstimator", 
                                             "slot 'modifyIC' of 'IC' was not filled!"))
                 }
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))
@@ -447,10 +451,10 @@ setMethod("kStepEstimator", signature(x = "matrix",
                 main(newParam) <- res
                 newL2Fam <- modifyModel(newL2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = TRUE"))
             }else{
-                Infos <- rbind(Infos, c("oneStepEstimator", 
+                Infos <- rbind(Infos, c("kStepEstimator", 
                                         "computation of IC, asvar and asbias via useLast = FALSE"))
             }
             if("asCov" %in% names(Risks(IC)))

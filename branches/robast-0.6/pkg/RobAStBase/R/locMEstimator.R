@@ -4,6 +4,7 @@
 setMethod("locMEstimator", signature(x = "numeric", IC = "InfluenceCurve"),
     function(x, IC, eps = .Machine$double.eps^0.5){
         es.call <- match.call()
+        es.call[[1]] <- as.name("locMEstimator")
         if(numberOfMaps(IC@Curve) > 1)
             stop("number of Maps of 'IC' has to be 1")
 

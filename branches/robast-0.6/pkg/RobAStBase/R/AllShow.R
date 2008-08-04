@@ -100,9 +100,9 @@ setMethod("show", "ALEstimate",
             cat("asymptotic bias:\n")
             print(asbias(object), quote = FALSE)
         }
-        if(getdistrModOption("show.details") == "maximal"){
+        if(getdistrModOption("show.details") == "maximal" && !is.null(pIC(object))){
             cat("(partial) influence curve:\n")
-            print(pIC(object), quote = FALSE)
+            show(pIC(object))
         }
     })
 setMethod("show", "kStepEstimate", 
