@@ -3,7 +3,8 @@
 ###############################################################################
 setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
     function(model, risk, z.start = NULL, A.start = NULL, upper = 1e4, 
-             maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE, noLow = FALSE){
+             maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE, 
+             noLow = FALSE, verbose = FALSE){
         L2derivDim <- numberOfMaps(model@center@L2deriv)
         if(L2derivDim == 1){
             ow <- options("warn")
@@ -13,7 +14,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                         symm = model@center@L2derivDistrSymm[[1]],
                         Finfo = model@center@FisherInfo, trafo = model@center@param@trafo, 
                         upper = upper, maxiter = maxiter, tol = tol, warn = warn,
-                        noLow = noLow)
+                        noLow = noLow, verbose = verbose)
             options(ow)
             res$info <- c("optIC", res$info)
             modIC <- function(L2Fam, IC){
@@ -50,7 +51,8 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                             DistrSymm = model@center@distrSymm, L2derivSymm = L2derivSymm,
                             L2derivDistrSymm = L2derivDistrSymm, Finfo = model@center@FisherInfo, 
                             trafo = model@center@param@trafo, z.start = z.start, A.start = A.start, 
-                            upper = upper, maxiter = maxiter, tol = tol, warn = warn)
+                            upper = upper, maxiter = maxiter, tol = tol, warn = warn, 
+                            verbose = verbose)
                 options(ow)
                 res$info <- c("optIC", res$info)
                 modIC <- function(L2Fam, IC){
@@ -103,7 +105,8 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
 ###############################################################################
 setMethod("optIC", signature(model = "FixRobModel", risk = "fiUnOvShoot"),
     function(model, risk, sampleSize, upper = 1e4, maxiter = 50, 
-             tol = .Machine$double.eps^0.4, warn = TRUE, Algo = "A", cont = "left"){
+             tol = .Machine$double.eps^0.4, warn = TRUE, Algo = "A", 
+             cont = "left", verbose = FALSE){
         if(!identical(all.equal(sampleSize, trunc(sampleSize)), TRUE))
             stop("'sampleSize' has to be an integer > 0")
         if(is(model@center@distribution, "UnivariateDistribution")){

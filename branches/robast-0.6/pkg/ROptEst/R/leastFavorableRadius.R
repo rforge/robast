@@ -7,7 +7,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                             risk = "asGRisk"),
     function(L2Fam, neighbor, risk, rho, upRad = 1, z.start = NULL, 
             A.start = NULL, upper = 100, maxiter = 100, 
-            tol = .Machine$double.eps^0.4, warn = FALSE){
+            tol = .Machine$double.eps^0.4, warn = FALSE, verbose = FALSE){
         if(length(rho) != 1)
             stop("'rho' is not of length == 1")
         if((rho <= 0)||(rho >= 1))
@@ -40,7 +40,8 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                     resLo <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
                                 risk = risk, symm = L2Fam@L2derivDistrSymm[[1]],
                                 Finfo = L2Fam@FisherInfo, upper = upper.b,
-                                trafo = L2Fam@param@trafo, maxiter = MaxIter, tol = eps, warn = warn)
+                                trafo = L2Fam@param@trafo, maxiter = MaxIter, tol = eps, 
+                                warn = warn, verbose = verbose)
                     loRisk <- getAsRisk(risk = risk, L2deriv = L2Fam@L2derivDistr[[1]], 
                                         neighbor = neighbor, biastype = biastype, 
                                         clip = resLo$b, cent = resLo$a, 
@@ -58,7 +59,8 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                     resUp <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
                                 risk = risk, symm = L2Fam@L2derivDistrSymm[[1]],
                                 Finfo = L2Fam@FisherInfo, upper = upper.b,
-                                trafo = L2Fam@param@trafo, maxiter = MaxIter, tol = eps, warn = warn)
+                                trafo = L2Fam@param@trafo, maxiter = MaxIter, tol = eps, 
+                                warn = warn, verbose = verbose)
                     upRisk <- getAsRisk(risk = risk, L2deriv = L2Fam@L2derivDistr[[1]], 
                                         neighbor = neighbor, biastype = biastype, 
                                         clip = resUp$b, cent = resUp$a, 
@@ -130,7 +132,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                     L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                                     Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
                                     A.start = A.start, upper = upper.b, maxiter = MaxIter, 
-                                    tol = eps, warn = warn)
+                                    tol = eps, warn = warn, verbose = verbose)
                         riskLo <- risk
                         normtype(riskLo) <- resLo$normtype
                         loRisk <- getAsRisk(risk = riskLo, L2deriv = L2deriv, neighbor = neighbor, 
@@ -161,7 +163,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                     L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                                     Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
                                     A.start = A.start, upper = upper.b, maxiter = maxiter, 
-                                    tol = tol, warn = warn)
+                                    tol = tol, warn = warn, verbose = verbose)
                          riskUp <- risk
                          normtype(riskUp) <- resUp$normtype
                          upRisk <- getAsRisk(risk = riskUp, L2deriv = L2deriv, neighbor = neighbor, 

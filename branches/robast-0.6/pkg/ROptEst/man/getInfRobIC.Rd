@@ -21,30 +21,30 @@
 \usage{
 getInfRobIC(L2deriv, risk, neighbor, ...)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asCov,ContNeighborhood}(L2deriv, risk, neighbor, Finfo, trafo)
+\S4method{getInfRobIC}{UnivariateDistribution,asCov,ContNeighborhood}(L2deriv, risk, neighbor, Finfo, trafo, verbose = FALSE)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asCov,TotalVarNeighborhood}(L2deriv, risk, neighbor, Finfo, trafo)
+\S4method{getInfRobIC}{UnivariateDistribution,asCov,TotalVarNeighborhood}(L2deriv, risk, neighbor, Finfo, trafo, verbose = FALSE)
 
 \S4method{getInfRobIC}{RealRandVariable,asCov,ContNeighborhood}(L2deriv, risk, neighbor, Distr, Finfo, trafo, 
-                       QuadForm = diag(nrow(trafo)))
+                       QuadForm = diag(nrow(trafo)), verbose = FALSE)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asBias,UncondNeighborhood}(L2deriv, risk, neighbor, symm, trafo, 
-             maxiter, tol, warn, Finfo)
+             maxiter, tol, warn, Finfo, verbose = FALSE)
 
 \S4method{getInfRobIC}{RealRandVariable,asBias,ContNeighborhood}(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, z.start, A.start, Finfo, trafo, maxiter, tol, warn)
+             L2derivDistrSymm, z.start, A.start, Finfo, trafo, maxiter, tol, warn, verbose = FALSE)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn, noLow = FALSE)
+             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
 
 \S4method{getInfRobIC}{RealRandVariable,asHampel,ContNeighborhood}(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
+             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn, verbose = FALSE)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn, noLow = FALSE)
+             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
 
 \S4method{getInfRobIC}{RealRandVariable,asGRisk,ContNeighborhood}(L2deriv, risk, neighbor,  Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
+             L2derivDistrSymm, Finfo, z.start, A.start, trafo, onesetLM = FALSE, upper, maxiter, tol, warn, verbose = FALSE)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)
@@ -69,9 +69,11 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
   \item{tol}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }
   \item{noLow}{ logical: is lower case to be computed? }
+  \item{onesetLM}{ logical: use one set of Lagrange multipliers? }
   \item{QuadForm}{ matrix of (or which may coerced to) class 
                   \code{PosSemDefSymmMatrix} for use of different 
                   (standardizing) norm }
+  \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
 }
 %\details{}
 \value{The optimally robust IC is computed.}

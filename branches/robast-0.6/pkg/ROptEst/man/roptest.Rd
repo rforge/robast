@@ -8,7 +8,8 @@
 \usage{
 roptest(x, L2Fam, eps, eps.lower, eps.upper, initial.est, 
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1, 
-        distance = CvMDist, interval, par, ...)
+        distance = CvMDist, interval, par, verbose = FALSE, 
+        useLast = getRobAStBaseOption("kStepUseLast"), ...)
 }
 \arguments{
   \item{x}{ sample }
@@ -28,13 +29,18 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, initial.est,
   \item{interval}{ parameter interval for univariate parameters }
   \item{par}{ initial parameter value for multivariate parameters.
         If missing, the parameters of \code{L2Fam} are used. }
+  \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
+  \item{useLast}{ which parameter estimate (initial estimate or
+    k-step estimate) shall be used to fill the slots \code{pIC},
+    \code{asvar} and \code{asbias} of the return value. }
   \item{\dots}{ further arguments }
 }
 \details{
   Computes the optimally robust estimator for a given L2 differentiable
   parametric family. The computation uses a k-step construction with an 
-  appropriate initial estimate. Valid candidates are e.g. Kolmogorov(-Smirnov) 
-  or von Mises minimum distance estimators (default); cf. Rieder (1994) and Kohl (2005).
+  appropriate initial estimate; cf. also \code{\link[RobAStBase]{kStepEstimator}}. 
+  Valid candidates are e.g. Kolmogorov(-Smirnov) or von Mises minimum 
+  distance estimators (default); cf. Rieder (1994) and Kohl (2005).
 
   If the amount of gross errors (contamination) is known, it can be 
   specified by \code{eps}. The radius of the corresponding infinitesimal 
@@ -55,6 +61,21 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, initial.est,
 
   If \code{eps} is missing, the radius-minimax estimator in sense of 
   Rieder et al. (2001, 2008), respectively Section 2.2 of Kohl (2005) is returned.
+
+  The default value of argument \code{useLast} is set by the
+  global option \code{kStepUseLast} which by default is set to 
+  \code{FALSE}. In case of general models \code{useLast} 
+  remains unchanged during the computations. However, if 
+  slot \code{CallL2Fam} of \code{IC} generates an object of 
+  class \code{"L2GroupParamFamily"} the value of \code{useLast} 
+  is changed to \code{TRUE}.
+  Explicitly setting \code{useLast} to \code{TRUE} should
+  be done with care as in this situation the influence curve
+  is re-computed using the value of the one-step estimate
+  which may take quite a long time depending on the model.
+
+  If \code{useLast} is set to \code{TRUE} the computation of \code{asvar}, 
+  \code{asbias} and \code{IC} is based on the k-step estimate.
 }
 \value{Object of class \code{"kStepEstimate"}. }
 \references{
@@ -67,7 +88,7 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, initial.est,
   the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
-  the Radius. Submitted. Appeared as discussion paper Nr. 81. 
+  the Radius. Appeared as discussion paper Nr. 81. 
   SFB 373 (Quantification and Simulation of Economic Processes),
   Humboldt University, Berlin; also available under
   \url{www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf}
@@ -108,7 +129,7 @@ x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532),
 MLEstimator(x, PoisFamily(), interval = c(0, 10))
 
 ## compute optimally robust estimator (unknown contamination)
-roptest(x, PoisFamily(), eps.upper = 0.05, interval = c(0, 10), steps = 3)
+#roptest(x, PoisFamily(), eps.upper = 0.05, interval = c(0, 10), steps = 3)
 
 #############################
 ## 3. Normal (Gaussian) location and scale

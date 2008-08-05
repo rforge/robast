@@ -3,7 +3,9 @@
 ###############################################################################
 roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, initial.est, 
                     neighbor = ContNeighborhood(), risk = asMSE(), steps = 1, 
-                    distance = CvMDist, interval, par, ...){
+                    distance = CvMDist, interval, par, verbose = FALSE, 
+                    useLast = getRobAStBaseOption("kStepUseLast"), ...){
+    es.call <- match.call()
     if(missing(x))
         stop("'x' is missing with no default")
     if(missing(L2Fam))
@@ -49,9 +51,12 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, initial.est,
     }
 
     if(missing(initial.est)){
-        initial.est <- MDEstimator(x = x, ParamFamily = L2Fam, distance = distance,
-                                   interval = interval, par = par, ...)
+        initial.est <- estimate(MDEstimator(x = x, ParamFamily = L2Fam, distance = distance,
+                                            interval = interval, par = par, ...))
     }
+    newParam <- param(L2Fam)
+    main(newParam) <- initial.est
+    L2FamStart <- modifyModel(L2Fam, newParam)
     if(is.matrix(x))
         sqrtn <- sqrt(ncol(x))
     else
@@ -59,19 +64,22 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, initial.est,
     if(missing(eps)){
         r.lower <- sqrtn*eps.lower
         r.upper <- sqrtn*eps.upper
-        newParam <- param(L2Fam)
-        main(newParam) <- estimate(initial.est)
-        L2FamStart <- modifyModel(L2Fam, newParam)
-        ICstart <- radiusMinimaxIC(L2Fam=L2FamStart, neighbor=neighbor, risk=risk, 
-                                   loRad=r.lower, upRad=r.upper)
+        ICstart <- radiusMinimaxIC(L2Fam = L2FamStart, neighbor = neighbor, risk = risk, 
+                                   loRad = r.lower, upRad = r.upper, verbose = verbose)
     }else{
         r <- sqrtn*eps
         neighbor@radius <- r
-        newParam <- param(L2Fam)
-        main(newParam) <- estimate(initial.est)
-        L2FamStart <- modifyModel(L2Fam, newParam)
-        infMod <- InfRobModel(center = L2FamStart, neighbor=neighbor)
-        ICstart <- optIC(model=infMod, risk=risk)
+        infMod <- InfRobModel(center = L2FamStart, neighbor = neighbor)
+        ICstart <- optIC(model = infMod, risk = risk, verbose = verbose)
     }
-    kStepEstimator(x, IC=ICstart, start=initial.est, steps = steps)
+    res <- kStepEstimator(x, IC = ICstart, start = initial.est, steps = steps, useLast = useLast)
+    res@estimate.call <- es.call
+    Infos <- matrix(c("roptest", 
+                      paste(steps, "-step estimate for ", name(L2Fam), sep = "")),
+                    ncol = 2)
+    colnames(Infos) <- c("method", "message")
+    Infos <- rbind(Infos, c("roptest", 
+                            paste("computation of IC, asvar and asbias via useLast =", useLast)))
+    Infos(res) <- Infos
+    return(res)
 }
