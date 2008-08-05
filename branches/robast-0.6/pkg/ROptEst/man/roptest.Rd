@@ -129,7 +129,7 @@ x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532),
 MLEstimator(x, PoisFamily(), interval = c(0, 10))
 
 ## compute optimally robust estimator (unknown contamination)
-#roptest(x, PoisFamily(), eps.upper = 0.05, interval = c(0, 10), steps = 3)
+roptest(x, PoisFamily(), eps.upper = 0.05, interval = c(0, 10), steps = 3)
 
 #############################
 ## 3. Normal (Gaussian) location and scale

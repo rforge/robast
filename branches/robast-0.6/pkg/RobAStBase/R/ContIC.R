@@ -50,7 +50,6 @@ ContIC <- function(name, CallL2Fam = call("L2ParamFamily"),
 }
 
 
-
 setMethod("generateIC", signature(neighbor = "ContNeighborhood", 
                                   L2Fam = "L2ParamFamily"),
     function(neighbor, L2Fam, res){
@@ -63,20 +62,7 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
         w <- res$w
         return(ContIC(
                 name = "IC of contamination type", 
-                CallL2Fam = call("L2ParamFamily", 
-                                name = L2Fam@name,
-                                distribution = L2Fam@distribution,
-                                distrSymm = L2Fam@distrSymm,  
-                                param = L2Fam@param,
-                                modifyParam = L2Fam@modifyParam,
-                                props = L2Fam@props,
-#                                L2deriv = L2Fam@L2deriv,
-                                L2deriv.fct = L2Fam@L2deriv.fct,
-                                L2derivSymm = L2Fam@L2derivSymm,
-                                L2derivDistr = L2Fam@L2derivDistr,
-                                L2derivDistrSymm = L2Fam@L2derivDistrSymm,
-                                FisherInfo = L2Fam@FisherInfo,
-                                FisherInfo.fct = L2Fam@FisherInfo.fct),
+                CallL2Fam = L2Fam@fam.call,
                 Curve = generateIC.fct(neighbor, L2Fam, res),
                 clip = b,
                 cent = a,
@@ -93,7 +79,6 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
     })
 
 ## Access methods
-
 setMethod("clip", "ContIC", function(object) object@clip)
 setMethod("cent", "ContIC", function(object) object@cent)
 setMethod("neighbor", "ContIC", function(object) ContNeighborhood(radius = object@neighborRadius) )

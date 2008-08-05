@@ -145,19 +145,7 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
 
         modifyIC <- function(L2Fam, IC){ makeIC(IC, L2Fam) }
 
-        CallL2Fam <- call("L2ParamFamily", 
-                          name = L2Fam@name,
-                          distribution = L2Fam@distribution,
-                          distrSymm = L2Fam@distrSymm,
-                          param = L2Fam@param,
-                          props = L2Fam@props,
-                          modifyParam = L2Fam@modifyParam,
-                          L2deriv.fct = L2Fam@L2deriv.fct,
-                          L2derivSymm = L2Fam@L2derivSymm,
-                          L2derivDistr = L2Fam@L2derivDistr,
-                          L2derivDistrSymm = L2Fam@L2derivDistrSymm,
-                          FisherInfo.fct = L2Fam@FisherInfo.fct,
-                          FisherInfo = L2Fam@FisherInfo)
+        CallL2Fam <- L2Fam@fam.call
 
         return(IC(name = name(IC),
                   Curve = EuclRandVarList(Y),
