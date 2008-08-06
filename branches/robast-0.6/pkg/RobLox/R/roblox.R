@@ -298,8 +298,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                         stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
                     }
                 }
+                L2Fam <- substitute(NormLocationScaleFamily(mean = m1, sd = s1), 
+                                    list(m1 = robEst$est[1], s1 = robEst$est[2]))
                 IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
-                                  L2Fam = NormLocationScaleFamily(mean = robEst$est[1], sd = robEst$est[2]), 
+                                  L2Fam = eval(L2Fam), 
                                   res = list(A = diag(c(robEst$A1, robEst$A2)), a = robEst$a, 
                                       b = robEst$b, d = NULL, 
                                       risk = list(asMSE = mse, asBias = robEst$b, 
@@ -406,8 +408,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                         stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
                     }
                 }
+                L2Fam <- substitute(NormLocationScaleFamily(mean = m1, sd = s1), 
+                                    list(m1 = robEst$est[1], s1 = robEst$est[2]))
                 IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
-                                  L2Fam = NormLocationScaleFamily(mean = robEst$est[1], sd = robEst$est[2]), 
+                                  L2Fam = eval(L2Fam), 
                                   res = list(A = diag(c(robEst$A1, robEst$A2)), a = robEst$a, 
                                       b = robEst$b, d = NULL, 
                                       risk = list(asMSE = mse, asBias = robEst$b, 
@@ -480,8 +484,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                             stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
                         }
                     }
+                    L2Fam <- substitute(NormLocationFamily(mean = m1, sd = s1), 
+                                        list(m1 = robEst, s1 = sd))
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
-                                      L2Fam = NormLocationFamily(mean = robEst, sd = sd), 
+                                      L2Fam = eval(L2Fam), 
                                       res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
                                           risk = list(asMSE = A, asBias = b, asCov = A-r^2*b^2), 
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
@@ -550,8 +556,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                             stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
                         }
                     }
+                    L2Fam <- substitute(NormLocationFamily(mean = m1, sd = s1), 
+                                        list(m1 = robEst, s1 = sd))
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
-                                      L2Fam = NormLocationFamily(mean = robEst, sd = sd), 
+                                      L2Fam = eval(L2Fam), 
                                       res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
                                           risk = list(asMSE = A, asBias = b, asCov = A-r^2*b^2), 
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
@@ -645,8 +653,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                             stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
                         }
                     }
+                    L2Fam <- substitute(NormScaleFamily(mean = m1, sd = s1), 
+                                        list(m1 = mean, s1 = robEst$est))
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
-                                      L2Fam = NormScaleFamily(mean = mean, sd = robEst$est), 
+                                      L2Fam = eval(L2Fam), 
                                       res = list(A = as.matrix(robEst$A), a = robEst$a, b = robEst$b, d = NULL, 
                                           risk = list(asMSE = robEst$A, asBias = robEst$b, 
                                                       asCov = robEst$A-r^2*robEst$b^2), 
@@ -737,8 +747,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                             stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
                         }
                     }
+                    L2Fam <- substitute(NormScaleFamily(mean = m1, sd = s1), 
+                                        list(m1 = mean, s1 = robEst$est))
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
-                                      L2Fam = NormScaleFamily(mean = mean, sd = robEst$est), 
+                                      L2Fam = eval(L2Fam), 
                                       res = list(A = as.matrix(robEst$A), a = robEst$a, b = robEst$b, d = NULL, 
                                           risk = list(asMSE = robEst$A, asBias = robEst$b, 
                                                       asCov = robEst$A-r^2*robEst$b^2), 

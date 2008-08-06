@@ -72,8 +72,7 @@ rsOptIC <- function(r, mean = 0, sd = 1, bUp = 1000, delta = 1e-6, itmax = 100,
 
         modIC <- function(L2Fam, IC){
             ICL2Fam <- eval(CallL2Fam(IC))
-#            if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
-            if(is(distribution(L2Fam), "Norm")){
+            if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
                 sdneu <- main(L2Fam)
                 sdalt <- main(ICL2Fam)
                 w <- weight(IC)
@@ -96,12 +95,14 @@ rsOptIC <- function(r, mean = 0, sd = 1, bUp = 1000, delta = 1e-6, itmax = 100,
                 addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
                 return(IC)
             }else{
-                stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
+                makeIC(IC, L2Fam)
             }
         }
 
+        L2Fam <- substitute(NormLocationFamily(mean = m1, sd = s1), 
+                            list(m1 = mean, s1 = sd))
         return(generateIC(neighbor = ContNeighborhood(radius = r), 
-                    L2Fam = NormScaleFamily(sd = sd, mean = mean), 
+                    L2Fam = eval(L2Fam), 
                     res = list(A = as.matrix(A), a = a, b = b, d = NULL, 
                                risk = list(asMSE = A, asBias = b, asCov = A - r^2*b^2), 
                                info = c("rlOptIC", "optimally robust IC for AL estimators and 'asMSE'"),
