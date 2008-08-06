@@ -161,20 +161,12 @@ setClass("ContIC",
                       biastype = symmetricBias(), NormType = NormType()),
             contains = "HampIC",
             validity = function(object){
-                if(any(object@neighborRadius < 0)) # radius vector?!
-                    stop("'neighborRadius' has to be in [0, Inf]")
                 if(length(object@cent) != nrow(object@stand))
                     stop("length of centering constant != nrow of standardizing matrix")
                 if((length(object@clip) != 1) && (length(object@clip) != length(object@Curve)))
                     stop("length of clipping bound != 1 and != length of 'Curve'")
-                if(!is.null(object@lowerCase))
-                    if(length(object@lowerCase) != nrow(object@stand))
-                        stop("length of 'lowerCase' != nrow of standardizing matrix")
-                L2Fam <- eval(object@CallL2Fam)
                 if(!is(weight,"HampelWeight")) 
                     stop("Weight has to be of class 'HampelWeight'")
-                if(!identical(dim(L2Fam@param@trafo), dim(object@stand)))
-                    stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
                 return(TRUE)
             })
 ## (partial) influence curve of total variation type
@@ -195,17 +187,12 @@ setClass("TotalVarIC",
                       biastype = symmetricBias(), NormType = NormType()),
             contains = "HampIC",
             validity = function(object){
-                if(any(object@neighborRadius < 0)) # radius vector?!
-                    stop("'neighborRadius' has to be in [0, Inf]")
                 if((length(object@clipLo) != 1) && (length(object@clipLo) != length(object@Curve)))
                     stop("length of lower clipping bound != 1 and != length of 'Curve'")
                 if((length(object@clipLo) != 1) && (length(object@clipLo) != length(object@Curve)))
                     stop("length of upper clipping bound != 1 and != length of 'Curve'")
-                L2Fam <- eval(object@CallL2Fam)
                 if(!is(weight,"BdStWeight")) 
                     stop("Weight has to be of class 'BdStWeight'")
-                if(!identical(dim(L2Fam@param@trafo), dim(object@stand)))
-                    stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
                 return(TRUE)
             })
 
