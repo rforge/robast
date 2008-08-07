@@ -83,11 +83,9 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
             res$info <- rbind(res$info, c("radiusMinimaxIC", 
                             paste("maximum ", sQuote(class(risk)[1]), "-inefficiency: ",
                             round(ineff, 3), sep="")))
-            modIC <- function(L2Fam, IC){
-                infMod <- InfRobModel(L2Fam, neighbor)
-                optIC(infMod, risk)
-            }
-            res <- c(res, modifyIC = modIC)
+            res <- c(res, modifyIC = getModifyIC(L2FamIC = L2Fam, 
+                                                 neighbor = neighbor, 
+                                                 risk = risk))
             return(generateIC(neighbor, L2Fam, res))
         }else{
             if(is(L2Fam@distribution, "UnivariateDistribution")){
@@ -201,11 +199,9 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                 res$info <- rbind(res$info, c("radiusMinimaxIC", 
                                 paste("maximum ", sQuote(class(risk)[1]), "-inefficiency: ",
                             round(ineff, 3), sep="")))
-                modIC <- function(L2Fam, IC){
-                    infMod <- InfRobModel(L2Fam, neighbor)
-                    optIC(infMod, risk)
-                }
-                res <- c(res, modifyIC = modIC)
+                res <- c(res, modifyIC = getModifyIC(L2FamIC = L2Fam, 
+                                                 neighbor = neighbor, 
+                                                 risk = risk))
                 return(generateIC(neighbor, L2Fam, res))
             }else{
                 stop("not yet implemented")

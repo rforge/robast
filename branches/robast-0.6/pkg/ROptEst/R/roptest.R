@@ -50,10 +50,10 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, initial.est,
         stop("'steps' has to be of length 1")
     }
 
-    if(missing(initial.est)){
+    if(missing(initial.est))
         initial.est <- estimate(MDEstimator(x = x, ParamFamily = L2Fam, distance = distance,
                                             startPar = startPar, ...))
-    }
+    if(is(initial.est, "Estimate")) initial.est <- estimate(initial.est)
     newParam <- param(L2Fam)
     main(newParam) <- initial.est
     L2FamStart <- modifyModel(L2Fam, newParam)

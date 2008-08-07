@@ -109,23 +109,85 @@ ind <- rbinom(100, size=1, prob=0.05)
 x <- rbinom(100, size=25, prob=(1-ind)*0.25 + ind*0.75)
 
 ## 2. Kolmogorov(-Smirnov) minimum distance estimator
-(est0 <- MDEstimator(x=x, BinomFamily(size=25), interval = c(0, 1)))
+(est0 <- MDEstimator(x=x, BinomFamily(size=25)))
 
 ## 3.1. one-step estimation: radius known
+## ac) Define infinitesimal robust model
 RobB3 <- InfRobModel(center=BinomFamily(size=25, prob=estimate(est0)),
-                neighbor=ContNeighborhood(radius=0.5))
+                     neighbor=ContNeighborhood(radius=0.5))
+## bc) Compute optimally robust IC
 IC9 <- optIC(model=RobB3, risk=asMSE())
+checkIC(IC9)
+## cc) Determine 1-step estimate
 (est1c <- oneStepEstimator(x, IC=IC9, start=est0))
 
+## instead of ac)-cc) you can also use function roptest
+est1c1 <- roptest(x, BinomFamily(size = 25), eps = 0.05, initial.est = est0)
+checkIC(pIC(est1c1))
+## you can also omit step 2
+est1c2 <- roptest(x, BinomFamily(size = 25), eps = 0.05, distance = KolmogorovDist)
+checkIC(pIC(est1c2))
+
+## Using Cramer-von-Mises MD estimator (default)
+est1c3 <- roptest(x, BinomFamily(size = 25), eps = 0.025)
+checkIC(pIC(est1c3))
+
+## comparison of estimates
+estimate(est1c)
+estimate(est1c1)
+estimate(est1c2)
+estimate(est1c3)
+
+
+## av) Define infinitesimal robust model
 RobB4 <- InfRobModel(center=BinomFamily(size=25, prob=estimate(est0)),
                 neighbor=TotalVarNeighborhood(radius=0.25))
+## bv) Compute optimally robust IC
 IC10 <- optIC(model=RobB4, risk=asMSE())
+checkIC(IC10)
+## cv) Determine 1-step estimate
 (est1v <- oneStepEstimator(x, IC=IC10, start=est0))
+
+## instead of av)-cv) you can also use function roptest
+est1v1 <- roptest(x, BinomFamily(size = 25), eps = 0.025, initial.est = est0,
+                  neighbor = TotalVarNeighborhood())
+checkIC(pIC(est1v1))
+## you can also omit step 2
+est1v2 <- roptest(x, BinomFamily(size = 25), eps = 0.025,
+                  neighbor = TotalVarNeighborhood(), distance = KolmogorovDist)
+checkIC(pIC(est1v2))
+
+## Using Cramer-von-Mises MD estimator (default)
+est1v3 <- roptest(x, BinomFamily(size = 25), eps = 0.025, neighbor = TotalVarNeighborhood())
+checkIC(pIC(est1v3))
+
+## comparison of estimates
+estimate(est1v)
+estimate(est1v1)
+estimate(est1v2)
+estimate(est1v3)
 
 ## 3.2. k-step estimation: radius known
 IC9 <- optIC(model=RobB3, risk=asMSE())
-(est2c <- kStepEstimator(x, IC=IC9, start=est0, steps = 3L))
-checkIC(pIC(est2c))
+(est2c <- kStepEstimator(x, IC=IC9, start=est0, steps = 3L)
+
+est2c1 <- roptest(x, BinomFamily(size = 25), eps = 0.05, initial.est = est0, steps = 3L)
+checkIC(pIC(est2c1))
+
+est2c2 <- roptest(x, BinomFamily(size = 25), eps = 0.05, steps = 3L,
+                  distance = KolmogorovDist)
+checkIC(pIC(est2c2))
+
+## Using Cramer-von-Mises MD estimator
+est2c3 <- roptest(x, BinomFamily(size = 25), eps = 0.05, steps = 3L)
+checkIC(pIC(est2c3))
+
+## comparison of estimates
+estimate(est2c)
+estimate(est2c1)
+estimate(est2c2)
+estimate(est2c3)
+
 
 IC10 <- optIC(model=RobB4, risk=asMSE())
 (est2v <- kStepEstimator(x, IC=IC10, start=est0, steps = 3L))
@@ -142,6 +204,12 @@ IC12 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=estimate(est0)),
 (est3v <- oneStepEstimator(x, IC=IC12, start=est0))
 checkIC(pIC(est3v))
 
+## maximum radius for given sample size n: sqrt(n)*0.5
+est3c1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5)
+checkIC(pIC(est3c1))
+est3v1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5, neighbor = TotalVarNeighborhood())
+checkIC(pIC(est3v1))
+
 ## 4.2. k-step estimation: radius interval
 IC11 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=estimate(est0)),
                 neighbor=ContNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
@@ -152,3 +220,10 @@ IC12 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=estimate(est0)),
                 neighbor=TotalVarNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
 (est4v <- kStepEstimator(x, IC=IC12, start=est0, steps = 3L))
 checkIC(pIC(est4v))
+
+## maximum radius for given sample size n: sqrt(n)*0.5
+est4c1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5, steps = 3L)
+checkIC(pIC(est4c1))
+est4v1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5, neighbor = TotalVarNeighborhood(),
+        steps = 3L)
+checkIC(pIC(est4v1)
