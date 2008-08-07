@@ -22,7 +22,8 @@ exportMethods("optIC",
               "leastFavorableRadius",
               "lowerCaseRadius",
               "minmaxBias", "getBiasIC", 
-              "getL1normL2deriv")
+              "getL1normL2deriv",
+              "getModifyIC")
 exportMethods("updateNorm")
 export("getL2normL2deriv")
 export("roptest")

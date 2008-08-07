@@ -54,7 +54,7 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
                                                     neighbor, biastype, clip, cent, stand)
 
 \S4method{getAsRisk}{asCov,RealRandVariable,ContNeighborhood,ANY}(risk, L2deriv, neighbor, 
-                           biastype, Distr, clip, cent, stand, 
+                           biastype, Distr, cent, stand, 
                            V.comp =  matrix(TRUE, ncol = nrow(stand), nrow = nrow(stand)), w)
 
 \S4method{getAsRisk}{trAsCov,UnivariateDistribution,UncondNeighborhood,ANY}(risk, L2deriv, 

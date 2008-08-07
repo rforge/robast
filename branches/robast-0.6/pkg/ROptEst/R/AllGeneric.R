@@ -71,3 +71,6 @@ if(!isGeneric("getL1normL2deriv")){
 if(!isGeneric("updateNorm")){
     setGeneric("updateNorm", function(normtype, ...) standardGeneric("updateNorm"))
 }
+if(!isGeneric("getModifyIC")){
+    setGeneric("getModifyIC", function(L2FamIC, neighbor, risk) standardGeneric("getModifyIC"))
+}

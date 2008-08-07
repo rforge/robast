@@ -17,11 +17,9 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                         noLow = noLow, verbose = verbose)
             options(ow)
             res$info <- c("optIC", res$info)
-            modIC <- function(L2Fam, IC){
-                infMod <- InfRobModel(L2Fam, model@neighbor)
-                optIC(infMod, risk)
-            }
-            res <- c(res, modifyIC = modIC)
+            res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
+                                                 neighbor = model@neighbor, 
+                                                 risk = risk))
             return(generateIC(model@neighbor, model@center, res))
         }else{
             if(is(model@center@distribution, "UnivariateDistribution")){
@@ -55,13 +53,11 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                             verbose = verbose)
                 options(ow)
                 res$info <- c("optIC", res$info)
-                modIC <- function(L2Fam, IC){
-                    infMod <- InfRobModel(L2Fam, model@neighbor)
-                    optIC(infMod, risk)
-                }
-                res <- c(res, modifyIC = modIC)
-                return(generateIC(model@neighbor, model@center, res))
-            }else{
+                res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
+                                                     neighbor = model@neighbor, 
+                                                     risk = risk))
+                    return(generateIC(model@neighbor, model@center, res))
+                }else{
                 stop("not yet implemented")
             }
         }
@@ -88,11 +84,9 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
                 res$info <- c("optIC", "optIC", res$info, "Optimal IC for 'InfRobModel' with 'ContNeighborhood'!!!")
             else
                 res$info <- c("optIC", res$info)
-            modIC <- function(L2Fam, IC){
-                infMod <- InfRobModel(L2Fam, model@neighbor)
-                optIC(infMod, risk)
-            }
-            res <- c(res, modifyIC = modIC)
+            res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
+                                                 neighbor = model@neighbor, 
+                                                 risk = risk))
             return(generateIC(TotalVarNeighborhood(radius = model@neighbor@radius), model@center, res))
         }else{
             stop("restricted to 1-dimensional parameteric models")
@@ -121,11 +115,9 @@ setMethod("optIC", signature(model = "FixRobModel", risk = "fiUnOvShoot"),
                 res$info <- c("optIC", "optIC", res$info, "Optimal IC for 'FixRobModel' with 'ContNeighborhood'!!!")
             else
                 res$info <- c("optIC", res$info)
-            modIC <- function(L2Fam, IC){
-                infMod <- InfRobModel(L2Fam, model@neighbor)
-                optIC(infMod, risk)
-            }
-            res <- c(res, modifyIC = modIC)
+            res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
+                                                 neighbor = model@neighbor, 
+                                                 risk = risk))
             return(generateIC(TotalVarNeighborhood(radius = model@neighbor@radius), model@center, res))
         }else{
             stop("restricted to 1-dimensional parametric models")
