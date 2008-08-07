@@ -132,8 +132,8 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
         IC1 <- IC1 - cent
 
         dims <- length(L2Fam@param)
-        if(dimension(Domain(IC@Curve[[1]])) != dims)
-           stop("Dimension of IC and parameter must be the equal")
+        if(dimension(IC@Curve) != dims)
+           stop("Dimension of IC and parameter must be equal")
 
         L2deriv <- as(diag(dims) %*% L2Fam@L2deriv, "EuclRandVariable")
 
