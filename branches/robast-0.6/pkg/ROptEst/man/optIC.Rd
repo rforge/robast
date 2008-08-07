@@ -22,7 +22,8 @@ optIC(model, risk, ...)
 
 \S4method{optIC}{FixRobModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, 
                                           maxiter = 50, tol = .Machine$double.eps^0.4, 
-                                          warn = TRUE, Algo = "A", cont = "left")
+                                          warn = TRUE, Algo = "A", cont = "left",
+                                          verbose = FALSE)
 }
 \arguments{
   \item{model}{ probability model. }

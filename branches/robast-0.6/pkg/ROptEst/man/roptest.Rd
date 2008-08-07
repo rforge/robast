@@ -8,7 +8,7 @@
 \usage{
 roptest(x, L2Fam, eps, eps.lower, eps.upper, initial.est, 
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1, 
-        distance = CvMDist, interval, par, verbose = FALSE, 
+        distance = CvMDist, startPar = NULL, verbose = FALSE, 
         useLast = getRobAStBaseOption("kStepUseLast"), ...)
 }
 \arguments{
@@ -26,9 +26,12 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, initial.est,
   \item{risk}{ object of class \code{"RiskType"} }
   \item{steps}{ positive integer: number of steps used for k-steps construction }
   \item{distance}{ distance function }
-  \item{interval}{ parameter interval for univariate parameters }
-  \item{par}{ initial parameter value for multivariate parameters.
-        If missing, the parameters of \code{L2Fam} are used. }
+  \item{startPar}{ initial information used by \code{optimize} resp. \code{optim};
+    i.e; if (total) parameter is of length 1, \code{startPar} is 
+    a search interval, else it is an initial parameter value; if \code{NULL}
+    slot \code{startPar} of \code{ParamFamily} is used to produce it;
+    in the multivariate case, \code{startPar} may also be of class \code{Estimate},
+    in which case slot \code{untransformed.estimate} is used.}
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
   \item{useLast}{ which parameter estimate (initial estimate or
     k-step estimate) shall be used to fill the slots \code{pIC},
@@ -108,13 +111,13 @@ ind <- rbinom(100, size=1, prob=0.05)
 x <- rbinom(100, size=25, prob=(1-ind)*0.25 + ind*0.9)
 
 ## ML-estimate
-MLEstimator(x, BinomFamily(size = 25), interval = c(0, 1))
+MLEstimator(x, BinomFamily(size = 25))
 
 ## compute optimally robust estimator (known contamination)
-roptest(x, BinomFamily(size = 25), eps = 0.05, interval = c(0, 1), steps = 3)
+roptest(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
 
 ## compute optimally robust estimator (unknown contamination)
-roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.1, interval = c(0, 1), steps = 3)
+roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.1, steps = 3)
 
 
 #############################
@@ -126,10 +129,10 @@ x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532),
        rep(10, 10), rep(11, 4), rep(12, 0), rep(13, 1), rep(14, 1))
 
 ## ML-estimate
-MLEstimator(x, PoisFamily(), interval = c(0, 10))
+MLEstimator(x, PoisFamily())
 
 ## compute optimally robust estimator (unknown contamination)
-roptest(x, PoisFamily(), eps.upper = 0.05, interval = c(0, 10), steps = 3)
+roptest(x, PoisFamily(), eps.upper = 0.05, steps = 3)
 
 #############################
 ## 3. Normal (Gaussian) location and scale

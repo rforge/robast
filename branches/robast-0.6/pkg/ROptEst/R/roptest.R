@@ -3,7 +3,7 @@
 ###############################################################################
 roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, initial.est, 
                     neighbor = ContNeighborhood(), risk = asMSE(), steps = 1, 
-                    distance = CvMDist, interval, par, verbose = FALSE, 
+                    distance = CvMDist, startPar = NULL, verbose = FALSE, 
                     useLast = getRobAStBaseOption("kStepUseLast"), ...){
     es.call <- match.call()
     if(missing(x))
@@ -52,7 +52,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, initial.est,
 
     if(missing(initial.est)){
         initial.est <- estimate(MDEstimator(x = x, ParamFamily = L2Fam, distance = distance,
-                                            interval = interval, par = par, ...))
+                                            startPar = startPar, ...))
     }
     newParam <- param(L2Fam)
     main(newParam) <- initial.est

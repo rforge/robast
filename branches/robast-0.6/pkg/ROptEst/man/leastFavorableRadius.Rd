@@ -13,7 +13,7 @@ leastFavorableRadius(L2Fam, neighbor, risk, ...)
 \S4method{leastFavorableRadius}{L2ParamFamily,UncondNeighborhood,asGRisk}(
           L2Fam, neighbor, risk, rho, upRad = 1, 
             z.start = NULL, A.start = NULL, upper = 100, maxiter = 100, 
-            tol = .Machine$double.eps^0.4, warn = FALSE)
+            tol = .Machine$double.eps^0.4, warn = FALSE, verbose = FALSE)
 }
 \arguments{
   \item{L2Fam}{ L2-differentiable family of probability measures. }
@@ -29,6 +29,7 @@ leastFavorableRadius(L2Fam, neighbor, risk, ...)
   \item{maxiter}{ the maximum number of iterations }
   \item{tol}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }
+  \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
 }
 %\details{}
 \value{

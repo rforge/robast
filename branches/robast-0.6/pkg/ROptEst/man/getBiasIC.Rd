@@ -11,7 +11,7 @@
 \usage{
 getBiasIC(IC, neighbor, ...)
 
-\S4method{getBiasIC}{HampIC,UncondNeighborhood}(IC, neighbor, L2Fam)
+\S4method{getBiasIC}{HampIC,UncondNeighborhood}(IC, neighbor, L2Fam, ...)
 }
 \arguments{
   \item{IC}{ object of class \code{"InfluenceCurve"} }

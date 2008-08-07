@@ -25,35 +25,49 @@
 \usage{
 getAsRisk(risk, L2deriv, neighbor, biastype, ...)
 
-\S4method{getAsRisk}{asMSE,UnivariateDistribution,Neighborhood,ANY}(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo)
+\S4method{getAsRisk}{asMSE,UnivariateDistribution,Neighborhood,ANY}(risk, L2deriv, 
+                                      neighbor, biastype, clip, cent, stand, trafo)
 
-\S4method{getAsRisk}{asMSE,EuclRandVariable,Neighborhood,ANY}(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo)
+\S4method{getAsRisk}{asMSE,EuclRandVariable,Neighborhood,ANY}(risk, L2deriv, neighbor, 
+                                                    biastype, clip, cent, stand, trafo)
 
-\S4method{getAsRisk}{asBias,UnivariateDistribution,ContNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, trafo)
+\S4method{getAsRisk}{asBias,UnivariateDistribution,ContNeighborhood,ANY}(risk, L2deriv, 
+                                                              neighbor, biastype, trafo)
 
-\S4method{getAsRisk}{asBias,UnivariateDistribution,ContNeighborhood,onesidedBias}(risk, L2deriv, neighbor, biastype, trafo)
+\S4method{getAsRisk}{asBias,UnivariateDistribution,ContNeighborhood,onesidedBias}(risk, 
+                                                      L2deriv, neighbor, biastype, trafo)
 
-\S4method{getAsRisk}{asBias,UnivariateDistribution,ContNeighborhood,asymmetricBias}(risk, L2deriv, neighbor, biastype, trafo)
+\S4method{getAsRisk}{asBias,UnivariateDistribution,ContNeighborhood,asymmetricBias}(risk, 
+                                                        L2deriv, neighbor, biastype, trafo)
 
-\S4method{getAsRisk}{asBias,UnivariateDistribution,TotalVarNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, trafo)
+\S4method{getAsRisk}{asBias,UnivariateDistribution,TotalVarNeighborhood,ANY}(risk, L2deriv, 
+                                                                  neighbor, biastype, trafo)
 
-\S4method{getAsRisk}{asBias,RealRandVariable,ContNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, trafo, z.start, A.start, maxiter, tol, warn)
+\S4method{getAsRisk}{asBias,RealRandVariable,ContNeighborhood,ANY}(risk, L2deriv, neighbor, 
+                              biastype, Distr, DistrSymm, L2derivSymm, L2derivDistrSymm, 
+                              trafo, z.start, A.start, maxiter, tol, warn)
 
-\S4method{getAsRisk}{asCov,UnivariateDistribution,ContNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, clip, cent, stand)
+\S4method{getAsRisk}{asCov,UnivariateDistribution,ContNeighborhood,ANY}(risk, L2deriv, 
+                                                  neighbor, biastype, clip, cent, stand)
 
-\S4method{getAsRisk}{asCov,UnivariateDistribution,TotalVarNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, clip, cent, stand)
+\S4method{getAsRisk}{asCov,UnivariateDistribution,TotalVarNeighborhood,ANY}(risk, L2deriv, 
+                                                    neighbor, biastype, clip, cent, stand)
 
-\S4method{getAsRisk}{asCov,RealRandVariable,ContNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, Distr, clip, cent, stand)
+\S4method{getAsRisk}{asCov,RealRandVariable,ContNeighborhood,ANY}(risk, L2deriv, neighbor, 
+                           biastype, Distr, clip, cent, stand, 
+                           V.comp =  matrix(TRUE, ncol = nrow(stand), nrow = nrow(stand)), w)
 
-\S4method{getAsRisk}{trAsCov,UnivariateDistribution,UncondNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, clip, cent, stand)
+\S4method{getAsRisk}{trAsCov,UnivariateDistribution,UncondNeighborhood,ANY}(risk, L2deriv, 
+                                                      neighbor, biastype, clip, cent, stand)
 
-\S4method{getAsRisk}{trAsCov,RealRandVariable,ContNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, Distr, clip, cent, stand, normtype)
+\S4method{getAsRisk}{trAsCov,RealRandVariable,ContNeighborhood,ANY}(risk, L2deriv, neighbor, 
+                                                biastype, Distr, clip, cent, stand, normtype)
 
-\S4method{getAsRisk}{asUnOvShoot,UnivariateDistribution,UncondNeighborhood,ANY}(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo)
+\S4method{getAsRisk}{asUnOvShoot,UnivariateDistribution,UncondNeighborhood,ANY}(risk, L2deriv, 
+                                                  neighbor, biastype, clip, cent, stand, trafo)
 
-\S4method{getAsRisk}{asSemivar,UnivariateDistribution,Neighborhood,onesidedBias}(risk, L2deriv, neighbor, biastype, 
-    clip, cent, stand, trafo)
+\S4method{getAsRisk}{asSemivar,UnivariateDistribution,Neighborhood,onesidedBias}(risk, L2deriv, 
+                                                    neighbor, biastype, clip, cent, stand, trafo)
 }
 \arguments{
   \item{risk}{ object of class \code{"asRisk"}. }
@@ -76,6 +90,9 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
   \item{tol}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }
   \item{normtype}{ object of class \code{"NormType"}. }
+  \item{V.comp}{ matrix: indication which components of the standardizing
+    matrix have to be computed. }
+  \item{w}{object of class \code{RobWeight}; current weight}  
 }
 \details{ This function is rarely called directly. It is used by 
   other functions/methods. }

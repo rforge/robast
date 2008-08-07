@@ -127,17 +127,17 @@ x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532),
 (est0 <- mean(x))
 
 ## with distrMod
-MLEstimator(x, PoisFamily(), interval = c(0, 10))
+MLEstimator(x, PoisFamily())
 
 ## with MASS
 library(MASS)
 fitdistr(x, densfun = "Poisson")
 
 ## 1.1. Kolmogorov(-Smirnov) minimum distance estimator
-(est11 <- MDEstimator(x=x, PoisFamily(), interval = c(0, 10)))
+(est11 <- MDEstimator(x=x, PoisFamily()))
 
 ## 1.2. Cramer von Mises minimum distance estimator
-(est12 <- MDEstimator(x=x, PoisFamily(), distance = CvMDist, interval = c(0, 10)))
+(est12 <- MDEstimator(x=x, PoisFamily(), distance = CvMDist))
 
 ## 2. k-step estimation: contamination neighborhood
 ## 2.1 small amount of contamination < 2%
