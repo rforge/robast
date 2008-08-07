@@ -263,8 +263,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 mse <- robEst$A1 + robEst$A2
                 modIC <- function(L2Fam, IC){
                     ICL2Fam <- eval(CallL2Fam(IC))
-#                    if(is(L2Fam, "L2LocationScaleFamily") && is(distribution(L2Fam), "Norm")){
-                    if(is(distribution(L2Fam), "Norm")){
+                    if(is(L2Fam, "L2LocationScaleFamily") && is(distribution(L2Fam), "Norm")){
                         sdneu <- main(L2Fam)[2]
                         sdalt <- main(ICL2Fam)[2]
                         r <- neighborRadius(IC)
@@ -295,7 +294,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                         addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
                         return(IC)
                     }else{
-                        stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
+                        makeIC(L2Fam, IC)
                     }
                 }
                 L2Fam <- substitute(NormLocationScaleFamily(mean = m1, sd = s1), 
@@ -373,8 +372,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 mse <- robEst$A1 + robEst$A2
                 modIC <- function(L2Fam, IC){
                     ICL2Fam <- eval(CallL2Fam(IC))
-#                    if(is(L2Fam, "L2LocationScaleFamily") && is(distribution(L2Fam), "Norm")){
-                    if(is(distribution(L2Fam), "Norm")){
+                    if(is(L2Fam, "L2LocationScaleFamily") && is(distribution(L2Fam), "Norm")){
                         sdneu <- main(L2Fam)[2]
                         sdalt <- main(ICL2Fam)[2]
                         r <- neighborRadius(IC)
@@ -405,7 +403,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                         addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
                         return(IC)
                     }else{
-                        stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
+                        makeIC(L2Fam, IC)
                     }
                 }
                 L2Fam <- substitute(NormLocationScaleFamily(mean = m1, sd = s1), 
@@ -474,14 +472,13 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                            biastype = symmetricBias(), 
                                            normW = NormType())
                     modIC <- function(L2Fam, IC){
-#                        if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), "Norm")){
-                        if(is(distribution(L2Fam), "Norm")){
+                        if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), "Norm")){
                             CallL2New <- call("NormLocationFamily", 
                                               mean = main(L2Fam))
                             CallL2Fam(IC) <- CallL2New
                             return(IC)
                         }else{
-                            stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
+                            makeIC(L2Fam, IC)
                         }
                     }
                     L2Fam <- substitute(NormLocationFamily(mean = m1, sd = s1), 
@@ -546,14 +543,13 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                        biastype = symmetricBias(), 
                                        normW = NormType())
                     modIC <- function(L2Fam, IC){
-#                        if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), "Norm")){
-                        if(is(distribution(L2Fam), "Norm")){
+                        if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), "Norm")){
                             CallL2New <- call("NormLocationFamily", 
                                               mean = main(L2Fam))
                             CallL2Fam(IC) <- CallL2New
                             return(IC)
                         }else{
-                            stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
+                            makeIC(L2Fam, IC)
                         }
                     }
                     L2Fam <- substitute(NormLocationFamily(mean = m1, sd = s1), 
@@ -625,8 +621,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                        normW = NormType())
                     modIC <- function(L2Fam, IC){
                         ICL2Fam <- eval(CallL2Fam(IC))
-#                        if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
-                        if(is(distribution(L2Fam), "Norm")){
+                        if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
                             sdneu <- main(L2Fam)
                             sdalt <- main(ICL2Fam)
                             r <- neighborRadius(IC)
@@ -650,7 +645,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                             addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
                             return(IC)
                         }else{
-                            stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
+                            makeIC(L2Fam, IC)
                         }
                     }
                     L2Fam <- substitute(NormScaleFamily(mean = m1, sd = s1), 
@@ -719,8 +714,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                        normW = NormType())
                     modIC <- function(L2Fam, IC){
                         ICL2Fam <- eval(CallL2Fam(IC))
-#                        if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
-                        if(is(distribution(L2Fam), "Norm")){
+                        if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
                             sdneu <- main(L2Fam)
                             sdalt <- main(ICL2Fam)
                             r <- neighborRadius(IC)
@@ -744,7 +738,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                             addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
                             return(IC)
                         }else{
-                            stop("'L2Fam' is not compatible with 'CallL2Fam' of 'IC'!")
+                            makeIC(L2Fam, IC)
                         }
                     }
                     L2Fam <- substitute(NormScaleFamily(mean = m1, sd = s1), 
