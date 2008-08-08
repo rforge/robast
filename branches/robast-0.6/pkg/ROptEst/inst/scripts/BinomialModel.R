@@ -103,6 +103,11 @@ system.time(r.rho2 <- leastFavorableRadius(L2Fam=B, neighbor=TotalVarNeighborhoo
                     risk=asMSE(), rho=0.5))
 r.rho2
 
+
+###############################################################################
+## k-step (k >= 1) estimation
+###############################################################################
+
 ## one-step estimation
 ## 1. generate a contaminated sample
 ind <- rbinom(100, size=1, prob=0.05) 
@@ -169,7 +174,7 @@ estimate(est1v3)
 
 ## 3.2. k-step estimation: radius known
 IC9 <- optIC(model=RobB3, risk=asMSE())
-(est2c <- kStepEstimator(x, IC=IC9, start=est0, steps = 3L)
+(est2c <- kStepEstimator(x, IC=IC9, start=est0, steps = 3L))
 
 est2c1 <- roptest(x, BinomFamily(size = 25), eps = 0.05, initial.est = est0, steps = 3L)
 checkIC(pIC(est2c1))
@@ -193,6 +198,26 @@ IC10 <- optIC(model=RobB4, risk=asMSE())
 (est2v <- kStepEstimator(x, IC=IC10, start=est0, steps = 3L))
 checkIC(pIC(est2v))
 
+est2v1 <- roptest(x, BinomFamily(size = 25), eps = 0.025, initial.est = est0, 
+                  steps = 3L, neighbor = TotalVarNeighborhood())
+checkIC(pIC(est2v1))
+
+est2v2 <- roptest(x, BinomFamily(size = 25), eps = 0.025, steps = 3L,
+                  distance = KolmogorovDist, neighbor = TotalVarNeighborhood())
+checkIC(pIC(est2v2))
+
+## Using Cramer-von-Mises MD estimator
+est2v3 <- roptest(x, BinomFamily(size = 25), eps = 0.025, steps = 3L, 
+                  neighbor = TotalVarNeighborhood())
+checkIC(pIC(est2v3))
+
+## comparison of estimates
+estimate(est2v)
+estimate(est2v1)
+estimate(est2v2)
+estimate(est2v3)
+
+
 ## 4.1. one-step estimation: radius interval
 IC11 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=estimate(est0)),
                 neighbor=ContNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
@@ -205,9 +230,9 @@ IC12 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=estimate(est0)),
 checkIC(pIC(est3v))
 
 ## maximum radius for given sample size n: sqrt(n)*0.5
-est3c1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5)
+(est3c1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5))
 checkIC(pIC(est3c1))
-est3v1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5, neighbor = TotalVarNeighborhood())
+(est3v1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5, neighbor = TotalVarNeighborhood()))
 checkIC(pIC(est3v1))
 
 ## 4.2. k-step estimation: radius interval
@@ -222,8 +247,8 @@ IC12 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=estimate(est0)),
 checkIC(pIC(est4v))
 
 ## maximum radius for given sample size n: sqrt(n)*0.5
-est4c1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5, steps = 3L)
+(est4c1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5, steps = 3L))
 checkIC(pIC(est4c1))
-est4v1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5, neighbor = TotalVarNeighborhood(),
-        steps = 3L)
-checkIC(pIC(est4v1)
+(est4v1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5, neighbor = TotalVarNeighborhood(),
+        steps = 3L))
+checkIC(pIC(est4v1))
