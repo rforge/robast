@@ -21,7 +21,7 @@ setMethod("getModifyIC", signature(L2FamIC = "L2LocationFamily",
                 CallL2Fam(IC) <- fam.call(L2Fam)
                 return(IC)
             }else{
-                makeIC(L2Fam, IC)
+                makeIC(IC, L2Fam)
             }
         }
         return(modIC)
@@ -56,7 +56,7 @@ setMethod("getModifyIC", signature(L2FamIC = "L2ScaleFamily",
                 addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
                 return(IC)
             }else{
-                makeIC(L2Fam, IC)
+                makeIC(IC, L2Fam)
             }
         }
         return(modIC)
@@ -91,7 +91,7 @@ setMethod("getModifyIC", signature(L2FamIC = "L2ScaleFamily",
                 addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
                 return(IC)
             }else{
-                makeIC(L2Fam, IC)
+                makeIC(IC, L2Fam)
             }
         }
         return(modIC)
@@ -129,7 +129,7 @@ setMethod("getModifyIC", signature(L2FamIC = "L2LocationScaleFamily",
                 addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
                 return(IC)
             }else{
-                makeIC(L2Fam, IC)
+                makeIC(IC, L2Fam)
             }
         }
         return(modIC)
