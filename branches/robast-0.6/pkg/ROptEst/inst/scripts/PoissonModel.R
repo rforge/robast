@@ -159,6 +159,16 @@ checkIC(pIC(est213))
 (est214 <- kStepEstimator(x, IC=IC10, start=est12, steps = 3L))
 checkIC(pIC(est214))
 
+(est215 <- roptest(x, PoisFamily(), eps.upper = 1/sqrt(length(x)), steps = 3L))
+checkIC(pIC(est215))
+
+## comparision of estimates
+estimate(est211)
+estimate(est212)
+estimate(est213)
+estimate(est214)
+estimate(est215)
+
 
 ## 2.2 amount of contamination unknown
 IC11 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=estimate(est11)),
@@ -177,6 +187,17 @@ checkIC(pIC(est223))
 
 (est224 <- kStepEstimator(x, IC=IC12, start=est12, steps = 3L))
 checkIC(pIC(est224))
+
+(est225 <- roptest(x, PoisFamily(), eps.upper = 0.5, steps = 3L))
+checkIC(pIC(est225))
+
+## comparision of estimates
+estimate(est221)
+estimate(est222)
+estimate(est223)
+estimate(est224)
+estimate(est225)
+
 
 ## 3. k-step estimation: total variation neighborhood
 ## 3.1 small amount of contamination < 2%
@@ -198,6 +219,17 @@ checkIC(pIC(est313))
 (est314 <- kStepEstimator(x, IC=IC14, start=est12, steps = 3L))
 checkIC(pIC(est314))
 
+(est315 <- roptest(x, PoisFamily(), eps.upper = 1/sqrt(length(x)), steps = 3L, 
+                   neighbor = TotalVarNeighborhood()))
+checkIC(pIC(est315))
+
+## comparison of estimates
+estimate(est311)
+estimate(est312)
+estimate(est313)
+estimate(est314)
+estimate(est315)
+
 
 ## 3.2 amount of contamination unknown
 IC15 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=estimate(est11)),
@@ -216,5 +248,16 @@ checkIC(pIC(est323))
 
 (est324 <- kStepEstimator(x, IC=IC16, start=est12, steps = 3L))
 checkIC(pIC(est324))
+
+(est325 <- roptest(x, PoisFamily(), eps.upper = 0.5, steps = 3L, 
+                   neighbor = TotalVarNeighborhood()))
+checkIC(pIC(est325))
+
+## comparision of estimates
+estimate(est321)
+estimate(est322)
+estimate(est323)
+estimate(est324)
+estimate(est325)
 
 distroptions("TruncQuantile", 1e-5) # default
