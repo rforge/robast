@@ -2,7 +2,9 @@
 TotalVarIC <- function(name, CallL2Fam = call("L2ParamFamily"),
                     Curve = EuclRandVarList(RealRandVariable(Map = c(function(x){x}), Domain = Reals())), 
                     Risks, Infos, clipLo = -Inf, clipUp = Inf, stand = as.matrix(1),
-                    lowerCase = NULL, neighborRadius = 0, w = new("BdStWeight")){
+                    lowerCase = NULL, neighborRadius = 0, w = new("BdStWeight"),
+                    normtype = NormType(), biastype = symmetricBias(),
+                    modifyIC = NULL){
 
     if(missing(name))
         name <- "IC of total variation type"
@@ -32,6 +34,9 @@ TotalVarIC <- function(name, CallL2Fam = call("L2ParamFamily"),
     IC1@lowerCase <- lowerCase
     IC1@neighborRadius <- neighborRadius
     IC1@weight <- w
+    IC1@biastype <- biastype
+    IC1@normtype <- normtype
+    IC1@modifyIC <- modifyIC
 
     return(IC1)
 }
@@ -44,7 +49,6 @@ setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood",
         A <- res$A
         clipLo <- sign(as.vector(A))*res$a
         b <- res$b
-        if(is.null(res$w)) res$w <- new("BdStWeight") 
         w <- res$w 
         ICfct <- vector(mode = "list", length = 1)
         Y <- as(A %*% L2Fam@L2deriv, "EuclRandVariable")
@@ -55,27 +59,17 @@ setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood",
 
         return(TotalVarIC(
                 name = "IC of total variation type", 
-                CallL2Fam = call("L2ParamFamily", 
-                                name = L2Fam@name,
-                                distribution = L2Fam@distribution, 
-                                distrSymm = L2Fam@distrSymm, 
-                                param = L2Fam@param,
-                                modifyParam = L2Fam@modifyParam,
-                                props = L2Fam@props,
-#                                L2deriv = L2Fam@L2deriv,
-                                L2deriv.fct = L2Fam@L2deriv.fct,
-                                L2derivSymm = L2Fam@L2derivSymm,
-                                L2derivDistr = L2Fam@L2derivDistr,
-                                L2derivDistrSymm = L2Fam@L2derivDistrSymm,
-                                FisherInfo = L2Fam@FisherInfo,
-                                FisherInfo.fct = L2Fam@FisherInfo.fct),
+                CallL2Fam = L2Fam@fam.call,
                 Curve = generateIC.fct(neighbor, L2Fam, res),
                 clipUp = clipUp,
                 clipLo = clipLo,
                 stand = A,
                 lowerCase = res$d, 
                 w = w,
-                neighborRadius = neighbor@radius,           
+                modifyIC = res$modifyIC,
+                normtype = res$normtype,
+                biastype = res$biastype,
+                neighborRadius = neighbor@radius,
                 Risks = res$risk,
                 Infos = matrix(res$info, ncol = 2, 
                             dimnames = list(character(0), c("method", "message")))))
@@ -84,6 +78,7 @@ setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood",
 ## Access methods
 setMethod("clipLo", "TotalVarIC", function(object) object@clipLo)
 setMethod("clipUp", "TotalVarIC", function(object) object@clipUp)
+setMethod("neighbor", "TotalVarIC", function(object) TotalVarNeighborhood(radius = object@neighborRadius) )
 
 ## Replace methods
 setReplaceMethod("clipLo", "TotalVarIC", 
@@ -97,7 +92,8 @@ setReplaceMethod("clipLo", "TotalVarIC",
                                normW = object@normtype)
         res <- list(A = object@stand, a = value, b = object@clipUp-value, 
                     d = object@lowerCase, risk = object@Risks, info = object@Infos, 
-                    w = w, normtype = object@normtype, biastype = object@biastype)
+                    w = w, normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
         object <- generateIC(neighbor = TotalVarNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("clipLo<-", "The lower clipping bound has been changed")
@@ -115,7 +111,8 @@ setReplaceMethod("clipUp", "TotalVarIC",
                                normW = object@normtype)
         res <- list(A = object@stand, a = object@clipLo, b = value-object@clipLo, 
                     d = object@lowerCase, risk = object@Risks, info = object@Infos, 
-                    w = w, normtype = object@normtype, biastype = object@biastype)
+                    w = w, normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
         object <- generateIC(neighbor = TotalVarNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("clipUp<-", "The upper clipping bound has been changed")
@@ -133,7 +130,8 @@ setReplaceMethod("stand", "TotalVarIC",
                                normW = object@normtype)
         res <- list(A = value, a = object@clipLo, b = object@clipUp-object@clipLo, 
                     d = object@lowerCase, risk = object@Risks, info = object@Infos, 
-                    w = w, normtype = object@normtype, biastype = object@biastype)
+                    w = w, normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
         object <- generateIC(neighbor = TotalVarNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("stand<-", "The standardizing matrix has been changed")
@@ -146,7 +144,8 @@ setReplaceMethod("lowerCase", "TotalVarIC",
         L2Fam <- eval(object@CallL2Fam)
         res <- list(A = object@stand, a = object@clipLo, b = object@clipUp-object@clipLo, 
                     d = value, risk = object@Risks, info = object@Infos, 
-                    w = object@weight, normtype = object@normtype, biastype = object@biastype)
+                    w = object@weight, normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
         object <- generateIC(neighbor = TotalVarNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("lowerCase<-", "The slot 'lowerCase' has been changed")
@@ -158,7 +157,8 @@ setReplaceMethod("CallL2Fam", "TotalVarIC",
         L2Fam <- eval(value)
         res <- list(A = object@stand, a = object@clipLo, b = object@clipUp-object@clipLo, 
                     d = object@lowerCase, risk = object@Risks, info = object@Infos, 
-                    w = object@weight, normtype = object@normtype, biastype = object@biastype)
+                    w = object@weight, normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
         object <- generateIC(neighbor = TotalVarNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("CallL2Fam<-", "The slot 'CallL2Fam' has been changed")

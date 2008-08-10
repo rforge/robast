@@ -14,20 +14,19 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             res <- getInfRobIC(L2deriv = L2deriv, risk = asCov(), 
                         neighbor = TotalVarNeighborhood(radius = neighbor@radius),  
                         Finfo = Finfo, trafo = trafo)
-            if(is(neighbor, "ContNeighborhoood"))
-              {
+            if(is(neighbor, "ContNeighborhoood")){
                 res.c <- getInfRobIC(L2deriv = L2deriv, risk = asCov(), 
                          neighbor = ContNeighborhood(radius = neighbor@radius),  
-                         Finfo = Finfo, trafo = trafo)
+                         Finfo = Finfo, trafo = trafo, verbose = FALSE)
                 res$risk <- res.c$risk
-              }
+            }
             Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,  
                               biastype = biastype, clip = res$b, cent = res$a, 
                               stand = res$A, trafo = trafo)
             res$risk <- c(Risk, res$risk)
             return(res)
         }
-        
+
         bound <- risk@width*(-m1df(L2deriv, 0))
         if(is(neighbor, "ContNeighborhood")){
             if(identical(all.equal(radius, 2*bound), TRUE)){
@@ -44,11 +43,11 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                     a <- -b*(1-p0)/(1-ws0)
                 else
                     a <- b*(p0-ws0)/(1-ws0)
-            
+
                 info <- paste("optimally robust IC for", sQuote(class(risk)[1]))
                 Risk <- list(asUnOvShoot = 0.5)
 
-                return(list(A = A, a = a, b = b, d = 1, risk = Risk, info = info))                
+                return(list(A = A, a = a, b = b, d = 1, risk = Risk, info = info))
             }
             if(radius > 2*bound)
                 stop("boundedness condition is violated!")
@@ -69,16 +68,16 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                     a <- -b*(1-p0)/(1-ws0)
                 else
                     a <- b*(p0-ws0)/(1-ws0)
-            
+
                 info <- paste("optimally robust IC for", sQuote(class(risk)[1]))
                 Risk <- list(asUnOvShoot = 0.5)
 
-                return(list(A = A, a = a, b = b, d = 1, risk = Risk, info = info))                
+                return(list(A = A, a = a, b = b, d = 1, risk = Risk, info = info))
             }
             if(radius > bound)
                 stop("boundedness condition is violated!")
         }
-        
+
         z <- 0
         c0 <- 0
         iter <- 0
@@ -86,7 +85,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             S <- symm@SymmCenter == 0
         else
             S <- FALSE
-                
+
         repeat{
             iter <- iter + 1
             z.old <- z

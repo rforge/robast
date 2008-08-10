@@ -34,6 +34,18 @@
 <param name="Local" value="InfluenceCurve-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ALEstimate-class">
+<param name="Local" value="ALEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="asbias">
+<param name="Local" value="ALEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="asbias,ALEstimate-method">
+<param name="Local" value="ALEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="BdStWeight-class">
 <param name="Local" value="BdStWeight-class.html">
 </OBJECT>
@@ -326,6 +338,10 @@
 <param name="Local" value="getRiskIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getRobAStBaseOption">
+<param name="Local" value="RobAStBaseOptions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getweight">
 <param name="Local" value="getweight.html">
 </OBJECT>
@@ -410,6 +426,38 @@
 <param name="Local" value="internals.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kStepEstimate-class">
+<param name="Local" value="kStepEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kStepEstimator">
+<param name="Local" value="kStepEstimator.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kStepEstimator,matrix,IC,Estimate-method">
+<param name="Local" value="kStepEstimator.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kStepEstimator,matrix,IC,numeric-method">
+<param name="Local" value="kStepEstimator.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kStepEstimator,numeric,IC,Estimate-method">
+<param name="Local" value="kStepEstimator.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kStepEstimator,numeric,IC,numeric-method">
+<param name="Local" value="kStepEstimator.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kStepEstimator-methods">
+<param name="Local" value="kStepEstimator.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kStepUseLast">
+<param name="Local" value="RobAStBaseOptions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="locMEstimator">
 <param name="Local" value="locMEstimator.html">
 </OBJECT>
@@ -462,6 +510,10 @@
 <param name="Local" value="InfluenceCurve-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="MEstimate-class">
+<param name="Local" value="MEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="minbiasweight">
 <param name="Local" value="getweight.html">
 </OBJECT>
@@ -484,6 +536,22 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="minbiasweight-methods">
 <param name="Local" value="getweight.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="modifyIC">
+<param name="Local" value="IC-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="modifyIC,IC-method">
+<param name="Local" value="IC-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Mroot">
+<param name="Local" value="MEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Mroot,MEstimate-method">
+<param name="Local" value="MEstimate-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="name,InfluenceCurve-method">
@@ -518,8 +586,16 @@
 <param name="Local" value="RobModel-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="neighbor,ContIC-method">
+<param name="Local" value="ContIC-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="neighbor,RobModel-method">
 <param name="Local" value="RobModel-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="neighbor,TotalVarIC-method">
+<param name="Local" value="TotalVarIC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="neighbor<-">
@@ -566,7 +642,7 @@
 <param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="oneStepEstimator,matrix,InfluenceCurve,list-method">
+<param name="Name" value="oneStepEstimator,matrix,InfluenceCurve,Estimate-method">
 <param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -574,7 +650,7 @@
 <param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="oneStepEstimator,numeric,InfluenceCurve,list-method">
+<param name="Name" value="oneStepEstimator,numeric,InfluenceCurve,Estimate-method">
 <param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -596,6 +672,14 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="optIC-methods">
 <param name="Local" value="optIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pIC">
+<param name="Local" value="ALEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pIC,ALEstimate-method">
+<param name="Local" value="ALEstimate-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="plot,IC-method">
@@ -628,6 +712,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Risks<-,InfluenceCurve-method">
 <param name="Local" value="InfluenceCurve-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="RobAStBaseOptions">
+<param name="Local" value="RobAStBaseOptions.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="RobAStControl-class">
@@ -698,6 +786,14 @@
 <param name="Local" value="TotalVarIC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="steps">
+<param name="Local" value="kStepEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="steps,kStepEstimate-method">
+<param name="Local" value="kStepEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="TotalVarIC">
 <param name="Local" value="TotalVarIC.html">
 </OBJECT>
@@ -751,6 +847,10 @@
 </OBJECT>
 <UL>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ALEstimate-class.">
+<param name="Local" value="ALEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Compare - Plots">
 <param name="Local" value="comparePlot.html">
 </OBJECT>
@@ -761,6 +861,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Control classes in package RobAStBase">
 <param name="Local" value="RobAStControl-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function to change the global variables of the package `RobAStBase' ">
+<param name="Local" value="RobAStBaseOptions.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generating function for ContIC-class">
@@ -815,11 +919,15 @@
 <param name="Local" value="getRiskIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic function for the computation of location M estimators">
+<param name="Name" value="Generic function for the computation of k-step estimates">
+<param name="Local" value="kStepEstimator.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Generic function for the computation of location M estimates">
 <param name="Local" value="locMEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic function for the computation of one-step estimators">
+<param name="Name" value="Generic function for the computation of one-step estimates">
 <param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -853,6 +961,14 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Internal / Helper functions of package RobAStBase">
 <param name="Local" value="internals.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kStepEstimate-class.">
+<param name="Local" value="kStepEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="MEstimate-class.">
+<param name="Local" value="MEstimate-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Neighborhood">

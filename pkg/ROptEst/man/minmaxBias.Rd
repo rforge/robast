@@ -17,7 +17,7 @@
 minmaxBias(L2deriv, neighbor, biastype, ...)
 
 \S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype, symm, trafo, 
-             maxiter, tol, Finfo)
+             maxiter, tol, warn, Finfo)
 
 \S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(L2deriv, neighbor, biastype, symm, trafo, 
              maxiter, tol, warn, Finfo)
@@ -28,8 +28,8 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
 \S4method{minmaxBias}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(L2deriv, neighbor, biastype, symm, trafo, 
              maxiter, tol, warn, Finfo)
 
-\S4method{minmaxBias}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype, Distr, 
-             L2derivDistrSymm, z.start, A.start,  z.comp, A.comp, trafo, maxiter, tol, warn)
+\S4method{minmaxBias}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype, normtype, Distr, 
+             z.start, A.start,  z.comp, A.comp, trafo, maxiter, tol)
 
 }
 \arguments{
@@ -37,10 +37,10 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
     of probability measures. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{biastype}{ object of class \code{"BiasType"}. }
+  \item{normtype}{ object of class \code{"NormType"}. }
   \item{\dots}{ additional parameters. }
   \item{Distr}{ object of class \code{"Distribution"}. }
   \item{symm}{ logical: indicating symmetry of \code{L2deriv}. }
-  \item{L2derivDistrSymm}{ object of class \code{"DistrSymmList"}. }
   \item{z.start}{ initial value for the centering constant. }
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{z.comp}{ \code{logical} indicator which indices need to be computed and which are 0 due to symmetry. }
@@ -94,4 +94,4 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
 \seealso{\code{\link[RobAStBase]{InfRobModel-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

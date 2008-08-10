@@ -34,7 +34,8 @@ ContIC(name, CallL2Fam = call("L2ParamFamily"),
                                                 Domain = Reals())), 
        Risks, Infos, clip = Inf, cent = 0, stand = as.matrix(1), 
        lowerCase = NULL, neighborRadius = 0, w = new("HampelWeight"),
-       normtype = NormType(), biastype = symmetricBias())
+       normtype = NormType(), biastype = symmetricBias(),
+       modifyIC = NULL)
 </pre>
 
 
@@ -85,6 +86,13 @@ BiasType: type of the bias</td></tr>
 <tr valign="top"><td><code>normtype</code></td>
 <td>
 NormType: type of the norm</td></tr>
+<tr valign="top"><td><code>modifyIC</code></td>
+<td>
+object of class <code>"OptionalFunction"</code>:
+function of two arguments, which are an L2 parametric family 
+and an optional influence curve. Returns an object of 
+class <code>"IC"</code>. This function is mainly used for internal
+computations! </td></tr>
 </table>
 
 <h3>Value</h3>

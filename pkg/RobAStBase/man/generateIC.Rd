@@ -27,4 +27,4 @@ generateIC(neighbor, L2Fam, ...)
 \seealso{\code{\link{IC-class}}, \code{\link{ContIC-class}}, \code{\link{TotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

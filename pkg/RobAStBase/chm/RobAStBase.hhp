@@ -12,6 +12,7 @@ Title=R Help for package RobAStBase
 
 [FILES]
 00Index.html
+ALEstimate-class.html
 BdStWeight-class.html
 BoundedWeight-class.html
 ContIC-class.html
@@ -28,7 +29,9 @@ InfRobModel-class.html
 InfRobModel.html
 InfluenceCurve-class.html
 InfluenceCurve.html
+MEstimate-class.html
 Neighborhood-class.html
+RobAStBaseOptions.html
 RobAStControl-class.html
 RobModel-class.html
 RobWeight-class.html
@@ -47,6 +50,8 @@ getRiskIC.html
 getweight.html
 infoPlot.html
 internals.html
+kStepEstimate-class.html
+kStepEstimator.html
 locMEstimator.html
 makeIC-methods.html
 oneStepEstimator.html

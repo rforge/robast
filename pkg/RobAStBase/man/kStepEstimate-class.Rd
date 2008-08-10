@@ -3,6 +3,7 @@
 \alias{kStepEstimate-class}
 \alias{steps}
 \alias{steps,kStepEstimate-method}
+\alias{show,kStepEstimate-method}
 
 \title{kStepEstimate-class.}
 \description{Class of asymptotically linear estimates.}
@@ -17,8 +18,16 @@
       name of the estimator. }
     \item{\code{estimate}:}{Object of class \code{"ANY"}:
       estimate. }
+    \item{\code{samplesize}:}{Object of class \code{"numeric"}:
+      sample size. }
+    \item{\code{asvar}:}{Optional object of class \code{"matrix"}:
+      asymptotic variance. }
+    \item{\code{asbias}:}{Optional object of class \code{"numeric"}:
+      asymptotic bias. }
     \item{\code{pIC}:}{Optional object of class \code{InfluenceCurve}:
       influence curve. }
+    \item{\code{nuis.idx}:}{ object of class \code{"OptionalNumeric"}: 
+     indices of \code{estimate} belonging to the nuisance part. }
     \item{\code{steps}:}{Object of class \code{"integer"}: number
       of steps. }
     \item{\code{Infos}:}{ object of class \code{"matrix"}
@@ -34,6 +43,8 @@ Class \code{"Estimate"}, by class \code{"ALEstimate"}
   \describe{
     \item{steps}{\code{signature(object = "kStepEstimate")}: 
       accessor function for slot \code{steps}. }
+
+    \item{show}{\code{signature(object = "kStepEstimate")} }
   }
 }
 %\references{}

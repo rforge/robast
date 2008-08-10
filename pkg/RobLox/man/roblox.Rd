@@ -53,7 +53,7 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
   respectively.
 
   If \code{eps} is missing, the radius-minimax estimator in sense of 
-  Rieder et al. (2001), respectively Section 2.2 of Kohl (2005) is returned.
+  Rieder et al. (2001, 2008), respectively Section 2.2 of Kohl (2005) is returned.
 }
 \value{Object of class \code{"kStepEstimate"}. }
 \references{
@@ -75,7 +75,8 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
 %\note{}
 \seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link{rlOptIC}}, 
          \code{\link{rsOptIC}}, \code{\link{rlsOptIC.AL}},
-         \code{\link[RobAStBase]{kStepEstimate-class}} }
+         \code{\link[RobAStBase]{kStepEstimate-class}},
+         \code{\link[ROptEst]{roptest}} }
 \examples{
 ind <- rbinom(100, size=1, prob=0.05) 
 x <- rnorm(100, mean=ind*3, sd=(1-ind) + ind*9)

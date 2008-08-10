@@ -48,7 +48,8 @@
 %\note{}
 \seealso{\code{\link{InfluenceCurve-class}}, \code{\link{IC}}}
 \examples{
-%
+## prototype
+new("RobWeight")
 }
 \concept{influence curve}
 \keyword{classes}

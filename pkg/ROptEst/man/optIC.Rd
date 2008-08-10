@@ -12,16 +12,18 @@
 \usage{
 optIC(model, risk, ...)
 
-\S4method{optIC}{InfRobModel,asRisk}(model, risk, 
-                 z.start = NULL, A.start = NULL, upper = 1e4, 
-             maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE, noLow = FALSE)
+\S4method{optIC}{InfRobModel,asRisk}(model, risk, z.start = NULL, A.start = NULL,
+                                     upper = 1e4, maxiter = 50, 
+                                     tol = .Machine$double.eps^0.4, warn = TRUE, 
+                                     noLow = FALSE, verbose = FALSE)
 
-\S4method{optIC}{InfRobModel,asUnOvShoot}(model, risk, 
-                 upper = 1e4, maxiter = 50, 
-                 tol = .Machine$double.eps^0.4, warn = TRUE)
+\S4method{optIC}{InfRobModel,asUnOvShoot}(model, risk, upper = 1e4, maxiter = 50, 
+                                          tol = .Machine$double.eps^0.4, warn = TRUE)
 
-\S4method{optIC}{FixRobModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, maxiter = 50, 
-             tol = .Machine$double.eps^0.4, warn = TRUE, Algo = "A", cont = "left")
+\S4method{optIC}{FixRobModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, 
+                                          maxiter = 50, tol = .Machine$double.eps^0.4, 
+                                          warn = TRUE, Algo = "A", cont = "left",
+                                          verbose = FALSE)
 }
 \arguments{
   \item{model}{ probability model. }
@@ -37,6 +39,7 @@ optIC(model, risk, ...)
   \item{Algo}{ "A" or "B". }
   \item{cont}{ "left" or "right". }
   \item{noLow}{ logical: is lower case to be computed? }
+  \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
 }
 \details{ In case of the finite-sample risk \code{"fiUnOvShoot"} one can choose
   between two algorithms for the computation of this risk where the least favorable
@@ -84,4 +87,4 @@ checkIC(IC0, B)
 }
 \concept{robust influence curve}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

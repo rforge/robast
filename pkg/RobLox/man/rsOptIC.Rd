@@ -26,7 +26,7 @@ rsOptIC(r, mean = 0, sd = 1, bUp = 1000, delta = 1e-06, itmax = 100, computeIC =
 }
 \value{
   If 'computeIC' is 'TRUE' an object of class \code{"ContIC"} is returned, 
-  otherwise a list of Lagrane multipliers
+  otherwise a list of Lagrange multipliers
   \item{A}{ standardizing constant }
   \item{a}{ centering constant }
   \item{b}{ optimal clipping bound }

@@ -16,15 +16,20 @@
 \usage{
 getInfClip(clip, L2deriv, risk, neighbor, ...)
 
-\S4method{getInfClip}{numeric,UnivariateDistribution,asMSE,ContNeighborhood}(clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
+\S4method{getInfClip}{numeric,UnivariateDistribution,asMSE,ContNeighborhood}(clip, L2deriv, 
+                                                risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfClip}{numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood}(clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
+\S4method{getInfClip}{numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood}(clip, L2deriv, 
+                                                    risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfClip}{numeric,EuclRandVariable,asMSE,ContNeighborhood}(clip, L2deriv, risk, neighbor, Distr, stand, biastype, cent, trafo)
+\S4method{getInfClip}{numeric,EuclRandVariable,asMSE,ContNeighborhood}(clip, L2deriv, risk, 
+                                              neighbor, biastype, Distr, stand, cent, trafo)
 
-\S4method{getInfClip}{numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
+\S4method{getInfClip}{numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(clip, L2deriv, 
+                                                        risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfClip}{numeric,UnivariateDistribution,asSemivar,ContNeighborhood}(clip, L2deriv, risk, neighbor, cent, symm, trafo)
+\S4method{getInfClip}{numeric,UnivariateDistribution,asSemivar,ContNeighborhood}(clip, L2deriv, 
+                                                              risk, neighbor, cent, symm, trafo)
 }
 \arguments{
   \item{clip}{ positive real: clipping bound }
@@ -82,4 +87,4 @@ getInfClip(clip, L2deriv, risk, neighbor, ...)
 \seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link[RobAStBase]{TotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

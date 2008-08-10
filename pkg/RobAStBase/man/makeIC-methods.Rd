@@ -33,9 +33,26 @@ makeIC(IC, L2Fam, ...)
 %\note{}
 \seealso{\code{\link[distrMod]{L2ParamFamily-class}}, \code{\link{IC-class}}}
 \examples{
+## default IC
 IC1 <- new("IC")
+
+## L2-differentiable parametric family
 B <- BinomFamily(13, 0.3)
-makeIC(IC1,B)
+
+## check IC properties
+checkIC(IC1, B)
+
+## make IC
+IC2 <- makeIC(IC1, B)
+
+## check IC properties
+checkIC(IC2)
+
+## slot modifyIC is filled in case of IC2
+IC3 <- modifyIC(IC2)(BinomFamily(13, 0.2), IC2)
+checkIC(IC3)
+## identical to
+checkIC(IC3, BinomFamily(13, 0.2))
 }
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

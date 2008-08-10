@@ -33,4 +33,4 @@ infoPlot(IC1)
 }
 \concept{absolute information}
 \concept{relative information}
-\keyword{}
+\keyword{robust}

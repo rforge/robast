@@ -100,4 +100,4 @@ getInfGamma(L2deriv, risk, neighbor, biastype, ...)
         \code{\link[RobAStBase]{TotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

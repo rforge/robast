@@ -25,7 +25,7 @@ setMethod("getRiskIC", signature(IC = "IC",
 
         prec <- checkIC(IC, L2Fam, out = FALSE)
         if(prec > tol)
-            warning("The maximum deviation from the exact IC properties is", prec,
+            warning("The maximum deviation from the exact IC properties is ", prec,
                     "\nThis is larger than the specified 'tol' ",
                     "=> the result may be wrong")
 
@@ -57,7 +57,7 @@ setMethod("getRiskIC", signature(IC = "IC",
 
         prec <- checkIC(IC, L2Fam, out = FALSE)
         if(prec > tol)
-            warning("The maximum deviation from the exact IC properties is", prec,
+            warning("The maximum deviation from the exact IC properties is ", prec,
                     "\nThis is larger than the specified 'tol' ",
                     "=> the result may be wrong")
 
@@ -113,7 +113,7 @@ setMethod("getRiskIC", signature(IC = "IC",
 
         prec <- checkIC(IC, L2Fam, out = FALSE)
         if(prec > tol)
-            warning("The maximum deviation from the exact IC properties is", prec,
+            warning("The maximum deviation from the exact IC properties is ", prec,
                     "\nThis is larger than the specified 'tol' ",
                     "=> the result may be wrong")
 

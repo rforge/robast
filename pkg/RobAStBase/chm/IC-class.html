@@ -10,6 +10,8 @@
 <param name="keyword" value="R:   CallL2Fam,IC-method">
 <param name="keyword" value="R:   CallL2Fam<-">
 <param name="keyword" value="R:   CallL2Fam<-,IC-method">
+<param name="keyword" value="R:   modifyIC">
+<param name="keyword" value="R:   modifyIC,IC-method">
 <param name="keyword" value="R:   checkIC,IC,missing-method">
 <param name="keyword" value="R:   checkIC,IC,L2ParamFamily-method">
 <param name="keyword" value="R:   evalIC,IC,numeric-method">
@@ -46,6 +48,11 @@ More frequently they are created via the generating function
 <dt><code>CallL2Fam</code>:</dt><dd>Object of class <code>"call"</code>:
 creates an object of the underlying L2-differentiable 
 parametric family. </dd>
+<dt><code>modifyIC</code>:</dt><dd>Object of class <code>"OptionalFunction"</code>:
+function of two arguments, which are an L2 parametric family 
+and an optional influence curve. Returns an object of 
+class <code>"IC"</code>. This slot is mainly used for internal
+computations! </dd>
 <dt><code>name</code>:</dt><dd>Object of class <code>"character"</code>. </dd>
 <dt><code>Curve</code>:</dt><dd>Object of class <code>"EuclRandVarList"</code>.</dd>
 <dt><code>Risks</code>:</dt><dd>Object of class <code>"list"</code>: 
@@ -71,6 +78,10 @@ accessor function for slot <code>CallL2Fam</code>. </dd>
 
 <dt>CallL2Fam&lt;-</dt><dd><code>signature(object = "IC")</code>: 
 replacement function for slot <code>CallL2Fam</code>. </dd>
+
+
+<dt>modifyIC</dt><dd><code>signature(object = "IC")</code>: 
+accessor function for slot <code>modifyIC</code>. </dd>
 
 
 <dt>checkIC</dt><dd><code>signature(IC = "IC", L2Fam = "missing")</code>: 

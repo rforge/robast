@@ -5,6 +5,8 @@
 \alias{CallL2Fam,IC-method}
 \alias{CallL2Fam<-}
 \alias{CallL2Fam<-,IC-method}
+\alias{modifyIC}
+\alias{modifyIC,IC-method}
 \alias{checkIC,IC,missing-method}
 \alias{checkIC,IC,L2ParamFamily-method}
 \alias{evalIC,IC,numeric-method}
@@ -25,6 +27,11 @@
     \item{\code{CallL2Fam}:}{Object of class \code{"call"}:
       creates an object of the underlying L2-differentiable 
       parametric family. }
+    \item{\code{modifyIC}:}{ Object of class \code{"OptionalFunction"}:
+      function of two arguments, which are an L2 parametric family 
+      and an optional influence curve. Returns an object of 
+      class \code{"IC"}. This slot is mainly used for internal
+      computations! }
     \item{\code{name}:}{Object of class \code{"character"}. }
     \item{\code{Curve}:}{Object of class \code{"EuclRandVarList"}.}
     \item{\code{Risks}:}{Object of class \code{"list"}: 
@@ -44,6 +51,9 @@ Class \code{"InfluenceCurve"}, directly.
 
     \item{CallL2Fam<-}{\code{signature(object = "IC")}: 
       replacement function for slot \code{CallL2Fam}. }
+
+    \item{modifyIC}{\code{signature(object = "IC")}: 
+      accessor function for slot \code{modifyIC}. }
 
     \item{checkIC}{\code{signature(IC = "IC", L2Fam = "missing")}: 
       check centering and Fisher consistency of \code{IC} assuming
@@ -86,3 +96,4 @@ plot(IC1)
 }
 \concept{influence curve}
 \keyword{classes}
+\keyword{robust}

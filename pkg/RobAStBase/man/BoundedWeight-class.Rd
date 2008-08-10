@@ -44,7 +44,8 @@ Class \code{"RobWeight"}, directly.
 %\note{}
 \seealso{\code{\link{RobWeight-class}}, \code{\link{IC}}, \code{\link{InfluenceCurve-class}}}
 \examples{
-%
+## prototype
+new("BoundedWeight")
 }
 \concept{influence curve}
 \keyword{classes}

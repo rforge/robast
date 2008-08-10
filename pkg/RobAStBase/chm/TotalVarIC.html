@@ -33,7 +33,9 @@ TotalVarIC(name, CallL2Fam = call("L2ParamFamily"),
            Curve = EuclRandVarList(RealRandVariable(Map = c(function(x) {x}), 
                                                     Domain = Reals())), 
            Risks, Infos, clipLo = -Inf, clipUp = Inf, stand = as.matrix(1), 
-           lowerCase = NULL, neighborRadius = 0, w = new("BdStWeight"))
+           lowerCase = NULL, neighborRadius = 0, w = new("BdStWeight"),
+           normtype = NormType(), biastype = symmetricBias(),
+           modifyIC = NULL)
 </pre>
 
 
@@ -78,6 +80,19 @@ optional constant for lower case solution. </td></tr>
 <td>
 radius of the corresponding (unconditional) 
 contamination neighborhood. </td></tr>
+<tr valign="top"><td><code>biastype</code></td>
+<td>
+BiasType: type of the bias</td></tr>
+<tr valign="top"><td><code>normtype</code></td>
+<td>
+NormType: type of the norm</td></tr>
+<tr valign="top"><td><code>modifyIC</code></td>
+<td>
+object of class <code>"OptionalFunction"</code>:
+function of two arguments, which are an L2 parametric family 
+and an optional influence curve. Returns an object of 
+class <code>"IC"</code>. This function is mainly used for internal
+computations! </td></tr>
 </table>
 
 <h3>Value</h3>

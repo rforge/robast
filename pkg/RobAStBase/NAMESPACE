@@ -27,7 +27,8 @@ exportMethods("center", "center<-",
 exportMethods("Curve", 
               "Risks", "Risks<-", "addRisk<-", 
               "Infos", "Infos<-", "addInfo<-", 
-              "CallL2Fam", "CallL2Fam<-", 
+              "CallL2Fam", "CallL2Fam<-",
+              "modifyIC", 
               "generateIC", 
               "checkIC",
               "evalIC",
@@ -39,7 +40,8 @@ exportMethods("Curve",
               "clipLo", "clipLo<-", 
               "clipUp", "clipUp<-",
               "optIC") 
-exportMethods("oneStepEstimator", 
+exportMethods("oneStepEstimator",
+              "kStepEstimator",
               "locMEstimator")
 exportMethods("weight", "weight<-", 
               "getweight", 
@@ -49,8 +51,11 @@ exportMethods("weight", "weight<-",
 exportMethods("getRiskIC")
 exportMethods("getBiasIC")
 exportMethods("comparePlot")
-exportMethods("pIC", "steps", "Mroot")
+exportMethods("pIC", "asbias", 
+              "steps", 
+              "Mroot")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 
 export("InfluenceCurve", "IC", "ContIC", "TotalVarIC")
 export(".eq", ".getDistr")
+export("RobAStBaseOptions", "getRobAStBaseOption")

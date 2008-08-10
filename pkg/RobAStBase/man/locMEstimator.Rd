@@ -18,9 +18,10 @@ locMEstimator(x, IC, ...)
   \item{\dots}{ additional parameters }
   \item{eps}{ the desired accuracy (convergence tolerance). }  
 }
-%\details{}
+\details{ Given some sample \code{x} and some influence curve \code{IC}
+          an M estimate is computed by solving the corresponding 
+          M equation. }
 \value{Object of class \code{"MEstimate"}}
-}
 \section{Methods}{
 \describe{
   \item{x = "numeric", IC = "InfluenceCurve"}{ univariate location. }

@@ -1,4 +1,4 @@
-<html><head><title>Optimally robust estimator for location and/or scale</title>
+<html><head><title>Optimally robust estimation for location and/or scale</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
 </head>
@@ -7,18 +7,18 @@
 <table width="100%"><tr><td>rowRoblox and colRoblox(RobLox)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   rowRoblox">
 <param name="keyword" value="R:   colRoblox">
-<param name="keyword" value=" Optimally robust estimator for location and/or scale">
+<param name="keyword" value=" Optimally robust estimation for location and/or scale">
 </object>
 
 
-<h2>Optimally robust estimator for location and/or scale</h2>
+<h2>Optimally robust estimation for location and/or scale</h2>
 
 
 <h3>Description</h3>
 
 <p>
 The functions <code>rowRoblox</code> and <code>colRoblox</code> compute 
-the optimally robust estimator for normal location und/or scale and 
+optimally robust estimates for normal location und/or scale and 
 (convex) contamination neighborhoods. The definition of 
 these estimators can be found in Rieder (1994) or Kohl (2005),
 respectively.
@@ -74,8 +74,10 @@ Computes the optimally robust estimator for location with scale specified,
 scale with location specified, or both if neither is specified. The computation
 uses a k-step construction with an appropriate initial estimate for location
 or scale or location and scale, respectively. Valid candidates are e.g. 
-median and/or MAD (default) as well as Kolmogorov(-Smirnov) or von Mises minimum 
-distance estimators; cf. Rieder (1994) and Kohl (2005).
+median and/or MAD (default) as well as Kolmogorov(-Smirnov) or Cram'er von 
+Mises minimum distance estimators; cf. Rieder (1994) and Kohl (2005). In case 
+package Biobase from Bioconductor is installed as is suggested, 
+median and/or MAD are computed using function <code>rowMedians</code>.
 </p>
 <p>
 These functions are optimized for the situation where one has a matrix 
@@ -87,7 +89,7 @@ errors is assumed to be constant for all rows, respectively columns.
 If the amount of gross errors (contamination) is known, it can be 
 specified by <code>eps</code>. The radius of the corresponding infinitesimal 
 contamination neighborhood is obtained by multiplying <code>eps</code> 
-by the square root of the sample size. 
+by the square root of the sample size.
 </p>
 <p>
 If the amount of gross errors (contamination) is unknown, try to find a 
@@ -112,27 +114,15 @@ Rieder et al. (2001), respectively Section 2.2 of Kohl (2005) is returned.
 In case of location, respectively scale one additionally has to specify
 <code>sd</code>, respectively <code>mean</code> where <code>sd</code> and <code>mean</code> can
 be a single number, i.e., identical for all rows, respectively columns,
-or a vector, i.e., different for all rows, respectively columns.
+or a vector with length identical to the number of rows, respectively 
+columns.
 </p>
 
 
 <h3>Value</h3>
 
 <p>
-An object of S3-class <code>"ALEstimate"</code> which inherits from 
-class <code>"Estimate"</code>, a list with components
-</p>
-<table summary="R argblock">
-<tr valign="top"><td><code>estimate </code></td>
-<td>
-location and/or scale estimates </td></tr>
-<tr valign="top"><td><code>steps </code></td>
-<td>
-number of k-steps used to compute the estimates </td></tr>
-<tr valign="top"><td><code>Infos </code></td>
-<td>
-additional information about the estimates </td></tr>
-</table>
+Object of class <code>"kStepEstimate"</code>.</p>
 
 <h3>Author(s)</h3>
 
@@ -166,7 +156,7 @@ Humboldt University, Berlin; also available under
 <h3>See Also</h3>
 
 <p>
-<code><a href="roblox.html">roblox</a></code>
+<code><a href="roblox.html">roblox</a></code>, <code><a onclick="findlink('RobAStBase', 'kStepEstimate-class.html')" style="text-decoration: underline; color: blue; cursor: hand">kStepEstimate-class</a></code>
 </p>
 
 
@@ -199,6 +189,15 @@ colRoblox(X3, mean = c(-2, 1), k = 4)
 colRoblox(X3, eps = 0.02, mean = c(-2, 1), k = 4)
 </pre>
 
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
 
 <hr><div align="center">[Package <em>RobLox</em> version 0.6.0 <a href="00Index.html">Index]</a></div>

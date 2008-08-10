@@ -92,3 +92,34 @@ setMethod("show", "TotalVarIC",
         cat("\n### Infos:\n")
         show(object@Infos)
     })
+setMethod("show", "ALEstimate", 
+    function(object){
+        digits <- getOption("digits")
+        show(as(object,"Estimate"))
+        if(getdistrModOption("show.details") != "minimal"){
+            cat("asymptotic bias:\n")
+            print(asbias(object), quote = FALSE)
+        }
+        if(getdistrModOption("show.details") == "maximal" && !is.null(pIC(object))){
+            cat("(partial) influence curve:\n")
+            show(pIC(object))
+        }
+    })
+setMethod("show", "kStepEstimate", 
+    function(object){
+        digits <- getOption("digits")
+        show(as(object,"ALEstimate"))
+        if(getdistrModOption("show.details") != "minimal"){
+            cat("steps:\n")
+            print(steps(object), quote = FALSE)
+        }
+    })
+setMethod("show", "MEstimate", 
+    function(object){
+        digits <- getOption("digits")
+        show(as(object,"ALEstimate"))
+        if(getdistrModOption("show.details") != "minimal"){
+            cat("value of M equation:\n")
+            print(Mroot(object), quote = FALSE)
+        }
+    })

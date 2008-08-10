@@ -113,9 +113,7 @@
 }
 .kstep.sc <- function(x, initial.est, A, a, b, mean, k){
     est <- .onestep.sc(x = x, initial.est = initial.est, A = A, a = a, b = b, mean = mean)
-    if(k == 1){
-        return(est)
-    }else{
+    if(k > 1){
         for(i in 2:k){
             A <- est^2*A/initial.est^2
             a <- est*a/initial.est
@@ -123,8 +121,12 @@
             initial.est <- est
             est <- .onestep.sc(x = x, initial.est = est, A = A, a = a, b = b, mean = mean)
         }
-        return(est)
     }
+    A <- est^2*A/initial.est^2
+    a <- est*a/initial.est
+    b <- est*b/initial.est
+
+    return(list(est = est, A = A, a = a, b = b))
 }
 .onestep.locsc <- function(x, initial.est, A1, A2, a, b){
     mean <- initial.est[1]
@@ -137,9 +139,7 @@
 }
 .kstep.locsc <- function(x, initial.est, A1, A2, a, b, mean, k){
     est <- .onestep.locsc(x = x, initial.est = initial.est, A1 = A1, A2 = A2, a = a, b = b)
-    if(k == 1){
-        return(est)
-    }else{
+    if(k > 1){
         for(i in 2:k){
             A1 <- est[2]^2*A1/initial.est[2]^2
             A2 <- est[2]^2*A2/initial.est[2]^2
@@ -148,8 +148,17 @@
             initial.est <- est
             est <- .onestep.locsc(x = x, initial.est = est, A1 = A1, A2 = A2, a = a, b = b)
         }
-        return(est)
     }
+    A1 <- est[2]^2*A1/initial.est[2]^2
+    A2 <- est[2]^2*A2/initial.est[2]^2
+    a <- est[2]*a/initial.est[2]
+    b <- est[2]*b/initial.est[2]
+    a1 <- A1/est[2]^2
+    a3 <- A2/est[2]^2
+    a2 <- a[2]/est[2]/a3 + 1
+    asVar <- est[2]^2*.ALrlsVar(b = b, a1 = a1, a2 = a2, a3 = a3)
+
+    return(list(est = est, A1 = A1, A2 = A2, a = a, b = b, asvar = asVar))
 }
 
 
@@ -158,6 +167,7 @@
 ###############################################################################
 roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, 
                    returnIC = FALSE){
+    es.call <- match.call()
     if(missing(x))
         stop("'x' is missing with no default")
     if(!is.numeric(x)){
@@ -195,13 +205,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
         if((eps < 0) || (eps > 0.5))
             stop("'eps' has to be in (0, 0.5]")
     }
+    if(!is.integer(k))
+        k <- as.integer(k)
     if(k < 1){
-      stop("'k' has to be some positive integer value")
+        stop("'k' has to be some positive integer value")
     }
     if(length(k) != 1){
-      stop("'k' has to be of length 1")
+        stop("'k' has to be of length 1")
     }
-    k <- as.integer(k)
 
     if(missing(mean) && missing(sd)){
         if(missing(initial.est)){
@@ -236,30 +247,77 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 mse <- A1 + A2
             }
             robEst <- .kstep.locsc(x = x, initial.est = c(mean, sd), A1 = A1, A2 = A2, a = a, b = b, k = k)
-            names(robEst) <- c("mean", "sd")
+            names(robEst$est) <- c("mean", "sd")
             Info.matrix <- matrix(c("roblox", 
                                     paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
                                           "and 'asMSE'")),
                                   ncol = 2, dimnames = list(NULL, c("method", "message")))
             if(returnIC){
                 w <- new("HampelWeight")
-                clip(w) <- b
-                cent(w) <- a/A2
-                stand(w) <- diag(c(A1, A2))
+                clip(w) <- robEst$b
+                cent(w) <- robEst$a/robEst$A2
+                stand(w) <- diag(c(robEst$A1, robEst$A2))
                 weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
+                mse <- robEst$A1 + robEst$A2
+                modIC <- function(L2Fam, IC){
+                    ICL2Fam <- eval(CallL2Fam(IC))
+                    if(is(L2Fam, "L2LocationScaleFamily") && is(distribution(L2Fam), "Norm")){
+                        sdneu <- main(L2Fam)[2]
+                        sdalt <- main(ICL2Fam)[2]
+                        r <- neighborRadius(IC)
+                        w <- weight(IC)
+                        clip(w) <- sdneu*clip(w)/sdalt
+                        cent(w) <- sdalt*cent(w)/sdneu
+                        stand(w) <- sdneu^2*stand(w)/sdalt^2
+                        weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
+                                      biastype = biastype(IC), 
+                                      normW = normtype(IC))
+                        A <- sdneu^2*stand(IC)/sdalt^2
+                        b <- sdneu*clip(IC)/sdalt
+                        a <- sdneu*cent(IC)/sdalt
+                        mse <- sum(diag(A))
+                        a1 <- A[1, 1]/sdneu^2
+                        a3 <- A[2, 2]/sdneu^2
+                        a2 <- a[2]/sdneu/a3 + 1
+                        asVar <- sdneu^2*.ALrlsVar(b = b/sdneu, a1 = a1, a2 = a2, a3 = a3)
+                        res <- list(A = A, a = sdneu*cent(IC)/sdalt, b = b, d = NULL,
+                                    risk = list(asMSE = mse, asBias = b, 
+                                                trAsCov = mse - r^2*b^2,
+                                                asCov = asVar), info = Infos(IC), w = w,
+                                    normtype = normtype(IC), biastype = biastype(IC),
+                                    modifyIC = modifyIC(IC))
+                        IC <- generateIC(neighbor = ContNeighborhood(radius = r),
+                                        L2Fam = L2Fam, res = res)
+                        addInfo(IC) <- c("modifyIC", "The IC has been modified")
+                        addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
+                        return(IC)
+                    }else{
+                        makeIC(L2Fam, IC)
+                    }
+                }
+                L2Fam <- substitute(NormLocationScaleFamily(mean = m1, sd = s1), 
+                                    list(m1 = robEst$est[1], s1 = robEst$est[2]))
                 IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
-                                  L2Fam = NormLocationScaleFamily(mean = mean, sd = sd), 
-                                  res = list(A = diag(c(A1, A2)), a = a, b = b, d = NULL, 
-                                      risk = list(asMSE = mse, asBias = b, asCov = mse - r^2*b^2), 
+                                  L2Fam = eval(L2Fam), 
+                                  res = list(A = diag(c(robEst$A1, robEst$A2)), a = robEst$a, 
+                                      b = robEst$b, d = NULL, 
+                                      risk = list(asMSE = mse, asBias = robEst$b, 
+                                                  trAsCov = mse - r^2*robEst$b^2,
+                                                  asCov = robEst$asVar), 
                                       info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
-                                      w = w, biastype = symmetricBias(), normtype = NormType()))
-                return(new("kStepEstimate", name = "Optimally robust estimate",
-                           estimate = robEst, steps = k, pIC = IC1, Infos = Info.matrix))
+                                      w = w, biastype = symmetricBias(), normtype = NormType(),
+                                      modifyIC = modIC))
+                return(new("kStepEstimate", name = "Optimally robust estimate", 
+                           estimate.call = es.call, estimate = robEst$est, 
+                           samplesize = length(x), asvar = robEst$asvar,
+                           asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix))
             }else
-                return(new("kStepEstimate", name = "Optimally robust estimate",
-                           estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
+                return(new("kStepEstimate", name = "Optimally robust estimate", 
+                           estimate.call = es.call, estimate = robEst$est, 
+                           samplesize = length(x), asvar = robEst$asvar,
+                           asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix))
         }else{
             sqrtn <- sqrt(length(x))
             rlo <- sqrtn*eps.lower
@@ -296,7 +354,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 }
             }
             robEst <- .kstep.locsc(x = x, initial.est = c(mean, sd), A1 = A1, A2 = A2, a = a, b = b, k = k)
-            names(robEst) <- c("mean", "sd")
+            names(robEst$est) <- c("mean", "sd")
             Info.matrix <- matrix(c(rep("roblox", 3), 
                                   paste("radius-minimax estimate for contamination interval [", 
                                     round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
@@ -305,29 +363,76 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                   ncol = 2, dimnames = list(NULL, c("method", "message")))
             if(returnIC){
                 w <- new("HampelWeight")
-                clip(w) <- b
-                cent(w) <- a/A2
-                stand(w) <- diag(c(A1, A2))
+                clip(w) <- robEst$b
+                cent(w) <- robEst$a/robEst$A2
+                stand(w) <- diag(c(robEst$A1, robEst$A2))
                 weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
+                mse <- robEst$A1 + robEst$A2
+                modIC <- function(L2Fam, IC){
+                    ICL2Fam <- eval(CallL2Fam(IC))
+                    if(is(L2Fam, "L2LocationScaleFamily") && is(distribution(L2Fam), "Norm")){
+                        sdneu <- main(L2Fam)[2]
+                        sdalt <- main(ICL2Fam)[2]
+                        r <- neighborRadius(IC)
+                        w <- weight(IC)
+                        clip(w) <- sdneu*clip(w)/sdalt
+                        cent(w) <- sdalt*cent(w)/sdneu
+                        stand(w) <- sdneu^2*stand(w)/sdalt^2
+                        weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
+                                      biastype = biastype(IC), 
+                                      normW = normtype(IC))
+                        A <- sdneu^2*stand(IC)/sdalt^2
+                        b <- sdneu*clip(IC)/sdalt
+                        a <- sdneu*cent(IC)/sdalt
+                        mse <- sum(diag(A))
+                        a1 <- A[1, 1]/sdneu^2
+                        a3 <- A[2, 2]/sdneu^2
+                        a2 <- a[2]/sdneu/a3 + 1
+                        asVar <- sdneu^2*.ALrlsVar(b = b/sdneu, a1 = a1, a2 = a2, a3 = a3)
+                        res <- list(A = A, a = sdneu*cent(IC)/sdalt, b = b, d = NULL,
+                                    risk = list(asMSE = mse, asBias = b, 
+                                                trAsCov = mse - r^2*b^2,
+                                                asCov = asVar), info = Infos(IC), w = w,
+                                    normtype = normtype(IC), biastype = biastype(IC),
+                                    modifyIC = modifyIC(IC))
+                        IC <- generateIC(neighbor = ContNeighborhood(radius = r),
+                                        L2Fam = L2Fam, res = res)
+                        addInfo(IC) <- c("modifyIC", "The IC has been modified")
+                        addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
+                        return(IC)
+                    }else{
+                        makeIC(L2Fam, IC)
+                    }
+                }
+                L2Fam <- substitute(NormLocationScaleFamily(mean = m1, sd = s1), 
+                                    list(m1 = robEst$est[1], s1 = robEst$est[2]))
                 IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
-                                  L2Fam = NormLocationScaleFamily(mean = mean, sd = sd), 
-                                  res = list(A = diag(c(A1, A2)), a = a, b = b, d = NULL, 
-                                      risk = list(asMSE = mse, asBias = b, asCov = mse - r^2*b^2), 
+                                  L2Fam = eval(L2Fam), 
+                                  res = list(A = diag(c(robEst$A1, robEst$A2)), a = robEst$a, 
+                                      b = robEst$b, d = NULL, 
+                                      risk = list(asMSE = mse, asBias = robEst$b, 
+                                                  trAsCov = mse - r^2*robEst$b^2,
+                                                  asCov = robEst$asvar), 
                                       info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
-                                      w = w, biastype = symmetricBias(), normtype = NormType()))
+                                      w = w, biastype = symmetricBias(), normtype = NormType(),
+                                      modifyIC = modIC))
                 Infos(IC1) <- matrix(c(rep("roblox", 3), 
                                       paste("radius-minimax IC for contamination interval [", 
                                         round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
                                       paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
                                       paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
-                return(new("kStepEstimate", name = "Optimally robust estimate",
-                           estimate = robEst, steps = k, pIC = IC1, Infos = Info.matrix))
+                return(new("kStepEstimate", name = "Optimally robust estimate", 
+                           estimate.call = es.call, estimate = robEst$est, 
+                           samplesize = length(x), asvar = robEst$asvar,
+                           asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix))
             }else
-                return(new("kStepEstimate", name = "Optimally robust estimate",
-                           estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
+                return(new("kStepEstimate", name = "Optimally robust estimate", 
+                           estimate.call = es.call, estimate = robEst$est, 
+                           samplesize = length(x), asvar = robEst$asvar,
+                           asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix))
         }
     }else{
         if(missing(mean)){
@@ -364,19 +469,36 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     cent(w) <- 0
                     stand(w) <- as.matrix(A)
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
-                                       biastype = symmetricBias(), 
-                                       normW = NormType())
+                                           biastype = symmetricBias(), 
+                                           normW = NormType())
+                    modIC <- function(L2Fam, IC){
+                        if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), "Norm")){
+                            CallL2New <- call("NormLocationFamily", 
+                                              mean = main(L2Fam))
+                            CallL2Fam(IC) <- CallL2New
+                            return(IC)
+                        }else{
+                            makeIC(L2Fam, IC)
+                        }
+                    }
+                    L2Fam <- substitute(NormLocationFamily(mean = m1, sd = s1), 
+                                        list(m1 = robEst, s1 = sd))
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
-                                      L2Fam = NormLocationFamily(mean = mean, sd = sd), 
+                                      L2Fam = eval(L2Fam), 
                                       res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
-                                          risk = list(asMSE = A, asBias = b, asCov = b^2), 
+                                          risk = list(asMSE = A, asBias = b, asCov = A-r^2*b^2), 
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
-                                          w = w, biastype = symmetricBias(), normtype = NormType()))
+                                          w = w, biastype = symmetricBias(), normtype = NormType(),
+                                          modifyIC = modIC))
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate = robEst, steps = k, pIC = IC1, Infos = Info.matrix))
+                               estimate.call = es.call, estimate = robEst, 
+                               samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
+                               asbias = r*b, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
+                               estimate.call = es.call, estimate = robEst, 
+                               samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
+                               asbias = r*b, steps = k, pIC = NULL, Infos = Info.matrix))
             }else{
                 sqrtn <- sqrt(length(x))
                 rlo <- sqrtn*eps.lower
@@ -420,12 +542,25 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
+                    modIC <- function(L2Fam, IC){
+                        if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), "Norm")){
+                            CallL2New <- call("NormLocationFamily", 
+                                              mean = main(L2Fam))
+                            CallL2Fam(IC) <- CallL2New
+                            return(IC)
+                        }else{
+                            makeIC(L2Fam, IC)
+                        }
+                    }
+                    L2Fam <- substitute(NormLocationFamily(mean = m1, sd = s1), 
+                                        list(m1 = robEst, s1 = sd))
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
-                                      L2Fam = NormLocationFamily(mean = mean, sd = sd), 
+                                      L2Fam = eval(L2Fam), 
                                       res = list(A = as.matrix(A), a = 0, b = b, d = NULL, 
-                                          risk = list(asMSE = A, asBias = b, asCov = b^2), 
+                                          risk = list(asMSE = A, asBias = b, asCov = A-r^2*b^2), 
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
-                                          w = w, biastype = symmetricBias(), normtype = NormType()))
+                                          w = w, biastype = symmetricBias(), normtype = NormType(),
+                                          modifyIC = modIC))
                     Infos(IC1) <- matrix(c(rep("roblox", 3), 
                                  paste("radius-minimax IC for contamination interval [", 
                                    round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
@@ -433,10 +568,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                  paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate = robEst, steps = k, pIC = IC1, Infos = Info.matrix))
+                               estimate.call = es.call, estimate = robEst, 
+                               samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
+                               asbias = r*b, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
+                               estimate.call = es.call, estimate = robEst, 
+                               samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
+                               asbias = r*b, steps = k, pIC = NULL, Infos = Info.matrix))
             }
         }
         if(missing(sd)){
@@ -467,30 +606,67 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     b <- sd*.getb.sc(r)
                 }
                 robEst <- .kstep.sc(x = x, initial.est = sd, A = A, a = a, b = b, mean = mean, k = k)
-                names(robEst) <- "sd"
+                names(robEst$est) <- "sd"
                 Info.matrix <- matrix(c("roblox", 
                                         paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
                                               "and 'asMSE'")),
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
                 if(returnIC){
                     w <- new("HampelWeight")
-                    clip(w) <- b
-                    cent(w) <- a/A
-                    stand(w) <- as.matrix(A)
+                    clip(w) <- robEst$b
+                    cent(w) <- robEst$a/robEst$A
+                    stand(w) <- as.matrix(robEst$A)
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
+                    modIC <- function(L2Fam, IC){
+                        ICL2Fam <- eval(CallL2Fam(IC))
+                        if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
+                            sdneu <- main(L2Fam)
+                            sdalt <- main(ICL2Fam)
+                            r <- neighborRadius(IC)
+                            w <- weight(IC)
+                            clip(w) <- sdneu*clip(w)/sdalt
+                            cent(w) <- sdalt*cent(w)/sdneu
+                            stand(w) <- sdneu^2*stand(w)/sdalt^2
+                            weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
+                                          biastype = biastype(IC), 
+                                          normW = normtype(IC))
+                            A <- sdneu^2*stand(IC)/sdalt^2
+                            b <- sdneu*clip(IC)/sdalt
+                            res <- list(A = A, a = sdneu*cent(IC)/sdalt, b = b, d = NULL,
+                                        risk = list(asMSE = A, asBias = b, asCov = A-r^2*b^2), 
+                                        info = Infos(IC), w = w,
+                                        normtype = normtype(IC), biastype = biastype(IC),
+                                        modifyIC = modifyIC(IC))
+                            IC <- generateIC(neighbor = ContNeighborhood(radius = r),
+                                            L2Fam = L2Fam, res = res)
+                            addInfo(IC) <- c("modifyIC", "The IC has been modified")
+                            addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
+                            return(IC)
+                        }else{
+                            makeIC(L2Fam, IC)
+                        }
+                    }
+                    L2Fam <- substitute(NormScaleFamily(mean = m1, sd = s1), 
+                                        list(m1 = mean, s1 = robEst$est))
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
-                                      L2Fam = NormScaleFamily(mean = mean, sd = sd), 
-                                      res = list(A = as.matrix(A), a = a, b = b, d = NULL, 
-                                          risk = list(asMSE = A, asBias = b, asCov = b^2), 
+                                      L2Fam = eval(L2Fam), 
+                                      res = list(A = as.matrix(robEst$A), a = robEst$a, b = robEst$b, d = NULL, 
+                                          risk = list(asMSE = robEst$A, asBias = robEst$b, 
+                                                      asCov = robEst$A-r^2*robEst$b^2), 
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
-                                          w = w, biastype = symmetricBias(), normtype = NormType()))
+                                          w = w, biastype = symmetricBias(), normtype = NormType(),
+                                          modifyIC = modIC))
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate = robEst, steps = k, pIC = IC1, Infos = Info.matrix))
+                               estimate.call = es.call, estimate = robEst$est, 
+                               samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
+                               asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
+                               estimate.call = es.call, estimate = robEst$est, 
+                               samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
+                               asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix))
             }else{
                 sqrtn <- sqrt(length(x))
                 rlo <- sqrtn*eps.lower
@@ -521,7 +697,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                     }
                 }
                 robEst <- .kstep.sc(x = x, initial.est = sd, A = A, a = a, b = b, mean = mean, k = k)
-                names(robEst) <- "sd"
+                names(robEst$est) <- "sd"
                 Info.matrix <- matrix(c(rep("roblox", 3), 
                                       paste("radius-minimax estimate for contamination interval [", 
                                         round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
@@ -530,18 +706,51 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
                 if(returnIC){
                     w <- new("HampelWeight")
-                    clip(w) <- b
-                    cent(w) <- a/A
-                    stand(w) <- as.matrix(A)
+                    clip(w) <- robEst$b
+                    cent(w) <- robEst$a/robEst$A
+                    stand(w) <- as.matrix(robEst$A)
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
+                    modIC <- function(L2Fam, IC){
+                        ICL2Fam <- eval(CallL2Fam(IC))
+                        if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
+                            sdneu <- main(L2Fam)
+                            sdalt <- main(ICL2Fam)
+                            r <- neighborRadius(IC)
+                            w <- weight(IC)
+                            clip(w) <- sdneu*clip(w)/sdalt
+                            cent(w) <- sdalt*cent(w)/sdneu
+                            stand(w) <- sdneu^2*stand(w)/sdalt^2
+                            weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
+                                          biastype = biastype(IC), 
+                                          normW = normtype(IC))
+                            A <- sdneu^2*stand(IC)/sdalt^2
+                            b <- sdneu*clip(IC)/sdalt
+                            res <- list(A = A, a = sdneu*cent(IC)/sdalt, b = b, d = NULL,
+                                        risk = list(asMSE = A, asBias = b, asCov = A-r^2*b^2), 
+                                        info = Infos(IC), w = w,
+                                        normtype = normtype(IC), biastype = biastype(IC),
+                                        modifyIC = modifyIC(IC))
+                            IC <- generateIC(neighbor = ContNeighborhood(radius = r),
+                                            L2Fam = L2Fam, res = res)
+                            addInfo(IC) <- c("modifyIC", "The IC has been modified")
+                            addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
+                            return(IC)
+                        }else{
+                            makeIC(L2Fam, IC)
+                        }
+                    }
+                    L2Fam <- substitute(NormScaleFamily(mean = m1, sd = s1), 
+                                        list(m1 = mean, s1 = robEst$est))
                     IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
-                                      L2Fam = NormScaleFamily(mean = mean, sd = sd), 
-                                      res = list(A = as.matrix(A), a = a, b = b, d = NULL, 
-                                          risk = list(asMSE = A, asBias = b, asCov = b^2), 
+                                      L2Fam = eval(L2Fam), 
+                                      res = list(A = as.matrix(robEst$A), a = robEst$a, b = robEst$b, d = NULL, 
+                                          risk = list(asMSE = robEst$A, asBias = robEst$b, 
+                                                      asCov = robEst$A-r^2*robEst$b^2), 
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
-                                          w = w, biastype = symmetricBias(), normtype = NormType()))
+                                          w = w, biastype = symmetricBias(), normtype = NormType(),
+                                          modifyIC = modIC))
                     Infos(IC1) <- matrix(c(rep("roblox", 3), 
                                  paste("radius-minimax IC for contamination interval [", 
                                    round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
@@ -549,10 +758,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                  paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate = robEst, steps = k, pIC = IC1, Infos = Info.matrix))
+                               estimate.call = es.call, estimate = robEst$est, 
+                               samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
+                               asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate = robEst, steps = k, pIC = NULL, Infos = Info.matrix))
+                               estimate.call = es.call, estimate = robEst$est, 
+                               samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
+                               asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix))
             }
         }
     }

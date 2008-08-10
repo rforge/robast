@@ -3,10 +3,10 @@
 ###############################################################################
 require(ROptEst)
 
-## generates normal location and scale family with mean = 0 and sd = 1
-N0 <- NormLocationScaleFamily(mean=0, sd=1) 
+## generates normal location and scale family with mean = -2 and sd = 3
+N0 <- NormLocationScaleFamily(mean=-2, sd=3) 
 N0        # show G0
-plot(N0)  # plot of Norm(mean = 0, sd = 1) and L_2 derivative
+plot(N0)  # plot of Norm(mean = -2, sd = 3) and L_2 derivative
 checkL2deriv(N0)
 
 ## classical optimal IC
@@ -64,7 +64,7 @@ infoPlot(N0.IC3)
 
 ## radius minimax IC
 ## (may take quite some time!)
-(N0.IC4 <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(), 
+system.time(N0.IC4 <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(), 
                 risk=asMSE(), loRad=0, upRad=Inf))
 checkIC(N0.IC4)
 Risks(N0.IC4)
@@ -100,13 +100,13 @@ x <- rnorm(100, mean=0, sd=(1-ind) + ind*9)
 ## 2. Kolmogorov(-Smirnov) minimum distance estimator
 (est0 <- MDEstimator(x=x, NormLocationScaleFamily()))
 
-## 3. one-step estimation: radius known
-N1 <- NormLocationScaleFamily(mean=est0$estimate[1], sd=est0$estimate[2])
+## 3. k-step estimation: radius known
+N1 <- NormLocationScaleFamily(mean=estimate(est0)[1], sd=estimate(est0)[2])
 N1.Rob <- InfRobModel(center = N1, neighbor = ContNeighborhood(radius = 0.5))
 IC1 <- optIC(model = N1.Rob, risk = asMSE())
-(est1 <- oneStepEstimator(x, IC1, est0$estimate))
+(est1 <- kStepEstimator(x, IC1, est0, steps = 3))
 
-## 4. one-step estimation: radius unknown
+## 4. k-step estimation: radius unknown
 ## rough estimate: 1-10% contamination
 ## => r\in[0.1,1.0]
 

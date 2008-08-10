@@ -16,6 +16,7 @@
 <param name="keyword" value="R:   clipUp<-">
 <param name="keyword" value="R:   clipUp<-,TotalVarIC-method">
 <param name="keyword" value="R:   lowerCase<-,TotalVarIC-method">
+<param name="keyword" value="R:   neighbor,TotalVarIC-method">
 <param name="keyword" value="R:   show,TotalVarIC-method">
 <param name="keyword" value="R:   stand<-,TotalVarIC-method">
 <param name="keyword" value="R:   generateIC,TotalVarNeighborhood,L2ParamFamily-method">
@@ -62,6 +63,13 @@ parametric family. </dd>
 <dt><code>Curve</code>:</dt><dd>object of class <code>"EuclRandVarList"</code>.</dd>
 
 
+<dt><code>modifyIC</code>:</dt><dd>Object of class <code>"OptionalFunction"</code>:
+function of two arguments, which are an L2 parametric family 
+and an optional influence curve. Returns an object of 
+class <code>"IC"</code>. This slot is mainly used for internal
+computations! </dd>
+
+
 <dt><code>Risks</code>:</dt><dd>object of class <code>"list"</code>: 
 list of risks; cf. <code><a onclick="findlink('distrMod', 'RiskType-class.html')" style="text-decoration: underline; color: blue; cursor: hand">RiskType-class</a></code>. </dd>
 
@@ -85,6 +93,14 @@ standardizing matrix. </dd>
 
 <dt><code>weight</code>:</dt><dd>object of class <code>"BdStWeight"</code>:
 weight function </dd>
+
+
+<dt><code>biastype</code>:</dt><dd>object of class <code>"BiasType"</code>:
+bias type (symmetric/onsided/asymmetric) </dd>
+
+
+<dt><code>normtype</code>:</dt><dd>object of class <code>"NormType"</code>:
+norm type (Euclidean, information/self-standardized)</dd>
 
 
 <dt><code>neighborRadius</code>:</dt><dd>object of class <code>"numeric"</code>:
@@ -126,6 +142,15 @@ replacement function for slot <code>clipUp</code>. </dd>
 
 <dt>stand&lt;-</dt><dd><code>signature(object = "TotalVarIC")</code>:
 replacement function for slot <code>stand</code>. </dd>
+
+
+<dt>lowerCase&lt;-</dt><dd><code>signature(object = "TotalVarIC")</code>:
+replacement function for slot <code>lowerCase</code>. </dd>
+
+
+<dt>neighbor</dt><dd><code>signature(object = "TotalVarIC")</code>: 
+generates an object of class <code>"TotalVarNeighborhood"</code> with
+radius given in slot <code>neighborRadius</code>. </dd>
 
 
 <dt>generateIC</dt><dd><code>signature(neighbor = "TotalVarNeighborhood", L2Fam = "L2ParamFamily")</code>:

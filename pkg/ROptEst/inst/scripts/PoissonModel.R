@@ -123,20 +123,141 @@ x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532),
        rep(5, 408), rep(6, 273), rep(7, 139), rep(8, 45), rep(9, 27), 
        rep(10, 10), rep(11, 4), rep(12, 0), rep(13, 1), rep(14, 1))
 
-## 0. mean (classical optimal)
+## 0. ML-estimator (mean)
 (est0 <- mean(x))
 
-## 1. Kolmogorov(-Smirnov) minimum distance estimator
-(est1 <- MDEstimator(x=x, PoisFamily(), interval = c(0, 10)))
+## with distrMod
+MLEstimator(x, PoisFamily())
 
-## 2. one-step estimation: radius interval
+## with MASS
+library(MASS)
+fitdistr(x, densfun = "Poisson")
+
+## 1.1. Kolmogorov(-Smirnov) minimum distance estimator
+(est11 <- MDEstimator(x=x, PoisFamily()))
+
+## 1.2. Cramer von Mises minimum distance estimator
+(est12 <- MDEstimator(x=x, PoisFamily(), distance = CvMDist))
+
+## 2. k-step estimation: contamination neighborhood
 ## 2.1 small amount of contamination < 2%
-IC9 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=est1$estimate),
+IC9 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=estimate(est11)),
                 neighbor=ContNeighborhood(), risk=asMSE(), loRad=0, upRad=1)
-(est21 <- oneStepEstimator(x, IC=IC9, start=est1$estimate))
+IC10 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=estimate(est12)),
+                neighbor=ContNeighborhood(), risk=asMSE(), loRad=0, upRad=1)
+(est211 <- kStepEstimator(x, IC=IC9, start=est11, steps = 1L))
+## one could also use function oneStepEstimator
+oneStepEstimator(x, IC=IC9, start=est11)
+checkIC(pIC(est211))
+
+(est212 <- kStepEstimator(x, IC=IC9, start=est11, steps = 3L))
+checkIC(pIC(est212))
+
+(est213 <- kStepEstimator(x, IC=IC10, start=est12, steps = 1L))
+checkIC(pIC(est213))
+
+(est214 <- kStepEstimator(x, IC=IC10, start=est12, steps = 3L))
+checkIC(pIC(est214))
+
+(est215 <- roptest(x, PoisFamily(), eps.upper = 1/sqrt(length(x)), steps = 3L))
+checkIC(pIC(est215))
+
+## comparision of estimates
+estimate(est211)
+estimate(est212)
+estimate(est213)
+estimate(est214)
+estimate(est215)
+
+
 ## 2.2 amount of contamination unknown
-IC10 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=est1$estimate),
+IC11 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=estimate(est11)),
                 neighbor=ContNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
-(est22 <- oneStepEstimator(x, IC=IC10, start=est1$estimate))
+IC12 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=estimate(est12)),
+                neighbor=ContNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
+(est221 <- oneStepEstimator(x, IC=IC11, start=est11))
+kStepEstimator(x, IC=IC11, start=est11)
+checkIC(pIC(est221))
+
+(est222 <- kStepEstimator(x, IC=IC11, start=est11, steps = 3L))
+checkIC(pIC(est222))
+
+(est223 <- kStepEstimator(x, IC=IC12, start=est12, steps = 1L))
+checkIC(pIC(est223))
+
+(est224 <- kStepEstimator(x, IC=IC12, start=est12, steps = 3L))
+checkIC(pIC(est224))
+
+(est225 <- roptest(x, PoisFamily(), eps.upper = 0.5, steps = 3L))
+checkIC(pIC(est225))
+
+## comparision of estimates
+estimate(est221)
+estimate(est222)
+estimate(est223)
+estimate(est224)
+estimate(est225)
+
+
+## 3. k-step estimation: total variation neighborhood
+## 3.1 small amount of contamination < 2%
+IC13 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=estimate(est11)),
+                neighbor=TotalVarNeighborhood(), risk=asMSE(), loRad=0, upRad=1)
+IC14 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=estimate(est12)),
+                neighbor=TotalVarNeighborhood(), risk=asMSE(), loRad=0, upRad=1)
+(est311 <- kStepEstimator(x, IC=IC13, start=est11, steps = 1L))
+## one could also use function oneStepEstimator
+oneStepEstimator(x, IC=IC13, start=est11)
+checkIC(pIC(est311))
+
+(est312 <- kStepEstimator(x, IC=IC13, start=est11, steps = 3L))
+checkIC(pIC(est312))
+
+(est313 <- kStepEstimator(x, IC=IC14, start=est12, steps = 1L))
+checkIC(pIC(est313))
+
+(est314 <- kStepEstimator(x, IC=IC14, start=est12, steps = 3L))
+checkIC(pIC(est314))
+
+(est315 <- roptest(x, PoisFamily(), eps.upper = 1/sqrt(length(x)), steps = 3L, 
+                   neighbor = TotalVarNeighborhood()))
+checkIC(pIC(est315))
+
+## comparison of estimates
+estimate(est311)
+estimate(est312)
+estimate(est313)
+estimate(est314)
+estimate(est315)
+
+
+## 3.2 amount of contamination unknown
+IC15 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=estimate(est11)),
+                neighbor=TotalVarNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
+IC16 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=estimate(est12)),
+                neighbor=TotalVarNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
+(est321 <- oneStepEstimator(x, IC=IC15, start=est11))
+kStepEstimator(x, IC=IC15, start=est11)
+checkIC(pIC(est321))
+
+(est322 <- kStepEstimator(x, IC=IC15, start=est11, steps = 3L))
+checkIC(pIC(est322))
+
+(est323 <- kStepEstimator(x, IC=IC16, start=est12, steps = 1L))
+checkIC(pIC(est323))
+
+(est324 <- kStepEstimator(x, IC=IC16, start=est12, steps = 3L))
+checkIC(pIC(est324))
+
+(est325 <- roptest(x, PoisFamily(), eps.upper = 0.5, steps = 3L, 
+                   neighbor = TotalVarNeighborhood()))
+checkIC(pIC(est325))
+
+## comparision of estimates
+estimate(est321)
+estimate(est322)
+estimate(est323)
+estimate(est324)
+estimate(est325)
 
 distroptions("TruncQuantile", 1e-5) # default

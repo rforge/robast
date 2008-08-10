@@ -12,9 +12,8 @@
 \S4method{getL1normL2deriv}{UnivariateDistribution}(L2deriv, 
      cent, ...)
 
-\S4method{getL1normL2deriv}{UnivariateDistribution}(L2deriv, 
+\S4method{getL1normL2deriv}{RealRandVariable}(L2deriv, 
      cent, stand, Distr, normtype, ...)
-
 }
 %\details{}
 \arguments{
@@ -33,5 +32,5 @@
 ##
 }
 \concept{L1norm}
-\keyword{}
+\keyword{robust}
 

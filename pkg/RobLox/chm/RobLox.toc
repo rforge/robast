@@ -175,8 +175,12 @@
 <param name="Local" value="rlsOptIC.TuMad.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Optimally robust estimator for location and/or scale">
+<param name="Name" value="Optimally robust estimation for location and/or scale">
 <param name="Local" value="rowRoblox.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Optimally robust estimator for location and/or scale">
+<param name="Local" value="roblox.html">
 </OBJECT>
 </UL>
 </UL>

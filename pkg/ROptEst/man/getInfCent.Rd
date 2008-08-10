@@ -25,7 +25,7 @@ getInfCent(L2deriv, neighbor, biastype, ...)
      neighbor, biastype, clip, cent, tol.z, symm, trafo)
 
 \S4method{getInfCent}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, 
-     neighbor, biastype, z.comp, stand, cent, clip, w)
+     neighbor, biastype, Distr, z.comp, w)
 
 \S4method{getInfCent}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv, 
      neighbor, biastype, clip, cent, tol.z, symm, trafo)
@@ -41,10 +41,10 @@ getInfCent(L2deriv, neighbor, biastype, ...)
   \item{\dots}{ additional parameters. }
   \item{clip}{ optimal clipping bound. }
   \item{cent}{ optimal centering constant. }
-  \item{stand}{ standardizing matrix. }
   \item{tol.z}{ the desired accuracy (convergence tolerance). }
   \item{symm}{ logical: indicating symmetry of \code{L2deriv}. }
   \item{trafo}{ matrix: transformation of the parameter. }
+  \item{Distr}{object of class \code{Distribution}. }
   \item{z.comp}{ logical vector: indication which components of the 
     centering constant have to be computed. }
   \item{w}{object of class \code{RobWeight}; current weight}  
@@ -83,4 +83,4 @@ getInfCent(L2deriv, neighbor, biastype, ...)
 \seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link[RobAStBase]{TotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

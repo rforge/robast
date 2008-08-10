@@ -11,7 +11,7 @@
 \usage{
 getBiasIC(IC, neighbor, ...)
 
-\S4method{getBiasIC}{HampIC,UncondNeighborhood}(IC, neighbor, L2Fam)
+\S4method{getBiasIC}{HampIC,UncondNeighborhood}(IC, neighbor, L2Fam, ...)
 }
 \arguments{
   \item{IC}{ object of class \code{"InfluenceCurve"} }
@@ -19,7 +19,8 @@ getBiasIC(IC, neighbor, ...)
   \item{L2Fam}{ object of class \code{"L2ParamFamily"}. }
   \item{\dots}{ additional parameters }
 }
-\details{}
+\details{ This function is rarely called directly. It is used by 
+  other functions/methods. }
 \value{The bias of the IC is computed.}
 \section{Methods}{
 \describe{
@@ -45,4 +46,4 @@ getBiasIC(IC, neighbor, ...)
 \seealso{\code{\link{getRiskIC-methods}}, \code{\link[RobAStBase]{InfRobModel-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

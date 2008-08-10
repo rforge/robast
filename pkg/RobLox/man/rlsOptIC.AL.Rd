@@ -37,7 +37,7 @@ rlsOptIC.AL(r, mean = 0, sd = 1, A.loc.start = 1, a.sc.start = 0,
 }
 \value{
   If 'computeIC' is 'TRUE' an object of class \code{"ContIC"} is returned, 
-  otherwise a list of Lagrane multipliers
+  otherwise a list of Lagrange multipliers
   \item{A}{ standardizing matrix }
   \item{a}{ centering vector }
   \item{b}{ optimal clipping bound }
@@ -63,8 +63,8 @@ stand(IC1)
 plot(IC1)
 infoPlot(IC1)
 
-## one-step estimation
-## see also: ?roblox
+## k-step estimation
+## better use function roblox (see ?roblox)
 ## 1. data: random sample
 ind <- rbinom(100, size=1, prob=0.05) 
 x <- rnorm(100, mean=0, sd=(1-ind) + ind*9)
@@ -73,19 +73,29 @@ sd(x)
 median(x)
 mad(x)
 
-## 2. Kolmogorov(-Smirnov) minimum distance estimator
+## 2. Kolmogorov(-Smirnov) minimum distance estimator (default)
 ## -> we use it as initial estimate for one-step construction
-(est0 <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = KolmogorovDist))
+(est0 <- MDEstimator(x, ParamFamily = NormLocationScaleFamily()))
 
-## 3. one-step estimation: radius known
+## 3.1 one-step estimation: radius known
 IC1 <- rlsOptIC.AL(r = 0.5, mean = estimate(est0)[1], sd = estimate(est0)[2])
 (est1 <- oneStepEstimator(x, IC1, est0))
 
-## 4. one-step estimation: radius unknown
+## 3.2 k-step estimation: radius known
+## Choose k = 3
+(est2 <- kStepEstimator(x, IC1, est0, steps = 3L))
+
+## 4.1 one-step estimation: radius unknown
 ## take least favorable radius r = 0.579
 ## cf. Table 8.1 in Kohl(2005)
 IC2 <- rlsOptIC.AL(r = 0.579, mean = estimate(est0)[1], sd = estimate(est0)[2])
-(est2 <- oneStepEstimator(x, IC2, est0))
+(est3 <- oneStepEstimator(x, IC2, est0))
+
+## 4.2 k-step estimation: radius unknown
+## take least favorable radius r = 0.579
+## cf. Table 8.1 in Kohl(2005)
+## choose k = 3
+(est4 <- kStepEstimator(x, IC2, est0, steps = 3L))
 }
 \concept{normal location and scale}
 \concept{influence curve}

@@ -73,4 +73,4 @@ optRisk(model, risk, ...)
 optRisk(model = NormLocationScaleFamily(), risk = asCov())
 }
 \concept{risk}
-\keyword{}
+\keyword{robust}

@@ -60,4 +60,4 @@ getFiRisk(risk, Distr, neighbor, ...)
 %\examples{}
 \concept{finite-sample risk}
 \concept{risk}
-\keyword{}
+\keyword{robust}

@@ -87,7 +87,11 @@ if(!isGeneric("clipUp<-")){
 }
 if(!isGeneric("oneStepEstimator")){
     setGeneric("oneStepEstimator", 
-        function(x, IC, start) standardGeneric("oneStepEstimator"))
+        function(x, IC, start, ...) standardGeneric("oneStepEstimator"))
+}
+if(!isGeneric("kStepEstimator")){
+    setGeneric("kStepEstimator", 
+        function(x, IC, start, ...) standardGeneric("kStepEstimator"))
 }
 if(!isGeneric("locMEstimator")){
     setGeneric("locMEstimator", function(x, IC, ...) standardGeneric("locMEstimator"))
@@ -106,7 +110,7 @@ if(!isGeneric("weight")){
 }
 if(!isGeneric("weight<-")){
     setGeneric("weight<-",
-        function(object, value, ...) standardGeneric("weight<-"))
+        function(object, value) standardGeneric("weight<-"))
 }
 if(!isGeneric("clip")){
     setGeneric("clip",
@@ -163,9 +167,15 @@ if(!isGeneric("comparePlot")){
 if(!isGeneric("pIC")){
     setGeneric("pIC", function(object) standardGeneric("pIC"))
 }
+if(!isGeneric("asbias")){
+    setGeneric("asbias", function(object) standardGeneric("asbias"))
+}
 if(!isGeneric("steps")){
     setGeneric("steps", function(object) standardGeneric("steps"))
 }
 if(!isGeneric("Mroot")){
     setGeneric("Mroot", function(object) standardGeneric("Mroot"))
+}
+if(!isGeneric("modifyIC")){
+    setGeneric("modifyIC", function(object) standardGeneric("modifyIC"))
 }

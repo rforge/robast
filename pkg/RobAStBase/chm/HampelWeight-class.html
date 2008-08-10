@@ -58,9 +58,10 @@ accessor function for slot <code>cent</code>. </dd>
 
 
 <dt>cent&lt;-</dt><dd><code>signature(object = "HampelWeight", value = "matrix")</code>:
-replacement function for slot <code>cent</code>. </dd>
-
-<p>
+replacement function for slot <code>cent</code>. This replacement method 
+should be used with great care, as the slot <code>weight</code> is not
+simultaneously updated and hence, this may lead to inconsistent
+objects. </dd>
 </dl>
 
 <h3>Author(s)</h3>
@@ -92,6 +93,14 @@ Bayreuth: Dissertation.
 <code><a href="BoundedWeight-class.html">BoundedWeight-class</a></code>, <code><a href="RobWeight-class.html">RobWeight-class</a></code>,
 <code><a href="IC.html">IC</a></code>, <code><a href="InfluenceCurve-class.html">InfluenceCurve-class</a></code>
 </p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## prototype
+new("HampelWeight")
+</pre>
 
 
 

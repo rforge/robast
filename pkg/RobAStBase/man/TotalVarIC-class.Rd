@@ -11,6 +11,7 @@
 \alias{clipUp<-}
 \alias{clipUp<-,TotalVarIC-method}
 \alias{lowerCase<-,TotalVarIC-method}
+\alias{neighbor,TotalVarIC-method}
 \alias{show,TotalVarIC-method}
 \alias{stand<-,TotalVarIC-method}
 \alias{generateIC,TotalVarNeighborhood,L2ParamFamily-method}
@@ -39,6 +40,12 @@
 
     \item{\code{Curve}:}{ object of class \code{"EuclRandVarList"}.}
 
+    \item{\code{modifyIC}:}{ Object of class \code{"OptionalFunction"}:
+      function of two arguments, which are an L2 parametric family 
+      and an optional influence curve. Returns an object of 
+      class \code{"IC"}. This slot is mainly used for internal
+      computations! }
+
     \item{\code{Risks}:}{ object of class \code{"list"}: 
       list of risks; cf. \code{\link[distrMod]{RiskType-class}}. }
 
@@ -57,6 +64,12 @@
 
     \item{\code{weight}:}{ object of class \code{"BdStWeight"}:
       weight function }
+
+    \item{\code{biastype}:}{ object of class \code{"BiasType"}:
+      bias type (symmetric/onsided/asymmetric) }
+
+    \item{\code{normtype}:}{ object of class \code{"NormType"}:
+      norm type (Euclidean, information/self-standardized)}
 
     \item{\code{neighborRadius}:}{ object of class \code{"numeric"}:
       radius of the corresponding (unconditional) contamination 
@@ -88,6 +101,13 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
     \item{stand<-}{\code{signature(object = "TotalVarIC")}:
       replacement function for slot \code{stand}. }
 
+    \item{lowerCase<-}{\code{signature(object = "TotalVarIC")}:
+      replacement function for slot \code{lowerCase}. }
+
+    \item{neighbor}{\code{signature(object = "TotalVarIC")}: 
+      generates an object of class \code{"TotalVarNeighborhood"} with
+      radius given in slot \code{neighborRadius}. }
+
     \item{generateIC}{\code{signature(neighbor = "TotalVarNeighborhood", L2Fam = "L2ParamFamily")}:
       generate an object of class \code{"TotalVarIC"}. Rarely called directly. }
 
@@ -109,3 +129,4 @@ plot(IC1)
 }
 \concept{influence curve}
 \keyword{classes}
+\keyword{robust}

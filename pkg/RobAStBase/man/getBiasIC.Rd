@@ -23,7 +23,7 @@ getBiasIC(IC, neighbor, ...)
   \item{tol}{ the desired accuracy (convergence tolerance).}
   \item{numbeval}{number of evalation points.}
 }
-\details{}
+%\details{}
 \value{The bias of the IC is computed.}
 \section{Methods}{
 \describe{
@@ -63,4 +63,4 @@ getBiasIC(IC, neighbor, ...)
 \seealso{\code{\link{getRiskIC-methods}}, \code{\link{InfRobModel-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

@@ -39,4 +39,4 @@ IC2 <- optIC(model = N0.Rob1, risk = asMSE())
 comparePlot(IC1,IC2)
 }
 }
-\keyword{}
+\keyword{robust}

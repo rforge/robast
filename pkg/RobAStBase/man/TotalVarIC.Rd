@@ -16,7 +16,9 @@ TotalVarIC(name, CallL2Fam = call("L2ParamFamily"),
            Curve = EuclRandVarList(RealRandVariable(Map = c(function(x) {x}), 
                                                     Domain = Reals())), 
            Risks, Infos, clipLo = -Inf, clipUp = Inf, stand = as.matrix(1), 
-           lowerCase = NULL, neighborRadius = 0, w = new("BdStWeight"))
+           lowerCase = NULL, neighborRadius = 0, w = new("BdStWeight"),
+           normtype = NormType(), biastype = symmetricBias(),
+           modifyIC = NULL)
 }
 \arguments{
   \item{name}{ object of class \code{"character"}. }
@@ -35,6 +37,13 @@ TotalVarIC(name, CallL2Fam = call("L2ParamFamily"),
   \item{lowerCase}{ optional constant for lower case solution. }
   \item{neighborRadius}{ radius of the corresponding (unconditional) 
     contamination neighborhood. }
+  \item{biastype}{ BiasType: type of the bias}
+  \item{normtype}{ NormType: type of the norm}
+  \item{modifyIC}{ object of class \code{"OptionalFunction"}:
+    function of two arguments, which are an L2 parametric family 
+    and an optional influence curve. Returns an object of 
+    class \code{"IC"}. This function is mainly used for internal
+    computations! }
 }
 %\details{}
 \value{Object of class \code{"TotalVarIC"}}
@@ -52,4 +61,4 @@ IC1 <- TotalVarIC()
 plot(IC1)
 }
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

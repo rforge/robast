@@ -4,7 +4,8 @@ ContIC <- function(name, CallL2Fam = call("L2ParamFamily"),
                                            Domain = Reals())), 
                    Risks, Infos, clip = Inf, cent = 0, stand = as.matrix(1), 
                    lowerCase = NULL, neighborRadius = 0, w = new("HampelWeight"),
-                   normtype = NormType(), biastype = symmetricBias()){
+                   normtype = NormType(), biastype = symmetricBias(),
+                   modifyIC = NULL){
     if(missing(name))
         name <- "IC of contamination type"
     if(missing(Risks))
@@ -40,13 +41,13 @@ ContIC <- function(name, CallL2Fam = call("L2ParamFamily"),
     contIC@weight <- w
     contIC@biastype <- biastype
     contIC@normtype <- normtype
+    contIC@modifyIC <- modifyIC
 
     return(contIC)
 #    return(new("ContIC", name = name, Curve = Curve, Risks = Risks, Infos = Infos,
 #               CallL2Fam = CallL2Fam, clip = clip, cent = cent, stand = stand, 
 #               lowerCase = lowerCase, neighborRadius = neighborRadius))
 }
-
 
 
 setMethod("generateIC", signature(neighbor = "ContNeighborhood", 
@@ -56,26 +57,12 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
         a <- res$a
         b <- res$b
         d <- res$d
-        normtype <-  res$normtype
-        biastype <-  res$biastype
-        if(is.null(res$w)) res$w <- new("HampelWeight")
+        normtype <- res$normtype
+        biastype <- res$biastype
         w <- res$w
         return(ContIC(
                 name = "IC of contamination type", 
-                CallL2Fam = call("L2ParamFamily", 
-                                name = L2Fam@name,
-                                distribution = L2Fam@distribution,
-                                distrSymm = L2Fam@distrSymm,  
-                                param = L2Fam@param,
-                                modifyParam = L2Fam@modifyParam,
-                                props = L2Fam@props,
-#                                L2deriv = L2Fam@L2deriv,
-                                L2deriv.fct = L2Fam@L2deriv.fct,
-                                L2derivSymm = L2Fam@L2derivSymm,
-                                L2derivDistr = L2Fam@L2derivDistr,
-                                L2derivDistrSymm = L2Fam@L2derivDistrSymm,
-                                FisherInfo = L2Fam@FisherInfo,
-                                FisherInfo.fct = L2Fam@FisherInfo.fct),
+                CallL2Fam = L2Fam@fam.call,
                 Curve = generateIC.fct(neighbor, L2Fam, res),
                 clip = b,
                 cent = a,
@@ -83,6 +70,7 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
                 lowerCase = d,
                 w = w,
                 neighborRadius = neighbor@radius,
+                modifyIC = res$modifyIC,
                 normtype = normtype,
                 biastype = biastype,
                 Risks = res$risk,
@@ -91,9 +79,9 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
     })
 
 ## Access methods
-
 setMethod("clip", "ContIC", function(object) object@clip)
 setMethod("cent", "ContIC", function(object) object@cent)
+setMethod("neighbor", "ContIC", function(object) ContNeighborhood(radius = object@neighborRadius) )
 
 ## replace methods
 setReplaceMethod("clip", "ContIC", 
@@ -107,7 +95,8 @@ setReplaceMethod("clip", "ContIC",
                                normW = object@normtype)
         res <- list(A = object@stand, a = object@cent, b = value, d = object@lowerCase,
                     risk = object@Risks, info = object@Infos, w = w,
-                    normtype = object@normtype, biastype = object@biastype)
+                    normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
         object <- generateIC(neighbor = ContNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("clip<-", "The clipping bound has been changed")
@@ -125,7 +114,8 @@ setReplaceMethod("cent", "ContIC",
                                normW = object@normtype)
         res <- list(A = object@stand, a = value, b = object@clip, d = object@lowerCase,
                     risk = object@Risks, info = object@Infos, w = w,
-                    normtype = object@normtype, biastype = object@biastype)
+                    normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
         object <- generateIC(neighbor = ContNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("cent<-", "The centering constant has been changed")
@@ -143,7 +133,8 @@ setReplaceMethod("stand", "ContIC",
                                normW = object@normtype)
         res <- list(A = value, a = object@cent, b = object@clip, d = object@lowerCase,
                     risk = object@Risks, info = object@Infos, w = w,
-                    normtype = object@normtype, biastype = object@biastype)
+                    normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
         object <- generateIC(neighbor = ContNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("stand<-", "The standardizing matrix has been changed")
@@ -156,7 +147,8 @@ setReplaceMethod("lowerCase", "ContIC",
         L2Fam <- eval(object@CallL2Fam)
         res <- list(A = object@stand, a = object@cent, b = object@clip, d = value,
                     risk = object@Risks, info = object@Infos, w = object@weight,
-                    normtype = object@normtype, biastype = object@biastype)
+                    normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
         object <- generateIC(neighbor = ContNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("lowerCase<-", "The slot 'lowerCase' has been changed")
@@ -168,7 +160,8 @@ setReplaceMethod("CallL2Fam", "ContIC",
         L2Fam <- eval(value)
         res <- list(A = object@stand, a = object@cent, b = object@clip, d = object@lowerCase,
                     risk = object@Risks, info = object@Infos, w = object@weight,
-                    normtype = object@normtype, biastype = object@biastype)
+                    normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
         object <- generateIC(neighbor = ContNeighborhood(radius = object@neighborRadius), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("CallL2Fam<-", "The slot 'CallL2Fam' has been changed")

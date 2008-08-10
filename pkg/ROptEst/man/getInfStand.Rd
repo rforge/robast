@@ -23,7 +23,7 @@ getInfStand(L2deriv, neighbor, biastype, ...)
      neighbor, biastype, clip, cent, trafo)
 
 \S4method{getInfStand}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, 
-     neighbor, biastype, Distr, A.comp, stand, clip, cent, trafo, w)
+     neighbor, biastype, Distr, A.comp, cent, trafo, w)
 
 \S4method{getInfStand}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, 
      neighbor, biastype, clip, cent, trafo)
@@ -39,7 +39,6 @@ getInfStand(L2deriv, neighbor, biastype, ...)
   \item{\dots}{ additional parameters }
   \item{clip}{ optimal clipping bound. }
   \item{cent}{ optimal centering constant. }
-  \item{stand}{ standardizing matrix. }
   \item{Distr}{ object of class \code{"Distribution"}. }
   \item{trafo}{ matrix: transformation of the parameter. }  
   \item{A.comp}{ matrix: indication which components of the standardizing
@@ -85,4 +84,4 @@ getInfStand(L2deriv, neighbor, biastype, ...)
 \seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link[RobAStBase]{TotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

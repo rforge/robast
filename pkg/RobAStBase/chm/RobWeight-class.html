@@ -8,11 +8,11 @@
 <param name="keyword" value="R:   RobWeight-class">
 <param name="keyword" value="R:   name,RobWeight-method">
 <param name="keyword" value="R:   name<-,RobWeight-method">
-<param name="keyword" value="R:   weight,RobWeight-method">
 <param name="keyword" value="R:   weight">
+<param name="keyword" value="R:   weight,RobWeight-method">
+<param name="keyword" value="R:   weight<-">
 <param name="keyword" value="R:   weight<--methods">
 <param name="keyword" value="R:   weight<-,RobWeight-method">
-<param name="keyword" value="R:   weight<-">
 <param name="keyword" value=" Robust Weight classes">
 </object>
 
@@ -48,7 +48,7 @@ Objects can be created by calls of the form <code>new("RobWeight", ...)</code>.
 accessor function for slot <code>name</code>. </dd>
 
 
-<dt>name&lt;-</dt><dd><code>signature(object = "RobWeight", value = "character")</code>: 
+<dt>name&lt;-</dt><dd><code>signature(object = "RobWeight")</code>: 
 replacement function for slot <code>name</code>. </dd>
 
 
@@ -56,7 +56,7 @@ replacement function for slot <code>name</code>. </dd>
 accessor function for slot <code>weight</code>. </dd>
 
 
-<dt>weight&lt;-</dt><dd><code>signature(object = "RobWeight", value = "ANY")</code>: 
+<dt>weight&lt;-</dt><dd><code>signature(object = "RobWeight")</code>: 
 replacement function for slot <code>weight</code>. </dd>
 </dl>
 
@@ -87,6 +87,14 @@ Bayreuth: Dissertation.
 <p>
 <code><a href="InfluenceCurve-class.html">InfluenceCurve-class</a></code>, <code><a href="IC.html">IC</a></code>
 </p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## prototype
+new("RobWeight")
+</pre>
 
 
 

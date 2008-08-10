@@ -75,9 +75,6 @@ minbiasweight(Weight, neighbor, biastype, ...)
 \seealso{\code{\link{BdStWeight-class}},
          \code{\link{HampelWeight-class}},
          \code{\link{IC-class}}}
-\examples{
-%
-}
-
+%\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}

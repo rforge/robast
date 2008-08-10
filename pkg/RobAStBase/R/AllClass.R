@@ -5,6 +5,10 @@
     require("distrMod", character = TRUE, quietly = TRUE)
     require("RandVar", character = TRUE, quietly = TRUE)
 }
+.onAttach <- function(library, pkg){
+    unlockBinding(".RobAStBaseOptions", asNamespace("RobAStBase"))
+    invisible()
+}
 
 ## neighborhood
 setClass("Neighborhood",
@@ -85,14 +89,16 @@ setClass("InfluenceCurve",
                 else TRUE
             })
 ## partial incluence curve
-setClass("IC", representation(CallL2Fam = "call"),
+setClass("IC", representation(CallL2Fam = "call",
+                              modifyIC = "OptionalFunction"),
             prototype(name = "square integrable (partial) influence curve",
                       Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}), 
                                                Domain = Reals())),
                       Risks = list(),
                       Infos = matrix(c(character(0),character(0)), ncol=2,
                                 dimnames=list(character(0), c("method", "message"))),
-                      CallL2Fam = call("L2ParamFamily")),
+                      CallL2Fam = call("L2ParamFamily"),
+                      modifyIC = NULL),
             contains = "InfluenceCurve",
             validity = function(object){
                 L2Fam <- eval(object@CallL2Fam)
@@ -119,6 +125,7 @@ setClass("HampIC",
                       Infos = matrix(c(character(0),character(0)), ncol=2,
                                 dimnames=list(character(0), c("method", "message"))),
                       CallL2Fam = call("L2ParamFamily"),
+                      modifyIC = NULL,
                       stand = as.matrix(1),
                       lowerCase = NULL,
                       neighborRadius = 0, 
@@ -147,26 +154,19 @@ setClass("ContIC",
                       Infos = matrix(c(character(0),character(0)), ncol=2,
                                 dimnames=list(character(0), c("method", "message"))),
                       CallL2Fam = call("L2ParamFamily"),
+                      modifyIC = NULL,
                       clip = Inf, cent = 0, stand = as.matrix(1),
                       lowerCase = NULL,
                       neighborRadius = 0, weight = new("HampelWeight"),
                       biastype = symmetricBias(), NormType = NormType()),
             contains = "HampIC",
             validity = function(object){
-                if(any(object@neighborRadius < 0)) # radius vector?!
-                    stop("'neighborRadius' has to be in [0, Inf]")
                 if(length(object@cent) != nrow(object@stand))
                     stop("length of centering constant != nrow of standardizing matrix")
                 if((length(object@clip) != 1) && (length(object@clip) != length(object@Curve)))
                     stop("length of clipping bound != 1 and != length of 'Curve'")
-                if(!is.null(object@lowerCase))
-                    if(length(object@lowerCase) != nrow(object@stand))
-                        stop("length of 'lowerCase' != nrow of standardizing matrix")
-                L2Fam <- eval(object@CallL2Fam)
                 if(!is(weight,"HampelWeight")) 
                     stop("Weight has to be of class 'HampelWeight'")
-                if(!identical(dim(L2Fam@param@trafo), dim(object@stand)))
-                    stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
                 return(TRUE)
             })
 ## (partial) influence curve of total variation type
@@ -180,50 +180,78 @@ setClass("TotalVarIC",
                       Infos = matrix(c(character(0),character(0)), ncol=2,
                                 dimnames=list(character(0), c("method", "message"))),
                       CallL2Fam = call("L2ParamFamily"),
+                      modifyIC = NULL,
                       clipLo = -Inf, clipUp = Inf, stand = as.matrix(1),
                       lowerCase = NULL,
-                      neighborRadius = 0, weight = new("BdStWeight")),
+                      neighborRadius = 0, weight = new("BdStWeight"),
+                      biastype = symmetricBias(), NormType = NormType()),
             contains = "HampIC",
             validity = function(object){
-                if(any(object@neighborRadius < 0)) # radius vector?!
-                    stop("'neighborRadius' has to be in [0, Inf]")
                 if((length(object@clipLo) != 1) && (length(object@clipLo) != length(object@Curve)))
                     stop("length of lower clipping bound != 1 and != length of 'Curve'")
                 if((length(object@clipLo) != 1) && (length(object@clipLo) != length(object@Curve)))
                     stop("length of upper clipping bound != 1 and != length of 'Curve'")
-                L2Fam <- eval(object@CallL2Fam)
                 if(!is(weight,"BdStWeight")) 
                     stop("Weight has to be of class 'BdStWeight'")
-                if(!identical(dim(L2Fam@param@trafo), dim(object@stand)))
-                    stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
                 return(TRUE)
             })
 
 ## ALEstimate
 setClassUnion("OptionalInfluenceCurve", c("InfluenceCurve", "NULL"))
 setClass("ALEstimate", 
-         representation(pIC = "OptionalInfluenceCurve"),
+         representation(pIC = "OptionalInfluenceCurve",
+                        asbias = "OptionalNumeric"),
          prototype(name = "Asymptotically linear estimate",
                    estimate = numeric(0),
+                   samplesize = numeric(0),
+                   estimate.call = call("{}"),
+                   asvar = NULL,
+                   asbias = NULL,
                    pIC = NULL,
+                   nuis.idx = NULL,
+                   trafo = list(fct = function(x){
+                                      list(fval = x, mat = matrix(0))}, 
+                                mat = matrix(1)), ### necessary for comparison with unit matrix
                    Infos = matrix(c(character(0),character(0)), ncol=2,
-                                  dimnames=list(character(0), c("method", "message")))),
+                                  dimnames=list(character(0), c("method", "message"))),
+                   untransformed.estimate = NULL,
+                   untransformed.asvar = NULL),
          contains = "Estimate")
 setClass("kStepEstimate", 
          representation(steps = "integer"),
-         prototype(name = "k-step estimate",
+         prototype(name = "Asymptotically linear estimate",
                    estimate = numeric(0),
-                   pIC = NULL,
+                   samplesize = numeric(0),
+                   estimate.call = call("{}"),
                    steps = integer(0),
+                   asvar = NULL,
+                   asbias = NULL,
+                   pIC = NULL,
+                   nuis.idx = NULL,
+                   trafo = list(fct = function(x){
+                                      list(fval = x, mat = matrix(0))}, 
+                                mat = matrix(1)), ### necessary for comparison with unit matrix
                    Infos = matrix(c(character(0),character(0)), ncol=2,
-                                  dimnames=list(character(0), c("method", "message")))),
+                                  dimnames=list(character(0), c("method", "message"))),
+                   untransformed.estimate = NULL,
+                   untransformed.asvar = NULL),
          contains = "ALEstimate")
 setClass("MEstimate", 
          representation(Mroot = "numeric"),
-         prototype(name = "M estimate",
+         prototype(name = "Asymptotically linear estimate",
                    estimate = numeric(0),
-                   pIC = NULL,
+                   samplesize = numeric(0),
+                   estimate.call = call("{}"),
                    Mroot = numeric(0),
+                   asvar = NULL,
+                   asbias = NULL,
+                   pIC = NULL,
+                   nuis.idx = NULL,
+                   trafo = list(fct = function(x){
+                                      list(fval = x, mat = matrix(0))}, 
+                                mat = matrix(1)), ### necessary for comparison with unit matrix
                    Infos = matrix(c(character(0),character(0)), ncol=2,
-                                  dimnames=list(character(0), c("method", "message")))),
+                                  dimnames=list(character(0), c("method", "message"))),
+                   untransformed.estimate = NULL,
+                   untransformed.asvar = NULL),
          contains = "ALEstimate")

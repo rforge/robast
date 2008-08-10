@@ -49,4 +49,4 @@ InfluenceCurve <- function(name, Curve = EuclRandVarList(EuclRandVariable(Domain
 }
 }
 \concept{influence curve}
-\keyword{}
+\keyword{robust}
