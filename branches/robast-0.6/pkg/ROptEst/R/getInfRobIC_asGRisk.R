@@ -36,6 +36,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
         else
             S <- FALSE
 
+        prec <- 1
         repeat{
             iter <- iter + 1
             z.old <- z
@@ -76,9 +77,18 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                             clip = c0, cent = z, symm = S, trafo = trafo, tol.z = tol)
 #            cat("c0:\t", c0, "c0.old:\t", c0.old, "z:\t", z, "z.old:\t", z.old, "\n")
             if(S) break
-            if(max(abs(z - z.old), abs(c0-c0.old)) < tol) break
+
+            prec.old <- prec
+            prec <- max(abs(z - z.old), abs(c0-c0.old))
+            if(verbose)
+                cat("current precision in IC algo:\t", prec, "\n")
+            if(prec < tol) break
+            if(abs(prec.old - prec) < 1e-10){
+                cat("algorithm did not converge!\n", "achieved precision:\t", prec, "\n")
+                break
+            }
             if(iter > maxiter){
-                cat("maximum iterations reached!\n", "achieved precision:\t", abs(c0 - c0.old), "\n")
+                cat("maximum iterations reached!\n", "achieved precision:\t", prec, "\n")
                 break
             }
         }
@@ -177,6 +187,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         A <- A.start
         b <- 0
         iter <- 0
+        prec <- 1
         repeat{
             iter <- iter + 1
             z.old <- z
@@ -249,10 +260,15 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                    Distr = Distr, V.comp = A.comp, cent = as.vector(A %*% z), 
                    stand = A, w = w)}
 
+            prec.old <- prec
             prec <- max(abs(b-b.old), max(abs(A-A.old)), max(abs(z-z.old)))
             if(verbose)
                 cat("current precision in IC algo:\t", prec, "\n")
             if(prec < tol) break
+            if(abs(prec.old - prec) < 1e-10){
+                cat("algorithm did not converge!\n", "achieved precision:\t", prec, "\n")
+                break
+            }
             if(iter > maxiter){
                 cat("maximum iterations reached!\n", "achieved precision:\t", prec, "\n")
                 break
@@ -274,7 +290,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                        biastype = biastype, Distr = Distr, 
                        V.comp = A.comp, cent = a, 
                        stand = A, w = w)
-  
+
         QF <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(nrow(A))
 
         trAsCov <- sum(diag(QF%*%Cov))

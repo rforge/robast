@@ -3,10 +3,10 @@
 ###############################################################################
 require(ROptEst)
 
-## generates normal location and scale family with mean = 0 and sd = 1
-N0 <- NormLocationScaleFamily(mean=0, sd=1) 
+## generates normal location and scale family with mean = -2 and sd = 3
+N0 <- NormLocationScaleFamily(mean=-2, sd=3) 
 N0        # show G0
-plot(N0)  # plot of Norm(mean = 0, sd = 1) and L_2 derivative
+plot(N0)  # plot of Norm(mean = -2, sd = 3) and L_2 derivative
 checkL2deriv(N0)
 
 ## classical optimal IC
@@ -64,7 +64,7 @@ infoPlot(N0.IC3)
 
 ## radius minimax IC
 ## (may take quite some time!)
-(N0.IC4 <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(), 
+system.time(N0.IC4 <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(), 
                 risk=asMSE(), loRad=0, upRad=Inf))
 checkIC(N0.IC4)
 Risks(N0.IC4)

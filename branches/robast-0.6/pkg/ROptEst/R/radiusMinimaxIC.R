@@ -6,7 +6,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                        neighbor = "UncondNeighborhood",
                                        risk = "asGRisk"),
     function(L2Fam, neighbor, risk, loRad, upRad, z.start = NULL, 
-             A.start = NULL, upper = 1e5, maxiter = 100, 
+             A.start = NULL, upper = 1e5, maxiter = 50, 
              tol = .Machine$double.eps^0.4, warn = FALSE, verbose = FALSE){
         if(length(loRad) != 1)
             stop("'loRad' is not of length == 1")
@@ -183,7 +183,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                 z.start = z.start, A.start = A.start, upper.b = upper.b, risk = risk, 
                                 loRad = loRad, upRad = upRad, loRisk = loRisk, upRisk = upRisk, 
                                 eps = tol, MaxIter = maxiter, warn = warn, 
-                                loNorm = loNorm, upNorm = upNorm)$root
+                                loNorm = loNorm, upNorm = upNorm, verbose = verbose)$root
                 neighbor@radius <- leastFavR
                 res <- getInfRobIC(L2deriv = L2deriv, neighbor = neighbor, risk = risk, 
                             Distr = L2Fam@distribution, DistrSymm = L2Fam@distrSymm, 

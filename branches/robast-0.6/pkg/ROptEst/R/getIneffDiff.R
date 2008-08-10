@@ -75,8 +75,8 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                    ineffUp <- if(upRad == Inf) biasUp^2/upRisk else
                                    (p+biasUp^2*upRad^2)/upRisk
                 }else{
-                ineffLo <- (sum(diag(std%*%res$A%*%t(trafo))) - 
-                            biasLo^2*(radius^2-loRad^2))/loRisk
+                    ineffLo <- (sum(diag(std%*%res$A%*%t(trafo))) - 
+                                biasLo^2*(radius^2-loRad^2))/loRisk
                 if(upRad == Inf)
                     ineffUp <- biasUp^2/upRisk
                 else
