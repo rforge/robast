@@ -12,7 +12,7 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
 
 \S4method{radiusMinimaxIC}{L2ParamFamily,UncondNeighborhood,asGRisk}(
         L2Fam, neighbor, risk, loRad, upRad, z.start = NULL, A.start = NULL, 
-        upper = 1e5, maxiter = 100, tol = .Machine$double.eps^0.4, 
+        upper = 1e5, maxiter = 50, tol = .Machine$double.eps^0.4, 
         warn = FALSE, verbose = FALSE)
 }
 \arguments{
