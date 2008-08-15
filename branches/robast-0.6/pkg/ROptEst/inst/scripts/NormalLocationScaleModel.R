@@ -92,6 +92,17 @@ infoPlot(N0.IC4.s)
 N0.r.rho1 <- leastFavorableRadius(L2Fam=N0, neighbor=ContNeighborhood(),
                     risk=asMSE(), rho=0.5)
 
+
+library(ROptEst)
+library(MASS)
+data(chem)
+initial.est <- c(median(chem), mad(chem))
+system.time(ROest1 <- roptest(chem, NormLocationScaleFamily(), eps.upper = 0.05, steps = 3L, 
+                           initial.est = initial.est))
+
+library(RobLox)
+system.time(ROest2 <- roblox(chem, eps.upper = 0.05, k = 3, returnIC = TRUE))
+
 ## one-step estimation
 ## 1. generate a contaminated sample
 ind <- rbinom(100, size=1, prob=0.05) 
