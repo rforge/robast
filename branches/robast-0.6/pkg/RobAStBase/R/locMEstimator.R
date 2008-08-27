@@ -21,7 +21,14 @@ setMethod("locMEstimator", signature(x = "numeric", IC = "InfluenceCurve"),
                             ncol = 2)
             colnames(Infos) <- c("method", "message")
             asVar <- getRiskIC(IC, risk = asCov(), L2Fam = L2Fam)$asCov$value
-            asBias <- getRiskIC(IC, risk = asBias(), L2Fam = L2Fam)$asBias$value
+            asBias <- getRiskIC(IC, risk = asBias(), 
+                                neighbor = ContNeighborhood(1), 
+                                L2Fam = L2Fam)$asBias$value
+                                 
+            names(res$root) <- nms <- locscalename(L2Fam)
+            asVar <- PosDefSymmMatrix(asVar)
+            dimnames(asVar) <- list(nms, nms)
+            names(asBias) <- nms
         }else{
             Infos <- matrix(c("locMEstimator", "Location M estimate"), ncol = 2)
             colnames(Infos) <- c("method", "message")

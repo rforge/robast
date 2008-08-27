@@ -3,11 +3,12 @@
 \alias{getModifyIC-methods}
 \alias{getModifyIC,L2ParamFamily,Neighborhood,asRisk-method}
 \alias{getModifyIC,L2LocationFamily,UncondNeighborhood,asGRisk-method}
+\alias{getModifyIC,L2LocationFamily,UncondNeighborhood,fiUnOvShoot-method}
 \alias{getModifyIC,L2ScaleFamily,ContNeighborhood,asGRisk-method}
 \alias{getModifyIC,L2ScaleFamily,TotalVarNeighborhood,asGRisk-method}
 \alias{getModifyIC,L2LocationScaleFamily,ContNeighborhood,asGRisk-method}
-
 \title{Generic Function for the Computation of Functions for Slot modifyIC}
+
 \description{
   This function is used by internal computations and is rarely called directly.
 }
@@ -15,6 +16,7 @@
 getModifyIC(L2FamIC, neighbor, risk)
 \S4method{getModifyIC}{L2ParamFamily,Neighborhood,asRisk}(L2FamIC, neighbor, risk)
 \S4method{getModifyIC}{L2LocationFamily,UncondNeighborhood,asGRisk}(L2FamIC, neighbor, risk)
+\S4method{getModifyIC}{L2LocationFamily,UncondNeighborhood,fiUnOvShoot}(L2FamIC, neighbor, risk)
 \S4method{getModifyIC}{L2ScaleFamily,ContNeighborhood,asGRisk}(L2FamIC, neighbor, risk)
 \S4method{getModifyIC}{L2ScaleFamily,TotalVarNeighborhood,asGRisk}(L2FamIC, neighbor, risk)
 \S4method{getModifyIC}{L2LocationScaleFamily,ContNeighborhood,asGRisk}(L2FamIC, neighbor, risk)

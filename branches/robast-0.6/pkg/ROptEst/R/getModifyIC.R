@@ -27,6 +27,12 @@ setMethod("getModifyIC", signature(L2FamIC = "L2LocationFamily",
         return(modIC)
     })
 
+setMethod("getModifyIC", signature(L2FamIC = "L2LocationFamily", 
+                                   neighbor = "UncondNeighborhood", risk = "fiUnOvShoot"),
+    getMethod("getModifyIC",signature(L2FamIC = "L2LocationFamily", 
+                                   neighbor = "UncondNeighborhood", risk = "asGRisk"))
+    )
+
 setMethod("getModifyIC", signature(L2FamIC = "L2ScaleFamily", 
                                    neighbor = "ContNeighborhood", risk = "asGRisk"),
     function(L2FamIC, neighbor, risk){
