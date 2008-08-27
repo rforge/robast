@@ -682,7 +682,7 @@
 <param name="Local" value="ALEstimate-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="plot,IC-method">
+<param name="Name" value="plot,IC,ANY-method">
 <param name="Local" value="IC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -730,6 +730,10 @@
 <param name="Local" value="RobWeight-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="show,ALEstimate-method">
+<param name="Local" value="ALEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="show,ContIC-method">
 <param name="Local" value="ContIC-class.html">
 </OBJECT>
@@ -748,6 +752,14 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="show,InfRobModel-method">
 <param name="Local" value="InfRobModel-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="show,kStepEstimate-method">
+<param name="Local" value="kStepEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="show,MEstimate-method">
+<param name="Local" value="MEstimate-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="show,Neighborhood-method">

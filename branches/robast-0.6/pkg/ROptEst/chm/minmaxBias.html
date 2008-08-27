@@ -36,7 +36,7 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
 ## S4 method for signature 'UnivariateDistribution,
 ##   ContNeighborhood, BiasType':
 minmaxBias(L2deriv, neighbor, biastype, symm, trafo, 
-             maxiter, tol, Finfo)
+             maxiter, tol, warn, Finfo)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   ContNeighborhood, asymmetricBias':
@@ -55,8 +55,8 @@ minmaxBias(L2deriv, neighbor, biastype, symm, trafo,
 
 ## S4 method for signature 'RealRandVariable,
 ##   ContNeighborhood, BiasType':
-minmaxBias(L2deriv, neighbor, biastype, Distr, 
-             L2derivDistrSymm, z.start, A.start,  z.comp, A.comp, trafo, maxiter, tol, warn)
+minmaxBias(L2deriv, neighbor, biastype, normtype, Distr, 
+             z.start, A.start,  z.comp, A.comp, trafo, maxiter, tol)
 
 </pre>
 
@@ -74,6 +74,9 @@ object of class <code>"Neighborhood"</code>. </td></tr>
 <tr valign="top"><td><code>biastype</code></td>
 <td>
 object of class <code>"BiasType"</code>. </td></tr>
+<tr valign="top"><td><code>normtype</code></td>
+<td>
+object of class <code>"NormType"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 additional parameters. </td></tr>
@@ -83,9 +86,6 @@ object of class <code>"Distribution"</code>. </td></tr>
 <tr valign="top"><td><code>symm</code></td>
 <td>
 logical: indicating symmetry of <code>L2deriv</code>. </td></tr>
-<tr valign="top"><td><code>L2derivDistrSymm</code></td>
-<td>
-object of class <code>"DistrSymmList"</code>. </td></tr>
 <tr valign="top"><td><code>z.start</code></td>
 <td>
 initial value for the centering constant. </td></tr>

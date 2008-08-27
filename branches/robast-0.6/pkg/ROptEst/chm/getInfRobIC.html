@@ -40,46 +40,46 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 
 ## S4 method for signature 'UnivariateDistribution, asCov,
 ##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Finfo, trafo)
+getInfRobIC(L2deriv, risk, neighbor, Finfo, trafo, verbose = FALSE)
 
 ## S4 method for signature 'UnivariateDistribution, asCov,
 ##   TotalVarNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Finfo, trafo)
+getInfRobIC(L2deriv, risk, neighbor, Finfo, trafo, verbose = FALSE)
 
 ## S4 method for signature 'RealRandVariable, asCov,
 ##   ContNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, Distr, Finfo, trafo, 
-                       QuadForm = diag(nrow(trafo)))
+                       QuadForm = diag(nrow(trafo)), verbose = FALSE)
 
 ## S4 method for signature 'UnivariateDistribution, asBias,
 ##   UncondNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, symm, trafo, 
-             maxiter, tol, warn, Finfo)
+             maxiter, tol, warn, Finfo, verbose = FALSE, ...)
 
 ## S4 method for signature 'RealRandVariable, asBias,
 ##   ContNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, z.start, A.start, Finfo, trafo, maxiter, tol, warn)
+             L2derivDistrSymm, z.start, A.start, Finfo, trafo, maxiter, tol, warn, verbose = FALSE, ...)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asHampel, UncondNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn, noLow = FALSE)
+             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
 
 ## S4 method for signature 'RealRandVariable, asHampel,
 ##   ContNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
+             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper, maxiter, tol, warn, verbose = FALSE)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asGRisk, UncondNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn, noLow = FALSE)
+             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
 
 ## S4 method for signature 'RealRandVariable, asGRisk,
 ##   ContNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor,  Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, z.start, A.start, trafo, upper, maxiter, tol, warn)
+             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper, maxiter, tol, warn, verbose = FALSE)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asUnOvShoot, UncondNeighborhood':
@@ -146,11 +146,17 @@ logical: print warnings. </td></tr>
 <tr valign="top"><td><code>noLow</code></td>
 <td>
 logical: is lower case to be computed? </td></tr>
+<tr valign="top"><td><code>onesetLM</code></td>
+<td>
+logical: use one set of Lagrange multipliers? </td></tr>
 <tr valign="top"><td><code>QuadForm</code></td>
 <td>
 matrix of (or which may coerced to) class 
 <code>PosSemDefSymmMatrix</code> for use of different 
 (standardizing) norm </td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+logical: if <code>TRUE</code>, some messages are printed </td></tr>
 </table>
 
 <h3>Value</h3>

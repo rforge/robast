@@ -32,7 +32,7 @@ leastFavorableRadius(L2Fam, neighbor, risk, ...)
 leastFavorableRadius(
           L2Fam, neighbor, risk, rho, upRad = 1, 
             z.start = NULL, A.start = NULL, upper = 100, maxiter = 100, 
-            tol = .Machine$double.eps^0.4, warn = FALSE)
+            tol = .Machine$double.eps^0.4, warn = FALSE, verbose = FALSE)
 </pre>
 
 
@@ -76,6 +76,9 @@ the desired accuracy (convergence tolerance).</td></tr>
 <tr valign="top"><td><code>warn</code></td>
 <td>
 logical: print warnings. </td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+logical: if <code>TRUE</code>, some messages are printed </td></tr>
 </table>
 
 <h3>Value</h3>

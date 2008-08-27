@@ -354,6 +354,34 @@
 <param name="Local" value="getL2normL2deriv.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getModifyIC">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getModifyIC,L2LocationFamily,UncondNeighborhood,asGRisk-method">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getModifyIC,L2LocationScaleFamily,ContNeighborhood,asGRisk-method">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getModifyIC,L2ParamFamily,Neighborhood,asRisk-method">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getModifyIC,L2ScaleFamily,ContNeighborhood,asGRisk-method">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getModifyIC,L2ScaleFamily,TotalVarNeighborhood,asGRisk-method">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getModifyIC-methods">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getRiskIC">
 <param name="Local" value="getRiskIC.html">
 </OBJECT>
@@ -537,6 +565,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic Function for the Computation of Bias-Optimally Robust ICs ">
 <param name="Local" value="minmaxBias.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Generic Function for the Computation of Functions for Slot modifyIC">
+<param name="Local" value="getModifyIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic Function for the Computation of Inefficiency Differences">
