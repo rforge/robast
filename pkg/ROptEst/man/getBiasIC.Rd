@@ -3,6 +3,7 @@
 \alias{getBiasIC}
 \alias{getBiasIC-methods}
 \alias{getBiasIC,HampIC,UncondNeighborhood-method}
+\alias{getBiasIC,TotalVarIC,UncondNeighborhood-method}
 
 \title{Generic function for the computation of the asymptotic bias for an IC}
 \description{
@@ -26,6 +27,10 @@ getBiasIC(IC, neighbor, ...)
 \describe{
   \item{IC = "HampIC", neighbor = "UncondNeighborhood"}{
     reads off the as. bias from the risks-slot of the IC. }
+  \item{IC = "TotalVarIC", neighbor = "UncondNeighborhood"}{
+    reads off the as. bias from the risks-slot of the IC,
+    resp. if this is \code{NULL} from the corresponding
+    Lagrange Multipliers. }
 }}
 \references{
   Huber, P.J. (1968) Robust Confidence Limits. Z. Wahrscheinlichkeitstheor.

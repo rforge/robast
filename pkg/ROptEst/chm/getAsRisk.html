@@ -44,61 +44,75 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
 
 ## S4 method for signature 'asMSE, UnivariateDistribution,
 ##   Neighborhood, ANY':
-getAsRisk(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo)
+getAsRisk(risk, L2deriv, 
+                                      neighbor, biastype, clip, cent, stand, trafo)
 
 ## S4 method for signature 'asMSE, EuclRandVariable,
 ##   Neighborhood, ANY':
-getAsRisk(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo)
+getAsRisk(risk, L2deriv, neighbor, 
+                                                    biastype, clip, cent, stand, trafo)
 
 ## S4 method for signature 'asBias, UnivariateDistribution,
 ##   ContNeighborhood, ANY':
-getAsRisk(risk, L2deriv, neighbor, biastype, trafo)
+getAsRisk(risk, L2deriv, 
+                                                              neighbor, biastype, trafo)
 
 ## S4 method for signature 'asBias, UnivariateDistribution,
 ##   ContNeighborhood, onesidedBias':
-getAsRisk(risk, L2deriv, neighbor, biastype, trafo)
+getAsRisk(risk, 
+                                                      L2deriv, neighbor, biastype, trafo)
 
 ## S4 method for signature 'asBias, UnivariateDistribution,
 ##   ContNeighborhood, asymmetricBias':
-getAsRisk(risk, L2deriv, neighbor, biastype, trafo)
+getAsRisk(risk, 
+                                                        L2deriv, neighbor, biastype, trafo)
 
 ## S4 method for signature 'asBias, UnivariateDistribution,
 ##   TotalVarNeighborhood, ANY':
-getAsRisk(risk, L2deriv, neighbor, biastype, trafo)
+getAsRisk(risk, L2deriv, 
+                                                                  neighbor, biastype, trafo)
 
 ## S4 method for signature 'asBias, RealRandVariable,
 ##   ContNeighborhood, ANY':
-getAsRisk(risk, L2deriv, neighbor, biastype, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, trafo, z.start, A.start, maxiter, tol, warn)
+getAsRisk(risk, L2deriv, neighbor, 
+                              biastype, Distr, DistrSymm, L2derivSymm, L2derivDistrSymm, 
+                              trafo, z.start, A.start, maxiter, tol, warn)
 
 ## S4 method for signature 'asCov, UnivariateDistribution,
 ##   ContNeighborhood, ANY':
-getAsRisk(risk, L2deriv, neighbor, biastype, clip, cent, stand)
+getAsRisk(risk, L2deriv, 
+                                                  neighbor, biastype, clip, cent, stand)
 
 ## S4 method for signature 'asCov, UnivariateDistribution,
 ##   TotalVarNeighborhood, ANY':
-getAsRisk(risk, L2deriv, neighbor, biastype, clip, cent, stand)
+getAsRisk(risk, L2deriv, 
+                                                    neighbor, biastype, clip, cent, stand)
 
 ## S4 method for signature 'asCov, RealRandVariable,
 ##   ContNeighborhood, ANY':
-getAsRisk(risk, L2deriv, neighbor, biastype, Distr, clip, cent, stand)
+getAsRisk(risk, L2deriv, neighbor, 
+                           biastype, Distr, cent, stand, 
+                           V.comp =  matrix(TRUE, ncol = nrow(stand), nrow = nrow(stand)), w)
 
 ## S4 method for signature 'trAsCov,
 ##   UnivariateDistribution, UncondNeighborhood, ANY':
-getAsRisk(risk, L2deriv, neighbor, biastype, clip, cent, stand)
+getAsRisk(risk, L2deriv, 
+                                                      neighbor, biastype, clip, cent, stand)
 
 ## S4 method for signature 'trAsCov, RealRandVariable,
 ##   ContNeighborhood, ANY':
-getAsRisk(risk, L2deriv, neighbor, biastype, Distr, clip, cent, stand, normtype)
+getAsRisk(risk, L2deriv, neighbor, 
+                                                biastype, Distr, clip, cent, stand, normtype)
 
 ## S4 method for signature 'asUnOvShoot,
 ##   UnivariateDistribution, UncondNeighborhood, ANY':
-getAsRisk(risk, L2deriv, neighbor, biastype, clip, cent, stand, trafo)
+getAsRisk(risk, L2deriv, 
+                                                  neighbor, biastype, clip, cent, stand, trafo)
 
 ## S4 method for signature 'asSemivar,
 ##   UnivariateDistribution, Neighborhood, onesidedBias':
-getAsRisk(risk, L2deriv, neighbor, biastype, 
-    clip, cent, stand, trafo)
+getAsRisk(risk, L2deriv, 
+                                                    neighbor, biastype, clip, cent, stand, trafo)
 </pre>
 
 
@@ -163,6 +177,13 @@ logical: print warnings. </td></tr>
 <tr valign="top"><td><code>normtype</code></td>
 <td>
 object of class <code>"NormType"</code>. </td></tr>
+<tr valign="top"><td><code>V.comp</code></td>
+<td>
+matrix: indication which components of the standardizing
+matrix have to be computed. </td></tr>
+<tr valign="top"><td><code>w</code></td>
+<td>
+object of class <code>RobWeight</code>; current weight</td></tr>
 </table>
 
 <h3>Details</h3>

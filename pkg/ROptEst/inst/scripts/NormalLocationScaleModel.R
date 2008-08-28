@@ -112,7 +112,7 @@ x <- rnorm(100, mean=0, sd=(1-ind) + ind*9)
 (est0 <- MDEstimator(x=x, NormLocationScaleFamily()))
 
 ## 3. k-step estimation: radius known
-N1 <- NormLocationScaleFamily(mean=estimate(est0)[1], sd=estimate(est0)[2])
+N1 <- NormLocationScaleFamily(mean=estimate(est0)["mean"], sd=estimate(est0)["sd"])
 N1.Rob <- InfRobModel(center = N1, neighbor = ContNeighborhood(radius = 0.5))
 IC1 <- optIC(model = N1.Rob, risk = asMSE())
 (est1 <- kStepEstimator(x, IC1, est0, steps = 3))

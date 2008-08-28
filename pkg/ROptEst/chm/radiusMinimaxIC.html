@@ -31,7 +31,8 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
 ##   UncondNeighborhood, asGRisk':
 radiusMinimaxIC(
         L2Fam, neighbor, risk, loRad, upRad, z.start = NULL, A.start = NULL, 
-        upper = 1e5, maxiter = 100, tol = .Machine$double.eps^0.4, warn = FALSE)
+        upper = 1e5, maxiter = 50, tol = .Machine$double.eps^0.4, 
+        warn = FALSE, verbose = FALSE)
 </pre>
 
 
@@ -74,7 +75,20 @@ the desired accuracy (convergence tolerance).</td></tr>
 <tr valign="top"><td><code>warn</code></td>
 <td>
 logical: print warnings. </td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+logical: if <code>TRUE</code>, some messages are printed </td></tr>
 </table>
+
+<h3>Details</h3>
+
+<p>
+In case the neighborhood radius is unknown, Rieder et al. (2001, 2008)
+and Kohl (2005) show that there is nevertheless a way to compute an
+optimally robust IC - the so-called radius-minimax IC - which is 
+optimal for some radius interval.
+</p>
+
 
 <h3>Value</h3>
 
@@ -99,11 +113,11 @@ Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ru
 
 <p>
 Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
-the Radius. Statistical Methods and Applications <EM>17</EM>(1) 13-40.
+the Radius. Statistical Methods and Applications, <EM>17</EM>(1) 13-40.
 </p>
 <p>
 Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
-the Radius. Submitted. Appeared as discussion paper Nr. 81. 
+the Radius. Appeared as discussion paper Nr. 81. 
 SFB 373 (Quantification and Simulation of Economic Processes),
 Humboldt University, Berlin; also available under
 <a href="www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf">www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf</a>
@@ -125,8 +139,9 @@ Bayreuth: Dissertation.
 
 <pre>
 N &lt;- NormLocationFamily(mean=0, sd=1) 
-radiusMinimaxIC(L2Fam=N, neighbor=ContNeighborhood(), 
-                risk=asMSE(), loRad=0.1, upRad=0.5)
+radIC &lt;- radiusMinimaxIC(L2Fam=N, neighbor=ContNeighborhood(), 
+                         risk=asMSE(), loRad=0.1, upRad=0.5)
+checkIC(radIC)
 </pre>
 
 

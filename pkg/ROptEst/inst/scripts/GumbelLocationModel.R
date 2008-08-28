@@ -131,4 +131,4 @@ G0.IC101 <- radiusMinimaxIC(L2Fam=GumbelLocationFamily(),
                 neighbor=ContNeighborhood(), risk=asMSE(), loRad=0.5, upRad=1)
 (G0.est21 <- locMEstimator(G0.x, IC=G0.IC101))
 
-distrExOptions(ElowerTruncQuantile, 0) # default
+distrExOptions(ElowerTruncQuantile=0) # default

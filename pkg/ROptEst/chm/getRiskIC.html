@@ -9,6 +9,7 @@
 <param name="keyword" value="R:   getRiskIC-methods">
 <param name="keyword" value="R:   getRiskIC,HampIC,asCov,missing,missing-method">
 <param name="keyword" value="R:   getRiskIC,HampIC,asCov,missing,L2ParamFamily-method">
+<param name="keyword" value="R:   getRiskIC,TotalVarIC,asCov,missing,L2ParamFamily-method">
 <param name="keyword" value=" Generic function for the computation of a risk for an IC">
 </object>
 
@@ -33,6 +34,9 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
 getRiskIC(IC, risk)
 
 ## S4 method for signature 'HampIC, asCov, missing,
+##   L2ParamFamily':
+getRiskIC(IC, risk, L2Fam)
+## S4 method for signature 'TotalVarIC, asCov, missing,
 ##   L2ParamFamily':
 getRiskIC(IC, risk, L2Fam)
 
@@ -80,6 +84,8 @@ The risk of an IC is computed.</p>
 
 
 <dt>IC = "HampIC", risk = "asCov", neighbor = "missing", L2Fam = "L2ParamFamily"</dt><dd>asymptotic covariance of <code>IC</code> under <code>L2Fam</code> read off from corresp. <code>Risks</code> slot. </dd>
+<dt>IC = "TotalVarIC", risk = "asCov", neighbor = "missing", L2Fam = "L2ParamFamily"</dt><dd>asymptotic covariance of <code>IC</code> read off from corresp. <code>Risks</code> slot,
+resp. if this is <code>NULL</code> calculates it via <code><a href="getInfV.html">getInfV</a></code>.</dd>
 </dl>
 
 <h3>Note</h3>

@@ -110,14 +110,14 @@ N0.IC8 <- optIC(model = N0.Rob6, risk=fiUnOvShoot(width = 1.960/sqrt(n)), sample
 
 
 ## 3. Kolmogorov(-Smirnov) minimum distance estimator
-(est0 <- MDEstimator(x=X, NormLocationFamily(), interval = c(-5, 5)))
+(est0 <- MDEstimator(x=X, NormLocationFamily()))
 
 ## 4. one-step estimation
-N0.Rob7 <- InfRobModel(center = NormLocationFamily(mean = est0$estimate), 
+N0.Rob7 <- InfRobModel(center = NormLocationFamily(mean = estimate(est0)), 
                        neighbor = ContNeighborhood(radius=0.5))
 N0.IC9 <- optIC(model=N0.Rob7, risk=asUnOvShoot(width = 1.960))
-(est1 <- oneStepEstimator(X, IC = N0.IC9, start = est0$estimate))
-N0.Rob8 <- FixRobModel(center = NormLocationFamily(mean = est0$estimate), 
+(est1 <- oneStepEstimator(X, IC = N0.IC9, start = estimate(est0)))
+N0.Rob8 <- FixRobModel(center = NormLocationFamily(mean = estimate(est0)), 
                        neighbor = ContNeighborhood(radius=0.05))
 N0.IC10 <- optIC(model=N0.Rob8, risk=fiUnOvShoot(width = 1.960/sqrt(n)), sampleSize = 1e2)
-(est2 <- oneStepEstimator(X, IC = N0.IC10, start = est0$estimate))
+(est2 <- oneStepEstimator(X, IC = N0.IC10, start = estimate(est0)))

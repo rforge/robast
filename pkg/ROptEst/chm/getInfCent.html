@@ -48,7 +48,7 @@ getInfCent(L2deriv,
 ## S4 method for signature 'RealRandVariable,
 ##   ContNeighborhood, BiasType':
 getInfCent(L2deriv, 
-     neighbor, biastype, z.comp, stand, cent, clip, w)
+     neighbor, biastype, Distr, z.comp, w)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   ContNeighborhood, onesidedBias':
@@ -84,9 +84,6 @@ optimal clipping bound. </td></tr>
 <tr valign="top"><td><code>cent</code></td>
 <td>
 optimal centering constant. </td></tr>
-<tr valign="top"><td><code>stand</code></td>
-<td>
-standardizing matrix. </td></tr>
 <tr valign="top"><td><code>tol.z</code></td>
 <td>
 the desired accuracy (convergence tolerance). </td></tr>
@@ -96,6 +93,9 @@ logical: indicating symmetry of <code>L2deriv</code>. </td></tr>
 <tr valign="top"><td><code>trafo</code></td>
 <td>
 matrix: transformation of the parameter. </td></tr>
+<tr valign="top"><td><code>Distr</code></td>
+<td>
+object of class <code>Distribution</code>. </td></tr>
 <tr valign="top"><td><code>z.comp</code></td>
 <td>
 logical vector: indication which components of the 

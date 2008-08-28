@@ -34,7 +34,7 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
 getIneffDiff(
           radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
           z.start = NULL, A.start = NULL, upper.b, MaxIter, eps, warn,
-          loNorm = NULL, upNorm = NULL)
+          loNorm = NULL, upNorm = NULL, verbose = FALSE)
 </pre>
 
 
@@ -96,6 +96,9 @@ bound</td></tr>
 object of class <code>"NormType"</code>; used in selfstandardization
 to evaluate the bias of the current IC in the norm of the upper 
 bound</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+logical: if <code>TRUE</code>, some messages are printed </td></tr>
 </table>
 
 <h3>Value</h3>
@@ -121,6 +124,10 @@ Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de
 
 <h3>References</h3>
 
+<p>
+Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
+the Radius. Statistical Methods and Applications, <EM>17</EM>(1) 13-40.
+</p>
 <p>
 Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
 the Radius. Submitted. Appeared as discussion paper Nr. 81. 

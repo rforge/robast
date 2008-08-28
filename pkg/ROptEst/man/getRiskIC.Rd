@@ -4,6 +4,7 @@
 \alias{getRiskIC-methods}
 \alias{getRiskIC,HampIC,asCov,missing,missing-method}
 \alias{getRiskIC,HampIC,asCov,missing,L2ParamFamily-method}
+\alias{getRiskIC,TotalVarIC,asCov,missing,L2ParamFamily-method}
 
 \title{Generic function for the computation of a risk for an IC}
 \description{
@@ -15,6 +16,7 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
 \S4method{getRiskIC}{HampIC,asCov,missing,missing}(IC, risk)
 
 \S4method{getRiskIC}{HampIC,asCov,missing,L2ParamFamily}(IC, risk, L2Fam)
+\S4method{getRiskIC}{TotalVarIC,asCov,missing,L2ParamFamily}(IC, risk, L2Fam)
 
 }
 \arguments{
@@ -35,6 +37,9 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
 
   \item{IC = "HampIC", risk = "asCov", neighbor = "missing", L2Fam = "L2ParamFamily"}{
     asymptotic covariance of \code{IC} under \code{L2Fam} read off from corresp. \code{Risks} slot. }
+  \item{IC = "TotalVarIC", risk = "asCov", neighbor = "missing", L2Fam = "L2ParamFamily"}{
+   asymptotic covariance of \code{IC} read off from corresp. \code{Risks} slot,
+   resp. if this is \code{NULL} calculates it via \code{\link{getInfV}}.}
 }}
 \references{
   Huber, P.J. (1968) Robust Confidence Limits. Z. Wahrscheinlichkeitstheor.

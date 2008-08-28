@@ -72,22 +72,26 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
              tol = .Machine$double.eps^0.4, warn = TRUE){
         L2derivDistr <- model@center@L2derivDistr[[1]]
         if((length(model@center@L2derivDistr) == 1) & is(L2derivDistr, "UnivariateDistribution")){
-            ow <- options("warn")
-            options(warn = -1)
-            res <- getInfRobIC(L2deriv = L2derivDistr, 
+            if(identical(all.equal(model@neighbor@radius, 0), TRUE)){
+               return(optIC(model@center, risk = asCov()))
+            }else{
+               ow <- options("warn")
+               options(warn = -1)
+               res <- getInfRobIC(L2deriv = L2derivDistr, 
                         neighbor = model@neighbor, risk = risk, 
                         symm = model@center@L2derivDistrSymm[[1]],
                         Finfo = model@center@FisherInfo, trafo = model@center@param@trafo, 
                         upper = upper, maxiter = maxiter, tol = tol, warn = warn)
-            options(ow)
-            if(is(model@neighbor, "ContNeighborhood"))
-                res$info <- c("optIC", "optIC", res$info, "Optimal IC for 'InfRobModel' with 'ContNeighborhood'!!!")
-            else
-                res$info <- c("optIC", res$info)
-            res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
-                                                 neighbor = model@neighbor, 
-                                                 risk = risk))
-            return(generateIC(TotalVarNeighborhood(radius = model@neighbor@radius), model@center, res))
+               options(ow)
+               if(is(model@neighbor, "ContNeighborhood"))
+                  res$info <- c("optIC", "optIC", res$info, "Optimal IC for 'InfRobModel' with 'ContNeighborhood'!!!")
+               else
+                  res$info <- c("optIC", res$info)
+               res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
+                                                    neighbor = model@neighbor, 
+                                                    risk = risk))
+               return(generateIC(TotalVarNeighborhood(radius = model@neighbor@radius), model@center, res))
+           }    
         }else{
             stop("restricted to 1-dimensional parameteric models")
         }
