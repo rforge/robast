@@ -71,7 +71,8 @@ x <- (1-ind)*rgamma(100, scale = 1, shape = 2) + ind*rgamma(100, scale = 3, shap
 MLEstimator(x=x, GammaFamily())
 
 ## 3. one-step estimation: radius known
-RobG3 <- InfRobModel(center=GammaFamily(scale = est0$estimate[1], shape = est0$estimate[2]), 
+RobG3 <- InfRobModel(center=GammaFamily(scale = estimate(est0)["scale"], 
+                     shape = estimate(est0)["shape"]), 
                 neighbor=ContNeighborhood(radius=0.5))
 IC9 <- optIC(model=RobG3, risk=asMSE())
 (est1 <- oneStepEstimator(x, IC=IC9, start=est0$estimate))

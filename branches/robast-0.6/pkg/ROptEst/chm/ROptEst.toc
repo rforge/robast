@@ -82,6 +82,10 @@
 <param name="Local" value="getBiasIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getBiasIC,TotalVarIC,UncondNeighborhood-method">
+<param name="Local" value="getBiasIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getBiasIC-methods">
 <param name="Local" value="getBiasIC.html">
 </OBJECT>
@@ -362,6 +366,10 @@
 <param name="Local" value="getModifyIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getModifyIC,L2LocationFamily,UncondNeighborhood,fiUnOvShoot-method">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getModifyIC,L2LocationScaleFamily,ContNeighborhood,asGRisk-method">
 <param name="Local" value="getModifyIC.html">
 </OBJECT>
@@ -391,6 +399,10 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getRiskIC,HampIC,asCov,missing,missing-method">
+<param name="Local" value="getRiskIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getRiskIC,TotalVarIC,asCov,missing,L2ParamFamily-method">
 <param name="Local" value="getRiskIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">

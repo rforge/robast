@@ -8,6 +8,7 @@
 <param name="keyword" value="R:   getBiasIC">
 <param name="keyword" value="R:   getBiasIC-methods">
 <param name="keyword" value="R:   getBiasIC,HampIC,UncondNeighborhood-method">
+<param name="keyword" value="R:   getBiasIC,TotalVarIC,UncondNeighborhood-method">
 <param name="keyword" value=" Generic function for the computation of the asymptotic bias for an IC">
 </object>
 
@@ -66,6 +67,9 @@ The bias of the IC is computed.</p>
 
 <dl>
 <dt>IC = "HampIC", neighbor = "UncondNeighborhood"</dt><dd>reads off the as. bias from the risks-slot of the IC. </dd>
+<dt>IC = "TotalVarIC", neighbor = "UncondNeighborhood"</dt><dd>reads off the as. bias from the risks-slot of the IC,
+resp. if this is <code>NULL</code> from the corresponding
+Lagrange Multipliers. </dd>
 </dl>
 
 <h3>Note</h3>
