@@ -75,4 +75,4 @@ RobG3 <- InfRobModel(center=GammaFamily(scale = estimate(est0)["scale"],
                      shape = estimate(est0)["shape"]), 
                 neighbor=ContNeighborhood(radius=0.5))
 IC9 <- optIC(model=RobG3, risk=asMSE())
-(est1 <- oneStepEstimator(x, IC=IC9, start=est0$estimate))
+(est1 <- oneStepEstimator(x, IC=IC9, start=estimate(est0)))
