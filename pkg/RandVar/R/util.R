@@ -3,5 +3,5 @@
 { if (is(try(return(f(distr)), silent = TRUE),
          "try-error")){
   rl <- function(n) { xr <- r(distr)(n); f(xr) }
-  return(AbscontDistribution( r = rl, .withArith = TRUE, .withSim = TRUE)))}
+  return(AbscontDistribution( r = rl, .withArith = TRUE, .withSim = TRUE))}
 }         
