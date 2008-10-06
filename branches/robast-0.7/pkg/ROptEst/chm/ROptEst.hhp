@@ -1,0 +1,38 @@
+[OPTIONS]
+Auto Index=Yes
+Contents file=ROptEst.toc
+Compatibility=1.1 or later
+Compiled file=ROptEst.chm
+Default topic=00Index.html
+Display compile progress=No
+Full-text search=Yes
+Full text search stop list file=..\..\..\gnuwin32\help\R.stp
+Title=R Help for package ROptEst
+
+
+[FILES]
+00Index.html
+getAsRisk.html
+getBiasIC.html
+getFiRisk.html
+getFixClip.html
+getFixRobIC.html
+getIneffDiff.html
+getInfCent.html
+getInfClip.html
+getInfGamma.html
+getInfRobIC.html
+getInfStand.html
+getInfV.html
+getL1normL2deriv.html
+getL2normL2deriv.html
+getModifyIC.html
+getRiskIC.html
+leastFavorableRadius.html
+lowerCaseRadius.html
+minmaxBias.html
+optIC.html
+optRisk.html
+radiusMinimaxIC.html
+roptest.html
+updateNorm-methods.html

@@ -1,0 +1,126 @@
+<html><head><title>Random variable</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>RandVariable-class(RandVar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   RandVariable-class">
+<param name="keyword" value="R:   Map">
+<param name="keyword" value="R:   Domain">
+<param name="keyword" value="R:   Range">
+<param name="keyword" value="R:   compatibleDomains">
+<param name="keyword" value="R:   Map,RandVariable-method">
+<param name="keyword" value="R:   Domain,RandVariable-method">
+<param name="keyword" value="R:   Range,RandVariable-method">
+<param name="keyword" value="R:   Map<-">
+<param name="keyword" value="R:   Domain<-">
+<param name="keyword" value="R:   Range<-">
+<param name="keyword" value="R:   Map<-,RandVariable-method">
+<param name="keyword" value="R:   Domain<-,RandVariable-method">
+<param name="keyword" value="R:   Range<-,RandVariable-method">
+<param name="keyword" value="R:   compatibleDomains,RandVariable,RandVariable-method">
+<param name="keyword" value="R:   length,RandVariable-method">
+<param name="keyword" value="R:   show,RandVariable-method">
+<param name="keyword" value=" Random variable">
+</object>
+
+
+<h2>Random variable</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Class of random variables; i.e., measurable maps from 
+<code>Domain</code> to <code>Range</code>. The elements contained in 
+the list <code>Map</code> are functions in one(!) argument named &ldquo;x&rdquo;.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>
+Objects can be created by calls of the form <code>new("RandVariable", ...)</code>.
+More frequently they are created via the generating function 
+<code>RandVariable</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+<dl>
+<dt><code>Map</code>:</dt><dd>Object of class <code>"list"</code>: list of functions. </dd>
+<dt><code>Domain</code>:</dt><dd>Object of class <code>"OptionalrSpace"</code>: 
+domain of the random variable. </dd>
+<dt><code>Range</code>:</dt><dd>Object of class <code>"OptionalrSpace"</code>:
+range of the random variable. </dd>
+</dl>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>Map</dt><dd><code>signature(object = "RandVariable")</code>:
+accessor function for the slot <code>Map</code>.</dd>
+<dt>Domain</dt><dd><code>signature(object = "RandVariable")</code>:
+accessor function for the slot <code>Domain</code>.</dd>
+<dt>Range</dt><dd><code>signature(object = "RandVariable")</code>:
+accessor function for the slot <code>Range</code>.</dd>
+<dt>Map&lt;-</dt><dd><code>signature(object = "RandVariable")</code>:
+replacement function for the slot <code>Map</code>.</dd>
+<dt>Domain&lt;-</dt><dd><code>signature(object = "RandVariable")</code>:
+replacement function for the slot <code>Domain</code>.</dd>
+<dt>Range&lt;-</dt><dd><code>signature(object = "RandVariable")</code>:
+replacement function for the slot <code>Range</code>.</dd>
+<dt>compatibleDomains</dt><dd><code>signature(e1 = "RandVariable", e2 = "RandVariable")</code>: 
+test if the domains of two random variables are compatible. </dd>
+<dt>length</dt><dd><code>signature(object = "RandVariable")</code>:
+length of the list of functions in slot <code>Map</code>.</dd>
+<dt>show</dt><dd><code>signature(object = "RandVariable")</code></dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="RandVariable.html">RandVariable</a></code>, <code><a href="EuclRandVariable-class.html">EuclRandVariable-class</a></code>,
+<code><a href="EuclRandMatrix-class.html">EuclRandMatrix-class</a></code>, <code><a href="EuclRandVarList-class.html">EuclRandVarList-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+(R1 &lt;- new("RandVariable"))
+Map(R1)
+Domain(R1)
+Range(R1)
+Map(R1) &lt;- list(function(x){ceiling(x)}, function(x){floor(x)})
+Domain(R1) &lt;- Reals()
+Range(R1) &lt;- Naturals()
+R1
+Map(R1)
+length(R1)
+
+R2 &lt;- R1
+Domain(R2) &lt;- Naturals()
+compatibleDomains(R1, R2)
+Domain(R2) &lt;- NULL
+compatibleDomains(R1, R2)
+Domain(R2) &lt;- EuclideanSpace(dimension = 1)
+compatibleDomains(R1, R2)
+Domain(R2) &lt;- EuclideanSpace(dimension = 2)
+compatibleDomains(R1, R2)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>RandVar</em> version 0.6.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

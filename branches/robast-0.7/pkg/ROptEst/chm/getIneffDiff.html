@@ -1,0 +1,154 @@
+<html><head><title>Generic Function for the Computation of Inefficiency Differences</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>getIneffDiff(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   getIneffDiff">
+<param name="keyword" value="R:   getIneffDiff-methods">
+<param name="keyword" value="R:   getIneffDiff,numeric,L2ParamFamily,UncondNeighborhood,asMSE-method">
+<param name="keyword" value=" Generic Function for the Computation of Inefficiency Differences">
+</object>
+
+
+<h2>Generic Function for the Computation of Inefficiency Differences</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for the computation of inefficiency differencies.
+This function is rarely called directly. It is used to compute
+the radius minimax IC and the least favorable radius.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+getIneffDiff(radius, L2Fam, neighbor, risk, ...)
+
+## S4 method for signature 'numeric, L2ParamFamily,
+##   UncondNeighborhood, asMSE':
+getIneffDiff(
+          radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
+          z.start = NULL, A.start = NULL, upper.b, MaxIter, eps, warn,
+          loNorm = NULL, upNorm = NULL, verbose = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>radius</code></td>
+<td>
+neighborhood radius. </td></tr>
+<tr valign="top"><td><code>L2Fam</code></td>
+<td>
+L2-differentiable family of probability measures. </td></tr>
+<tr valign="top"><td><code>neighbor</code></td>
+<td>
+object of class <code>"Neighborhood"</code>. </td></tr>
+<tr valign="top"><td><code>risk</code></td>
+<td>
+object of class <code>"RiskType"</code>. </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional parameters </td></tr>
+<tr valign="top"><td><code>loRad</code></td>
+<td>
+the lower end point of the interval to be searched. </td></tr>
+<tr valign="top"><td><code>upRad</code></td>
+<td>
+the upper end point of the interval to be searched. </td></tr>
+<tr valign="top"><td><code>loRisk</code></td>
+<td>
+the risk at the lower end point of the interval. </td></tr>
+<tr valign="top"><td><code>upRisk</code></td>
+<td>
+the risk at the upper end point of the interval. </td></tr>
+<tr valign="top"><td><code>z.start</code></td>
+<td>
+initial value for the centering constant. </td></tr>
+<tr valign="top"><td><code>A.start</code></td>
+<td>
+initial value for the standardizing matrix. </td></tr>
+<tr valign="top"><td><code>upper.b</code></td>
+<td>
+upper bound for the optimal clipping bound. </td></tr>
+<tr valign="top"><td><code>MaxIter</code></td>
+<td>
+the maximum number of iterations </td></tr>
+<tr valign="top"><td><code>eps</code></td>
+<td>
+the desired accuracy (convergence tolerance).</td></tr>
+<tr valign="top"><td><code>warn</code></td>
+<td>
+logical: print warnings. </td></tr>
+<tr valign="top"><td><code>loNorm</code></td>
+<td>
+object of class <code>"NormType"</code>; used in selfstandardization
+to evaluate the bias of the current IC in the norm of the lower 
+bound</td></tr>
+<tr valign="top"><td><code>upNorm</code></td>
+<td>
+object of class <code>"NormType"</code>; used in selfstandardization
+to evaluate the bias of the current IC in the norm of the upper 
+bound</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+logical: if <code>TRUE</code>, some messages are printed </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+The inefficieny difference between the left and
+the right margin of a given radius interval is computed.</p>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>radius = "numeric", L2Fam = "L2ParamFamily", 
+neighbor = "UncondNeighborhood", risk = "asMSE":</dt><dd>computes difference of asymptotic MSE&ndash;inefficiency for
+the boundaries of a given radius interval.</dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
+the Radius. Statistical Methods and Applications, <EM>17</EM>(1) 13-40.
+</p>
+<p>
+Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
+the Radius. Submitted. Appeared as discussion paper Nr. 81. 
+SFB 373 (Quantification and Simulation of Economic Processes),
+Humboldt University, Berlin; also available under
+<a href="www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf">www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf</a>
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="radiusMinimaxIC.html">radiusMinimaxIC</a></code>, <code><a href="leastFavorableRadius.html">leastFavorableRadius</a></code>
+</p>
+
+
+
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

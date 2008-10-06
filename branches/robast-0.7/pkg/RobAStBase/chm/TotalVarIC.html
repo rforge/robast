@@ -1,0 +1,148 @@
+<html><head><title>Generating function for TotalVarIC-class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>TotalVarIC(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   TotalVarIC">
+<param name="keyword" value=" Generating function for TotalVarIC-class">
+</object>
+
+
+<h2>Generating function for TotalVarIC-class</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generates an object of class <code>"TotalVarIC"</code>;
+i.e., an influence curves <i>eta</i> of the form
+</p><p align="center"><i>eta = max(c, min(A Lambda, d))</i></p><p>
+with lower clipping bound <i>c</i>, upper clipping bound <i>d</i> and
+standardizing matrix <i>A</i>. <i>Lambda</i> stands for
+the L2 derivative of the corresponding L2 differentiable 
+parametric family which can be created via <code>CallL2Fam</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+TotalVarIC(name, CallL2Fam = call("L2ParamFamily"), 
+           Curve = EuclRandVarList(RealRandVariable(Map = c(function(x) {x}), 
+                                                    Domain = Reals())), 
+           Risks, Infos, clipLo = -Inf, clipUp = Inf, stand = as.matrix(1), 
+           lowerCase = NULL, neighborRadius = 0, w = new("BdStWeight"),
+           normtype = NormType(), biastype = symmetricBias(),
+           modifyIC = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+object of class <code>"character"</code>. </td></tr>
+<tr valign="top"><td><code>CallL2Fam</code></td>
+<td>
+object of class <code>"call"</code>:
+creates an object of the underlying L2-differentiable 
+parametric family. </td></tr>
+<tr valign="top"><td><code>Curve</code></td>
+<td>
+object of class <code>"EuclRandVarList"</code>. </td></tr>
+<tr valign="top"><td><code>Risks</code></td>
+<td>
+object of class <code>"list"</code>: 
+list of risks; cf. <code><a onclick="findlink('distrMod', 'RiskType-class.html')" style="text-decoration: underline; color: blue; cursor: hand">RiskType-class</a></code>. </td></tr>
+<tr valign="top"><td><code>Infos</code></td>
+<td>
+matrix of characters with two columns 
+named <code>method</code> and <code>message</code>: additional informations. </td></tr>
+<tr valign="top"><td><code>clipLo</code></td>
+<td>
+negative real: lower clipping bound. </td></tr>
+<tr valign="top"><td><code>clipUp</code></td>
+<td>
+positive real: lower clipping bound. </td></tr>
+<tr valign="top"><td><code>stand</code></td>
+<td>
+matrix: standardizing matrix </td></tr>
+<tr valign="top"><td><code>w</code></td>
+<td>
+BdStWeight: weight object</td></tr>
+<tr valign="top"><td><code>lowerCase</code></td>
+<td>
+optional constant for lower case solution. </td></tr>
+<tr valign="top"><td><code>neighborRadius</code></td>
+<td>
+radius of the corresponding (unconditional) 
+contamination neighborhood. </td></tr>
+<tr valign="top"><td><code>biastype</code></td>
+<td>
+BiasType: type of the bias</td></tr>
+<tr valign="top"><td><code>normtype</code></td>
+<td>
+NormType: type of the norm</td></tr>
+<tr valign="top"><td><code>modifyIC</code></td>
+<td>
+object of class <code>"OptionalFunction"</code>:
+function of two arguments, which are an L2 parametric family 
+and an optional influence curve. Returns an object of 
+class <code>"IC"</code>. This function is mainly used for internal
+computations! </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"TotalVarIC"</code></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="IC-class.html">IC-class</a></code>, <code><a href="ContIC.html">ContIC</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+IC1 &lt;- TotalVarIC()
+plot(IC1)
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

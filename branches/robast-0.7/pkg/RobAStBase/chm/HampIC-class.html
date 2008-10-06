@@ -1,0 +1,179 @@
+<html><head><title>Influence curve of Hampel type</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>HampIC-class(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   HampIC-class">
+<param name="keyword" value="R:   lowerCase">
+<param name="keyword" value="R:   lowerCase,HampIC-method">
+<param name="keyword" value="R:   neighborRadius">
+<param name="keyword" value="R:   neighborRadius,HampIC-method">
+<param name="keyword" value="R:   neighborRadius<-">
+<param name="keyword" value="R:   neighborRadius<-,HampIC-method">
+<param name="keyword" value="R:   stand">
+<param name="keyword" value="R:   stand,HampIC-method">
+<param name="keyword" value="R:   weight,HampIC-method">
+<param name="keyword" value="R:   biastype,HampIC-method">
+<param name="keyword" value="R:   normtype,HampIC-method">
+<param name="keyword" value=" Influence curve of Hampel type">
+</object>
+
+
+<h2>Influence curve of Hampel type</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Class of (partial) influence curves of Hampel (= total variation or contamination) type;
+used as common mother class for classes <code>ContIC</code> and <code>TotalVarIC</code>.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>
+Objects can be created by calls of the form <code>new("HampIC", ...)</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+<dl>
+<dt><code>CallL2Fam</code>:</dt><dd>object of class <code>"call"</code>:
+creates an object of the underlying L2-differentiable
+parametric family. </dd>
+
+
+<dt><code>name</code>:</dt><dd>object of class <code>"character"</code> </dd>
+
+
+<dt><code>Curve</code>:</dt><dd>object of class <code>"EuclRandVarList"</code></dd>
+
+
+<dt><code>modifyIC</code>:</dt><dd>Object of class <code>"OptionalFunction"</code>:
+function of two arguments, which are an L2 parametric family 
+and an optional influence curve. Returns an object of 
+class <code>"IC"</code>. This slot is mainly used for internal
+computations! </dd>
+
+
+<dt><code>Risks</code>:</dt><dd>object of class <code>"list"</code>:
+list of risks; cf. <code><a onclick="findlink('distrMod', 'RiskType-class.html')" style="text-decoration: underline; color: blue; cursor: hand">RiskType-class</a></code>. </dd>
+
+
+<dt><code>Infos</code>:</dt><dd>object of class <code>"matrix"</code>
+with two columns named <code>method</code> and <code>message</code>:
+additional informations. </dd>
+
+
+<dt><code>stand</code>:</dt><dd>object of class <code>"matrix"</code>:
+standardizing matrix. </dd>
+
+
+<dt><code>weight</code>:</dt><dd>object of class <code>"RobWeight"</code>:
+weight function </dd>
+
+
+<dt><code>biastype</code>:</dt><dd>object of class <code>"BiasType"</code>:
+bias type (symmetric/onsided/asymmetric) </dd>
+<dt><code>normtype</code>:</dt><dd>object of class <code>"NormType"</code>:
+norm type (Euclidean, information/self-standardized)</dd>
+
+
+<dt><code>lowerCase</code>:</dt><dd>object of class <code>"OptionalNumeric"</code>:
+optional constant for lower case solution. </dd>
+
+
+<dt><code>neighborRadius</code>:</dt><dd>object of class <code>"numeric"</code>:
+radius of the corresponding (unconditional) contamination
+neighborhood. </dd>
+</dl>
+
+<h3>Extends</h3>
+
+<p>
+Class <code>"IC"</code>, directly.<br>
+Class <code>"InfluenceCurve"</code>, by class <code>"IC"</code>.
+</p>
+
+
+<h3>Methods</h3>
+
+<dl>
+</p>
+
+<dt>stand</dt><dd><code>signature(object = "HampIC")</code>:
+accessor function for slot <code>stand</code>. </dd>
+
+
+<dt>weight</dt><dd><code>signature(object = "HampIC")</code>:
+accessor function for slot <code>weight</code>. </dd>
+
+
+<dt>biastype</dt><dd><code>signature(object = "HampIC")</code>:
+accessor function for slot <code>biastype</code>. </dd>
+<dt>normtype</dt><dd><code>signature(object = "HampIC")</code>:
+accessor function for slot <code>normtype</code>. </dd>
+<dt>lowerCase</dt><dd><code>signature(object = "HampIC")</code>:
+accessor function for slot <code>lowerCase</code>. </dd>
+
+
+<dt>neighborRadius</dt><dd><code>signature(object = "HampIC")</code>:
+accessor function for slot <code>neighborRadius</code>. </dd>
+
+
+<dt>neighborRadius&lt;-</dt><dd><code>signature(object = "HampIC")</code>:
+replacement function for slot <code>neighborRadius</code>. </dd>
+
+<p>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Hampributions to the Asymptotic Theory of Robustness</EM>.
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="IC-class.html">IC-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+IC1 &lt;- new("HampIC")
+plot(IC1)
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>
