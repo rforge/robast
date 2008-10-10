@@ -6,10 +6,11 @@
   Plot absolute and relative information of influence curves.
 }
 \usage{
-infoPlot(object)
+infoPlot(object, ...)
 }
 \arguments{
   \item{object}{ object of class \code{"InfluenceCurve"} }
+  \item{\dots} {further parameters for \code{plot}}
 }
 \details{
   Absolute information is defined as the square of the length

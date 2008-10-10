@@ -97,7 +97,7 @@ if(!isGeneric("locMEstimator")){
     setGeneric("locMEstimator", function(x, IC, ...) standardGeneric("locMEstimator"))
 }
 if(!isGeneric("infoPlot")){
-    setGeneric("infoPlot", function(object) standardGeneric("infoPlot"))
+    setGeneric("infoPlot", function(object,...) standardGeneric("infoPlot"))
 }
 if(!isGeneric("optIC")){
     setGeneric("optIC", function(model, risk, ...) standardGeneric("optIC"))

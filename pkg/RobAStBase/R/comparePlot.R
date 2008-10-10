@@ -1,5 +1,30 @@
 setMethod("comparePlot", signature("IC","IC"),
     function(obj1,obj2, obj3 = NULL, obj4 = NULL, ...){
+
+        xc1 <- as.character(deparse(match.call(call = sys.call(sys.parent(1)))$obj1))
+        xc2 <- as.character(deparse(match.call(call = sys.call(sys.parent(1)))$obj2))
+        xc <- c(xc1,xc2)
+        if(!is.null(obj3))
+            xc <- c(xc,as.character(deparse(match.call(call = sys.call(sys.parent(1)))$obj3)))
+        if(!is.null(obj4))
+            xc <- c(xc,as.character(deparse(match.call(call = sys.call(sys.parent(1)))$obj4)))
+        
+        dots <- match.call(call = sys.call(sys.parent(1)), 
+                       expand.dots = FALSE)$"..."
+
+        ncomp <- 2+ !is.null(obj3) +  !is.null(obj4)
+         
+        if(!is.null(dots[["lty"]]))  dots["lty"] <- NULL
+        if(!is.null(dots[["type"]])) dots["type"] <- NULL
+        if(!is.null(dots[["main"]])) dots["main"] <- NULL
+        if(!is.null(dots[["sub"]]))  dots["sub"] <- NULL
+        if(!is.null(dots[["xlab"]])) dots["xlab"] <- NULL
+        if(!is.null(dots[["ylab"]])) dots["ylab"] <- NULL
+        if(is.null(dots[["col"]]))   dots$"col" <- 1:ncomp
+        if(is.null(dots[["cex.main"]])) dots$"cex.main" <- 0.8
+        if(is.null(dots[["lwd"]]))   dots$"lwd" <- 1
+
+
         L2Fam <- eval(obj1@CallL2Fam)
         L2Fam1c <- obj1@CallL2Fam
         L2Fam2c <- obj2@CallL2Fam
@@ -66,26 +91,33 @@ setMethod("comparePlot", signature("IC","IC"),
             if(is(obj4, "IC"))
                 matp  <- cbind(matp,sapply(x.vec, IC4@Map[[i]]))
 
-            matplot(x.vec, matp,
+            do.call(matplot, args=c(list( x= x.vec, y=matp,
                  type = plty, lty = lty,
-                 xlab = "x", ylab = "(partial) IC")
+                 xlab = "x", ylab = "(partial) IC"), dots))
             if(is(e1, "DiscreteDistribution")){
                  matp1 <- cbind(sapply(x.vec1, IC1@Map[[i]]),sapply(x.vec1, IC2@Map[[i]]))
                  if(is(obj3, "IC"))
                     matp1  <- cbind(matp1,sapply(x.vec1, IC3@Map[[i]]))
                  if(is(obj4, "IC"))
                     matp1  <- cbind(matp1,sapply(x.vec1, IC4@Map[[i]]))
-                 matlines(x.vec1, matp1, lty = "dotted")
+                 do.call(matlines, c(list(x.vec1, matp1, lty = "dotted"),dots))
                  }
 
             if(is.null(L2Fam@param@nuisance))
-                title(paste("Component", i, "of (partial) ICs\nfor", name(L2Fam)[1],
-                            "\nwith main parameter (", paste(round(L2Fam@param@main, 3), collapse = ", "), ")"), cex.main = 0.8)
+                do.call(title, c(list(paste("Component", i, "of (partial) ICs\nfor", name(L2Fam)[1],
+                            "\nwith main parameter (", paste(round(L2Fam@param@main, 3), collapse = ", "), ")")),
+                            dots))
             else
-                title(paste("Component", i, "of (partial) ICs\nfor", name(L2Fam)[1],
+                do.call(title, c(list(paste("Component", i, "of (partial) ICs\nfor", name(L2Fam)[1],
                             "\nwith main parameter (", paste(round(L2Fam@param@main, 3), collapse = ", "),
-                            ")\nand nuisance parameter (", paste(round(L2Fam@param@nuisance, 3), collapse = ", "), ")"), cex.main = 0.8)
+                            ")\nand nuisance parameter (", paste(round(L2Fam@param@nuisance, 3), collapse = ", "), ")")),
+                            dots))
         }
+        
+        legend("bottomright", 
+               legend = xc, col = eval(dots[["col"]]), 
+               cex=0.75, lwd=eval(dots[["lwd"]])*1.5)
+
         par(opar)
         options(w0)
         invisible()
