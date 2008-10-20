@@ -19,7 +19,7 @@ plot(E1.IC0) # plot IC
 ## L_2 family + infinitesimal neighborhood
 E1.Rob1 <- InfRobModel(center = E1, neighbor = ContNeighborhood(radius = 0.5))
 E1.Rob1     # show E1.Rob1
-E1.Rob2 <- InfRobModel(center = E1, neighbor = TotalVarNeighborhood(radius = 0.5))
+(E1.Rob2 <- InfRobModel(center = E1, neighbor = TotalVarNeighborhood(radius = 0.5)))
 
 ## MSE solution
 (E1.IC1 <- optIC(model=E1.Rob1, risk=asMSE()))
