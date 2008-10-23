@@ -5,11 +5,13 @@
         slots <- slots[slots != "name"]
         nrvalues <- length(slots)
         if (nrvalues > 0) {
-            values = numeric(nrvalues)
+            values <- numeric(nrvalues)
             for (i in 1:nrvalues) 
                 values[i] <- attributes(attributes(L2Fam@distribution)$param)[[slots[i]]]
 
             paramstring <- paste("(", paste(values, collapse = ", "), ")", sep = "")
+        }else{
+            paramstring <- NULL
         }
         distr <- paste(class(L2Fam@distribution)[1], paramstring, sep = "")
 }
