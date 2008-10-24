@@ -85,7 +85,10 @@ IC9 <- optIC(model=RobG3, risk=asMSE())
 
 ## It's simpler to use function roptest!
 (est3 <- roptest(x, eps = 0.5/sqrt(length(x)), L2Fam = GammaFamily()))
+(est4 <- roptest(x, eps = 0.5/sqrt(length(x)), L2Fam = GammaFamily(), steps = 3))
 
 ## comparison
 estimate(est1)
 estimate(est3)
+estimate(est2)
+estimate(est4)
