@@ -395,7 +395,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="infoPlot,IC-method">
-<param name="Local" value="IC-class.html">
+<param name="Local" value="infoPlot.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="infoPlot-methods">
+<param name="Local" value="infoPlot.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Infos">
@@ -682,8 +686,16 @@
 <param name="Local" value="ALEstimate-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="plot,IC,ANY-method">
-<param name="Local" value="IC-class.html">
+<param name="Name" value="plot">
+<param name="Local" value="plot-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="plot,IC,missing-method">
+<param name="Local" value="plot-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="plot-methods">
+<param name="Local" value="plot-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="radius">
@@ -981,6 +993,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="MEstimate-class.">
 <param name="Local" value="MEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Methods for Function plot in Package `RobAStBase' ">
+<param name="Local" value="plot-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Neighborhood">

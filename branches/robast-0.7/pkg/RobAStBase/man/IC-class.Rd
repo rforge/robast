@@ -12,7 +12,6 @@
 \alias{evalIC,IC,numeric-method}
 \alias{evalIC,IC,matrix-method}
 \alias{infoPlot,IC-method}
-\alias{plot,IC,ANY-method}
 \alias{show,IC-method}
 
 \title{Influence curve}

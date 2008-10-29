@@ -1,0 +1,1142 @@
+This is pdfTeX, Version 3.141592-1.40.4 (MiKTeX 2.7) (preloaded format=pdflatex 2008.6.30)  27 AUG 2008 21:59
+entering extended mode
+**\nonstopmode{}\input{ROptEst-manual.tex}
+(ROptEst-manual.tex ("C:\Program Files\MiKTeX 2.7\tex\latex\base\article.cls"
+Document Class: article 2005/09/16 v1.4f Standard LaTeX document class
+("C:\Program Files\MiKTeX 2.7\tex\latex\base\size10.clo"
+File: size10.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(C:\PROGRA~1\R\R-28~1.0DE\share\texmf\Rd.sty
+Package: Rd 
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\base\ifthen.sty"
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+("C:\Program Files\MiKTeX 2.7\tex\latex\tools\longtable.sty"
+Package: longtable 2004/02/01 v4.11 Multi-page Table package (DPC)
+\LTleft=\skip43
+\LTright=\skip44
+\LTpre=\skip45
+\LTpost=\skip46
+\LTchunksize=\count87
+\LTcapwidth=\dimen103
+\LT@head=\box26
+\LT@firsthead=\box27
+\LT@foot=\box28
+\LT@lastfoot=\box29
+\LT@cols=\count88
+\LT@rows=\count89
+\c@LT@tables=\count90
+\c@LT@chunks=\count91
+\LT@p@ftn=\toks14
+)
+("C:\Program Files\MiKTeX 2.7\tex\latex\tools\bm.sty"
+Package: bm 2004/02/26 v1.1c Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup4
+\symboldletters=\mathgroup5
+\symboldsymbols=\mathgroup6
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 137.
+LaTeX Info: Redefining \bm on input line 203.
+)
+("C:\Program Files\MiKTeX 2.7\tex\latex\base\alltt.sty"
+Package: alltt 1997/06/16 v2.0g defines alltt environment
+)
+("C:\Program Files\MiKTeX 2.7\tex\latex\tools\verbatim.sty"
+Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks15
+\verbatim@line=\toks16
+\verbatim@in@stream=\read1
+)
+("C:\Program Files\MiKTeX 2.7\tex\latex\ltxmisc\url.sty"
+\Urlmuskip=\muskip10
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+(C:\PROGRA~1\R\R-28~1.0DE\share\texmf\upquote.sty
+Package: upquote 2003/08/11 v1.1 Covington's upright-quote modification to verb
+atim and verb
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\base\textcomp.sty"
+Package: textcomp 2005/09/27 v1.99g Standard LaTeX package
+Package textcomp Info: Sub-encoding information:
+(textcomp)               5 = only ISO-Adobe without \textcurrency
+(textcomp)               4 = 5 + \texteuro
+(textcomp)               3 = 4 + \textohm
+(textcomp)               2 = 3 + \textestimated + \textcurrency
+(textcomp)               1 = TS1 - \textcircled - \t
+(textcomp)               0 = TS1 (full)
+(textcomp)             Font families with sub-encoding setting implement
+(textcomp)             only a restricted character set as indicated.
+(textcomp)             Family '?' is the default used for unknown fonts.
+(textcomp)             See the documentation for details.
+Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 71.
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\base\ts1enc.def"
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+)
+LaTeX Info: Redefining \oldstylenums on input line 266.
+Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 281.
+Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 282.
+Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 283.
+Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 284.
+Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 285.
+Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 286.
+Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 287.
+Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 288.
+Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 289.
+Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 290.
+Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 291.
+Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 292.
+Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 293.
+Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 294.
+Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 295.
+Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 296.
+Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 297.
+Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 298.
+Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 299.
+Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 300.
+Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 301.
+Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 302.
+Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 303.
+Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 304.
+
+Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 305.
+Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 306.
+Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 307.
+Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 308.
+Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 309.
+Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 310.
+Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 311.
+Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 312.
+Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 313.
+Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 314.
+Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 315.
+Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 316.
+Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 317.
+Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 318.
+Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 319.
+Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 320.
+Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 321.
+Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 322.
+Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 323.
+Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 324.
+Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 325.
+Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 326.
+))
+\ldescriptionwidth=\skip47
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\base\fontenc.sty"
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\base\t1enc.def"
+File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+))
+("C:\Program Files\MiKTeX 2.7\tex\latex\ae\ae.sty"
+Package: ae 2001/02/12 1.3 Almost European Computer Modern
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\base\fontenc.sty"
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\base\t1enc.def"
+File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+)
+LaTeX Font Info:    Try loading font information for T1+aer on input line 100.
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\ae\t1aer.fd"
+File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
+)))
+("C:\Program Files\MiKTeX 2.7\tex\latex\ae\t1aett.fd"
+File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
+) NOT loading times
+NOT loading lmodern ("C:\Program Files\MiKTeX 2.7\tex\latex\graphics\color.sty"
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+("C:\Program Files\MiKTeX 2.7\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 130.
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\graphics\pdftex.def"
+File: pdftex.def 2007/06/12 v0.04h Graphics/color for pdfTeX
+\Gread@gobject=\count92
+))
+("C:\Program Files\MiKTeX 2.7\tex\latex\hyperref\hyperref.sty"
+Package: hyperref 2008/01/09 v6.77i Hypertext links for LaTeX
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks17
+)
+("C:\Program Files\MiKTeX 2.7\tex\latex\oberdiek\hycolor.sty"
+Package: hycolor 2007/04/11 v1.1 Code for color options of hyperref/bookmark (H
+O)
+)
+\@linkdim=\dimen104
+\Hy@linkcounter=\count93
+\Hy@pagecounter=\count94
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\hyperref\pd1enc.def"
+File: pd1enc.def 2008/01/09 v6.77i Hyperref: PDFDocEncoding definition (HO)
+)
+("C:\Program Files\MiKTeX 2.7\tex\generic\oberdiek\etexcmds.sty"
+Package: etexcmds 2007/12/12 v1.2 Prefix for e-TeX command names (HO)
+
+("C:\Program Files\MiKTeX 2.7\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2007/09/09 v1.2 Providing info/warning/message (HO)
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)
+("C:\Program Files\MiKTeX 2.7\tex\latex\00miktex\hyperref.cfg"
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+("C:\Program Files\MiKTeX 2.7\tex\latex\oberdiek\kvoptions.sty"
+Package: kvoptions 2007/10/18 v3.0 Keyval support for LaTeX options (HO)
+)
+Package hyperref Info: Hyper figures OFF on input line 2722.
+Package hyperref Info: Link nesting OFF on input line 2727.
+Package hyperref Info: Hyper index ON on input line 2730.
+Package hyperref Info: Plain pages OFF on input line 2737.
+Package hyperref Info: Backreferencing OFF on input line 2742.
+
+Implicit mode ON; LaTeX internals redefined
+Package hyperref Info: Bookmarks ON on input line 2898.
+LaTeX Info: Redefining \href on input line 3049.
+LaTeX Info: Redefining \url on input line 3068.
+("C:\Program Files\MiKTeX 2.7\tex\generic\oberdiek\bitset.sty"
+Package: bitset 2007/09/28 v1.0 Data type bit set (HO)
+
+("C:\Program Files\MiKTeX 2.7\tex\generic\oberdiek\intcalc.sty"
+Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
+)
+("C:\Program Files\MiKTeX 2.7\tex\generic\oberdiek\bigintcalc.sty"
+Package: bigintcalc 2007/11/11 v1.1 Expandable big integer calculations (HO)
+
+("C:\Program Files\MiKTeX 2.7\tex\generic\oberdiek\pdftexcmds.sty"
+Package: pdftexcmds 2007/12/12 v0.3 LuaTeX support for pdfTeX utility functions
+ (HO)
+Package pdftexcmds Info: LuaTeX not detected on input line 139.
+)))
+("C:\Program Files\MiKTeX 2.7\tex\generic\oberdiek\kvsetkeys.sty"
+Package: kvsetkeys 2007/09/29 v1.3 Key value parser with default handler suppor
+t (HO)
+)
+\Fld@menulength=\count95
+\Field@Width=\dimen105
+\Fld@charsize=\dimen106
+\Field@toks=\toks18
+Package hyperref Info: Hyper figures OFF on input line 3949.
+Package hyperref Info: Link nesting OFF on input line 3954.
+Package hyperref Info: Hyper index ON on input line 3957.
+Package hyperref Info: backreferencing OFF on input line 3964.
+Package hyperref Info: Link coloring OFF on input line 3969.
+
+("C:\Program Files\MiKTeX 2.7\tex\generic\oberdiek\atbegshi.sty"
+Package: atbegshi 2007/09/09 v1.6 At begin shipout hook (HO)
+
+("C:\Program Files\MiKTeX 2.7\tex\generic\oberdiek\ifpdf.sty"
+Package: ifpdf 2007/12/12 v1.6 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in pdf mode detected.
+))
+\Hy@abspage=\count96
+\c@Item=\count97
+\c@Hfootnote=\count98
+)
+*hyperref using default driver hpdftex*
+("C:\Program Files\MiKTeX 2.7\tex\latex\hyperref\hpdftex.def"
+File: hpdftex.def 2008/01/09 v6.77i Hyperref driver for pdfTeX
+\Fld@listcount=\count99
+)
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 315.
+
+Package hyperref Info: Option `colorlinks' set `true' on input line 315.
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 315.
+
+Package hyperref Info: Option `linktocpage' set `true' on input line 315.
+Package hyperref Info: Option `plainpages' set `false' on input line 315.
+)
+No file ROptEst-manual.aux.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 3.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 3.
+("C:\Program Files\MiKTeX 2.7\tex\latex\base\ts1cmr.fd"
+File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+
+("C:\Program Files\MiKTeX 2.7\tex\context\base\supp-pdf.tex"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count100
+\scratchdimen=\dimen107
+\scratchbox=\box30
+\nofMPsegments=\count101
+\nofMParguments=\count102
+\MPscratchCnt=\count103
+\MPscratchDim=\dimen108
+\MPnumerator=\count104
+\everyMPtoPDFconversion=\toks19
+)
+Package hyperref Info: Link coloring ON on input line 3.
+ ("C:\Program Files\MiKTeX 2.7\tex\latex\hyperref\nameref.sty"
+Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\oberdiek\refcount.sty"
+Package: refcount 2006/02/20 v3.0 Data extraction from references (HO)
+)
+\c@section@level=\count105
+)
+LaTeX Info: Redefining \ref on input line 3.
+LaTeX Info: Redefining \pageref on input line 3.
+\@outlinefile=\write3
+\AtBeginShipoutBox=\box31
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 4.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 4.
+LaTeX Font Info:    Try loading font information for TS1+aett on input line 30.
+
+
+(C:\PROGRA~1\R\R-28~1.0DE\share\texmf\ts1aett.fd
+File: ts1aett.fd 
+)
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 30.
+
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\base\ts1cmtt.fd"
+File: ts1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `TS1/aett/m/n' in size <10> not available
+(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 30.
+
+Overfull \hbox (39.70007pt too wide) in paragraph at lines 33--33
+ []                                      \T1/aett/m/n/10 neighbor, biastype, cl
+ip, cent, stand, trafo)[] 
+ []
+
+
+Overfull \hbox (60.66003pt too wide) in paragraph at lines 38--38
+ []                                                    \T1/aett/m/n/10 biastype
+, clip, cent, stand, trafo)[] 
+ []
+
+
+Overfull \hbox (65.90002pt too wide) in paragraph at lines 43--43
+ []                                                              \T1/aett/m/n/1
+0 neighbor, biastype, trafo)[] 
+ []
+
+
+Overfull \hbox (71.14001pt too wide) in paragraph at lines 48--48
+ []                                                      \T1/aett/m/n/10 L2deri
+v, neighbor, biastype, trafo)[] 
+ []
+
+
+Overfull \hbox (81.62pt too wide) in paragraph at lines 53--53
+ []                                                        \T1/aett/m/n/10 L2de
+riv, neighbor, biastype, trafo)[] 
+ []
+
+
+Overfull \hbox (86.85999pt too wide) in paragraph at lines 58--58
+ []                                                                  \T1/aett/m
+/n/10 neighbor, biastype, trafo)[] 
+ []
+
+
+Overfull \hbox (65.90002pt too wide) in paragraph at lines 63--63
+ []                              \T1/aett/m/n/10 biastype, Distr, DistrSymm, L2
+derivSymm, L2derivDistrSymm,[] 
+ []
+
+[1
+
+{C:/Documents and Settings/All Users/Application Data/MiKTeX/2.7/pdftex/config/
+pdftex.map}]
+Overfull \hbox (65.90002pt too wide) in paragraph at lines 69--69
+ []                                                  \T1/aett/m/n/10 neighbor, 
+biastype, clip, cent, stand)[] 
+ []
+
+
+Overfull \hbox (76.38pt too wide) in paragraph at lines 74--74
+ []                                                    \T1/aett/m/n/10 neighbor
+, biastype, clip, cent, stand)[] 
+ []
+
+
+Overfull \hbox (92.09998pt too wide) in paragraph at lines 80--80
+ []                           \T1/aett/m/n/10 V.comp =  matrix(TRUE, ncol = nro
+w(stand), nrow = nrow(stand)), w)[] 
+ []
+
+
+Overfull \hbox (86.85999pt too wide) in paragraph at lines 85--85
+ []                                                      \T1/aett/m/n/10 neighb
+or, biastype, clip, cent, stand)[] 
+ []
+
+
+Overfull \hbox (92.09998pt too wide) in paragraph at lines 90--90
+ []                                                \T1/aett/m/n/10 biastype, Di
+str, clip, cent, stand, normtype)[] 
+ []
+
+
+Overfull \hbox (102.57996pt too wide) in paragraph at lines 95--95
+ []                                                  \T1/aett/m/n/10 neighbor, 
+biastype, clip, cent, stand, trafo)[] 
+ []
+
+
+Overfull \hbox (113.05994pt too wide) in paragraph at lines 100--100
+ []                                                    \T1/aett/m/n/10 neighbor
+, biastype, clip, cent, stand, trafo)[] 
+ []
+
+[2]
+Overfull \hbox (127.80415pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+
+Overfull \hbox (104.54443pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+
+Overfull \hbox (149.03398pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+
+Overfull \hbox (187.29309pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+
+Overfull \hbox (202.26332pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+
+Overfull \hbox (168.54395pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+
+Overfull \hbox (126.21434pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+
+Overfull \hbox (147.33415pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+
+Overfull \hbox (166.84412pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+
+Overfull \hbox (124.51451pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+
+Overfull \hbox (173.88379pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+[3]
+Overfull \hbox (136.81439pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+
+Overfull \hbox (200.72327pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+
+Overfull \hbox (181.39322pt too wide) in paragraph at lines 172--172
+[]
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 186--188
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[4]
+Overfull \hbox (2.1563pt too wide) in paragraph at lines 230--230
+[]\T1/aer/m/n/10 reads off the as. bias from
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 246--248
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[5]
+Overfull \hbox (21.62582pt too wide) in paragraph at lines 308--308
+[]\T1/aer/m/n/10 computes
+ []
+
+[6]
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 317--319
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+
+Overfull \hbox (0.6396pt too wide) in paragraph at lines 320--322
+[]\T1/aer/m/n/10 Ruckdeschel, P. and Kohl, M. (2005) Com-pu-ta-tion of the Fi-n
+ite Sam-ple Risk of M-estimators
+ []
+
+[7]
+Overfull \hbox (71.85513pt too wide) in paragraph at lines 367--367
+[]
+ []
+
+
+Overfull \hbox (91.3651pt too wide) in paragraph at lines 367--367
+[]
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 376--378
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[8]
+Overfull \hbox (35.87558pt too wide) in paragraph at lines 430--430
+[]\T1/aer/m/n/10 computes
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 441--443
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[9] [10]
+Overfull \hbox (130.78477pt too wide) in paragraph at lines 504--504
+[]
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 519--521
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[11] [12]
+Overfull \hbox (83.38472pt too wide) in paragraph at lines 603--603
+[]
+ []
+
+
+Overfull \hbox (102.89468pt too wide) in paragraph at lines 603--603
+[]
+ []
+
+
+Overfull \hbox (60.56508pt too wide) in paragraph at lines 603--603
+[]
+ []
+
+
+Overfull \hbox (100.82428pt too wide) in paragraph at lines 603--603
+[]
+ []
+
+
+Overfull \hbox (115.79451pt too wide) in paragraph at lines 603--603
+[]
+ []
+
+
+Overfull \hbox (58.06248pt too wide) in paragraph at lines 606--608
+[]\T1/aer/m/n/10 Matthias Kohl $\OMS/cmsy/m/n/10 h$\T1/aer/m/n/10 Matthias.Kohl
+@stamats.de$\OMS/cmsy/m/n/10 i$\T1/aer/m/n/10 , Pe-ter Ruck-de-schel $\OMS/cmsy
+/m/n/10 h$\T1/aer/m/n/10 Peter.Ruckdeschel@itwm.fraunhofer.de$\OMS/cmsy/m/n/10 
+i$ 
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 615--617
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[13]
+Overfull \hbox (86.85999pt too wide) in paragraph at lines 642--642
+ []                                                \T1/aett/m/n/10 risk, neighb
+or, biastype, cent, symm, trafo)[] 
+ []
+
+
+Overfull \hbox (107.81995pt too wide) in paragraph at lines 647--647
+ []                                                    \T1/aett/m/n/10 risk, ne
+ighbor, biastype, cent, symm, trafo)[] 
+ []
+
+
+Overfull \hbox (86.85999pt too wide) in paragraph at lines 652--652
+ []                                              \T1/aett/m/n/10 neighbor, bias
+type, Distr, stand, cent, trafo)[] 
+ []
+
+
+Overfull \hbox (128.7799pt too wide) in paragraph at lines 658--658
+ []                                                        \T1/aett/m/n/10 risk
+, neighbor, biastype, cent, symm, trafo)[] 
+ []
+
+
+Overfull \hbox (107.81995pt too wide) in paragraph at lines 663--663
+ []                                                              \T1/aett/m/n/1
+0 risk, neighbor, cent, symm, trafo)[] 
+ []
+
+[14]
+Overfull \hbox (139.15411pt too wide) in paragraph at lines 702--702
+[]
+ []
+
+
+Overfull \hbox (158.66408pt too wide) in paragraph at lines 702--702
+[]
+ []
+
+
+Overfull \hbox (115.8944pt too wide) in paragraph at lines 702--702
+[]
+ []
+
+
+Overfull \hbox (187.49344pt too wide) in paragraph at lines 702--702
+[]
+ []
+
+
+Overfull \hbox (154.48407pt too wide) in paragraph at lines 702--702
+[]
+ []
+
+
+Overfull \hbox (58.06248pt too wide) in paragraph at lines 705--707
+[]\T1/aer/m/n/10 Matthias Kohl $\OMS/cmsy/m/n/10 h$\T1/aer/m/n/10 Matthias.Kohl
+@stamats.de$\OMS/cmsy/m/n/10 i$\T1/aer/m/n/10 , Pe-ter Ruck-de-schel $\OMS/cmsy
+/m/n/10 h$\T1/aer/m/n/10 Peter.Ruckdeschel@itwm.fraunhofer.de$\OMS/cmsy/m/n/10 
+i$ 
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 716--718
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[15] [16]
+Overfull \hbox (170.01355pt too wide) in paragraph at lines 815--815
+[]
+ []
+
+
+Overfull \hbox (196.1235pt too wide) in paragraph at lines 815--815
+[]
+ []
+
+
+Overfull \hbox (147.19391pt too wide) in paragraph at lines 815--815
+[]
+ []
+
+
+Overfull \hbox (204.10312pt too wide) in paragraph at lines 815--815
+[]
+ []
+
+
+Overfull \hbox (187.45311pt too wide) in paragraph at lines 815--815
+[]
+ []
+
+
+Overfull \hbox (202.42334pt too wide) in paragraph at lines 815--815
+[]
+ []
+
+
+Overfull \hbox (58.06248pt too wide) in paragraph at lines 818--820
+[]\T1/aer/m/n/10 Matthias Kohl $\OMS/cmsy/m/n/10 h$\T1/aer/m/n/10 Matthias.Kohl
+@stamats.de$\OMS/cmsy/m/n/10 i$\T1/aer/m/n/10 , Pe-ter Ruck-de-schel $\OMS/cmsy
+/m/n/10 h$\T1/aer/m/n/10 Peter.Ruckdeschel@itwm.fraunhofer.de$\OMS/cmsy/m/n/10 
+i$ 
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 832--834
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[17]
+Overfull \hbox (149.73987pt too wide) in paragraph at lines 884--884
+ []             \T1/aett/m/n/10 L2derivDistrSymm, z.start, A.start, Finfo, traf
+o, maxiter, tol, warn, verbose = FALSE, ...)[] 
+ []
+
+
+Overfull \hbox (254.53967pt too wide) in paragraph at lines 894--894
+ []             \T1/aett/m/n/10 L2derivDistrSymm, Finfo, trafo, onesetLM = FALS
+E, z.start, A.start, upper, maxiter, tol, warn, verbose = FALSE)[] 
+ []
+
+[18]
+Overfull \hbox (254.53967pt too wide) in paragraph at lines 904--904
+ []             \T1/aett/m/n/10 L2derivDistrSymm, Finfo, trafo, onesetLM = FALS
+E, z.start, A.start, upper, maxiter, tol, warn, verbose = FALSE)[] 
+ []
+
+
+Overfull \hbox (42.74551pt too wide) in paragraph at lines 989--989
+[]
+ []
+
+[19]
+Overfull \hbox (62.25548pt too wide) in paragraph at lines 989--989
+[]
+ []
+
+
+Overfull \hbox (19.92587pt too wide) in paragraph at lines 989--989
+[]
+ []
+
+
+Overfull \hbox (58.6951pt too wide) in paragraph at lines 989--989
+[]
+ []
+
+
+Overfull \hbox (21.6257pt too wide) in paragraph at lines 989--989
+[]
+ []
+
+
+Overfull \hbox (76.51492pt too wide) in paragraph at lines 989--989
+[]
+ []
+
+
+Overfull \hbox (39.44553pt too wide) in paragraph at lines 989--989
+[]
+ []
+
+
+Overfull \hbox (68.64505pt too wide) in paragraph at lines 989--989
+[]
+ []
+
+
+Overfull \hbox (31.57565pt too wide) in paragraph at lines 989--989
+[]
+ []
+
+
+Overfull \hbox (96.13463pt too wide) in paragraph at lines 989--989
+[]
+ []
+
+[20]
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 1005--1007
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[21]
+Overfull \hbox (83.38472pt too wide) in paragraph at lines 1090--1090
+[]
+ []
+
+
+Overfull \hbox (102.89468pt too wide) in paragraph at lines 1090--1090
+[]
+ []
+
+
+Overfull \hbox (60.56508pt too wide) in paragraph at lines 1090--1090
+[]
+ []
+
+
+Overfull \hbox (100.82428pt too wide) in paragraph at lines 1090--1090
+[]
+ []
+
+
+Overfull \hbox (115.79451pt too wide) in paragraph at lines 1090--1090
+[]
+ []
+
+
+Overfull \hbox (58.06248pt too wide) in paragraph at lines 1093--1095
+[]\T1/aer/m/n/10 Matthias Kohl $\OMS/cmsy/m/n/10 h$\T1/aer/m/n/10 Matthias.Kohl
+@stamats.de$\OMS/cmsy/m/n/10 i$\T1/aer/m/n/10 , Pe-ter Ruck-de-schel $\OMS/cmsy
+/m/n/10 h$\T1/aer/m/n/10 Peter.Ruckdeschel@itwm.fraunhofer.de$\OMS/cmsy/m/n/10 
+i$ 
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 1102--1104
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[22] [23]
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 1178--1180
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[24] [25] [26]
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 1307--1309
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+
+Overfull \hbox (39.92572pt too wide) in paragraph at lines 1364--1364
+[]\T1/aer/m/n/10 asymptotic
+ []
+
+[27]
+Overfull \hbox (34.30647pt too wide) in paragraph at lines 1364--1364
+[]
+ []
+
+
+Overfull \hbox (47.85645pt too wide) in paragraph at lines 1364--1364
+[]
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 1380--1382
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+
+Overfull \hbox (0.6396pt too wide) in paragraph at lines 1383--1385
+[]\T1/aer/m/n/10 Ruckdeschel, P. and Kohl, M. (2005) Com-pu-ta-tion of the Fi-n
+ite Sam-ple Risk of M-estimators
+ []
+
+[28]
+Overfull \hbox (29.90625pt too wide) in paragraph at lines 1435--1435
+[]
+ []
+
+
+Overfull \hbox (58.06248pt too wide) in paragraph at lines 1438--1440
+[]\T1/aer/m/n/10 Matthias Kohl $\OMS/cmsy/m/n/10 h$\T1/aer/m/n/10 Matthias.Kohl
+@stamats.de$\OMS/cmsy/m/n/10 i$\T1/aer/m/n/10 , Pe-ter Ruck-de-schel $\OMS/cmsy
+/m/n/10 h$\T1/aer/m/n/10 Peter.Ruckdeschel@itwm.fraunhofer.de$\OMS/cmsy/m/n/10 
+i$ 
+ []
+
+[29]
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 1454--1456
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+
+Overfull \hbox (131.27475pt too wide) in paragraph at lines 1518--1518
+[]
+ []
+
+
+Overfull \hbox (150.78471pt too wide) in paragraph at lines 1518--1518
+[]
+ []
+
+
+Overfull \hbox (148.71431pt too wide) in paragraph at lines 1518--1518
+[]
+ []
+
+[30]
+Overfull \hbox (163.68454pt too wide) in paragraph at lines 1518--1518
+[]
+ []
+
+
+Overfull \hbox (183.27342pt too wide) in paragraph at lines 1518--1518
+[]
+ []
+
+
+Overfull \hbox (58.06248pt too wide) in paragraph at lines 1521--1523
+[]\T1/aer/m/n/10 Matthias Kohl $\OMS/cmsy/m/n/10 h$\T1/aer/m/n/10 Matthias.Kohl
+@stamats.de$\OMS/cmsy/m/n/10 i$\T1/aer/m/n/10 , Pe-ter Ruck-de-schel $\OMS/cmsy
+/m/n/10 h$\T1/aer/m/n/10 Peter.Ruckdeschel@itwm.fraunhofer.de$\OMS/cmsy/m/n/10 
+i$ 
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 1525--1527
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[31] [32]
+Overfull \hbox (83.38472pt too wide) in paragraph at lines 1628--1628
+[]
+ []
+
+
+Overfull \hbox (115.79451pt too wide) in paragraph at lines 1628--1628
+[]
+ []
+
+
+Overfull \hbox (102.89468pt too wide) in paragraph at lines 1628--1628
+[]
+ []
+
+
+Overfull \hbox (60.56508pt too wide) in paragraph at lines 1628--1628
+[]
+ []
+
+
+Overfull \hbox (58.06248pt too wide) in paragraph at lines 1631--1633
+[]\T1/aer/m/n/10 Matthias Kohl $\OMS/cmsy/m/n/10 h$\T1/aer/m/n/10 Matthias.Kohl
+@stamats.de$\OMS/cmsy/m/n/10 i$\T1/aer/m/n/10 , Pe-ter Ruck-de-schel $\OMS/cmsy
+/m/n/10 h$\T1/aer/m/n/10 Peter.Ruckdeschel@itwm.fraunhofer.de$\OMS/cmsy/m/n/10 
+i$ 
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 1642--1644
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[33]
+Overfull \hbox (23.9801pt too wide) in paragraph at lines 1665--1665
+ []                                     \T1/aett/m/n/10 tol = .Machine$double.e
+ps^0.4, warn = TRUE,[] 
+ []
+
+
+Overfull \hbox (50.18005pt too wide) in paragraph at lines 1670--1670
+ []                                          \T1/aett/m/n/10 tol = .Machine$dou
+ble.eps^0.4, warn = TRUE)[] 
+ []
+
+
+Overfull \hbox (55.42004pt too wide) in paragraph at lines 1674--1674
+ []                                          \T1/aett/m/n/10 maxiter = 50, tol 
+= .Machine$double.eps^0.4,[] 
+ []
+
+
+Overfull \hbox (29.2201pt too wide) in paragraph at lines 1675--1675
+ []                                          \T1/aett/m/n/10 warn = TRUE, Algo 
+= "A", cont = "left",[] 
+ []
+
+[34]
+Overfull \hbox (11.55566pt too wide) in paragraph at lines 1719--1719
+\T1/aer/m/n/10 ence curve for ro-bust mod-els with fixed neigh-bor-hoods and fi
+nite-sample under-/overshoot
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 1732--1734
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[35]
+Overfull \hbox (81.62pt too wide) in paragraph at lines 1769--1769
+ []                   \T1/aett/m/n/10 maxiter = 50, tol = .Machine$double.eps^0
+.4, warn = TRUE, noLow = FALSE)[] 
+ []
+
+
+Overfull \hbox (39.70007pt too wide) in paragraph at lines 1773--1773
+ []             \T1/aett/m/n/10 tol = .Machine$double.eps^0.4, warn = TRUE, Alg
+o = "A", cont = "left")[] 
+ []
+
+[36]
+Overfull \hbox (5.41653pt too wide) in paragraph at lines 1811--1811
+[]\T1/aer/m/n/10 asymptotic co-vari-ance of L2 dif-fer-en-tiable
+ []
+
+
+Overfull \hbox (3.31567pt too wide) in paragraph at lines 1811--1811
+[]\T1/aer/m/n/10 finite-sample under-/overshoot risk
+ []
+
+
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 1824--1826
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+
+Overfull \hbox (3.02014pt too wide) in paragraph at lines 1850--1850
+ []        \T1/aett/m/n/10 L2Fam, neighbor, risk, loRad, upRad, z.start = NULL,
+ A.start = NULL,[] 
+ []
+
+[37]
+Overfull \hbox (33.09619pt too wide) in paragraph at lines 1884--1884
+[]
+ []
+
+
+Overfull \hbox (58.06248pt too wide) in paragraph at lines 1887--1889
+[]\T1/aer/m/n/10 Matthias Kohl $\OMS/cmsy/m/n/10 h$\T1/aer/m/n/10 Matthias.Kohl
+@stamats.de$\OMS/cmsy/m/n/10 i$\T1/aer/m/n/10 , Pe-ter Ruck-de-schel $\OMS/cmsy
+/m/n/10 h$\T1/aer/m/n/10 Peter.Ruckdeschel@itwm.fraunhofer.de$\OMS/cmsy/m/n/10 
+i$ 
+ []
+
+[38]
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 1900--1902
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[39] [40]
+Overfull \hbox (4.02951pt too wide) in paragraph at lines 2007--2009
+[]\T1/aer/m/n/10 Kohl, M. (2005) \T1/aer/m/it/10 Nu-mer-i-cal Con-tri-bu-tions 
+to the Asymp-totic The-ory of Ro-bust-ness\T1/aer/m/n/10 . Bayreuth:
+ []
+
+[41] [42]
+Overfull \hbox (19.3521pt too wide) in paragraph at lines 2124--2124
+[]\T1/aett/m/n/10 signature(normtype = "SelfNorm")\T1/aer/m/n/10 : udates the n
+orm in the self-standardized
+ []
+
+[43] (ROptEst-manual.aux) ) 
+Here is how much of TeX's memory you used:
+ 5264 strings out of 95327
+ 78035 string characters out of 1183974
+ 130192 words of memory out of 1500000
+ 7978 multiletter control sequences out of 110000
+ 17143 words of font info for 40 fonts, out of 1200000 for 2000
+ 14 hyphenation exceptions out of 8191
+ 46i,6n,27p,264b,544s stack positions out of 5000i,500n,10000p,200000b,5000s
+pdfTeX warning (dest): name{Rfn.NormType.Rdash.class
+} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.UncondNeighborhood.Rdash.class} has been refere
+nced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.roblox} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.kStepEstimator} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.RiskType.Rdash.class} has been referenced but d
+oes not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.InfluenceCurve.Rdash.class} has been referenced
+ but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.Neighborhood.Rdash.class} has been referenced b
+ut does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.L2ParamFamily.Rdash.class} has been referenced 
+but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.IC.Rdash.class} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.asUnOvShoot.Rdash.class} has been referenced bu
+t does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.asMSE.Rdash.class} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.asGRisk.Rdash.class} has been referenced but do
+es not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.FixRobModel.Rdash.class} has been referenced bu
+t does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TotalVarIC.Rdash.class} has been referenced but
+ does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ContIC.Rdash.class} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.fiRisk.Rdash.class} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.InfRobModel.Rdash.class} has been referenced bu
+t does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.asRisk.Rdash.class} has been referenced but doe
+s not exist, replaced by a fixed one
+
+ <C:\Documents and Settings\All Users\Application Data\MiKTeX\2.7\Fonts\Pk\ljfo
+ur\jknappen\ec\dpi600\tctt1000.pk><C:/Program Files/MiKTeX 2.7/fonts/type1/blue
+sky/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/bluesky/cm/cmmi10.pf
+b><C:/Program Files/MiKTeX 2.7/fonts/type1/bluesky/cm/cmr10.pfb><C:/Program Fil
+es/MiKTeX 2.7/fonts/type1/bluesky/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.7/fo
+nts/type1/bluesky/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/bluesk
+y/cm/cmtt10.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/bluesky/cm/cmtt9.pfb>
+Output written on ROptEst-manual.pdf (43 pages, 232772 bytes).
+PDF statistics:
+ 738 PDF objects out of 1000 (max. 8388607)
+ 423 named destinations out of 1000 (max. 131072)
+ 17 words of extra memory for PDF output out of 10000 (max. 10000000)
+

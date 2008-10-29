@@ -1,5 +1,10 @@
 setMethod("comparePlot", signature("IC","IC"),
-    function(obj1,obj2, obj3 = NULL, obj4 = NULL, ...){
+    function(obj1,obj2, obj3 = NULL, obj4 = NULL, 
+             ..., withSweave = getdistrOption("withSweave"), 
+             main = FALSE, inner = TRUE, sub = FALSE, 
+             col.inner = par("col.main"), cex.inner = 0.8, 
+             bmar = par("mar")[1], tmar = par("mar")[3], 
+             mfColRow = TRUE){
 
         xc1 <- as.character(deparse(match.call(call = sys.call(sys.parent(1)))$obj1))
         xc2 <- as.character(deparse(match.call(call = sys.call(sys.parent(1)))$obj2))
@@ -14,15 +19,18 @@ setMethod("comparePlot", signature("IC","IC"),
 
         ncomp <- 2+ !is.null(obj3) +  !is.null(obj4)
          
+        if(is.null(dots[["col"]]))   dots$"col" <- 1:ncomp
+        if(is.null(dots[["lwd"]]))   dots$"lwd" <- 1
+        
+        col <- dots[["col"]]
+        lwd <- dots[["lwd"]]
+        
         if(!is.null(dots[["lty"]]))  dots["lty"] <- NULL
         if(!is.null(dots[["type"]])) dots["type"] <- NULL
-        if(!is.null(dots[["main"]])) dots["main"] <- NULL
-        if(!is.null(dots[["sub"]]))  dots["sub"] <- NULL
         if(!is.null(dots[["xlab"]])) dots["xlab"] <- NULL
         if(!is.null(dots[["ylab"]])) dots["ylab"] <- NULL
-        if(is.null(dots[["col"]]))   dots$"col" <- 1:ncomp
-        if(is.null(dots[["cex.main"]])) dots$"cex.main" <- 0.8
-        if(is.null(dots[["lwd"]]))   dots$"lwd" <- 1
+        
+        dotsP <- dotsL <- dotsT <- dots
 
 
         L2Fam <- eval(obj1@CallL2Fam)
@@ -58,6 +66,7 @@ setMethod("comparePlot", signature("IC","IC"),
         IC1 <- as(diag(dims) %*% obj1@Curve, "EuclRandVariable")
         IC2 <- as(diag(dims) %*% obj2@Curve, "EuclRandVariable")
 
+
         obj <- obj3
         if(is(obj, "IC"))
            {
@@ -74,6 +83,83 @@ setMethod("comparePlot", signature("IC","IC"),
            IC4 <- as(diag(dims) %*% obj4@Curve, "EuclRandVariable")
            }
 
+      lineT <- NA
+
+      .mpresubs <- function(inx)
+                    distr:::.presubs(inx, c(paste("%C",1:ncomp,sep=""),
+                                             "%D", 
+                                            paste("%A",1:ncomp,sep="")),
+                          c(as.character(class(obj1)[1]),
+                            as.character(class(obj2)[1]),
+                            if(is.null(obj3))NULL else as.character(class(obj3)[1]),
+                            if(is.null(obj4))NULL else as.character(class(obj4)[1]),
+                            as.character(date()),
+                            xc))
+            
+        mainL <- FALSE
+        if (hasArg(main)){
+                 mainL <- TRUE
+                 if (is.logical(main)){
+                     if (!main) mainL <-  FALSE
+                     else
+                          main <- paste(gettextf("Plot for ICs"), 
+                                        paste("%A", 1:ncomp, sep="", collapse=", "),
+                                        sep=" ") ###
+                                  ### double  %% as % is special for gettextf
+                     }
+                 main <- .mpresubs(main)
+                 if (mainL) {
+                     if(missing(tmar))
+                        tmar <- 5
+                     if(missing(cex.inner))
+                        cex.inner <- .65
+                     lineT <- 0.6
+                     }
+             }
+        subL <- FALSE
+        if (hasArg(sub)){
+                 subL <- TRUE
+                 if (is.logical(sub)){
+                     if (!sub) subL <-  FALSE
+                     else       sub <- gettextf("generated %%D")
+                                  ### double  %% as % is special for gettextf
+                 }
+                 sub <- .mpresubs(sub)
+                 if (subL)
+                     if (missing(bmar)) bmar <- 6
+             }
+            innerParam <-  paste(gettext("\nwith main parameter ("), 
+                                    paste(round(L2Fam@param@main, 3), 
+                                          collapse = ", "),
+                                 ")", sep = "")
+            if(!is.null(L2Fam@param@nuisance))
+                innerParam <- paste(innerParam,
+                                gettext("\nand nuisance parameter ("), 
+                                    paste(round(L2Fam@param@nuisance, 3), 
+                                           collapse = ", "),
+                                ")", sep ="")
+            if(!is.null(L2Fam@param@fixed))
+                innerParam <- paste(innerParam,
+                                gettext("\nand fixed known parameter ("), 
+                                    paste(round(L2Fam@param@fixed, 3), 
+                                           collapse = ", "),
+                                ")", sep ="")
+            
+            if(!is.logical(inner)){
+                if(!is.character(inner))
+                    stop("Argument 'inner' must either be 'logical' or a character vector")
+                innerT <- rep(inner,length.out=dims)
+                innerL <- TRUE
+            }else{if(any(is.na(inner))||any(!inner)) {
+                 innerT <- ""; innerL <- FALSE
+                }else{innerL <- TRUE
+                      innerT <- paste(paste(gettext("Component "),  1:dims, 
+                                       gettext(" of (partial) IC\nfor "), 
+                                       name(L2Fam)[1], sep =""), innerParam)
+                   }
+              }
+
+
         w0 <- options("warn")
         options(warn = -1)
         opar <- par()
@@ -84,6 +170,11 @@ setMethod("comparePlot", signature("IC","IC"),
         if(is(e1, "DiscreteDistribution"))
                 x.vec1 <- seq(from = min(x.vec), to = max(x.vec), length = 1000)
 
+            dotsT["main"] <- NULL
+            dotsT["cex.main"] <- NULL
+            dotsT["col.main"] <- NULL
+            dotsT["line"] <- NULL
+
         for(i in 1:dims){
             matp  <- cbind(sapply(x.vec, IC1@Map[[i]]),sapply(x.vec, IC2@Map[[i]]))
             if(is(obj3, "IC"))
@@ -93,30 +184,38 @@ setMethod("comparePlot", signature("IC","IC"),
 
             do.call(matplot, args=c(list( x= x.vec, y=matp,
                  type = plty, lty = lty,
-                 xlab = "x", ylab = "(partial) IC"), dots))
+                 xlab = "x", ylab = "(partial) IC"), dotsP))
+
             if(is(e1, "DiscreteDistribution")){
                  matp1 <- cbind(sapply(x.vec1, IC1@Map[[i]]),sapply(x.vec1, IC2@Map[[i]]))
                  if(is(obj3, "IC"))
                     matp1  <- cbind(matp1,sapply(x.vec1, IC3@Map[[i]]))
                  if(is(obj4, "IC"))
                     matp1  <- cbind(matp1,sapply(x.vec1, IC4@Map[[i]]))
-                 do.call(matlines, c(list(x.vec1, matp1, lty = "dotted"),dots))
+                 do.call(matlines, c(list(x.vec1, matp1, lty = "dotted"),dotsL))
                  }
 
-            if(is.null(L2Fam@param@nuisance))
-                do.call(title, c(list(paste("Component", i, "of (partial) ICs\nfor", name(L2Fam)[1],
-                            "\nwith main parameter (", paste(round(L2Fam@param@main, 3), collapse = ", "), ")")),
-                            dots))
-            else
-                do.call(title, c(list(paste("Component", i, "of (partial) ICs\nfor", name(L2Fam)[1],
-                            "\nwith main parameter (", paste(round(L2Fam@param@main, 3), collapse = ", "),
-                            ")\nand nuisance parameter (", paste(round(L2Fam@param@nuisance, 3), collapse = ", "), ")")),
-                            dots))
+           if(innerL)
+              do.call(title, args=c(list(main = innerT[i]),  dotsT,
+                      line = lineT, cex.main = cex.inner, col.main = col.inner))
         }
         
         legend("bottomright", 
                legend = xc, col = eval(dots[["col"]]), 
                cex=0.75, lwd=eval(dots[["lwd"]])*1.5)
+
+        if(!hasArg(cex.main)) cex.main <- par("cex.main") else cex.main <- dots$"cex.main"
+        if(!hasArg(col.main)) col.main <- par("col.main") else col.main <- dots$"col.main"
+        if (mainL)
+            mtext(text = main, side = 3, cex = cex.main, adj = .5,
+                  outer = TRUE, padj = 1.4, col = col.main)
+
+        if(!hasArg(cex.sub)) cex.sub <- par("cex.sub") else cex.sub <- dots$"cex.sub"
+        if(!hasArg(col.sub)) col.sub <- par("col.sub") else col.sub <- dots$"col.sub"
+        if (subL)
+            mtext(text = sub, side = 1, cex = cex.sub, adj = .5,
+                  outer = TRUE, line = -1.6, col = col.sub)
+
 
         par(opar)
         options(w0)

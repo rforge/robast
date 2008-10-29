@@ -117,7 +117,7 @@ MLEstimator(x, BinomFamily(size = 25))
 roptest(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
 
 ## compute optimally robust estimator (unknown contamination)
-roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.1, steps = 3)
+roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.2, steps = 3)
 
 
 #############################
@@ -132,7 +132,7 @@ x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532),
 MLEstimator(x, PoisFamily())
 
 ## compute optimally robust estimator (unknown contamination)
-roptest(x, PoisFamily(), eps.upper = 0.05, steps = 3)
+roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
 
 #############################
 ## 3. Normal (Gaussian) location and scale
@@ -150,7 +150,7 @@ roptest(x, NormLocationScaleFamily(), eps = 0.05, steps = 3)
 
 ## compute optimally robust estimator (unknown contamination)
 ## takes some time
-roptest(x, NormLocationScaleFamily(), eps.upper = 0.1, steps = 3)
+roptest(x, NormLocationScaleFamily(), eps.upper = 0.2, steps = 3)
 }
 \concept{k-step construction}
 \concept{optimally robust estimation}
