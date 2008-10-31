@@ -17,11 +17,11 @@ Date: \tab 2008-10-31\cr
 Depends: \tab R (>= 2.7.0), methods, startupmsg, distr(>= 2.0), distrEx(>= 2.0)\cr
 LazyLoad: \tab yes\cr
 License: \tab LGPL-3\cr
+URL: \tab http://robast.r-forge.r-project.org/\cr
 }
-require(RandVar)
 }
 \author{
-Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de},\cr 
+Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de},\cr%
 Matthias Kohl \email{Matthias.Kohl@stamats.de}\cr
 
 Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
@@ -29,12 +29,11 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
   M. Kohl (2005). Numerical Contributions to the Asymptotic Theory of Robustness.
   Dissertation. University of Bayreuth.
 }
-%~~ Optionally other keywords from doc/KEYWORDS, one per line
-%\seealso{
-%~~ Optional links to other man pages, e.g. ~~
-%~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
-%}
-%\examples{
-%~~ simple examples of the most important functions ~~
-%}
+\seealso{
+\code{\link[distr]{distr-package}}, \code{\link[distrEx]{distrEx-package}}
+}
+\examples{
+library(RandVar)
+#vignette("RandVar")
+}
 \keyword{package}
