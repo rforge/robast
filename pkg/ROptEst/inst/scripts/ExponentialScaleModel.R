@@ -109,6 +109,14 @@ estimate(E1.est21)
 estimate(E1.est22)
 estimate(E1.est23)
 
+## confidence intervals
+confint(E1.est11, symmetricBias())
+confint(E1.est12, symmetricBias())
+confint(E1.est13, symmetricBias())
+confint(E1.est21, symmetricBias())
+confint(E1.est22, symmetricBias())
+confint(E1.est23, symmetricBias())
+
 
 ## 4. one-step estimation: radius interval
 E1.IC11 <- radiusMinimaxIC(L2Fam=ExpScaleFamily(scale=estimate(E1.est01)),
@@ -135,3 +143,11 @@ estimate(E1.est33)
 estimate(E1.est41)
 estimate(E1.est42)
 estimate(E1.est43)
+
+## confidence intervals
+confint(E1.est31, symmetricBias())
+confint(E1.est32, symmetricBias())
+confint(E1.est33, symmetricBias())
+confint(E1.est41, symmetricBias())
+confint(E1.est42, symmetricBias())
+confint(E1.est43, symmetricBias())
