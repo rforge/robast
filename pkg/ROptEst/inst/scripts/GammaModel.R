@@ -92,3 +92,9 @@ estimate(est1)
 estimate(est3)
 estimate(est2)
 estimate(est4)
+
+## confidence intervals
+confint(est1, symmetricBias())
+confint(est3, symmetricBias())
+confint(est2, symmetricBias())
+confint(est4, symmetricBias())

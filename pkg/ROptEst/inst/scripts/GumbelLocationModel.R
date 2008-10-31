@@ -152,11 +152,23 @@ estimate(G0.est1)
 estimate(G0.est2)
 estimate(G0.est11)
 
+## confidence intervals
+confint(G0.est1, symmetricBias())
+confint(G0.est2, symmetricBias())
+confint(G0.est11, symmetricBias())
+
 ## comparison - radius interval
 estimate(G0.est3)
 estimate(G0.est5)
 estimate(G0.est4)
 estimate(G0.est6)
 estimate(G0.est21)
+
+## confidence intervals
+confint(G0.est3, symmetricBias())
+confint(G0.est5, symmetricBias())
+confint(G0.est4, symmetricBias())
+confint(G0.est6, symmetricBias())
+confint(G0.est21, symmetricBias())
 
 distrExOptions(ElowerTruncQuantile=0) # default
