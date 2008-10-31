@@ -144,7 +144,6 @@ plot(N0.IC8)
 
 
 ## least favorable radius
-## (may take quite some time!)
 (LN1.r.rho1 <- leastFavorableRadius(L2Fam=LN1, neighbor=ContNeighborhood(),
                     risk=asMSE(), rho=0.5))
 (N0.r.rho1 <- leastFavorableRadius(L2Fam=N0, neighbor=ContNeighborhood(),
@@ -172,3 +171,9 @@ estimate(est1)
 log(estimate(est2))
 estimate(est3)
 log(estimate(est4))
+
+## confidence intervals
+confint(est1, symmetricBias())
+confint(est2, symmetricBias())
+confint(est3, symmetricBias())
+confint(est4, symmetricBias())
