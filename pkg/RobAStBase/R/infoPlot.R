@@ -166,7 +166,7 @@ setMethod("infoPlot", "IC",
                  ylab = "absolute information"), dotsP))
             do.call(lines, args=c(list(x.vec, absInfo, type = plty, lty = lty), 
                     dotsL))
-            legend(max(x.vec), 0, xjust = 1, yjust = 0,
+            legend("top",
                    legend = c("class. opt. IC", objectc), 
                    lty = c(lty,"dashed"), col = c(colI, col), 
                    lwd=c(lwdI, lwd), cex = 0.75)
@@ -205,7 +205,7 @@ setMethod("infoPlot", "IC",
                     yc.vec <- sapply(x.vec, classIC.i.5@Map[[i]])^2/absInfoClass
                     do.call(lines, args=c(list(x.vec, yc.vec, type = plty, 
                           lty = "dashed"), dotsL))
-                    legend(max(x.vec), 1.1,  xjust = 1, 
+                    legend("topright",
                            legend = c("class. opt. IC", objectc), lty = c(lty,"dashed"), 
                                col = c(colI, col), lwd=c(lwdI, lwd),
                                cex = 0.6)
