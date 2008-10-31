@@ -6,6 +6,10 @@
 \alias{asbias}
 \alias{asbias,ALEstimate-method}
 \alias{show,ALEstimate-method}
+\alias{confint,ALEstimate,missing-method}
+\alias{confint,ALEstimate,symmetricBias-method}
+\alias{confint,ALEstimate,onesidedBias-method}
+\alias{confint,ALEstimate,asymmetricBias-method}
 
 \title{ALEstimate-class.}
 \description{Class of asymptotically linear estimates.}
@@ -42,6 +46,21 @@ Class \code{"Estimate"}, directly.
       accessor function for slot \code{pIC}. }
 
     \item{show}{\code{signature(object = "ALEstimate")} }
+
+    \item{confint}{\code{signature(object = "ALEstimate", method = "missing")}: 
+      compute asymptotic (LAN-based) confidence interval neglecting any bias. }
+
+    \item{confint}{\code{signature(object = "ALEstimate", method = "symmetricBias")}: 
+      compute asymptotic (LAN-based) confidence interval incorporating bias
+      symmetrically. }
+
+    \item{confint}{\code{signature(object = "ALEstimate", method = "onesidedBias")}: 
+      compute asymptotic (LAN-based) confidence interval incorporating bias
+      one-sided; i.e., positive or negative, respectively. }
+
+    \item{confint}{\code{signature(object = "ALEstimate", method = "asymmetricBias")}: 
+      compute asymptotic (LAN-based) confidence interval incorporating bias
+      asymmetrically. }
   }
 }
 %\references{}
