@@ -16,7 +16,10 @@ setMethod("getRiskIC", signature(IC = "HampIC",
                                  L2Fam = "L2ParamFamily"),
     function(IC, risk, L2Fam){
         Cov <- IC@Risks[["asCov"]]
-        return(list(asCov = list(distribution = .getDistr(L2Fam), value = Cov)))
+        if(is.null(Cov))
+            return(getRiskIC(as(IC, "IC"), risk = risk, L2Fam = L2Fam))
+        else
+            return(list(asCov = list(distribution = .getDistr(L2Fam), value = Cov)))
     })
 
 setMethod("getRiskIC", signature(IC = "TotalVarIC", 
