@@ -190,6 +190,9 @@ confint(MLest)
 robest <- roptest(chem, NormLocationScaleFamily(), eps = 0.05, steps = 3)
 estimate(robest)
 confint(robest, symmetricBias())
+plot(pIC(robest))
+## plot of relative and absolute information; cf. Kohl (2005)
+infoPlot(pIC(robest))
 
 ## compute optimally robust estimator (unknown contamination)
 ## takes some time -> use package RobLox!
@@ -197,6 +200,9 @@ robest1 <- roptest(chem, NormLocationScaleFamily(), eps.lower = 0.05,
                    eps.upper = 0.1, steps = 3)
 estimate(robest1)
 confint(robest1, symmetricBias())
+plot(pIC(robest1))
+## plot of relative and absolute information; cf. Kohl (2005)
+infoPlot(pIC(robest1))
 }
 \concept{k-step construction}
 \concept{optimally robust estimation}
