@@ -115,7 +115,7 @@ setMethod("confint", signature(object="ALEstimate", method="onesidedBias"),
                    confint = ci)
 })
 
-setMethod("confint", signature(object="ALEstimate", method="symmetricBias"),
+setMethod("confint", signature(object="ALEstimate", method="asymmetricBias"),
           function(object, method, level = 0.95) {
     objN <- paste(deparse(substitute(object)),sep="",collapse="")
 
