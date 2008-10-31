@@ -12,16 +12,19 @@ Implementation of random variables by means of S4 classes and methods.
 \tabular{ll}{
 Package: \tab RandVar\cr
 Type: \tab Package\cr
-Version: \tab 0.5\cr
-Date: \tab 2006-12-14\cr
-Depends: \tab R (>= 2.4.0), methods, startupmsg, distr(>= 1.8), distrEx(>= 0.4-4)\cr
-License: \tab GPL (version 2 or later)\cr
+Version: \tab 0.6.5\cr
+Date: \tab 2008-10-31\cr
+Depends: \tab R (>= 2.7.0), methods, startupmsg, distr(>= 2.0), distrEx(>= 2.0)\cr
+LazyLoad: \tab yes\cr
+License: \tab LGPL-3\cr
 }
 require(RandVar)
 }
-\author{ Dr. Matthias Kohl
+\author{
+Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de},\cr 
+Matthias Kohl \email{Matthias.Kohl@stamats.de}\cr
 
-Maintainer: Dr. Matthias Kohl  \email{matthias.kohl@stamats.de}}
+Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
 \references{
   M. Kohl (2005). Numerical Contributions to the Asymptotic Theory of Robustness.
   Dissertation. University of Bayreuth.
