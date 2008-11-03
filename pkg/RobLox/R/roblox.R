@@ -156,7 +156,7 @@
     a1 <- A1/est[2]^2
     a3 <- A2/est[2]^2
     a2 <- a[2]/est[2]/a3 + 1
-    asVar <- est[2]^2*.ALrlsVar(b = b, a1 = a1, a2 = a2, a3 = a3)
+    asVar <- est[2]^2*.ALrlsVar(b = b/est[2], a1 = a1, a2 = a2, a3 = a3)
 
     return(list(est = est, A1 = A1, A2 = A2, a = a, b = b, asvar = asVar))
 }
