@@ -179,3 +179,14 @@ if(!isGeneric("Mroot")){
 if(!isGeneric("modifyIC")){
     setGeneric("modifyIC", function(object) standardGeneric("modifyIC"))
 }
+if(!isGeneric("cutoff.quantile")){
+    setGeneric("cutoff.quantile", function(object) standardGeneric("cutoff.quantile"))
+}
+if(!isGeneric("cutoff.quantile<-")){
+    setGeneric("cutoff.quantile<-", function(object,value)
+                standardGeneric("cutoff.quantile<-"))
+}
+if(!isGeneric("ddPlot")){
+    setGeneric("ddPlot", function(data, dist.x, dist.y, cutoff.x, cutoff.y,...)
+                                  standardGeneric("ddPlot"))
+}

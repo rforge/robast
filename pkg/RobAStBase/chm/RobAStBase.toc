@@ -10,6 +10,14 @@
 </OBJECT>
 <UL>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="RobAStBase-package">
+<param name="Local" value="0RobAStBase-package.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value=".ddPlot.MatNtNtCoCo">
+<param name="Local" value="internals_ddPlot.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value=".eq">
 <param name="Local" value="internals.html">
 </OBJECT>
@@ -202,6 +210,22 @@
 <param name="Local" value="comparePlot.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="confint,ALEstimate,asymmetricBias-method">
+<param name="Local" value="ALEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="confint,ALEstimate,missing-method">
+<param name="Local" value="ALEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="confint,ALEstimate,onesidedBias-method">
+<param name="Local" value="ALEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="confint,ALEstimate,symmetricBias-method">
+<param name="Local" value="ALEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ContIC">
 <param name="Local" value="ContIC.html">
 </OBJECT>
@@ -226,6 +250,58 @@
 <param name="Local" value="InfluenceCurve-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cutoff">
+<param name="Local" value="cutoff.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cutoff-class">
+<param name="Local" value="cutoff-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cutoff.chisq">
+<param name="Local" value="cutoff.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cutoff.quantile">
+<param name="Local" value="cutoff-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cutoff.quantile,cutoff-method">
+<param name="Local" value="cutoff-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cutoff.quantile<-">
+<param name="Local" value="cutoff-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cutoff.quantile<-,cutoff-method">
+<param name="Local" value="cutoff-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cutoff.sememp">
+<param name="Local" value="cutoff.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ddPlot">
+<param name="Local" value="ddPlot-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ddPlot,data.frame-method">
+<param name="Local" value="ddPlot-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ddPlot,matrix-method">
+<param name="Local" value="ddPlot-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ddPlot,numeric-method">
+<param name="Local" value="ddPlot-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ddPlot-methods">
+<param name="Local" value="ddPlot-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Domain,InfluenceCurve-method">
 <param name="Local" value="InfluenceCurve-class.html">
 </OBJECT>
@@ -240,6 +316,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="evalIC,IC,numeric-method">
 <param name="Local" value="IC-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fct,cutoff-method">
+<param name="Local" value="cutoff-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="FixRobModel">
@@ -430,6 +510,10 @@
 <param name="Local" value="internals.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="internals_for_RobAStBase_ddPlot">
+<param name="Local" value="internals_ddPlot.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="kStepEstimate-class">
 <param name="Local" value="kStepEstimate-class.html">
 </OBJECT>
@@ -558,6 +642,10 @@
 <param name="Local" value="MEstimate-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="name,cutoff-method">
+<param name="Local" value="cutoff-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="name,InfluenceCurve-method">
 <param name="Local" value="InfluenceCurve-class.html">
 </OBJECT>
@@ -678,6 +766,10 @@
 <param name="Local" value="optIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="outlyingPlotIC">
+<param name="Local" value="outlyingPlotIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="pIC">
 <param name="Local" value="ALEstimate-class.html">
 </OBJECT>
@@ -724,6 +816,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Risks<-,InfluenceCurve-method">
 <param name="Local" value="InfluenceCurve-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="RobAStBase">
+<param name="Local" value="0RobAStBase-package.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="RobAStBaseOptions">
@@ -887,6 +983,14 @@
 <param name="Local" value="RobAStControl-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Cutoff class for distance-distance plots">
+<param name="Local" value="cutoff-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function outlyingPlotIC in Package `RobAStBase' ">
+<param name="Local" value="outlyingPlotIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Function to change the global variables of the package `RobAStBase' ">
 <param name="Local" value="RobAStBaseOptions.html">
 </OBJECT>
@@ -921,6 +1025,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generating function for TotalVarNeighborhood-class">
 <param name="Local" value="TotalVarNeighborhood.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Generating function(s) for class 'cutoff'">
+<param name="Local" value="cutoff.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generating weights">
@@ -987,12 +1095,20 @@
 <param name="Local" value="internals.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Internal / Helper functions of package RobAStBase for ddPlot">
+<param name="Local" value="internals_ddPlot.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="kStepEstimate-class.">
 <param name="Local" value="kStepEstimate-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="MEstimate-class.">
 <param name="Local" value="MEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Methods for Function ddPlot in Package `RobAStBase' ">
+<param name="Local" value="ddPlot-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Methods for Function plot in Package `RobAStBase' ">
@@ -1005,6 +1121,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Plot absolute and relative information">
 <param name="Local" value="infoPlot.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Robust Asymptotic Statistics ">
+<param name="Local" value="0RobAStBase-package.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Robust model">

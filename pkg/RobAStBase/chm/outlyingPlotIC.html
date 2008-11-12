@@ -1,0 +1,182 @@
+<html><head><title>Function outlyingPlotIC in Package &lsquo;RobAStBase&rsquo;</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>outlyingPlotIC(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   outlyingPlotIC">
+<param name="keyword" value=" Function outlyingPlotIC in Package &lsquo;RobAStBase&rsquo;">
+</object>
+
+
+<h2>Function outlyingPlotIC in Package &lsquo;RobAStBase&rsquo;</h2>
+
+
+<h3>Description</h3>
+
+<p>
+outlyingPlotIC produces an outlyingness plot based on distances applied
+to ICs
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
+                         dist.y, cutoff.y = cutoff.chisq(), cutoff.x = cutoff.sememp(), ...,
+                         cutoff.quantile.x = 0.95,
+                         cutoff.quantile.y = cutoff.quantile.x,
+                         id.n, lab.pts, adj, cex.idn,
+                         col.idn, lty.cutoff, lwd.cutoff, col.cutoff,
+                         main = gettext("Outlyingness by means of a distance-distance plot")
+                         )
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+data coercable to <code>matrix</code>; the data  at which to produce the <code>ddPlot</code>.</td></tr>
+<tr valign="top"><td><code>IC.x</code></td>
+<td>
+object of class   <code>IC</code> the influence curve to produce
+the  distances for the <code>x</code> axis.</td></tr>
+<tr valign="top"><td><code>IC.y</code></td>
+<td>
+object of class   <code>IC</code> the influence curve to produce
+the  distances for the <code>y</code> axis.</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+further arguments to be passed to <code>plot.default</code>, <code>text</code>, and <code>abline</code></td></tr>
+<tr valign="top"><td><code>dist.x</code></td>
+<td>
+object of class <code>NormType</code>; the distance for the <code>x</code> axis.</td></tr>
+<tr valign="top"><td><code>dist.y</code></td>
+<td>
+object of class <code>NormType</code>; the distance for the <code>y</code> axis.</td></tr>
+<tr valign="top"><td><code>cutoff.x</code></td>
+<td>
+object of class <code>cutoff</code>; the cutoff information for the <code>x</code> axis
+(the vertical line discriminating 'good' and 'bad' points).</td></tr>
+<tr valign="top"><td><code>cutoff.y</code></td>
+<td>
+object of class <code>cutoff</code>; the cutoff information for the <code>y</code> axis
+(the horizontal line discriminating 'good' and 'bad' points).</td></tr>
+<tr valign="top"><td><code>cutoff.quantile.x</code></td>
+<td>
+numeric; the cutoff quantile for the <code>x</code> axis.</td></tr>
+<tr valign="top"><td><code>cutoff.quantile.y</code></td>
+<td>
+numeric; the cutoff quantile for the <code>y</code> axis.</td></tr>
+<tr valign="top"><td><code>id.n</code></td>
+<td>
+a set of indices (or a corresponding logical vector); to select a subset
+of the data in argument <code>data</code>.</td></tr>
+<tr valign="top"><td><code>lab.pts</code></td>
+<td>
+a vector of labels for the (unsubsetted) <code>data</code>.</td></tr>
+<tr valign="top"><td><code>adj</code></td>
+<td>
+the corresponding argument for <code><a onclick="findlink('graphics', 'text.html')" style="text-decoration: underline; color: blue; cursor: hand">text</a></code> for
+labelling the outliers.</td></tr>
+<tr valign="top"><td><code>cex.idn</code></td>
+<td>
+the corresponding <code>cex</code> argument for
+<code><a onclick="findlink('graphics', 'text.html')" style="text-decoration: underline; color: blue; cursor: hand">text</a></code> for labelling the outliers.</td></tr>
+<tr valign="top"><td><code>col.idn</code></td>
+<td>
+the corresponding <code>col</code> argument for
+<code><a onclick="findlink('graphics', 'text.html')" style="text-decoration: underline; color: blue; cursor: hand">text</a></code> for labelling the outliers.</td></tr>
+<tr valign="top"><td><code>lty.cutoff</code></td>
+<td>
+the corresponding <code>lty</code> argument for
+<code><a onclick="findlink('graphics', 'abline.html')" style="text-decoration: underline; color: blue; cursor: hand">abline</a></code> for drawing the cutoff lines.</td></tr>
+<tr valign="top"><td><code>lwd.cutoff</code></td>
+<td>
+the corresponding <code>lwd</code> argument for
+<code><a onclick="findlink('graphics', 'abline.html')" style="text-decoration: underline; color: blue; cursor: hand">abline</a></code> for drawing the cutoff lines.</td></tr>
+<tr valign="top"><td><code>col.cutoff</code></td>
+<td>
+the corresponding <code>col</code> argument for
+<code><a onclick="findlink('graphics', 'abline.html')" style="text-decoration: underline; color: blue; cursor: hand">abline</a></code> for drawing the cutoff lines.</td></tr>
+<tr valign="top"><td><code>main</code></td>
+<td>
+the main title.</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+calls a corresponding <code><a href="ddPlot-methods.html">ddPlot</a></code> method to produce the plot.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+a list with items
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>id.x</code></td>
+<td>
+the indices of (possibly transformed) data (within subset <code>id.n</code>) beyond the <code>x</code>-cutoff</td></tr>
+<tr valign="top"><td><code>id.y</code></td>
+<td>
+the indices of (possibly transformed) data (within subset <code>id.n</code>) beyond the <code>y</code>-cutoff</td></tr>
+<tr valign="top"><td><code>id.xy</code></td>
+<td>
+the indices of (possibly transformed) data (within subset <code>id.n</code>) beyond the <code>x</code>-cutoff and the <code>y</code>-cutoff</td></tr>
+<tr valign="top"><td><code>qtx</code></td>
+<td>
+the quantiles of the distances of the (possibly transformed) data in <code>x</code> direction</td></tr>
+<tr valign="top"><td><code>qty</code></td>
+<td>
+the quantiles of the distances of the (possibly transformed) data in <code>y</code> direction</td></tr>
+<tr valign="top"><td><code>cutoff.x.v</code></td>
+<td>
+the cutoff value in <code>x</code> direction</td></tr>
+<tr valign="top"><td><code>cutoff.y.v</code></td>
+<td>
+the cutoff value in <code>y</code> direction</td></tr>
+</table>
+
+<h3>Author(s)</h3>
+
+<p>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if(require(ROptEst)){
+## generates normal location and scale family with mean = -2 and sd = 3
+N0 &lt;- NormLocationScaleFamily()
+N0.IC0 &lt;- optIC(model = N0, risk = asCov())
+N0.Rob1 &lt;- InfRobModel(center = N0, neighbor = ContNeighborhood(radius = 0.5))
+N0.IC1 &lt;- optIC(model = N0.Rob1, risk = asMSE())
+xn &lt;- c(rnorm(100),rcauchy(20)+20)
+outlyingPlotIC(xn, IC.x=N0.IC0)
+outlyingPlotIC(xn, IC.x=N0.IC1)
+}
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.2 <a href="00Index.html">Index]</a></div>
+
+</body></html>

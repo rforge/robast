@@ -11,7 +11,6 @@
 \alias{checkIC,IC,L2ParamFamily-method}
 \alias{evalIC,IC,numeric-method}
 \alias{evalIC,IC,matrix-method}
-\alias{plot,IC,missing-method}
 \alias{show,IC-method}
 
 \title{Influence curve}

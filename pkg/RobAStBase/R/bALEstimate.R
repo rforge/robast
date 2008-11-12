@@ -65,7 +65,10 @@ setMethod("confint", signature(object="ALEstimate", method="symmetricBias"),
     ci[] <- main(object) + sd0 %o% fac
 ### end of borrowed code
 
-    new("Confint", type = gettext("asymptotic (LAN-based)"),
+    new("Confint", type = c(
+           gettext("asymptotic (LAN-based), uniform (bias-aware)\n"), 
+           gettextf("for %s", name(method))
+                           ),
                    samplesize.estimate = object@samplesize,
                    call.estimate = object@estimate.call,
                    name.estimate = object@name,
@@ -105,7 +108,10 @@ setMethod("confint", signature(object="ALEstimate", method="onesidedBias"),
     ci[] <- main(object) + sd0 %o% fac
 ### end of borrowed code
 
-    new("Confint", type = gettext("asymptotic (LAN-based)"),
+    new("Confint", type = c(
+           gettext("asymptotic (LAN-based), uniform (bias-aware)\n"), 
+           gettextf("for %s", name(method))
+                           ),
                    samplesize.estimate = object@samplesize,
                    call.estimate = object@estimate.call,
                    name.estimate = object@name,
@@ -135,13 +141,18 @@ setMethod("confint", signature(object="ALEstimate", method="asymmetricBias"),
     a <- (1 - level)/2
     a <- c(a, 1 - a)
     pct <- stats:::format.perc(a, 3)
-    fac <- qnorm(a, mean = c(-object@asbias, object@asbias)*method@nu)
+    fac <- qnorm(a, mean = c(-object@asbias, object@asbias)/method@nu)
     ci <- array(NA, dim = c(length(object@estimate), 2),
                 dimnames = list(names(object@estimate), pct))
     ci[] <- main(object) + sd0 %o% fac
 ### end of borrowed code
 
-    new("Confint", type = gettext("asymptotic (LAN-based)"),
+    nuround <- round(nu,3)
+    new("Confint", type = c(
+           gettext("asymptotic (LAN-based), uniform (bias-aware)\n"), 
+           gettextf("for %s with nu =(%f,%f)", 
+                     name(method), nuround[1], nuround[2])
+                           ),
                    samplesize.estimate = object@samplesize,
                    call.estimate = object@estimate.call,
                    name.estimate = object@name,

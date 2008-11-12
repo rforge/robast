@@ -1,0 +1,102 @@
+<html><head><title>MEstimate-class.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>MEstimate-class(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   MEstimate-class">
+<param name="keyword" value="R:   Mroot">
+<param name="keyword" value="R:   Mroot,MEstimate-method">
+<param name="keyword" value="R:   show,MEstimate-method">
+<param name="keyword" value=" MEstimate-class.">
+</object>
+
+
+<h2>MEstimate-class.</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Class of asymptotically linear estimates.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>
+Objects can be created by calls of the form <code>new("MEstimate", ...)</code>.
+More frequently they are created via the generating function 
+<code>locMEstimator</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+<dl>
+<dt><code>name</code>:</dt><dd>Object of class <code>"character"</code>:
+name of the estimator. </dd>
+<dt><code>estimate</code>:</dt><dd>Object of class <code>"ANY"</code>:
+estimate. </dd>
+<dt><code>samplesize</code>:</dt><dd>Object of class <code>"numeric"</code>:
+sample size. </dd>
+<dt><code>asvar</code>:</dt><dd>Optional object of class <code>"matrix"</code>:
+asymptotic variance. </dd>
+<dt><code>asbias</code>:</dt><dd>Optional object of class <code>"numeric"</code>:
+asymptotic bias. </dd>
+<dt><code>pIC</code>:</dt><dd>Optional object of class <code>InfluenceCurve</code>:
+influence curve. </dd>
+<dt><code>nuis.idx</code>:</dt><dd>object of class <code>"OptionalNumeric"</code>: 
+indices of <code>estimate</code> belonging to the nuisance part. </dd>
+<dt><code>Mroot</code>:</dt><dd>Object of class <code>"numeric"</code>: value of
+the M equation at the estimate. </dd>
+<dt><code>Infos</code>:</dt><dd>object of class <code>"matrix"</code>
+with two columns named <code>method</code> and <code>message</code>:
+additional informations. </dd>
+</dl>
+
+<h3>Extends</h3>
+
+<p>
+Class <code>"ALEstimate"</code>, directly.<br>
+Class <code>"Estimate"</code>, by class <code>"ALEstimate"</code>.
+</p>
+
+
+<h3>Methods</h3>
+
+<dl>
+<dt>Mroot</dt><dd><code>signature(object = "MEstimate")</code>: 
+accessor function for slot <code>Mroot</code>. </dd>
+
+
+<dt>show</dt><dd><code>signature(object = "MEstimate")</code> </dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="ALEstimate-class.html">ALEstimate-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## prototype
+new("MEstimate")
+</pre>
+
+
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

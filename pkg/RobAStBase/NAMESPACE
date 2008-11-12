@@ -17,6 +17,7 @@ exportClasses("InfluenceCurve",
 exportClasses("RobAStControl", "RobWeight", "BoundedWeight",
               "BdStWeight", "HampelWeight")
 exportClasses("ALEstimate", "kStepEstimate", "MEstimate")
+exportClasses("cutoff")
 exportMethods("show", 
               "plot")
 exportMethods("type", "radius")
@@ -54,8 +55,12 @@ exportMethods("comparePlot")
 exportMethods("pIC", "asbias", 
               "steps", 
               "Mroot")
+exportMethods("ddPlot")
+exportMethods("cutoff.quantile", "cutoff.quantile<-")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 
 export("InfluenceCurve", "IC", "ContIC", "TotalVarIC")
 export(".eq", ".getDistr")
 export("RobAStBaseOptions", "getRobAStBaseOption")
+export("cutoff","cutoff.chisq","cutoff.sememp")
+export("outlyingPlotIC")
