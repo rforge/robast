@@ -23,7 +23,8 @@ exportMethods("optIC",
               "lowerCaseRadius",
               "minmaxBias", "getBiasIC", 
               "getL1normL2deriv",
-              "getModifyIC")
+              "getModifyIC",
+              "cniperCont", "cniperPoint", "cniperPointPlot")
 exportMethods("updateNorm")
 export("getL2normL2deriv")
 export("roptest")
