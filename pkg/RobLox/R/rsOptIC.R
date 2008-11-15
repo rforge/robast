@@ -99,7 +99,7 @@ rsOptIC <- function(r, mean = 0, sd = 1, bUp = 1000, delta = 1e-6, itmax = 100,
             }
         }
 
-        L2Fam <- substitute(NormLocationFamily(mean = m1, sd = s1), 
+        L2Fam <- substitute(NormScaleFamily(sd = s1, mean = m1), 
                             list(m1 = mean, s1 = sd))
         return(generateIC(neighbor = ContNeighborhood(radius = r), 
                     L2Fam = eval(L2Fam), 
