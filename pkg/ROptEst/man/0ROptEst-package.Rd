@@ -14,7 +14,7 @@ using S4 classes and methods.
 Package: \tab ROptEst\cr
 Type: \tab Package\cr
 Version: \tab 0.6.1\cr
-Date: \tab 2008-10-31\cr
+Date: \tab 2008-11-19\cr
 Depends: \tab Depends: R(>= 2.7.0), methods, distr(>= 2.0), distrEx(>= 2.0), distrMod(>= 2.0), RandVar(>= 0.6.4), RobAStBase\cr
 LazyLoad: \tab yes\cr
 License: \tab LGPL-3\cr

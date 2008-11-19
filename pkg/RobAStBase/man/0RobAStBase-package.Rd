@@ -13,7 +13,7 @@ Base S4-classes and functions for robust asymptotic statistics.
 Package: \tab RobAStBase\cr
 Type: \tab Package\cr
 Version: \tab 0.1.2\cr
-Date: \tab 2008-11-05\cr
+Date: \tab 2008-11-19\cr
 Depends: \tab R(>= 2.7.0), methods, distr(>= 2.0), distrEx(>= 2.0), distrMod(>= 2.0), RandVar(>= 0.6.3)\cr
 LazyLoad: \tab yes\cr
 License: \tab LGPL-3\cr
