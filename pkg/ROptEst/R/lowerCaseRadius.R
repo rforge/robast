@@ -61,6 +61,7 @@ setMethod("lowerCaseRadius", signature(L2Fam = "L2ParamFamily",
 
         L2deriv <- L2Fam@L2derivDistr[[1]]        
         w0 <- options("warn")
+        on.exit(options(w0))
         options(warn = -1)
         supp <- support(L2deriv)
         gg <- min(abs(supp[supp != 0]))
@@ -99,6 +100,7 @@ setMethod("lowerCaseRadius", signature(L2Fam = "L2ParamFamily",
 
         sign <- sign(biastype)
         w0 <- options("warn")
+        on.exit(options(w0))
         options(warn = -1)
         L2deriv <- L2Fam@L2derivDistr[[1]]        
         
@@ -128,6 +130,7 @@ setMethod("lowerCaseRadius", signature(L2Fam = "UnivariateDistribution",
 
         sign <- sign(biastype)
         w0 <- options("warn")
+        on.exit(options(w0))
         options(warn = -1)
         
         l <- length(support(L2deriv))
