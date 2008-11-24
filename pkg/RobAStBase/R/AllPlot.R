@@ -112,9 +112,9 @@ setMethod("plot", signature(x = "IC", y = "missing"),
      }
 
 
-        w0 <- options("warn")
+        w0 <- getOption("warn")
         options(warn = -1)
-        on.exit(options(w0))
+        on.exit(options(warn = w0))
         opar <- par()
         on.exit(par=opar)
         if (!withSweave)

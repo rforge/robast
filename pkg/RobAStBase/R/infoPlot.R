@@ -142,9 +142,9 @@ setMethod("infoPlot", "IC",
             absInfo <- sapply(x.vec, absInfo@Map[[1]])
 
             
-            w0 <- options("warn")
+            w0 <- getOption("warn")
             options(warn = -1)
-            on.exit(w0)
+            on.exit(options(warn = w0))
             opar <- par()
             on.exit(par(opar))
 #            if (!withSweave)

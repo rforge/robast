@@ -160,9 +160,9 @@ setMethod("comparePlot", signature("IC","IC"),
               }
 
 
-        w0 <- options("warn")
+        w0 <- getOption("warn")
         options(warn = -1)
-        on.exit(options(w0))
+        on.exit(options(warn = w0))
         opar <- par()
         on.exit(par(opar))
         nrows <- trunc(sqrt(dims))
