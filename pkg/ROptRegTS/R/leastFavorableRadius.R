@@ -8,6 +8,9 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2RegTypeFamily",
     function(L2Fam, neighbor, risk, rho, upRad = 1, z.start = NULL, 
             A.start = NULL, upper = 100, maxiter = 100, 
             tol = .Machine$double.eps^0.4, warn = FALSE){
+        ow <- options("warn")
+        on.exit(options(ow))
+        
         if(length(rho) != 1)
             stop("'rho' is not of length == 1")
         if((rho <= 0)||(rho >= 1))
@@ -22,6 +25,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2RegTypeFamily",
                 lower <- ifelse(identical(all.equal(loRad, 0), TRUE), 1e-4, loRad)
                 upper <- ifelse(upRad == Inf, 10, upRad)
                 ow <- options("warn")
+                on.exit(options(ow))
                 options(warn = -1)
                 if(identical(all.equal(loRad, 0), TRUE)){
                     loRad <- 0
@@ -107,6 +111,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2RegTypeFamily",
                     lower <- ifelse(identical(all.equal(loRad, 0), TRUE), 1e-4, loRad)
                     upper <- ifelse(upRad == Inf, 10, upRad)
                     ow <- options("warn")
+                    on.exit(options(ow))
                     options(warn = -1)
                     trafo <- L2Fam@param@trafo
                     if(identical(all.equal(loRad, 0), TRUE)){

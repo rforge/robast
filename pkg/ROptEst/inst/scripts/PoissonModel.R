@@ -2,6 +2,7 @@
 ## Example: Poisson Family
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 distroptions("TruncQuantile", 1e-10) # increases numerical support of Pois; 
                                      # i.e., increases precision of the 

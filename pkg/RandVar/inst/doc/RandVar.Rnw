@@ -136,6 +136,7 @@ vector {\tt v} and a numerical matrix {\tt M} (with compatible dimensions)
 we can for instance generate
 <<exa1, eval = TRUE>>=
 library(RandVar)
+distroptions("withSweave" = TRUE) ## only for use in Sweave - document; set to FALSE else!
 (X <- RealRandVariable(Map = list(function(x){x}, function(x){x^2}), Domain = Reals(), Range = Reals()))
 Map(X)
 evalRandVar(X, 2)

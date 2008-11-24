@@ -2,6 +2,7 @@
 ## Example: Binomial Family
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 ## generates Binomial Family with 
 ## m = 25 and probability of success theta = 0.25

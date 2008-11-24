@@ -214,6 +214,7 @@ setMethod("getAsRisk", signature(risk = "asBias",
 
         sign <- sign(biastype)
         w0 <- options("warn")
+        on.exit(options(w0))
         options(warn = -1)
         
         l <- length(support(L2deriv))

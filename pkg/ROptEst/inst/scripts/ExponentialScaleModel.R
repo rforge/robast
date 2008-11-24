@@ -2,6 +2,7 @@
 ## Example: Exponential Scale Family
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 ## generates Exponential Scale Family with scale = 0.5 (rate = 2)
 E1 <- ExpScaleFamily(scale = 0.5) 

@@ -2,6 +2,7 @@
 ## Example: Normal location and scale
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 ## generates normal location and scale family with mean = -2 and sd = 3
 N0 <- NormLocationScaleFamily(mean=-2, sd=3) 

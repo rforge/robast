@@ -2,6 +2,7 @@
 ## Example: Normal Location
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 ## generates Normal Location Family with mean = 0
 N0 <- NormLocationFamily(mean=0) 

@@ -4,6 +4,7 @@
 ## Exponential Scale Family
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 ## generates Gumbel Location Family with loc = 0
 ## (known scale = 1)

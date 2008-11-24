@@ -114,7 +114,9 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
         w0 <- options("warn")
         options(warn = -1)
+        on.exit(options(w0))
         opar <- par()
+        on.exit(par=opar)
         if (!withSweave)
              devNew()
         nrows <- trunc(sqrt(dims))
@@ -160,7 +162,5 @@ setMethod("plot", signature(x = "IC", y = "missing"),
             mtext(text = sub, side = 1, cex = cex.sub, adj = .5,
                   outer = TRUE, line = -1.6, col = col.sub)
 
-        par(opar)
-        options(w0)
         invisible()
     })

@@ -12,6 +12,7 @@ setMethod("lowerCaseRadius", signature(L2Fam = "L2ParamFamily",
         if(!is(D1, "DiscreteDistribution")) stop("not yet implemented")
 
         w0 <- options("warn")
+        on.exit(options(w0))
         options(warn = -1)
         L2deriv <- L2Fam@L2derivDistr[[1]]        
         m <- q(L2deriv)(0.5)
@@ -34,10 +35,8 @@ setMethod("lowerCaseRadius", signature(L2Fam = "L2ParamFamily",
                 rad <- sqrt(M*Int - (1-wsm) - bet^2*wsm)
                 names(rad) <- "lower case radius"
                 
-                options(w0)
                 return(rad)
             }else{
-                options(w0)
                 rad <- Inf
                 names(rad) <- "lower case radius"
                 return(rad)
@@ -47,7 +46,6 @@ setMethod("lowerCaseRadius", signature(L2Fam = "L2ParamFamily",
             rad <- sqrt(M*Int - 1)
             names(rad) <- "lower case radius"
 
-            options(w0)
             return(rad)            
         }
     })

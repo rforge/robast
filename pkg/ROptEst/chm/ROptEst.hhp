@@ -12,6 +12,8 @@ Title=R Help for package ROptEst
 
 [FILES]
 00Index.html
+0ROptEst-package.html
+cniperCont.html
 getAsRisk.html
 getBiasIC.html
 getFiRisk.html

@@ -2,6 +2,7 @@
 ## Example: Lognormal Scale and Normal Location
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 ## generates Lognormal Scale Family with meanlog = 0, sdlog = 1
 LN1 <- LnormScaleFamily() 

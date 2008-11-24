@@ -11,7 +11,7 @@
 <UL>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="RandVar-package">
-<param name="Local" value="RandVar-package.html">
+<param name="Local" value="0RandVar-package.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="%*%,EuclRandMatrix,EuclRandMatrix-method">
@@ -419,7 +419,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="RandVar">
-<param name="Local" value="RandVar-package.html">
+<param name="Local" value="0RandVar-package.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="RandVariable">
@@ -532,7 +532,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Implementation of random variables ">
-<param name="Local" value="RandVar-package.html">
+<param name="Local" value="0RandVar-package.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="List of Euclidean random variables">

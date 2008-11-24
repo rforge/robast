@@ -162,7 +162,9 @@ setMethod("comparePlot", signature("IC","IC"),
 
         w0 <- options("warn")
         options(warn = -1)
+        on.exit(options(w0))
         opar <- par()
+        on.exit(par(opar))
         nrows <- trunc(sqrt(dims))
         ncols <- ceiling(dims/nrows)
         par(mfrow = c(nrows, ncols))
@@ -217,7 +219,5 @@ setMethod("comparePlot", signature("IC","IC"),
                   outer = TRUE, line = -1.6, col = col.sub)
 
 
-        par(opar)
-        options(w0)
         invisible()
     })

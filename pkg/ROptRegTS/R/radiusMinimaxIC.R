@@ -7,6 +7,10 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2RegTypeFamily",
                                        risk = "asGRisk"),
     function(L2Fam, neighbor, risk, loRad, upRad, z.start = NULL, A.start = NULL,
             upper = 1e4, maxiter = 100, tol = .Machine$double.eps^0.4, warn = FALSE){
+        
+        ow <- options("warn")
+        on.exit(options(ow))
+        
         if(length(loRad) != 1)
             stop("'loRad' is not of length == 1")
         if(length(upRad) != 1)
@@ -15,7 +19,6 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2RegTypeFamily",
             stop("'upRad < loRad' is not fulfilled")
         L2derivDim <- numberOfMaps(L2Fam@ErrorL2deriv)
         if(L2derivDim == 1){
-            ow <- options("warn")
             options(warn = -1)
             upper.b <- upper
             lower <- ifelse(identical(all.equal(loRad, 0), TRUE), 1e-4, loRad)
@@ -102,7 +105,6 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2RegTypeFamily",
                     }
                 }
                 trafo <- L2Fam@param@trafo
-                ow <- options("warn")
                 options(warn = -1)
                 upper.b <- upper
                 lower <- ifelse(identical(all.equal(loRad, 0), TRUE), 1e-4, loRad)

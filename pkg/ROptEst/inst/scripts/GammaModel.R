@@ -2,6 +2,7 @@
 ## Example: Gamma Family
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 ## generates Gamma Family with 
 ## scale = 2 and shape = 0.5
@@ -28,7 +29,7 @@ IC1
 checkIC(IC1)
 Risks(IC1)
 plot(IC1)
-devNew()
+#devNew()
 infoPlot(IC1)
 
 ## lower case solutions

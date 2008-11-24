@@ -23,8 +23,6 @@ setMethod("infoPlot", "IC",
         
         dotsP <- dotsL <- dotsT <- dots
 
-        print(dots)
-        print(lwd)
         e1 <- L2Fam@distribution
         if(!is(e1, "UnivariateDistribution") | is(e1, "CondDistribution"))
             stop("not yet implemented")
@@ -146,9 +144,11 @@ setMethod("infoPlot", "IC",
             
             w0 <- options("warn")
             options(warn = -1)
+            on.exit(w0)
             opar <- par()
-            if (!withSweave)
-               devNew()
+            on.exit(par(opar))
+#            if (!withSweave)
+#               devNew()
 
             omar <- par("mar")
             parArgs <- list(mar = c(bmar,omar[2],tmar,omar[4]))
@@ -227,8 +227,6 @@ setMethod("infoPlot", "IC",
                   outer = TRUE, line = -1.6, col = col.sub)
 
 
-            par(opar)
-            options(w0)
         }
     })
  

@@ -2,6 +2,7 @@
 ## Example: Normal Scale
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 ## generates Normal Scale Family with scale = 3
 N0 <- NormScaleFamily(mean=2, sd=3) 

@@ -6,8 +6,9 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
              maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE, 
              noLow = FALSE, verbose = FALSE){
         L2derivDim <- numberOfMaps(model@center@L2deriv)
+        ow <- options("warn")
+        on.exit(options(ow))
         if(L2derivDim == 1){
-            ow <- options("warn")
             options(warn = -1)
             res <- getInfRobIC(L2deriv = model@center@L2derivDistr[[1]], 
                         neighbor = model@neighbor, risk = risk, 
@@ -15,7 +16,6 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                         Finfo = model@center@FisherInfo, trafo = model@center@param@trafo, 
                         upper = upper, maxiter = maxiter, tol = tol, warn = warn,
                         noLow = noLow, verbose = verbose)
-            options(ow)
             res$info <- c("optIC", res$info)
             res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                  neighbor = model@neighbor, 
@@ -42,7 +42,6 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                         L2derivDistrSymm <- new("DistrSymmList", L2)
                     }
                 }
-                ow <- options("warn")
                 options(warn = -1)
                 res <- getInfRobIC(L2deriv = L2deriv, neighbor = model@neighbor, 
                             risk = risk,  Distr = model@center@distribution, 
@@ -71,11 +70,12 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
     function(model, risk, upper = 1e4, maxiter = 50, 
              tol = .Machine$double.eps^0.4, warn = TRUE){
         L2derivDistr <- model@center@L2derivDistr[[1]]
+        ow <- options("warn")
+        on.exit(options(ow))
         if((length(model@center@L2derivDistr) == 1) & is(L2derivDistr, "UnivariateDistribution")){
             if(identical(all.equal(model@neighbor@radius, 0), TRUE)){
                return(optIC(model@center, risk = asCov()))
             }else{
-               ow <- options("warn")
                options(warn = -1)
                res <- getInfRobIC(L2deriv = L2derivDistr, 
                         neighbor = model@neighbor, risk = risk, 
@@ -105,10 +105,11 @@ setMethod("optIC", signature(model = "FixRobModel", risk = "fiUnOvShoot"),
     function(model, risk, sampleSize, upper = 1e4, maxiter = 50, 
              tol = .Machine$double.eps^0.4, warn = TRUE, Algo = "A", 
              cont = "left", verbose = FALSE){
+        ow <- options("warn")
+        on.exit(options(ow))
         if(!identical(all.equal(sampleSize, trunc(sampleSize)), TRUE))
             stop("'sampleSize' has to be an integer > 0")
         if(is(model@center@distribution, "UnivariateDistribution")){
-            ow <- options("warn")
             options(warn = -1)
             res <- getFixRobIC(Distr = model@center@distribution, 
                         neighbor = model@neighbor, risk = risk, 

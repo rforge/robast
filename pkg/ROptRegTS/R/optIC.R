@@ -37,8 +37,9 @@ setMethod("optIC", signature(model = "InfRobRegTypeModel", risk = "asRisk"),
     function(model, risk, z.start=NULL, A.start=NULL, upper = 1e4, 
              maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE){
         ErrorL2derivDim <- numberOfMaps(model@center@ErrorL2deriv)
+        ow <- options("warn")
+        on.exit(options(ow))
         if(ErrorL2derivDim == 1){
-            ow <- options("warn")
             options(warn = -1)
             res <- getInfRobRegTypeIC(ErrorL2deriv = model@center@ErrorL2derivDistr[[1]], 
                         Regressor = model@center@RegDistr, risk = risk, neighbor = model@neighbor, 
@@ -71,7 +72,6 @@ setMethod("optIC", signature(model = "InfRobRegTypeModel", risk = "asRisk"),
                         ErrorL2derivDistrSymm <- new("DistrSymmList", L2)
                     }
                 }
-                ow <- options("warn")
                 options(warn = -1)
                 res <- getInfRobRegTypeIC(ErrorL2deriv = ErrorL2deriv, 
                             Regressor = model@center@RegDistr, risk = risk, neighbor = model@neighbor, 
@@ -96,10 +96,11 @@ setMethod("optIC", signature(model = "InfRobRegTypeModel", risk = "asRisk"),
 setMethod("optIC", signature(model = "InfRobRegTypeModel", risk = "asUnOvShoot"),
     function(model, risk, upper = 1e4, maxiter = 50, tol = .Machine$double.eps^0.4, 
              warn = TRUE){
+        ow <- options("warn")
+        on.exit(options(ow))
         ErrorL2derivDistr <- model@center@ErrorL2derivDistr[[1]]
         if((length(model@center@ErrorL2derivDistr) == 1) & is(ErrorL2derivDistr, "UnivariateDistribution")
             & is(model@center@RegDistr, "UnivariateDistribution")){
-            ow <- options("warn")
             options(warn = -1)
             res <- getInfRobRegTypeIC(ErrorL2deriv = ErrorL2derivDistr, 
                         Regressor = model@center@RegDistr, risk = risk, neighbor = model@neighbor, 
@@ -134,6 +135,8 @@ setMethod("optIC", signature(model = "InfRobRegTypeModel", risk = "asUnOvShoot")
 setMethod("optIC", signature(model = "FixRobRegTypeModel", risk = "fiUnOvShoot"),
     function(model, risk, sampleSize, upper = 1e4, maxiter = 50, 
              tol = .Machine$double.eps^0.4, warn = TRUE, Algo = "A", cont = "left"){
+        ow <- options("warn")
+        on.exit(options(ow))
         if(!identical(all.equal(sampleSize, trunc(sampleSize)), TRUE))
             stop("'sampleSize' has to be an integer > 0")
         if(is(model@center@ErrorDistr, "UnivariateDistribution") 
@@ -142,7 +145,6 @@ setMethod("optIC", signature(model = "FixRobRegTypeModel", risk = "fiUnOvShoot")
             if(!is(RegDistr, "AbscontDistribution"))
                 if(!identical(all.equal(d(RegDistr)(0), 0), TRUE))
                     stop("Solution only available under 'K(x=0)!=0'!") 
-            ow <- options("warn")
             options(warn = -1)
             res <- getFixRobRegTypeIC(ErrorDistr = model@center@ErrorDistr, 
                         Regressor = RegDistr, risk = risk, neighbor = model@neighbor, 
