@@ -11,7 +11,6 @@
 \alias{checkIC,IC,L2ParamFamily-method}
 \alias{evalIC,IC,numeric-method}
 \alias{evalIC,IC,matrix-method}
-\alias{infoPlot,IC-method}
 \alias{show,IC-method}
 
 \title{Influence curve}
@@ -72,7 +71,7 @@ Class \code{"InfluenceCurve"}, directly.
     \item{infoPlot}{\code{signature(object = "IC")}: 
       Plot absolute and relative information of \code{IC}. }
 
-    \item{plot}{\code{signature(x = "IC")}}
+    \item{plot}{\code{signature(x = "IC", y = "missing")}}
 
     \item{show}{\code{signature(object = "IC")}}
   }

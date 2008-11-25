@@ -2,11 +2,12 @@
 ## Example: Lognormal Scale and Normal Location
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
-## generates Lognormal Scale Family with rate = 1
+## generates Lognormal Scale Family with meanlog = 0, sdlog = 1
 LN1 <- LnormScaleFamily() 
 LN1        # show LN1
-plot(LN1)  # plot of Exp(rate = 1) and L_2 derivative
+plot(LN1)  # plot of Lnorm() and L_2 derivative
 checkL2deriv(LN1)
 
 ## generates Normal Location Family with mean = 0
@@ -144,7 +145,6 @@ plot(N0.IC8)
 
 
 ## least favorable radius
-## (may take quite some time!)
 (LN1.r.rho1 <- leastFavorableRadius(L2Fam=LN1, neighbor=ContNeighborhood(),
                     risk=asMSE(), rho=0.5))
 (N0.r.rho1 <- leastFavorableRadius(L2Fam=N0, neighbor=ContNeighborhood(),
@@ -153,3 +153,28 @@ plot(N0.IC8)
                     risk=asMSE(), rho=1/3))
 (N0.r.rho2 <- leastFavorableRadius(L2Fam=N0, neighbor=TotalVarNeighborhood(),
                     risk=asMSE(), rho=1/3))
+
+## For estimation use function roptest
+ind <- rbinom(1e2, size=1, prob=0.05) 
+x <- rnorm(1e2, mean=(1-ind)+ind*9)
+y <- exp(x)
+
+## 1-step: contamination known
+est1 <- roptest(x, eps = 0.05, L2Fam = NormLocationFamily())
+est2 <- roptest(y, eps = 0.05, L2Fam = LnormScaleFamily())
+
+## k-step: contamination known
+est3 <- roptest(x, eps = 0.05, L2Fam = NormLocationFamily(), steps = 3)
+est4 <- roptest(y, eps = 0.05, L2Fam = LnormScaleFamily(), steps = 3)
+
+## comparison
+estimate(est1)
+log(estimate(est2))
+estimate(est3)
+log(estimate(est4))
+
+## confidence intervals
+confint(est1, symmetricBias())
+confint(est2, symmetricBias())
+confint(est3, symmetricBias())
+confint(est4, symmetricBias())

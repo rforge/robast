@@ -2,6 +2,7 @@
 ## Example: Normal location and scale
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 ## generates normal location and scale family with mean = -2 and sd = 3
 N0 <- NormLocationScaleFamily(mean=-2, sd=3) 
@@ -92,17 +93,6 @@ infoPlot(N0.IC4.s)
 N0.r.rho1 <- leastFavorableRadius(L2Fam=N0, neighbor=ContNeighborhood(),
                     risk=asMSE(), rho=0.5)
 
-
-library(ROptEst)
-library(MASS)
-data(chem)
-initial.est <- c(median(chem), mad(chem))
-system.time(ROest1 <- roptest(chem, NormLocationScaleFamily(), eps.upper = 0.05, steps = 3L, 
-                           initial.est = initial.est))
-
-library(RobLox)
-system.time(ROest2 <- roblox(chem, eps.upper = 0.05, k = 3, returnIC = TRUE))
-
 ## one-step estimation
 ## 1. generate a contaminated sample
 ind <- rbinom(100, size=1, prob=0.05) 
@@ -125,3 +115,23 @@ IC1 <- optIC(model = N1.Rob, risk = asMSE())
 IC2 <- radiusMinimaxIC(L2Fam=N1, neighbor=ContNeighborhood(),risk=asMSE(), 
                        loRad=0.1, upRad=1.0) 
 (est2 <- oneStepEstimator(x, IC2, est0$estimate))
+
+
+## a simple example
+library(MASS)
+data(chem)
+initial.est <- c(median(chem), mad(chem))
+system.time(ROest1 <- roptest(chem, NormLocationScaleFamily(), eps.upper = 0.1, steps = 3L, 
+                              initial.est = initial.est, useLast = TRUE))
+
+## optimized for speed
+library(RobLox)
+system.time(ROest2 <- roblox(chem, eps.upper = 0.1, k = 3, returnIC = TRUE))
+
+## comparison
+estimate(ROest1)
+estimate(ROest2)
+
+## confidence intervals
+confint(ROest1, symmetricBias())
+confint(ROest2, symmetricBias())

@@ -10,6 +10,46 @@
 </OBJECT>
 <UL>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ROptEst-package">
+<param name="Local" value="0ROptEst-package.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cniperCont">
+<param name="Local" value="cniperCont.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cniperCont,IC,IC,L2ParamFamily,ContNeighborhood,asMSE-method">
+<param name="Local" value="cniperCont.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cniperCont-methods">
+<param name="Local" value="cniperCont.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cniperPoint">
+<param name="Local" value="cniperCont.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cniperPoint,L2ParamFamily,ContNeighborhood,asMSE-method">
+<param name="Local" value="cniperCont.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cniperPoint-methods">
+<param name="Local" value="cniperCont.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cniperPointPlot">
+<param name="Local" value="cniperCont.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cniperPointPlot,L2ParamFamily,ContNeighborhood,asMSE-method">
+<param name="Local" value="cniperCont.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cniperPointPlot-methods">
+<param name="Local" value="cniperCont.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getAsRisk">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
@@ -530,6 +570,10 @@
 <param name="Local" value="radiusMinimaxIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ROptEst">
+<param name="Local" value="0ROptEst-package.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="roptest">
 <param name="Local" value="roptest.html">
 </OBJECT>
@@ -625,6 +669,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic Function for the Computation of the Standardizing Matrix ">
 <param name="Local" value="getInfStand.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Generic Functions for Computation and Plot of Cniper Contamination          and Cniper Points. ">
+<param name="Local" value="cniperCont.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Methods for Function updateNorm in Package `ROptEst' ">

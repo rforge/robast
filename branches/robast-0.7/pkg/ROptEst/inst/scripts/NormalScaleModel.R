@@ -2,6 +2,7 @@
 ## Example: Normal Scale
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 ## generates Normal Scale Family with scale = 3
 N0 <- NormScaleFamily(mean=2, sd=3) 
@@ -70,3 +71,30 @@ plot(N0.IC8)
                     risk=asMSE(), rho=0.5))
 (N0.r.rho2 <- leastFavorableRadius(L2Fam=N0, neighbor=TotalVarNeighborhood(),
                     risk=asMSE(), rho=1/3))
+
+
+## For estimation use function roptest
+ind <- rbinom(1e2, size=1, prob=0.05) 
+x <- rnorm(1e2, mean=1, sd = (1-ind)+ind*9)
+
+## 1-step: contamination known
+est1 <- roptest(x, eps = 0.05, L2Fam = NormScaleFamily(mean = 1))
+est1v <- roptest(x, eps = 0.025, L2Fam = NormScaleFamily(mean = 1), 
+                 neighbor = TotalVarNeighborhood())
+
+## k-step: contamination known
+est2 <- roptest(x, eps = 0.05, L2Fam = NormScaleFamily(mean = 1), steps = 3)
+est2v <- roptest(x, eps = 0.025, L2Fam = NormScaleFamily(mean = 1), 
+                 neighbor = TotalVarNeighborhood(), steps = 3)
+
+## comparison
+estimate(est1)
+estimate(est2)
+estimate(est1v)
+estimate(est2v)
+
+## confidence intervals
+confint(est1, symmetricBias())
+confint(est2, symmetricBias())
+confint(est1v, symmetricBias())
+confint(est2v, symmetricBias())

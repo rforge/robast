@@ -1,4 +1,5 @@
 library(RobRex)
+options("newDevice"=TRUE)
 
 ###############################################################################
 ## start of tests

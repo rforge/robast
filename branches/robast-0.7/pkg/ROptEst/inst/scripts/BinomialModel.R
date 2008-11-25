@@ -2,6 +2,7 @@
 ## Example: Binomial Family
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 ## generates Binomial Family with 
 ## m = 25 and probability of success theta = 0.25
@@ -143,6 +144,11 @@ estimate(est1c1)
 estimate(est1c2)
 estimate(est1c3)
 
+## confidence intervals
+confint(est1c, symmetricBias())
+confint(est1c1, symmetricBias())
+confint(est1c2, symmetricBias())
+confint(est1c3, symmetricBias())
 
 ## av) Define infinitesimal robust model
 RobB4 <- InfRobModel(center=BinomFamily(size=25, prob=estimate(est0)),
@@ -172,6 +178,12 @@ estimate(est1v1)
 estimate(est1v2)
 estimate(est1v3)
 
+## confidence intervals
+confint(est1v, symmetricBias())
+confint(est1v1, symmetricBias())
+confint(est1v2, symmetricBias())
+confint(est1v3, symmetricBias())
+
 ## 3.2. k-step estimation: radius known
 IC9 <- optIC(model=RobB3, risk=asMSE())
 (est2c <- kStepEstimator(x, IC=IC9, start=est0, steps = 3L))
@@ -193,6 +205,11 @@ estimate(est2c1)
 estimate(est2c2)
 estimate(est2c3)
 
+## confidence intervals
+confint(est2c, symmetricBias())
+confint(est2c1, symmetricBias())
+confint(est2c2, symmetricBias())
+confint(est2c3, symmetricBias())
 
 IC10 <- optIC(model=RobB4, risk=asMSE())
 (est2v <- kStepEstimator(x, IC=IC10, start=est0, steps = 3L))
@@ -217,6 +234,12 @@ estimate(est2v1)
 estimate(est2v2)
 estimate(est2v3)
 
+## confidence intervals
+confint(est2v, symmetricBias())
+confint(est2v1, symmetricBias())
+confint(est2v2, symmetricBias())
+confint(est2v3, symmetricBias())
+
 
 ## 4.1. one-step estimation: radius interval
 IC11 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=estimate(est0)),
@@ -235,6 +258,19 @@ checkIC(pIC(est3c1))
 (est3v1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5, neighbor = TotalVarNeighborhood()))
 checkIC(pIC(est3v1))
 
+## comparison of estimates
+estimate(est3c)
+estimate(est3v)
+estimate(est3c1)
+estimate(est3v1)
+
+## confidence intervals
+confint(est3c, symmetricBias())
+confint(est3v, symmetricBias())
+confint(est3c1, symmetricBias())
+confint(est3v1, symmetricBias())
+
+
 ## 4.2. k-step estimation: radius interval
 IC11 <- radiusMinimaxIC(L2Fam=BinomFamily(size=25, prob=estimate(est0)),
                 neighbor=ContNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
@@ -252,3 +288,15 @@ checkIC(pIC(est4c1))
 (est4v1 <- roptest(x, BinomFamily(size = 25), eps.upper = 0.5, neighbor = TotalVarNeighborhood(),
         steps = 3L))
 checkIC(pIC(est4v1))
+
+## comparison of estimates
+estimate(est4c)
+estimate(est4v)
+estimate(est4c1)
+estimate(est4v1)
+
+## confidence intervals
+confint(est4c, symmetricBias())
+confint(est4v, symmetricBias())
+confint(est4c1, symmetricBias())
+confint(est4v1, symmetricBias())

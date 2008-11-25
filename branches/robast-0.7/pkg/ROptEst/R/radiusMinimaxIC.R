@@ -8,6 +8,8 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
     function(L2Fam, neighbor, risk, loRad, upRad, z.start = NULL, 
              A.start = NULL, upper = 1e5, maxiter = 50, 
              tol = .Machine$double.eps^0.4, warn = FALSE, verbose = FALSE){
+        ow <- options("warn")
+        on.exit(options(ow))
         if(length(loRad) != 1)
             stop("'loRad' is not of length == 1")
         if(length(upRad) != 1)
@@ -21,7 +23,6 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
            upRad <- min(upRad,10) 
 
         if(L2derivDim == 1){
-            ow <- options("warn")
             options(warn = -1)
             upper.b <- upper
             lower <- ifelse(identical(all.equal(loRad, 0), TRUE), 1e-4, loRad)
@@ -122,7 +123,6 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                       normtype(risk) <- normtype}
                 std <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(p)
 
-                ow <- options("warn")
                 options(warn = -1)
                 upper.b <- upper
                 lower <- ifelse(identical(all.equal(loRad, 0), TRUE), 1e-4, loRad)
@@ -191,7 +191,6 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                             Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
                             A.start = A.start, upper = upper.b, maxiter = maxiter, 
                             tol = tol, warn = warn, verbose = verbose)
-                options(ow)
                 res$info <- c("radiusMinimaxIC", paste("radius minimax IC for radius interval [", 
                                 round(loRad, 3), ", ", round(upRad, 3), "]", sep=""))
                 res$info <- rbind(res$info, c("radiusMinimaxIC", 

@@ -4,10 +4,11 @@
 ## Exponential Scale Family
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 ## generates Gumbel Location Family with loc = 0
 ## (known scale = 1)
-distrExOptions(ElowerTruncQuantile = 1e-15) # non-finite function value in integrate
+distrExOptions(ElowerTruncQuantile = 1e-7) # non-finite function value in integrate
 G0 <- GumbelLocationFamily(loc = 0, scale = 1)
 G0        # show G0
 plot(G0)  # plot of Gumbel(loc = 0, scale = 1) and L_2 derivative
@@ -107,28 +108,68 @@ ind <- rbinom(1e2, size=1, prob=0.05)
 G0.x <- rgumbel(1e2, loc=(1-ind)*0.5+ind*1)
 
 ## 2. Kolmogorov(-Smirnov) minimum distance estimator
-(G0.est0 <- MDEstimator(x=G0.x, GumbelLocationFamily(), interval = c(0, 5)))
+(G0.est01 <- MDEstimator(x=G0.x, GumbelLocationFamily()))
 
-## 3. one-step estimation: radius known
-G0.Rob3 <- InfRobModel(center=GumbelLocationFamily(loc=G0.est0$estimate), 
+## 3. Cramer von Mises minimum distance estimator
+(G0.est02 <- MDEstimator(x=G0.x, GumbelLocationFamily(), distance = CvMDist))
+
+## 4. one-step estimation: radius known
+G0.Rob3 <- InfRobModel(center=GumbelLocationFamily(loc=estimate(G0.est02)), 
                        neighbor=ContNeighborhood(radius=0.5))
 G0.IC9 <- optIC(model=G0.Rob3, risk=asMSE())
-(G0.est1 <- oneStepEstimator(G0.x, IC=G0.IC9, start=G0.est0$estimate))
+(G0.est1 <- oneStepEstimator(G0.x, IC=G0.IC9, start=G0.est02))
 
-## 4. M estimation: radius known
+## 5. k-step estimation: radius known
+(G0.est2 <- kStepEstimator(G0.x, IC=G0.IC9, start=G0.est02, steps = 3))
+
+## 6. M estimation: radius known
 G0.Rob31 <- InfRobModel(center=GumbelLocationFamily(loc=0), 
                         neighbor=ContNeighborhood(radius=0.5))
 G0.IC91 <- optIC(model=G0.Rob31, risk=asMSE())
 (G0.est11 <- locMEstimator(G0.x, IC=G0.IC91))
 
-## 5. one-step estimation: radius interval
-G0.IC10 <- radiusMinimaxIC(L2Fam=GumbelLocationFamily(loc=G0.est0$estimate),
+## 7. one-step estimation: radius interval
+G0.IC10 <- radiusMinimaxIC(L2Fam=GumbelLocationFamily(loc=estimate(G0.est02)),
                 neighbor=ContNeighborhood(), risk=asMSE(), loRad=0.5, upRad=1)
-(G0.est2 <- oneStepEstimator(G0.x, IC=G0.IC10, start=G0.est0$estimate))
+(G0.est3 <- oneStepEstimator(G0.x, IC=G0.IC10, start=G0.est02))
 
-## 6. M estimation: radius interval
+## 8. k-step estimation: radius interval
+(G0.est4 <- kStepEstimator(G0.x, IC=G0.IC10, start=G0.est02, steps = 3))
+
+## 9. M estimation: radius interval
 G0.IC101 <- radiusMinimaxIC(L2Fam=GumbelLocationFamily(),
                 neighbor=ContNeighborhood(), risk=asMSE(), loRad=0.5, upRad=1)
 (G0.est21 <- locMEstimator(G0.x, IC=G0.IC101))
+
+## 10. It's easier to use function roptest for k-step (k >= 1) estimation!
+sqrtn <- sqrt(length(G0.x))
+G0.est5 <- roptest(G0.x, eps.lower = 0.5/sqrtn, eps.upper = 1/sqrtn, 
+                   L2Fam = GumbelLocationFamily())
+G0.est6 <- roptest(G0.x, eps.lower = 0.5/sqrtn, eps.upper = 1/sqrtn, 
+                   L2Fam = GumbelLocationFamily(), steps = 3)
+
+## comparison - radius known
+estimate(G0.est1)
+estimate(G0.est2)
+estimate(G0.est11)
+
+## confidence intervals
+confint(G0.est1, symmetricBias())
+confint(G0.est2, symmetricBias())
+confint(G0.est11, symmetricBias())
+
+## comparison - radius interval
+estimate(G0.est3)
+estimate(G0.est5)
+estimate(G0.est4)
+estimate(G0.est6)
+estimate(G0.est21)
+
+## confidence intervals
+confint(G0.est3, symmetricBias())
+confint(G0.est5, symmetricBias())
+confint(G0.est4, symmetricBias())
+confint(G0.est6, symmetricBias())
+confint(G0.est21, symmetricBias())
 
 distrExOptions(ElowerTruncQuantile=0) # default

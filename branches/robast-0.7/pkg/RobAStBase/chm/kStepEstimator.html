@@ -1,0 +1,144 @@
+<html><head><title>Generic function for the computation of k-step estimates</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>kStepEstimator(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   kStepEstimator">
+<param name="keyword" value="R:   kStepEstimator-methods">
+<param name="keyword" value="R:   kStepEstimator,numeric,IC,numeric-method">
+<param name="keyword" value="R:   kStepEstimator,matrix,IC,numeric-method">
+<param name="keyword" value="R:   kStepEstimator,numeric,IC,Estimate-method">
+<param name="keyword" value="R:   kStepEstimator,matrix,IC,Estimate-method">
+<param name="keyword" value=" Generic function for the computation of k-step estimates">
+</object>
+
+
+<h2>Generic function for the computation of k-step estimates</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for the computation of k-step estimates.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+kStepEstimator(x, IC, start, ...)
+
+## S4 method for signature 'numeric, IC, numeric':
+kStepEstimator(x, IC, start, steps = 1L, 
+    useLast = getRobAStBaseOption("kStepUseLast"))
+## S4 method for signature 'matrix, IC, numeric':
+kStepEstimator(x, IC, start, steps = 1L, 
+    useLast = getRobAStBaseOption("kStepUseLast"))
+## S4 method for signature 'numeric, IC, Estimate':
+kStepEstimator(x, IC, start, steps = 1L, 
+    useLast = getRobAStBaseOption("kStepUseLast"))
+## S4 method for signature 'matrix, IC, Estimate':
+kStepEstimator(x, IC, start, steps = 1L, 
+    useLast = getRobAStBaseOption("kStepUseLast"))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+sample </td></tr>
+<tr valign="top"><td><code>IC</code></td>
+<td>
+object of class <code>"IC"</code> </td></tr>
+<tr valign="top"><td><code>start</code></td>
+<td>
+initial estimate </td></tr>
+<tr valign="top"><td><code>steps</code></td>
+<td>
+integer: number of steps </td></tr>
+<tr valign="top"><td><code>useLast</code></td>
+<td>
+which parameter estimate (initial estimate or
+k-step estimate) shall be used to fill the slots <code>pIC</code>,
+<code>asvar</code> and <code>asbias</code> of the return value. </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional parameters </td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+Given an initial estimation <code>start</code>, a sample <code>x</code> 
+and an influence curve <code>IC</code> the corresponding k-step
+estimator is computed.
+</p>
+<p>
+The default value of argument <code>useLast</code> is set by the
+global option <code>kStepUseLast</code> which by default is set to 
+<code>FALSE</code>. In case of general models <code>useLast</code> 
+remains unchanged during the computations. However, if 
+slot <code>CallL2Fam</code> of <code>IC</code> generates an object of 
+class <code>"L2GroupParamFamily"</code> the value of <code>useLast</code> 
+is changed to <code>TRUE</code>.
+Explicitly setting <code>useLast</code> to <code>TRUE</code> should
+be done with care as in this situation the influence curve
+is re-computed using the value of the one-step estimate
+which may take quite a long time depending on the model.
+</p>
+<p>
+If <code>useLast</code> is set to <code>TRUE</code> and slot <code>modifyIC</code> 
+of <code>IC</code> is filled with some function (which can be 
+used to re-compute the IC for a different parameter), the 
+computation of <code>asvar</code>, <code>asbias</code> and <code>IC</code> is 
+based on the k-step estimate.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"kStepEstimate"</code>.</p>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>x = "numeric", IC = "IC", start = "numeric"</dt><dd>univariate samples. </dd>
+<dt>x = "matrix", IC = "IC", start = "numeric"</dt><dd>multivariate samples. </dd>
+<dt>x = "matrix", IC = "IC", start = "Estimate"</dt><dd>multivariate samples. </dd>
+<dt>x = "matrix", IC = "IC", start = "Estimate"</dt><dd>multivariate samples. </dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="IC-class.html">IC-class</a></code>, <code><a href="kStepEstimate-class.html">kStepEstimate-class</a></code>
+</p>
+
+
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

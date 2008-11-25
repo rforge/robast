@@ -1,0 +1,134 @@
+<html><head><title>Methods for Function plot in Package &lsquo;RobAStBase&rsquo;</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>plot-methods(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   plot">
+<param name="keyword" value="R:   plot-methods">
+<param name="keyword" value="R:   plot,IC,missing-method">
+<param name="keyword" value=" Methods for Function plot in Package &lsquo;RobAStBase&rsquo;">
+</object>
+
+
+<h2>Methods for Function plot in Package &lsquo;RobAStBase&rsquo;</h2>
+
+
+<h3>Description</h3>
+
+<p>
+plot-methods
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>plot(x, y, ...)
+## S4 method for signature 'IC, missing':
+plot(x, ..., withSweave = getdistrOption("withSweave"),
+             main = FALSE, inner = TRUE, sub = FALSE,
+             col.inner = par("col.main"), cex.inner = 0.8,
+             bmar = par("mar")[1], tmar = par("mar")[3],
+             mfColRow = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+object of class <code>"IC"</code>: IC to be plotted </td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+missing </td></tr>
+<tr valign="top"><td><code>withSweave</code></td>
+<td>
+logical: if <code>TRUE</code> (for working with <CODE>Sweave</CODE>)
+no extra device is opened</td></tr>
+<tr valign="top"><td><code>main</code></td>
+<td>
+logical: is a main title to be used? or <br>
+just as argument <code>main</code> in <code><a onclick="findlink('graphics', 'plotdefault.html')" style="text-decoration: underline; color: blue; cursor: hand">plot.default</a></code>.</td></tr>
+<tr valign="top"><td><code>inner</code></td>
+<td>
+logical: panels have their own titles? or <br>
+character vector of / cast to length number of comparands:
+<code>main</code> in <code><a onclick="findlink('graphics', 'plotdefault.html')" style="text-decoration: underline; color: blue; cursor: hand">plot.default</a></code>)</td></tr>
+<tr valign="top"><td><code>sub</code></td>
+<td>
+logical: is a sub-title to be used? or <br>
+just as argument <code>sub</code> in <code><a onclick="findlink('graphics', 'plotdefault.html')" style="text-decoration: underline; color: blue; cursor: hand">plot.default</a></code>.</td></tr>
+<tr valign="top"><td><code>tmar</code></td>
+<td>
+top margin &ndash; useful for non-standard main title sizes</td></tr>
+<tr valign="top"><td><code>bmar</code></td>
+<td>
+bottom margin &ndash; useful for non-standard sub title sizes</td></tr>
+<tr valign="top"><td><code>cex.inner</code></td>
+<td>
+magnification to be used for inner titles relative
+to the current setting of <code>cex</code>; as in
+<code><a onclick="findlink('stats', 'par.html')" style="text-decoration: underline; color: blue; cursor: hand">par</a></code></td></tr>
+<tr valign="top"><td><code>col.inner</code></td>
+<td>
+character or integer code; color for the inner title</td></tr>
+<tr valign="top"><td><code>mfColRow</code></td>
+<td>
+shall default partition in panels be used &mdash; defaults to <code>TRUE</code></td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+</td></tr>
+</table>
+<p>
+ {further parameters for <code>plot</code>}</p>
+
+<h3>Details</h3>
+
+<p>
+Any parameters of <code>plot.default</code> may be passed on to this particular
+<code>plot</code> method.
+</p>
+<p>
+For main-, inner, and subtitles given as arguments <code>main</code>,
+<code>inner</code>, and <code>sub</code>, top and bottom margins are enlarged to 5 resp.
+6 by default but may also be specified by <code>tmar</code> / <code>bmar</code> arguments.
+If <code>main</code> / <code>inner</code> / <code>sub</code> are
+logical then if the respective argument is <code>FALSE</code> nothing is done/plotted,
+but if it is <code>TRUE</code>, we use a default main title taking up the calling
+arguments in case of <code>main</code>, default inner titles taking up the
+class and (named) parameter slots of arguments in case of <code>inner</code>,
+and a "generated on &lt;data&gt;"-tag in case of <code>sub</code>.
+Of course, if <code>main</code> / <code>inner</code> / <code>sub</code> are <code>character</code>, this
+is used for the title; in case of <code>inner</code> it is then checked whether it
+has correct length. In all title arguments, the following patterns are substituted:
+<ul>
+<dt><code>"%C"</code></dt><dd>class of argument <code>object</code></dd>
+<dt><code>"%A"</code></dt><dd>deparsed argument  <code>object</code></dd>
+<dt><code>"%D"</code></dt><dd>time/date-string when the plot was generated</dd>
+</ul>
+
+<h3>Examples</h3>
+
+<pre>
+IC1 &lt;- new("IC")
+plot(IC1)
+plot(IC1, main = TRUE, panel.first= grid(),
+     col = "blue", cex.main = 2, cex.inner = 1)
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

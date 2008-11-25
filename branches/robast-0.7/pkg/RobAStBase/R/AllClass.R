@@ -255,3 +255,12 @@ setClass("MEstimate",
                    untransformed.estimate = NULL,
                    untransformed.asvar = NULL),
          contains = "ALEstimate")
+#################################################
+## "cutoff" class
+#################################################
+setClass("cutoff", representation = representation(name = "character",
+                                                   fct = "function",
+                                                   cutoff.quantile = "numeric"),
+                   prototype = prototype(name = "empirical",
+                                         fct = function(data) quantile(data),
+                                         cutoff.quantile = 0.95))

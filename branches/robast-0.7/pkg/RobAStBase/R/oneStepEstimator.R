@@ -23,7 +23,7 @@ setMethod("oneStepEstimator", signature(x = "numeric",
             if(is(L2Fam, "L2GroupParamFamily")) useLast <- TRUE
             if(useLast && !is(modifyIC(IC), "NULL") ){
                 newParam <- param(L2Fam)
-                main(newParam) <- res
+                main(newParam)[] <- res
                 newL2Fam <- modifyModel(L2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 Infos <- rbind(Infos, c("oneStepEstimator", 
@@ -94,7 +94,7 @@ setMethod("oneStepEstimator", signature(x = "matrix",
             if(is(L2Fam, "L2GroupParamFamily")) useLast <- TRUE
             if(useLast && !is(modifyIC(IC), "NULL") ){
                 newParam <- param(L2Fam)
-                main(newParam) <- res
+                main(newParam)[] <- res
                 newL2Fam <- modifyModel(L2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 Infos <- rbind(Infos, c("oneStepEstimator", 
@@ -164,7 +164,7 @@ setMethod("oneStepEstimator", signature(x = "numeric",
             if(is(L2Fam, "L2GroupParamFamily")) useLast <- TRUE
             if(useLast && !is(modifyIC(IC), "NULL") ){
                 newParam <- param(L2Fam)
-                main(newParam) <- res
+                main(newParam)[] <- res
                 newL2Fam <- modifyModel(L2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 Infos <- rbind(Infos, c("oneStepEstimator", 
@@ -236,7 +236,7 @@ setMethod("oneStepEstimator", signature(x = "matrix",
             if(is(L2Fam, "L2GroupParamFamily")) useLast <- TRUE
             if(useLast && !is(modifyIC(IC), "NULL") ){
                 newParam <- param(L2Fam)
-                main(newParam) <- res
+                main(newParam)[] <- res
                 newL2Fam <- modifyModel(L2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 Infos <- rbind(Infos, c("oneStepEstimator", 

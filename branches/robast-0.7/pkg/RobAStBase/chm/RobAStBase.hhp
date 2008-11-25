@@ -12,6 +12,7 @@ Title=R Help for package RobAStBase
 
 [FILES]
 00Index.html
+0RobAStBase-package.html
 ALEstimate-class.html
 BdStWeight-class.html
 BoundedWeight-class.html
@@ -42,6 +43,9 @@ TotalVarNeighborhood.html
 UncondNeighborhood-class.html
 checkIC.html
 comparePlot.html
+cutoff-class.html
+cutoff.html
+ddPlot-methods.html
 evalIC.html
 generateIC.html
 generateICfct.html
@@ -50,9 +54,12 @@ getRiskIC.html
 getweight.html
 infoPlot.html
 internals.html
+internals_ddPlot.html
 kStepEstimate-class.html
 kStepEstimator.html
 locMEstimator.html
 makeIC-methods.html
 oneStepEstimator.html
 optIC.html
+outlyingPlotIC.html
+plot-methods.html

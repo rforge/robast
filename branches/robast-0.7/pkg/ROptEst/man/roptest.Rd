@@ -111,13 +111,37 @@ ind <- rbinom(100, size=1, prob=0.05)
 x <- rbinom(100, size=25, prob=(1-ind)*0.25 + ind*0.9)
 
 ## ML-estimate
-MLEstimator(x, BinomFamily(size = 25))
+MLest <- MLEstimator(x, BinomFamily(size = 25))
+estimate(MLest)
+confint(MLest)
 
 ## compute optimally robust estimator (known contamination)
-roptest(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
+robest1 <- roptest(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
+estimate(robest1)
+confint(robest1, method = symmetricBias())
+## neglecting bias
+confint(robest1)
+plot(pIC(robest1))
 
 ## compute optimally robust estimator (unknown contamination)
-roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.2, steps = 3)
+robest2 <- roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.2, steps = 3)
+estimate(robest2)
+confint(robest2, method = symmetricBias())
+plot(pIC(robest2))
+
+## total variation neighborhoods (known deviation)
+robest3 <- roptest(x, BinomFamily(size = 25), eps = 0.025, 
+                   neighbor = TotalVarNeighborhood(), steps = 3)
+estimate(robest3)
+confint(robest3, method = symmetricBias())
+plot(pIC(robest3))
+
+## total variation neighborhoods (unknown deviation)
+robest4 <- roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.1, 
+                   neighbor = TotalVarNeighborhood(), steps = 3)
+estimate(robest4)
+confint(robest4, method = symmetricBias())
+plot(pIC(robest4))
 
 
 #############################
@@ -129,28 +153,56 @@ x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532),
        rep(10, 10), rep(11, 4), rep(12, 0), rep(13, 1), rep(14, 1))
 
 ## ML-estimate
-MLEstimator(x, PoisFamily())
+MLest <- MLEstimator(x, PoisFamily())
+estimate(MLest)
+confint(MLest)
 
 ## compute optimally robust estimator (unknown contamination)
-roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
+robest <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
+estimate(robest)
+confint(robest, symmetricBias())
+plot(pIC(robest))
+
+## total variation neighborhoods (unknown deviation)
+robest1 <- roptest(x, PoisFamily(), eps.upper = 0.05, 
+                  neighbor = TotalVarNeighborhood(), steps = 3)
+estimate(robest1)
+confint(robest1, symmetricBias())
+plot(pIC(robest1))
+
 
 #############################
 ## 3. Normal (Gaussian) location and scale
 #############################
-## Generate a contaminated sample
-ind <- rbinom(100, size=1, prob=0.05) 
-x <- rnorm(100, mean=0, sd=(1-ind) + ind*9)
+## 24 determinations of copper in wholemeal flour
+library(MASS)
+data(chem)
+plot(chem, main = "copper in wholemeal flour", pch = 20)
 
 ## ML-estimate
-MLEstimator(x, NormLocationScaleFamily())
+MLest <- MLEstimator(chem, NormLocationScaleFamily())
+estimate(MLest)
+confint(MLest)
 
 ## compute optimally robust estimator (known contamination)
-## takes some time
-roptest(x, NormLocationScaleFamily(), eps = 0.05, steps = 3)
+## takes some time -> you can use package RobLox for normal 
+## location and scale which is optimized for speed
+robest <- roptest(chem, NormLocationScaleFamily(), eps = 0.05, steps = 3)
+estimate(robest)
+confint(robest, symmetricBias())
+plot(pIC(robest))
+## plot of relative and absolute information; cf. Kohl (2005)
+infoPlot(pIC(robest))
 
 ## compute optimally robust estimator (unknown contamination)
-## takes some time
-roptest(x, NormLocationScaleFamily(), eps.upper = 0.2, steps = 3)
+## takes some time -> use package RobLox!
+robest1 <- roptest(chem, NormLocationScaleFamily(), eps.lower = 0.05, 
+                   eps.upper = 0.1, steps = 3)
+estimate(robest1)
+confint(robest1, symmetricBias())
+plot(pIC(robest1))
+## plot of relative and absolute information; cf. Kohl (2005)
+infoPlot(pIC(robest1))
 }
 \concept{k-step construction}
 \concept{optimally robust estimation}

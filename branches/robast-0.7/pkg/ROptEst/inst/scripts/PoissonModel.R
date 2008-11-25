@@ -2,6 +2,7 @@
 ## Example: Poisson Family
 ###############################################################################
 require(ROptEst)
+options("newDevice"=TRUE)
 
 distroptions("TruncQuantile", 1e-10) # increases numerical support of Pois; 
                                      # i.e., increases precision of the 
@@ -159,6 +160,7 @@ checkIC(pIC(est213))
 (est214 <- kStepEstimator(x, IC=IC10, start=est12, steps = 3L))
 checkIC(pIC(est214))
 
+## Its simpler to use roptest!
 (est215 <- roptest(x, PoisFamily(), eps.upper = 1/sqrt(length(x)), steps = 3L))
 checkIC(pIC(est215))
 
@@ -168,6 +170,13 @@ estimate(est212)
 estimate(est213)
 estimate(est214)
 estimate(est215)
+
+## confidence intervals
+confint(est211, symmetricBias())
+confint(est212, symmetricBias())
+confint(est213, symmetricBias())
+confint(est214, symmetricBias())
+confint(est215, symmetricBias())
 
 
 ## 2.2 amount of contamination unknown
@@ -188,6 +197,7 @@ checkIC(pIC(est223))
 (est224 <- kStepEstimator(x, IC=IC12, start=est12, steps = 3L))
 checkIC(pIC(est224))
 
+## Its simpler to use roptest!
 (est225 <- roptest(x, PoisFamily(), eps.upper = 0.5, steps = 3L))
 checkIC(pIC(est225))
 
@@ -198,6 +208,12 @@ estimate(est223)
 estimate(est224)
 estimate(est225)
 
+## confidence intervals
+confint(est221, symmetricBias())
+confint(est222, symmetricBias())
+confint(est223, symmetricBias())
+confint(est224, symmetricBias())
+confint(est225, symmetricBias())
 
 ## 3. k-step estimation: total variation neighborhood
 ## 3.1 small amount of contamination < 2%
@@ -219,6 +235,7 @@ checkIC(pIC(est313))
 (est314 <- kStepEstimator(x, IC=IC14, start=est12, steps = 3L))
 checkIC(pIC(est314))
 
+## Its simpler to use roptest!
 (est315 <- roptest(x, PoisFamily(), eps.upper = 1/sqrt(length(x)), steps = 3L, 
                    neighbor = TotalVarNeighborhood()))
 checkIC(pIC(est315))
@@ -229,6 +246,13 @@ estimate(est312)
 estimate(est313)
 estimate(est314)
 estimate(est315)
+
+## confidence intervals
+confint(est311, symmetricBias())
+confint(est312, symmetricBias())
+confint(est313, symmetricBias())
+confint(est314, symmetricBias())
+confint(est315, symmetricBias())
 
 
 ## 3.2 amount of contamination unknown
@@ -249,6 +273,7 @@ checkIC(pIC(est323))
 (est324 <- kStepEstimator(x, IC=IC16, start=est12, steps = 3L))
 checkIC(pIC(est324))
 
+## Its simpler to use roptest!
 (est325 <- roptest(x, PoisFamily(), eps.upper = 0.5, steps = 3L, 
                    neighbor = TotalVarNeighborhood()))
 checkIC(pIC(est325))
@@ -259,5 +284,12 @@ estimate(est322)
 estimate(est323)
 estimate(est324)
 estimate(est325)
+
+## confidence intervals
+confint(est321, symmetricBias())
+confint(est322, symmetricBias())
+confint(est323, symmetricBias())
+confint(est324, symmetricBias())
+confint(est325, symmetricBias())
 
 distroptions("TruncQuantile", 1e-5) # default

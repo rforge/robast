@@ -29,7 +29,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
         if(steps == 1){
             if(useLast && !is(modifyIC(IC), "NULL") ){
                 newParam <- param(L2Fam)
-                main(newParam) <- res
+                main(newParam)[] <- res
                 newL2Fam <- modifyModel(L2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 Infos <- rbind(Infos, c("kStepEstimator", 
@@ -76,7 +76,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
                 start <- res
                 newL2Fam <- eval(CallL2Fam(IC))
                 newParam <- param(newL2Fam)
-                main(newParam) <- start
+                main(newParam)[] <- start
                 newL2Fam <- modifyModel(newL2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 res <- start + rowMeans(evalIC(IC, as.matrix(x)), na.rm = TRUE)
@@ -84,7 +84,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
             if(useLast){
                 newL2Fam <- eval(CallL2Fam(IC))
                 newParam <- param(newL2Fam)
-                main(newParam) <- res
+                main(newParam)[] <- res
                 newL2Fam <- modifyModel(newL2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 Infos <- rbind(Infos, c("kStepEstimator", 
@@ -151,7 +151,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
         if(steps == 1){
             if(useLast && !is(modifyIC(IC), "NULL") ){
                 newParam <- param(L2Fam)
-                main(newParam) <- res
+                main(newParam)[] <- res
                 newL2Fam <- modifyModel(L2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 Infos <- rbind(Infos, c("kStepEstimator", 
@@ -198,7 +198,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
                 start <- res
                 newL2Fam <- eval(CallL2Fam(IC))
                 newParam <- param(newL2Fam)
-                main(newParam) <- start
+                main(newParam)[] <- start
                 newL2Fam <- modifyModel(newL2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 res <- start + rowMeans(evalIC(IC, x), na.rm = TRUE)
@@ -206,7 +206,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
             if(useLast){
                 newL2Fam <- eval(CallL2Fam(IC))
                 newParam <- param(newL2Fam)
-                main(newParam) <- res
+                main(newParam)[] <- res
                 newL2Fam <- modifyModel(newL2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 Infos <- rbind(Infos, c("kStepEstimator", 
@@ -271,7 +271,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
         if(steps == 1){
             if(useLast && !is(modifyIC(IC), "NULL") ){
                 newParam <- param(L2Fam)
-                main(newParam) <- res
+                main(newParam)[] <- res
                 newL2Fam <- modifyModel(L2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 Infos <- rbind(Infos, c("kStepEstimator", 
@@ -318,7 +318,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
                 start0 <- res
                 newL2Fam <- eval(CallL2Fam(IC))
                 newParam <- param(newL2Fam)
-                main(newParam) <- start0
+                main(newParam)[] <- start0
                 newL2Fam <- modifyModel(newL2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 res <- start0 + rowMeans(evalIC(IC, as.matrix(x)), na.rm = TRUE)
@@ -326,7 +326,7 @@ setMethod("kStepEstimator", signature(x = "numeric",
             if(useLast){
                 newL2Fam <- eval(CallL2Fam(IC))
                 newParam <- param(newL2Fam)
-                main(newParam) <- res
+                main(newParam)[] <- res
                 newL2Fam <- modifyModel(newL2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 Infos <- rbind(Infos, c("kStepEstimator", 
@@ -393,7 +393,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
         if(steps == 1){
             if(useLast && !is(modifyIC(IC), "NULL") ){
                 newParam <- param(L2Fam)
-                main(newParam) <- res
+                main(newParam)[] <- res
                 newL2Fam <- modifyModel(L2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 Infos <- rbind(Infos, c("kStepEstimator", 
@@ -440,7 +440,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
                 start0 <- res
                 newL2Fam <- eval(CallL2Fam(IC))
                 newParam <- param(newL2Fam)
-                main(newParam) <- start0
+                main(newParam)[] <- start0
                 newL2Fam <- modifyModel(newL2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 res <- start0 + rowMeans(evalIC(IC, x), na.rm = TRUE)
@@ -448,7 +448,7 @@ setMethod("kStepEstimator", signature(x = "matrix",
             if(useLast){
                 newL2Fam <- eval(CallL2Fam(IC))
                 newParam <- param(newL2Fam)
-                main(newParam) <- res
+                main(newParam)[] <- res
                 newL2Fam <- modifyModel(newL2Fam, newParam)
                 IC <- modifyIC(IC)(newL2Fam, IC)
                 Infos <- rbind(Infos, c("kStepEstimator", 

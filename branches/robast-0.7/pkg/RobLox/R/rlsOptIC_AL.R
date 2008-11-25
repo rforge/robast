@@ -176,7 +176,7 @@ rlsOptIC.AL <- function(r, mean = 0, sd = 1, A.loc.start = 1, a.sc.start = 0,
                 a1 <- A[1, 1]/sdneu^2
                 a3 <- A[2, 2]/sdneu^2
                 a2 <- a[1]/sd/a3 + 1
-                asVar <- sd^2*.ALrlsVar(b = b/sd, a1 = a1, a2 = a2, a3 = a3)
+                asVar <- sdneu^2*.ALrlsVar(b = b/sdneu, a1 = a1, a2 = a2, a3 = a3)
                 res <- list(A = A, a = sdneu*cent(IC)/sdalt, b = b, d = NULL,
                             risk = list(asMSE = mse, asBias = b, trAsCov = mse - r^2*b^2,
                                         asCov = asVar), 

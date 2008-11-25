@@ -55,7 +55,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, initial.est,
                                             startPar = startPar, ...)
     if(is(initial.est, "Estimate")) initial.est <- estimate(initial.est)
     newParam <- param(L2Fam)
-    main(newParam) <- initial.est
+    main(newParam)[] <- initial.est
     L2FamStart <- modifyModel(L2Fam, newParam)
     if(is.matrix(x))
         sqrtn <- sqrt(ncol(x))

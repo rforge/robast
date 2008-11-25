@@ -1,7 +1,8 @@
 ###############################################################################
 ## Example: Normal Location
 ###############################################################################
-system.time(require(ROptEst))
+require(ROptEst)
+options("newDevice"=TRUE)
 
 ## generates Normal Location Family with mean = 0
 N0 <- NormLocationFamily(mean=0) 
@@ -103,11 +104,16 @@ N0.Rob5 <- InfRobModel(center = NormLocationFamily(mean = 0),
 N0.IC7 <- optIC(model=N0.Rob5, risk=asUnOvShoot(width = 1.960))
 (Mest1 <- locMEstimator(X, IC=N0.IC7))
 
+## confidence interval
+confint(Mest1, symmetricBias())
+
 N0.Rob6 <- FixRobModel(center = NormLocationFamily(mean = 0), 
                        neighbor = ContNeighborhood(radius = 0.05))
 N0.IC8 <- optIC(model = N0.Rob6, risk=fiUnOvShoot(width = 1.960/sqrt(n)), sampleSize = 1e2)
 (Mest2 <- locMEstimator(X, IC=N0.IC8))
 
+## confidence interval
+confint(Mest2, symmetricBias())
 
 ## 3. Kolmogorov(-Smirnov) minimum distance estimator
 (est0 <- MDEstimator(x=X, NormLocationFamily()))
@@ -117,7 +123,10 @@ N0.Rob7 <- InfRobModel(center = NormLocationFamily(mean = estimate(est0)),
                        neighbor = ContNeighborhood(radius=0.5))
 N0.IC9 <- optIC(model=N0.Rob7, risk=asUnOvShoot(width = 1.960))
 (est1 <- oneStepEstimator(X, IC = N0.IC9, start = estimate(est0)))
+confint(est1, symmetricBias())
+
 N0.Rob8 <- FixRobModel(center = NormLocationFamily(mean = estimate(est0)), 
                        neighbor = ContNeighborhood(radius=0.05))
 N0.IC10 <- optIC(model=N0.Rob8, risk=fiUnOvShoot(width = 1.960/sqrt(n)), sampleSize = 1e2)
 (est2 <- oneStepEstimator(X, IC = N0.IC10, start = estimate(est0)))
+confint(est2, symmetricBias())

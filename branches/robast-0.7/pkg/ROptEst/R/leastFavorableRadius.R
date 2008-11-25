@@ -31,6 +31,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                 lower <- ifelse(identical(all.equal(loRad, 0), TRUE), 1e-4, loRad)
                 upper <- ifelse(upRad == Inf, 10, upRad)
                 ow <- options("warn")
+                on.exit(options(ow))
                 options(warn = -1)
                 if(identical(all.equal(loRad, 0), TRUE)){
                     loRad <- 0
@@ -119,6 +120,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                     lower <- ifelse(identical(all.equal(loRad, 0), TRUE), 1e-4, loRad)
                     upper <- ifelse(upRad == Inf, 10, upRad)
                     ow <- options("warn")
+                    on.exit(options(ow))
                     options(warn = -1)
                     trafo <- L2Fam@param@trafo
                     if(identical(all.equal(loRad, 0), TRUE)){

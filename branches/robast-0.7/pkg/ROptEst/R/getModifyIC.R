@@ -123,8 +123,11 @@ setMethod("getModifyIC", signature(L2FamIC = "L2LocationScaleFamily",
                 b <- sdneu*clip(IC)/sdalt
                 a <- sdneu*cent(IC)/sdalt
                 mse <- sum(diag(A))
+                Cov <- sdneu^2*Risks(IC)$asCov/sdalt^2
+
                 res <- list(A = A, a = sdneu*cent(IC)/sdalt, b = b, d = NULL,
-                            risk = list(asMSE = mse, asBias = b, 
+                            risk = list(asCov = Cov,
+                                        asMSE = mse, asBias = b, 
                                         trAsCov = mse - r^2*b^2), 
                             info = Infos(IC), w = w,
                             normtype = normtype(IC), biastype = biastype(IC),
