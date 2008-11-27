@@ -1,6 +1,6 @@
 Package: RobLox
 Version: 0.7
-Date: 2008-11-25
+Date: 2008-11-27
 Title: Optimally robust influence curves for location and scale
 Description: Functions for the determination of optimally robust
         influence curves and estimators in case of normal location with
