@@ -1,0 +1,11 @@
+citHeader("To cite package RobLox in publications use:")
+
+citEntry(entry="Manual",
+         title = "RobLox: Optimally robust influence curves for location and scale",
+         author = personList(as.person("M. Kohl")),
+         language = "English",
+         year = 2008,
+         type = "R package",
+         url = "http://robast.r-forge.r-project.org/",
+         textVersion = paste("Kohl, M. (2008).", 
+                             "RobLox: Optimally robust influence curves for location and scale.", "R package."))

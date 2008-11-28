@@ -1,0 +1,11 @@
+citHeader("To cite package RobRex in publications use:")
+
+citEntry(entry="Manual",
+         title = "RobRex: Optimally robust influence curves for regression and scale",
+         author = personList(as.person("M. Kohl")),
+         language = "English",
+         year = 2008,
+         type = "R package",
+         url = "http://robast.r-forge.r-project.org/",
+         textVersion = paste("Kohl, M. (2008).", 
+                             "RobRex: Optimally robust influence curves for regression and scale.", "R package."))

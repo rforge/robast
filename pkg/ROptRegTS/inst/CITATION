@@ -1,0 +1,12 @@
+citHeader("To cite package ROptRegTS in publications use:")
+
+citEntry(entry="Manual",
+         title = "ROptRegTS: Optimally robust estimation for regression-type models",
+         author = personList(as.person("M. Kohl"),
+                             as.person("P. Ruckdeschel")),
+         language = "English",
+         year = 2008,
+         type = "R package",
+         url = "http://robast.r-forge.r-project.org/",
+         textVersion = paste("Kohl, M., and Ruckdeschel, P. (2008).", 
+                             "ROptRegTS: Optimally robust estimation for regression-type models.", "R package."))

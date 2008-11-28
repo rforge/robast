@@ -1,0 +1,12 @@
+citHeader("To cite package ROptEst in publications use:")
+
+citEntry(entry="Manual",
+         title = "ROptEst: Optimally robust estimation",
+         author = personList(as.person("M. Kohl"),
+                             as.person("P. Ruckdeschel")),
+         language = "English",
+         year = 2008,
+         type = "R package",
+         url = "http://robast.r-forge.r-project.org/",
+         textVersion = paste("Kohl, M., and Ruckdeschel, P. (2008).", 
+                             "ROptEst: Optimally robust estimation.", "R package."))
