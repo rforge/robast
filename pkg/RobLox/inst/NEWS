@@ -1,0 +1,11 @@
+###############################################################################
+##  News: to package RobLox
+###############################################################################
+
+#######################################
+version 0.6.1
+#######################################
++ bug in computation of as. covariance in roblox corrected.
++ bug in rsOptIC corrected.
++ introduction of NEWS-file
++ update of CITATION-file (based on code provided by A. Zeileis on R help)

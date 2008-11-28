@@ -1,0 +1,14 @@
+###############################################################################
+##  News: to package ROptEst
+###############################################################################
+
+#######################################
+version 0.6.2
+#######################################
++ added functions to compute and plot cniper contamination and cniper points, 
+  respectively.
++ introduced option("newDevice") to control new opening of graphic devices
++ use of on.exit() to restore old settings for options() and par() at the end 
+  of functions
++ introduction of NEWS-file
++ update of CITATION-file (based on code provided by A. Zeileis on R help)
