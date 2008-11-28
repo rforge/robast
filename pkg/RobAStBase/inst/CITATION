@@ -1,7 +1,7 @@
 citHeader("To cite package RobAStBase in publications use:")
 
 citEntry(entry="Manual",
-         title = "RobAStBase: Miscellaneous functions from M. Kohl",
+         title = "RobAStBase: Robust Asymptotic Statistics",
          author = personList(as.person("M. Kohl"),
                              as.person("P. Ruckdeschel")),
          language = "English",
