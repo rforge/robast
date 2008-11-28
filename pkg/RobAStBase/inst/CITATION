@@ -1,0 +1,12 @@
+citHeader("To cite package RobAStBase in publications use:")
+
+citEntry(entry="Manual",
+         title = "RobAStBase: Miscellaneous functions from M. Kohl",
+         author = personList(as.person("M. Kohl"),
+                             as.person("P. Ruckdeschel")),
+         language = "English",
+         year = 2008,
+         type = "R package",
+         url = "http://robast.r-forge.r-project.org/",
+         textVersion = paste("Kohl, M., and Ruckdeschel, P. (2008).", 
+                             "RobAStBase: Robust Asymptotic Statistics.", "R package."))
