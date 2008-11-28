@@ -1,0 +1,14 @@
+###############################################################################
+##  News: to package RandVar
+###############################################################################
+
+#######################################
+version 0.6.6
+#######################################
++ quicker way to compute image distributions of objects of class 
+  DiscreteDistribution
++ use of new option "newDevice"
++ use of on.exit() to restore old settings for options() and par() at the end 
+  of functions
++ introduction of NEWS-file
++ update of CITATION-file (based on code provided by A. Zeileis on R help)
