@@ -1,3 +1,7 @@
+if(!exists("meta") || is.null(meta)) meta <- packageDescription("RobAStBase")
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
 citHeader("To cite package RobAStBase in publications use:")
 
 citEntry(entry="Manual",
@@ -5,8 +9,12 @@ citEntry(entry="Manual",
          author = personList(as.person("M. Kohl"),
                              as.person("P. Ruckdeschel")),
          language = "English",
-         year = 2008,
+         year = year,
+         note = note,
          type = "R package",
          url = "http://robast.r-forge.r-project.org/",
-         textVersion = paste("Kohl, M., and Ruckdeschel, P. (2008).", 
-                             "RobAStBase: Robust Asymptotic Statistics.", "R package."))
+         textVersion = paste("Kohl, M., and Ruckdeschel, P.",
+                             sprintf("(%s).", year),
+                             "RobAStBase: Robust Asymptotic Statistics.",
+                             paste(note, ".", sep = ""),
+                             "URL http://robast.r-forge.r-project.org/"))

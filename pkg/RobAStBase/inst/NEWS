@@ -1,0 +1,14 @@
+###############################################################################
+##  News: to package RobAStBase
+###############################################################################
+
+#######################################
+version 0.1.3
+#######################################
++ new plotting features similar to package distr
++ new plotting functionality: ddPlot and outlyingPlot
++ introduced option("newDevice") to control new opening of graphic devices
++ use of on.exit() to restore old settings for options() and par() at the end 
+  of functions
++ introduction of NEWS-file
++ update of CITATION-file (based on code provided by A. Zeileis on R help)
