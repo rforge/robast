@@ -121,4 +121,5 @@ getInfCentRegTS(ErrorL2deriv, Regressor, neighbor, ...)
         \code{\link{CondContIC-class}}, \code{\link{CondTotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}
+

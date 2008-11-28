@@ -44,3 +44,4 @@ new("CondTotalVarNeighborhood")
 \concept{neighborhood}
 \keyword{classes}
 \keyword{models}
+\keyword{robust}

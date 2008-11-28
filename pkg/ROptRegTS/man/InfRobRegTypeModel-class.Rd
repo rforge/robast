@@ -47,3 +47,4 @@ new("InfRobRegTypeModel")
 \concept{shrinking neighborhood}
 \keyword{classes}
 \keyword{models}
+\keyword{robust}

@@ -65,3 +65,4 @@ new("CondIC")
 \concept{partial influence curve}
 \concept{influence curve}
 \keyword{classes}
+\keyword{robust}

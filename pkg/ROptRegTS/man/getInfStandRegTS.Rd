@@ -50,10 +50,10 @@ getInfStandRegTS(ErrorL2deriv, Regressor, neighbor, ...)
 		Regressor, neighbor, z.comp, clip, cent, stand, trafo)
 
 \S4method{getInfStandRegTS}{RealRandVariable,Distribution,ContNeighborhood}(ErrorL2deriv, 
-		Regressor, neighbor, ErrorDistr, A.comp, clip, cent, stand, trafo)
+		Regressor, neighbor, ErrorDistr, A.comp, stand, clip, cent, trafo)
 
 \S4method{getInfStandRegTS}{RealRandVariable,Distribution,Av1CondContNeighborhood}(ErrorL2deriv, 
-		Regressor, neighbor, ErrorDistr, A.comp, clip, cent, stand, trafo)
+		Regressor, neighbor, ErrorDistr, A.comp, stand, clip, cent, trafo)
 }
 \arguments{
   \item{ErrorL2deriv}{ L2-derivative of \code{ErrorDistr}. }
@@ -123,4 +123,5 @@ getInfStandRegTS(ErrorL2deriv, Regressor, neighbor, ...)
         \code{\link{CondTotalVarIC}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}
+

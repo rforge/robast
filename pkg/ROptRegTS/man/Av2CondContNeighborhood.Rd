@@ -36,3 +36,4 @@ function(radius = 0, radiusCurve = function(x){1}){
 \concept{conditional neighborhood}
 \concept{neighborhood}
 \keyword{models}
+\keyword{robust}

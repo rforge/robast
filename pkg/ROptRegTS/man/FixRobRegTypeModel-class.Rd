@@ -45,3 +45,4 @@ new("FixRobRegTypeModel")
 \concept{fixed neighborhood}
 \keyword{classes}
 \keyword{models}
+\keyword{robust}

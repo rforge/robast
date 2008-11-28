@@ -148,4 +148,5 @@ getAsRiskRegTS(risk, ErrorL2deriv, Regressor, neighbor, ...)
 %\examples{}
 \concept{asymptotic risk}
 \concept{risk}
-\keyword{}
+\keyword{robust}
+

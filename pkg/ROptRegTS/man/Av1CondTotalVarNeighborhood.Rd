@@ -13,7 +13,7 @@ Av1CondTotalVarNeighborhood(radius = 0, radiusCurve = function(x){1})
   \item{radiusCurve}{ real-valued, non-negative function
     with L1 norm \code{<= 1}. }
 }
-\details{}
+%\details{}
 \value{Object of class \code{"Av1CondTotalVarNeighborhood"}}
 \references{
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
@@ -36,3 +36,4 @@ function(radius = 0, radiusCurve = function(x){1}){
 \concept{conditional neighborhood}
 \concept{neighborhood}
 \keyword{models}
+\keyword{robust}

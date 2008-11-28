@@ -141,4 +141,5 @@ getInfGammaRegTS(ErrorL2deriv, Regressor, risk, neighbor, ...)
         \code{\link{CondContIC-class}}, \code{\link{CondTotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}
+

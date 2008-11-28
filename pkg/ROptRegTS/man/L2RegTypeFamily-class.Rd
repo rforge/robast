@@ -124,3 +124,4 @@ new("L2RegTypeFamily")
 \concept{regression}
 \keyword{classes}
 \keyword{models}
+\keyword{robust}

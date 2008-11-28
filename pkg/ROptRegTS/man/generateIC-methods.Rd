@@ -20,3 +20,4 @@
 \seealso{\code{\link[ROptEst]{generateIC}}}
 \concept{influence curve}
 \keyword{methods}
+\keyword{robust}

@@ -42,3 +42,4 @@ Class \code{"Neighborhood"}, by class \code{"AvCondNeighborhood"}.
 \concept{neighborhood}
 \keyword{classes}
 \keyword{models}
+\keyword{robust}

@@ -35,3 +35,4 @@ function(radius = 0, radiusCurve = function(x){1}){
 \concept{contamination neighborhood}
 \concept{neighborhood}
 \keyword{models}
+\keyword{robust}

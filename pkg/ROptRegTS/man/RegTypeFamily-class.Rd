@@ -75,3 +75,4 @@ new("RegTypeFamily")
 }
 \keyword{classes}
 \keyword{models}
+\keyword{robust}

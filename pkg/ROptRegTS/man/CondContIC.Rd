@@ -57,4 +57,5 @@ IC1 <- CondContIC()
 IC1
 }
 \concept{influence curve}
-\keyword{}
+\keyword{robust}
+

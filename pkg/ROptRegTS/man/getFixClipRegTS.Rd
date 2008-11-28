@@ -57,4 +57,5 @@ getFixClipRegTS(clip, ErrorDistr, Regressor, risk, neighbor, ...)
         \code{\link{CondTotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}
+
