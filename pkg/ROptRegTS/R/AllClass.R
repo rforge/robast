@@ -3,7 +3,7 @@
     require("distr", character = TRUE, quietly = TRUE) 
     require("distrEx", character = TRUE, quietly = TRUE) 
     require("RandVar", character = TRUE, quietly = TRUE) 
-    require("ROptEst", character = TRUE, quietly = TRUE) 
+    require("ROptEstOld", character = TRUE, quietly = TRUE) 
 }
 
 # Regression type families
