@@ -2,7 +2,7 @@ import("methods")
 import("distr")
 import("distrEx")
 import("RandVar")
-import("ROptEst")
+import("ROptEstOld")
 
 exportClasses("RegTypeFamily", 
               "L2RegTypeFamily")
