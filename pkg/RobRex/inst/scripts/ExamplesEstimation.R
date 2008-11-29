@@ -46,7 +46,7 @@ abline(fit.LTS, lwd = 2, col = myCol[4])
 lines(c(1, c(blood.glucose,25)), ALc1[1] + ALc1[2]*c(1,c(blood.glucose,25)), 
       col = myCol[5], lwd = 2)
 lines(c(1, c(blood.glucose,25)), AL1[1] + AL1[2]*c(1,c(blood.glucose,25)), 
-      col = myCol[1], lwd = 2)
+      col = myCol[6], lwd = 1)
 legend("topleft", legend = c("LS", "M", "MM", "LTS", "ALc", "AL"), 
        fill = myCol, ncol = 2)
 detach(thuesen)
@@ -81,11 +81,11 @@ AL2 <- oneStepEstimator(cbind(1,year,calls), IC2, c(fit2.MM$coeff, fit2.MM$s))
 ## Plot
 plot(calls ~ year, ylab = "phone calls [Mio.]", xlab = "year", 
      main = "Belgium Phone Calls 1950-1973", pch = 20)
-abline(fit2.LS, lwd = 2, col = "black")
-abline(fit2.M, lwd = 2, col = 1)
-abline(fit2.MM, lwd = 2, col = 3)
-abline(fit2.LTS, lwd = 2, col = 2)
-lines(c(1, c(year,75)), ALc2[1] + ALc2[2]*c(1,c(year,75)), col = 4, lwd = 2)
-lines(c(1, c(year,75)), AL2[1] + AL2[2]*c(1,c(year,75)), col = 5, lwd = 2)
+abline(fit2.LS, lwd = 2, col = "black", col = myCol[1])
+abline(fit2.M, lwd = 2, col = myCol[2])
+abline(fit2.MM, lwd = 2, col = myCol[3])
+abline(fit2.LTS, lwd = 2, col = myCol[4], lty = 2)
+lines(c(1, c(year,75)), ALc2[1] + ALc2[2]*c(1,c(year,75)), lwd = 2, col = myCol[5])
+lines(c(1, c(year,75)), AL2[1] + AL2[2]*c(1,c(year,75)), lwd = 2, col = myCol[6])
 legend("topleft", legend = c("LS", "M", "MM", "LTS", "ALc", "AL"), 
-       fill = c("black", 1, 3, 2, 4, 5), ncol = 2)
+       fill = myCol, ncol = 2)
