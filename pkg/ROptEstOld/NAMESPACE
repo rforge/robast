@@ -1,0 +1,149 @@
+import("distr")
+import("distrEx")
+import("RandVar")
+
+exportClasses("PosDefSymmMatrix",
+              "OptionalNumeric") 
+exportClasses("Symmetry", 
+              "DistributionSymmetry",  
+              "NoSymmetry", 
+              "EllipticalSymmetry", 
+              "SphericalSymmetry", 
+              "FunctionSymmetry",
+              "NonSymmetric",
+              "EvenSymmetric",
+              "OddSymmetric",
+              "FunSymmList",
+              "DistrSymmList")
+exportClasses("ParamFamParameter", 
+              "ProbFamily", 
+              "ParamFamily", 
+              "L2ParamFamily")
+exportClasses("Neighborhood", 
+              "UncondNeighborhood", 
+              "ContNeighborhood", 
+              "TotalVarNeighborhood") 
+exportClasses("RobModel", 
+              "FixRobModel", 
+              "InfRobModel") 
+exportClasses("RiskType", 
+              "asRisk", 
+              "asCov", 
+              "trAsCov", 
+              "asHampel", 
+              "asBias", 
+              "asGRisk", 
+              "asMSE", 
+              "asUnOvShoot", 
+              "fiRisk", 
+              "fiCov", 
+              "trFiCov", 
+              "fiHampel", 
+              "fiMSE", 
+              "fiBias", 
+              "fiUnOvShoot")
+exportClasses("InfluenceCurve", 
+              "IC", 
+              "ContIC", 
+              "TotalVarIC")
+
+exportMethods("show", 
+              "plot", 
+              "coerce", 
+              "length", 
+              "E")
+exportMethods("type",
+              "SymmCenter")
+exportMethods("name", "name<-", 
+              "distribution", 
+              "distrSymm",
+              "props", "props<-", "addProp<-", 
+              "main", "main<-", 
+              "nuisance", "nuisance<-", 
+              "trafo", "trafo<-", 
+              "param", 
+              "L2deriv", 
+              "L2derivSymm", 
+              "L2derivDistr", 
+              "L2derivDistrSymm", 
+              "FisherInfo", 
+              "checkL2deriv",
+              "infoPlot")
+exportMethods("radius")
+exportMethods("center", "center<-", 
+              "neighbor", "neighbor<-")
+exportMethods("bound", 
+              "width")
+exportMethods("Curve", 
+              "Risks", "Risks<-", "addRisk<-", 
+              "Infos", "Infos<-", "addInfo<-", 
+              "CallL2Fam", "CallL2Fam<-", 
+              "generateIC", 
+              "checkIC",
+              "evalIC",
+              "clip", "clip<-", 
+              "cent", "cent<-", 
+              "stand", "stand<-", 
+              "lowerCase", "lowerCase<-", 
+              "neighborRadius", "neighborRadius<-", 
+              "clipLo", "clipLo<-", 
+              "clipUp", "clipUp<-") 
+exportMethods("optIC", 
+              "getInfRobIC", 
+              "getFixRobIC",
+              "getAsRisk", 
+              "getFiRisk",
+              "getInfClip", 
+              "getFixClip",
+              "getInfGamma", 
+              "getInfCent", 
+              "getInfStand", 
+              "getRiskIC", 
+              "optRisk", 
+              "radiusMinimaxIC", 
+              "getIneffDiff", 
+              "leastFavorableRadius",
+              "lowerCaseRadius")
+exportMethods("ksEstimator",
+              "oneStepEstimator", 
+              "locMEstimator")
+
+export("PosDefSymmMatrix")
+export("NoSymmetry", 
+       "EllipticalSymmetry", 
+       "SphericalSymmetry", 
+       "NonSymmetric",
+       "EvenSymmetric",
+       "OddSymmetric",
+       "DistrSymmList",
+       "FunSymmList") 
+export("ParamFamParameter", 
+       "ParamFamily", 
+       "L2ParamFamily", 
+       "BinomFamily", 
+       "PoisFamily", 
+       "NormLocationFamily", 
+       "GumbelLocationFamily", 
+       "NormScaleFamily", 
+       "ExpScaleFamily",
+       "LnormScaleFamily", 
+       "GammaFamily", 
+       "NormLocationScaleFamily")
+export("ContNeighborhood", "TotalVarNeighborhood") 
+export("FixRobModel", "InfRobModel") 
+export("asCov", 
+       "trAsCov", 
+       "asHampel", 
+       "asBias", 
+       "asMSE", 
+       "asUnOvShoot", 
+       "fiCov", 
+       "trFiCov", 
+       "fiHampel", 
+       "fiMSE", 
+       "fiBias", 
+       "fiUnOvShoot")
+export("InfluenceCurve", 
+       "IC", 
+       "ContIC", 
+       "TotalVarIC")
