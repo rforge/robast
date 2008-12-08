@@ -31,7 +31,7 @@
           \code{\link[stats]{par}}}
   \item{col.inner}{character or integer code; color for the inner title}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
-  \item{\dots} {further parameters for \code{plot}}
+  \item{\dots}{further parameters for \code{plot}}
 }
 \details{
 Any parameters of \code{plot.default} may be passed on to this particular

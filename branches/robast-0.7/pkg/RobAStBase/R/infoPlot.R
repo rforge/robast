@@ -102,19 +102,21 @@ setMethod("infoPlot", "IC",
                                 ")", sep ="")
             
             if(!is.logical(inner)){
-                if(!is.character(inner))
-                    stop("Argument 'inner' must either be 'logical' or a character vector")
-                innerT <- rep(inner,length.out=1+dims)
+                #if(!is.character(inner))
+                #stop("Argument 'inner' must either be 'logical' or a 'list'")
+                if(!is.list(inner))
+                    inner <- as.list(inner)                
+                innerT <- distr:::.fillList(inner,1+dims)
                 innerL <- TRUE
             }else{if(any(is.na(inner))||any(!inner)) {
-                     innerT <- rep("",1+dims); innerL <- FALSE
+                     innerT <- as.list(rep("",1+dims)); innerL <- FALSE
                 }else{innerL <- TRUE
-                      innerT <- paste(c( paste(gettext("Absolute information of (partial) IC for"), 
+                      innerT <- as.list(paste(c( paste(gettext("Absolute information of (partial) IC for"), 
                                        name(L2Fam)[1], sep =""),
                                    paste(gettext("Relative information of \ncomponent "),
                                        1:dims, 
                                        gettext("of (partial) IC\nfor "), 
-                                       name(L2Fam)[1], sep ="")), innerParam)
+                                       name(L2Fam)[1], sep ="")), innerParam))
                    }
               }
 
@@ -176,7 +178,7 @@ setMethod("infoPlot", "IC",
             dotsT["col.main"] <- NULL
             dotsT["line"] <- NULL
             if(innerL)
-               do.call(title, args=c(list(main = innerT[1]),  dotsT,
+               do.call(title, args=c(list(main = innerT[[1]]),  dotsT,
                        line = lineT, cex.main = cex.inner, col.main = col.inner))
             
             if(dims > 1){
@@ -210,7 +212,7 @@ setMethod("infoPlot", "IC",
                                col = c(colI, col), lwd=c(lwdI, lwd),
                                cex = 0.6)
                     if(innerL)
-                       do.call(title, args=c(list(main = innerT[1+i]),  dotsT,
+                       do.call(title, args=c(list(main = innerT[[1+i]]),  dotsT,
                                line = lineT, cex.main = cex.inner, col.main = col.inner))
                 }
             }

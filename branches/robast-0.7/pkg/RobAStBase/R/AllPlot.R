@@ -10,8 +10,10 @@ setMethod("plot", signature(x = "IC", y = "missing"),
                        expand.dots = FALSE)$"..."
 
         if(!is.logical(inner)){
-           if(!is.list(inner)||length(inner) != 4)
-               stop("Argument 'inner' must either be 'logical' or a 'list' vector of length 4")
+          if(!is.list(inner))
+              inner <- as.list(inner)
+            #stop("Argument 'inner' must either be 'logical' or a 'list'")
+           inner <- distr:::.fillList(inner,4)          
            innerD <- inner[1:3]
            innerL <- inner[4] 
         }else{innerD <- innerL <- inner}
@@ -108,7 +110,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
                         ")",
                         sep=""  )
      }else{
-        innerT <- rep(sapply(inner, .mpresubs), length.out=dims)
+        innerT <- lapply(inner, .mpresubs)
      }
 
 

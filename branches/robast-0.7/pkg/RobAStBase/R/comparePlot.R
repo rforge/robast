@@ -146,16 +146,18 @@ setMethod("comparePlot", signature("IC","IC"),
                                 ")", sep ="")
             
             if(!is.logical(inner)){
-                if(!is.character(inner))
-                    stop("Argument 'inner' must either be 'logical' or a character vector")
-                innerT <- rep(inner,length.out=dims)
+#                if(!is.character(inner))
+#                    stop("Argument 'inner' must either be 'logical' or a character vector")
+                if(!is.list(inner))
+                    inner <- as.list(inner)                
+                innerT <- distr:::.fillList(inner,dims)
                 innerL <- TRUE
             }else{if(any(is.na(inner))||any(!inner)) {
-                 innerT <- ""; innerL <- FALSE
+                 innerT <- as.list(rep("",dims)); innerL <- FALSE
                 }else{innerL <- TRUE
-                      innerT <- paste(paste(gettext("Component "),  1:dims, 
+                      innerT <- as.list(paste(paste(gettext("Component "),  1:dims, 
                                        gettext(" of (partial) IC\nfor "), 
-                                       name(L2Fam)[1], sep =""), innerParam)
+                                       name(L2Fam)[1], sep =""), innerParam))
                    }
               }
 
@@ -198,7 +200,7 @@ setMethod("comparePlot", signature("IC","IC"),
                  }
 
            if(innerL)
-              do.call(title, args=c(list(main = innerT[i]),  dotsT,
+              do.call(title, args=c(list(main = innerT[[i]]),  dotsT,
                       line = lineT, cex.main = cex.inner, col.main = col.inner))
         }
         
