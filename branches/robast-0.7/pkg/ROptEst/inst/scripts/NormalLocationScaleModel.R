@@ -114,7 +114,7 @@ IC1 <- optIC(model = N1.Rob, risk = asMSE())
 ## takes some time
 IC2 <- radiusMinimaxIC(L2Fam=N1, neighbor=ContNeighborhood(),risk=asMSE(), 
                        loRad=0.1, upRad=1.0) 
-(est2 <- oneStepEstimator(x, IC2, est0$estimate))
+(est2 <- oneStepEstimator(x, IC2, est0))
 
 
 ## a simple example
