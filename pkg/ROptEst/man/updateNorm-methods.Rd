@@ -31,7 +31,7 @@
       internally in the opt-IC-Algorithm. }
 }}
 \value{
-\item{updateNorm} an updated object of class \code{NormType}
+\item{updateNorm}{an updated object of class \code{NormType}.}
 }
 
 \details{\code{updateNorm} is used internally in the opt-IC-algorithm to be

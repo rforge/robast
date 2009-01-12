@@ -16,9 +16,9 @@ getRobAStBaseOption(x)
 }
 %\details{}
 \value{
-  \code{RobAStBaseOptions()} returns a list of the global variables.\newline
-  \code{RobAStBaseOptions(x)} returns the global variable \var{x}.\newline
-  \code{getRobAStBaseOption(x)} returns the global variable \var{x}.\newline
+  \code{RobAStBaseOptions()} returns a list of the global variables.\cr
+  \code{RobAStBaseOptions(x)} returns the global variable \var{x}.\cr
+  \code{getRobAStBaseOption(x)} returns the global variable \var{x}.\cr
   \code{RobAStBaseOptions(x=y)} sets the value of the global variable \var{x} to \var{y}.
 }
 \section{Global Options}{

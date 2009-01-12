@@ -51,24 +51,24 @@ minbiasweight(Weight, neighbor, biastype, ...)
          object of class \code{RobWeight} and descendants.}
 \section{Methods}{\describe{
 \item{getweight}{\code{signature(Weight = "HampelWeight", neighbor = "ContNeighborhood", 
-                       biastype = "BiasType"}} with additional argument \code{biastype} of class 
+                       biastype = "BiasType")} with additional argument \code{biastype} of class 
                        \code{"BiasType"}: produces weight slot...}
 \item{minbiasweight}{\code{signature(Weight = "HampelWeight", neighbor = "ContNeighborhood", 
-                       biastype = "BiasType"} with additional argument \code{biastype} of class 
+                       biastype = "BiasType")} with additional argument \code{biastype} of class 
                        \code{"BiasType"}: produces weight slot...}
 \item{getweight}{\code{signature(Weight = "HampelWeight", neighbor = "ContNeighborhood", 
-                       biastype = "onesidedBias"}: produces weight slot...}
+                       biastype = "onesidedBias")}: produces weight slot...}
 \item{minbiasweight}{\code{signature(Weight = "HampelWeight", neighbor = "ContNeighborhood", 
-                       biastype = "onesidedBias"}: produces weight slot...}
+                       biastype = "onesidedBias")}: produces weight slot...}
 \item{getweight}{\code{signature(Weight = "HampelWeight", neighbor = "ContNeighborhood", 
-                       biastype = "asymmetricBias"}: produces weight slot...}
+                       biastype = "asymmetricBias")}: produces weight slot...}
 \item{minbiasweight}{\code{signature(Weight = "HampelWeight", neighbor = "ContNeighborhood", 
-                       biastype = "asymmetricBias"}: produces weight slot...}
+                       biastype = "asymmetricBias")}: produces weight slot...}
 \item{getweight}{\code{signature(Weight = "BdStWeight", neighbor = "TotalVarNeighborhood", 
-                       biastype = "BiasType"}: produces weight slot...}
+                       biastype = "BiasType")}: produces weight slot...}
 \item{minbiasweight}{\code{signature(Weight = "BdStWeight", neighbor = "TotalVarNeighborhood", 
-                       biastype = "BiasType"}: produces weight slot...}
-}
+                       biastype = "BiasType")}: produces weight slot...}
+}}
 
 \author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}

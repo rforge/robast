@@ -27,8 +27,8 @@ These functions are used internally by package RobAStBase.}
 
 
 \value{
-\item{.eq}(a vector of) \code{logical}.
-\item{.getDistr} \code{character}
+\item{.eq}{(a vector of) \code{logical}.}
+\item{.getDistr}{\code{character}.}
 }
 
 
