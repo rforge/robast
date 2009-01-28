@@ -20,7 +20,7 @@ setMethod("getBiasIC", signature(IC = "IC",
         x <- as.matrix(x[!duplicated(x),])
 
         Bias <- .evalBiasIC(IC = IC, neighbor = neighbor, biastype = biastype,
-                            normtype = normtype, x = x, trafo = L2Fam@param@trafo)
+                            normtype = normtype, x = x, trafo = trafo(L2Fam@param))
 
         prec <- if(misF) checkIC(IC, out = FALSE) else
                          checkIC(IC, L2Fam, out = FALSE)

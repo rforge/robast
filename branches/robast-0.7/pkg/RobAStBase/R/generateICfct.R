@@ -20,7 +20,7 @@ setMethod("generateIC.fct", signature(neighbor = "UncondNeighborhood", L2Fam = "
                                         { ind <- 1-.eq(Y(x))
                                           Y(x)*w(L(x)) + zi*(1-ind)*d*b },
                                         list(Y = Y@Map[[1]], L = L.fct, w = w, b = b, d = d,
-                                             zi = sign(L2Fam@param@trafo), .eq = .eq))
+                                             zi = sign(trafo(L2Fam@param)), .eq = .eq))
             }else{
                 ICfct[[1]] <- function(x){}
                 body(ICfct[[1]]) <- substitute({ Y(x)*w(L(x)) },

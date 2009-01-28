@@ -16,7 +16,8 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
         biastype <- biastype(risk)
         normtype <- normtype(risk)
 
-        FI0 <- L2Fam@param@trafo%*%solve(L2Fam@FisherInfo)%*%t(L2Fam@param@trafo)
+        trafo <- trafo(L2Fam@param)
+        FI0 <- trafo%*%solve(L2Fam@FisherInfo)%*%t(trafo)
         FI <- solve(FI0)
         if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") ) 
            {QuadForm(normtype) <- PosSemDefSymmMatrix(FI); 
@@ -41,31 +42,31 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                     resLo <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
                                 risk = risk, symm = L2Fam@L2derivDistrSymm[[1]],
                                 Finfo = L2Fam@FisherInfo, upper = upper.b,
-                                trafo = L2Fam@param@trafo, maxiter = MaxIter, tol = eps, 
+                                trafo = trafo, maxiter = MaxIter, tol = eps, 
                                 warn = warn, verbose = verbose)
                     loRisk <- getAsRisk(risk = risk, L2deriv = L2Fam@L2derivDistr[[1]], 
                                         neighbor = neighbor, biastype = biastype, 
                                         clip = resLo$b, cent = resLo$a, 
-                                        stand = resLo$A, trafo = L2Fam@param@trafo)[[1]]
+                                        stand = resLo$A, trafo = trafo)[[1]]
                 }
 
                 if(upRad == Inf){
                     bmin <- getAsRisk(risk = asBias(biastype = biastype), 
                                 L2deriv = L2Fam@L2derivDistr[[1]], 
                                 neighbor = neighbor, biastype = biastype, 
-                                trafo = L2Fam@param@trafo, symm = L2Fam@L2derivSymm[[1]])
+                                trafo = trafo, symm = L2Fam@L2derivSymm[[1]])
                     upRisk <- bmin^2
                 }else{
                     neighbor@radius <- upRad
                     resUp <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
                                 risk = risk, symm = L2Fam@L2derivDistrSymm[[1]],
                                 Finfo = L2Fam@FisherInfo, upper = upper.b,
-                                trafo = L2Fam@param@trafo, maxiter = MaxIter, tol = eps, 
+                                trafo = trafo, maxiter = MaxIter, tol = eps, 
                                 warn = warn, verbose = verbose)
                     upRisk <- getAsRisk(risk = risk, L2deriv = L2Fam@L2derivDistr[[1]], 
                                         neighbor = neighbor, biastype = biastype, 
                                         clip = resUp$b, cent = resUp$a, 
-                                        stand = resUp$A, trafo = L2Fam@param@trafo)[[1]]
+                                        stand = resUp$A, trafo = trafo)[[1]]
                 }
                 loNorm<- upNorm <- NormType()
                 leastFavR <- uniroot(getIneffDiff, lower = lower, upper = upper, 
@@ -111,7 +112,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                 }
    
                 std <- if(is(normtype,"QFNorm")) 
-                       QuadForm(normtype) else diag(nrow(L2Fam@param@trafo))
+                       QuadForm(normtype) else diag(nrow(trafo))
    
                 leastFavFct <- function(r, L2Fam, neighbor, risk, rho, 
                                         z.start, A.start, upper.b, MaxIter, eps, warn){
@@ -122,7 +123,6 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                     ow <- options("warn")
                     on.exit(options(ow))
                     options(warn = -1)
-                    trafo <- L2Fam@param@trafo
                     if(identical(all.equal(loRad, 0), TRUE)){
                         loRad <- 0
                         loRisk <- sum(diag(std%*%FI0))
@@ -185,7 +185,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                     return(ineff)
                 }
                 if(is.null(z.start)) z.start <- numeric(L2derivDim)
-                if(is.null(A.start)) A.start <- L2Fam@param@trafo
+                if(is.null(A.start)) A.start <- trafo
                 leastFavR <- optimize(leastFavFct, lower = 1e-4, upper = upRad, 
                                 tol = .Machine$double.eps^0.25, maximum = TRUE,
                                 L2Fam = L2Fam, neighbor = neighbor, risk = risk,

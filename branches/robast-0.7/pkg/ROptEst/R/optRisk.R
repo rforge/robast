@@ -21,7 +21,7 @@ setMethod("optRisk", signature(model = "InfRobModel", risk = "asRisk"),
             res <- getInfRobIC(L2deriv = model@center@L2derivDistr[[1]], 
                         neighbor = model@neighbor, risk = risk,
                         symm = model@center@L2derivDistrSymm[[1]],
-                        Finfo = model@center@FisherInfo, trafo = model@center@param@trafo, 
+                        Finfo = model@center@FisherInfo, trafo = trafo(model@center@param), 
                         upper = upper, maxiter = maxiter, tol = tol, warn = warn,
                         noLow = noLow)
             options(ow)     
@@ -53,7 +53,7 @@ setMethod("optRisk", signature(model = "InfRobModel", risk = "asRisk"),
                             risk = risk, Distr = model@center@distribution, 
                             DistrSymm = model@center@distrSymm, L2derivSymm = L2derivSymm,
                             L2derivDistrSymm = L2derivDistrSymm, Finfo = model@center@FisherInfo, 
-                            trafo = model@center@param@trafo, z.start = z.start, A.start = A.start, 
+                            trafo = trafo(model@center@param), z.start = z.start, A.start = A.start, 
                             upper = upper, maxiter = maxiter, tol = tol, warn = warn)
                 options(ow)     
                 return(res$risk)

@@ -97,7 +97,7 @@ setMethod("comparePlot", signature("IC","IC"),
         dotsP$xlim <- xlim
         dots$xlim <- NULL
 
-        dims <- nrow(L2Fam@param@trafo)
+        dims <- nrow(trafo(L2Fam@param))
         IC1 <- as(diag(dimm) %*% obj1@Curve, "EuclRandVariable")
         IC2 <- as(diag(dimm) %*% obj2@Curve, "EuclRandVariable")
 
@@ -201,7 +201,10 @@ setMethod("comparePlot", signature("IC","IC"),
             }else{if(any(is.na(inner))||any(!inner)) {
                  innerT <- as.list(rep("",dims)); innerL <- FALSE
                 }else{innerL <- TRUE
-                      innerT <- as.list(paste(paste(gettext("Component "),  1:dims, 
+                      tnm  <- c(rownames(trafO))
+                      tnms <- if(is.null(tnm)) paste(1:dims) else 
+                                               paste("'", tnm, "'", sep = "") 
+                      innerT <- as.list(paste(paste(gettext("Component "),  tnms, 
                                        gettext(" of (partial) IC\nfor "), 
                                        name(L2Fam)[1], sep =""), innerParam))
                    }

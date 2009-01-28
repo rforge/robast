@@ -14,9 +14,9 @@ setMethod("getIneffDiff", signature(radius = "numeric",
             res <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
                         risk = risk, symm = L2Fam@L2derivDistrSymm[[1]], 
                         Finfo = L2Fam@FisherInfo, upper = upper.b,
-                        trafo = L2Fam@param@trafo, maxiter = MaxIter, tol = eps, 
+                        trafo = trafo(L2Fam@param), maxiter = MaxIter, tol = eps, 
                         warn = warn, verbose = verbose)
-            trafo <- as.vector(L2Fam@param@trafo)
+            trafo <- as.vector(trafo(L2Fam@param))
             ineffLo <- (as.vector(res$A)*trafo - res$b^2*(radius^2-loRad^2))/loRisk
             if(upRad == Inf)
                 ineffUp <- res$b^2/upRisk
@@ -45,7 +45,7 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                         L2derivDistrSymm <- new("DistrSymmList", L2)
                     }
                 }
-                trafo <- L2Fam@param@trafo
+                trafo <- trafo(L2Fam@param)
                 p <- nrow(trafo)
                 neighbor@radius <- radius
                 res <- getInfRobIC(L2deriv = L2deriv, neighbor = neighbor, risk = risk, 

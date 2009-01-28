@@ -88,7 +88,7 @@ setMethod("infoPlot", "IC",
          dotsP <- dotsL <- dotsT <- dots
          dotsP$xlim <- xlim
          
-         trafo <- L2Fam@param@trafo
+         trafo <- trafo(L2Fam@param)
             
             
             mainL <- FALSE

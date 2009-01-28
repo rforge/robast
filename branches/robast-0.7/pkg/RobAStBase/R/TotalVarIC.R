@@ -19,7 +19,7 @@ TotalVarIC <- function(name, CallL2Fam = call("L2ParamFamily"),
     if((length(clipLo) != 1) && (length(clipLo) != length(Curve)))
         stop("length of lower clipping bound != 1 and != length of 'Curve'")
     L2Fam <- eval(CallL2Fam)
-    if(!identical(dim(L2Fam@param@trafo), dim(stand)))
+    if(!identical(dim(trafo(L2Fam@param)), dim(stand)))
         stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
 
     IC1 <- new("TotalVarIC")
@@ -57,9 +57,12 @@ setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood",
         else
             clipUp <- clipLo + b
 
+        L2call <- L2Fam@fam.call
+        L2call$trafo <- trafo(L2Fam)
+
         return(TotalVarIC(
                 name = "IC of total variation type", 
-                CallL2Fam = L2Fam@fam.call,
+                CallL2Fam = L2call,
                 Curve = generateIC.fct(neighbor, L2Fam, res),
                 clipUp = clipUp,
                 clipLo = clipLo,

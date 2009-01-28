@@ -111,6 +111,27 @@ comparePlot(IC1, IC2 ,mfColRow = FALSE, to.draw.arg=c("mean"),
             panel.first= grid(),ylim=c(-4,4),xlim=c(-6,6))
 ## matrix-valued ylim
 comparePlot(IC1, IC2, panel.first= grid(),ylim=c(-4,4,0,4),xlim=c(-6,6))
+
+## with use of trafo-matrix:
+G <- GammaFamily(scale = 1, shape = 2)
+## explicitely transforming to
+## MASS parametrization:
+mtrafo <- function(x){
+     nms0 <- names(c(main(param(G)),nuisance(param(G))))
+     nms <- c("shape","rate")
+     fval0 <- c(x[2], 1/x[1])
+     names(fval0) <- nms
+     mat0 <- matrix( c(0, -1/x[1]^2, 1, 0), nrow = 2, ncol = 2,
+                     dimnames = list(nms,nms0))                          
+     list(fval = fval0, mat = mat0)}
+G2 <- G
+trafo(G2) <- mtrafo
+G2
+G2.Rob1 <- InfRobModel(center = G2, neighbor = ContNeighborhood(radius = 0.5))
+IC1 <- optIC(model = G2, risk = asCov())
+IC2 <- optIC(model = G2.Rob1, risk = asMSE())
+comparePlot(IC1,IC2)
+
 }
 }
 \keyword{robust}

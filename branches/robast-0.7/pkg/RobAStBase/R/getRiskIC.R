@@ -17,7 +17,6 @@ setMethod("getRiskIC", signature(IC = "IC",
         if(dimension(Domain(IC@Curve[[1]])) != dimension(img(L2Fam@distribution)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
-        trafo <- L2Fam@param@trafo
         IC1 <- as(diag(dimension(IC@Curve)) %*% IC@Curve, "EuclRandVariable")
 
         bias <- E(L2Fam, IC1)

@@ -102,7 +102,7 @@ setClass("IC", representation(CallL2Fam = "call",
             contains = "InfluenceCurve",
             validity = function(object){
                 L2Fam <- eval(object@CallL2Fam)
-                trafo <- L2Fam@param@trafo
+                trafo <- trafo(L2Fam@param)
                 if(nrow(trafo) != dimension(object@Curve))
                     stop("wrong dimension of 'Curve'")
                 if(dimension(Domain(L2Fam@L2deriv[[1]])) != dimension(Domain(object@Curve[[1]])))
@@ -139,7 +139,7 @@ setClass("HampIC",
                     if(length(object@lowerCase) != nrow(object@stand))
                         stop("length of 'lowerCase' != nrow of standardizing matrix")
                 L2Fam <- eval(object@CallL2Fam)
-                if(!identical(dim(L2Fam@param@trafo), dim(object@stand)))
+                if(!identical(dim(trafo(L2Fam@param)), dim(object@stand)))
                     stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
                 return(TRUE)
             })
