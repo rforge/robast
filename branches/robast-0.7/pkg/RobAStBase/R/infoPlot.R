@@ -4,7 +4,7 @@ setMethod("infoPlot", "IC",
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
-             mfColRow = TRUE){
+             mfColRow = TRUE, to.draw.arg = NULL){
 
         objectc <- match.call(call = sys.call(sys.parent(1)))$object
         dots <- match.call(call = sys.call(sys.parent(1)), 
@@ -21,29 +21,74 @@ setMethod("infoPlot", "IC",
         if(!is.null(dots[["xlab"]])) dots["xlab"] <- NULL
         if(!is.null(dots[["ylab"]])) dots["ylab"] <- NULL
         
-        dotsP <- dotsL <- dotsT <- dots
+        trafO <- trafo(L2Fam@param)
+        dims <- nrow(trafO)
+        dimm <- length(L2Fam@param)
+        
+        to.draw <- 1:(dims+1)
+        dimnms  <- c(rownames(trafO))
+        if(is.null(dimnms))
+           dimnms <- paste("dim",1:dims,sep="")
+        pdimnms <- c("Abs",dimnms)
+        if(!mfColRow && ! is.null(to.draw.arg)){
+            if(is.character(to.draw.arg)) 
+                 to.draw <- pmatch(to.draw.arg, pdimnms)
+            else if(is.numeric(to.draw.arg)) 
+                 to.draw <- to.draw.arg
+        }
+        
+        to.draw1 <- to.draw[to.draw>1]
+        dims0 <- length(to.draw1)
+        nrows <- trunc(sqrt(dims0))
+        ncols <- ceiling(dims0/nrows)
 
         e1 <- L2Fam@distribution
         if(!is(e1, "UnivariateDistribution") | is(e1, "CondDistribution"))
             stop("not yet implemented")
 
         if(is(e1, "UnivariateDistribution")){
+           xlim <- eval(dots$xlim)
+           if(!is.null(xlim)){ 
+               xm <- min(xlim)
+               xM <- max(xlim)
+               dots$xlim <- NULL
+            }
             if(is(e1, "AbscontDistribution")){
-                ifelse(is.finite(q(e1)(0)), lower <- q(e1)(0), lower <- q(e1)(getdistrOption("TruncQuantile")))
-                ifelse(is.finite(q(e1)(1)), upper <- q(e1)(1), upper <- q(e1)(1 - getdistrOption("TruncQuantile")))
+                lower <- if(is.finite(q(e1)(0)))
+                     q(e1)(0) else q(e1)(getdistrOption("TruncQuantile"))
+                upper <- if(is.finite(q(e1)(1))) 
+                     q(e1)(1) else q(e1)(1 - getdistrOption("TruncQuantile"))
+                if(!is.null(xlim)){ 
+                  lower <- min(lower,xm)
+                  upper <- max(upper,xM)
+                }
                 h <- upper - lower
                 x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
                 plty <- "l"
                 lty <- "solid"
-            }
-            if(is(e1, "DiscreteDistribution")){
-                x.vec <- support(e1)
-                plty <- "o"
+            }else{
+                if(is(e1, "DiscreteDistribution")) x.vec <- support(e1)
+                else{
+                   x.vec <- r(e1)(1000)
+                   x.vec <- sort(unique(x.vec))
+                }
+                plty <- "p"
                 lty <- "dotted"
+                if(!is.null(xlim)) x.vec <- x.vec[(x.vec>=xm) & (x.vec<=xM)]
             }
+         }
+         ylim <- eval(dots$ylim)
+         if(!is.null(ylim)){ 
+               if(!length(ylim) %in% c(2,2*(dims0+(1%in%to.draw)))) 
+                  stop("Wrong length of Argument ylim"); 
+               ylim <- matrix(ylim, nrow=2,ncol=dims0+(1%in%to.draw))
+               dots$ylim <- NULL
+         }
 
-            trafo <- L2Fam@param@trafo
-            dims <- nrow(trafo)
+         dotsP <- dotsL <- dotsT <- dots
+         dotsP$xlim <- xlim
+         
+         trafo <- L2Fam@param@trafo
             
             
             mainL <- FALSE
@@ -84,44 +129,58 @@ setMethod("infoPlot", "IC",
                  if (subL)
                      if (missing(bmar)) bmar <- 6
              }
-            innerParam <-  paste(gettext("\nwith main parameter ("), 
-                                    paste(round(L2Fam@param@main, 3), 
-                                          collapse = ", "),
-                                 ")", sep = "")
-            if(!is.null(L2Fam@param@nuisance))
-                innerParam <- paste(innerParam,
-                                gettext("\nand nuisance parameter ("), 
-                                    paste(round(L2Fam@param@nuisance, 3), 
-                                           collapse = ", "),
-                                ")", sep ="")
-            if(!is.null(L2Fam@param@fixed))
-                innerParam <- paste(innerParam,
-                                gettext("\nand fixed known parameter ("), 
-                                    paste(round(L2Fam@param@fixed, 3), 
-                                           collapse = ", "),
-                                ")", sep ="")
-            
-            if(!is.logical(inner)){
+             mnm <- names(L2Fam@param@main)
+             mnms <- if(is.null(mnm)) NULL else paste("'", mnm, "' = ", sep = "") 
+             innerParam <-  paste(gettext("\nwith main parameter ("), 
+                                         paste(mnms, round(L2Fam@param@main, 3), 
+                                               collapse = ", "),
+                                      ")", sep = "")
+             if(!is.null(L2Fam@param@nuisance)){            
+                 nnm <- names(L2Fam@param@nuisance)
+                 nnms <- if(is.null(nnm)) NULL else paste("'", nnm, "' = ", sep = "") 
+                 innerParam <- paste(innerParam,
+                                     gettext("\nand nuisance parameter ("), 
+                                         paste(nnms, round(L2Fam@param@nuisance, 3), 
+                                                collapse = ", "),
+                                     ")", sep ="")
+             }
+             if(!is.null(L2Fam@param@fixed)){
+                 fnm <- names(L2Fam@param@fixed)
+                 fnms <- if(is.null(fnm)) NULL else paste("'", fnm, "' = ", sep = "") 
+                 innerParam <- paste(innerParam,
+                                     gettext("\nand fixed known parameter ("), 
+                                         paste(fnms, round(L2Fam@param@fixed, 3), 
+                                                collapse = ", "),
+                                     ")", sep ="")
+             }    
+             if(!is.logical(inner)){
                 #if(!is.character(inner))
                 #stop("Argument 'inner' must either be 'logical' or a 'list'")
                 if(!is.list(inner))
                     inner <- as.list(inner)                
                 innerT <- distr:::.fillList(inner,1+dims)
+                if(dims0<dims){
+                   innerT0 <- innerT
+                   for(i in 1:dims0) innerT[1+to.draw[i]] <- innerT0[1+i]          
+                }
                 innerL <- TRUE
             }else{if(any(is.na(inner))||any(!inner)) {
                      innerT <- as.list(rep("",1+dims)); innerL <- FALSE
                 }else{innerL <- TRUE
+                      tnm  <- c(rownames(trafO))
+                      tnms <- if(is.null(tnm)) paste(1:dims) else 
+                                               paste("'", tnm, "'", sep = "") 
                       innerT <- as.list(paste(c( paste(gettext("Absolute information of (partial) IC for"), 
                                        name(L2Fam)[1], sep =""),
                                    paste(gettext("Relative information of \ncomponent "),
-                                       1:dims, 
-                                       gettext("of (partial) IC\nfor "), 
+                                       tnms, 
+                                       gettext(" of (partial) IC\nfor "), 
                                        name(L2Fam)[1], sep ="")), innerParam))
                    }
               }
 
 
-            QFc <- diag(dims)
+            QFc <- diag(dimm)
             if(is(object,"ContIC") & dims>1 )
                {if (is(normtype(object),"QFNorm")) QFc <- QuadForm(normtype(object))
                 QFc0 <- solve( trafo %*% solve(L2Fam@FisherInfo) %*% t(trafo ))
@@ -134,12 +193,12 @@ setMethod("infoPlot", "IC",
             absInfoClass <- t(classIC) %*% QFc %*% classIC
             absInfoClass <- sapply(x.vec, absInfoClass@Map[[1]])
 
-            QF <- diag(dims)
+            QF <- diag(dimm)
             if(is(object,"ContIC") & dims>1 )
                {if (is(normtype(object),"QFNorm")) QF <- QuadForm(normtype(object))}
             QF.5 <- sqrt(PosSemDefSymmMatrix(QF))
 
-            IC1 <- as(diag(dims) %*% object@Curve, "EuclRandVariable")
+            IC1 <- as(diag(dimm) %*% object@Curve, "EuclRandVariable")
             absInfo <- t(IC1) %*% QF %*% IC1
             absInfo <- sapply(x.vec, absInfo@Map[[1]])
 
@@ -160,34 +219,35 @@ setMethod("infoPlot", "IC",
             
             dotsP["col"] <- NULL
             dotsP["lwd"] <- NULL
-            if(!hasArg(ylim)) dots["ylim"] <- c(0, 2*max(absInfo, na.rm = TRUE))
+            if(!is.null(ylim)) 
+                dotsP$ylim <- ylim[,1]       
+            if(1 %in% to.draw){
+               do.call(plot, args=c(list(x.vec, absInfoClass, type = plty, 
+                   lty = "dashed", col = colI, lwd = lwdI,
+                   xlab = "x", ylab = "absolute information"), dotsP))
+               do.call(lines, args=c(list(x.vec, absInfo, type = plty, lty = lty), 
+                       dotsL))
+               legend("top",
+                     legend = c("class. opt. IC", objectc), 
+                     lty = c(lty,"dashed"), col = c(colI, col), 
+                     lwd=c(lwdI, lwd), cex = 0.75)
 
-            do.call(plot, args=c(list(x.vec, absInfoClass, type = plty, 
-                 lty = "dashed", col = colI, lwd = lwdI,
-                 xlab = "x", 
-                 ylab = "absolute information"), dotsP))
-            do.call(lines, args=c(list(x.vec, absInfo, type = plty, lty = lty), 
-                    dotsL))
-            legend("top",
-                   legend = c("class. opt. IC", objectc), 
-                   lty = c(lty,"dashed"), col = c(colI, col), 
-                   lwd=c(lwdI, lwd), cex = 0.75)
-
-            dotsT["main"] <- NULL
-            dotsT["cex.main"] <- NULL
-            dotsT["col.main"] <- NULL
-            dotsT["line"] <- NULL
-            if(innerL)
-               do.call(title, args=c(list(main = innerT[[1]]),  dotsT,
-                       line = lineT, cex.main = cex.inner, col.main = col.inner))
+               dotsT["main"] <- NULL
+               dotsT["cex.main"] <- NULL
+               dotsT["col.main"] <- NULL
+               dotsT["line"] <- NULL
+               if(innerL)
+                  do.call(title, args=c(list(main = innerT[[1]]),  dotsT,
+                          line = lineT, cex.main = cex.inner, col.main = col.inner))
+            }
             
-            if(dims > 1){
+            if(dims0 > 1){
                 dotsP["ylim"] <- NULL
                 dotsL["ylim"] <- NULL
                 dotsT["ylim"] <- NULL
                 nrows <- trunc(sqrt(dims))
                 ncols <- ceiling(dims/nrows)
-                if (!withSweave)
+                if (!withSweave||!mfColRow)
                      devNew()
                 if(mfColRow)
                    parArgs <- c(parArgs,list(mfrow = c(nrows, ncols)))
@@ -196,15 +256,18 @@ setMethod("infoPlot", "IC",
 
                 IC1.i.5 <- QF.5%*%IC1
                 classIC.i.5 <- QFc.5%*%classIC
-                for(i in 1:dims){
-                    y.vec <- sapply(x.vec, IC1.i.5@Map[[i]])^2/absInfo
+                for(i in 1:dims0){
+                    indi <- to.draw1[i]-1
+                    if(!is.null(ylim)) 
+                         dotsP$ylim <- ylim[,(1%in%to.draw)+i]       
+                    else dotsP$ylim <- c(0,1)
+                    y.vec <- sapply(x.vec, IC1.i.5@Map[[indi]])^2/absInfo
                     do.call(plot, args=c(list(x.vec, y.vec, type = plty, 
                                   lty = lty, xlab = "x", 
                                   ylab = "relative information", 
-                                  ylim = c(0, 1.1), 
                                   col = colI, lwd = lwdI), dotsP))
 
-                    yc.vec <- sapply(x.vec, classIC.i.5@Map[[i]])^2/absInfoClass
+                    yc.vec <- sapply(x.vec, classIC.i.5@Map[[indi]])^2/absInfoClass
                     do.call(lines, args=c(list(x.vec, yc.vec, type = plty, 
                           lty = "dashed"), dotsL))
                     legend("topright",
@@ -212,7 +275,7 @@ setMethod("infoPlot", "IC",
                                col = c(colI, col), lwd=c(lwdI, lwd),
                                cex = 0.6)
                     if(innerL)
-                       do.call(title, args=c(list(main = innerT[[1+i]]),  dotsT,
+                       do.call(title, args=c(list(main = innerT[[1+indi]]),  dotsT,
                                line = lineT, cex.main = cex.inner, col.main = col.inner))
                 }
             }
@@ -229,6 +292,7 @@ setMethod("infoPlot", "IC",
                   outer = TRUE, line = -1.6, col = col.sub)
 
 
+        invisible()
         }
-    })
+    )
  

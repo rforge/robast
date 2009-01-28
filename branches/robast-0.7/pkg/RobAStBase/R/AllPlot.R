@@ -3,11 +3,12 @@ setMethod("plot", signature(x = "IC", y = "missing"),
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
-             mfColRow = TRUE){
+             mfColRow = TRUE, to.draw.arg = NULL){
 
         xc <- match.call(call = sys.call(sys.parent(1)))$x
         dots <- match.call(call = sys.call(sys.parent(1)), 
                        expand.dots = FALSE)$"..."
+
 
         if(!is.logical(inner)){
           if(!is.list(inner))
@@ -20,28 +21,66 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
 
         L2Fam <- eval(x@CallL2Fam)
+
+        trafO <- trafo(L2Fam@param)
+        dims  <- nrow(trafO)
+        dimm <- length(L2Fam@param)
+        
+        to.draw <- 1:dims
+        dimnms  <- c(rownames(trafO))
+        if(is.null(dimnms))
+           dimnms <- paste("dim",1:dims,sep="")
+        if(!mfColRow && ! is.null(to.draw.arg)){
+            if(is.character(to.draw.arg)) 
+                 to.draw <- pmatch(to.draw.arg, dimnms)
+            else if(is.numeric(to.draw.arg)) 
+                 to.draw <- to.draw.arg
+        }
+        dims0 <- length(to.draw)
+        nrows <- trunc(sqrt(dims0))
+        ncols <- ceiling(dims0/nrows)
+
+
         e1 <- L2Fam@distribution
         if(!is(e1, "UnivariateDistribution")) stop("not yet implemented")
 
-        if(is(e1, "AbscontDistribution")){
-            lower <- ifelse(is.finite(q(e1)(0)), q(e1)(0), q(e1)(getdistrOption("TruncQuantile")))
-            upper <- ifelse(is.finite(q(e1)(1)), q(e1)(1), q(e1)(1 - getdistrOption("TruncQuantile")))
-            h <- upper - lower
-            x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
-            plty <- "l"
-            lty <- "solid"
-        }else{
-            if(is(e1, "DiscreteDistribution")){ 
-                x.vec <- support(e1)
-                plty <- "p"
-                lty <- "dotted"
-            }else{
-                x.vec <- r(e1)(1000)
-                x.vec <- sort(unique(x.vec))
-                plty <- "p"
-                lty <- "dotted"
+        if(is(e1, "UnivariateDistribution")){
+           xlim <- eval(dots$xlim)
+           if(!is.null(xlim)){ 
+               xm <- min(xlim)
+               xM <- max(xlim)
             }
-        }
+            if(is(e1, "AbscontDistribution")){
+                lower <- if(is.finite(q(e1)(0))) 
+                     q(e1)(0) else q(e1)(getdistrOption("TruncQuantile"))
+                upper <- if(is.finite(q(e1)(1))) 
+                     q(e1)(1) else q(e1)(1 - getdistrOption("TruncQuantile"))
+                if(!is.null(xlim)){ 
+                  lower <- min(lower,xm)
+                  upper <- max(upper,xM)
+                }
+                h <- upper - lower
+                x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
+                plty <- "l"
+                lty <- "solid"
+            }else{
+                if(is(e1, "DiscreteDistribution")) x.vec <- support(e1)
+                else{
+                   x.vec <- r(e1)(1000)
+                   x.vec <- sort(unique(x.vec))
+                }
+                plty <- "p"
+                lty <- "dotted"
+                if(!is.null(dots$xlim)) x.vec <- x.vec[(x.vec>=xm) & (x.vec<=xM)]
+                
+            }
+         }
+         ylim <- eval(dots$ylim)
+         if(!is.null(ylim)){ 
+               if(!length(ylim) %in% c(2,2*dims0)) 
+                  stop("Wrong length of Argument ylim"); 
+               ylim <- matrix(ylim, 2,dims0)
+         }
 
         
         if(!is.null(dots[["lty"]]))  dots["lty"] <- NULL
@@ -49,8 +88,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         if(!is.null(dots[["xlab"]])) dots["xlab"] <- NULL
         if(!is.null(dots[["ylab"]])) dots["ylab"] <- NULL
 
-        dims <- nrow(L2Fam@param@trafo)
-        IC1 <- as(diag(dims) %*% x@Curve, "EuclRandVariable")
+        IC1 <- as(diag(dimm) %*% x@Curve, "EuclRandVariable")
 
         mainL <- FALSE
         subL <- FALSE
@@ -92,25 +130,41 @@ setMethod("plot", signature(x = "IC", y = "missing"),
      }
 
      if(is.logical(innerL)){
-        innerT <- paste(gettextf("Component "), 1:dims,
-                        gettextf(" of (partial) IC\nfor"),
-                        name(L2Fam)[1],
-                        gettextf("\nwith main parameter ("),
-                        paste(round(L2Fam@param@main, 3), collapse = ", "),")")
-        if(!is.null(L2Fam@param@nuisance))
+        tnm  <- c(rownames(trafO))
+        tnms <- if(is.null(tnm)) paste(1:dims) else 
+                                 paste("'", tnm, "'", sep = "") 
+        mnm <- names(L2Fam@param@main)
+        mnms <- if(is.null(mnm)) NULL else paste("'", mnm, "' = ", sep = "") 
+        mss  <- paste(mnms, round(L2Fam@param@main, 3), collapse=", ",sep="")
+        innerT <- paste(gettextf("Component "),  tnms, 
+                        gettextf(" of L_2 derivative\nof"),
+                        name(x)[1],
+                        gettextf("\nwith main parameter ("), mss,")")
+        if(!is.null(L2Fam@param@nuisance)){
+            nnm <- names(L2Fam@param@nuisance)
+            nnms <- if(is.null(nnm)) NULL else paste("'", nnm, "' = ", sep = "") 
             innerT <- paste(innerT,
                         gettextf("\nand nuisance parameter ("),
-                        paste(round(L2Fam@param@nuisance, 3), collapse = ", "),
+                        paste(nnms,round(L2Fam@param@nuisance, 3), collapse = ", "),
                         ")",
                         sep=""  )
-        if(!is.null(L2Fam@param@fixed))
+        }
+        if(!is.null(L2Fam@param@fixed)){
+            fnm <- names(L2Fam@param@fixed)
+            fnms <- if(is.null(fnm)) NULL else paste("'", fnm, "' = ", sep = "") 
             innerT <- paste(innerT,
                         gettextf("\nand fixed known parameter ("),
-                        paste(round(L2Fam@param@fixed, 3), collapse = ", "),
+                        paste(fnms, round(L2Fam@param@fixed, 3), collapse = ", "),
                         ")",
                         sep=""  )
+        }
      }else{
         innerT <- lapply(inner, .mpresubs)
+        innerT <- distr:::.fillList(innerT,dims)
+        if(dims0<dims){
+           innerT0 <- innerT
+           for(i in 1:dims0) innerT[to.draw[i]] <- innerT0[i]          
+        }
      }
 
 
@@ -121,9 +175,8 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         on.exit(par=opar)
         if (!withSweave)
              devNew()
-        nrows <- trunc(sqrt(dims))
-        ncols <- ceiling(dims/nrows)
         
+        parArgs <- NULL
         if(mfColRow)
            parArgs <- list(mfrow = c(nrows, ncols))
 
@@ -139,17 +192,20 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         dotsT["line"] <- NULL
 
 
-        for(i in 1:dims){
-            do.call(plot, args=c(list(x.vec, sapply(x.vec, IC1@Map[[i]]), 
+        dots$ylim <- NULL
+        for(i in 1:dims0){
+            indi <- to.draw[i]
+            if(!is.null(ylim)) dots$ylim <- ylim[,i]       
+            do.call(plot, args=c(list(x.vec, sapply(x.vec, IC1@Map[[indi]]), 
                                       type = plty, lty = lty,
                                       xlab = "x", ylab = "(partial) IC"),
                                  dots))     
             if(is(e1, "DiscreteDistribution")){
                 x.vec1 <- seq(from = min(x.vec), to = max(x.vec), length = 1000)
-                do.call(lines,args=c(list(x.vec1, sapply(x.vec1, IC1@Map[[i]]), 
+                do.call(lines,args=c(list(x.vec1, sapply(x.vec1, IC1@Map[[indi]]), 
                                           lty = "dotted"), dots))
             }
-            do.call(title,args=c(list(main = innerT[i]), dotsT, line = lineT,
+            do.call(title,args=c(list(main = innerT[indi]), dotsT, line = lineT,
                     cex.main = cex.inner, col.main = col.inner))
         }
         if(!hasArg(cex.main)) cex.main <- par("cex.main") else cex.main <- dots$"cex.main"

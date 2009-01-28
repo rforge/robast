@@ -4,7 +4,7 @@ setMethod("comparePlot", signature("IC","IC"),
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
-             mfColRow = TRUE){
+             mfColRow = TRUE, to.draw.arg = NULL){
 
         xc1 <- as.character(deparse(match.call(call = sys.call(sys.parent(1)))$obj1))
         xc2 <- as.character(deparse(match.call(call = sys.call(sys.parent(1)))$obj2))
@@ -32,39 +32,74 @@ setMethod("comparePlot", signature("IC","IC"),
         
         dotsP <- dotsL <- dotsT <- dots
 
-
         L2Fam <- eval(obj1@CallL2Fam)
         L2Fam1c <- obj1@CallL2Fam
         L2Fam2c <- obj2@CallL2Fam
         if(!identical(L2Fam1c,L2Fam2c))
             stop("ICs need to be defined for the same model")
 
+        trafO <- trafo(L2Fam@param)
+        dims  <- nrow(trafO)
+        dimm <- length(L2Fam@param)
+        
+        to.draw <- 1:dims
+        dimnms  <- c(rownames(trafO))
+        if(is.null(dimnms))
+           dimnms <- paste("dim",1:dims,sep="")
+        if(!mfColRow && ! is.null(to.draw.arg)){
+            if(is.character(to.draw.arg)) 
+                 to.draw <- pmatch(to.draw.arg, dimnms)
+            else if(is.numeric(to.draw.arg)) 
+                 to.draw <- to.draw.arg
+        }
+        dims0 <- length(to.draw)
+        nrows <- trunc(sqrt(dims0))
+        ncols <- ceiling(dims0/nrows)
+
         e1 <- L2Fam@distribution
         if(!is(e1, "UnivariateDistribution")) stop("not yet implemented")
 
+        xlim <- eval(dots$xlim)
+        if(!is.null(xlim)){ 
+               xm <- min(xlim)
+               xM <- max(xlim)
+            }
         if(is(e1, "AbscontDistribution")){
-            lower <- ifelse(is.finite(q(e1)(0)), q(e1)(0), q(e1)(getdistrOption("TruncQuantile")))
-            upper <- ifelse(is.finite(q(e1)(1)), q(e1)(1), q(e1)(1 - getdistrOption("TruncQuantile")))
+            lower <- if(is.finite(q(e1)(0))) 
+                     q(e1)(0) else q(e1)(getdistrOption("TruncQuantile"))
+            upper <- if(is.finite(q(e1)(1)))
+                     q(e1)(1) else q(e1)(1 - getdistrOption("TruncQuantile"))
+            if(!is.null(xlim)){ 
+               lower <- min(lower,xm)
+               upper <- max(upper,xM)
+            }
             h <- upper - lower
             x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
             plty <- "l"
             lty <- "solid"
         }else{
-            if(is(e1, "DiscreteDistribution")){
-                x.vec <- support(e1)
-                plty <- "p"
-                lty <- "dotted"
-            }else{
+            if(is(e1, "DiscreteDistribution")) x.vec <- support(e1)
+            else{
                 x.vec <- r(e1)(1000)
                 x.vec <- sort(unique(x.vec))
-                plty <- "p"
-                lty <- "dotted"
             }
+            plty <- "p"
+            lty <- "dotted"
+            if(!is.null(xlim)) x.vec <- x.vec[(x.vec>=xm) & (x.vec<=xM)]
         }
+        ylim <- eval(dots$ylim)
+        if(!is.null(ylim)){ 
+               if(! length(ylim) %in% c(2,2*dims0)) 
+                  stop("Wrong length of Argument ylim"); 
+               ylim <- matrix(ylim, 2,dims0)
+        }
+        dots$ylim <- NULL
+        dotsP$xlim <- xlim
+        dots$xlim <- NULL
 
         dims <- nrow(L2Fam@param@trafo)
-        IC1 <- as(diag(dims) %*% obj1@Curve, "EuclRandVariable")
-        IC2 <- as(diag(dims) %*% obj2@Curve, "EuclRandVariable")
+        IC1 <- as(diag(dimm) %*% obj1@Curve, "EuclRandVariable")
+        IC2 <- as(diag(dimm) %*% obj2@Curve, "EuclRandVariable")
 
 
         obj <- obj3
@@ -72,7 +107,7 @@ setMethod("comparePlot", signature("IC","IC"),
            {
            if(!identical(L2Fam1c,obj@CallL2Fam))
                stop("ICs need to be defined for the same model")
-           IC3 <- as(diag(dims) %*% obj3@Curve, "EuclRandVariable")
+           IC3 <- as(diag(dimm) %*% obj3@Curve, "EuclRandVariable")
            }
 
         obj <- obj4
@@ -80,7 +115,7 @@ setMethod("comparePlot", signature("IC","IC"),
            {
            if(!identical(L2Fam1c,obj@CallL2Fam))
                stop("ICs need to be defined for the same model")
-           IC4 <- as(diag(dims) %*% obj4@Curve, "EuclRandVariable")
+           IC4 <- as(diag(dimm) %*% obj4@Curve, "EuclRandVariable")
            }
 
       lineT <- NA
@@ -128,29 +163,40 @@ setMethod("comparePlot", signature("IC","IC"),
                  if (subL)
                      if (missing(bmar)) bmar <- 6
              }
-            innerParam <-  paste(gettext("\nwith main parameter ("), 
-                                    paste(round(L2Fam@param@main, 3), 
+        mnm <- names(L2Fam@param@main)
+        mnms <- if(is.null(mnm)) NULL else paste("'", mnm, "' = ", sep = "") 
+        innerParam <-  paste(gettext("\nwith main parameter ("), 
+                                    paste(mnms, round(L2Fam@param@main, 3), 
                                           collapse = ", "),
                                  ")", sep = "")
-            if(!is.null(L2Fam@param@nuisance))
-                innerParam <- paste(innerParam,
+        if(!is.null(L2Fam@param@nuisance)){            
+            nnm <- names(L2Fam@param@nuisance)
+            nnms <- if(is.null(nnm)) NULL else paste("'", nnm, "' = ", sep = "") 
+            innerParam <- paste(innerParam,
                                 gettext("\nand nuisance parameter ("), 
-                                    paste(round(L2Fam@param@nuisance, 3), 
+                                    paste(nnms, round(L2Fam@param@nuisance, 3), 
                                            collapse = ", "),
                                 ")", sep ="")
-            if(!is.null(L2Fam@param@fixed))
-                innerParam <- paste(innerParam,
+        }
+        if(!is.null(L2Fam@param@fixed)){
+            fnm <- names(L2Fam@param@fixed)
+            fnms <- if(is.null(fnm)) NULL else paste("'", fnm, "' = ", sep = "") 
+            innerParam <- paste(innerParam,
                                 gettext("\nand fixed known parameter ("), 
-                                    paste(round(L2Fam@param@fixed, 3), 
+                                    paste(fnms, round(L2Fam@param@fixed, 3), 
                                            collapse = ", "),
                                 ")", sep ="")
-            
+        }    
             if(!is.logical(inner)){
 #                if(!is.character(inner))
 #                    stop("Argument 'inner' must either be 'logical' or a character vector")
                 if(!is.list(inner))
                     inner <- as.list(inner)                
                 innerT <- distr:::.fillList(inner,dims)
+                if(dims0<dims){
+                   innerT0 <- innerT
+                   for(i in 1:dims0) innerT[to.draw[i]] <- innerT0[i]          
+                }
                 innerL <- TRUE
             }else{if(any(is.na(inner))||any(!inner)) {
                  innerT <- as.list(rep("",dims)); innerL <- FALSE
@@ -167,40 +213,42 @@ setMethod("comparePlot", signature("IC","IC"),
         on.exit(options(warn = w0))
         opar <- par()
         on.exit(par(opar))
-        nrows <- trunc(sqrt(dims))
-        ncols <- ceiling(dims/nrows)
-        par(mfrow = c(nrows, ncols))
+        
+        if(mfColRow)
+             par(mfrow = c(nrows, ncols))
 
         if(is(e1, "DiscreteDistribution"))
                 x.vec1 <- seq(from = min(x.vec), to = max(x.vec), length = 1000)
-
+        
             dotsT["main"] <- NULL
             dotsT["cex.main"] <- NULL
             dotsT["col.main"] <- NULL
             dotsT["line"] <- NULL
 
-        for(i in 1:dims){
-            matp  <- cbind(sapply(x.vec, IC1@Map[[i]]),sapply(x.vec, IC2@Map[[i]]))
+        for(i in 1:dims0){
+            indi <- to.draw[i]
+            if(!is.null(ylim)) dotsP$ylim <- ylim[,i]       
+            matp  <- cbind(sapply(x.vec, IC1@Map[[indi]]),sapply(x.vec, IC2@Map[[indi]]))
             if(is(obj3, "IC"))
-                matp  <- cbind(matp,sapply(x.vec, IC3@Map[[i]]))
+                matp  <- cbind(matp,sapply(x.vec, IC3@Map[[indi]]))
             if(is(obj4, "IC"))
-                matp  <- cbind(matp,sapply(x.vec, IC4@Map[[i]]))
+                matp  <- cbind(matp,sapply(x.vec, IC4@Map[[indi]]))
 
             do.call(matplot, args=c(list( x= x.vec, y=matp,
                  type = plty, lty = lty,
                  xlab = "x", ylab = "(partial) IC"), dotsP))
 
             if(is(e1, "DiscreteDistribution")){
-                 matp1 <- cbind(sapply(x.vec1, IC1@Map[[i]]),sapply(x.vec1, IC2@Map[[i]]))
+                 matp1 <- cbind(sapply(x.vec1, IC1@Map[[indi]]),sapply(x.vec1, IC2@Map[[indi]]))
                  if(is(obj3, "IC"))
-                    matp1  <- cbind(matp1,sapply(x.vec1, IC3@Map[[i]]))
+                    matp1  <- cbind(matp1,sapply(x.vec1, IC3@Map[[indi]]))
                  if(is(obj4, "IC"))
-                    matp1  <- cbind(matp1,sapply(x.vec1, IC4@Map[[i]]))
+                    matp1  <- cbind(matp1,sapply(x.vec1, IC4@Map[[indi]]))
                  do.call(matlines, c(list(x.vec1, matp1, lty = "dotted"),dotsL))
                  }
 
            if(innerL)
-              do.call(title, args=c(list(main = innerT[[i]]),  dotsT,
+              do.call(title, args=c(list(main = innerT[[indi]]),  dotsT,
                       line = lineT, cex.main = cex.inner, col.main = col.inner))
         }
         

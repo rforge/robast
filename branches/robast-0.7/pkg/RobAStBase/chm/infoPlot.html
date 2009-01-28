@@ -32,7 +32,7 @@ infoPlot(object, ..., withSweave = getdistrOption("withSweave"),
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
-             mfColRow = TRUE)
+             mfColRow = TRUE, to.draw.arg = NULL)
 </pre>
 
 
@@ -52,9 +52,14 @@ logical: is a main title to be used? or <br>
 just as argument <code>main</code> in <code><a onclick="findlink('graphics', 'plotdefault.html')" style="text-decoration: underline; color: blue; cursor: hand">plot.default</a></code>.</td></tr>
 <tr valign="top"><td><code>inner</code></td>
 <td>
-logical: panels have their own titles? or <br>
-character vector of / cast to length number of comparands: 
-<code>main</code> in <code><a onclick="findlink('graphics', 'plotdefault.html')" style="text-decoration: underline; color: blue; cursor: hand">plot.default</a></code>)</td></tr>
+logical: do panels have their own titles? or <br>
+character vector of / cast to length 'number of compared 
+dimensions';
+if argument <code>to.draw.arg</code> is used, this refers to 
+a vector of length <code>1</code> (absolute information) 
+<code>+ length(to.draw.arg)</code>, the actually plotted
+relative informations. For further information, see  also
+<code>main</code> in <code><a onclick="findlink('graphics', 'plotdefault.html')" style="text-decoration: underline; color: blue; cursor: hand">plot.default</a></code>.</td></tr>
 <tr valign="top"><td><code>sub</code></td>
 <td>
 logical: is a sub-title to be used? or <br>
@@ -82,6 +87,22 @@ character or integer code; color for the inner title</td></tr>
 <tr valign="top"><td><code>mfColRow</code></td>
 <td>
 shall default partition in panels be used &mdash; defaults to <code>TRUE</code></td></tr>
+<tr valign="top"><td><code>to.draw.arg</code></td>
+<td>
+if <code>mfColRow==FALSE</code>, either <code>NULL</code> (default; 
+everything is plotted) or a vector making a selection
+among the relative information plots; the absolute
+information being plotted in any case. This
+vector is either a vector of integers 
+(the indices of the subplots to be drawn) or characters 
+&mdash; the names of the subplots to be drawn: these
+names are to be chosen either among the row names of 
+the trafo matrix 
+<code>rownames(trafo(eval(object@CallL2Fam)@param))</code> 
+or if the last expression is <code>NULL</code> a 
+vector <code>"dim&lt;dimnr&gt;"</code>, <code>dimnr</code> running through 
+the number of rows of the trafo matrix.
+</td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 further parameters for <code>plot</code></td></tr>
@@ -119,6 +140,19 @@ has correct length. In all title arguments, the following patterns are substitut
 <dt><code>"%D"</code></dt><dd>time/date-string when the plot was generated</dd>
 </ul>
 
+<p>
+If argument <code>...</code> contains argument <code>ylim</code>, this may either be
+as in <code>plot.default</code> (i.e. a vector of length 2) or a vector of 
+length 2*(number of plotted dimensions + e), where e is 1 or 0 depending
+on whether absolute information is plotted or not; 
+in the case of longer length, 
+if e is 1, the first two elements are the values for <code>ylim</code> 
+in panel "Abs", while the last 2*(number of plotted dimensions)
+are the values for <code>ylim</code> for the plotted dimensions of the IC, 
+one pair for each dimension.
+</p>
+
+
 <h3>Author(s)</h3>
 
 <p>
@@ -147,6 +181,17 @@ Bayreuth: Dissertation.
 N &lt;- NormLocationScaleFamily(mean=0, sd=1) 
 IC1 &lt;- optIC(model = N, risk = asCov())
 infoPlot(IC1)
+## selection of subpanels for plotting
+par(mfrow=c(1,2))
+infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"))
+infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
+              panel.first= grid(), ylim = c(0,4), xlim = c(-6,6))
+infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
+              panel.first= grid(), ylim = c(0,4,-3,3), xlim = c(-6,6))
+par(mfrow=c(1,3))
+infoPlot(IC1, mfColRow = FALSE, panel.first= grid(),
+         ylim = c(0,4,0,.3,0,.8), xlim=c(-6,6))
+par(mfrow=c(1,1))
 </pre>
 
 <script Language="JScript">

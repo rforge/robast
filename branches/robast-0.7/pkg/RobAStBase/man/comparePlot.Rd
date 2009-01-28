@@ -15,7 +15,7 @@ comparePlot(obj1, obj2, ... )
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
-             mfColRow = TRUE)
+             mfColRow = TRUE, to.draw.arg = NULL)
 }
 \arguments{
   \item{obj1}{ object of class \code{"InfluenceCurve"} }
@@ -26,9 +26,13 @@ comparePlot(obj1, obj2, ... )
         no extra device is opened}
   \item{main}{logical: is a main title to be used? or \cr
               just as argument \code{main} in \code{\link{plot.default}}.}
-  \item{inner}{logical: panels have their own titles? or \cr
-               character vector of / cast to length number of comparands: 
-               \code{main} in \code{\link{plot.default}})} 
+  \item{inner}{logical: do panels have their own titles? or \cr
+               character vector of / cast to length 'number of plotted 
+               dimensions';
+               if argument \code{to.draw.arg} is used, this refers to 
+               a vector of length \code{length(to.draw.arg)}, the 
+               actually plotted dimensions. For further information, see also 
+               description of argument \code{main} in \code{\link{plot.default}}.} 
   \item{sub}{logical: is a sub-title to be used? or \cr
               just as argument \code{sub} in \code{\link{plot.default}}.}
   \item{tmar}{top margin -- useful for non-standard main title sizes}
@@ -38,6 +42,17 @@ comparePlot(obj1, obj2, ... )
           \code{\link[stats]{par}}}
   \item{col.inner}{character or integer code; color for the inner title}              
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
+  \item{to.draw.arg}{if \code{mfColRow==FALSE}, either \code{NULL} (default; 
+                          everything is plotted) or a vector of either integers 
+                         (the indices of the subplots to be drawn) or characters 
+                         --- the names of the subplots to be drawn: these
+                         names are to be chosen either among the row names of 
+                         the trafo matrix 
+                         \code{rownames(trafo(eval(obj1@CallL2Fam)@param))} 
+                         or if the last expression is \code{NULL} a 
+                         vector \code{"dim<dimnr>"}, \code{dimnr} running through 
+                         the number of rows of the trafo matrix.
+                         }
   \item{\dots}{further arguments to be passed to \code{plot}}
 }
 \details{
@@ -63,6 +78,12 @@ has correct length. In all title arguments, the following patterns are substitut
       \code{obj<i>}, i=1,..4}
 \item{\code{"\%D"}}{time/date-string when the plot was generated}
 }
+
+If argument \code{\dots} contains argument \code{ylim}, this may either be
+as in \code{plot.default} (i.e. a vector of length 2) or a vector of 
+length 2*(number of plotted dimensions); in the case of longer length, 
+these are the values for \code{ylim} for the plotted dimensions of the IC, 
+one pair for each dimension.
 }
 
 %\value{}
@@ -83,6 +104,13 @@ IC1 <- optIC(model = N0, risk = asCov())
 IC2 <- optIC(model = N0.Rob1, risk = asMSE())
 
 comparePlot(IC1,IC2)
+
+## selection of subpanels for plotting
+par(mfrow=c(1,1))
+comparePlot(IC1, IC2 ,mfColRow = FALSE, to.draw.arg=c("mean"),
+            panel.first= grid(),ylim=c(-4,4),xlim=c(-6,6))
+## matrix-valued ylim
+comparePlot(IC1, IC2, panel.first= grid(),ylim=c(-4,4,0,4),xlim=c(-6,6))
 }
 }
 \keyword{robust}

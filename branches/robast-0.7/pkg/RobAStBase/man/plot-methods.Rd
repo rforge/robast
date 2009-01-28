@@ -10,7 +10,7 @@
              main = FALSE, inner = TRUE, sub = FALSE,
              col.inner = par("col.main"), cex.inner = 0.8,
              bmar = par("mar")[1], tmar = par("mar")[3],
-             mfColRow = TRUE)
+             mfColRow = TRUE, to.draw.arg = NULL)
 }
 \arguments{
   \item{x}{object of class \code{"IC"}: IC to be plotted }
@@ -19,9 +19,13 @@
         no extra device is opened}
   \item{main}{logical: is a main title to be used? or \cr
               just as argument \code{main} in \code{\link{plot.default}}.}
-  \item{inner}{logical: panels have their own titles? or \cr
-               character vector of / cast to length number of comparands:
-               \code{main} in \code{\link{plot.default}})}
+  \item{inner}{logical: do panels have their own titles? or \cr
+               character vector of / cast to length 'number of plotted 
+               dimensions';
+               if argument \code{to.draw.arg} is used, this refers to 
+               a vector of length \code{length(to.draw.arg)}, the 
+               actually plotted dimensions. For further information, see also 
+               description of argument \code{main} in \code{\link{plot.default}}.} 
   \item{sub}{logical: is a sub-title to be used? or \cr
               just as argument \code{sub} in \code{\link{plot.default}}.}
   \item{tmar}{top margin -- useful for non-standard main title sizes}
@@ -31,6 +35,17 @@
           \code{\link[stats]{par}}}
   \item{col.inner}{character or integer code; color for the inner title}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
+  \item{to.draw.arg}{if \code{mfColRow==FALSE}, either \code{NULL} (default; 
+                          everything is plotted) or a vector of either integers 
+                         (the indices of the subplots to be drawn) or characters 
+                         --- the names of the subplots to be drawn: these
+                         names are to be chosen either among the row names of 
+                         the trafo matrix 
+                         \code{rownames(trafo(eval(x@CallL2Fam)@param))} 
+                         or if the last expression is \code{NULL} a 
+                         vector \code{"dim<dimnr>"}, \code{dimnr} running through 
+                         the number of rows of the trafo matrix.
+                         }
   \item{\dots}{further parameters for \code{plot}}
 }
 \details{
@@ -54,12 +69,36 @@ has correct length. In all title arguments, the following patterns are substitut
 \item{\code{"\%A"}}{deparsed argument  \code{object}}
 \item{\code{"\%D"}}{time/date-string when the plot was generated}
 }
+
+If argument \code{\dots} contains argument \code{ylim}, this may either be
+as in \code{plot.default} (i.e. a vector of length 2) or a vector of 
+length 2*(number of plotted dimensions + 2), 
+where the first two elements are the values for \code{ylim} 
+in panel "d",  the first two are for \code{ylim} resp. \code{xlim} 
+for panels "p" and "q", and the last 2*(number of plotted dimensions)
+are the values for \code{ylim} for the plotted dimensions of the L2derivative, 
+one pair for each dimension.
 }
 \examples{
 IC1 <- new("IC")
 plot(IC1)
 plot(IC1, main = TRUE, panel.first= grid(),
      col = "blue", cex.main = 2, cex.inner = 1)
+
+### selection of subpanels for plotting
+N <- NormLocationScaleFamily(mean=0, sd=1) 
+IC2 <- optIC(model = N, risk = asCov())
+par(mfrow=c(1,1))
+plot(IC2, main = TRUE, panel.first= grid(),
+     col = "blue", cex.main = 2, cex.inner = 0.6,
+     mfColRow = FALSE, to.draw.arg=c("sd"))
+
+## xlim and ylim arguments
+plot(IC2, main = TRUE, panel.first= grid(), 
+     ylim=c(-3,3), xlim=c(-2,3))
+plot(IC2, main = TRUE, panel.first= grid(), 
+     ylim=c(-3,3,-1,3), xlim=c(-2,3))
+
 }
 \keyword{methods}
 \keyword{distribution}

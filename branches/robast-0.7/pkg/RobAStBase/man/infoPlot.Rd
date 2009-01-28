@@ -14,7 +14,7 @@ infoPlot(object,  ...)
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
-             mfColRow = TRUE)
+             mfColRow = TRUE, to.draw.arg = NULL)
 }
 \arguments{
   \item{object}{object of class \code{"InfluenceCurve"} }
@@ -22,9 +22,14 @@ infoPlot(object,  ...)
         no extra device is opened}
   \item{main}{logical: is a main title to be used? or \cr
               just as argument \code{main} in \code{\link{plot.default}}.}
-  \item{inner}{logical: panels have their own titles? or \cr
-               character vector of / cast to length number of comparands: 
-               \code{main} in \code{\link{plot.default}})} 
+  \item{inner}{logical: do panels have their own titles? or \cr
+               character vector of / cast to length 'number of compared 
+               dimensions';
+               if argument \code{to.draw.arg} is used, this refers to 
+               a vector of length \code{1} (absolute information) 
+               \code{+ length(to.draw.arg)}, the actually plotted
+               relative informations. For further information, see  also
+               \code{main} in \code{\link{plot.default}}.} 
   \item{sub}{logical: is a sub-title to be used? or \cr
               just as argument \code{sub} in \code{\link{plot.default}}.}
   \item{tmar}{top margin -- useful for non-standard main title sizes}
@@ -36,6 +41,20 @@ infoPlot(object,  ...)
           \code{\link[stats]{par}}}
   \item{col.inner}{character or integer code; color for the inner title}              
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
+  \item{to.draw.arg}{if \code{mfColRow==FALSE}, either \code{NULL} (default; 
+                          everything is plotted) or a vector making a selection
+                          among the relative information plots; the absolute
+                          information being plotted in any case. This
+                          vector is either a vector of integers 
+                         (the indices of the subplots to be drawn) or characters 
+                         --- the names of the subplots to be drawn: these
+                         names are to be chosen either among the row names of 
+                         the trafo matrix 
+                         \code{rownames(trafo(eval(object@CallL2Fam)@param))} 
+                         or if the last expression is \code{NULL} a 
+                         vector \code{"dim<dimnr>"}, \code{dimnr} running through 
+                         the number of rows of the trafo matrix.
+                         }
   \item{\dots}{further parameters for \code{plot}}
 }
 \details{
@@ -65,6 +84,16 @@ has correct length. In all title arguments, the following patterns are substitut
 \item{\code{"\%A"}}{deparsed argument  \code{object}}
 \item{\code{"\%D"}}{time/date-string when the plot was generated}
 }
+
+If argument \code{\dots} contains argument \code{ylim}, this may either be
+as in \code{plot.default} (i.e. a vector of length 2) or a vector of 
+length 2*(number of plotted dimensions + e), where e is 1 or 0 depending
+on whether absolute information is plotted or not; 
+in the case of longer length, 
+if e is 1, the first two elements are the values for \code{ylim} 
+in panel "Abs", while the last 2*(number of plotted dimensions)
+are the values for \code{ylim} for the plotted dimensions of the IC, 
+one pair for each dimension.
 }
 %\value{}
 \references{
@@ -78,6 +107,17 @@ has correct length. In all title arguments, the following patterns are substitut
 N <- NormLocationScaleFamily(mean=0, sd=1) 
 IC1 <- optIC(model = N, risk = asCov())
 infoPlot(IC1)
+## selection of subpanels for plotting
+par(mfrow=c(1,2))
+infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"))
+infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
+              panel.first= grid(), ylim = c(0,4), xlim = c(-6,6))
+infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
+              panel.first= grid(), ylim = c(0,4,-3,3), xlim = c(-6,6))
+par(mfrow=c(1,3))
+infoPlot(IC1, mfColRow = FALSE, panel.first= grid(),
+         ylim = c(0,4,0,.3,0,.8), xlim=c(-6,6))
+par(mfrow=c(1,1))
 }
 \concept{absolute information}
 \concept{relative information}
