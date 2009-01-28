@@ -2,6 +2,7 @@ setMethod("comparePlot", signature("IC","IC"),
     function(obj1,obj2, obj3 = NULL, obj4 = NULL, 
              ..., withSweave = getdistrOption("withSweave"), 
              main = FALSE, inner = TRUE, sub = FALSE, 
+             col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
              mfColRow = TRUE, to.draw.arg = NULL){
@@ -17,15 +18,16 @@ setMethod("comparePlot", signature("IC","IC"),
         dots <- match.call(call = sys.call(sys.parent(1)), 
                        expand.dots = FALSE)$"..."
 
-        ncomp <- 2+ !is.null(obj3) +  !is.null(obj4)
+        ncomp <- 2+ (!missing(obj3)|!is.null(obj3)) +  
+                    (!missing(obj4)|!is.null(obj4))
          
-        if(is.null(dots[["col"]]))   dots$"col" <- 1:ncomp
-        if(is.null(dots[["lwd"]]))   dots$"lwd" <- 1
+        if(missing(col)) col <- 1:ncomp
+           else col <- rep(col, length.out = ncomp)
+        if(missing(lwd))  lwd <- rep(1,ncomp)
+           else lwd <- rep(lwd, length.out = ncomp)
+        if(!missing(lty)) rep(lty, length.out = ncomp)
         
-        col <- dots[["col"]]
-        lwd <- dots[["lwd"]]
         
-        if(!is.null(dots[["lty"]]))  dots["lty"] <- NULL
         if(!is.null(dots[["type"]])) dots["type"] <- NULL
         if(!is.null(dots[["xlab"]])) dots["xlab"] <- NULL
         if(!is.null(dots[["ylab"]])) dots["ylab"] <- NULL
@@ -76,7 +78,7 @@ setMethod("comparePlot", signature("IC","IC"),
             h <- upper - lower
             x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
             plty <- "l"
-            lty <- "solid"
+            if(missing(lty)) lty <- "solid"
         }else{
             if(is(e1, "DiscreteDistribution")) x.vec <- support(e1)
             else{
@@ -84,7 +86,7 @@ setMethod("comparePlot", signature("IC","IC"),
                 x.vec <- sort(unique(x.vec))
             }
             plty <- "p"
-            lty <- "dotted"
+            if(missing(lty)) lty <- "dotted"
             if(!is.null(xlim)) x.vec <- x.vec[(x.vec>=xm) & (x.vec<=xM)]
         }
         ylim <- eval(dots$ylim)
@@ -231,23 +233,26 @@ setMethod("comparePlot", signature("IC","IC"),
         for(i in 1:dims0){
             indi <- to.draw[i]
             if(!is.null(ylim)) dotsP$ylim <- ylim[,i]       
-            matp  <- cbind(sapply(x.vec, IC1@Map[[indi]]),sapply(x.vec, IC2@Map[[indi]]))
+            matp  <- cbind(sapply(x.vec, IC1@Map[[indi]]),
+                           sapply(x.vec, IC2@Map[[indi]]))
             if(is(obj3, "IC"))
                 matp  <- cbind(matp,sapply(x.vec, IC3@Map[[indi]]))
             if(is(obj4, "IC"))
                 matp  <- cbind(matp,sapply(x.vec, IC4@Map[[indi]]))
 
             do.call(matplot, args=c(list( x= x.vec, y=matp,
-                 type = plty, lty = lty,
+                 type = plty, lty = lty, col = col, lwd = lwd,
                  xlab = "x", ylab = "(partial) IC"), dotsP))
 
             if(is(e1, "DiscreteDistribution")){
-                 matp1 <- cbind(sapply(x.vec1, IC1@Map[[indi]]),sapply(x.vec1, IC2@Map[[indi]]))
+                 matp1 <- cbind(sapply(x.vec1, IC1@Map[[indi]]),
+                                sapply(x.vec1, IC2@Map[[indi]]))
                  if(is(obj3, "IC"))
                     matp1  <- cbind(matp1,sapply(x.vec1, IC3@Map[[indi]]))
                  if(is(obj4, "IC"))
                     matp1  <- cbind(matp1,sapply(x.vec1, IC4@Map[[indi]]))
-                 do.call(matlines, c(list(x.vec1, matp1, lty = "dotted"),dotsL))
+                 do.call(matlines, c(list(x.vec1, matp1, lty = lty, 
+                         col = col, lwd = lwd), dotsL))
                  }
 
            if(innerL)
@@ -255,9 +260,8 @@ setMethod("comparePlot", signature("IC","IC"),
                       line = lineT, cex.main = cex.inner, col.main = col.inner))
         }
         
-        legend("bottomright", 
-               legend = xc, col = eval(dots[["col"]]), 
-               cex=0.75, lwd=eval(dots[["lwd"]])*1.5)
+        legend("bottomright", legend = xc, col = col, 
+               cex = 0.75, lwd = lwd*1.5, lty = lty)
 
         if(!hasArg(cex.main)) cex.main <- par("cex.main") else cex.main <- dots$"cex.main"
         if(!hasArg(col.main)) col.main <- par("col.main") else col.main <- dots$"col.main"

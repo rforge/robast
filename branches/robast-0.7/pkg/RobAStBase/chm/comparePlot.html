@@ -30,6 +30,7 @@ comparePlot(obj1, obj2, ... )
 comparePlot(obj1, obj2, obj3 = NULL, obj4 = NULL, 
              ..., withSweave = getdistrOption("withSweave"), 
              main = FALSE, inner = TRUE, sub = FALSE, 
+             col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
              mfColRow = TRUE, to.draw.arg = NULL)
@@ -59,6 +60,15 @@ no extra device is opened</td></tr>
 <td>
 logical: is a main title to be used? or <br>
 just as argument <code>main</code> in <code><a onclick="findlink('graphics', 'plotdefault.html')" style="text-decoration: underline; color: blue; cursor: hand">plot.default</a></code>.</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+color[s] of ICs in arguments <code>obj1</code> [,...,<code>obj4</code>].</td></tr>
+<tr valign="top"><td><code>lwd</code></td>
+<td>
+linewidth[s] of ICs in arguments <code>obj1</code> [,...,<code>obj4</code>].</td></tr>
+<tr valign="top"><td><code>lty</code></td>
+<td>
+line-type[s] of ICs in arguments <code>obj1</code> [,...,<code>obj4</code>].</td></tr>
 <tr valign="top"><td><code>inner</code></td>
 <td>
 logical: do panels have their own titles? or <br>
@@ -201,9 +211,12 @@ G2 &lt;- G
 trafo(G2) &lt;- mtrafo
 G2
 G2.Rob1 &lt;- InfRobModel(center = G2, neighbor = ContNeighborhood(radius = 0.5))
-IC1 &lt;- optIC(model = G2, risk = asCov())
-IC2 &lt;- optIC(model = G2.Rob1, risk = asMSE())
-comparePlot(IC1,IC2)
+system.time(IC1 &lt;- optIC(model = G2, risk = asCov()))
+system.time(IC2 &lt;- optIC(model = G2.Rob1, risk = asMSE()))
+system.time(IC2.i &lt;- optIC(model = G2.Rob1, risk = asMSE(normtype=InfoNorm())))
+system.time(IC2.s &lt;- optIC(model = G2.Rob1, risk = asMSE(normtype=SelfNorm())))
+
+comparePlot(IC1,IC2, IC2.i, IC2.s)
 
 }
 </pre>

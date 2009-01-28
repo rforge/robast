@@ -1,6 +1,7 @@
 setMethod("infoPlot", "IC",
     function(object, ..., withSweave = getdistrOption("withSweave"), 
-             colI = grey(0.5), lwdI = 0.7*par("lwd"),
+             col = par("col"), lwd = par("lwd"), lty, 
+             colI = grey(0.5), lwdI = 0.7*par("lwd"), ltyI = "dotted",
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
@@ -13,10 +14,7 @@ setMethod("infoPlot", "IC",
 
         L2Fam <- eval(object@CallL2Fam)
         
-        if(!hasArg(col)) col <- par("col") else col <- dots$col
-        if(!hasArg(lwd)) lwd <- par("lwd") else lwd <- dots$lwd
         
-        if(!is.null(dots[["lty"]]))  dots["lty"] <- NULL
         if(!is.null(dots[["type"]])) dots["type"] <- NULL
         if(!is.null(dots[["xlab"]])) dots["xlab"] <- NULL
         if(!is.null(dots[["ylab"]])) dots["ylab"] <- NULL
@@ -65,7 +63,7 @@ setMethod("infoPlot", "IC",
                 h <- upper - lower
                 x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
                 plty <- "l"
-                lty <- "solid"
+                if(missing(lty)) lty <- "solid"
             }else{
                 if(is(e1, "DiscreteDistribution")) x.vec <- support(e1)
                 else{
@@ -73,7 +71,7 @@ setMethod("infoPlot", "IC",
                    x.vec <- sort(unique(x.vec))
                 }
                 plty <- "p"
-                lty <- "dotted"
+                if(missing(lty)) lty <- "dotted"
                 if(!is.null(xlim)) x.vec <- x.vec[(x.vec>=xm) & (x.vec<=xM)]
             }
          }
@@ -86,6 +84,8 @@ setMethod("infoPlot", "IC",
          }
 
          dotsP <- dotsL <- dotsT <- dots
+         dotsL$lwd <- dotsL$col <- dotsL$lty <- NULL
+         dotsP$lwd <- dotsP$col <- dotsP$lty <- NULL
          dotsP$xlim <- xlim
          
          trafo <- trafo(L2Fam@param)
@@ -217,20 +217,18 @@ setMethod("infoPlot", "IC",
 
             
             
-            dotsP["col"] <- NULL
-            dotsP["lwd"] <- NULL
             if(!is.null(ylim)) 
                 dotsP$ylim <- ylim[,1]       
             if(1 %in% to.draw){
                do.call(plot, args=c(list(x.vec, absInfoClass, type = plty, 
-                   lty = "dashed", col = colI, lwd = lwdI,
+                   lty = ltyI, col = colI, lwd = lwdI,
                    xlab = "x", ylab = "absolute information"), dotsP))
-               do.call(lines, args=c(list(x.vec, absInfo, type = plty, lty = lty), 
-                       dotsL))
+               do.call(lines, args=c(list(x.vec, absInfo, type = plty, 
+                       lty = lty, lwd = lwd, col = col), dotsL))
                legend("top",
                      legend = c("class. opt. IC", objectc), 
-                     lty = c(lty,"dashed"), col = c(colI, col), 
-                     lwd=c(lwdI, lwd), cex = 0.75)
+                     lty = c(ltyI, lty), col = c(colI, col), 
+                     lwd = c(lwdI, lwd), cex = 0.75)
 
                dotsT["main"] <- NULL
                dotsT["cex.main"] <- NULL
@@ -265,15 +263,15 @@ setMethod("infoPlot", "IC",
                     do.call(plot, args=c(list(x.vec, y.vec, type = plty, 
                                   lty = lty, xlab = "x", 
                                   ylab = "relative information", 
-                                  col = colI, lwd = lwdI), dotsP))
+                                  col = col, lwd = lwd), dotsP))
 
                     yc.vec <- sapply(x.vec, classIC.i.5@Map[[indi]])^2/absInfoClass
                     do.call(lines, args=c(list(x.vec, yc.vec, type = plty, 
-                          lty = "dashed"), dotsL))
+                            lty = ltyI, col = colI, lwd = lwdI), dotsL))
                     legend("topright",
-                           legend = c("class. opt. IC", objectc), lty = c(lty,"dashed"), 
-                               col = c(colI, col), lwd=c(lwdI, lwd),
-                               cex = 0.6)
+                           legend = c("class. opt. IC", objectc),  
+                               col = c(colI, col), lwd = c(lwdI, lwd),
+                               lty = c(ltyI, lty), cex = 0.6)
                     if(innerL)
                        do.call(title, args=c(list(main = innerT[[1+indi]]),  dotsT,
                                line = lineT, cex.main = cex.inner, col.main = col.inner))

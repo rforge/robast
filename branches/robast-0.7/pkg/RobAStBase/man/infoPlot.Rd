@@ -10,7 +10,8 @@
 \usage{
 infoPlot(object,  ...)
 \S4method{infoPlot}{IC}(object, ..., withSweave = getdistrOption("withSweave"), 
-             colI = grey(0.5), lwdI = 0.7*par("lwd"),
+             col = par("col"), lwd = par("lwd"), lty, 
+             colI = grey(0.5), lwdI = 0.7*par("lwd"), ltyI = 3,
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
@@ -34,8 +35,12 @@ infoPlot(object,  ...)
               just as argument \code{sub} in \code{\link{plot.default}}.}
   \item{tmar}{top margin -- useful for non-standard main title sizes}
   \item{bmar}{bottom margin -- useful for non-standard sub title sizes}
+  \item{col}{color of IC in argument \code{object}.}
+  \item{lwd}{linewidth of IC in argument \code{object}.}
+  \item{lty}{line-type of IC in argument \code{object}.}
   \item{colI}{color of the classically optimal IC}
   \item{lwdI}{linewidth of the classically optimal IC}
+  \item{ltyI}{line-type of the classically optimal IC}
   \item{cex.inner}{magnification to be used for inner titles relative
           to the current setting of \code{cex}; as in 
           \code{\link[stats]{par}}}

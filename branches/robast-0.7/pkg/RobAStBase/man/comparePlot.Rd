@@ -13,6 +13,7 @@ comparePlot(obj1, obj2, ... )
 \S4method{comparePlot}{IC,IC}(obj1, obj2, obj3 = NULL, obj4 = NULL, 
              ..., withSweave = getdistrOption("withSweave"), 
              main = FALSE, inner = TRUE, sub = FALSE, 
+             col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
              mfColRow = TRUE, to.draw.arg = NULL)
@@ -26,6 +27,9 @@ comparePlot(obj1, obj2, ... )
         no extra device is opened}
   \item{main}{logical: is a main title to be used? or \cr
               just as argument \code{main} in \code{\link{plot.default}}.}
+  \item{col}{color[s] of ICs in arguments \code{obj1} [,\ldots,\code{obj4}].}
+  \item{lwd}{linewidth[s] of ICs in arguments \code{obj1} [,\ldots,\code{obj4}].}
+  \item{lty}{line-type[s] of ICs in arguments \code{obj1} [,\ldots,\code{obj4}].}
   \item{inner}{logical: do panels have their own titles? or \cr
                character vector of / cast to length 'number of plotted 
                dimensions';
@@ -128,9 +132,12 @@ G2 <- G
 trafo(G2) <- mtrafo
 G2
 G2.Rob1 <- InfRobModel(center = G2, neighbor = ContNeighborhood(radius = 0.5))
-IC1 <- optIC(model = G2, risk = asCov())
-IC2 <- optIC(model = G2.Rob1, risk = asMSE())
-comparePlot(IC1,IC2)
+system.time(IC1 <- optIC(model = G2, risk = asCov()))
+system.time(IC2 <- optIC(model = G2.Rob1, risk = asMSE()))
+system.time(IC2.i <- optIC(model = G2.Rob1, risk = asMSE(normtype=InfoNorm())))
+system.time(IC2.s <- optIC(model = G2.Rob1, risk = asMSE(normtype=SelfNorm())))
+
+comparePlot(IC1,IC2, IC2.i, IC2.s)
 
 }
 }

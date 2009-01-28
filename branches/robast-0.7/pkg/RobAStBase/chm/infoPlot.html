@@ -28,7 +28,8 @@ Plot absolute and relative information of influence curves.
 infoPlot(object,  ...)
 ## S4 method for signature 'IC':
 infoPlot(object, ..., withSweave = getdistrOption("withSweave"), 
-             colI = grey(0.5), lwdI = 0.7*par("lwd"),
+             col = par("col"), lwd = par("lwd"), lty, 
+             colI = grey(0.5), lwdI = 0.7*par("lwd"), ltyI = 3,
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
@@ -70,12 +71,24 @@ top margin &ndash; useful for non-standard main title sizes</td></tr>
 <tr valign="top"><td><code>bmar</code></td>
 <td>
 bottom margin &ndash; useful for non-standard sub title sizes</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+color of IC in argument <code>object</code>.</td></tr>
+<tr valign="top"><td><code>lwd</code></td>
+<td>
+linewidth of IC in argument <code>object</code>.</td></tr>
+<tr valign="top"><td><code>lty</code></td>
+<td>
+line-type of IC in argument <code>object</code>.</td></tr>
 <tr valign="top"><td><code>colI</code></td>
 <td>
 color of the classically optimal IC</td></tr>
 <tr valign="top"><td><code>lwdI</code></td>
 <td>
 linewidth of the classically optimal IC</td></tr>
+<tr valign="top"><td><code>ltyI</code></td>
+<td>
+line-type of the classically optimal IC</td></tr>
 <tr valign="top"><td><code>cex.inner</code></td>
 <td>
 magnification to be used for inner titles relative
