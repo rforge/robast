@@ -5,6 +5,7 @@ setMethod("comparePlot", signature("IC","IC"),
              col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
+             legend.location = "bottomright", 
              mfColRow = TRUE, to.draw.arg = NULL){
 
         xc1 <- as.character(deparse(match.call(call = sys.call(sys.parent(1)))$obj1))
@@ -260,7 +261,7 @@ setMethod("comparePlot", signature("IC","IC"),
                       line = lineT, cex.main = cex.inner, col.main = col.inner))
         }
         
-        legend("bottomright", legend = xc, col = col, 
+        legend(legend.location, legend = xc, col = col, 
                cex = 0.75, lwd = lwd*1.5, lty = lty)
 
         if(!hasArg(cex.main)) cex.main <- par("cex.main") else cex.main <- dots$"cex.main"

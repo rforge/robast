@@ -33,6 +33,7 @@ comparePlot(obj1, obj2, obj3 = NULL, obj4 = NULL,
              col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
+             legend.location = "bottomright", 
              mfColRow = TRUE, to.draw.arg = NULL)
 </pre>
 
@@ -96,6 +97,11 @@ to the current setting of <code>cex</code>; as in
 <tr valign="top"><td><code>col.inner</code></td>
 <td>
 character or integer code; color for the inner title</td></tr>
+<tr valign="top"><td><code>legend.location</code></td>
+<td>
+a valid argument <code>x</code> for <code><a onclick="findlink('PerformanceAnalytics', 'PerformanceAnalytics-internal.html')" style="text-decoration: underline; color: blue; cursor: hand">legend</a></code> &mdash;
+the place where to put the legend on the last issued
+plot</td></tr>
 <tr valign="top"><td><code>mfColRow</code></td>
 <td>
 shall default partition in panels be used &mdash; defaults to <code>TRUE</code></td></tr>

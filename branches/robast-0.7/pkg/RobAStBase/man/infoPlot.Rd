@@ -45,6 +45,10 @@ infoPlot(object,  ...)
           to the current setting of \code{cex}; as in 
           \code{\link[stats]{par}}}
   \item{col.inner}{character or integer code; color for the inner title}              
+  \item{legend.location}{a valid argument \code{x} for \code{\link{legend}} ---
+                         the place where to put the legend on the last issued
+                         plot --- or a list of length (number of plotted panels) 
+                         of such arguments, one for each plotted panel.}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
   \item{to.draw.arg}{if \code{mfColRow==FALSE}, either \code{NULL} (default; 
                           everything is plotted) or a vector making a selection

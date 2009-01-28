@@ -5,6 +5,7 @@ setMethod("infoPlot", "IC",
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
+             legend.location = "bottomright", 
              mfColRow = TRUE, to.draw.arg = NULL){
 
         objectc <- match.call(call = sys.call(sys.parent(1)))$object
@@ -39,6 +40,15 @@ setMethod("infoPlot", "IC",
         dims0 <- length(to.draw1)
         nrows <- trunc(sqrt(dims0))
         ncols <- ceiling(dims0/nrows)
+        in1to.draw   <- (1%in%to.draw)
+
+        if(missing(legend.location)){
+           legend.location <- distr:::.fillList(list("topright"), dims0+in1to.draw   )
+           if (in1to.draw) legend.location[[1]] <-  "bottomright"
+        }else{
+           legend.location <- as.list(legend.location)
+           legend.location <- distr:::.fillList(legend.location, dims0+in1to.draw   )
+        }
 
         e1 <- L2Fam@distribution
         if(!is(e1, "UnivariateDistribution") | is(e1, "CondDistribution"))
@@ -77,9 +87,9 @@ setMethod("infoPlot", "IC",
          }
          ylim <- eval(dots$ylim)
          if(!is.null(ylim)){ 
-               if(!length(ylim) %in% c(2,2*(dims0+(1%in%to.draw)))) 
+               if(!length(ylim) %in% c(2,2*(dims0+in1to.draw))) 
                   stop("Wrong length of Argument ylim"); 
-               ylim <- matrix(ylim, nrow=2,ncol=dims0+(1%in%to.draw))
+               ylim <- matrix(ylim, nrow=2,ncol=dims0+in1to.draw)
                dots$ylim <- NULL
          }
 
@@ -225,7 +235,7 @@ setMethod("infoPlot", "IC",
                    xlab = "x", ylab = "absolute information"), dotsP))
                do.call(lines, args=c(list(x.vec, absInfo, type = plty, 
                        lty = lty, lwd = lwd, col = col), dotsL))
-               legend("top",
+               legend(legend.location[[1]],
                      legend = c("class. opt. IC", objectc), 
                      lty = c(ltyI, lty), col = c(colI, col), 
                      lwd = c(lwdI, lwd), cex = 0.75)
@@ -257,7 +267,7 @@ setMethod("infoPlot", "IC",
                 for(i in 1:dims0){
                     indi <- to.draw1[i]-1
                     if(!is.null(ylim)) 
-                         dotsP$ylim <- ylim[,(1%in%to.draw)+i]       
+                         dotsP$ylim <- ylim[,in1to.draw+i]       
                     else dotsP$ylim <- c(0,1)
                     y.vec <- sapply(x.vec, IC1.i.5@Map[[indi]])^2/absInfo
                     do.call(plot, args=c(list(x.vec, y.vec, type = plty, 
@@ -266,15 +276,16 @@ setMethod("infoPlot", "IC",
                                   col = col, lwd = lwd), dotsP))
 
                     yc.vec <- sapply(x.vec, classIC.i.5@Map[[indi]])^2/absInfoClass
-                    do.call(lines, args=c(list(x.vec, yc.vec, type = plty, 
+                    do.call(lines, args = c(list(x.vec, yc.vec, type = plty, 
                             lty = ltyI, col = colI, lwd = lwdI), dotsL))
-                    legend("topright",
+                    legend(legend.location[[i+in1to.draw]],
                            legend = c("class. opt. IC", objectc),  
-                               col = c(colI, col), lwd = c(lwdI, lwd),
-                               lty = c(ltyI, lty), cex = 0.6)
+                           col = c(colI, col), lwd = c(lwdI, lwd),
+                           lty = c(ltyI, lty), cex = 0.6)
                     if(innerL)
-                       do.call(title, args=c(list(main = innerT[[1+indi]]),  dotsT,
-                               line = lineT, cex.main = cex.inner, col.main = col.inner))
+                       do.call(title, args = c(list(main = innerT[[1+indi]]),  
+                               dotsT, line = lineT, cex.main = cex.inner, 
+                               col.main = col.inner))
                 }
             }
         if(!hasArg(cex.main)) cex.main <- par("cex.main") else cex.main <- dots$"cex.main"
