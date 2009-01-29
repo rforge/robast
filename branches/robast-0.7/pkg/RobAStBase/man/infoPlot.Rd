@@ -15,6 +15,7 @@ infoPlot(object,  ...)
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
+             legend.location = "bottomright",
              mfColRow = TRUE, to.draw.arg = NULL)
 }
 \arguments{
