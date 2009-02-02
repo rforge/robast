@@ -35,7 +35,7 @@
           \code{\link[stats]{par}}}
   \item{col.inner}{character or integer code; color for the inner title}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
-  \item{to.draw.arg}{if \code{mfColRow==FALSE}, either \code{NULL} (default; 
+  \item{to.draw.arg}{Either \code{NULL} (default; 
                           everything is plotted) or a vector of either integers 
                          (the indices of the subplots to be drawn) or characters 
                          --- the names of the subplots to be drawn: these

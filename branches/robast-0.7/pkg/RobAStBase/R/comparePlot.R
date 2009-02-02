@@ -49,7 +49,7 @@ setMethod("comparePlot", signature("IC","IC"),
         dimnms  <- c(rownames(trafO))
         if(is.null(dimnms))
            dimnms <- paste("dim",1:dims,sep="")
-        if(!mfColRow && ! is.null(to.draw.arg)){
+        if(! is.null(to.draw.arg)){
             if(is.character(to.draw.arg)) 
                  to.draw <- pmatch(to.draw.arg, dimnms)
             else if(is.numeric(to.draw.arg)) 

@@ -33,6 +33,7 @@ infoPlot(object, ..., withSweave = getdistrOption("withSweave"),
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
+             legend.location = "bottomright",
              mfColRow = TRUE, to.draw.arg = NULL)
 </pre>
 
@@ -108,7 +109,7 @@ of such arguments, one for each plotted panel.</td></tr>
 shall default partition in panels be used &mdash; defaults to <code>TRUE</code></td></tr>
 <tr valign="top"><td><code>to.draw.arg</code></td>
 <td>
-if <code>mfColRow==FALSE</code>, either <code>NULL</code> (default; 
+Either <code>NULL</code> (default; 
 everything is plotted) or a vector making a selection
 among the relative information plots; the absolute
 information being plotted in any case. This
@@ -224,6 +225,6 @@ location.href = link;
 </script>
 
 
-<hr><div align="center">[Package <em>RobAStBase</em> version 0.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 
 </body></html>

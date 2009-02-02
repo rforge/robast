@@ -51,7 +51,7 @@ infoPlot(object,  ...)
                          plot --- or a list of length (number of plotted panels) 
                          of such arguments, one for each plotted panel.}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
-  \item{to.draw.arg}{if \code{mfColRow==FALSE}, either \code{NULL} (default; 
+  \item{to.draw.arg}{Either \code{NULL} (default; 
                           everything is plotted) or a vector making a selection
                           among the relative information plots; the absolute
                           information being plotted in any case. This

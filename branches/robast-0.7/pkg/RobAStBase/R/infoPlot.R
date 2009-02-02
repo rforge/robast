@@ -29,7 +29,7 @@ setMethod("infoPlot", "IC",
         if(is.null(dimnms))
            dimnms <- paste("dim",1:dims,sep="")
         pdimnms <- c("Abs",dimnms)
-        if(!mfColRow && ! is.null(to.draw.arg)){
+        if(! is.null(to.draw.arg)){
             if(is.character(to.draw.arg)) 
                  to.draw <- pmatch(to.draw.arg, pdimnms)
             else if(is.numeric(to.draw.arg)) 

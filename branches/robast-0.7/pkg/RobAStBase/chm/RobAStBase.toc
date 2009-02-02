@@ -14,18 +14,6 @@
 <param name="Local" value="0RobAStBase-package.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value=".ddPlot.MatNtNtCoCo">
-<param name="Local" value="internals_ddPlot.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value=".eq">
-<param name="Local" value="internals.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value=".getDistr">
-<param name="Local" value="internals.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="addInfo<-">
 <param name="Local" value="InfluenceCurve-class.html">
 </OBJECT>
@@ -506,14 +494,6 @@
 <param name="Local" value="InfRobModel-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="internals_for_RobAStBase">
-<param name="Local" value="internals.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="internals_for_RobAStBase_ddPlot">
-<param name="Local" value="internals_ddPlot.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="kStepEstimate-class">
 <param name="Local" value="kStepEstimate-class.html">
 </OBJECT>
@@ -987,11 +967,11 @@
 <param name="Local" value="cutoff-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Function outlyingPlotIC in Package `RobAStBase' ">
+<param name="Name" value="Function outlyingPlotIC in Package 'RobAStBase'">
 <param name="Local" value="outlyingPlotIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Function to change the global variables of the package `RobAStBase' ">
+<param name="Name" value="Function to change the global variables of the package 'RobAStBase'">
 <param name="Local" value="RobAStBaseOptions.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -1044,7 +1024,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic Function for making ICs consistent at a possibly different model">
-<param name="Local" value="makeIC-methods.html">
+<param name="Local" value="generateICfct.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic function for the computation of a risk for an IC">
@@ -1091,14 +1071,6 @@
 <param name="Local" value="TotalVarIC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Internal / Helper functions of package RobAStBase">
-<param name="Local" value="internals.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Internal / Helper functions of package RobAStBase for ddPlot">
-<param name="Local" value="internals_ddPlot.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="kStepEstimate-class.">
 <param name="Local" value="kStepEstimate-class.html">
 </OBJECT>
@@ -1107,11 +1079,11 @@
 <param name="Local" value="MEstimate-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Methods for Function ddPlot in Package `RobAStBase' ">
+<param name="Name" value="Methods for Function ddPlot in Package 'RobAStBase'">
 <param name="Local" value="ddPlot-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Methods for Function plot in Package `RobAStBase' ">
+<param name="Name" value="Methods for Function plot in Package 'RobAStBase'">
 <param name="Local" value="plot-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -1123,7 +1095,7 @@
 <param name="Local" value="infoPlot.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Robust Asymptotic Statistics ">
+<param name="Name" value="Robust Asymptotic Statistics">
 <param name="Local" value="0RobAStBase-package.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
