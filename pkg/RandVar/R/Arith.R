@@ -17,6 +17,7 @@ setMethod("Arith", signature(e1 = "numeric", e2 = "EuclRandVariable"),
             }
         }
 
+        fct <- NULL;  f <- function(x,y);
         map <- vector("list", length(e2))
         for(i in 1:length(e2)){
             map[[i]] <- function(x){ f2 <- fct; f(e1, f2(x)) }
@@ -79,6 +80,7 @@ setMethod("Arith", signature(e1 = "EuclRandVariable", e2 = "numeric"),
             }
         }
 
+        fct <- NULL;  f <- function(x,y);
         map <- vector("list", length(e1))
         for(i in 1:length(e1)){
             map[[i]] <- function(x){ f1 <- fct; f(f1(x), e2) }
@@ -148,6 +150,7 @@ setMethod("Arith", signature(e1 = "EuclRandVariable", e2 = "EuclRandVariable"),
             }
         }
 
+        fct1 <- NULL;  fct2 <- NULL; f <- function(x,y);
         nrvalues <- max(nrvalues1, nrvalues2)
         map <- vector("list", nrvalues)
         for(i in 1:nrvalues){

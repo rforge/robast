@@ -336,6 +336,7 @@ setMethod("t", signature(x = "EuclRandVariable"),
     function(x){ 
         nrvalues <- length(x)
         map <- vector(mode = "list", length = nrvalues)
+        fct <- NULL
         for(i in 1:nrvalues){
             map[[i]] <- function(x){ f <- fct; t(f(x)) }
             body(map[[i]]) <- substitute({ f <- fct; t(f(x)) },
@@ -354,6 +355,7 @@ setMethod("t", signature(x = "EuclRandMatrix"),
     function(x){ 
         map <- matrix(x@Map, nrow = x@Dim[1])
 
+        fkt <- NULL
         d <- x@Dim
         map <- vector(mode = "list", length = d[1]*d[2])
         for(i in 1:d[1])

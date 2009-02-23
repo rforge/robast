@@ -6,6 +6,7 @@ setMethod("%*%", signature(x = "matrix", y = "EuclRandVariable"),
         if(ncol(x) != dimension(y))
             stop("the number of columns of x != dimension of y")
 
+        fct1 <- NULL;  e <- NULL
         dimn <- y@Range@dimension
         map <- vector("list", nrow(x))
         for(i in 1:nrow(x)){
@@ -73,6 +74,7 @@ setMethod("%*%", signature(x = "matrix", y = "EuclRandVarList"),
         if(ncol(x) != dimension(y))
             stop("the number of columns of x != dimension of y")
         
+        fct1 <- NULL;  e <- NULL
         map <- vector("list", nrow(x))
         for(i in 1:nrow(x)){
             if(numberOfMaps(y) == 1){
@@ -154,6 +156,7 @@ setMethod("%*%", signature(x = "EuclRandVariable", y = "EuclRandVariable"),
         if(!compatibleDomains(x, y))
             stop("the domains of the two random variables are not compatible")
 
+        fct1 <- NULL;  fct2 <- NULL
         fct <- function(x){ f1 <- fct1; f2 <- fct2; f1(x) %*% f2(x) }
         body(fct) <- substitute({ f1 <- fct1; f2 <- fct2; f1(x) %*% f2(x) },
                                 list(fct1 = x@Map[[1]], fct2 = y@Map[[1]]))

@@ -78,10 +78,6 @@
 <param name="Local" value="EuclRandVarList-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value=".getImageDistr">
-<param name="Local" value="util.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Arith,EuclRandMatrix,EuclRandMatrix-method">
 <param name="Local" value="EuclRandMatrix-class.html">
 </OBJECT>
@@ -527,11 +523,7 @@
 <param name="Local" value="RealRandVariable.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Help function for generation of image distributions">
-<param name="Local" value="util.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Implementation of random variables ">
+<param name="Name" value="Implementation of random variables">
 <param name="Local" value="0RandVar-package.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
