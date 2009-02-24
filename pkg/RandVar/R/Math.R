@@ -4,7 +4,7 @@ setMethod("Math", signature(x = "EuclRandVariable"),
         nrvalues <- length(x)
         map <- vector("list", nrvalues)
 
-        fct1 <- NULL; f <- function(x);
+        fct1 <- NULL; f <- function(x){};
         for(i in 1:nrvalues){
             map[[i]] <- function(x){ f1 <- fct1; f(f1(x)) }
             body(map[[i]]) <- substitute({ f1 <- fct1; f(f1(x)) },
