@@ -11,7 +11,7 @@
 infoPlot(object,  ...)
 \S4method{infoPlot}{IC}(object, ..., withSweave = getdistrOption("withSweave"), 
              col = par("col"), lwd = par("lwd"), lty, 
-             colI = grey(0.5), lwdI = 0.7*par("lwd"), ltyI = 3,
+             colI = grey(0.5), lwdI = 0.7*par("lwd"), ltyI = "dotted",
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
