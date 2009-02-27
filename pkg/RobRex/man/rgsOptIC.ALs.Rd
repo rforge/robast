@@ -39,11 +39,14 @@ rgsOptIC.ALs(r, K, A.rg.start, b.rg.Up = 1000, delta = 1e-06,
 %\note{}
 \seealso{\code{ContIC-class}}
 \examples{
+## code takes some time
+\dontrun{
 K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
 IC1 <- rgsOptIC.ALs(r = 0.1, K = K)
 checkIC(IC1)
 Risks(IC1)
 Infos(IC1)
+}
 }
 \concept{regression and scale}
 \concept{influence curve}
