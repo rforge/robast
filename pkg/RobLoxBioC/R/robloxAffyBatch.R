@@ -3,7 +3,7 @@
 ###############################################################################
 setMethod("robloxbioc", signature(x = "AffyBatch"),
     function(x, pmcorrect = "roblox", verbose = TRUE,
-            eps, eps.lower = 0, eps.upper = 0.1, steps = 1L, mad0 = 1e-4,
+            eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 1L, mad0 = 1e-4,
             contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20)) {
         n <- length(x)
         ids <- featureNames(x)
@@ -37,8 +37,8 @@ setMethod("robloxbioc", signature(x = "AffyBatch"),
                 ind <- which(NROW == k)
                 temp <- matrix(do.call(rbind, res[ind]), nrow = k)
                 ind1 <-  as.vector(sapply(seq_len(n)-1, function(x, ind, m){ ind + x*m }, ind = ind, m = m))
-                rob.est1[ind1, 1:2] <- robloxEM(t(temp), eps = eps, eps.lower = eps.lower, k = steps,
-                                                mad0 = mad0)
+                rob.est1[ind1, 1:2] <- robloxbioc(t(temp), eps = eps, eps.lower = eps.lower, eps.upper = eps.upper, 
+                                                  steps = steps, mad0 = mad0)
             }
             sb <- matrix(rob.est1[,1], nrow = m)
             for(k in seq_len(m)){
@@ -71,7 +71,8 @@ setMethod("robloxbioc", signature(x = "AffyBatch"),
             ind <- which(NROW == k)
             temp <- matrix(do.call(rbind, res[ind]), nrow = k)
             ind1 <-  as.vector(sapply(seq_len(n)-1, function(x, ind, m){ ind + x*m }, ind = ind, m = m))
-            rob.est[ind1, 1:2] <- robloxEM(log2(t(temp)), eps = eps, eps.lower = eps.lower, k = steps, mad0 = mad0)
+            rob.est[ind1, 1:2] <- robloxbioc(log2(t(temp)), eps = eps, eps.lower = eps.lower, 
+                                             eps.upper = eps.upper, steps = steps, mad0 = mad0)
         }
         if(verbose) cat(" done.\n")
         exp.mat <- 2^matrix(rob.est[,1], nrow = m)

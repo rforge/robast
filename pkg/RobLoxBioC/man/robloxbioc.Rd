@@ -1,0 +1,126 @@
+\name{robloxbioc}
+\alias{robloxbioc}
+\alias{robloxbioc-methods}
+\alias{robloxbioc,matrix-method}
+\alias{robloxbioc,AffyBatch-method}
+
+\title{Generic Function for Preprocessing Biological Data}
+\description{
+  Generic function for preprocessing biological data using optimally robust
+  (rmx) estimators; confer Rieder (1994), Kohl (2005), Rieder et al (2008).
+}
+\usage{
+robloxbioc(x, ...)
+
+\S4method{robloxbioc}{matrix}(x, eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 1L, mad0 = 1e-4)
+
+\S4method{robloxbioc}{AffyBatch}(x, pmcorrect = "roblox", verbose = TRUE,  
+                                 eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 1L, mad0 = 1e-4,
+                                 contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20))
+}
+\arguments{
+  \item{x}{ biological data. }
+  \item{\dots}{ additional parameters. }
+  \item{eps}{ positive real (0 < \code{eps} <= 0.5): amount of gross errors. 
+        See details below. }
+  \item{eps.lower}{ positive real (0 <= \code{eps.lower} <= \code{eps.upper}): 
+        lower bound for the amount of gross errors. See details below. }
+  \item{eps.upper}{ positive real (\code{eps.lower} <= \code{eps.upper} <= 0.5): 
+        upper bound for the amount of gross errors. See details below. }
+  \item{steps}{ positive integer. k-step is used to compute the optimally robust estimator. }
+  \item{mad0}{ scale estimate used if computed MAD is equal to zero}
+  \item{pmcorrect}{ method used for PM correction; so far only "roblox" and \code{pm.only} 
+    are implemented. The algorithm is comparable to the algorithm of MAS 5.0; confer
+    \code{\link[affy]{pmcorrect.mas}}. }
+  \item{contrast.tau}{ a number denoting the contrast tau parameter; confer the MAS 5.0 
+    PM correction algorithm. }
+  \item{scale.tau}{ a number denoting the scale tau parameter; confer the MAS 5.0 
+    PM correction algorithm. }
+  \item{delta}{ a number denoting the delta parameter; confer the MAS 5.0 
+    PM correction algorithm. }
+  \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
+}
+\details{
+  The optimally-robust resp. the radius-minimax (rmx) estimator for normal location 
+  and scale is used to preprocess biological data. The computation uses a k-step 
+  construction with median and MAD as starting estimators; cf. Rieder (1994) and 
+  Kohl (2005).
+
+  If the amount of gross errors (contamination) is known, it can be 
+  specified by \code{eps}. The radius of the corresponding infinitesimal 
+  contamination neighborhood (infinitesimal version of Tukey's gross error model) 
+  is obtained by multiplying \code{eps} by the square root of the sample size. 
+
+  If the amount of gross errors (contamination) is unknown, which is typically
+  the case, try to find a rough estimate for the amount of gross errors, such that 
+  it lies between \code{eps.lower} and \code{eps.upper}.
+
+  If \code{eps} is missing, the radius-minimax (rmx) estimator in sense of 
+  Rieder et al. (2001, 2008), respectively Section 2.2 of Kohl (2005) is used.
+  
+  The algorithm used for Affymetrix data is similar to MAS 5.0 (cf. Affymetrix (2002)).
+  The main difference is the substitution of the Tukey one-step estimator by our rmx 
+  k-step (k >= 1) estimator.
+}
+\value{ Return value depends on the class of \code{x}. 
+  In case of \code{"matrix"} a matrix with columns "mean" and "sd" is returned.
+  In case of \code{"AffyBatch"} an object of class \code{"ExpressionSet"} is returned. 
+}
+\references{
+  Affymetrix, Inc. (2002). \emph{Statistical Algorithms Description Document}.
+  Affymetrix, Santa Clara.
+
+  Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
+  Bayreuth: Dissertation.
+
+  Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
+
+  Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
+  the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
+
+  Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
+  the Radius. Submitted. Appeared as discussion paper Nr. 81. 
+  SFB 373 (Quantification and Simulation of Economic Processes),
+  Humboldt University, Berlin; also available under
+  \url{www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf}
+}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
+%\note{}
+\seealso{\code{\link[RobLox]{roblox}}, \code{\link[RobLox]{rowRoblox}},
+         \code{\link[affy]{AffyBatch-class}}, 
+         \code{\link[affy]{generateExprVal.method.mas}},
+         \code{\link[Biobase]{ExpressionSet-class}} }
+\examples{
+## similar to rowRoblox of package RobLox
+ind <- rbinom(200, size=1, prob=0.05) 
+X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
+robloxbioc(X)
+robloxbioc(X, steps = 3)
+robloxbioc(X, eps = 0.05)
+robloxbioc(X, eps = 0.05, steps = 3)
+
+## the function is designed for large scale problems
+X <- matrix(rnorm(50000*20, mean = 1), nrow = 50000)
+system.time(robloxbioc(X))
+
+## using Affymetrix-Data
+## confer example to generateExprVal.method.mas
+data(SpikeIn)
+probes <- pm(SpikeIn) 
+mas <- generateExprVal.method.mas(probes)
+rl <- 2^robloxbioc(log2(t(probes)))
+concentrations <- as.numeric(sampleNames(SpikeIn))
+plot(concentrations, mas$exprs, log="xy", ylim=c(50,10000), type="b",
+     ylab = "expression measures")
+points(concentrations, rl[,1], pch = 20, col="orange", type="b")
+legend("topleft", c("MAS", "roblox"), pch = c(1, 20))
+
+if(require(affydata)){
+    data(Dilution)
+    eset <- robloxbioc(Dilution)
+}
+}
+\concept{normal location and scale}
+\concept{infinitesimal robustness}
+\concept{radius-minimax estimator}
+\keyword{robust}

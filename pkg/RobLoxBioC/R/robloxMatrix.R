@@ -38,26 +38,8 @@
 ## matrix
 ###############################################################################
 setMethod("robloxbioc", signature(x = "matrix"),
-    function(x, eps, eps.lower = 0, eps.upper = 0.1, steps = 1L, mad0 = 1e-4){
-        if(missing(x))
-            stop("'x' is missing with no default")
-        if(is.data.frame(x))
-            x <- data.matrix(x)
-        else
-            x <- as.matrix(x)
-        if(!is.matrix(x))
-            stop("'x' has to be a matrix resp. convertable to a matrix by 'as.matrix'
-                  or 'data.matrix'")
-
-        if(missing(eps) && missing(eps.lower) && missing(eps.upper)){
-            eps.lower <- 0
-            eps.upper <- 0.5
-        }
-        if(missing(eps)){
-            if(!missing(eps.lower) && missing(eps.upper))
-                eps.upper <- 0.5
-            if(missing(eps.lower) && !missing(eps.upper))
-                eps.lower <- 0
+    function(x, eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 1L, mad0 = 1e-4){
+        if(is.null(eps)){
             if(length(eps.lower) != 1 || length(eps.upper) != 1)
                 stop("'eps.lower' and 'eps.upper' have to be of length 1")
             if(!is.numeric(eps.lower) || !is.numeric(eps.upper) || eps.lower >= eps.upper) 
@@ -65,8 +47,12 @@ setMethod("robloxbioc", signature(x = "matrix"),
             if((eps.lower < 0) || (eps.upper > 0.5))
                 stop("'eps.lower' and 'eps.upper' have to be in [0, 0.5]")
         }else{
-            if(length(eps) != 1)
-                stop("'eps' has to be of length 1")
+            if(length(eps) != 1){
+                warning("'eps' has to be of length 1 => only first element is used")
+                eps <- eps[1]
+            }
+            if(!is.numeric(eps))
+                stop("'eps' has to be a double in (0, 0.5]")
             if(eps == 0)
                 stop("'eps = 0'! => use functions 'mean' and 'sd' for estimation")
             if((eps < 0) || (eps > 0.5))
@@ -76,9 +62,9 @@ setMethod("robloxbioc", signature(x = "matrix"),
             warning("'steps' has to be of length 1 => only first element is used!")
             steps <- steps[1]
         }
-        if(steps < 1){
+        if(steps < 1)
             stop("'steps' has to be some positive integer value")
-        }
+
         steps <- as.integer(steps)
 
         mean <- rowMedians(x, na.rm = TRUE)
@@ -88,7 +74,7 @@ setMethod("robloxbioc", signature(x = "matrix"),
             sd[sd == 0] <- mad0
         }
 
-        if(!missing(eps)){
+        if(!is.null(eps)){
             r <- sqrt(ncol(x))*eps
             if(r > 10){
                 b <- sd*1.618128043
