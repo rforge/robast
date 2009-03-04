@@ -14,9 +14,9 @@ robloxbioc(x, ...)
 
 \S4method{robloxbioc}{matrix}(x, eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 1L, mad0 = 1e-4)
 
-\S4method{robloxbioc}{AffyBatch}(x, pmcorrect = "roblox", verbose = TRUE,  
+\S4method{robloxbioc}{AffyBatch}(x, pmcorrect = "roblox", normalize = "FALSE", verbose = TRUE,  
                                  eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 1L, mad0 = 1e-4,
-                                 contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20))
+                                 contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20), sc = 500)
 }
 \arguments{
   \item{x}{ biological data. }
@@ -32,13 +32,15 @@ robloxbioc(x, ...)
   \item{pmcorrect}{ method used for PM correction; so far only "roblox" and \code{pm.only} 
     are implemented. The algorithm is comparable to the algorithm of MAS 5.0; confer
     \code{\link[affy]{pmcorrect.mas}}. }
+  \item{normalize}{ logical: if \code{TRUE}, Affymetrix scale normalization is performed. }
+  \item{verbose}{ logical: if \code{TRUE}, some messages are printed. }
   \item{contrast.tau}{ a number denoting the contrast tau parameter; confer the MAS 5.0 
     PM correction algorithm. }
   \item{scale.tau}{ a number denoting the scale tau parameter; confer the MAS 5.0 
     PM correction algorithm. }
   \item{delta}{ a number denoting the delta parameter; confer the MAS 5.0 
     PM correction algorithm. }
-  \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
+  \item{sc}{ value at which all arrays will be scaled to. }
 }
 \details{
   The optimally-robust resp. the radius-minimax (rmx) estimator for normal location 
@@ -118,6 +120,7 @@ legend("topleft", c("MAS", "roblox"), pch = c(1, 20))
 if(require(affydata)){
     data(Dilution)
     eset <- robloxbioc(Dilution)
+    eset1 <- robloxbioc(Dilution, normalize = TRUE)
 }
 }
 \concept{normal location and scale}

@@ -2,9 +2,9 @@
 ## Use robloxbioc to preprocess Affymetrix-data - comparable to MAS 5.0
 ###############################################################################
 setMethod("robloxbioc", signature(x = "AffyBatch"),
-    function(x, pmcorrect = "roblox", verbose = TRUE,
+    function(x, pmcorrect = "roblox", normalize = FALSE, verbose = TRUE,
             eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 1L, mad0 = 1e-4,
-            contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20)) {
+            contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20), sc = 500) {
         n <- length(x)
         ids <- featureNames(x)
         m <- length(ids)
@@ -57,7 +57,6 @@ setMethod("robloxbioc", signature(x = "AffyBatch"),
                 l <- t(t(pps.mm >= pps.pm) & (sb[k,] <= contrast.tau))
                 pps.im[l] <- t(t(pps.pm)/2^(contrast.tau/(1 + (contrast.tau - sb[k,])/scale.tau)))[l]
                 pm.corrected <- pmax.int(pps.pm - pps.im, delta)
-    #            pm.corrected[pm.corrected < delta] <- delta
                 res[[k]] <- pm.corrected
             }
         }else{
@@ -83,5 +82,15 @@ setMethod("robloxbioc", signature(x = "AffyBatch"),
         eset <- new("ExpressionSet", phenoData = phenoData(x), 
             experimentData = experimentData(x), exprs = exp.mat, 
             se.exprs = se.mat, annotation = annotation(x))
+        if(normalize){
+            if(verbose) cat("Scale normalization ...")
+            for (i in 1:ncol(exprs(eset))) {
+                slg <- exprs(eset)[, i]
+                sf <- sc/mean(slg, trim = 0.02)
+                reported.value <- sf * slg
+                exprs(eset)[, i] <- reported.value
+            }
+            if(verbose) cat(" done.\n")
+        }
         return(eset)
     })
