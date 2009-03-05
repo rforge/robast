@@ -1,39 +1,4 @@
 ###############################################################################
-## computation of k-step construction in case x is a matrix
-###############################################################################
-.onestep.locsc.matrix <- function(x, initial.est, A1, A2, a, b){
-    mean <- initial.est[,1]
-    sd <- initial.est[,2]
-    u <- A1*(x-mean)/sd^2
-    v <- A2*(((x-mean)/sd)^2-1)/sd - a
-    ind <- b/sqrt(u^2 + v^2) <= 1
-    IC1 <- rowMeans(u*(ind*b/sqrt(u^2 + v^2) + !ind), na.rm = TRUE)
-    IC2 <- rowMeans(v*(ind*b/sqrt(u^2 + v^2) + !ind), na.rm = TRUE)
-    IC <- cbind(IC1, IC2)
-    return(initial.est + IC)
-}
-.kstep.locsc.matrix <- function(x, initial.est, A1, A2, a, b, mean, k){
-    est <- .onestep.locsc.matrix(x = x, initial.est = initial.est, A1 = A1, A2 = A2, a = a, b = b)
-    if(k > 1){
-        for(i in 2:k){
-            A1 <- est[,2]^2*A1/initial.est[,2]^2
-            A2 <- est[,2]^2*A2/initial.est[,2]^2
-            a <- est[,2]*a/initial.est[,2]
-            b <- est[,2]*b/initial.est[,2]
-            initial.est <- est
-            est <- .onestep.locsc.matrix(x = x, initial.est = est, A1 = A1, A2 = A2, a = a, b = b)
-        }
-    }
-    A1 <- est[,2]^2*A1/initial.est[,2]^2
-    A2 <- est[,2]^2*A2/initial.est[,2]^2
-    a <- est[,2]*a/initial.est[,2]
-    b <- est[,2]*b/initial.est[,2]
-
-    return(est)
-}
-
-
-###############################################################################
 ## Use robloxbioc to compute optimally robust (rmx) estimator for rows of a 
 ## matrix
 ###############################################################################
@@ -134,3 +99,37 @@ setMethod("robloxbioc", signature(x = "matrix"),
         }
         return(robEst)
     })
+
+###############################################################################
+## computation of k-step construction in case x is a matrix
+###############################################################################
+.onestep.locsc.matrix <- function(x, initial.est, A1, A2, a, b){
+    mean <- initial.est[,1]
+    sd <- initial.est[,2]
+    u <- A1*(x-mean)/sd^2
+    v <- A2*(((x-mean)/sd)^2-1)/sd - a
+    ind <- b/sqrt(u^2 + v^2) <= 1
+    IC1 <- rowMeans(u*(ind*b/sqrt(u^2 + v^2) + !ind), na.rm = TRUE)
+    IC2 <- rowMeans(v*(ind*b/sqrt(u^2 + v^2) + !ind), na.rm = TRUE)
+    IC <- cbind(IC1, IC2)
+    return(initial.est + IC)
+}
+.kstep.locsc.matrix <- function(x, initial.est, A1, A2, a, b, mean, k){
+    est <- .onestep.locsc.matrix(x = x, initial.est = initial.est, A1 = A1, A2 = A2, a = a, b = b)
+    if(k > 1){
+        for(i in 2:k){
+            A1 <- est[,2]^2*A1/initial.est[,2]^2
+            A2 <- est[,2]^2*A2/initial.est[,2]^2
+            a <- est[,2]*a/initial.est[,2]
+            b <- est[,2]*b/initial.est[,2]
+            initial.est <- est
+            est <- .onestep.locsc.matrix(x = x, initial.est = est, A1 = A1, A2 = A2, a = a, b = b)
+        }
+    }
+    A1 <- est[,2]^2*A1/initial.est[,2]^2
+    A2 <- est[,2]^2*A2/initial.est[,2]^2
+    a <- est[,2]*a/initial.est[,2]
+    b <- est[,2]*b/initial.est[,2]
+
+    return(est)
+}

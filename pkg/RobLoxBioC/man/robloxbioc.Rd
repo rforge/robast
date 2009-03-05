@@ -14,7 +14,8 @@ robloxbioc(x, ...)
 
 \S4method{robloxbioc}{matrix}(x, eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 1L, mad0 = 1e-4)
 
-\S4method{robloxbioc}{AffyBatch}(x, pmcorrect = "roblox", normalize = "FALSE", verbose = TRUE,  
+\S4method{robloxbioc}{AffyBatch}(x, bg.correct = TRUE, pmcorrect = TRUE, normalize = FALSE, 
+                                 add.constant = 32, verbose = TRUE,  
                                  eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 1L, mad0 = 1e-4,
                                  contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20), sc = 500)
 }
@@ -29,10 +30,15 @@ robloxbioc(x, ...)
         upper bound for the amount of gross errors. See details below. }
   \item{steps}{ positive integer. k-step is used to compute the optimally robust estimator. }
   \item{mad0}{ scale estimate used if computed MAD is equal to zero}
-  \item{pmcorrect}{ method used for PM correction; so far only "roblox" and \code{pm.only} 
-    are implemented. The algorithm is comparable to the algorithm of MAS 5.0; confer
-    \code{\link[affy]{pmcorrect.mas}}. }
+  \item{bg.correct}{ if \code{TRUE} MAS 5.0 background correction is performed;
+    confer \code{\link[affy]{bg.correct.mas}}. }
+  \item{pmcorrect}{ method used for PM correction; \code{TRUE} calls an algorithm which is 
+    comparable to the algorithm of MAS 5.0; confer \code{\link[affy]{pmcorrect.mas}}. 
+    If \code{FALSE} only the PM intensities are used. }
   \item{normalize}{ logical: if \code{TRUE}, Affymetrix scale normalization is performed. }
+  \item{add.constant}{ constant added to the MAS 5.0 expression values before the normalization
+    step. Improves the variance of the measure one no longer devides by numbers close to 0
+    when computing fold-changes. }
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed. }
   \item{contrast.tau}{ a number denoting the contrast tau parameter; confer the MAS 5.0 
     PM correction algorithm. }
@@ -57,12 +63,13 @@ robloxbioc(x, ...)
   the case, try to find a rough estimate for the amount of gross errors, such that 
   it lies between \code{eps.lower} and \code{eps.upper}.
 
-  If \code{eps} is missing, the radius-minimax (rmx) estimator in sense of 
+  If \code{eps} is \code{NULL}, the radius-minimax (rmx) estimator in sense of 
   Rieder et al. (2001, 2008), respectively Section 2.2 of Kohl (2005) is used.
   
   The algorithm used for Affymetrix data is similar to MAS 5.0 (cf. Affymetrix (2002)).
   The main difference is the substitution of the Tukey one-step estimator by our rmx 
-  k-step (k >= 1) estimator.
+  k-step (k >= 1) estimator. The optional scale normalization is performed as given 
+  in Affymetrix (2002).
 }
 \value{ Return value depends on the class of \code{x}. 
   In case of \code{"matrix"} a matrix with columns "mean" and "sd" is returned.
@@ -107,6 +114,8 @@ system.time(robloxbioc(X))
 
 ## using Affymetrix-Data
 ## confer example to generateExprVal.method.mas
+## A more worked out example can be found in the scripts folder
+## of the package.
 data(SpikeIn)
 probes <- pm(SpikeIn) 
 mas <- generateExprVal.method.mas(probes)
@@ -120,6 +129,7 @@ legend("topleft", c("MAS", "roblox"), pch = c(1, 20))
 if(require(affydata)){
     data(Dilution)
     eset <- robloxbioc(Dilution)
+    ## Affymetrix scale normalization
     eset1 <- robloxbioc(Dilution, normalize = TRUE)
 }
 }

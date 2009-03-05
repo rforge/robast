@@ -2,9 +2,15 @@
 ## Use robloxbioc to preprocess Affymetrix-data - comparable to MAS 5.0
 ###############################################################################
 setMethod("robloxbioc", signature(x = "AffyBatch"),
-    function(x, pmcorrect = "roblox", normalize = FALSE, verbose = TRUE,
-            eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 1L, mad0 = 1e-4,
-            contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20), sc = 500) {
+    function(x, bg.correct = TRUE, pmcorrect = TRUE, normalize = FALSE,
+            add.constant = 32, verbose = TRUE, 
+            eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 1L, 
+            mad0 = 1e-4, contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20), sc = 500) {
+        if(bg.correct){
+            if(verbose) cat("Background correcting ...")
+            x <- affy::bg.correct.mas(x, griddim = 16)
+            if(verbose) cat(" done.\n")
+        }
         n <- length(x)
         ids <- featureNames(x)
         m <- length(ids)
@@ -14,23 +20,18 @@ setMethod("robloxbioc", signature(x = "AffyBatch"),
         NROW <- unlist(lapply(INDEX, nrow))
         nr <- as.integer(names(table(NROW)))
 
-        diff.log2 <- function(INDEX, x){
-            l.pm <- INDEX[,1]
-            if(ncol(INDEX) == 2)
-                l.mm <- INDEX[,2]
-            else
-                l.mm <- integer()
-            log2(x[l.pm, , drop = FALSE]) - log2(x[l.mm, , drop = FALSE])
-        }
-        pm.only <- function(INDEX, x){
-            l.pm <- INDEX[,1]
-            x[l.pm, , drop = FALSE]
-        }
-
         intensData <- intensity(x)
         rob.est <- matrix(NA, ncol = 2, nrow = m*n)
-        if(verbose) cat("PM/MM correcting ...")
-        if(pmcorrect == "roblox"){
+        if(pmcorrect){
+            if(verbose) cat("PM/MM correcting ...")
+            diff.log2 <- function(INDEX, x){
+                l.pm <- INDEX[,1]
+                if(ncol(INDEX) == 2)
+                    l.mm <- INDEX[,2]
+                else
+                    l.mm <- integer()
+                log2(x[l.pm, , drop = FALSE]) - log2(x[l.mm, , drop = FALSE])
+            }
             res <- lapply(INDEX, diff.log2, x = intensData)
             rob.est1 <- matrix(NA, ncol = 2, nrow = m*n)
             for(k in nr){
@@ -56,16 +57,22 @@ setMethod("robloxbioc", signature(x = "AffyBatch"),
                 pps.im[l] <- t(t(pps.pm)/2^sb[k,])[l]
                 l <- t(t(pps.mm >= pps.pm) & (sb[k,] <= contrast.tau))
                 pps.im[l] <- t(t(pps.pm)/2^(contrast.tau/(1 + (contrast.tau - sb[k,])/scale.tau)))[l]
-                pm.corrected <- pmax.int(pps.pm - pps.im, delta)
+                pm.corrected <- matrix(pmax.int(pps.pm - pps.im, delta), ncol = ncol(pps.pm))
+                colnames(pm.corrected) <- colnames(pps.pm)
+                rownames(pm.corrected) <- rownames(pps.pm)
                 res[[k]] <- pm.corrected
             }
+            if(verbose) cat(" done.\n")
         }else{
+            if(verbose) cat("Extract PM data ...")
+            pm.only <- function(INDEX, x){
+                l.pm <- INDEX[,1]
+                x[l.pm, , drop = FALSE]
+            }
             res <- lapply(INDEX, pm.only, x = intensData)
+            if(verbose) cat(" done.\n")
         }
-        if(verbose){ 
-            cat(" done.\n")
-            cat("Computing expression values ...")
-        }
+        if(verbose) cat("Computing expression values ...")
         for(k in nr){
             ind <- which(NROW == k)
             temp <- matrix(do.call(rbind, res[ind]), nrow = k)
@@ -74,8 +81,8 @@ setMethod("robloxbioc", signature(x = "AffyBatch"),
                                              eps.upper = eps.upper, steps = steps, mad0 = mad0)
         }
         if(verbose) cat(" done.\n")
-        exp.mat <- 2^matrix(rob.est[,1], nrow = m)
-        se.mat <- 2^matrix(rob.est[,2], nrow = m)
+        exp.mat <- 2^matrix(rob.est[,1], nrow = m) + add.constant
+        se.mat <- 2^matrix(rob.est[,2], nrow = m) + add.constant
 
         dimnames(exp.mat) <- list(ids, sampleNames(x))
         dimnames(se.mat) <- list(ids, sampleNames(x))
