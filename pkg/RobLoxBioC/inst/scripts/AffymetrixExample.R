@@ -70,46 +70,84 @@ data(rma.assessment)
 data(mas5.assessment.133)
 data(rma.assessment.133)
 
-res.rma <- rma(spikein.hgu133a)
+## just for timing ...
+## on Intel P9500 (64 bit Linux, 4 GByte RAM)
+
+## about 510 sec
+#system.time(mas5.ass <- mas5(spikein.hgu95a))
+
+## about 570 sec
+#system.time(mad5.ass.133 <- mas5(spikein.hgu133a))
+
+## Implementation of function mas5 in affy package could clearly be improved ...
+## by parallelizing function affy::tukey.biweight (similar to roblox) and by 
+## modifying function affy::pmcorrect.mas
+## function (object, contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20)) 
+## {
+##    ...
+##    for (i in 1:ncol(diff)) {
+##        ...
+##
+##        the following line is quite slow ... much faster pmax.int!
+##        !!!
+##        pm.corrected <- apply(cbind(pps.pm - pps.im, delta), 1, max)
+##        !!!
+##        ...
+##    }
+##    return(diff)
+## }
+
+
+
+## about 30 sec
+#system.time(rma.ass <- rma(spikein.hgu95a))
+
+## about 26 sec
+#system.time(rma.ass.133 <- rma(spikein.hgu133a))
+
 
 library(RobLoxBioC)
 ###########################################################
 ## Example 1: Analogous to "classical" MAS 5.0
-## computation takes about 38 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
+## both computations take about 38 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
 ###########################################################
 ## hgu95a
 system.time(eset.hgu95a <- robloxbioc(spikein.hgu95a, normalize = TRUE, add.constant = 0))
 eset.hgu95a.log2 <- eset.hgu95a
 exprs(eset.hgu95a.log2) <- log2(exprs(eset.hgu95a))
 roblox.hgu95a <- assessSpikeIn(eset.hgu95a.log2, method.name = "roblox")
+roblox.hgu95a.2 <- assessSpikeIn2(eset.hgu95a.log2, method.name = "roblox")
 
 ## hgu133a
 system.time(eset.hgu133a <- robloxbioc(spikein.hgu133a, normalize = TRUE, add.constant = 0))
 eset.hgu133a.log2 <- eset.hgu133a
 exprs(eset.hgu133a.log2) <- log2(exprs(eset.hgu133a))
 roblox.hgu133a <- assessSpikeIn(eset.hgu133a.log2, method.name = "roblox")
+roblox.hgu133a.2 <- assessSpikeIn2(eset.hgu133a.log2, method.name = "roblox")
 
 
 ###########################################################
 ## Example 2: MAS 5.0 + 32
-## computation takes about 38 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
+## both computations take about 38 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
 ###########################################################
 ## hgu95a
 system.time(eset.hgu95a32 <- robloxbioc(spikein.hgu95a, normalize = TRUE, add.constant = 32))
 eset.hgu95a.log232 <- eset.hgu95a32
 exprs(eset.hgu95a.log232) <- log2(exprs(eset.hgu95a32))
 roblox.hgu95a32 <- assessSpikeIn(eset.hgu95a.log232, method.name = "roblox + 32")
+roblox.hgu95a32.2 <- assessSpikeIn2(eset.hgu95a.log232, method.name = "roblox + 32")
 
 ## hgu133a
 system.time(eset.hgu133a32 <- robloxbioc(spikein.hgu133a, normalize = TRUE, add.constant = 32))
 eset.hgu133a.log232 <- eset.hgu133a32
 exprs(eset.hgu133a.log232) <- log2(exprs(eset.hgu133a32))
 roblox.hgu133a32 <- assessSpikeIn(eset.hgu133a.log232, method.name = "roblox + 32")
+roblox.hgu133a32.2 <- assessSpikeIn2(eset.hgu133a.log232, method.name = "roblox + 32")
 
 
 ###########################################################
 ## Example 3: MAS 5.0 with PM only
-## computation takes about 19 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
+## both computations take about 19 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
 ###########################################################
 ## hgu95a
 system.time(eset.hgu95a.pmonly <- robloxbioc(spikein.hgu95a, bg.correct = TRUE, 
@@ -118,6 +156,7 @@ system.time(eset.hgu95a.pmonly <- robloxbioc(spikein.hgu95a, bg.correct = TRUE,
 eset.hgu95a.log2.pmonly <- eset.hgu95a.pmonly
 exprs(eset.hgu95a.log2.pmonly) <- log2(exprs(eset.hgu95a.pmonly))
 roblox.hgu95a.pmonly <- assessSpikeIn(eset.hgu95a.log2.pmonly, method.name = "roblox (PM)")
+roblox.hgu95a.pmonly.2 <- assessSpikeIn2(eset.hgu95a.log2.pmonly, method.name = "roblox (PM)")
 
 ## hgu133a
 system.time(eset.hgu133a.pmonly <- robloxbioc(spikein.hgu133a, bg.correct = TRUE, 
@@ -126,11 +165,12 @@ system.time(eset.hgu133a.pmonly <- robloxbioc(spikein.hgu133a, bg.correct = TRUE
 eset.hgu133a.log2.pmonly <- eset.hgu133a.pmonly
 exprs(eset.hgu133a.log2.pmonly) <- log2(exprs(eset.hgu133a.pmonly))
 roblox.hgu133a.pmonly <- assessSpikeIn(eset.hgu133a.log2.pmonly, method.name = "roblox (PM)")
+roblox.hgu133a.pmonly.2 <- assessSpikeIn2(eset.hgu133a.log2.pmonly, method.name = "roblox (PM)")
 
 
 ###########################################################
 ## Example 4: MAS 5.0 + 32 with PM only
-## computation takes about 19 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
+## both computations take about 19 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
 ###########################################################
 ## hgu95a
 system.time(eset.hgu95a.pmonly32 <- robloxbioc(spikein.hgu95a, bg.correct = TRUE, 
@@ -139,6 +179,7 @@ system.time(eset.hgu95a.pmonly32 <- robloxbioc(spikein.hgu95a, bg.correct = TRUE
 eset.hgu95a.log2.pmonly32 <- eset.hgu95a.pmonly32
 exprs(eset.hgu95a.log2.pmonly32) <- log2(exprs(eset.hgu95a.pmonly32))
 roblox.hgu95a.pmonly32 <- assessSpikeIn(eset.hgu95a.log2.pmonly32, method.name = "roblox + 32 (PM)")
+roblox.hgu95a.pmonly32.2 <- assessSpikeIn2(eset.hgu95a.log2.pmonly32, method.name = "roblox + 32 (PM)")
 
 ## hgu133a
 system.time(eset.hgu133a.pmonly32 <- robloxbioc(spikein.hgu133a, bg.correct = TRUE, 
@@ -147,6 +188,7 @@ system.time(eset.hgu133a.pmonly32 <- robloxbioc(spikein.hgu133a, bg.correct = TR
 eset.hgu133a.log2.pmonly32 <- eset.hgu133a.pmonly32
 exprs(eset.hgu133a.log2.pmonly32) <- log2(exprs(eset.hgu133a.pmonly32))
 roblox.hgu133a.pmonly32 <- assessSpikeIn(eset.hgu133a.log2.pmonly32, method.name = "roblox + 32 (PM)")
+roblox.hgu133a.pmonly32.2 <- assessSpikeIn2(eset.hgu133a.log2.pmonly32, method.name = "roblox + 32 (PM)")
 
 
 ###############################################################################
@@ -365,16 +407,25 @@ affycomp.figure6b(rma.assessment.133$FC)
 ## Table
 ###############################################################################
 ## hgu95a
-round(tableAll(roblox.hgu95a, roblox.hgu95a32, roblox.hgu95a.pmonly, 
-               roblox.hgu95a.pmonly32, mas5.assessment, rma.assessment), 4)
+tab.hgu95a <- tableAll(roblox.hgu95a, roblox.hgu95a32, 
+                        roblox.hgu95a.pmonly, roblox.hgu95a.pmonly32, 
+                        mas5.assessment, rma.assessment)
+round(tab.hgu95a, 4)
 
 ## hgu133a
-round(tableAll(roblox.hgu133a, roblox.hgu133a32, roblox.hgu133a.pmonly, 
-               roblox.hgu133a.pmonly32, mas5.assessment.133, rma.assessment.133), 4)
+tab.hgu133a <- tableAll(roblox.hgu133a, roblox.hgu133a32, 
+                        roblox.hgu133a.pmonly, roblox.hgu133a.pmonly32, 
+                        mas5.assessment.133, rma.assessment.133)
+round(tab.hgu133a, 4)
 
 ## smaller table, more informative ...
+## affycompTable does not work due to missing dilution data
 ## hgu95a
-affycompTable(roblox.hgu95a, mas5.assessment, rma.assessment)
+tab.hgu95a.small <- tab.hgu95a[c(1,2,6:8,15:17,9:11), ]
+tab.hgu95a.small <- cbind(tab.hgu95a.small, "whatsgood" = c(1, 1, 1, 0, 16, 1, 0, 16, 0, 1, 1))
+round(tab.hgu95a.small, 4)
 
 ## hgu133a
-affycompTable(roblox.hgu133a, mas5.assessment.133, rma.assessment.133)
+tab.hgu133a.small <- tab.hgu133a[c(1,2,6:8,15:17,9:11), ]
+tab.hgu133a.small <- cbind(tab.hgu133a.small, "whatsgood" = c(1, 1, 1, 0, NA, 1, 0, NA, 0, 1, 1))
+round(tab.hgu133a.small, 4)
