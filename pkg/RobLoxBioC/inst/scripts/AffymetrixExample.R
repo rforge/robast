@@ -74,10 +74,10 @@ data(rma.assessment.133)
 ## on Intel P9500 (64 bit Linux, 4 GByte RAM)
 
 ## about 510 sec
-#system.time(mas5.ass <- mas5(spikein.hgu95a))
+#system.time(mas5.res <- mas5(spikein.hgu95a))
 
 ## about 570 sec
-#system.time(mad5.ass.133 <- mas5(spikein.hgu133a))
+#system.time(mas5.res.133 <- mas5(spikein.hgu133a))
 
 ## Implementation of function mas5 in affy package could clearly be improved ...
 ## by parallelizing function affy::tukey.biweight (similar to roblox) and by 
@@ -100,10 +100,10 @@ data(rma.assessment.133)
 
 
 ## about 30 sec
-#system.time(rma.ass <- rma(spikein.hgu95a))
+#system.time(rma.res <- rma(spikein.hgu95a))
 
 ## about 26 sec
-#system.time(rma.ass.133 <- rma(spikein.hgu133a))
+#system.time(rma.res.133 <- rma(spikein.hgu133a))
 
 
 library(RobLoxBioC)
@@ -412,11 +412,41 @@ tab.hgu95a <- tableAll(roblox.hgu95a, roblox.hgu95a32,
                         mas5.assessment, rma.assessment)
 round(tab.hgu95a, 4)
 
+
+system.time(mas5.res <- mas5(spikein.hgu95a))
+system.time(rma.res <- rma(spikein.hgu95a))
+mas5.exprs <- exprs(mas5.res)
+exprs(mas5.res) <- log2(mas5.exprs)
+mas5.ass <- assessSpikeIn2(mas5.res, method.name = "MAS 5.0")
+rma.ass <- assessSpikeIn2(rma.res, method.name = "RMA")
+
+## use vsn for normalization ...
+library(vsn)
+vsn.res <- vsn2(spikein.hgu95a)
+spikein.vsn <- spikein.hgu95a
+exprs(spikein.vsn) <- 2^exprs(vsn.res)
+vsn.roblox <- robloxbioc(spikein.vsn, bg.correct = FALSE, pmcorrect = FALSE, 
+                         normalize = FALSE, add.constant = 32)
+vsn.roblox.log2 <- vsn.roblox
+exprs(vsn.roblox.log2) <- log2(exprs(vsn.roblox))
+vsn.rmx <- assessSpikeIn2(vsn.roblox.log2, method.name = "vsn+roblox")
+
+tab.hgu95a.2 <- tableAll(roblox.hgu95a.2, roblox.hgu95a32.2, 
+                         roblox.hgu95a.pmonly.2, roblox.hgu95a.pmonly32.2,
+                         mas5.ass, rma.ass, vsn.rmx)
+round(tab.hgu95a.2, 3)
+
+
 ## hgu133a
 tab.hgu133a <- tableAll(roblox.hgu133a, roblox.hgu133a32, 
                         roblox.hgu133a.pmonly, roblox.hgu133a.pmonly32, 
                         mas5.assessment.133, rma.assessment.133)
 round(tab.hgu133a, 4)
+
+tab.hgu133a.2 <- tableAll(roblox.hgu133a.2, roblox.hgu133a32.2, 
+                        roblox.hgu133a.pmonly.2, roblox.hgu133a.pmonly32.2)
+round(tab.hgu133a.2, 4)
+
 
 ## smaller table, more informative ...
 ## affycompTable does not work due to missing dilution data
@@ -429,3 +459,4 @@ round(tab.hgu95a.small, 4)
 tab.hgu133a.small <- tab.hgu133a[c(1,2,6:8,15:17,9:11), ]
 tab.hgu133a.small <- cbind(tab.hgu133a.small, "whatsgood" = c(1, 1, 1, 0, NA, 1, 0, NA, 0, 1, 1))
 round(tab.hgu133a.small, 4)
+
