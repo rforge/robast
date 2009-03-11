@@ -19,7 +19,7 @@
     a.mad <- qnorm(0.75)
     b.mad <- 1/(4*a.mad*dnorm(a.mad))
 
-    b.2 <- sqrt(A.loc^2*(16/25/sqrt(5)*a^5)^2 + b.mad^2)
+    b.2 <- sqrt(A.loc^2*(16/25/sqrt(5)*a^5)^2 + b.mad^2)^2
 
     return(.TuMadrlsGetvar(a = a) + r^2*b.2)
 }
@@ -36,7 +36,7 @@ rlsOptIC.TuMad <- function(r, aUp = 10, delta = 1e-6){
     a.mad <- qnorm(0.75)
     b.mad <- 1/(4*a.mad*dnorm(a.mad))
 
-    bias <- A.loc^2*(16/25/sqrt(5)*a^5)^2 + b.mad^2
+    bias <- sqrt(A.loc^2*(16/25/sqrt(5)*a^5)^2 + b.mad^2)
 
     fct1 <- function(x){ A.loc*x*(a^2 - x^2)^2*(abs(x) < a) }
     body(fct1) <- substitute({ A.loc*x*(a^2 - x^2)^2*(abs(x) < a) },
