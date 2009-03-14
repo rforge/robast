@@ -3,6 +3,7 @@
 \alias{robloxbioc-methods}
 \alias{robloxbioc,matrix-method}
 \alias{robloxbioc,AffyBatch-method}
+\alias{robloxbioc,BeadLevelList-method}
 
 \title{Generic Function for Preprocessing Biological Data}
 \description{
@@ -18,6 +19,10 @@ robloxbioc(x, ...)
                                  add.constant = 32, verbose = TRUE,  
                                  eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 3L, mad0 = 1e-4,
                                  contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20), sc = 500)
+
+\S4method{robloxbioc}{BeadLevelList}(x, log = FALSE, imagesPerArray = 1, what = "G", probes = NULL, 
+                                     arrays = NULL, eps = NULL, eps.lower = 0, eps.upper = 0.1, 
+                                     steps = 3L, mad0 = 1e-4)
 }
 \arguments{
   \item{x}{ biological data. }
@@ -47,6 +52,16 @@ robloxbioc(x, ...)
   \item{delta}{ a number denoting the delta parameter; confer the MAS 5.0 
     PM correction algorithm. }
   \item{sc}{ value at which all arrays will be scaled to. }
+  \item{log}{ if \code{TRUE}, then the log2 intensities for each bead-type are summarized}
+  \item{imagesPerArray}{ Specifies how many images (strips) there are per array. 
+    Normally 1 for a SAM and 1 or 2 for a BeadChip. The images (strips) from the same array 
+    will be combined so that each column in the output represents a sample. }
+  \item{what}{ character string specifying which intensities/values to summarize. 
+    See \code{\link[beadarray]{getArrayData}} for a list of possibilities. }
+  \item{probes}{ Specify particular probes to summarize. If left \code{NULL} then all
+    the probes on the first array are used. }
+  \item{arrays}{ integer (scalar or vector) specifying the strips/arrays to summarize. 
+    If \code{NULL}, then all strips/arrays are summarized. }
 }
 \details{
   The optimally-robust resp. the radius-minimax (rmx) estimator for normal location 
@@ -68,8 +83,12 @@ robloxbioc(x, ...)
   
   The algorithm used for Affymetrix data is similar to MAS 5.0 (cf. Affymetrix (2002)).
   The main difference is the substitution of the Tukey one-step estimator by our rmx 
-  k-step (k >= 1) estimator. The optional scale normalization is performed as given 
-  in Affymetrix (2002).
+  k-step (k >= 1) estimator in the PM/MM correction step. The optional scale normalization 
+  is performed as given in Affymetrix (2002).
+  
+  In case of Illumina data, the rmx estimator is used to summarize the bead types. 
+  The implementation for the most part was taken from function 
+  \code{\link[beadarray]{createBeadSummaryData}}.
 }
 \value{ Return value depends on the class of \code{x}. 
   In case of \code{"matrix"} a matrix with columns "mean" and "sd" is returned.
@@ -98,7 +117,8 @@ robloxbioc(x, ...)
 \seealso{\code{\link[RobLox]{roblox}}, \code{\link[RobLox]{rowRoblox}},
          \code{\link[affy]{AffyBatch-class}}, 
          \code{\link[affy]{generateExprVal.method.mas}},
-         \code{\link[Biobase]{ExpressionSet-class}} }
+         \code{\link[Biobase]{ExpressionSet-class}},
+         \code{\link[beadarray]{createBeadSummaryData}} }
 \examples{
 ## similar to rowRoblox of package RobLox
 ind <- rbinom(200, size=1, prob=0.05) 
@@ -132,6 +152,10 @@ if(require(affydata)){
     ## Affymetrix scale normalization
     eset1 <- robloxbioc(Dilution, normalize = TRUE)
 }
+
+## using Illumina-Data
+data(BLData)
+BSData <- robloxbioc(BLData, eps.upper = 0.5)
 }
 \concept{normal location and scale}
 \concept{infinitesimal robustness}

@@ -109,7 +109,7 @@ data(rma.assessment.133)
 library(RobLoxBioC)
 ###########################################################
 ## Example 1: Analogous to "classical" MAS 5.0
-## both computations take about 38 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
+## both computations take about 55 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
 ###########################################################
 ## hgu95a
 system.time(eset.hgu95a <- robloxbioc(spikein.hgu95a, normalize = TRUE, add.constant = 0))
@@ -128,7 +128,7 @@ roblox.hgu133a.2 <- assessSpikeIn2(eset.hgu133a.log2, method.name = "roblox")
 
 ###########################################################
 ## Example 2: MAS 5.0 + 32
-## both computations take about 38 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
+## both computations take about 55 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
 ###########################################################
 ## hgu95a
 system.time(eset.hgu95a32 <- robloxbioc(spikein.hgu95a, normalize = TRUE, add.constant = 32))
