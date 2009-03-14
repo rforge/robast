@@ -79,6 +79,7 @@ setMethod("robloxbioc", signature(x = "AffyBatch"),
             ind1 <-  as.vector(sapply(seq_len(n)-1, function(x, ind, m){ ind + x*m }, ind = ind, m = m))
             rob.est[ind1, 1:2] <- robloxbioc(log2(t(temp)), eps = eps, eps.lower = eps.lower, 
                                              eps.upper = eps.upper, steps = steps, mad0 = mad0)
+            rob.est[ind1, 2]/sqrt(k)
         }
         if(verbose) cat(" done.\n")
         exp.mat <- 2^matrix(rob.est[,1], nrow = m) + add.constant
