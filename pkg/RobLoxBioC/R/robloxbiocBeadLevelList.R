@@ -172,20 +172,40 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
     })
 ## computation of bead summaries via robloxbioc for "matrix"
 rmxBeadSummary <- function(x, probeIDs, probes, eps, eps.lower, eps.upper, steps, mad0){
+    comIDs <- intersect(probeIDs, probes)
+    x <- x[probeIDs %in% comIDs]
+    probeIDs <- probeIDs[probeIDs %in% comIDs]
     noBeads <- as.vector(table(probeIDs))
     noBeads.uni <- as.integer(names(table(noBeads)))
+    probes1 <- comIDs
+    len1 <- length(probes1)
+    fore1 <- numeric(len1)
+    SD1 <- numeric(len1)
+    for(i in seq(along = noBeads.uni)){
+        index <- noBeads == noBeads.uni[i]
+        IDs <- probes1[index]
+        if(noBeads.uni[i] == 1){
+            fore1[index] <- x[probeIDs %in% IDs]
+            SD1[index] <- mad0
+        }else{
+            temp <- matrix(x[probeIDs %in% IDs], ncol = noBeads.uni[i], byrow = TRUE)
+            rmx <- robloxbioc(temp, eps = eps, eps.lower = eps.lower, eps.upper = eps.upper, 
+                              steps = steps, mad0 = mad0)
+            fore1[index] <- rmx[,"mean"]
+            SD1[index] <- rmx[,"sd"]
+        }
+    }    
     len <- length(probes)
     fore <- numeric(len)
     SD <- numeric(len)
-    for(i in seq(along = noBeads.uni)){
-        index <- noBeads == noBeads.uni[i]
-        IDs <- probes[index]
-        temp <- matrix(x[probeIDs %in% IDs], ncol = noBeads.uni[i], byrow = TRUE)
-        rmx <- robloxbioc(temp, eps = eps, eps.lower = eps.lower, eps.upper = eps.upper, 
-                          steps = steps, mad0 = mad0)
-        fore[index] <- rmx[,"mean"]
-        SD[index] <- rmx[,"sd"]
-    }
+    noBeads1 <- numeric(len)
+    nas <- !(probes %in% comIDs)
+    fore[nas] <- NA
+    fore[!nas] <- fore1
+    SD[nas] <- NA
+    SD[!nas] <- SD1
+    noBeads1[nas] <- 0
+    noBeads1[!nas] <- noBeads
 
-    return(list(fore = fore, sd = SD, noBeads = noBeads))
+    return(list(fore = fore, sd = SD, noBeads = noBeads1))
 }
