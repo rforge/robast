@@ -351,36 +351,39 @@ for(l in 1:length(per.out)) {
 save(ill.summ.array2, ill.summ2.array2, med.summ.array2, mean.summ.array2, 
      win.summ.array2, trim.summ.array2, rmx.summ.array2, file="sim.summary.bias.raw.rda")
 
+load(file="sim.summary.bias.raw.rda")
+
 ## calculate bias - assume original, complete data set gave true values
 bias.ill.array2 <- list(NoBeads=list(), exprs=list(), se.exprs=list())
 bias.ill2.array2 <- bias.med.array2 <- bias.mean.array2 <- bias.trim.array2 <- bias.win.array2 <- bias.ill.array2
 bias.rmx.array2 <- bias.ill.array2
 for(l in 1:length(per.out)) {
     cat(l, "\n")
-    bias.ill.array2$exprs[[l]] <- ill.summ.array2$exprs[[l]]-mean.summ.array2$exprs[[1]]
+    bias.ill.array2$exprs[[l]] <- (ill.summ.array2$exprs[[l]]-mean.summ.array2$exprs[[1]])^2
     bias.ill.array2$se.exprs[[l]] <- ill.summ.array2$se.exprs[[l]]^2*ill.summ.array2$NoBeads[[l]]
     bias.ill.array2$NoBeads[[l]] <- mean.summ.array2$NoBeads[[1]]-ill.summ.array2$NoBeads[[l]]
 
-    bias.ill2.array2$exprs[[l]] <- ill.summ2.array2$exprs[[l]]-mean.summ.array2$exprs[[1]]
+    bias.ill2.array2$exprs[[l]] <- (ill.summ2.array2$exprs[[l]]-mean.summ.array2$exprs[[1]])^2
     bias.ill2.array2$se.exprs[[l]] <- ill.summ2.array2$se.exprs[[l]]^2*ill.summ2.array2$NoBeads[[l]]
     bias.ill2.array2$NoBeads[[l]] <- mean.summ.array2$NoBeads[[1]]-ill.summ2.array2$NoBeads[[l]]
 
-    bias.med.array2$exprs[[l]] <- med.summ.array2$exprs[[l]]-mean.summ.array2$exprs[[1]]
+    bias.med.array2$exprs[[l]] <- (med.summ.array2$exprs[[l]]-mean.summ.array2$exprs[[1]])^2
+    bias.med.array2$se.exprs[[l]] <- med.summ.array2$se.exprs[[l]]^2*med.summ.array2$NoBeads[[l]]
     bias.med.array2$NoBeads[[l]] <- mean.summ.array2$NoBeads[[1]]-med.summ.array2$NoBeads[[l]]
   
-    bias.mean.array2$exprs[[l]] <- mean.summ.array2$exprs[[l]]-mean.summ.array2$exprs[[1]]
+    bias.mean.array2$exprs[[l]] <- (mean.summ.array2$exprs[[l]]-mean.summ.array2$exprs[[1]])^2
     bias.mean.array2$se.exprs[[l]] <- mean.summ.array2$se.exprs[[l]]^2*mean.summ.array2$NoBeads[[l]]
     bias.mean.array2$NoBeads[[l]] <- mean.summ.array2$NoBeads[[1]]-mean.summ.array2$NoBeads[[l]]
 
-    bias.trim.array2$exprs[[l]] <- trim.summ.array2$exprs[[l]]-mean.summ.array2$exprs[[1]]
+    bias.trim.array2$exprs[[l]] <- (trim.summ.array2$exprs[[l]]-mean.summ.array2$exprs[[1]])^2
     bias.trim.array2$se.exprs[[l]] <- trim.summ.array2$se.exprs[[l]]^2*trim.summ.array2$NoBeads[[l]]
     bias.trim.array2$NoBeads[[l]] <- mean.summ.array2$NoBeads[[1]]-trim.summ.array2$NoBeads[[l]]
 
-    bias.win.array2$exprs[[l]] <- win.summ.array2$exprs[[l]]-mean.summ.array2$exprs[[1]]
+    bias.win.array2$exprs[[l]] <- (win.summ.array2$exprs[[l]]-mean.summ.array2$exprs[[1]])^2
     bias.win.array2$se.exprs[[l]] <- win.summ.array2$se.exprs[[l]]^2*win.summ.array2$NoBeads[[l]]
     bias.win.array2$NoBeads[[l]] <- mean.summ.array2$NoBeads[[1]]-win.summ.array2$NoBeads[[l]]
 
-    bias.rmx.array2$exprs[[l]] <- rmx.summ.array2$exprs[[l]]-mean.summ.array2$exprs[[1]]
+    bias.rmx.array2$exprs[[l]] <- (rmx.summ.array2$exprs[[l]]-mean.summ.array2$exprs[[1]])^2
     bias.rmx.array2$se.exprs[[l]] <- rmx.summ.array2$se.exprs[[l]]^2*rmx.summ.array2$NoBeads[[l]]
     bias.rmx.array2$NoBeads[[l]] <- mean.summ.array2$NoBeads[[1]]-rmx.summ.array2$NoBeads[[l]]
 }
@@ -398,29 +401,30 @@ for(l in 1:length(per.out)) {
     avebias.rmx.array2[l] <- mean(as.vector(bias.rmx.array2$exprs[[l]]), na.rm=TRUE)
 }
 
-numout.ill.array2 <- numout.ill2.array2 <- numout.mean.array2 <- numout.med.array2 <- numout.trim.array2 <- numout.win.array2 <- NULL
-numout.rmx.array2 <- NULL
-for(l in 1:length(per.out)) {
-    numout.ill.array2[l] <- mean(as.vector(bias.ill.array2$NoBeads[[l]]/mean.summ.array2$NoBeads[[1]]), na.rm=TRUE)*100
-    numout.ill2.array2[l] <- mean(as.vector(bias.ill2.array2$NoBeads[[l]]/mean.summ.array2$NoBeads[[1]]), na.rm=TRUE)*100
-    numout.med.array2[l] <- mean(as.vector(bias.med.array2$NoBeads[[l]]/mean.summ.array2$NoBeads[[1]]), na.rm=TRUE)*100
-    numout.mean.array2[l] <- mean(as.vector(bias.mean.array2$NoBeads[[l]]/mean.summ.array2$NoBeads[[1]]), na.rm=TRUE)*100
-    numout.win.array2[l] <- mean(as.vector(bias.win.array2$NoBeads[[l]]/mean.summ.array2$NoBeads[[1]]), na.rm=TRUE)*100
-    numout.trim.array2[l] <- mean(as.vector(bias.trim.array2$NoBeads[[l]]/mean.summ.array2$NoBeads[[1]]), na.rm=TRUE)*100
-    numout.rmx.array2[l] <- mean(as.vector(bias.rmx.array2$NoBeads[[l]]/mean.summ.array2$NoBeads[[1]]), na.rm=TRUE)*100
-}
-
 ## calculate variance
 avevar.ill.array2 <- avevar.ill2.array2 <- avevar.mean.array2 <- avevar.med.array2 <- avevar.trim.array2 <- avevar.win.array2 <- NULL
 avevar.rmx.array2 <- NULL
 for(l in 1:length(per.out)) {
     avevar.ill.array2[l] <- mean(as.vector(bias.ill.array2$se.exprs[[l]]), na.rm=TRUE)
     avevar.ill2.array2[l] <- mean(as.vector(bias.ill2.array2$se.exprs[[l]]), na.rm=TRUE)
-#    avevar.med.array2[l] <- mean(as.vector(bias.med.array2$se.exprs[[l]]), na.rm=TRUE)
+    avevar.med.array2[l] <- mean(as.vector(bias.med.array2$se.exprs[[l]]), na.rm=TRUE)
     avevar.mean.array2[l] <- mean(as.vector(bias.mean.array2$se.exprs[[l]]), na.rm=TRUE)
     avevar.win.array2[l] <- mean(as.vector(bias.win.array2$se.exprs[[l]]), na.rm=TRUE)
     avevar.trim.array2[l] <- mean(as.vector(bias.trim.array2$se.exprs[[l]]), na.rm=TRUE)
     avevar.rmx.array2[l] <- mean(as.vector(bias.rmx.array2$se.exprs[[l]]), na.rm=TRUE)
+}
+
+## calculate MSE
+avemse.ill.array2 <- avemse.ill2.array2 <- avemse.mean.array2 <- avemse.med.array2 <- avemse.trim.array2 <- avemse.win.array2 <- NULL
+avemse.rmx.array2 <- NULL
+for(l in 1:length(per.out)) {
+    avemse.ill.array2[l] <- mean(as.vector(bias.ill.array2$se.exprs[[l]])+as.vector(bias.ill.array2$exprs[[l]]), na.rm=TRUE)
+    avemse.ill2.array2[l] <- mean(as.vector(bias.ill2.array2$se.exprs[[l]])+as.vector(bias.ill2.array2$exprs[[l]]), na.rm=TRUE)
+    avemse.med.array2[l] <- mean(as.vector(bias.med.array2$se.exprs[[l]])+as.vector(bias.med.array2$exprs[[l]]), na.rm=TRUE)
+    avemse.mean.array2[l] <- mean(as.vector(bias.mean.array2$se.exprs[[l]])+as.vector(bias.mean.array2$exprs[[l]]), na.rm=TRUE)
+    avemse.win.array2[l] <- mean(as.vector(bias.win.array2$se.exprs[[l]])+as.vector(bias.win.array2$exprs[[l]]), na.rm=TRUE)
+    avemse.trim.array2[l] <- mean(as.vector(bias.trim.array2$se.exprs[[l]])+as.vector(bias.trim.array2$exprs[[l]]), na.rm=TRUE)
+    avemse.rmx.array2[l] <- mean(as.vector(bias.rmx.array2$se.exprs[[l]])+as.vector(bias.rmx.array2$exprs[[l]]), na.rm=TRUE)
 }
 
 lwd <- 2
@@ -429,23 +433,35 @@ x <- per.out[sel]*100
 myCol <- brewer.pal(5, "Set1")
 
 pdf("Figure2.pdf", width=8, height=5)
-par(mfrow=c(1,2))
+par(mfrow=c(1,3))
 par(mar=c(3,4,1.5,0.15), oma=c(1,0,0,0))
-plot(x, avebias.ill.array2[sel], lwd=lwd, type="l", xlab="", ylab="average bias", main="A", ylim=c(0,25000), col = myCol[1])
-points(x, avebias.med.array2[sel], type="l", col=myCol[2], lwd=lwd)
-points(x, avebias.trim.array2[sel], type="l", col=myCol[3], lwd=lwd)
-points(x, avebias.mean.array2[sel], type="l", col=myCol[4], lwd=lwd)
-points(x, avebias.rmx.array2[sel], type="l", col=myCol[5], lty = 2, lwd=lwd)
-legend("topleft",legend=c("Illumina", "median", "trimmed mean", "mean", "rmx"), col=myCol, lwd=2)
+plot(x, log2(avebias.ill.array2[sel]), lwd=lwd, type="l", xlab="", ylab=expression(log[2]("average bias^2")), 
+     main="Bias^2", ylim=c(0,30), col = myCol[1], 
+     panel.first = abline(v = c(0, 10, 20, 30, 40), h = seq(0, 30, by = 5), lty = 2, col = "grey"))
+points(x, log2(avebias.med.array2[sel]), type="l", col=myCol[2], lwd=lwd)
+#points(x, avebias.trim.array2[sel], type="l", col=myCol[3], lwd=lwd)
+points(x, log2(avebias.mean.array2[sel]), type="l", col=myCol[4], lwd=lwd)
+points(x, log2(avebias.rmx.array2[sel]), type="l", col=myCol[5], lwd=lwd)
+legend("bottomright",legend=c("Illumina", "median", "mean", "rmx"), col=myCol[c(1,2,4,5)], lwd=2)
 #plot(x, numout.ill.array2[sel], lwd=lwd, type="l", xlab="", ylab="% observations removed by summary method", main="(b)", ylim=c(0,40))
 #points(x, numout.med.array2[sel], type="l", col=2, lwd=lwd)
 #points(x, numout.trim.array2[sel], type="l", col=3, lwd=lwd)
 #points(x, numout.mean.array2[sel], type="l", col=4, lwd=lwd)
 #abline(0,1,col="gray", lty=2)
-plot(x, log2(avevar.ill.array2)[sel], lwd=lwd, type="l", xlab="", ylab=expression(log[2]("average variance")), main="B", ylim=c(0,30),col = myCol[1])
-points(x, log2(avevar.trim.array2)[sel], type="l", col=myCol[3], lwd=lwd)
+plot(x, log2(avevar.ill.array2)[sel], lwd=lwd, type="l", xlab="", ylab=expression(log[2]("average variance")), 
+     main="Variance", ylim=c(0,30),col = myCol[1], 
+     panel.first = abline(v = c(0, 10, 20, 30, 40), h = seq(0, 30, by = 5), lty = 2, col = "grey"))
+points(x, log2(avevar.med.array2)[sel], type="l", col=myCol[2], lwd=lwd)
+#points(x, log2(avevar.trim.array2)[sel], type="l", col=myCol[3], lwd=lwd)
 points(x, log2(avevar.mean.array2)[sel], type="l", col=myCol[4], lwd=lwd)
 points(x, log2(avevar.rmx.array2)[sel], type="l", col=myCol[5], lwd=lwd)
+plot(x, log2(avemse.ill.array2)[sel], lwd=lwd, type="l", xlab="", ylab=expression(log[2]("average MSE")), 
+     main="MSE", ylim=c(0,30),col = myCol[1], 
+     panel.first = abline(v = c(0, 10, 20, 30, 40), h = seq(0, 30, by = 5), lty = 2, col = "grey"))
+points(x, log2(avemse.med.array2)[sel], type="l", col=myCol[2], lwd=lwd)
+#points(x, log2(avemse.trim.array2)[sel], type="l", col=myCol[3], lwd=lwd)
+points(x, log2(avemse.mean.array2)[sel], type="l", col=myCol[4], lwd=lwd)
+points(x, log2(avemse.rmx.array2)[sel], type="l", col=myCol[5], lwd=lwd)
 mtext("% outliers simulated", side=1, outer=TRUE)
 dev.off()
 
