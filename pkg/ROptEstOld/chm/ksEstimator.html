@@ -1,0 +1,172 @@
+<html><head><title>Generic Function for the Computation of the Kolmogorov Minimum Distance Estimator</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>ksEstimator(ROptEstOld)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   ksEstimator">
+<param name="keyword" value="R:   ksEstimator-methods">
+<param name="keyword" value="R:   ksEstimator,numeric,Binom-method">
+<param name="keyword" value="R:   ksEstimator,numeric,Pois-method">
+<param name="keyword" value="R:   ksEstimator,numeric,Norm-method">
+<param name="keyword" value="R:   ksEstimator,numeric,Lnorm-method">
+<param name="keyword" value="R:   ksEstimator,numeric,Gumbel-method">
+<param name="keyword" value="R:   ksEstimator,numeric,Exp-method">
+<param name="keyword" value="R:   ksEstimator,numeric,Gammad-method">
+<param name="keyword" value=" Generic Function for the Computation of the Kolmogorov Minimum Distance Estimator">
+</object>
+
+
+<h2>Generic Function for the Computation of the Kolmogorov Minimum Distance Estimator</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for the computation of the Kolmogorov(-Smirnov)
+minimum distance estimator.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+ksEstimator(x, distribution, ...)
+
+## S4 method for signature 'numeric, Binom':
+ksEstimator(x, distribution, param, eps = .Machine$double.eps^0.5)
+
+## S4 method for signature 'numeric, Pois':
+ksEstimator(x, distribution, param, eps = .Machine$double.eps^0.5)
+
+## S4 method for signature 'numeric, Norm':
+ksEstimator(x, distribution, param, eps = .Machine$double.eps^0.5)
+
+## S4 method for signature 'numeric, Lnorm':
+ksEstimator(x, distribution, param, eps = .Machine$double.eps^0.5)
+
+## S4 method for signature 'numeric, Gumbel':
+ksEstimator(x, distribution, param, eps = .Machine$double.eps^0.5)
+
+## S4 method for signature 'numeric, Exp':
+ksEstimator(x, distribution, param, eps = .Machine$double.eps^0.5)
+
+## S4 method for signature 'numeric, Gammad':
+ksEstimator(x, distribution, param, eps = .Machine$double.eps^0.5)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+sample </td></tr>
+<tr valign="top"><td><code>distribution</code></td>
+<td>
+object of class <code>"Distribution"</code> </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional parameters </td></tr>
+<tr valign="top"><td><code>param</code></td>
+<td>
+name of the unknown parameter. If missing all parameters
+of the corresponding distribution are estimated. </td></tr>
+<tr valign="top"><td><code>eps</code></td>
+<td>
+the desired accuracy (convergence tolerance). </td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+In case of discrete distributions the Kolmogorov distance is computed and
+the parameters which lead to the minimum distance are returned. In case of 
+absolutely continuous distributions <code>ks.test</code> is called and the parameters
+which minimize the corresponding test statistic are returned.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+The Kolmogorov minimum distance estimator is computed. Returns a list
+with components named like the parameters of <code>distribution</code>.</p>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>x = "numeric", distribution = "Binom"</dt><dd>Binomial distributions. </dd>
+
+
+<dt>x = "numeric", distribution = "Pois"</dt><dd>Poisson distributions. </dd>
+
+
+<dt>x = "numeric", distribution = "Norm"</dt><dd>Normal distributions. </dd>
+
+
+<dt>x = "numeric", distribution = "Lnorm"</dt><dd>Lognormal distributions. </dd>
+
+
+<dt>x = "numeric", distribution = "Gumbel"</dt><dd>Gumbel distributions. </dd>
+
+
+<dt>x = "numeric", distribution = "Exp"</dt><dd>Exponential distributions. </dd>
+
+
+<dt>x = "numeric", distribution = "Gamma"</dt><dd>Gamma distributions. </dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('distr', 'Distribution-class.html')" style="text-decoration: underline; color: blue; cursor: hand">Distribution-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- rnorm(100, mean = 1, sd = 2)
+ksEstimator(x=x, distribution = Norm()) # estimate mean and sd
+ksEstimator(x=x, distribution = Norm(mean = 1), param = "sd") # estimate sd
+ksEstimator(x=x, distribution = Norm(sd = 2), param = "mean") # estimate mean
+mean(x)
+median(x)
+sd(x)
+mad(x)
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>ROptEstOld</em> version 0.5.2 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

@@ -1,0 +1,108 @@
+<html><head><title>Generating Function for Linear Regression Family with Unknown Scale</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>NormLinRegScaleFamily(ROptRegTS)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   NormLinRegScaleFamily">
+<param name="keyword" value=" Generating Function for Linear Regression Family with Unknown Scale">
+</object>
+
+
+<h2>Generating Function for Linear Regression Family with Unknown Scale</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generates an object of class <code>"L2RegTypeFamily"</code>
+which represents a linear regression family with standard
+normal distributed errors and random regressor where the
+scale of the error distribution is unknown.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+NormLinRegScaleFamily(theta, scale = 1, trafo, RegDistr = Norm(), 
+                      RegSymm, Reg2Mom, nuisance = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>theta</code></td>
+<td>
+linear regression parameter </td></tr>
+<tr valign="top"><td><code>scale</code></td>
+<td>
+scale parameter for error distribution </td></tr>
+<tr valign="top"><td><code>trafo</code></td>
+<td>
+matrix: transformation of the parameter </td></tr>
+<tr valign="top"><td><code>RegDistr</code></td>
+<td>
+regressor distribution </td></tr>
+<tr valign="top"><td><code>RegSymm</code></td>
+<td>
+symmetry of the regressor distribution </td></tr>
+<tr valign="top"><td><code>Reg2Mom</code></td>
+<td>
+second moment matrix of regressor </td></tr>
+<tr valign="top"><td><code>nuisance</code></td>
+<td>
+logical: is scale nuisance parameter </td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+In case <code>theta</code> is missing, it is set to 0.
+If <code>Reg2Mom</code> is missing, it is computed via <code>E</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"L2RegTypeFamily"</code></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the
+Asymptotic Theory of Robustness</EM>. Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="L2RegTypeFamily-class.html">L2RegTypeFamily-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+(LM1 &lt;- NormLinRegScaleFamily(Reg2Mom = matrix(1)))
+Map(L2deriv(LM1)[[1]])
+FisherInfo(LM1)
+checkL2deriv(LM1)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

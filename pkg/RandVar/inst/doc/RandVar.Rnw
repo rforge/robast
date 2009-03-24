@@ -4,6 +4,25 @@
 %\VignettePackage{RandVar}
 %
 \documentclass[11pt]{article}
+%
+%use svn-multi to fill in revision information
+%
+\usepackage{svn-multi}
+% Version control information:
+\svnidlong
+{$HeadURL$}
+{$LastChangedDate$}
+{$LastChangedRevision$}
+{$LastChangedBy$}
+%\svnid{$Id: example_main.tex 146 2008-12-03 13:29:19Z martin $}
+% Don't forget to set the svn property 'svn:keywords' to
+% 'HeadURL LastChangedDate LastChangedRevision LastChangedBy' or
+% 'Id' or both depending if you use \svnidlong and/or \svnid
+%
+\newcommand{\svnfooter}{Last Changed Rev: \svnkw{LastChangedRevision}}
+\svnRegisterAuthor{ruckdeschel}{Peter Ruckdeschel}
+\svnRegisterAuthor{stamats}{Matthias Kohl}
+%
 \usepackage{geometry}\usepackage{color}
 \usepackage{ifpdf}
 \definecolor{darkblue}{rgb}{0.0,0.0,0.75}
@@ -31,7 +50,20 @@ pagecolor=darkblue,raiselinks,plainpages,pdftex]{hyperref}
 \title{RandVar: Implementation of random variables by means
     of {\tt S4} classes and methods}
 \author{Matthias Kohl\\
-e-Mail: {\tt matthias.kohl@stamats.de}\\
+e-Mail: {\tt matthias.kohl@stamats.de}\medskip\\
+\parbox[t]{5cm}{
+\footnotesize\sffamily
+ Version control information:
+\begin{tabbing}
+\footnotesize\sffamily
+ Last changes revision: \= \kill
+ Head URL: \> \parbox[t]{6cm}{\url{\svnkw{HeadURL}}}\\[1.2ex]
+ Last changed date: \> \svndate\\
+ Last changes revision: \> \svnrev\\
+ Version: \> \svnFullRevision*{\svnrev}\\
+ Last changed by: \> \svnFullAuthor*{\svnauthor}\\
+\end{tabbing}
+}
 }
 \maketitle
 % -------------------------------------------------------------------------------

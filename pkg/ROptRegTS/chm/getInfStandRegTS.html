@@ -1,0 +1,224 @@
+<html><head><title>Generic Function for the Computation of the Standardizing Matrix</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>getInfStandRegTS(ROptRegTS)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   getInfStandRegTS">
+<param name="keyword" value="R:   getInfStandRegTS-methods">
+<param name="keyword" value="R:   getInfStandRegTS,UnivariateDistribution,UnivariateDistribution,ContNeighborhood-method">
+<param name="keyword" value="R:   getInfStandRegTS,UnivariateDistribution,UnivariateDistribution,TotalVarNeighborhood-method">
+<param name="keyword" value="R:   getInfStandRegTS,UnivariateDistribution,UnivariateDistribution,CondTotalVarNeighborhood-method">
+<param name="keyword" value="R:   getInfStandRegTS,UnivariateDistribution,UnivariateDistribution,Av1CondContNeighborhood-method">
+<param name="keyword" value="R:   getInfStandRegTS,UnivariateDistribution,UnivariateDistribution,Av1CondTotalVarNeighborhood-method">
+<param name="keyword" value="R:   getInfStandRegTS,UnivariateDistribution,MultivariateDistribution,ContNeighborhood-method">
+<param name="keyword" value="R:   getInfStandRegTS,UnivariateDistribution,MultivariateDistribution,Av1CondContNeighborhood-method">
+<param name="keyword" value="R:   getInfStandRegTS,UnivariateDistribution,MultivariateDistribution,Av1CondTotalVarNeighborhood-method">
+<param name="keyword" value="R:   getInfStandRegTS,UnivariateDistribution,Distribution,Av2CondContNeighborhood-method">
+<param name="keyword" value="R:   getInfStandRegTS,RealRandVariable,Distribution,ContNeighborhood-method">
+<param name="keyword" value="R:   getInfStandRegTS,RealRandVariable,Distribution,Av1CondContNeighborhood-method">
+<param name="keyword" value=" Generic Function for the Computation of the Standardizing Matrix">
+</object>
+
+
+<h2>Generic Function for the Computation of the Standardizing Matrix</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for the computation of the standardizing matrix which
+takes care of the Fisher consistency of the corresponding IC. This function 
+is rarely called directly. It is used to compute optimally robust ICs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+getInfStandRegTS(ErrorL2deriv, Regressor, neighbor, ...)
+
+## S4 method for signature 'UnivariateDistribution,
+##   UnivariateDistribution, ContNeighborhood':
+getInfStandRegTS(ErrorL2deriv, 
+                Regressor, neighbor, z.comp, clip, cent, stand, trafo)
+
+## S4 method for signature 'UnivariateDistribution,
+##   UnivariateDistribution, TotalVarNeighborhood':
+getInfStandRegTS(ErrorL2deriv, 
+                Regressor, neighbor, clip, cent)
+
+## S4 method for signature 'UnivariateDistribution,
+##   UnivariateDistribution, CondTotalVarNeighborhood':
+getInfStandRegTS(ErrorL2deriv, 
+                Regressor, neighbor, clip, cent)
+
+## S4 method for signature 'UnivariateDistribution,
+##   UnivariateDistribution, Av1CondContNeighborhood':
+getInfStandRegTS(ErrorL2deriv, 
+                Regressor, neighbor, z.comp, clip, cent, stand, trafo)
+
+## S4 method for signature 'UnivariateDistribution,
+##   UnivariateDistribution, Av1CondTotalVarNeighborhood':
+getInfStandRegTS(ErrorL2deriv, 
+                Regressor, neighbor, z.comp, clip, cent, stand, trafo)
+
+## S4 method for signature 'UnivariateDistribution,
+##   MultivariateDistribution, ContNeighborhood':
+getInfStandRegTS(ErrorL2deriv, 
+                Regressor, neighbor, z.comp, clip, cent, stand, trafo)
+
+## S4 method for signature 'UnivariateDistribution,
+##   MultivariateDistribution, Av1CondContNeighborhood':
+getInfStandRegTS(ErrorL2deriv, 
+                Regressor, neighbor, z.comp, clip, cent, stand, trafo)
+
+## S4 method for signature 'UnivariateDistribution,
+##   MultivariateDistribution,
+##   Av1CondTotalVarNeighborhood':
+getInfStandRegTS(ErrorL2deriv, 
+                Regressor, neighbor, z.comp, clip, cent, stand, trafo)
+
+## S4 method for signature 'UnivariateDistribution,
+##   Distribution, Av2CondContNeighborhood':
+getInfStandRegTS(ErrorL2deriv, 
+                Regressor, neighbor, z.comp, clip, cent, stand, trafo)
+
+## S4 method for signature 'RealRandVariable, Distribution,
+##   ContNeighborhood':
+getInfStandRegTS(ErrorL2deriv, 
+                Regressor, neighbor, ErrorDistr, A.comp, stand, clip, cent, trafo)
+
+## S4 method for signature 'RealRandVariable, Distribution,
+##   Av1CondContNeighborhood':
+getInfStandRegTS(ErrorL2deriv, 
+                Regressor, neighbor, ErrorDistr, A.comp, stand, clip, cent, trafo)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>ErrorL2deriv</code></td>
+<td>
+L2-derivative of <code>ErrorDistr</code>. </td></tr>
+<tr valign="top"><td><code>Regressor</code></td>
+<td>
+regressor. </td></tr>
+<tr valign="top"><td><code>neighbor</code></td>
+<td>
+object of class <code>"Neighborhood"</code>. </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional parameters. </td></tr>
+<tr valign="top"><td><code>ErrorDistr</code></td>
+<td>
+error distribution. </td></tr>
+<tr valign="top"><td><code>clip</code></td>
+<td>
+optimal clipping bound/function. </td></tr>
+<tr valign="top"><td><code>cent</code></td>
+<td>
+optimal centering constant/function. </td></tr>
+<tr valign="top"><td><code>stand</code></td>
+<td>
+standardizing matrix. </td></tr>
+<tr valign="top"><td><code>z.comp</code></td>
+<td>
+which components of the centering constant/function 
+have to be computed. </td></tr>
+<tr valign="top"><td><code>A.comp</code></td>
+<td>
+which components of the standardizing matrix
+have to be computed. </td></tr>
+<tr valign="top"><td><code>trafo</code></td>
+<td>
+matrix: transformation of the parameter. </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+The standardizing matrix is computed.</p>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "ContNeighborhood"</dt><dd>computes standardizing matrix. </dd>
+
+
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "TotalVarNeighborhood"</dt><dd>computes standardizing constant. </dd>
+
+
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "CondTotalVarNeighborhood"</dt><dd>computes standardizing constant. </dd>
+
+
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "Av1CondContNeighborhood"</dt><dd>computes standardizing matrix. </dd>
+
+
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd>computes standardizing matrix. </dd>
+
+
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "ContNeighborhood"</dt><dd>computes standardizing matrix. </dd>
+
+
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "Av1CondContNeighborhood"</dt><dd>computes standardizing matrix. </dd>
+
+
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd>computes standardizing matrix. </dd>
+
+
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "Distribution", neighbor = "Av2CondContNeighborhood"</dt><dd>computes standardizing matrix. </dd>
+
+
+<dt>ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", neighbor = "ContNeighborhood"</dt><dd>computes standardizing matrix. </dd>
+
+
+<dt>ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", neighbor = "Av1CondContNeighborhood"</dt><dd>computes standardizing matrix. </dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. <B>8</B>: 106&ndash;115.
+</p>
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('ROptEst', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, <code><a onclick="findlink('ROptEst', 'TotalVarIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">TotalVarIC-class</a></code>, 
+<code><a href="Av1CondContIC-class.html">Av1CondContIC-class</a></code>, <code><a href="Av2CondContIC-class.html">Av2CondContIC-class</a></code>, 
+<code><a href="Av1CondTotalVarIC-class.html">Av1CondTotalVarIC-class</a></code>, <code><a href="CondContIC.html">CondContIC</a></code>,
+<code><a href="CondTotalVarIC.html">CondTotalVarIC</a></code>
+</p>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

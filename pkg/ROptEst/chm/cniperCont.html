@@ -1,0 +1,172 @@
+<html><head><title>Generic Functions for Computation and Plot of Cniper Contamination 
+and Cniper Points.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>cniperCont(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   cniperCont">
+<param name="keyword" value="R:   cniperCont-methods">
+<param name="keyword" value="R:   cniperCont,IC,IC,L2ParamFamily,ContNeighborhood,asMSE-method">
+<param name="keyword" value="R:   cniperPoint">
+<param name="keyword" value="R:   cniperPoint-methods">
+<param name="keyword" value="R:   cniperPoint,L2ParamFamily,ContNeighborhood,asMSE-method">
+<param name="keyword" value="R:   cniperPointPlot">
+<param name="keyword" value="R:   cniperPointPlot-methods">
+<param name="keyword" value="R:   cniperPointPlot,L2ParamFamily,ContNeighborhood,asMSE-method">
+<param name="keyword" value=" Generic Functions for Computation and Plot of Cniper Contamination 
+and Cniper Points.">
+</object>
+
+
+<h2>Generic Functions for Computation and Plot of Cniper Contamination 
+and Cniper Points.</h2>
+
+
+<h3>Description</h3>
+
+<p>
+These generic functions and their methods can be used to determine cniper 
+contamination as well as cniper points. That is, under which (Dirac) 
+contamination is the risk of one procedure larger than the risk of some
+other procedure.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+cniperCont(IC1, IC2, L2Fam, neighbor, risk, ...)
+## S4 method for signature 'IC, IC, L2ParamFamily,
+##   ContNeighborhood, asMSE':
+cniperCont(IC1, 
+      IC2, L2Fam, neighbor, risk, lower, upper, n = 101)
+
+cniperPoint(L2Fam, neighbor, risk, ...)
+## S4 method for signature 'L2ParamFamily,
+##   ContNeighborhood, asMSE':
+cniperPoint(L2Fam, 
+      neighbor, risk, lower, upper)
+
+cniperPointPlot(L2Fam, neighbor, risk, ...)
+## S4 method for signature 'L2ParamFamily,
+##   ContNeighborhood, asMSE':
+cniperPointPlot(L2Fam, 
+      neighbor, risk, lower, upper, n = 101)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>IC1</code></td>
+<td>
+object of class <code>IC</code> </td></tr>
+<tr valign="top"><td><code>IC2</code></td>
+<td>
+object of class <code>IC</code> </td></tr>
+<tr valign="top"><td><code>L2Fam</code></td>
+<td>
+object of class <code>L2ParamFamily</code> </td></tr>
+<tr valign="top"><td><code>neighbor</code></td>
+<td>
+object of class <code>Neighborhood</code> </td></tr>
+<tr valign="top"><td><code>risk</code></td>
+<td>
+object of class <code>RiskType</code> </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional parameters. </td></tr>
+<tr valign="top"><td><code>lower, upper</code></td>
+<td>
+the lower and upper end points of the 
+contamination interval. </td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+number of points between <code>lower</code> and <code>upper</code></td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+In case of <code>cniperCont</code> the difference between the risks of two ICs 
+is plotted.
+</p>
+<p>
+The function <code>cniperPoint</code> can be used to determine cniper
+points. That is, points such that the optimally robust estimator
+has smaller minimax risk than the classical optimal estimator under 
+contamination with Dirac measures at the cniper points. 
+</p>
+<p>
+As such points might be difficult to find, we provide the
+function <code>cniperPointPlot</code> which can be used to obtain a plot
+of the risk difference.
+</p>
+<p>
+For more details about cniper contamination and cniper points we refer 
+to Section~3.5 of Kohl et al. (2008) as well as Ruckdeschel (2004) and 
+the Introduction of Kohl (2005).
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+invisible() resp. cniper point is returned.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Kohl, M. and Ruckdeschel, H. and Rieder, H. (2008). Infinitesimally 
+Robust Estimation in General Smoothly Parametrized Models. Unpublished
+Manuscript.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+<p>
+Ruckdeschel, P. (2004). Higher Order Asymptotics for the MSE of M-Estimators
+on Shrinking Neighborhoods. Unpublished Manuscript.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## cniper contamination
+P &lt;- PoisFamily(lambda = 4)
+RobP1 &lt;- InfRobModel(center = P, neighbor = ContNeighborhood(radius = 0.1))
+IC1 &lt;- optIC(model=RobP1, risk=asMSE())
+RobP2 &lt;- InfRobModel(center = P, neighbor = ContNeighborhood(radius = 1))
+IC2 &lt;- optIC(model=RobP2, risk=asMSE())
+cniperCont(IC1 = IC1, IC2 = IC2, L2Fam = P, 
+           neighbor = ContNeighborhood(radius = 0.5), 
+           risk = asMSE(),
+           lower = 0, upper = 8, n = 101)
+
+## cniper point plot
+cniperPointPlot(P, neighbor = ContNeighborhood(radius = 0.5), 
+                risk = asMSE(), lower = 0, upper = 10)
+
+## cniper point
+cniperPoint(P, neighbor = ContNeighborhood(radius = 0.5), 
+            risk = asMSE(), lower = 0, upper = 4)
+cniperPoint(P, neighbor = ContNeighborhood(radius = 0.5), 
+            risk = asMSE(), lower = 4, upper = 8)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>ROptEst</em> version 0.6.1 <a href="00Index.html">Index]</a></div>
+
+</body></html>

@@ -51,10 +51,13 @@ setMethod("plot", signature(x = "IC", y = "missing"),
                xM <- max(xlim)
             }
             if(is(e1, "AbscontDistribution")){
-                lower <- if(is.finite(q(e1)(0))) 
-                     q(e1)(0) else q(e1)(getdistrOption("TruncQuantile"))
-                upper <- if(is.finite(q(e1)(1))) 
-                     q(e1)(1) else q(e1)(1 - getdistrOption("TruncQuantile"))
+                lower0 <- getLow(e1, eps = getdistrOption("TruncQuantile")*2)
+                upper0 <- getUp(e1, eps = getdistrOption("TruncQuantile")*2)
+                me <- median(e1); s <- IQR(e1)
+                lower1 <- me - 6 * s
+                upper1 <- me + 6 * s
+                lower <- max(lower0, lower1)
+                upper <- min(upper0, upper1)
                 if(!is.null(xlim)){ 
                   lower <- min(lower,xm)
                   upper <- max(upper,xM)

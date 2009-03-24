@@ -1,0 +1,87 @@
+<html><head><title>Generating function for Av1CondTotalVarNeighborhood-class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>Av1CondTotalVarNeighborhood(ROptRegTS)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   Av1CondTotalVarNeighborhood">
+<param name="keyword" value=" Generating function for Av1CondTotalVarNeighborhood-class">
+</object>
+
+
+<h2>Generating function for Av1CondTotalVarNeighborhood-class</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generates an object of class <code>"Av1CondTotalVarNeighborhood"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Av1CondTotalVarNeighborhood(radius = 0, radiusCurve = function(x){1})
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>radius</code></td>
+<td>
+non-negative real: neighborhood radius. </td></tr>
+<tr valign="top"><td><code>radiusCurve</code></td>
+<td>
+real-valued, non-negative function
+with L1 norm <code>&lt;= 1</code>. </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"Av1CondTotalVarNeighborhood"</code></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="Av1CondTotalVarNeighborhood-class.html">Av1CondTotalVarNeighborhood-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+Av1CondTotalVarNeighborhood()
+
+## The function is currently defined as
+function(radius = 0, radiusCurve = function(x){1}){ 
+    new("Av1CondTotalVarNeighborhood", radius = radius, radiusCurve = radiusCurve) 
+}
+</pre>
+
+
+
+<hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

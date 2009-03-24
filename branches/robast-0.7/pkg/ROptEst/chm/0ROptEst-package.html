@@ -1,0 +1,123 @@
+<html><head><title>Optimally robust estimation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>ROptEst-package(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   ROptEst-package">
+<param name="keyword" value="R:   ROptEst">
+<param name="keyword" value=" Optimally robust estimation">
+</object>
+
+
+<h2>Optimally robust estimation</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Optimally robust estimation in general smoothly parameterized models 
+using S4 classes and methods.
+</p>
+
+
+<h3>Details</h3>
+
+<p>
+<table summary="Rd table">
+<tr>
+  <td align="left">Package: </td>  <td align="left"> ROptEst</td>
+</tr>
+<tr>
+  <td align="left"> Version: </td>  <td align="left"> 0.7 </td>
+</tr>
+<tr>
+  <td align="left"> Date: </td>  <td align="left"> 2008-11-27 </td>
+</tr>
+<tr>
+  <td align="left"> Depends: </td>  <td align="left"> R(&gt;= 2.7.0), methods, distr(&gt;= 2.0), distrEx(&gt;= 2.0), distrMod(&gt;= 2.0), RandVar(&gt;= 0.6.4), RobAStBase</td>
+</tr>
+<tr>
+  <td align="left"> LazyLoad: </td>  <td align="left"> yes</td>
+</tr>
+<tr>
+  <td align="left"> License: </td>  <td align="left"> LGPL-3</td>
+</tr>
+<tr>
+  <td align="left"> URL: </td>  <td align="left"> http://robast.r-forge.r-project.org/</td>
+</tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a>,<br>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a><br>
+</p>
+<p>
+Maintainer: Matthias Kohl  <a href="mailto:matthias.kohl@stamats.de">matthias.kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+M. Kohl (2005). Numerical Contributions to the Asymptotic Theory of Robustness.
+Dissertation. University of Bayreuth.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('distr', 'distr-package.html')" style="text-decoration: underline; color: blue; cursor: hand">distr-package</a></code>, <code><a onclick="findlink('distrEx', 'distrEx-package.html')" style="text-decoration: underline; color: blue; cursor: hand">distrEx-package</a></code>,
+<code><a onclick="findlink('distrMod', 'distrMod-package.html')" style="text-decoration: underline; color: blue; cursor: hand">distrMod-package</a></code>, <code><a onclick="findlink('RandVar', 'RandVar-package.html')" style="text-decoration: underline; color: blue; cursor: hand">RandVar-package</a></code>,
+<code><a onclick="findlink('RobAStBase', 'RobAStBase-package.html')" style="text-decoration: underline; color: blue; cursor: hand">RobAStBase-package</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+library(ROptEst)
+
+## Example: Rutherford-Geiger (1910); cf. Feller~(1968), Section VI.7 (a)
+x &lt;- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532), 
+       rep(5, 408), rep(6, 273), rep(7, 139), rep(8, 45), rep(9, 27), 
+       rep(10, 10), rep(11, 4), rep(12, 0), rep(13, 1), rep(14, 1))
+
+## ML-estimate from package distrMod
+MLest &lt;- MLEstimator(x, PoisFamily())
+MLest
+## confidence interval based on CLT
+confint(MLest)
+
+## compute optimally (w.r.t to MSE) robust estimator (unknown contamination)
+robest &lt;- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
+estimate(robest)
+## check influence curve
+checkIC(pIC(robest))
+## plot influence curve
+plot(pIC(robest))
+## confidence interval based on LAN - neglecting bias
+confint(robest)
+## confidence interval based on LAN - including bias
+confint(robest, method = symmetricBias())
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>ROptEst</em> version 0.7 <a href="00Index.html">Index</a>]</div>
+
+</body></html>
