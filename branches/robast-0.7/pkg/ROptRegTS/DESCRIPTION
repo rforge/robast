@@ -12,3 +12,5 @@ LazyLoad: yes
 License: LGPL-3
 URL: http://robast.r-forge.r-project.org/
 Packaged: Mon Aug 6 08:09:59 2007; kohl
+LastChangedDate: {$LastChangedDate$}
+LastChangedRevision: {$LastChangedRevision$}
