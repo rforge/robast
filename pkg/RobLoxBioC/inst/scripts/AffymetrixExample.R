@@ -75,9 +75,17 @@ library(RobLoxBioC)
 ## takes more than 130 min on Intel P9500 (64bit Linux, 4 GByte RAM)
 #system.time(minKD.hgu133a <- KolmogorovMinDist(spikein.hgu133a, Norm()))
 
-## load the results from r-forge ...
-load(file = "https://r-forge.r-project.org/minKD_hgu95a.RData")
-(minKD.hgu133a)
+## load the results from R-forge ...
+con <- url("http://robast.r-forge.r-project.org/data/minKD_hgu95a.RData")
+load(file = con)
+close(con)
+con <- url("http://robast.r-forge.r-project.org/data/minKD_hgu133a.RData")
+load(file = con)
+close(con)
+
+boxplot(as.data.frame(minKD.hgu95a$dist), main = "HGU95a")
+boxplot(as.data.frame(minKD.hgu133a$dist), main = "HGU133a")
+
 
 ###########################################################
 ## assessments for MAS 5.0 and RMA including dilution data from package affycomp

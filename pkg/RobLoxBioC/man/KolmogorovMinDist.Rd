@@ -49,7 +49,9 @@ KolmogorovMinDist(x, D, ...)
   So far, only the minimum distance to the set of normal distributions can be
   computed.
 }
-\value{ Numeric vector with minimum Kolmogorov distances. }
+\value{ List with components \code{dist} containing a numeric vector 
+or matrix with minimum Kolmogorov distances and \code{n} a numeric vector 
+or matrix with the corresponding sample sizes. }
 \references{
   Huber, P.J. (1981) \emph{Robust Statistics}. New York: Wiley.
 
@@ -68,15 +70,21 @@ KolmogorovMinDist(X, D = Norm())
 data(SpikeIn)
 probes <- log2(pm(SpikeIn))
 (res <- KolmogorovMinDist(probes, Norm()))
-boxplot(res)
+boxplot(res$dist)
 
 \dontrun{
 ## "Not run" just because of computation time
 require(affydata)
 data(Dilution)
 res <- KolmogorovMinDist(Dilution[,1], Norm())
-summary(res)
-boxplot(res)
+summary(res$dist)
+boxplot(res$dist)
+plot(res$n, res$dist, pch = 20, main = "Kolmogorov distance vs. sample size",
+     xlab = "sample size", ylab = "Kolmogorov distance",
+     ylim = c(0, max(res$dist)))
+uni.n <- min(res$n):max(res$n)
+lines(uni.n, 1/(2*uni.n), col = "orange", lwd = 2)
+legend("topright", legend = "minimal possible distance", fill = "orange")
 }
 
 ## using Illumina-Data
@@ -85,8 +93,15 @@ boxplot(res)
 data(BLData)
 res <- KolmogorovMinDist(BLData, Norm(), arrays = 1)
 res1 <- KolmogorovMinDist(BLData, log = TRUE, Norm(), arrays = 1)
-summary(cbind(res, res1))
-boxplot(list(res, res1), names = c("raw", "log-raw"))
+summary(cbind(res$dist, res1$dist))
+boxplot(list(res$dist, res1$dist), names = c("raw", "log-raw"))
+sort(unique(res1$n))
+plot(res1$n, res1$dist, pch = 20, main = "Kolmogorov distance vs. sample size",
+     xlab = "sample size", ylab = "Kolmogorov distance",
+     ylim = c(0, max(res1$dist)), xlim = c(min(res1$n), 56))
+uni.n <- min(res1$n):56
+lines(uni.n, 1/(2*uni.n), col = "orange", lwd = 2)
+legend("topright", legend = "minimal possible distance", fill = "orange")
 }
 }
 \concept{normal location and scale}

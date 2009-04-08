@@ -15,19 +15,19 @@ setMethod("KolmogorovMinDist", signature(x = "matrix",
         Med <- rowMedians(x, na.rm = TRUE)
         Mad <- pmax(rowMedians(abs(x-Med), na.rm = TRUE)/qnorm(0.75), mad0)
         startPars <- cbind(Med, Mad)
-        n <- nrow(x)
-        res <- numeric(n)
-        for(i in seq_len(n)){
+        M <- nrow(x)
+        n <- ncol(x)
+        res <- matrix(NA, nrow = M, ncol = 2)
+        for(i in seq_len(M)){
             temp <- try(optim(par = startPars[i,], fn = ksdist, x = x[i,], 
                               method = "L-BFGS-B", lower = c(-Inf, 1e-15), 
-                              upper = c(Inf, Inf))$value)
-            if(inherits(temp, "try-error")){
-                res[i] <- NA
-            }else{
-                res[i] <- temp
+                              upper = c(Inf, Inf))$value, silent = TRUE)
+            if(!inherits(temp, "try-error")){
+                res[i,1] <- temp
+                res[i,2] <- n
             }
         }
-        res
+        list("dist" = res[,1], "n" = res[,2])
     })
 
 setMethod("KolmogorovMinDist", signature(x = "AffyBatch",
@@ -49,6 +49,7 @@ setMethod("KolmogorovMinDist", signature(x = "AffyBatch",
 
         intensData <- intensity(x)
         kmd <- numeric(m*n)
+        ns <- numeric(m*n)
         if(pmcorrect){
             if(verbose) cat("Calculating PM/MM ...")
             div <- function(INDEX, x){
@@ -75,12 +76,16 @@ setMethod("KolmogorovMinDist", signature(x = "AffyBatch",
             ind <- which(NROW == k)
             temp <- matrix(do.call(rbind, res[ind]), nrow = k)
             ind1 <-  as.vector(sapply(seq_len(n)-1, function(x, ind, m){ ind + x*m }, ind = ind, m = m))
-            kmd[ind1] <- KolmogorovMinDist(log2(t(temp)), D = D)
+            temp.res <- KolmogorovMinDist(log2(t(temp)), D = D)
+            kmd[ind1] <- temp.res[["dist"]]
+            ns[ind1] <- temp.res[["n"]]
         }
         if(verbose) cat(" done.\n")
         kmd.mat <- matrix(kmd, nrow = m)
+        ns.mat <- matrix(ns, nrow = m)
         dimnames(kmd.mat) <- list(ids, sampleNames(x))
-        kmd.mat
+        dimnames(ns.mat) <- list(ids, sampleNames(x))
+        list("dist" = kmd.mat, "n" = ns.mat)
     })
 
 setMethod("KolmogorovMinDist", signature(x = "BeadLevelList",
@@ -138,23 +143,27 @@ setMethod("KolmogorovMinDist", signature(x = "BeadLevelList",
         pr <- pr[!nasinf]
         if (imagesPerArray == 1) {
             G.kmd <- matrix(0, nrow = noprobes, ncol = len)
-            colnames(G.kmd) <- arraynms
+            G.ns <- matrix(0, nrow = noprobes, ncol = len)
+            colnames(G.kmd) <- colnames(G.ns) <- arraynms
             if (BLData@arrayInfo$channels == "two" && !is.null(BLData[[arraynms[1]]]$R) && whatelse == "R") 
-                R.kmd <- G.kmd
-            else R.kmd <- NULL
+                R.kmd <- R.ns <- G.kmd
+            else R.kmd <- R.ns <- NULL
         }
         else if (imagesPerArray == 2) {
             G.kmd <- matrix(0, nrow = noprobes, ncol = (len/2))
-            colnames(G.kmd) <- arraynms[seq(1, len, by = 2)]
+            G.ns <- matrix(0, nrow = noprobes, ncol = (len/2))
+            colnames(G.kmd) <- colnames(G.ns) <- arraynms[seq(1, len, by = 2)]
             if (BLData@arrayInfo$channels == "two" && !is.null(BLData[[arraynms[1]]]$R) && whatelse == "R") 
-                R.kmd <- G.kmd
-            else R.kmd <- NULL
+                R.kmd <- R.ns <- G.kmd
+            else R.kmd <- R.ns <- NULL
         }
         i <- j <- 1
         while (j <= len) {
             probeIDs <- as.integer(pr)
             start <- 0
-            G.kmd[,i] <- kmdBeadLevel(x = finten, D = D, probeIDs = probeIDs, probes = probes)
+            G.res <- kmdBeadLevel(x = finten, D = D, probeIDs = probeIDs, probes = probes)
+            G.kmd[,i] <- G.res[["dist"]]
+            G.ns[,i] <- G.res[["n"]]
             if (BLData@arrayInfo$channels == "two" && !is.null(BLData[[arraynms[i]]]$R) && whatelse == "R") {
                 if (imagesPerArray == 1) {
                     finten <- getArrayData(BLData, what = whatelse, log = log, array = arraynms[i])[sel]
@@ -170,7 +179,9 @@ setMethod("KolmogorovMinDist", signature(x = "BeadLevelList",
                     binten <- rep(0, length(finten))
                 }
                 start <- 0
-                R.kmd[,i] <- kmdBeadLevel(x = finten, D = D, probeIDs = probeIDs, probes = probes)
+                R.res[,i] <- kmdBeadLevel(x = finten, D = D, probeIDs = probeIDs, probes = probes)
+                R.kmd[,i] <- R.res[["dist"]]
+                R.ns[,i] <- R.res[["n"]]
             }
             j <- j + imagesPerArray
             i <- i + 1
@@ -197,12 +208,13 @@ setMethod("KolmogorovMinDist", signature(x = "BeadLevelList",
             }
         }
         if (whatelse == "R") {
-            rownames(G.kmd) <- rownames(R.kmd) <- probes
-            res <- list(G = G.kmd, R = R.kmd)
+            rownames(G.kmd) <- rownames(G.ns) <- rownames(R.kmd) <- rownames(R.ns) <- probes
+            res <- list(G = list("dist" = G.kmd, "n" = G.ns), 
+                        R = list("dist" = R.kmd, "n" = R.ns))
         }
         else {
-            rownames(G.kmd) <- probes
-            res <- G.kmd
+            rownames(G.kmd) <- rownames(G.ns) <- probes
+            res <- list("dist" = G.kmd, "n" = G.ns)
         }
         return(res)
     })
@@ -215,6 +227,7 @@ kmdBeadLevel <- function(x, D, probeIDs, probes){
     probes1 <- comIDs
     len1 <- length(probes1)
     kmd1 <- numeric(len1)
+    ns1 <- numeric(len1)
     for(i in seq(along = noBeads.uni)){
         index <- noBeads == noBeads.uni[i]
         IDs <- probes1[index]
@@ -222,14 +235,19 @@ kmdBeadLevel <- function(x, D, probeIDs, probes){
             kmd1[index] <- 0.5
         }else{
             temp <- matrix(x[probeIDs %in% IDs], ncol = noBeads.uni[i], byrow = TRUE)
-            kmd1[index] <- KolmogorovMinDist(temp, D = D)
+            res <- KolmogorovMinDist(temp, D = D)
+            kmd1[index] <- res[["dist"]]
+            ns1[index] <- res[["n"]]
         }
     }    
     len <- length(probes)
     kmd <- numeric(len)
+    ns <- numeric(len)
     nas <- !(probes %in% comIDs)
     kmd[nas] <- NA
     kmd[!nas] <- kmd1
+    ns[nas] <- NA
+    ns[!nas] <- ns1
 
-    return(kmd)
+    list("dist" = kmd, "n" = ns)
 }
