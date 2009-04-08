@@ -70,13 +70,14 @@ data(hgu133a.spikein.phenodata)
 ###########################################################
 library(RobLoxBioC)
 
-## both computations take more than 90 min on Intel P9500 (64bit Linux, 4 GByte RAM)
+## takes more than 90 min on Intel P9500 (64bit Linux, 4 GByte RAM)
 #system.time(minKD.hgu95a <- KolmogorovMinDist(spikein.hgu95a, Norm()))
+## takes more than 130 min on Intel P9500 (64bit Linux, 4 GByte RAM)
 #system.time(minKD.hgu133a <- KolmogorovMinDist(spikein.hgu133a, Norm()))
 
-## load the results from package RobLoxBioC ...
-data(minKD.hgu95a)
-data(minKD.hgu133a)
+## load the results from r-forge ...
+load(file = "https://r-forge.r-project.org/minKD_hgu95a.RData")
+(minKD.hgu133a)
 
 ###########################################################
 ## assessments for MAS 5.0 and RMA including dilution data from package affycomp
