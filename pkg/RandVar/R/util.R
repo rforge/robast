@@ -7,6 +7,9 @@
             xr <- r(distr)(n) 
             f(xr) 
         }
-        return(AbscontDistribution(r = rl, .withArith = TRUE, .withSim = TRUE))
+        if(length(unique(rl(10000)))!=10000)
+           return(AbscontDistribution(r = rl, .withArith = TRUE, .withSim = TRUE))
+        else
+           return(UnivarLebDecDistribution(r = rl))
     }
 }
