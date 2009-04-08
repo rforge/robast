@@ -32,7 +32,7 @@
 
 
 library(affy)
-library(affycomp) ## Version 1.19.4
+library(affycomp) ## Version >= 1.19.4
 
 ###################
 ## replace with your path to hgu95a data!!!
@@ -61,6 +61,22 @@ data(hgu133a.spikein.phenodata)
 (spikein.hgu133a <- read.affybatch(filenames = fn,
                                   phenoData = hgu133a.spikein.phenodata))
 
+
+###########################################################
+## Is normal location and scale appropriate for the log-data?
+## As there is no way to test for approximate normality, we use the Kolmogorov
+## distance as indicator and compute the minimum Kolmogorov distance between
+## the log-data and the set of (univariate) normal distributions.
+###########################################################
+library(RobLoxBioC)
+
+## both computations take more than 90 min on Intel P9500 (64bit Linux, 4 GByte RAM)
+#system.time(minKD.hgu95a <- KolmogorovMinDist(spikein.hgu95a, Norm()))
+#system.time(minKD.hgu133a <- KolmogorovMinDist(spikein.hgu133a, Norm()))
+
+## load the results from package RobLoxBioC ...
+data(minKD.hgu95a)
+data(minKD.hgu133a)
 
 ###########################################################
 ## assessments for MAS 5.0 and RMA including dilution data from package affycomp
@@ -106,7 +122,6 @@ data(rma.assessment.133)
 #system.time(rma.res.133 <- rma(spikein.hgu133a))
 
 
-library(RobLoxBioC)
 ###########################################################
 ## Example 1: Analogous to "classical" MAS 5.0
 ## both computations take about 55 sec on Intel P9500 (64bit Linux, 4 GByte RAM)

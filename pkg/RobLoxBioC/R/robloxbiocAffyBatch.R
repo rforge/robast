@@ -30,7 +30,7 @@ setMethod("robloxbioc", signature(x = "AffyBatch"),
                     l.mm <- INDEX[,2]
                 else
                     l.mm <- integer()
-                log2(x[l.pm, , drop = FALSE]) - log2(x[l.mm, , drop = FALSE])
+                log2(x[l.pm, , drop = FALSE]/x[l.mm, , drop = FALSE])
             }
             res <- lapply(INDEX, diff.log2, x = intensData)
             rob.est1 <- matrix(NA, ncol = 2, nrow = m*n)
@@ -79,11 +79,11 @@ setMethod("robloxbioc", signature(x = "AffyBatch"),
             ind1 <-  as.vector(sapply(seq_len(n)-1, function(x, ind, m){ ind + x*m }, ind = ind, m = m))
             rob.est[ind1, 1:2] <- robloxbioc(log2(t(temp)), eps = eps, eps.lower = eps.lower, 
                                              eps.upper = eps.upper, steps = steps, mad0 = mad0)
-            rob.est[ind1, 2]/sqrt(k)
+            rob.est[ind1, 2] <- rob.est[ind1, 2]/sqrt(k)
         }
         if(verbose) cat(" done.\n")
         exp.mat <- 2^matrix(rob.est[,1], nrow = m) + add.constant
-        se.mat <- 2^matrix(rob.est[,2], nrow = m) + add.constant
+        se.mat <- 2^matrix(rob.est[,2], nrow = m)
 
         dimnames(exp.mat) <- list(ids, sampleNames(x))
         dimnames(se.mat) <- list(ids, sampleNames(x))

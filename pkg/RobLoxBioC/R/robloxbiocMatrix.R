@@ -4,6 +4,7 @@
 ###############################################################################
 setMethod("robloxbioc", signature(x = "matrix"),
     function(x, eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 3L, mad0 = 1e-4){
+        stopifnot(is.numeric(x))
         if(is.null(eps)){
             if(length(eps.lower) != 1 || length(eps.upper) != 1)
                 stop("'eps.lower' and 'eps.upper' have to be of length 1")

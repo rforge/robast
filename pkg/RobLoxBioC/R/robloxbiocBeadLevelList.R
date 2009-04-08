@@ -17,13 +17,12 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
             }
         }
         if(imagesPerArray == 1){
-            sel <- getArrayData(BLData, what = "ProbeID", array = arraynms[1]) != 0
-            pr <- getArrayData(BLData, what = "ProbeID", array = arraynms[1])[sel]
+            pr <- getArrayData(BLData, what = "ProbeID", array = arraynms[1])
+            sel <- pr != 0
+            pr <- pr[sel]
             finten <- getArrayData(BLData, what = what, log = log, array = arraynms[1])[sel]
             nasinf <- !is.finite(finten) | is.na(finten)
-            pr <- pr[!nasinf]
             finten <- finten[!nasinf]
-            binten <- rep(0, length(finten))
         }
         else if(imagesPerArray == 2){
             if(length(arraynms)%%2 != 0) 
@@ -42,22 +41,18 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
             sel1 <- getArrayData(BLData, what = "ProbeID", array = arraynms[1]) != 0
             sel2 <- getArrayData(BLData, what = "ProbeID", array = arraynms[2]) != 0
             pr <- append(getArrayData(BLData, what = "ProbeID", array = arraynms[1])[sel1], 
-                        getArrayData(BLData, what = "ProbeID", array = arraynms[2])[sel2])
+                         getArrayData(BLData, what = "ProbeID", array = arraynms[2])[sel2])
             finten <- append(getArrayData(BLData, what = what, log = log, array = arraynms[1])[sel1], 
-                            getArrayData(BLData, what = what, log = log, array = arraynms[2])[sel2])
+                             getArrayData(BLData, what = what, log = log, array = arraynms[2])[sel2])
             nasinf <- !is.finite(finten) | is.na(finten)
-            pr <- pr[!nasinf]
             finten <- finten[!nasinf]
-            binten <- rep(0, length(finten))
-            ord <- order(pr)
-            pr <- pr[ord]
-            finten <- finten[ord]
         }else{
             stop("You can only specify 1 or 2 images per array")
         }
         if(is.null(probes)) probes <- sort(unique(pr))
         probes <- probes[probes > 0 & !is.na(probes)]
         noprobes <- length(probes)
+        pr <- pr[!nasinf]
         if (imagesPerArray == 1) {
             G <- GBeadStDev <- GNoBeads <- matrix(0, nrow = noprobes, ncol = len)
             colnames(G) <- colnames(GBeadStDev) <- colnames(GNoBeads) <- arraynms
@@ -87,19 +82,13 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
                     finten <- getArrayData(BLData, what = whatelse, log = log, array = arraynms[i])[sel]
                     nasinf <- !is.finite(finten) | is.na(finten)
                     finten <- finten[!nasinf]
-                    binten <- rep(0, length(finten))
                 }
                 else if (imagesPerArray == 2) {
                     finten <- append(getArrayData(BLData, what = whatelse, log = log, array = arraynms[j])[sel1], 
                                     getArrayData(BLData, what = whatelse, log = log, array = arraynms[j + 1])[sel2])
                     nasinf <- !is.finite(finten) | is.na(finten)
                     finten <- finten[!nasinf]
-                    binten <- rep(0, length(finten))
-                    ord <- order(pr)
-                    pr <- pr[ord]
-                    finten <- finten[ord]
                 }
-                start <- 0
                 blah <- rmxBeadSummary(x = finten, probeIDs = probeIDs, probes = probes, 
                                        eps = eps, eps.lower = eps.lower, eps.upper = eps.upper, 
                                        steps = steps, mad0 = mad0)
@@ -118,7 +107,6 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
                 nasinf <- !is.finite(finten) | is.na(finten)
                 pr <- pr[!nasinf]
                 finten <- finten[!nasinf]
-                binten <- rep(0, length(finten))
             }
             else if ((imagesPerArray == 2) && (j < len)) {
                 sel1 <- getArrayData(BLData, what = "ProbeID", array = arraynms[j]) != 0
@@ -130,10 +118,6 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
                 nasinf <- !is.finite(finten) | is.na(finten)
                 pr <- pr[!nasinf]
                 finten <- finten[!nasinf]
-                binten <- rep(0, length(finten))
-                ord <- order(pr)
-                pr <- pr[ord]
-                finten <- finten[ord]
             }
         }
         GBeadStDev <- GBeadStDev/sqrt(GNoBeads)

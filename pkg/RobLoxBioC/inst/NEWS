@@ -6,3 +6,13 @@
 version 0.1
 #######################################
 + start of development
+
+#######################################
+version 0.2
+#######################################
++ robloxbioc methods for AffyBatch and BeadLevelList
+
+#######################################
+version 0.3
+#######################################
++ added KolmogorovMinDist methods for matrix, AffyBatch and BeadLevelList

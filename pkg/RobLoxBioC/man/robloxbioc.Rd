@@ -13,16 +13,17 @@
 \usage{
 robloxbioc(x, ...)
 
-\S4method{robloxbioc}{matrix}(x, eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 3L, mad0 = 1e-4)
+\S4method{robloxbioc}{matrix}(x, eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 3L, 
+           mad0 = 1e-4)
 
 \S4method{robloxbioc}{AffyBatch}(x, bg.correct = TRUE, pmcorrect = TRUE, normalize = FALSE, 
-                                 add.constant = 32, verbose = TRUE,  
-                                 eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 3L, mad0 = 1e-4,
-                                 contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20), sc = 500)
+           add.constant = 32, verbose = TRUE, eps = NULL, 
+           eps.lower = 0, eps.upper = 0.1, steps = 3L, mad0 = 1e-4, 
+           contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20), sc = 500)
 
 \S4method{robloxbioc}{BeadLevelList}(x, log = FALSE, imagesPerArray = 1, what = "G", probes = NULL, 
-                                     arrays = NULL, eps = NULL, eps.lower = 0, eps.upper = 0.1, 
-                                     steps = 3L, mad0 = 1e-4)
+           arrays = NULL, eps = NULL, eps.lower = 0, eps.upper = 0.1, 
+           steps = 3L, mad0 = 1e-4)
 }
 \arguments{
   \item{x}{ biological data. }
@@ -52,7 +53,7 @@ robloxbioc(x, ...)
   \item{delta}{ a number denoting the delta parameter; confer the MAS 5.0 
     PM correction algorithm. }
   \item{sc}{ value at which all arrays will be scaled to. }
-  \item{log}{ if \code{TRUE}, then the log2 intensities for each bead-type are summarized}
+  \item{log}{ if \code{TRUE}, then the log2 intensities for each bead-type are summarized. }
   \item{imagesPerArray}{ Specifies how many images (strips) there are per array. 
     Normally 1 for a SAM and 1 or 2 for a BeadChip. The images (strips) from the same array 
     will be combined so that each column in the output represents a sample. }
@@ -146,16 +147,21 @@ plot(concentrations, mas$exprs, log="xy", ylim=c(50,10000), type="b",
 points(concentrations, rl[,1], pch = 20, col="orange", type="b")
 legend("topleft", c("MAS", "roblox"), pch = c(1, 20))
 
-if(require(affydata)){
-    data(Dilution)
-    eset <- robloxbioc(Dilution)
-    ## Affymetrix scale normalization
-    eset1 <- robloxbioc(Dilution, normalize = TRUE)
+\dontrun{
+## "Not run" just because of computation time
+require(affydata)
+data(Dilution)
+eset <- robloxbioc(Dilution)
+## Affymetrix scale normalization
+eset1 <- robloxbioc(Dilution, normalize = TRUE)
 }
 
 ## using Illumina-Data
+\dontrun{
+## "Not run" just because of computation time
 data(BLData)
 BSData <- robloxbioc(BLData, eps.upper = 0.5)
+}
 }
 \concept{normal location and scale}
 \concept{infinitesimal robustness}
