@@ -27,7 +27,7 @@
 ## and
 ## http://www.genelogic.com/media/studies/dilution.cfm        (not found)
 ## seem not to lead to the data any longer.
-## An email to the support of genelogic is still unanswered ...
+## An email to the support of genelogic remained unanswered ...
 ###############################################################################
 
 
@@ -70,10 +70,10 @@ data(hgu133a.spikein.phenodata)
 ###########################################################
 library(RobLoxBioC)
 
-## takes more than 90 min on Intel P9500 (64bit Linux, 4 GByte RAM)
-#system.time(minKD.hgu95a <- KolmogorovMinDist(spikein.hgu95a, Norm()))
+## takes more than 100 min on Intel P9500 (64bit Linux, 4 GByte RAM)
+system.time(minKD.hgu95a <- KolmogorovMinDist(spikein.hgu95a, Norm()))
 ## takes more than 130 min on Intel P9500 (64bit Linux, 4 GByte RAM)
-#system.time(minKD.hgu133a <- KolmogorovMinDist(spikein.hgu133a, Norm()))
+system.time(minKD.hgu133a <- KolmogorovMinDist(spikein.hgu133a, Norm()))
 
 ## load the results from R-forge ...
 con <- url("http://robast.r-forge.r-project.org/data/minKD_hgu95a.RData")
@@ -85,6 +85,49 @@ close(con)
 
 boxplot(as.data.frame(minKD.hgu95a$dist), main = "HGU95a")
 boxplot(as.data.frame(minKD.hgu133a$dist), main = "HGU133a")
+table(minKD.hgu95a$n)
+table(minKD.hgu133a$n)
+
+###########################################################
+## Comparison with normal samples
+###########################################################
+
+## takes more than 90 min on Intel P9500 (64bit Linux, 4 GByte RAM)
+ns <- 5:20
+M <- length(ns)
+minKD.norm <- matrix(NA, nrow = 50000, ncol = M)
+for(i in seq_len(M)){
+    print(i)
+    temp <- matrix(rnorm(50000*ns[i]), ncol = ns[i])
+    minKD.norm[,i] <- KolmogorovMinDist(temp, Norm())$dist
+}
+colnames(minKD.norm) <- ns
+
+## load the results from R-forge
+con <- url("http://robast.r-forge.r-project.org/data/minKD_norm.RData")
+load(file = con)
+close(con)
+
+x11(width = 14)
+par(mfrow = c(1, 3))
+res <- split(as.vector(minKD.hgu95a$dist), as.vector(minKD.hgu95a$n))
+uni.n <- sort(unique(as.vector(minKD.hgu95a$n)))
+boxplot(res, main = "HGU95a", ylim = c(0, 0.45), 
+        ylab = "minimum Kolmogorov distance", xlab = "sample size")
+lines(1:length(uni.n), 1/(2*uni.n), col = "orange", lwd = 2)
+legend("topright", legend = "minimal possible distance", fill = "orange")
+
+res <- split(as.vector(minKD.hgu133a$dist), as.vector(minKD.hgu133a$n))
+uni.n <- sort(unique(as.vector(minKD.hgu133a$n)))
+boxplot(res, main = "HGU133a", ylim = c(0, 0.45), 
+        ylab = "minimum Kolmogorov distance", xlab = "sample size")
+lines(1:length(uni.n), 1/(2*uni.n), col = "orange", lwd = 2)
+legend("topright", legend = "minimal possible distance", fill = "orange")
+
+boxplot(as.data.frame(minKD.norm), main = "Normal samples", ylim = c(0, 0.45), 
+        ylab = "minimum Kolmogorov distance", xlab = "sample size")
+lines(1:length(ns), 1/(2*ns), col = "orange", lwd = 2)
+legend("topright", legend = "minimal possible distance", fill = "orange")
 
 
 ###########################################################

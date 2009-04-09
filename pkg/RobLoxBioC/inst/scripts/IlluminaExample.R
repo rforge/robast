@@ -91,9 +91,6 @@ save(bld.sharpen.normexp, file="bld.sharpen.normexp.rda")
 rm(bld.sharpen.normexp); gc()
 
 
-
-
-
 ## no sharpening, no local background subtraction
 bld.nosharpen.nobgc <- readIllumina(path = "./SpikeInData", textType=".csv", 
                                     arrayNames=targets$ArrayNo,
@@ -302,6 +299,7 @@ for(l in 1:length(per.out)) {
 #            simdataarray2@beadData[[arraynms[i]]]$G[ind] <- 2^16
         ## problem: there are bead types where more than 50% of the values are contaminated
         ## => there is no meaningful estimator which can handle this!
+        ## Hence, we contiminate bead-type wise
             sel <- which(simdataarray2@beadData[[arraynms[i]]]$ProbeID != 0)
             pr <- simdataarray2@beadData[[arraynms[i]]]$ProbeID[sel]
             probes <- sort(unique(pr))
