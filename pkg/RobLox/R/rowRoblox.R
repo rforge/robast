@@ -71,7 +71,8 @@
 ###############################################################################
 ## Evaluate roblox on rows of a matrix
 ###############################################################################
-rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1){
+rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, 
+                      k = 1, finiteSampleCorrection = TRUE){
     es.call <- match.call()
     if(missing(x))
         stop("'x' is missing with no default")
@@ -137,6 +138,7 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
 
         if(!missing(eps)){
             r <- sqrt(ncol(x))*eps
+            if(finiteSampleCorrection) r <- .finiteSampleCorrection.locsc(r = r, n = ncol(x))
             if(r > 10){
                 b <- sd*1.618128043
                 const <- 1.263094656
@@ -176,6 +178,7 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1
                 r <- uniroot(.getlsInterval, lower = rlo+1e-8, upper = rup, 
                              tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup)$root
             }
+            if(finiteSampleCorrection) r <- .finiteSampleCorrection.locsc(r = r, n = ncol(x))
             if(r > 10){
                 b <- sd*1.618128043
                 const <- 1.263094656

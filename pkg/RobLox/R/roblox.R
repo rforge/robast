@@ -160,13 +160,27 @@
 
     return(list(est = est, A1 = A1, A2 = A2, a = a, b = b, asvar = asVar))
 }
+.finiteSampleCorrection.locsc <- function(r, n){
+    if(r >= 1.74) return(r)
+
+    eps <- r/sqrt(n)
+    ns <- c(3:50, seq(55, 100, by = 5), seq(110, 200, by = 10), 
+            seq(250, 500, by = 50))
+    epss <- c(seq(0.001, 0.01, by = 0.001), seq(0.02, to = 0.5, by = 0.01))
+    if(n %in% ns){
+        ind <- ns == n
+    }else{
+        ind <- which.min(abs(ns-n))
+    }
+    return(approx(x = epss, y = .finiteSampleRadius.locsc[,ind], xout = eps, rule = 2)$y)
+}
 
 
 ###############################################################################
 ## optimally robust estimator for normal location and/or scale
 ###############################################################################
 roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, 
-                   returnIC = FALSE){
+                   finiteSampleCorrection = TRUE, returnIC = FALSE){
     es.call <- match.call()
     if(missing(x))
         stop("'x' is missing with no default")
@@ -213,7 +227,6 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
     if(length(k) != 1){
         stop("'k' has to be of length 1")
     }
-
     if(missing(mean) && missing(sd)){
         if(missing(initial.est)){
             mean <- median(x, na.rm = TRUE)
@@ -232,6 +245,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
 
         if(!missing(eps)){
             r <- sqrt(length(x))*eps
+            if(finiteSampleCorrection) r <- .finiteSampleCorrection.locsc(r = r, n = length(x))
             if(r > 10){
                 b <- sd*1.618128043
                 const <- 1.263094656
@@ -328,6 +342,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 r <- uniroot(.getlsInterval, lower = rlo+1e-8, upper = rup, 
                              tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup)$root
             }
+            if(finiteSampleCorrection) r <- .finiteSampleCorrection.locsc(r = r, n = length(x))
             if(r > 10){
                 b <- sd*1.618128043
                 const <- 1.263094656
