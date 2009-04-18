@@ -10,6 +10,7 @@
 ## eps.lower: eps.lower for rmx estimator
 ## eps.upper: eps.upper for rmx estimator
 ## steps: number of steps used for estimator construction
+## fsCor: perform finite-sample correction
 ## contD: contaminating distribution
 ## plot1: plot densities of ideal and real situation
 ## plot2: plot 20 randomly chosen samples out of the M samples
