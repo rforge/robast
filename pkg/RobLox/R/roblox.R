@@ -209,6 +209,8 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
         }
         if(missing(sd)){
             warning("Sample size <= 2! => MAD is used for estimation.")
+            if(length(mean) != 1)
+                stop("mean has length != 1")
             robEst <- mad(x, center = mean, na.rm = TRUE)
             names(robEst) <- "sd"
             Info.matrix <- matrix(c("roblox", 
