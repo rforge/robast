@@ -9,7 +9,8 @@
   respectively.
 }
 \usage{
-roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FALSE)
+roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L, 
+       fsCor = TRUE, returnIC = FALSE, mad0 = 1e-4)
 }
 \arguments{
   \item{x}{ vector \code{x} of data values, may also be a matrix or data.frame
@@ -25,7 +26,9 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
   \item{initial.est}{ initial estimate for \code{mean} and/or \code{sd}. If missing 
         median and/or MAD are used. }
   \item{k}{ positive integer. k-step is used to compute the optimally robust estimator. }
+  \item{fsCor}{ logical: perform finite-sample correction. See function \code{\link{finiteSampleCorrection}}. }
   \item{returnIC}{ logical: should IC be returned. See details below. }
+  \item{mad0}{ scale estimate used if computed MAD is equal to zero}
 }
 \details{
   Computes the optimally robust estimator for location with scale specified,
@@ -53,7 +56,16 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
   respectively.
 
   If \code{eps} is missing, the radius-minimax estimator in sense of 
-  Rieder et al. (2001, 2008), respectively Section 2.2 of Kohl (2005) is returned.
+  Rieder et al. (2008), respectively Section 2.2 of Kohl (2005) is returned.
+  
+  In case of location, respectively scale one additionally has to specify
+  \code{sd}, respectively \code{mean} where \code{sd} and \code{mean} have
+  to be a single number.
+
+  For sample size <= 2, median and/or MAD are used for estimation.
+  
+  If \code{eps = 0}, mean and/or sd are computed. In this situation it's better
+  to use function \code{\link[distrMod]{MLEstimator}}.
 }
 \value{Object of class \code{"kStepEstimate"}. }
 \references{
@@ -64,12 +76,7 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, returnIC = FA
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
   the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
-
-  Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
-  the Radius. Submitted. Appeared as discussion paper Nr. 81. 
-  SFB 373 (Quantification and Simulation of Economic Processes),
-  Humboldt University, Berlin; also available under
-  \url{www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf}
+  Extended version: \url{http://www.stamats.de/RRlong.pdf}
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
@@ -84,6 +91,8 @@ x <- rnorm(100, mean=ind*3, sd=(1-ind) + ind*9)
 ## amount of gross errors known
 res1 <- roblox(x, eps = 0.05, returnIC = TRUE)
 estimate(res1)
+confint(res1)
+confint(res1, method = symmetricBias())
 pIC(res1)
 checkIC(pIC(res1))
 Risks(pIC(res1))
@@ -94,6 +103,8 @@ infoPlot(pIC(res1))
 ## amount of gross errors unknown
 res2 <- roblox(x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
 estimate(res2)
+confint(res2)
+confint(res2, method = symmetricBias())
 pIC(res2)
 checkIC(pIC(res2))
 Risks(pIC(res2))

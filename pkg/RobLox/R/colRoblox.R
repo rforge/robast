@@ -2,7 +2,7 @@
 ## Evaluate roblox on columns of a matrix
 ###############################################################################
 colRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, 
-                      k = 1, finiteSampleCorrection = TRUE){
+                      k = 1L, fsCor = TRUE, mad0 = 1e-4){
     call.est <- match.call()
     if(missing(x))
         stop("'x' is missing with no default")
@@ -16,7 +16,7 @@ colRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
 
     res <- rowRoblox(x = t(x), mean = mean, sd = sd, eps = eps, eps.lower = eps.lower,
                      eps.upper = eps.upper, initial.est = initial.est, k = k,
-                     finiteSampleCorrection = finiteSampleCorrection)
+                     fsCor = fsCor, mad0 = mad0)
     res@estimate.call <- call.est
     return(res)
 }
