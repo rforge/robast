@@ -93,7 +93,7 @@ table(minKD.hgu133a$n)
 ###########################################################
 
 ## takes more than 90 min on Intel P9500 (64bit Linux, 4 GByte RAM)
-ns <- 5:20
+ns <- c(5:20, 69)
 M <- length(ns)
 minKD.norm <- matrix(NA, nrow = 50000, ncol = M)
 for(i in seq_len(M)){
@@ -128,6 +128,42 @@ boxplot(as.data.frame(minKD.norm), main = "Normal samples", ylim = c(0, 0.45),
         ylab = "minimum Kolmogorov distance", xlab = "sample size")
 lines(1:length(ns), 1/(2*ns), col = "orange", lwd = 2)
 legend("topright", legend = "minimal possible distance", fill = "orange")
+
+#######################################
+## Figure 1 in Kohl and Deigner (2009)
+#######################################
+res1 <- split(as.vector(minKD.hgu95a$dist), as.vector(minKD.hgu95a$n))
+res2 <- split(as.vector(minKD.hgu133a$dist), as.vector(minKD.hgu133a$n))
+res3 <- lapply(as.data.frame(minKD.norm[,c(2:12,16,17)]), function(x) x)
+uni.n <- c(as.integer(names(res1)), as.integer(names(res2)), as.integer(names(res3)))
+
+postscript(file = "minKDAffy.eps", height = 6, width = 9, paper = "special", 
+           horizontal = TRUE)
+par(mar = c(4, 4, 3, 1))
+plot(0, 0, type = "n", ylim = c(0, 0.49), xlim = c(0.5, 37.5), 
+     panel.first = abline(h = seq(0, 0.45, by = 0.05), lty = 2, col = "grey"), 
+     main = "Minimum Kolmogorov distance", 
+     ylab = "minimum Kolmogorov distance", 
+     xlab = "sample size", axes = FALSE)
+axis(1, c(1:13, 15:23, 25:37), labels = uni.n, cex.axis = 0.6)
+axis(2, seq(0, 0.45, by = 0.05), labels = seq(0, 0.45, by = 0.05), las = 2,
+     cex.axis = 0.8)
+box()
+boxplot(c(res1, res2, res3), at = c(1:13, 15:23, 25:37), add = TRUE, pch = 20, 
+        names = FALSE, axes = FALSE)
+abline(v = c(14, 24), lwd = 1.5)
+text(c(7, 19, 31), rep(0.48, 3), labels = c("HGU95A", "HGU133A", "Normal Samples"),
+     font = 2)
+lines(1:13, 1/(2*uni.n[1:13]), lwd = 2)
+lines(15:23, 1/(2*uni.n[14:22]), lwd = 2)
+lines(25:37, 1/(2*uni.n[23:35]), lwd = 2)
+legend("bottomleft", legend = "minimal possible distance", lty = 1, 
+       bg = "white", cex = 0.8)
+dev.off()
+
+## Comparison of median distances
+abs(sapply(res1, median) - sapply(res3, median))
+abs(sapply(res2, median) - sapply(res3, median)[-c(1,2,4,7)])
 
 
 ###########################################################
