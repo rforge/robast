@@ -34,28 +34,20 @@ contD <- Norm(3, 1)
 (res4 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
                      contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Norm(5, 1)
+contD <- Norm(10, 1)
 (res5 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
                      contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Norm(10, 1)
+contD <- Dirac(1.51)
 (res6 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
                      contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Norm(5, 9)
+contD <- Dirac(1000)
 (res7 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
                      contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Dirac(100)
-(res8 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
-                     eps.lower = eps.lower, eps.upper = eps.upper, 
-                     contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Dirac(1.51)
-(res9 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
-                     eps.lower = eps.lower, eps.upper = eps.upper, 
-                     contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
 
-eps <- 0.025
+eps <- 0.02
 contD <- Norm(0, 9)
 (res11 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
@@ -72,28 +64,20 @@ contD <- Norm(3, 1)
 (res14 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
                      contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Norm(5, 1)
+contD <- Norm(10, 1)
 (res15 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
                      contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Norm(10, 1)
+contD <- Dirac(1.51)
 (res16 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
                      contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Norm(5, 9)
+contD <- Dirac(1000)
 (res17 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
                      contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Dirac(100)
-(res18 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
-                     eps.lower = eps.lower, eps.upper = eps.upper, 
-                     contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Dirac(1.51)
-(res19 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
-                     eps.lower = eps.lower, eps.upper = eps.upper, 
-                     contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
 
-eps <- 0.05
+eps <- 0.04
 contD <- Norm(0, 9)
 (res21 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
@@ -110,23 +94,15 @@ contD <- Norm(3, 1)
 (res24 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
                      contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Norm(5, 1)
+contD <- Norm(10, 1)
 (res25 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
                      contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Norm(10, 1)
+contD <- Norm(1.51)
 (res26 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
                      contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Norm(5, 9)
+contD <- Dirac(1000)
 (res27 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
-                     eps.lower = eps.lower, eps.upper = eps.upper, 
-                     contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Dirac(100)
-(res28 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
-                     eps.lower = eps.lower, eps.upper = eps.upper, 
-                     contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))
-contD <- Norm(1.51)
-(res29 <- AffySimStudy(n = n, M = M, eps = eps, seed = seed, 
                      eps.lower = eps.lower, eps.upper = eps.upper, 
                      contD = contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE))

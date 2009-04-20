@@ -162,8 +162,8 @@ legend("bottomleft", legend = "minimal possible distance", lty = 1,
 dev.off()
 
 ## Comparison of median distances
-abs(sapply(res1, median) - sapply(res3, median))
-abs(sapply(res2, median) - sapply(res3, median)[-c(1,2,4,7)])
+round(sapply(res1, median) - sapply(res3, median), 4)
+round(sapply(res2, median) - sapply(res3, median)[-c(1,2,4,7)], 4)
 
 
 ###########################################################

@@ -58,17 +58,13 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.2,
     Tukey <- cbind(Tukey, Mad)
 
     ## Radius-minimax estimator
-    RadMinmax1 <- estimate(rowRoblox(Mre, eps.lower = eps.lower, 
+    RadMinmax <- estimate(rowRoblox(Mre, eps.lower = eps.lower, 
                                     eps.upper = eps.upper, k = steps,
                                     fsCor = fsCor))
-    RadMinmax2 <- estimate(rowRoblox(Mre, sd = Mad, eps.lower = eps.lower, 
-                                    eps.upper = eps.upper, k = steps,
-                                    fsCor = fsCor))
-    RadMinmax2 <- cbind(RadMinmax2, Mad)
 
     if(plot3){
-        Ergebnis1 <- list(Mean, Median, Tukey[,1], RadMinmax1[,1], RadMinmax2[,1])
-        Ergebnis2 <- list(Sd, Mad, Tukey[,2], RadMinmax1[,2], RadMinmax2[,2])
+        Ergebnis1 <- list(Mean, Median, Tukey[,1], RadMinmax[,1])
+        Ergebnis2 <- list(Sd, Mad, Tukey[,2], RadMinmax[,2])
         myCol <- brewer.pal(4, "Dark2")
         if(plot1 || plot2) dev.new()
         layout(matrix(c(1, 1, 1, 1, 3, 2, 2, 2, 2, 3), ncol = 2))
@@ -78,7 +74,7 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.2,
         abline(h = 1)
         op <- par(mar = rep(2, 4))
         plot(c(0,1), c(1, 0), type = "n", axes = FALSE)
-        legend("center", c("ML", "Med/MAD", "biweight", "rmx", "rmx/MAD"),
+        legend("center", c("ML", "Med/MAD", "biweight", "rmx"),
                fill = myCol, ncol = 5, cex = 1.5)
         par(op)
     }
@@ -90,11 +86,12 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.2,
     ## Tukey
     MSE3.1 <- n*mean(Tukey[,1]^2)
     ## Radius-minimax
-    MSE4.1 <- n*mean(RadMinmax1[,1]^2)
-    MSE5.1 <- n*mean(RadMinmax2[,1]^2)
-    empMSE <- data.frame(ML = MSE1.1, Med = MSE2.1, Tukey = MSE3.1, 
-                         "rmx" = MSE4.1, "rmx1" = MSE5.1)
+    MSE4.1 <- n*mean(RadMinmax[,1]^2)
+    empMSE <- data.frame(ML = MSE1.1, Med = MSE2.1, Tukey = MSE3.1, "rmx" = MSE4.1)
     rownames(empMSE) <- "n x empMSE (loc)"
+    relMSE <- empMSE[1,]/empMSE[1,4]
+    empMSE <- rbind(empMSE, relMSE)
+    rownames(empMSE)[2] <- "relMSE (loc)"
 
     ## ML-estimator
     MSE1.2 <- n*mean((Sd-1)^2)
@@ -103,13 +100,18 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.2,
     ## Tukey
     MSE3.2 <- MSE2.2
     ## Radius-minimax
-    MSE4.2 <- n*mean((RadMinmax1[,2]-1)^2)
-    MSE5.2 <- n*mean((RadMinmax2[,2]-1)^2)
-    empMSE <- rbind(empMSE, c(MSE1.2, MSE2.2, MSE3.2, MSE4.2, MSE5.2))
-    rownames(empMSE)[2] <- "n x empMSE (scale)"
+    MSE4.2 <- n*mean((RadMinmax[,2]-1)^2)
+    empMSE <- rbind(empMSE, c(MSE1.2, MSE2.2, MSE3.2, MSE4.2))
+    rownames(empMSE)[3] <- "n x empMSE (scale)"
+    relMSE <- empMSE[3,]/empMSE[3,4]
+    empMSE <- rbind(empMSE, relMSE)
+    rownames(empMSE)[4] <- "relMSE (scale)"
     empMSE <- rbind(empMSE, c(MSE1.1 + MSE1.2, MSE2.1 + MSE2.2, MSE3.1 + MSE3.2, 
-                              MSE4.1 + MSE4.2, MSE5.1 + MSE5.2))
-    rownames(empMSE)[3] <- "n x empMSE (loc + scale)"
+                              MSE4.1 + MSE4.2))
+    rownames(empMSE)[5] <- "n x empMSE (loc + scale)"
+    relMSE <- empMSE[5,]/empMSE[5,4]
+    empMSE <- rbind(empMSE, relMSE)
+    rownames(empMSE)[6] <- "relMSE (loc + scale)"
 
     empMSE
 }
