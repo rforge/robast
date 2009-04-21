@@ -35,6 +35,17 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.2,
     Mid <- rnorm(n*M)
     Mcont <- r(contD)(n*M)
     Mre <- matrix((1-r)*Mid + r*Mcont, ncol = n)
+    ind <- rowSums(matrix(r, ncol = n)) >= n/2
+    while(any(ind)){
+        M1 <- sum(ind)
+        cat("Samples to re-simulate:\t", M1, "\n")
+        r <- rbinom(n*M1, prob = eps, size = 1)
+        Mid <- rnorm(n*M1)
+        Mcont <- r(contD)(n*M1)
+        Mre[ind,] <- (1-r)*Mid + r*Mcont
+        ind[ind] <- rowSums(matrix(r, ncol = n)) >= n/2
+    }
+
 
     if(plot2){
         library(lattice)
