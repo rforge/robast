@@ -3,7 +3,7 @@
 ## matrix
 ###############################################################################
 setMethod("robloxbioc", signature(x = "matrix"),
-    function(x, eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 3L, 
+    function(x, eps = NULL, eps.lower = 0, eps.upper = 0.05, steps = 3L, 
              fsCor = TRUE, mad0 = 1e-4){
         stopifnot(is.numeric(x))
         if(ncol(x) <= 2){
@@ -48,6 +48,8 @@ setMethod("robloxbioc", signature(x = "matrix"),
         if(steps < 1)
             stop("'steps' has to be some positive integer value")
         steps <- as.integer(steps)
+        if(steps > 10)
+            warning("steps > 10 => numbers between 1 and 5 should be sufficient.")
 
         mean <- rowMedians(x, na.rm = TRUE)
         sd <- rowMedians(abs(x-mean), na.rm = TRUE)/qnorm(0.75)

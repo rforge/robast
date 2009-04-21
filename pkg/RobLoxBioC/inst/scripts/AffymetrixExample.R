@@ -89,7 +89,7 @@ table(minKD.hgu95a$n)
 table(minKD.hgu133a$n)
 
 ###########################################################
-## Comparison with normal samples
+## Comparison with normal (pseudo) random samples
 ###########################################################
 
 ## takes more than 90 min on Intel P9500 (64bit Linux, 4 GByte RAM)
@@ -130,7 +130,7 @@ lines(1:length(ns), 1/(2*ns), col = "orange", lwd = 2)
 legend("topright", legend = "minimal possible distance", fill = "orange")
 
 #######################################
-## Figure 1 in Kohl and Deigner (2009)
+## Figure in Kohl and Deigner (2009)
 #######################################
 res1 <- split(as.vector(minKD.hgu95a$dist), as.vector(minKD.hgu95a$n))
 res2 <- split(as.vector(minKD.hgu133a$dist), as.vector(minKD.hgu133a$n))
@@ -162,6 +162,7 @@ legend("bottomleft", legend = "minimal possible distance", lty = 1,
 dev.off()
 
 ## Comparison of median distances
+## Table in Kohl and Deigner (2009)
 round(sapply(res1, median) - sapply(res3, median), 4)
 round(sapply(res2, median) - sapply(res3, median)[-c(1,2,4,7)], 4)
 
@@ -399,6 +400,9 @@ affycomp.figure5a(rma.assessment.133$FC)
 ## Comparison plot
 ## hgu95a
 affycomp.compfig5a(list(roblox.hgu95a$FC,
+                        mas5.assessment$FC), 
+                   method.names = c("roblox", "MAS 5.0"))
+affycomp.compfig5a(list(roblox.hgu95a$FC,
                         roblox.hgu95a32$FC,
                         roblox.hgu95a.pmonly$FC,
                         roblox.hgu95a.pmonly32$FC,
@@ -408,12 +412,15 @@ affycomp.compfig5a(list(roblox.hgu95a$FC,
                                     "roblox + 32 (PM)", "MAS 5.0", "RMA"))
 
 ## hgu133a
+affycomp.compfig5a(list(roblox.hgu133a$FC,
+                        mas5.assessment.133$FC), 
+                   method.names = c("roblox", "MAS 5.0"))
 affycomp.compfig5a(list(roblox.hgu133a$FC, 
                         roblox.hgu133a32$FC,
                         roblox.hgu133a.pmonly$FC,
                         roblox.hgu133a.pmonly32$FC,
-                        mas5.assessment$FC, 
-                        rma.assessment$FC), 
+                        mas5.assessment.133$FC, 
+                        rma.assessment.133$FC), 
                    method.names = c("roblox", "roblox + 32", "roblox (PM)", 
                                     "roblox + 32 (PM)", "MAS 5.0", "RMA"))
 
@@ -438,6 +445,9 @@ affycomp.figure5b(rma.assessment.133$FC)
 
 ## Comparison plot
 ## hgu95a
+affycomp.compfig5b(list(roblox.hgu95a$FC,
+                        mas5.assessment$FC), 
+                   method.names = c("roblox", "MAS 5.0"))
 affycomp.compfig5b(list(roblox.hgu95a$FC, 
                         roblox.hgu95a32$FC,
                         roblox.hgu95a.pmonly$FC,
@@ -448,12 +458,15 @@ affycomp.compfig5b(list(roblox.hgu95a$FC,
                                     "roblox + 32 (PM)", "MAS 5.0", "RMA"))
 
 ## hgu133a
+affycomp.compfig5b(list(roblox.hgu133a$FC,
+                        mas5.assessment.133$FC), 
+                   method.names = c("roblox", "MAS 5.0"))
 affycomp.compfig5b(list(roblox.hgu133a$FC, 
                         roblox.hgu133a32$FC,
                         roblox.hgu133a.pmonly$FC,
                         roblox.hgu133a.pmonly32$FC,
-                        mas5.assessment$FC, 
-                        rma.assessment$FC), 
+                        mas5.assessment.133$FC, 
+                        rma.assessment.133$FC), 
                    method.names = c("roblox", "roblox + 32", "roblox (PM)", 
                                     "roblox + 32 (PM)", "MAS 5.0", "RMA"))
 
@@ -510,6 +523,8 @@ affycomp.figure6b(rma.assessment.133$FC)
 ## Table
 ###############################################################################
 ## hgu95a
+tab.hgu95a <- tableAll(roblox.hgu95a, mas5.assessment)
+round(tab.hgu95a, 4)
 tab.hgu95a <- tableAll(roblox.hgu95a, roblox.hgu95a32, 
                         roblox.hgu95a.pmonly, roblox.hgu95a.pmonly32, 
                         mas5.assessment, rma.assessment)
@@ -523,31 +538,34 @@ exprs(mas5.res) <- log2(mas5.exprs)
 mas5.ass <- assessSpikeIn2(mas5.res, method.name = "MAS 5.0")
 rma.ass <- assessSpikeIn2(rma.res, method.name = "RMA")
 
-## use vsn for normalization ...
-library(vsn)
-vsn.res <- vsn2(spikein.hgu95a)
-spikein.vsn <- spikein.hgu95a
-exprs(spikein.vsn) <- 2^exprs(vsn.res)
-vsn.roblox <- robloxbioc(spikein.vsn, bg.correct = FALSE, pmcorrect = FALSE, 
-                         normalize = FALSE, add.constant = 32)
-vsn.roblox.log2 <- vsn.roblox
-exprs(vsn.roblox.log2) <- log2(exprs(vsn.roblox))
-vsn.rmx <- assessSpikeIn2(vsn.roblox.log2, method.name = "vsn+roblox")
-
+tab.hgu95a.2 <- tableAll(roblox.hgu95a.2, mas5.ass)
+round(tab.hgu95a.2, 4)
 tab.hgu95a.2 <- tableAll(roblox.hgu95a.2, roblox.hgu95a32.2, 
                          roblox.hgu95a.pmonly.2, roblox.hgu95a.pmonly32.2,
-                         mas5.ass, rma.ass, vsn.rmx)
-round(tab.hgu95a.2, 3)
+                         mas5.ass, rma.ass)
+round(tab.hgu95a.2, 4)
 
 
 ## hgu133a
+tab.hgu133a <- tableAll(roblox.hgu133a, mas5.assessment.133)
+round(tab.hgu133a, 4)
 tab.hgu133a <- tableAll(roblox.hgu133a, roblox.hgu133a32, 
                         roblox.hgu133a.pmonly, roblox.hgu133a.pmonly32, 
                         mas5.assessment.133, rma.assessment.133)
 round(tab.hgu133a, 4)
 
+system.time(mas5.res.133 <- mas5(spikein.hgu133a))
+system.time(rma.res.133 <- rma(spikein.hgu133a))
+mas5.exprs <- exprs(mas5.res.133)
+exprs(mas5.res.133) <- log2(mas5.exprs)
+mas5.ass.133 <- assessSpikeIn2(mas5.res.133, method.name = "MAS 5.0")
+rma.ass.133 <- assessSpikeIn2(rma.res.133, method.name = "RMA")
+
+tab.hgu133a.2 <- tableAll(roblox.hgu133a.2, mas5.ass.133)
+round(tab.hgu133a.2, 4)
 tab.hgu133a.2 <- tableAll(roblox.hgu133a.2, roblox.hgu133a32.2, 
-                        roblox.hgu133a.pmonly.2, roblox.hgu133a.pmonly32.2)
+                        roblox.hgu133a.pmonly.2, roblox.hgu133a.pmonly32.2,
+                        mas5.ass.133, rma.ass.133)
 round(tab.hgu133a.2, 4)
 
 
@@ -562,4 +580,33 @@ round(tab.hgu95a.small, 4)
 tab.hgu133a.small <- tab.hgu133a[c(1,2,6:8,15:17,9:11), ]
 tab.hgu133a.small <- cbind(tab.hgu133a.small, "whatsgood" = c(1, 1, 1, 0, NA, 1, 0, NA, 0, 1, 1))
 round(tab.hgu133a.small, 4)
+
+
+## Figure in Kohl and Deigner (2009)
+res.sd <- assessSpikeInSD(eset.hgu133a.log2)
+res.sd.133 <- assessSpikeInSD(eset.hgu133a.log2)
+res.sd.mas <- assessSpikeInSD(mas5.res)
+res.sd.mas.133 <- assessSpikeInSD(mas5.res.133)
+postscript(file = "AffyMeanSD.eps", height = 6, width = 9, paper = "special", 
+           horizontal = TRUE)
+par(mfrow = c(1, 2))
+plot(res.sd.mas$xsmooth, res.sd.mas$ysmooth, type = "l", xlab = "mean log expression",
+     ylab = "mean SD", main = "HGU95A", lwd = 2, ylim = c(0, max(res.sd.mas$ysmooth)),
+     xlim = c(0, max(res.sd.mas$xsmooth)),
+     panel.first = abline(h = seq(0, 1.2, by = 0.2), v = c(0, 5, 10, 15), lty = 2, col = "grey"))
+lines(res.sd$xsmooth, res.sd$ysmooth, type = "l", lty = 2, lwd = 2)
+legend("topright", c("biweight", "rmx"), lty = 1:2, lwd = 2, bg = "white")
+plot(res.sd.133$xsmooth, res.sd.133$ysmooth, type = "l", lty = 2, lwd = 2, 
+     xlab = "mean log expression", ylab = "mean SD", main = "HGU133A", 
+     ylim = c(0, max(res.sd.mas$ysmooth)), 
+     xlim = c(0, max(res.sd.133$xsmooth)),
+     panel.first = abline(h = seq(0, 1.2, by = 0.2), v = c(0, 5, 10, 15), lty = 2, col = "grey"))
+lines(res.sd.mas.133$xsmooth, res.sd.mas.133$ysmooth, type = "l", lwd = 2)
+legend("topright", c("biweight", "rmx"), lty = 1:2, lwd = 2, bg = "white")
+dev.off()
+
+
+## Table in Kohl and Deigner (2009)
+round(tableAll(roblox.hgu95a.2, mas5.ass)[c(1:3, 8:11),], 3)
+round(tableAll(roblox.hgu133a.2, mas5.ass.133)[c(1:3, 8:11),], 3)
 

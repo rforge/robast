@@ -4,7 +4,7 @@
 setMethod("robloxbioc", signature(x = "AffyBatch"),
     function(x, bg.correct = TRUE, pmcorrect = TRUE, normalize = FALSE,
             add.constant = 32, verbose = TRUE, 
-            eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 3L, 
+            eps = NULL, eps.lower = 0, eps.upper = 0.05, steps = 3L, 
             fsCor = TRUE, mad0 = 1e-4, contrast.tau = 0.03, scale.tau = 10, 
             delta = 2^(-20), sc = 500) {
         if(bg.correct){
