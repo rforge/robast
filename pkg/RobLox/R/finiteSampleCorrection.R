@@ -2,7 +2,8 @@
 ## Function for finite-sample correction of the neighborhood radius
 ###############################################################################
 finiteSampleCorrection <- function(r, n, model = "locsc"){
-    if(r >= 1.74) return(r)
+    if(model == "locsc" & r >= 1.74) return(r)
+    if(model %in% c("loc", "sc") & r >= 3.0) return(r)
     if(n == 1) return(Inf)
     if(n == 2) return(Inf)
 
