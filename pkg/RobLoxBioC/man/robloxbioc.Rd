@@ -14,16 +14,17 @@
 robloxbioc(x, ...)
 
 \S4method{robloxbioc}{matrix}(x, eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 3L, 
-           mad0 = 1e-4)
+           fsCor = TRUE, mad0 = 1e-4)
 
 \S4method{robloxbioc}{AffyBatch}(x, bg.correct = TRUE, pmcorrect = TRUE, normalize = FALSE, 
            add.constant = 32, verbose = TRUE, eps = NULL, 
-           eps.lower = 0, eps.upper = 0.1, steps = 3L, mad0 = 1e-4, 
-           contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20), sc = 500)
+           eps.lower = 0, eps.upper = 0.1, steps = 3L, fsCor = TRUE, 
+           mad0 = 1e-4, contrast.tau = 0.03, scale.tau = 10, 
+           delta = 2^(-20), sc = 500)
 
 \S4method{robloxbioc}{BeadLevelList}(x, log = FALSE, imagesPerArray = 1, what = "G", probes = NULL, 
            arrays = NULL, eps = NULL, eps.lower = 0, eps.upper = 0.1, 
-           steps = 3L, mad0 = 1e-4)
+           steps = 3L, fsCor = TRUE, mad0 = 1e-4)
 }
 \arguments{
   \item{x}{ biological data. }
@@ -35,6 +36,7 @@ robloxbioc(x, ...)
   \item{eps.upper}{ positive real (\code{eps.lower} <= \code{eps.upper} <= 0.5): 
         upper bound for the amount of gross errors. See details below. }
   \item{steps}{ positive integer. k-step is used to compute the optimally robust estimator. }
+  \item{fsCor}{ logical: perform finite-sample correction. See function \code{\link[RobLox]{finiteSampleCorrection}}. }
   \item{mad0}{ scale estimate used if computed MAD is equal to zero}
   \item{bg.correct}{ if \code{TRUE} MAS 5.0 background correction is performed;
     confer \code{\link[affy]{bg.correct.mas}}. }
@@ -90,6 +92,10 @@ robloxbioc(x, ...)
   In case of Illumina data, the rmx estimator is used to summarize the bead types. 
   The implementation for the most part was taken from function 
   \code{\link[beadarray]{createBeadSummaryData}}.
+
+  For sample size <= 2, median and/or MAD are used for estimation.
+  
+  If \code{eps = 0}, mean and/or sd are computed.
 }
 \value{ Return value depends on the class of \code{x}. 
   In case of \code{"matrix"} a matrix with columns "mean" and "sd" is returned.

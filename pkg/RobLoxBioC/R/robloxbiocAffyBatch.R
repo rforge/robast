@@ -5,7 +5,8 @@ setMethod("robloxbioc", signature(x = "AffyBatch"),
     function(x, bg.correct = TRUE, pmcorrect = TRUE, normalize = FALSE,
             add.constant = 32, verbose = TRUE, 
             eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 3L, 
-            mad0 = 1e-4, contrast.tau = 0.03, scale.tau = 10, delta = 2^(-20), sc = 500) {
+            fsCor = TRUE, mad0 = 1e-4, contrast.tau = 0.03, scale.tau = 10, 
+            delta = 2^(-20), sc = 500) {
         if(bg.correct){
             if(verbose) cat("Background correcting ...")
             x <- affy::bg.correct.mas(x, griddim = 16)
@@ -39,7 +40,7 @@ setMethod("robloxbioc", signature(x = "AffyBatch"),
                 temp <- matrix(do.call(rbind, res[ind]), nrow = k)
                 ind1 <-  as.vector(sapply(seq_len(n)-1, function(x, ind, m){ ind + x*m }, ind = ind, m = m))
                 rob.est1[ind1, 1:2] <- robloxbioc(t(temp), eps = eps, eps.lower = eps.lower, eps.upper = eps.upper, 
-                                                  steps = steps, mad0 = mad0)
+                                                  steps = steps, fsCor = fsCor, mad0 = mad0)
             }
             sb <- matrix(rob.est1[,1], nrow = m)
             for(k in seq_len(m)){
@@ -78,7 +79,8 @@ setMethod("robloxbioc", signature(x = "AffyBatch"),
             temp <- matrix(do.call(rbind, res[ind]), nrow = k)
             ind1 <-  as.vector(sapply(seq_len(n)-1, function(x, ind, m){ ind + x*m }, ind = ind, m = m))
             rob.est[ind1, 1:2] <- robloxbioc(log2(t(temp)), eps = eps, eps.lower = eps.lower, 
-                                             eps.upper = eps.upper, steps = steps, mad0 = mad0)
+                                             eps.upper = eps.upper, steps = steps, fsCor = fsCor, 
+                                             mad0 = mad0)
             rob.est[ind1, 2] <- rob.est[ind1, 2]/sqrt(k)
         }
         if(verbose) cat(" done.\n")

@@ -3,8 +3,17 @@
 ## matrix
 ###############################################################################
 setMethod("robloxbioc", signature(x = "matrix"),
-    function(x, eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 3L, mad0 = 1e-4){
+    function(x, eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 3L, 
+             fsCor = TRUE, mad0 = 1e-4){
         stopifnot(is.numeric(x))
+        if(ncol(x) <= 2){
+            warning("Sample size <= 2! => Median and MAD are used for estimation.")
+            mean <- rowMedians(x, na.rm = TRUE)
+            sd <- rowMedians(abs(x-mean), na.rm = TRUE)/qnorm(0.75)
+            robEst <- cbind(mean, sd)
+            colnames(robEst) <- c("mean", "sd")
+            return(robEst)
+        }
         if(is.null(eps)){
             if(length(eps.lower) != 1 || length(eps.upper) != 1)
                 stop("'eps.lower' and 'eps.upper' have to be of length 1")
@@ -19,10 +28,18 @@ setMethod("robloxbioc", signature(x = "matrix"),
             }
             if(!is.numeric(eps))
                 stop("'eps' has to be a double in (0, 0.5]")
-            if(eps == 0)
-                stop("'eps = 0'! => use functions 'mean' and 'sd' for estimation")
             if((eps < 0) || (eps > 0.5))
                 stop("'eps' has to be in (0, 0.5]")
+            if(eps == 0){
+                warning("eps = 0! => Mean and sd are used for estimation.")
+                mean <- rowMeans(x, na.rm = TRUE)
+                n <- rowSums(!is.na(x))
+                n[n < 1] <- NA
+                sd <- rowSums((x - mean)^2, na.rm = TRUE)/n
+                robEst <- cbind(mean, sd)
+                colnames(robEst) <- c("mean", "sd")
+                return(robEst)
+            }
         }
         if(length(steps) != 1){
             warning("'steps' has to be of length 1 => only first element is used!")
@@ -30,7 +47,6 @@ setMethod("robloxbioc", signature(x = "matrix"),
         }
         if(steps < 1)
             stop("'steps' has to be some positive integer value")
-
         steps <- as.integer(steps)
 
         mean <- rowMedians(x, na.rm = TRUE)
@@ -42,6 +58,7 @@ setMethod("robloxbioc", signature(x = "matrix"),
 
         if(!is.null(eps)){
             r <- sqrt(ncol(x))*eps
+            if(fsCor) r <- .finiteSampleCorrection(r = r, n = ncol(x))
             if(r > 10){
                 b <- sd*1.618128043
                 const <- 1.263094656
@@ -69,6 +86,7 @@ setMethod("robloxbioc", signature(x = "matrix"),
                 r <- uniroot(.getlsInterval, lower = rlo+1e-8, upper = rup, 
                             tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup)$root
             }
+            if(fsCor) r <- .finiteSampleCorrection(r = r, n = ncol(x))
             if(r > 10){
                 b <- sd*1.618128043
                 const <- 1.263094656
@@ -133,4 +151,18 @@ setMethod("robloxbioc", signature(x = "matrix"),
     b <- est[,2]*b/initial.est[,2]
 
     return(est)
+}
+.finiteSampleCorrection <- function(r, n){
+    if(r >= 1.74) return(r)
+
+    eps <- r/sqrt(n)
+    ns <- c(3:50, seq(55, 100, by = 5), seq(110, 200, by = 10), 
+            seq(250, 500, by = 50))
+    epss <- c(seq(0.001, 0.01, by = 0.001), seq(0.02, to = 0.5, by = 0.01))
+    if(n %in% ns){
+        ind <- ns == n
+    }else{
+        ind <- which.min(abs(ns-n))
+    }
+    return(max(r, approx(x = epss, y = .finiteSampleRadius.locsc[,ind], xout = eps, rule = 2)$y))
 }

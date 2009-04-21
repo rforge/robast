@@ -1,6 +1,7 @@
 setMethod("robloxbioc", signature(x = "BeadLevelList"),
     function(x, log = FALSE, imagesPerArray = 1, what = "G", probes = NULL, arrays = NULL,
-             eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 3L, mad0 = 1e-4){
+             eps = NULL, eps.lower = 0, eps.upper = 0.1, steps = 3L, 
+             fsCor = TRUE, mad0 = 1e-4){
         BLData <- x
         arraynms <- arrayNames(BLData)
         if(!is.null(arrays) && !is.character(arrays)) arraynms <- arraynms[arrays]
@@ -73,7 +74,7 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
             start <- 0
             blah <- rmxBeadSummary(x = finten, probeIDs = probeIDs, probes = probes, 
                                    eps = eps, eps.lower = eps.lower, eps.upper = eps.upper, 
-                                   steps = steps, mad0 = mad0)
+                                   steps = steps, fsCor = fsCor, mad0 = mad0)
             G[, i] <- blah$fore
             GBeadStDev[, i] <- blah$sd
             GNoBeads[, i] <- blah$noBeads
@@ -91,7 +92,7 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
                 }
                 blah <- rmxBeadSummary(x = finten, probeIDs = probeIDs, probes = probes, 
                                        eps = eps, eps.lower = eps.lower, eps.upper = eps.upper, 
-                                       steps = steps, mad0 = mad0)
+                                       steps = steps, fsCor = fsCor, mad0 = mad0)
                 R[, i] <- blah$fore
                 RBeadStDev[, i] <- blah$sd
                 RNoBeads[, i] <- blah$noBeads
@@ -155,7 +156,7 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
         BSData
     })
 ## computation of bead summaries via robloxbioc for "matrix"
-rmxBeadSummary <- function(x, probeIDs, probes, eps, eps.lower, eps.upper, steps, mad0){
+rmxBeadSummary <- function(x, probeIDs, probes, eps, eps.lower, eps.upper, steps, fsCor, mad0){
     comIDs <- intersect(probeIDs, probes)
     x <- x[probeIDs %in% comIDs]
     probeIDs <- probeIDs[probeIDs %in% comIDs]
@@ -174,7 +175,7 @@ rmxBeadSummary <- function(x, probeIDs, probes, eps, eps.lower, eps.upper, steps
         }else{
             temp <- matrix(x[probeIDs %in% IDs], ncol = noBeads.uni[i], byrow = TRUE)
             rmx <- robloxbioc(temp, eps = eps, eps.lower = eps.lower, eps.upper = eps.upper, 
-                              steps = steps, mad0 = mad0)
+                              steps = steps, fsCor = fsCor, mad0 = mad0)
             fore1[index] <- rmx[,"mean"]
             SD1[index] <- rmx[,"sd"]
         }

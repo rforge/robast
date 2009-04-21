@@ -3,9 +3,15 @@
 ###############################################################################
 
 #######################################
-version 0.1
+version 0.4
 #######################################
-+ start of development
++ added finite-sample correction
++ handle cases with sample size <= 2 and contamination eps = 0
+
+#######################################
+version 0.3
+#######################################
++ added KolmogorovMinDist methods for matrix, AffyBatch and BeadLevelList
 
 #######################################
 version 0.2
@@ -13,6 +19,7 @@ version 0.2
 + robloxbioc methods for AffyBatch and BeadLevelList
 
 #######################################
-version 0.3
+version 0.1
 #######################################
-+ added KolmogorovMinDist methods for matrix, AffyBatch and BeadLevelList
++ start of development
+
