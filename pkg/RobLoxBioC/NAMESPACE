@@ -1,3 +1,4 @@
 import("methods")
 
 exportMethods("robloxbioc", "KolmogorovMinDist")
+export("AffySimStudy")

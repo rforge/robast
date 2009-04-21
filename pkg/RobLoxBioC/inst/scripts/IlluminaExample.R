@@ -19,8 +19,36 @@
 ## http://www.compbio.group.cam.ac.uk/Resources/spike/index.html
 ###############################################################################
 
+## Load the required packages
+library(beadarray)
+library(gplots)
+library(RColorBrewer)
+library(RobLoxBioC)
+
+
+###########################################################
+## Read targets information
+targets <- read.table("./SpikeInData/spike_targets.txt",header=TRUE)
+arraynms <- as.character(targets$ArrayNo)
+
+## Use sharpened, subtracted data from text files
+spikeInData <- readIllumina(path = "./SpikeInData", arrayNames=arraynms[1:2], 
+                            useImages=FALSE, textType=".csv")
+#save(spikeInData, compress = TRUE, file = "spikeInData.RData")
+#load(file = "spikeInData.RData")
+
+## takes more than 100 min on Intel P9500 (64bit Linux, 4 GByte RAM)
+system.time(minKD <- KolmogorovMinDist(spikeInData, Norm(), imagesPerArray = 2))
+save(minKD, compress = TRUE, file = "minKD_Illumina.RData")
+
+## load the results from R-forge ...
+con <- url("http://robast.r-forge.r-project.org/data/minKD_hgu95a.RData")
+load(file = con)
+close(con)
+
+
 ###############################################################################
-## This example is based on the R code of Mark Dunning and Matt Ritchie
+## The following example is based on the R code of Mark Dunning and Matt Ritchie
 ## available under
 ## http://www.compbio.group.cam.ac.uk/Resources/spike/scripts/Analysis.R
 ##
@@ -35,12 +63,6 @@
 ##
 ## Mark Dunning and Matt Ritchie
 ########################################
-
-## Load the required packages
-library(beadarray)
-library(gplots)
-library(RColorBrewer)
-library(RobLoxBioC)
 
 ###############################################################################
 ## Extract all *.zip file to directory "SpikeInData".

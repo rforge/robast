@@ -1,31 +1,20 @@
 ###############################################################################
-## Function to perform simulation study comparing Tukey's biweight with the 
-## rmx estimator
+## Function to perform simulation study comparing Tukey's biweight with
+## rmx estimators
 ###############################################################################
-
-## n: sample size
-## M: Monte Carlo replications
-## eps: amount of contamination
-## seed: seed for simulations
-## eps.lower: eps.lower for rmx estimator
-## eps.upper: eps.upper for rmx estimator
-## steps: number of steps used for estimator construction
-## fsCor: perform finite-sample correction
-## contD: contaminating distribution
-## plot1: plot densities of ideal and real situation
-## plot2: plot 20 randomly chosen samples out of the M samples
-## plot3: boxplots of the estimates
-AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.2, 
-                         steps = 3, fsCor = TRUE, contD, 
-                         plot1 = TRUE, plot2 = FALSE, plot3 = TRUE){
+AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.05, 
+                         steps = 3L, fsCor = TRUE, contD, 
+                         plot1 = FALSE, plot2 = FALSE, plot3 = FALSE){
+    stopifnot(n >= 3)
+    stopifnot(eps >= 0, eps <= 0.5)
     if(plot1){
         from <- min(-6, q(contD)(1e-15))
         to <- max(6, q(contD)(1-1e-15))
-        curve(dnorm, from = from, to = to, lwd = 2, n = 201, 
-              main = "Comparison: ideal vs. real")
-        fun <- function(x) (1-eps)*dnorm(x)+eps*d(contD)(x)
+        curve(pnorm, from = from, to = to, lwd = 2, n = 201, 
+              main = "Comparison: ideal vs. real", ylab = "cdf")
+        fun <- function(x) (1-eps)*pnorm(x) + eps*p(contD)(x)
         curve(fun, from = from, to = to, add = TRUE, col = "orange", 
-              lwd = 2, n = 201)
+              lwd = 2, n = 201, ylab = "cdf")
         legend("topleft", legend = c("ideal", "real"), 
               fill = c("black", "orange"))
     }
@@ -45,16 +34,16 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.2,
         Mre[ind,] <- (1-r)*Mid + r*Mcont
         ind[ind] <- rowSums(matrix(r, ncol = n)) >= n/2
     }
+    rm(Mid, Mcont, r, ind)
 
 
     if(plot2){
-        library(lattice)
-        ind <- sample(1:M, 20)
+        ind <- sample(1:M, min(M, 20))
         if(plot1) dev.new()
         print(
           stripplot(rep(1:20, each = 20) ~ as.vector(Mre[ind,]), 
-          ylab = "samples", xlab = "x", pch = 20,
-          main = "Randomly chosen samples")
+                    ylab = "samples", xlab = "x", pch = 20,
+                    main = "Randomly chosen samples")
         )
     }
 
@@ -87,7 +76,7 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.2,
         plot(c(0,1), c(1, 0), type = "n", axes = FALSE)
         legend("center", c("ML", "Med/MAD", "biweight", "rmx"),
                fill = myCol, ncol = 5, cex = 1.5)
-        par(op)
+        on.exit(par(op))
     }
 
     ## ML-estimator

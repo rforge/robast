@@ -7,6 +7,8 @@ version 0.4
 #######################################
 + added finite-sample correction
 + handle cases with sample size <= 2 and contamination eps = 0
++ moved function AffySimStudy from folder inst/scripts to folder R as 
+  exported and documented function to perform Monte-Carlo studies.
 
 #######################################
 version 0.3

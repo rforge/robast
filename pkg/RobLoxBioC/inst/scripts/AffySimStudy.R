@@ -2,14 +2,6 @@
 ## Simulation study comparing Tukey's biweight with the rmx estimator
 ###############################################################################
 
-library(affy)
-library(RobLox)
-library(distr)
-library(RColorBrewer)
-
-## Load function AffySimStudy which is in file "AffySimStudyFunction.R"
-source(file = "AffySimStudyFunction.R")
-
 ## fixed variables
 n <- 11
 M <- 1e5
