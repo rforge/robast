@@ -93,9 +93,9 @@ robloxbioc(x, ...)
   The implementation for the most part was taken from function 
   \code{\link[beadarray]{createBeadSummaryData}}.
 
-  For sample size <= 2, median and/or MAD are used for estimation.
+  For sample size <= 2, median and MAD are used for estimation.
   
-  If \code{eps = 0}, mean and/or sd are computed.
+  If \code{eps = 0}, mean and sd are computed.
 }
 \value{ Return value depends on the class of \code{x}. 
   In case of \code{"matrix"} a matrix with columns "mean" and "sd" is returned.
