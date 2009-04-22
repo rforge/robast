@@ -64,18 +64,18 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.05,
 
     if(plot3){
         Ergebnis1 <- list(Mean, Median, Tukey[,1], RadMinmax[,1])
-        Ergebnis2 <- list(Sd, Mad, Tukey[,2], RadMinmax[,2])
+        Ergebnis2 <- list(Sd, Mad, RadMinmax[,2])
         myCol <- brewer.pal(4, "Dark2")
         if(plot1 || plot2) dev.new()
         layout(matrix(c(1, 1, 1, 1, 3, 2, 2, 2, 2, 3), ncol = 2))
         boxplot(Ergebnis1, col = myCol, pch = 20, main = "Location")
         abline(h = 0)
-        boxplot(Ergebnis2, col = myCol, pch = 20, main = "Scale")
+        boxplot(Ergebnis2, col = myCol[c(1,2,4)], pch = 20, main = "Scale")
         abline(h = 1)
         op <- par(mar = rep(2, 4))
         plot(c(0,1), c(1, 0), type = "n", axes = FALSE)
         legend("center", c("ML", "Med/MAD", "biweight", "rmx"),
-               fill = myCol, ncol = 5, cex = 1.5)
+               fill = myCol, ncol = 4, cex = 1.5)
         on.exit(par(op))
     }
 

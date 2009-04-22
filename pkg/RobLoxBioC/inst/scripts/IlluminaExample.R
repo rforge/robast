@@ -37,14 +37,77 @@ spikeInData <- readIllumina(path = "./SpikeInData", arrayNames=arraynms[1:2],
 #save(spikeInData, compress = TRUE, file = "spikeInData.RData")
 #load(file = "spikeInData.RData")
 
-## takes more than 100 min on Intel P9500 (64bit Linux, 4 GByte RAM)
-system.time(minKD <- KolmogorovMinDist(spikeInData, Norm(), imagesPerArray = 2))
-save(minKD, compress = TRUE, file = "minKD_Illumina.RData")
+## takes about 9 hours on Intel P9500 (64bit Linux, 4 GByte RAM)
+system.time(minKD.Illumina <- KolmogorovMinDist(spikeInData, Norm(), imagesPerArray = 2))
+save(minKD.Illumina, compress = TRUE, file = "minKD_Illumina.RData")
+
+## takes about 9 hours on Intel P9500 (64bit Linux, 4 GByte RAM)
+system.time(minKD.Illumina.log <- KolmogorovMinDist(spikeInData, Norm(), log = TRUE, imagesPerArray = 2))
+save(minKD.Illumina.log, compress = TRUE, file = "minKD_Illumina_log.RData")
 
 ## load the results from R-forge ...
-con <- url("http://robast.r-forge.r-project.org/data/minKD_hgu95a.RData")
+con <- url("http://robast.r-forge.r-project.org/data/minKD_Illumina.RData")
 load(file = con)
 close(con)
+con <- url("http://robast.r-forge.r-project.org/data/minKD_Illumina_log.RData")
+load(file = con)
+close(con)
+
+## takes more than 90 min on Intel P9500 (64bit Linux, 4 GByte RAM)
+ns <- c(10:70)
+M <- length(ns)
+minKD.Illumina.norm <- matrix(NA, nrow = 50000, ncol = M)
+colnames(minKD.Illumina.norm) <- ns
+for(i in seq_len(M)){
+    tm <- proc.time()
+    print(ns[i])
+    temp <- matrix(rnorm(50000*ns[i]), ncol = ns[i])
+    minKD.Illumina.norm[,i] <- KolmogorovMinDist(temp, Norm())$dist
+    cat("Dauer:\t", proc.time()-tm, "\n")
+    save(minKD.Illumina.norm, compress = TRUE, file = "minKD_Illumina_norm.RData")
+}
+
+## load the results from R-forge
+con <- url("http://robast.r-forge.r-project.org/data/minKD_Illumina_norm.RData")
+load(file = con)
+close(con)
+
+#######################################
+## Figure in Kohl and Deigner (2009)
+#######################################
+res1 <- split(as.vector(minKD.Illumina$dist), as.vector(minKD.Illumina$n))[10:70]
+res2 <- split(as.vector(minKD.Illumina.log$dist), as.vector(minKD.Illumina.log$n))[10:70]
+res3 <- lapply(as.data.frame(minKD.Illumina.norm), function(x) x)
+uni.n <- rep(10:70, 3)
+
+postscript(file = "minKDIllumina.eps", height = 6, width = 9, paper = "special", 
+           horizontal = TRUE)
+par(mar = c(4, 4, 3, 1))
+plot(0, 0, type = "n", ylim = c(0, 0.49), xlim = c(0.5, 37.5), 
+     panel.first = abline(h = seq(0, 0.45, by = 0.05), lty = 2, col = "grey"), 
+     main = "Minimum Kolmogorov distance", 
+     ylab = "minimum Kolmogorov distance", 
+     xlab = "sample size", axes = FALSE)
+axis(1, c(1:61, 63:123, 125:185), labels = uni.n, cex.axis = 0.6)
+axis(2, seq(0, 0.4, by = 0.05), labels = seq(0, 0.4, by = 0.05), las = 2,
+     cex.axis = 0.8)
+box()
+boxplot(c(res1, res2, res3), at = c(1:61, 63:123, 125:185), add = TRUE, pch = 20, 
+        names = FALSE, axes = FALSE)
+abline(v = c(62, 124), lwd = 1.5)
+text(c(30, 93, 155), rep(0.48, 3), labels = c("Raw Data", "log Raw Data", "Normal Samples"),
+     font = 2)
+lines(1:61, 1/(2*(10:70)), lwd = 2)
+lines(63:123, 1/(2*(10:70)), lwd = 2)
+lines(125:185, 1/(2*(10:70)), lwd = 2)
+legend("bottomleft", legend = "minimal possible distance", lty = 1, 
+       bg = "white", cex = 0.8)
+dev.off()
+
+## Comparison of median distances
+## Table in Kohl and Deigner (2009)
+round(sapply(res1, median) - sapply(res3, median), 4)
+round(sapply(res2, median) - sapply(res3, median), 4)
 
 
 ###############################################################################

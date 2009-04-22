@@ -1,16 +1,24 @@
-\name{AffySimStudy}
+\name{SimStudies}
 \Rdversion{1.1}
 \alias{AffySimStudy}
-\title{Perform Monte-Carlo Study comparing Tukey's biweight and rmx estimators.}
+\alias{IlluminaSimStudy}
+\title{Perform Monte-Carlo Study.}
 \description{
-  The function can be used to perform Monte-Carlo studies comparing Tukey's 
-  biweight and rmx estimators for normal location and scale. In addition, 
-  maximum likelihood (ML) estimators (mean and sd) and median and MAD are
-  computed. The comparison is based on the empirical MSE.
+  The function \code{AffySimStudy} can be used to perform Monte-Carlo studies 
+  comparing Tukey's biweight and rmx estimators for normal location and scale. 
+  The function \code{IlluminaSimStudy} can be used to perform Monte-Carlo studies 
+  comparing Illumina's default method - a Huber-type skipped mean and sd 
+  (cf. Hampel (1985)) - and rmx estimators for normal location and scale.
+  In addition, maximum likelihood (ML) estimators (mean and sd) and median and 
+  MAD are computed. The comparison is based on the empirical MSE.
 }
 \usage{
-AffySimStudy(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.05, steps = 3L, 
-             fsCor = TRUE, contD, plot1 = FALSE, plot2 = FALSE, plot3 = FALSE)
+AffySimStudy(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.05, 
+             steps = 3L, fsCor = TRUE, contD, plot1 = FALSE, 
+             plot2 = FALSE, plot3 = FALSE)
+IlluminaSimStudy(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.05, 
+                 steps = 3L, fsCor = TRUE, contD, plot1 = FALSE, 
+                 plot2 = FALSE, plot3 = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -44,6 +52,9 @@ relMSE with respect to the rmx estimator.
   Affymetrix, Inc. (2002). \emph{Statistical Algorithms Description Document}.
   Affymetrix, Santa Clara.
 
+  Hampel F.R. (1985). The breakdown points of the mean combined with some rejection
+  rules. Technometrics, 27(2):95-107.  
+
   Kohl M. and Deigner H.P. (2009). Using infinitesimally robust estimators for 
   preprocessing gene expression data. In preparation.
 }
@@ -53,6 +64,8 @@ relMSE with respect to the rmx estimator.
 \examples{
 AffySimStudy(n = 11, M = 100, eps = 0.02, contD = Norm(mean = 0, sd = 3), 
              plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
+IlluminaSimStudy(n = 30, M = 100, eps = 0.02, contD = Norm(mean = 0, sd = 3), 
+                 plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
 }
 \concept{Monte-Carlo study}
 \keyword{robust}

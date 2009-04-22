@@ -82,7 +82,7 @@ IlluminaSimStudy <- function(n, M, eps, seed = 123,
         op <- par(mar = rep(2, 4))
         plot(c(0,1), c(1, 0), type = "n", axes = FALSE)
         legend("center", c("ML", "Med/MAD", "Illumina", "rmx"),
-               fill = myCol, ncol = 5, cex = 1.5)
+               fill = myCol, ncol = 4, cex = 1.5)
         on.exit(par(op))
     }
 
