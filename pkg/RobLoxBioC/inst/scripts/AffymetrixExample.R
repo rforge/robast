@@ -163,6 +163,9 @@ dev.off()
 
 ## Comparison of median distances
 ## Table in Kohl and Deigner (2009)
+round(sapply(res1, quantile, prob = 0.95) - sapply(res3, quantile, prob = 0.95), 4)
+round(sapply(res2, quantile, prob = 0.95) - sapply(res3, quantile, prob = 0.95)[-c(1,2,4,7)], 4)
+
 round(sapply(res1, median) - sapply(res3, median), 4)
 round(sapply(res2, median) - sapply(res3, median)[-c(1,2,4,7)], 4)
 

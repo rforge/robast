@@ -5,7 +5,7 @@
 library(RobLoxBioC)
 
 ## fixed variables
-n <- 11
+n <- 30
 M <- 1e5
 eps.lower <- 0
 eps.upper <- 0.05
