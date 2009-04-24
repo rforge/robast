@@ -116,7 +116,10 @@ postscript(file = "minKDIlluminaQuant.eps", height = 6, width = 9, paper = "spec
 par(mar = c(4, 4, 3, 1))
 plot(10:70, sapply(res3, quantile, prob = 0.99), type = "l", lwd = 2, xlab = "sample size", 
      ylab = "quantile of mimimum Kolmogorov distances",
-     main = "50% and 99% quantiles of minimum Kolmogorov distances", ylim = c(0.05, 0.23))
+     main = "50% and 99% quantiles of minimum Kolmogorov distances", 
+     ylim = c(0.05, 0.23),
+     panel.first = abline(h = c(0.05, 0.1, 0.15, 0.2), v = seq(10, 70, by = 10), 
+                          lty = 2, col = "grey"))
 lines(10:70, sapply(res1, quantile, prob = 0.99), lwd = 2, lty = 2)
 lines(10:70, sapply(res2, quantile, prob = 0.99), lwd = 2, lty = 3)
 lines(10:70, sapply(res3, quantile, prob = 0.5), lwd = 2, lty = 1)
@@ -125,8 +128,74 @@ lines(10:70, sapply(res2, quantile, prob = 0.5), lwd = 2, lty = 3)
 text(22, 0.18, "99% quantiles", font = 2)
 text(22, 0.115, "50% quantiles", font = 2)
 legend("topright", legend = c("normal samples", "bead level data", "log bead level data"),
-       lty = 1:3, lwd = 2)
+       lty = 1:3, lwd = 2, bg = "white")
 dev.off()
+
+
+#load(file = "spikeInData.RData")
+## takes about 100 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
+system.time(res.ill <- createBeadSummaryData(spikeInData, log = TRUE, imagesPerArray = 2))
+## takes about 500 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
+system.time(res.rmx <- robloxbioc(spikeInData, imagesPerArray = 2))
+spikecsv <- read.csv("spikeins_profile.csv")
+
+## cf. function assessSpikeInSD of package affycomp
+library(splines)
+genenames <- spikecsv[,"ProbeID"]
+spikein <- match(genenames, featureNames(res.ill))
+y <- apply(exprs(res.ill)[-spikein, ], 1, sd, na.rm = TRUE)
+x <- rowMeans(exprs(res.ill)[-spikein, ], na.rm = TRUE)
+smooth1 <- loess(y ~ x, span = 1/3, family = "gaussian", degree = 1)
+x.ill <- sort(x)[seq(1, length(x), length = 100)]
+y.ill <- smooth1$fitted[order(x)][seq(1, length(x), length = 100)]
+
+y <- apply(exprs(res.rmx)[-spikein, ], 1, sd, na.rm = TRUE)
+x <- rowMeans(exprs(res.rmx)[-spikein, ], na.rm = TRUE)
+smooth1 <- loess(y ~ x, span = 1/3, family = "gaussian", degree = 1)
+x.rmx <- sort(x)[seq(1, length(x), length = 100)]
+y.rmx <- smooth1$fitted[order(x)][seq(1, length(x), length = 100)]
+
+
+## Figure in Kohl and Deigner (2009)
+postscript(file = "IllMeanSD.eps", height = 6, width = 9, paper = "special", 
+           horizontal = TRUE)
+plot(x.ill, y.ill, type = "l", xlab = "mean log expression",
+     ylab = "mean SD", main = "Spike-in data of Dunning et al. (2008)", lwd = 2,
+     panel.first = abline(h = c(0.1, 0.12, 0.14, 0.16), v = seq(6, 16, 2), lty = 2, col = "grey"))
+lines(x.rmx, y.rmx, type = "l", lty = 2, lwd = 2)
+legend("topright", c("Illumina", "rmx"), lty = 1:2, lwd = 2, bg = "white")
+dev.off()
+
+
+## Table in Kohl and Deigner (2009)
+y.ill <- apply(exprs(res.ill)[-spikein, ], 1, sd, na.rm = TRUE)
+y.rmx <- apply(exprs(res.rmx)[-spikein, ], 1, sd, na.rm = TRUE)
+quantile(y.ill, prob = c(0.25, 0.5, 0.75, 0.99))
+quantile(y.rmx, prob = c(0.25, 0.5, 0.75, 0.99))
+
+## cf. function assessMA2 of package affycomp
+NCOMP <- choose(12, 2)*4
+I <- c(1:6, 25:30, 7:12, 31:36, 13:18, 37:42, 19:24, 43:48)
+spikein <- match(genenames, featureNames(res.ill))
+
+#mat <- exprs(res.ill)[,I]
+mat <- exprs(res.rmx)[,I]
+
+quants <- matrix(0, nrow(mat) - length(spikein), NCOMP)
+count <- 0
+for (i in c(1:11, 13:23, 25:35, 37:47)) {
+    print(i)
+    for (j in (i + 1):(12 * ceiling(i/12))) {
+        print(j)
+        count <- count + 1
+        fc <- mat[, j] - mat[, i]
+        quants[, count] <- sort(fc[-spikein], na.last = TRUE)
+    }
+}
+nulls <- rowMedians(quants)
+IQR(nulls, na.rm = TRUE)
+quantile(nulls, prob = c(0.99, 0.999), na.rm = TRUE)
+
 
 ###############################################################################
 ## The following example is based on the R code of Mark Dunning and Matt Ritchie
