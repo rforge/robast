@@ -25,6 +25,15 @@ library(gplots)
 library(RColorBrewer)
 library(RobLoxBioC)
 
+###############################################################################
+## Extract all *.zip file to directory "SpikeInData".
+## Copy spike_targets.txt to directory "SpikeInData".
+##
+## Code to read the bead level data from the directory "SpikeInData"
+##
+## NOTE: reading in the raw data for the entire experiment requires at
+## least 4Gb of RAM for each processing method.  
+###############################################################################
 
 ###########################################################
 ## Read targets information
@@ -137,64 +146,99 @@ dev.off()
 system.time(res.ill <- createBeadSummaryData(spikeInData, log = TRUE, imagesPerArray = 2))
 ## takes about 500 sec on Intel P9500 (64bit Linux, 4 GByte RAM)
 system.time(res.rmx <- robloxbioc(spikeInData, imagesPerArray = 2))
-spikecsv <- read.csv("spikeins_profile.csv")
 
 ## cf. function assessSpikeInSD of package affycomp
 library(splines)
+assessSpikeInSD <- function(BSdata, genenames, method.name = NULL, span = 1/3){
+    spikein <- match(genenames, featureNames(BSdata))
+    y <- apply(exprs(BSdata)[-spikein, ], 1, sd, na.rm = TRUE)
+    x <- rowMeans(exprs(BSdata)[-spikein, ], na.rm = TRUE)
+    smooth1 <- loess(y ~ x, span = 1/3, family = "gaussian", degree = 1)
+    x2 <- sort(x)[seq(1, length(x), length = 100)]
+    y2 <- smooth1$fitted[order(x)][seq(1, length(x), length = 100)]
+    list(x = x, y = y, xsmooth = x2, ysmooth = y2, loess = smooth1, 
+         method.name = method.name, what = "SpikeInSD")
+}
+
+spikecsv <- read.csv("spikeins_profile.csv")
 genenames <- spikecsv[,"ProbeID"]
-spikein <- match(genenames, featureNames(res.ill))
-y <- apply(exprs(res.ill)[-spikein, ], 1, sd, na.rm = TRUE)
-x <- rowMeans(exprs(res.ill)[-spikein, ], na.rm = TRUE)
-smooth1 <- loess(y ~ x, span = 1/3, family = "gaussian", degree = 1)
-x.ill <- sort(x)[seq(1, length(x), length = 100)]
-y.ill <- smooth1$fitted[order(x)][seq(1, length(x), length = 100)]
-
-y <- apply(exprs(res.rmx)[-spikein, ], 1, sd, na.rm = TRUE)
-x <- rowMeans(exprs(res.rmx)[-spikein, ], na.rm = TRUE)
-smooth1 <- loess(y ~ x, span = 1/3, family = "gaussian", degree = 1)
-x.rmx <- sort(x)[seq(1, length(x), length = 100)]
-y.rmx <- smooth1$fitted[order(x)][seq(1, length(x), length = 100)]
-
+ill.SD <- assessSpikeInSD(res.ill, genenames = genenames, method.name = "Illumina")
+rmx.SD <- assessSpikeInSD(res.rmx, genenames = genenames, method.name = "rmx estimator")
 
 ## Figure in Kohl and Deigner (2009)
 postscript(file = "IllMeanSD.eps", height = 6, width = 9, paper = "special", 
            horizontal = TRUE)
-plot(x.ill, y.ill, type = "l", xlab = "mean log expression",
+plot(ill.SD$xsmooth, ill.SD$ysmooth, type = "l", xlab = "mean log expression",
      ylab = "mean SD", main = "Spike-in data of Dunning et al. (2008)", lwd = 2,
      panel.first = abline(h = c(0.1, 0.12, 0.14, 0.16), v = seq(6, 16, 2), lty = 2, col = "grey"))
-lines(x.rmx, y.rmx, type = "l", lty = 2, lwd = 2)
+lines(rmx.SD$xsmooth, rmx.SD$ysmooth, type = "l", lty = 2, lwd = 2)
 legend("topright", c("Illumina", "rmx"), lty = 1:2, lwd = 2, bg = "white")
 dev.off()
 
 
 ## Table in Kohl and Deigner (2009)
-y.ill <- apply(exprs(res.ill)[-spikein, ], 1, sd, na.rm = TRUE)
-y.rmx <- apply(exprs(res.rmx)[-spikein, ], 1, sd, na.rm = TRUE)
-quantile(y.ill, prob = c(0.25, 0.5, 0.75, 0.99))
-quantile(y.rmx, prob = c(0.25, 0.5, 0.75, 0.99))
+quantile(ill.SD$y, prob = c(0.25, 0.5, 0.75, 0.99))
+quantile(rmx.SD$y, prob = c(0.25, 0.5, 0.75, 0.99))
 
-## cf. function assessMA2 of package affycomp
-NCOMP <- choose(12, 2)*4
-I <- c(1:6, 25:30, 7:12, 31:36, 13:18, 37:42, 19:24, 43:48)
-spikein <- match(genenames, featureNames(res.ill))
-
-#mat <- exprs(res.ill)[,I]
-mat <- exprs(res.rmx)[,I]
-
-quants <- matrix(0, nrow(mat) - length(spikein), NCOMP)
-count <- 0
-for (i in c(1:11, 13:23, 25:35, 37:47)) {
-    print(i)
-    for (j in (i + 1):(12 * ceiling(i/12))) {
-        print(j)
-        count <- count + 1
-        fc <- mat[, j] - mat[, i]
-        quants[, count] <- sort(fc[-spikein], na.last = TRUE)
+## cf. functions assessMA2 and tableMA2 of package affycomp
+genenames <- spikecsv[,"ProbeID"]
+assessMA2 <- function(BSdata, genenames){
+    NCOMP <- choose(12, 2)*4
+    I <- c(1:6, 25:30, 7:12, 31:36, 13:18, 37:42, 19:24, 43:48)
+    spikein <- match(genenames, featureNames(BSdata))
+    mat <- exprs(BSdata)[,I]
+    quants <- matrix(0, nrow(mat) - length(spikein), NCOMP)
+    count <- 0
+    for (i in c(1:11, 13:23, 25:35, 37:47)) {
+        for (j in (i + 1):(12 * ceiling(i/12))) {
+            count <- count + 1
+            fc <- mat[, j] - mat[, i]
+            quants[, count] <- sort(fc[-spikein], na.last = TRUE)
+        }
     }
+    nulls <- rowMedians(quants)
+    temp <- quantile(nulls, prob = c(0.99, 0.999), na.rm = TRUE)
+    c("null log-fc IQR" = IQR(nulls, na.rm = TRUE), 
+      "null log-fc 99%" = temp[1],
+      "null log-fc 99.9%" = temp[2])
 }
-nulls <- rowMedians(quants)
-IQR(nulls, na.rm = TRUE)
-quantile(nulls, prob = c(0.99, 0.999), na.rm = TRUE)
+assessMA2(BSdata = res.ill, genenames = genenames)
+assessMA2(BSdata = res.rmx, genenames = genenames)
+
+
+## other procedures
+system.time(res.ill1 <- createBeadSummaryData(spikeInData, log = TRUE, imagesPerArray = 2,
+                                              method = "mean"))
+system.time(res.ill2 <- createBeadSummaryData(spikeInData, log = TRUE, imagesPerArray = 2,
+                                              method = "median"))
+system.time(res.ill3 <- createBeadSummaryData(spikeInData, log = TRUE, imagesPerArray = 2,
+                                              method = "trim"))
+system.time(res.ill4 <- createBeadSummaryData(spikeInData, log = TRUE, imagesPerArray = 2,
+                                              method = "winsorize"))
+system.time(res.rmx1 <- robloxbioc(spikeInData, imagesPerArray = 2, eps.upper = 0.025))
+system.time(res.rmx2 <- robloxbioc(spikeInData, imagesPerArray = 2, eps.lower = 0.01))
+ill1.SD <- assessSpikeInSD(res.ill1, genenames = genenames, method.name = "mean")
+ill2.SD <- assessSpikeInSD(res.ill2, genenames = genenames, method.name = "median")
+ill3.SD <- assessSpikeInSD(res.ill3, genenames = genenames, method.name = "trim")
+ill4.SD <- assessSpikeInSD(res.ill4, genenames = genenames, method.name = "winsorize")
+rmx1.SD <- assessSpikeInSD(res.rmx1, genenames = genenames, method.name = "rmx estimator")
+rmx2.SD <- assessSpikeInSD(res.rmx2, genenames = genenames, method.name = "rmx estimator")
+quantile(ill.SD$y, prob = c(0.25, 0.5, 0.75, 0.99))
+quantile(ill1.SD$y, prob = c(0.25, 0.5, 0.75, 0.99))
+quantile(ill2.SD$y, prob = c(0.25, 0.5, 0.75, 0.99))
+quantile(ill3.SD$y, prob = c(0.25, 0.5, 0.75, 0.99))
+quantile(ill4.SD$y, prob = c(0.25, 0.5, 0.75, 0.99))
+quantile(rmx.SD$y, prob = c(0.25, 0.5, 0.75, 0.99))
+quantile(rmx1.SD$y, prob = c(0.25, 0.5, 0.75, 0.99))
+quantile(rmx2.SD$y, prob = c(0.25, 0.5, 0.75, 0.99))
+assessMA2(BSdata = res.ill, genenames = genenames)
+assessMA2(BSdata = res.ill1, genenames = genenames)
+assessMA2(BSdata = res.ill2, genenames = genenames)
+assessMA2(BSdata = res.ill3, genenames = genenames)
+assessMA2(BSdata = res.ill4, genenames = genenames)
+assessMA2(BSdata = res.rmx, genenames = genenames)
+assessMA2(BSdata = res.rmx1, genenames = genenames)
+assessMA2(BSdata = res.rmx2, genenames = genenames)
 
 
 ###############################################################################

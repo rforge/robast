@@ -3,6 +3,13 @@
 ###############################################################################
 
 #######################################
+version 0.5
+#######################################
++ added example code for Illumina data
++ function to perform Monte-Carlo studies for comparison with Illumina's
+  default method
+
+#######################################
 version 0.4
 #######################################
 + added finite-sample correction
