@@ -53,7 +53,7 @@ setReplaceMethod("CallL2Fam", "IC",
 setMethod("checkIC", signature(IC = "IC", L2Fam = "missing"), 
     function(IC, out = TRUE){ 
         L2Fam <- eval(IC@CallL2Fam)
-        checkIC(IC, L2Fam)        
+        checkIC(IC, L2Fam, out = out)        
     })
 ## check centering and Fisher consistency
 setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"), 
