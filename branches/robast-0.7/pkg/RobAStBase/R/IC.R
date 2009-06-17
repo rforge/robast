@@ -57,21 +57,21 @@ setMethod("checkIC", signature(IC = "IC", L2Fam = "missing"),
     })
 ## check centering and Fisher consistency
 setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"), 
-    function(IC, L2Fam, out = TRUE){ 
+    function(IC, L2Fam, out = TRUE, ...){
         D1 <- L2Fam@distribution
         if(dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
         trafo <- trafo(L2Fam@param)
         IC1 <- as(diag(dimension(IC@Curve)) %*% IC@Curve, "EuclRandVariable")
-        cent <- E(D1, IC1)
+        cent <- E(D1, IC1, ...)
         if(out)
             cat("precision of centering:\t", cent, "\n")
 
         dims <- length(L2Fam@param)
         L2deriv <- as(diag(dims) %*% L2Fam@L2deriv, "EuclRandVariable")
 
-        consist <- E(D1, IC1 %*% t(L2deriv)) - trafo
+        consist <- E(D1, IC1 %*% t(L2deriv), ...) - trafo
         if(out){
             cat("precision of Fisher consistency:\n")
             print(consist)
