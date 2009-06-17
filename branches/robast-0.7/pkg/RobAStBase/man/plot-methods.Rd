@@ -32,7 +32,7 @@
   \item{bmar}{bottom margin -- useful for non-standard sub title sizes}
   \item{cex.inner}{magnification to be used for inner titles relative
           to the current setting of \code{cex}; as in
-          \code{\link[stats]{par}}}
+          \code{\link[graphics]{par}}}
   \item{col.inner}{character or integer code; color for the inner title}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
   \item{to.draw.arg}{Either \code{NULL} (default; 

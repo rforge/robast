@@ -44,7 +44,7 @@ comparePlot(obj1, obj2, ... )
   \item{bmar}{bottom margin -- useful for non-standard sub title sizes}
   \item{cex.inner}{magnification to be used for inner titles relative
           to the current setting of \code{cex}; as in 
-          \code{\link[stats]{par}}}
+          \code{\link[graphics]{par}}}
   \item{col.inner}{character or integer code; color for the inner title}              
   \item{legend.location}{a valid argument \code{x} for \code{\link{legend}} ---
                          the place where to put the legend on the last issued
