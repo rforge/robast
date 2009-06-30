@@ -4,6 +4,7 @@
 require(ROptEst)
 options("newDevice"=TRUE)
 
+
 ## generates Gamma Family with 
 ## scale = 2 and shape = 0.1
 G <- GammaFamily(scale = 2, shape = 0.1)
@@ -12,11 +13,16 @@ plot(G) # plot of Gammad(scale = 2, shape = 0.1) and L_2 derivative
 distrExOptions(ErelativeTolerance = 1e-8) # increase precision for E
 checkL2deriv(G)
 
+## 30.06.09: new method for "E" with 
+## signature(object = "Gammad", fun = "function", cond = "missing")
+## in package distrEx introduced which slightly reduces the problem
+## documented below.
+
 ## more precisely:
 ## numerical integration gives
 E(Gammad(scale = 2, shape = 0.1), function(x) (log(x/2)-digamma(0.1))^2)
 
-## vhereas
+## whereas
 trigamma(0.1)
 
 ## Problem is more or less caused by integration of log(x/2)^2
