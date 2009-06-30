@@ -165,8 +165,8 @@
 ###############################################################################
 ## optimally robust estimator for normal location and/or scale
 ###############################################################################
-roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1, 
-                   returnIC = FALSE){
+roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L, 
+                   fsCor = TRUE, returnIC = FALSE, mad0 = 1e-4){
     es.call <- match.call()
     if(missing(x))
         stop("'x' is missing with no default")
@@ -181,6 +181,46 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
         if(ncol(x) > 1 & nrow(x) > 1)
             stop("number of rows and columns/variables > 1. Please, do use 'rowRoblox'
                   resp. 'colRoblox'.")
+    }
+    if(length(x) <= 2){
+        if(missing(mean) && missing(sd)){
+            warning("Sample size <= 2! => Median and MAD are used for estimation.")
+            robEst <- c(median(x, na.rm = TRUE), mad(x, na.rm = TRUE))
+            names(robEst) <- c("mean", "sd")
+            Info.matrix <- matrix(c("roblox", 
+                                  paste("median and MAD")),
+                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
+            return(new("ALEstimate", name = "Median and MAD", 
+                       estimate.call = es.call, estimate = robEst, 
+                       samplesize = length(x), asvar = NULL,
+                       asbias = NULL, pIC = NULL, Infos = Info.matrix))
+        }
+        if(missing(mean)){
+            warning("Sample size <= 2! => Median is used for estimation.")
+            robEst <- median(x, na.rm = TRUE)
+            names(robEst) <- "mean"
+            Info.matrix <- matrix(c("roblox", 
+                                  paste("median")),
+                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
+            return(new("ALEstimate", name = "Median", 
+                       estimate.call = es.call, estimate = robEst, 
+                       samplesize = length(x), asvar = NULL,
+                       asbias = NULL, pIC = NULL, Infos = Info.matrix))
+        }
+        if(missing(sd)){
+            warning("Sample size <= 2! => MAD is used for estimation.")
+            if(length(mean) != 1)
+                stop("mean has length != 1")
+            robEst <- mad(x, center = mean, na.rm = TRUE)
+            names(robEst) <- "sd"
+            Info.matrix <- matrix(c("roblox", 
+                                  paste("MAD")),
+                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
+            return(new("ALEstimate", name = "MAD", 
+                       estimate.call = es.call, estimate = robEst, 
+                       samplesize = length(x), asvar = NULL,
+                       asbias = NULL, pIC = NULL, Infos = Info.matrix))
+        }
     }
     if(missing(eps) && missing(eps.lower) && missing(eps.upper)){
         eps.lower <- 0
@@ -200,10 +240,48 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
     }else{
         if(length(eps) != 1)
             stop("'eps' has to be of length 1")
-        if(eps == 0)
-            stop("'eps = 0'! => use functions 'mean' and 'sd' for estimation")
         if((eps < 0) || (eps > 0.5))
             stop("'eps' has to be in (0, 0.5]")
+        if(eps == 0){
+            if(missing(mean) && missing(sd)){
+                warning("eps = 0! => Mean and sd are used for estimation.")
+                n <- sum(!is.na(x))
+                robEst <- c(mean(x, na.rm = TRUE), sqrt((n-1)/n)*sd(x, na.rm = TRUE))
+                names(robEst) <- c("mean", "sd")
+                Info.matrix <- matrix(c("roblox", 
+                                      paste("mean and sd")),
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                return(new("ALEstimate", name = "Mean and sd", 
+                          estimate.call = es.call, estimate = robEst, 
+                          samplesize = n, asvar = NULL,
+                          asbias = NULL, pIC = NULL, Infos = Info.matrix))
+            }
+            if(missing(mean)){
+                warning("eps = 0! => Mean is used for estimation.")
+                robEst <- mean(x, na.rm = TRUE)
+                names(robEst) <- "mean"
+                Info.matrix <- matrix(c("roblox", 
+                                      paste("mean")),
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                return(new("ALEstimate", name = "Mean", 
+                          estimate.call = es.call, estimate = robEst, 
+                          samplesize = length(x), asvar = NULL,
+                          asbias = NULL, pIC = NULL, Infos = Info.matrix))
+            }
+            if(missing(sd)){
+                warning("eps = 0! => sd is used for estimation.")
+                n <- sum(!is.na(x))
+                robEst <- sqrt((n-1)/n)*sd(x, na.rm = TRUE)
+                names(robEst) <- "sd"
+                Info.matrix <- matrix(c("roblox", 
+                                      paste("sd")),
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                return(new("ALEstimate", name = "sd", 
+                          estimate.call = es.call, estimate = robEst, 
+                          samplesize = n, asvar = NULL,
+                          asbias = NULL, pIC = NULL, Infos = Info.matrix))
+            }
+        }
     }
     if(!is.integer(k))
         k <- as.integer(k)
@@ -213,17 +291,20 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
     if(length(k) != 1){
         stop("'k' has to be of length 1")
     }
-
     if(missing(mean) && missing(sd)){
         if(missing(initial.est)){
             mean <- median(x, na.rm = TRUE)
-            sd <- mad(x, na.rm = TRUE)
-            if(sd == 0)
-                stop("'mad(x, na.rm = TRUE) == 0' => cannot compute a valid initial estimate, 
-                      please specify one via 'initial.est'")
+            sd <- mad(x, center = mean, na.rm = TRUE)
+            if(sd == 0){
+                warning("'mad(x, na.rm = TRUE) = 0' => cannot compute a valid initial estimate. 
+                        To avoid division by zero 'mad0' is used. You could also specify 
+                        a valid scale estimate via 'initial.est'. Note that you have to provide
+                        a location and scale estimate.")
+                sd <- mad0
+            }
         }else{
             if(!is.numeric(initial.est) || length(initial.est) != 2)
-              stop("'initial.est' needs to be a numeric vector of length 2 or missing")
+                stop("'initial.est' needs to be a numeric vector of length 2 or missing")
             mean <- initial.est[1]
             sd <- initial.est[2]
             if(sd <= 0)
@@ -232,6 +313,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
 
         if(!missing(eps)){
             r <- sqrt(length(x))*eps
+            if(fsCor) r <- finiteSampleCorrection(r = r, n = length(x), model = "locsc")
             if(r > 10){
                 b <- sd*1.618128043
                 const <- 1.263094656
@@ -248,10 +330,17 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
             }
             robEst <- .kstep.locsc(x = x, initial.est = c(mean, sd), A1 = A1, A2 = A2, a = a, b = b, k = k)
             names(robEst$est) <- c("mean", "sd")
-            Info.matrix <- matrix(c("roblox", 
-                                    paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
-                                          "and 'asMSE'")),
-                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
+            if(fsCor){
+                Info.matrix <- matrix(c("roblox", 
+                                        paste("finite-sample corrected optimally robust estimate for contamination 'eps' =", 
+                                              round(eps, 3), "and 'asMSE'")),
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+            }else{
+                Info.matrix <- matrix(c("roblox", 
+                                        paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
+                                              "and 'asMSE'")),
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+            }
             if(returnIC){
                 w <- new("HampelWeight")
                 clip(w) <- robEst$b
@@ -299,6 +388,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 }
                 L2Fam <- substitute(NormLocationScaleFamily(mean = m1, sd = s1), 
                                     list(m1 = robEst$est[1], s1 = robEst$est[2]))
+                info <- c("roblox", "optimally robust IC for AL estimators and 'asMSE'")
                 IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                   L2Fam = eval(L2Fam), 
                                   res = list(A = diag(c(robEst$A1, robEst$A2)), a = robEst$a, 
@@ -306,9 +396,9 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                       risk = list(asMSE = mse, asBias = robEst$b, 
                                                   trAsCov = mse - r^2*robEst$b^2,
                                                   asCov = robEst$asVar), 
-                                      info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
-                                      w = w, biastype = symmetricBias(), normtype = NormType(),
-                                      modifyIC = modIC))
+                                      info = info, w = w, biastype = symmetricBias(), 
+                                      normtype = NormType(), modifyIC = modIC))
+                Infos(IC1) <- Info.matrix
                 return(new("kStepEstimate", name = "Optimally robust estimate", 
                            estimate.call = es.call, estimate = robEst$est, 
                            samplesize = length(x), asvar = robEst$asvar,
@@ -328,6 +418,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 r <- uniroot(.getlsInterval, lower = rlo+1e-8, upper = rup, 
                              tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup)$root
             }
+            if(fsCor){
+                r.as <- r
+                r <- finiteSampleCorrection(r = r, n = length(x), model = "locsc")
+            }
             if(r > 10){
                 b <- sd*1.618128043
                 const <- 1.263094656
@@ -343,24 +437,33 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 mse <- A1 + A2
             }
             if(rlo == 0){
-                ineff <- (A1 + A2 - b^2*r^2)/(1.5*sd^2)
+                ineff <- (A1 + A2 - b^2*r.as^2)/(1.5*sd^2)
             }else{
                 if(rlo > 10){
                     ineff <- 1
                 }else{
                     A1lo <- sd^2*.getA1.locsc(rlo)
                     A2lo <- sd^2*.getA2.locsc(rlo)
-                    ineff <- (A1 + A2 - b^2*(r^2 - rlo^2))/(A1lo + A2lo)
+                    ineff <- (A1 + A2 - b^2*(r.as^2 - rlo^2))/(A1lo + A2lo)
                 }
             }
             robEst <- .kstep.locsc(x = x, initial.est = c(mean, sd), A1 = A1, A2 = A2, a = a, b = b, k = k)
             names(robEst$est) <- c("mean", "sd")
-            Info.matrix <- matrix(c(rep("roblox", 3), 
-                                  paste("radius-minimax estimate for contamination interval [", 
-                                    round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
-                                  paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
-                                  paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
-                                  ncol = 2, dimnames = list(NULL, c("method", "message")))
+            if(fsCor){
+                Info.matrix <- matrix(c(rep("roblox", 3), 
+                                      paste("finite-sample corrected radius-minimax estimate for contamination interval [", 
+                                        round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                      paste("least favorable (uncorrected) contamination: ", round(r.as/sqrtn, 3), sep = ""),
+                                      paste("maximum asymptotic MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+            }else{
+                Info.matrix <- matrix(c(rep("roblox", 3), 
+                                      paste("radius-minimax estimate for contamination interval [", 
+                                        round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                      paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                      paste("maximum asymptotic MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+            }
             if(returnIC){
                 w <- new("HampelWeight")
                 clip(w) <- robEst$b
@@ -408,6 +511,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 }
                 L2Fam <- substitute(NormLocationScaleFamily(mean = m1, sd = s1), 
                                     list(m1 = robEst$est[1], s1 = robEst$est[2]))
+                info <- c("roblox", "optimally robust IC for AL estimators and 'asMSE'")
                 IC1 <- generateIC(neighbor = ContNeighborhood(radius = r), 
                                   L2Fam = eval(L2Fam), 
                                   res = list(A = diag(c(robEst$A1, robEst$A2)), a = robEst$a, 
@@ -415,15 +519,9 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                       risk = list(asMSE = mse, asBias = robEst$b, 
                                                   trAsCov = mse - r^2*robEst$b^2,
                                                   asCov = robEst$asvar), 
-                                      info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
-                                      w = w, biastype = symmetricBias(), normtype = NormType(),
-                                      modifyIC = modIC))
-                Infos(IC1) <- matrix(c(rep("roblox", 3), 
-                                      paste("radius-minimax IC for contamination interval [", 
-                                        round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
-                                      paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
-                                      paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
-                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                                      info = info, w = w, biastype = symmetricBias(), 
+                                      normtype = NormType(), modifyIC = modIC))
+                Infos(IC1) <- Info.matrix
                 return(new("kStepEstimate", name = "Optimally robust estimate", 
                            estimate.call = es.call, estimate = robEst$est, 
                            samplesize = length(x), asvar = robEst$asvar,
@@ -450,6 +548,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
 
             if(!missing(eps)){
                 r <- sqrt(length(x))*eps
+                if(fsCor) r <- finiteSampleCorrection(r = r, n = length(x), model = "loc")
                 if(r > 10){
                     b <- sd*sqrt(pi/2)
                     A <- b^2*(1+r^2)
@@ -459,10 +558,17 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 }
                 robEst <- .kstep.loc(x = x, initial.est = mean, A = A, b = b, sd = sd, k = k)
                 names(robEst) <- "mean"
-                Info.matrix <- matrix(c("roblox", 
-                                        paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
-                                              "and 'asMSE'")),
-                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                if(fsCor){
+                    Info.matrix <- matrix(c("roblox", 
+                                            paste("finite-sample corrected optimally robust estimate for contamination 'eps' =", round(eps, 3),
+                                                  "and 'asMSE'")),
+                                          ncol = 2, dimnames = list(NULL, c("method", "message")))
+                }else{
+                    Info.matrix <- matrix(c("roblox", 
+                                            paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
+                                                  "and 'asMSE'")),
+                                          ncol = 2, dimnames = list(NULL, c("method", "message")))
+                }
                 if(returnIC){
                     w <- new("HampelWeight")
                     clip(w) <- b
@@ -490,6 +596,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
                                           w = w, biastype = symmetricBias(), normtype = NormType(),
                                           modifyIC = modIC))
+                    Infos(IC1) <- Info.matrix
                     return(new("kStepEstimate", name = "Optimally robust estimate",
                                estimate.call = es.call, estimate = robEst, 
                                samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
@@ -508,6 +615,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 }else{
                     r <- uniroot(.getlInterval, lower = rlo+1e-8, upper = rup, 
                                  tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup)$root
+                }
+                if(fsCor){ 
+                    r.as <- r
+                    r <- finiteSampleCorrection(r = r, n = length(x), model = "loc")
                 }
                 if(r > 10){
                     b <- sd*sqrt(pi/2)
@@ -528,12 +639,21 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 }
                 robEst <- .kstep.loc(x = x, initial.est = mean, A = A, b = b, sd = sd, k = k)
                 names(robEst) <- "mean"
-                Info.matrix <- matrix(c(rep("roblox", 3), 
-                                      paste("radius-minimax estimate for contamination interval [", 
-                                        round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
-                                      paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
-                                      paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
-                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                if(fsCor){
+                    Info.matrix <- matrix(c(rep("roblox", 3), 
+                                          paste("finite-sample corrected radius-minimax estimate for contamination interval [", 
+                                            round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                          paste("least favorable (uncorrected) contamination: ", round(r.as/sqrtn, 3), sep = ""),
+                                          paste("maximum asymptotic MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                          ncol = 2, dimnames = list(NULL, c("method", "message")))
+                }else{
+                    Info.matrix <- matrix(c(rep("roblox", 3), 
+                                          paste("radius-minimax estimate for contamination interval [", 
+                                            round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                          paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                          paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                          ncol = 2, dimnames = list(NULL, c("method", "message")))
+                }
                 if(returnIC){
                     w <- new("HampelWeight")
                     clip(w) <- b
@@ -561,12 +681,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
                                           w = w, biastype = symmetricBias(), normtype = NormType(),
                                           modifyIC = modIC))
-                    Infos(IC1) <- matrix(c(rep("roblox", 3), 
-                                 paste("radius-minimax IC for contamination interval [", 
-                                   round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
-                                 paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
-                                 paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
-                                 ncol = 2, dimnames = list(NULL, c("method", "message")))
+                    Infos(IC1) <- Info.matrix
                     return(new("kStepEstimate", name = "Optimally robust estimate",
                                estimate.call = es.call, estimate = robEst, 
                                samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
@@ -582,10 +697,13 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
             if(length(mean) != 1)
                 stop("mean has length != 1")
             if(missing(initial.est)){ 
-                sd <- mad(x, na.rm = TRUE)
-                if(sd == 0)
-                  stop("'mad(x, na.rm = TRUE) == 0' => cannot compute a valid initial estimate, 
-                       please specify one via 'initial.est'")
+                sd <- mad(x, center = mean, na.rm = TRUE)
+                if(sd == 0){
+                    warning("'mad(x, na.rm = TRUE) = 0' => cannot compute a valid initial estimate. 
+                            To avoid division by zero 'mad0' is used. You could also specify 
+                            a valid scale estimate via 'initial.est'.")
+                    sd <- mad0
+                }
             }else{
                 if(!is.numeric(initial.est) || length(initial.est) != 1)
                     stop("'initial.est' needs to be a numeric vector of length 1 or missing")
@@ -596,6 +714,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
 
             if(!missing(eps)){
                 r <- sqrt(length(x))*eps
+                if(fsCor) r <- finiteSampleCorrection(r = r, n = length(x), model = "sc")
                 if(r > 10){
                     b <- sd/(4*qnorm(0.75)*dnorm(qnorm(0.75)))
                     A <- b^2*(1+r^2)
@@ -607,10 +726,17 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 }
                 robEst <- .kstep.sc(x = x, initial.est = sd, A = A, a = a, b = b, mean = mean, k = k)
                 names(robEst$est) <- "sd"
-                Info.matrix <- matrix(c("roblox", 
-                                        paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
-                                              "and 'asMSE'")),
-                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                if(fsCor){
+                    Info.matrix <- matrix(c("roblox", 
+                                            paste("finite-sample corrected optimally robust estimate for contamination 'eps' =", round(eps, 3),
+                                                  "and 'asMSE'")),
+                                          ncol = 2, dimnames = list(NULL, c("method", "message")))
+                }else{
+                    Info.matrix <- matrix(c("roblox", 
+                                            paste("optimally robust estimate for contamination 'eps' =", round(eps, 3),
+                                                  "and 'asMSE'")),
+                                          ncol = 2, dimnames = list(NULL, c("method", "message")))
+                }
                 if(returnIC){
                     w <- new("HampelWeight")
                     clip(w) <- robEst$b
@@ -658,6 +784,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
                                           w = w, biastype = symmetricBias(), normtype = NormType(),
                                           modifyIC = modIC))
+                    Infos(IC1) <- Info.matrix
                     return(new("kStepEstimate", name = "Optimally robust estimate",
                                estimate.call = es.call, estimate = robEst$est, 
                                samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
@@ -676,6 +803,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 }else{
                     r <- uniroot(.getsInterval, lower = rlo+1e-8, upper = rup, 
                              tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup)$root
+                }
+                if(fsCor){ 
+                    r.as <- r
+                    r <- finiteSampleCorrection(r = r, n = length(x), model = "sc")
                 }
                 if(r > 10){
                     b <- sd/(4*qnorm(0.75)*dnorm(qnorm(0.75)))
@@ -698,12 +829,21 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                 }
                 robEst <- .kstep.sc(x = x, initial.est = sd, A = A, a = a, b = b, mean = mean, k = k)
                 names(robEst$est) <- "sd"
-                Info.matrix <- matrix(c(rep("roblox", 3), 
-                                      paste("radius-minimax estimate for contamination interval [", 
-                                        round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
-                                      paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
-                                      paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
-                                      ncol = 2, dimnames = list(NULL, c("method", "message")))
+                if(fsCor){
+                    Info.matrix <- matrix(c(rep("roblox", 3), 
+                                          paste("finite-sample corrected radius-minimax estimate for contamination interval [", 
+                                            round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                          paste("least favorable (uncorrected) contamination: ", round(r.as/sqrtn, 3), sep = ""),
+                                          paste("maximum asymptotic MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                          ncol = 2, dimnames = list(NULL, c("method", "message")))
+                }else{
+                    Info.matrix <- matrix(c(rep("roblox", 3), 
+                                          paste("radius-minimax estimate for contamination interval [", 
+                                            round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
+                                          paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
+                                          paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
+                                          ncol = 2, dimnames = list(NULL, c("method", "message")))
+                }
                 if(returnIC){
                     w <- new("HampelWeight")
                     clip(w) <- robEst$b
@@ -751,12 +891,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1,
                                           info = c("roblox", "optimally robust IC for AL estimators and 'asMSE'"),
                                           w = w, biastype = symmetricBias(), normtype = NormType(),
                                           modifyIC = modIC))
-                    Infos(IC1) <- matrix(c(rep("roblox", 3), 
-                                 paste("radius-minimax IC for contamination interval [", 
-                                   round(eps.lower, 3), ", ", round(eps.upper, 3), "]", sep = ""),
-                                 paste("least favorable contamination: ", round(r/sqrtn, 3), sep = ""),
-                                 paste("maximum MSE-inefficiency: ", round(ineff, 3), sep = "")), 
-                                 ncol = 2, dimnames = list(NULL, c("method", "message")))
+                    Infos(IC1) <- Info.matrix
                     return(new("kStepEstimate", name = "Optimally robust estimate",
                                estimate.call = es.call, estimate = robEst$est, 
                                samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),

@@ -1,0 +1,19 @@
+###############################################################################
+##  News: to package RobLox
+###############################################################################
+
+#######################################
+version 0.7
+#######################################
++ introduction of finite-sample correction
++ handle marginal cases n = 1 or 2 as well as eps = 0 and mad = 0
++ package Rd-file added
+
+
+#######################################
+version 0.6.1
+#######################################
++ bug in computation of as. covariance in roblox corrected.
++ bug in rsOptIC corrected.
++ introduction of NEWS-file
++ update of CITATION-file (based on code provided by A. Zeileis on R help)

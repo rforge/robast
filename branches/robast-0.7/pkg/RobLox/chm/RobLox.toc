@@ -108,7 +108,7 @@
 <UL>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Computation of the optimally robust IC for AL estimators">
-<param name="Local" value="rlOptIC.html">
+<param name="Local" value="rsOptIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Computation of the optimally robust IC for An1 estimators">
@@ -152,7 +152,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Computation of the optimally robust IC for HuMad estimators">
-<param name="Local" value="rlsOptIC.HaMad.html">
+<param name="Local" value="rlsOptIC.HuMad.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Computation of the optimally robust IC for M estimators">

@@ -10,8 +10,10 @@
   respectively.
 }
 \usage{
-rowRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
-colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
+rowRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
+          fsCor = TRUE, mad0 = 1e-4)
+colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
+          fsCor = TRUE, mad0 = 1e-4)
 }
 \arguments{
   \item{x}{ matrix or data.frame of (numeric) data values. }
@@ -27,6 +29,8 @@ colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
   \item{initial.est}{ initial estimate for \code{mean} and/or \code{sd}. If missing 
         median and/or MAD are used. }
   \item{k}{ positive integer. k-step is used to compute the optimally robust estimator.}
+  \item{fsCor}{ logical: perform finite-sample correction. See function \code{\link{finiteSampleCorrection}}. }
+  \item{mad0}{ scale estimate used if computed MAD is equal to zero}
 }
 \details{
   Computes the optimally robust estimator for location with scale specified,
@@ -61,13 +65,17 @@ colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
   respectively.
 
   If \code{eps} is missing, the radius-minimax estimator in sense of 
-  Rieder et al. (2001), respectively Section 2.2 of Kohl (2005) is returned.
+  Rieder et al. (2008), respectively Section 2.2 of Kohl (2005) is returned.
 
   In case of location, respectively scale one additionally has to specify
   \code{sd}, respectively \code{mean} where \code{sd} and \code{mean} can
   be a single number, i.e., identical for all rows, respectively columns,
   or a vector with length identical to the number of rows, respectively 
   columns.
+
+  For sample size <= 2, median and/or MAD are used for estimation.
+  
+  If \code{eps = 0}, mean and/or sd are computed.
 }
 \value{Object of class \code{"kStepEstimate"}. }
 \references{
@@ -78,12 +86,7 @@ colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
   the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
-
-  Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
-  the Radius. Submitted. Appeared as discussion paper Nr. 81. 
-  SFB 373 (Quantification and Simulation of Economic Processes),
-  Humboldt University, Berlin; also available under
-  \url{www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf}
+  Extended version: \url{http://www.stamats.de/RRlong.pdf}
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}

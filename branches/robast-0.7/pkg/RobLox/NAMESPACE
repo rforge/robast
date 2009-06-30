@@ -1,4 +1,5 @@
-export(rlsOptIC.AL, 
+export(finiteSampleCorrection,
+       rlsOptIC.AL, 
        rlsOptIC.M, 
        rlsOptIC.BM,
        rlsOptIC.Hu1, 
