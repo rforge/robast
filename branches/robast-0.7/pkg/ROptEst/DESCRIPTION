@@ -1,6 +1,6 @@
 Package: ROptEst
 Version: 0.7
-Date: 2008-11-27
+Date: 2009-04-22
 Title: Optimally robust estimation
 Description: Optimally robust estimation in general smoothly
         parameterized models using S4 classes and methods.

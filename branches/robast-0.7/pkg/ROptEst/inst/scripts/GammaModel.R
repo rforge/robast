@@ -4,13 +4,63 @@
 require(ROptEst)
 options("newDevice"=TRUE)
 
+
 ## generates Gamma Family with 
-## scale = 2 and shape = 0.5
-G <- GammaFamily(scale = 2, shape = 0.5)
+## scale = 2 and shape = 0.1
+G <- GammaFamily(scale = 2, shape = 0.1)
 G       # show G
-plot(G) # plot of Gammad(scale = 2, shape = 0.5) and L_2 derivative
+plot(G) # plot of Gammad(scale = 2, shape = 0.1) and L_2 derivative
 distrExOptions(ErelativeTolerance = 1e-8) # increase precision for E
 checkL2deriv(G)
+
+## 30.06.09: new method for "E" with 
+## signature(object = "Gammad", fun = "function", cond = "missing")
+## in package distrEx introduced which slightly reduces the problem
+## documented below.
+
+## more precisely:
+## numerical integration gives
+E(Gammad(scale = 2, shape = 0.1), function(x) (log(x/2)-digamma(0.1))^2)
+
+## whereas
+trigamma(0.1)
+
+## Problem is more or less caused by integration of log(x/2)^2
+## occurs for shape parameter small (<< 1)
+E(Gammad(scale = 2, shape = 0.1), function(x) log(x/2)^2)
+distrExOptions(ErelativeTolerance = 1e-10)
+E(Gammad(scale = 2, shape = 0.1), function(x) log(x/2)^2)
+distrExOptions(ErelativeTolerance = 1e-7)
+E(Gammad(scale = 2, shape = 0.1), function(x) log(x/2)^2)
+
+## result should be
+res1 <- 2*digamma(0.1)*E(Gammad(scale = 2, shape = 0.1), function(x) log(x/2))
+res2 <- digamma(0.1)^2
+trigamma(0.1) + res1 - res2
+
+fun <- function(x) log(x/2)^2*dgamma(x, scale = 2, shape = 0.1)
+integrate(fun, lower = 0, upper = Inf, rel.tol = 1e-6)
+integrate(fun, lower = 0, upper = Inf, rel.tol = 1e-3)
+integrate(fun, lower = 1e-9, upper = Inf, rel.tol = 1e-6)
+integrate(fun, lower = 1e-13, upper = Inf, rel.tol = 1e-6)
+## problem at zero!
+fun(0)
+curve(fun, from = 0, to = 1, n = 501)
+
+fun <- function(x) (log(x/2)-digamma(0.1))^2*dgamma(x, scale = 2, shape = 0.1)
+curve(fun, from = 0, to = 1, n = 501)
+
+GLIntegrate(fun, lower = 1e-9, upper = qgamma(1-1e-9, scale = 2, shape = 0.1), order = 500)
+
+
+## generates Gamma Family with 
+## scale = 2 and shape = 1
+G <- GammaFamily(scale = 2, shape = 1)
+G       # show G
+plot(G) # plot of Gammad(scale = 2, shape = 1) and L_2 derivative
+distrExOptions(ErelativeTolerance = 1e-8) # increase precision for E
+checkL2deriv(G)
+
 
 ## classical optimal IC
 IC0 <- optIC(model = G, risk = asCov())

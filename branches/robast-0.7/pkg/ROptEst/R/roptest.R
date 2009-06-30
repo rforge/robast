@@ -1,8 +1,8 @@
 ###############################################################################
 ## Optimally robust estimation
 ###############################################################################
-roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, initial.est, 
-                    neighbor = ContNeighborhood(), risk = asMSE(), steps = 1, 
+roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est, 
+                    neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
                     distance = CvMDist, startPar = NULL, verbose = FALSE, 
                     useLast = getRobAStBaseOption("kStepUseLast"), ...){
     es.call <- match.call()
@@ -41,6 +41,11 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, initial.est,
         if((eps < 0) || (eps > 0.5))
             stop("'eps' has to be in (0, 0.5]")
     }
+    if(fsCor <= 0)
+        stop("'fsCor' has to be positive")
+    if(length(fsCor) != 1){
+        stop("'fsCor' has to be of length 1")
+    }
     if(!is.integer(steps))
         steps <- as.integer(steps)
     if(steps < 1){
@@ -66,9 +71,13 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, initial.est,
         r.upper <- sqrtn*eps.upper
         ICstart <- radiusMinimaxIC(L2Fam = L2FamStart, neighbor = neighbor, risk = risk, 
                                    loRad = r.lower, upRad = r.upper, verbose = verbose)
+        if(!isTRUE(all.equal(fsCor, 1, tol = 1e-3))){
+            neighbor@radius <- neighborRadius(ICstart)*fsCor
+            infMod <- InfRobModel(center = L2FamStart, neighbor = neighbor)
+            ICstart <- optIC(model = infMod, risk = risk, verbose = verbose)
+        }    
     }else{
-        r <- sqrtn*eps
-        neighbor@radius <- r
+        neighbor@radius <- sqrtn*eps*fsCor
         infMod <- InfRobModel(center = L2FamStart, neighbor = neighbor)
         ICstart <- optIC(model = infMod, risk = risk, verbose = verbose)
     }
