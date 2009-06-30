@@ -1,0 +1,101 @@
+<html><head><title>Generic function for the computation of location M estimators</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>locMEstimator(ROptEstOld)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   locMEstimator">
+<param name="keyword" value="R:   locMEstimator-methods">
+<param name="keyword" value="R:   locMEstimator,numeric,InfluenceCurve-method">
+<param name="keyword" value=" Generic function for the computation of location M estimators">
+</object>
+
+
+<h2>Generic function for the computation of location M estimators</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for the computation of location M estimators.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+locMEstimator(x, IC, ...)
+
+## S4 method for signature 'numeric, InfluenceCurve':
+locMEstimator(x, IC, eps = .Machine$double.eps^0.5)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+sample </td></tr>
+<tr valign="top"><td><code>IC</code></td>
+<td>
+object of class <code>"InfluenceCurve"</code> </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional parameters </td></tr>
+<tr valign="top"><td><code>eps</code></td>
+<td>
+the desired accuracy (convergence tolerance). </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Returns a list with component
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>loc</code></td>
+<td>
+M estimator of location </td></tr>
+</table>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>x = "numeric", IC = "InfluenceCurve"</dt><dd>univariate location. </dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Huber, P.J. (1964) Robust estimation of a location parameter. 
+Ann. Math. Stat. <B>35</B>: 73&ndash;101.
+</p>
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="InfluenceCurve-class.html">InfluenceCurve-class</a></code>
+</p>
+
+
+
+<hr><div align="center">[Package <em>ROptEstOld</em> version 0.5.2 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

@@ -1,0 +1,34 @@
+###############################################################################
+##  News: to package RobLoxBioC
+###############################################################################
+
+#######################################
+version 0.5
+#######################################
++ added example code for Illumina data
++ function to perform Monte-Carlo studies for comparison with Illumina's
+  default method
+
+#######################################
+version 0.4
+#######################################
++ added finite-sample correction
++ handle cases with sample size <= 2 and contamination eps = 0
++ moved function AffySimStudy from folder inst/scripts to folder R as 
+  exported and documented function to perform Monte-Carlo studies.
+
+#######################################
+version 0.3
+#######################################
++ added KolmogorovMinDist methods for matrix, AffyBatch and BeadLevelList
+
+#######################################
+version 0.2
+#######################################
++ robloxbioc methods for AffyBatch and BeadLevelList
+
+#######################################
+version 0.1
+#######################################
++ start of development
+
