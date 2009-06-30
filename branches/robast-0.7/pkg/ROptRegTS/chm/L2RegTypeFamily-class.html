@@ -1,0 +1,184 @@
+<html><head><title>L2 differentiable parametric regression-type family</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>L2RegTypeFamily-class(ROptRegTS)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   L2RegTypeFamily-class">
+<param name="keyword" value="R:   ErrorL2deriv">
+<param name="keyword" value="R:   ErrorL2deriv,L2RegTypeFamily-method">
+<param name="keyword" value="R:   ErrorL2derivDistr">
+<param name="keyword" value="R:   ErrorL2derivDistr,L2RegTypeFamily-method">
+<param name="keyword" value="R:   ErrorL2derivSymm">
+<param name="keyword" value="R:   ErrorL2derivSymm,L2RegTypeFamily-method">
+<param name="keyword" value="R:   ErrorL2derivDistrSymm">
+<param name="keyword" value="R:   ErrorL2derivDistrSymm,L2RegTypeFamily-method">
+<param name="keyword" value="R:   FisherInfo,L2RegTypeFamily-method">
+<param name="keyword" value="R:   L2deriv,L2RegTypeFamily-method">
+<param name="keyword" value="R:   checkL2deriv,L2RegTypeFamily-method">
+<param name="keyword" value="R:   checkIC,IC,missing-method">
+<param name="keyword" value="R:   checkIC,IC,L2RegTypeFamily-method">
+<param name="keyword" value="R:   E,L2RegTypeFamily,EuclRandVariable,missing-method">
+<param name="keyword" value="R:   E,L2RegTypeFamily,EuclRandMatrix,missing-method">
+<param name="keyword" value="R:   E,L2RegTypeFamily,EuclRandVarList,missing-method">
+<param name="keyword" value="R:   show,L2RegTypeFamily-method">
+<param name="keyword" value=" L2 differentiable parametric regression-type family">
+</object>
+
+
+<h2>L2 differentiable parametric regression-type family</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Class for L2 differentiable parametric regression-type families.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>
+Objects can be created by calls of the form <code>new("L2RegTypeFamily", ...)</code>.
+More frequently they are created via the generating function 
+<code>L2RegTypeFamily</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+<dl>
+<dt><code>L2deriv</code>:</dt><dd>Object of class <code>"EuclRandVarList"</code>: L2 derivative. </dd>
+<dt><code>ErrorL2deriv</code>:</dt><dd>Object of class <code>"EuclRandVarList"</code>: 
+L2 derivative of <code>ErrorDistr</code>. </dd>
+<dt><code>ErrorL2derivSymm</code>:</dt><dd>Object of class <code>"FunSymmList"</code>:
+symmetry of <code>ErrorL2deriv</code>. </dd>
+<dt><code>ErrorL2derivDistr</code>:</dt><dd>Object of class <code>"DistrList"</code>: 
+distribution of <code>ErrorL2deriv</code>. </dd>
+<dt><code>ErrorL2derivDistrSymm</code>:</dt><dd>Object of class <code>"DistrSymmList"</code>:
+symmetry of <code>ErrorL2derivDistr</code>. </dd>
+<dt><code>FisherInfo</code>:</dt><dd>Object of class <code>"PosDefSymmMatrix"</code>:
+Fisher information. </dd>
+<dt><code>ErrorDistr</code>:</dt><dd>Object of class <code>"Distribution"</code>: 
+error distribution. </dd>
+<dt><code>ErrorSymm</code>:</dt><dd>Object of class <code>"DistributionSymmetry"</code>:
+symmetry of <code>ErrorDistr</code>. </dd>
+<dt><code>RegDistr</code>:</dt><dd>Object of class <code>"Distribution"</code>:
+regressor distribution. </dd>
+<dt><code>RegSymm</code>:</dt><dd>Object of class <code>"DistributionSymmetry"</code>:
+symmetry of <code>RegDistr</code>. </dd>
+<dt><code>Regressor</code>:</dt><dd>Object of class <code>"EuclRandVariable"</code>:
+regressor. </dd>
+<dt><code>param</code>:</dt><dd>Object of class <code>"ParamFamParameter"</code>:
+parameter of the family. </dd>
+<dt><code>props</code>:</dt><dd>Object of class <code>"character"</code>:
+properties of the family. </dd>
+<dt><code>name</code>:</dt><dd>Object of class <code>"character"</code>:
+name of the family. </dd>
+<dt><code>distribution</code>:</dt><dd>Object of class <code>"CondDistribution"</code>:
+conditional distribution given the regressor. </dd>
+<dt><code>distrSymm</code>:</dt><dd>Object of class <code>"DistributionSymmetry"</code>:
+symmetry of <code>distribution</code>. </dd>
+</dl>
+
+<h3>Extends</h3>
+
+<p>
+Class <code>"RegTypeFamily"</code>, directly.<br>
+Class <code>"ParamFamily"</code>, by class <code>"RegTypeFamily"</code>.<br>
+Class <code>"ProbFamily"</code>, by class <code>"RegTypeFamily"</code>.
+</p>
+
+
+<h3>Methods</h3>
+
+<dl>
+<dt>L2deriv</dt><dd><code>signature(object = "L2RegTypeFamily")</code>:
+acessor function for slot <code>L2deriv</code> </dd>
+
+
+<dt>FisherInfo</dt><dd><code>signature(object = "L2RegTypeFamily")</code>:
+acessor function for slot <code>FisherInfo</code> </dd>
+
+
+<dt>ErrorL2deriv</dt><dd><code>signature(object = "L2RegTypeFamily")</code>: 
+acessor function for slot <code>ErrorL2deriv</code>. </dd>
+
+
+<dt>ErrorL2derivDistr</dt><dd><code>signature(object = "L2RegTypeFamily")</code>: 
+acessor function for slot <code>ErrorL2derivDistr</code>. </dd>
+
+
+<dt>ErrorL2derivSymm</dt><dd><code>signature(object = "L2RegTypeFamily")</code>: 
+acessor function for slot <code>ErrorL2derivSymm</code> </dd>
+
+
+<dt>ErrorL2derivDistrSymm</dt><dd><code>signature(object = "L2RegTypeFamily")</code>: 
+acessor function for slot <code>ErrorL2derivDistrSymm</code> </dd>
+
+
+<dt>checkL2deriv</dt><dd><code>signature(object = "L2RegTypeFamily")</code>: 
+check centering of <code>L2deriv</code> and compute precision 
+of Fisher information. </dd>
+
+
+<dt>checkIC</dt><dd><code>signature(IC = "IC", L2Fam = "missing")</code>: 
+check centering and Fisher consistency of <code>IC</code> assuming the 
+L2-differentiable regression-type family which can be created via 
+the slot <code>CallL2Fam</code> of <code>IC</code>. </dd>
+
+
+<dt>checkIC</dt><dd><code>signature(IC = "IC", L2Fam = "L2RegTypeFamily")</code>: 
+check centering and Fisher consistency of <code>IC</code> assuming the 
+L2-differentiable regression-type family <code>L2Fam</code>. </dd>
+
+
+<dt>E</dt><dd><code>signature(object = "L2RegTypeFamily", fun = "EuclRandVariable", cond = "missing")</code>:
+expectation of <code>fun</code> under <code>object</code>. </dd>
+
+
+<dt>E</dt><dd><code>signature(object = "L2RegTypeFamily", fun = "EuclRandMatrix", cond = "missing")</code>:
+expectation of <code>fun</code> under <code>object</code>. </dd>
+
+
+<dt>E</dt><dd><code>signature(object = "L2RegTypeFamily", fun = "EuclRandVarList", cond = "missing")</code>:
+expectation of <code>fun</code> under <code>object</code>. </dd>
+
+
+<dt>show</dt><dd><code>signature(object = "L2RegTypeFamily")</code></dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to 
+the Asymptotic Theory of Robustness</EM>. Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="RegTypeFamily-class.html">RegTypeFamily-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+new("L2RegTypeFamily")
+</pre>
+
+
+
+<hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

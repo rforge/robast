@@ -50,16 +50,17 @@ getInfStandRegTS(ErrorL2deriv, Regressor, neighbor, ...)
 		Regressor, neighbor, z.comp, clip, cent, stand, trafo)
 
 \S4method{getInfStandRegTS}{RealRandVariable,Distribution,ContNeighborhood}(ErrorL2deriv, 
-		Regressor, neighbor, A.comp, clip, cent, stand, trafo)
+		Regressor, neighbor, ErrorDistr, A.comp, stand, clip, cent, trafo)
 
 \S4method{getInfStandRegTS}{RealRandVariable,Distribution,Av1CondContNeighborhood}(ErrorL2deriv, 
-		Regressor, neighbor, A.comp, clip, cent, stand, trafo)
+		Regressor, neighbor, ErrorDistr, A.comp, stand, clip, cent, trafo)
 }
 \arguments{
   \item{ErrorL2deriv}{ L2-derivative of \code{ErrorDistr}. }
   \item{Regressor}{ regressor. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{\dots}{ additional parameters. }
+  \item{ErrorDistr}{ error distribution. }
   \item{clip}{ optimal clipping bound/function. }
   \item{cent}{ optimal centering constant/function. }
   \item{stand}{ standardizing matrix. }
@@ -122,4 +123,5 @@ getInfStandRegTS(ErrorL2deriv, Regressor, neighbor, ...)
         \code{\link{CondTotalVarIC}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}
+

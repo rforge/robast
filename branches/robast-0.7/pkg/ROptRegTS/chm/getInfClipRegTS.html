@@ -1,0 +1,171 @@
+<html><head><title>Generic Function for the Computation of the Optimal Clipping Bound</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>getInfClipRegTS(ROptRegTS)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   getInfClipRegTS">
+<param name="keyword" value="R:   getInfClipRegTS,numeric,UnivariateDistribution,Distribution,asMSE,Neighborhood-method">
+<param name="keyword" value="R:   getInfClipRegTS,numeric,UnivariateDistribution,Distribution,asMSE,Av1CondTotalVarNeighborhood-method">
+<param name="keyword" value="R:   getInfClipRegTS,numeric,EuclRandVariable,Distribution,asMSE,Neighborhood-method">
+<param name="keyword" value="R:   getInfClipRegTS,numeric,UnivariateDistribution,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method">
+<param name="keyword" value="R:   getInfClipRegTS,numeric,UnivariateDistribution,numeric,asUnOvShoot,CondNeighborhood-method">
+<param name="keyword" value=" Generic Function for the Computation of the Optimal Clipping Bound">
+</object>
+
+
+<h2>Generic Function for the Computation of the Optimal Clipping Bound</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for the computation of the optimal clipping bound/function.
+This function is rarely called directly. It is used to 
+compute optimally robust ICs in case infinitesimal models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+getInfClipRegTS(clip, ErrorL2deriv, Regressor, risk, neighbor, ...)
+
+## S4 method for signature 'numeric,
+##   UnivariateDistribution, Distribution, asMSE,
+##   Neighborhood':
+getInfClipRegTS(clip, 
+                ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent)
+
+## S4 method for signature 'numeric,
+##   UnivariateDistribution, Distribution, asMSE,
+##   Av1CondTotalVarNeighborhood':
+getInfClipRegTS(clip, 
+                ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent)
+
+## S4 method for signature 'numeric, EuclRandVariable,
+##   Distribution, asMSE, Neighborhood':
+getInfClipRegTS(clip, ErrorL2deriv, 
+                Regressor, risk, neighbor, ErrorDistr, stand, cent, trafo)
+
+## S4 method for signature 'numeric,
+##   UnivariateDistribution, UnivariateDistribution,
+##   asUnOvShoot, UncondNeighborhood':
+getInfClipRegTS(clip, 
+                ErrorL2deriv, Regressor, risk, neighbor, z.comp, cent)
+
+## S4 method for signature 'numeric,
+##   UnivariateDistribution, numeric, asUnOvShoot,
+##   CondNeighborhood':
+getInfClipRegTS(clip, 
+                ErrorL2deriv, Regressor, risk, neighbor)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>clip</code></td>
+<td>
+optimal clipping bound. </td></tr>
+<tr valign="top"><td><code>ErrorL2deriv</code></td>
+<td>
+L2-derivative of <code>ErrorDistr</code>. </td></tr>
+<tr valign="top"><td><code>Regressor</code></td>
+<td>
+regressor. </td></tr>
+<tr valign="top"><td><code>risk</code></td>
+<td>
+object of class <code>"RiskType"</code>. </td></tr>
+<tr valign="top"><td><code>neighbor</code></td>
+<td>
+object of class <code>"Neighborhood"</code>. </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional parameters. </td></tr>
+<tr valign="top"><td><code>cent</code></td>
+<td>
+optimal centering constant/function. </td></tr>
+<tr valign="top"><td><code>stand</code></td>
+<td>
+standardizing matrix. </td></tr>
+<tr valign="top"><td><code>z.comp</code></td>
+<td>
+which components of the centering constant/function 
+have to be computed. </td></tr>
+<tr valign="top"><td><code>ErrorDistr</code></td>
+<td>
+error distribution. </td></tr>
+<tr valign="top"><td><code>trafo</code></td>
+<td>
+matrix: transformation of the parameter. </td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+The optimal clipping bound/function is computed.</p>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>clip = "numeric", ErrorL2deriv = "UnivariateDistribution", Regressor = "Distribution", risk = "asMSE", neighbor = "Neighborhood"</dt><dd>optimal clipping bound for asymtotic mean square error. </dd>
+
+
+<dt>clip = "numeric", ErrorL2deriv = "UnivariateDistribution", Regressor = "Distribution", risk = "asMSE", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd>optimal clipping bound for asymtotic mean square error. </dd>
+
+
+<dt>clip = "numeric", ErrorL2deriv = "EuclRandVariable", Regressor = "Distribution", risk = "asMSE", neighbor = "Neighborhood"</dt><dd>optimal clipping bound for asymtotic mean square error. </dd>
+
+
+<dt>clip = "numeric", ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", risk = "asUnOvShoot", neighbor = "UncondNeighborhood"</dt><dd>optimal clipping bound for asymtotic under-/overshoot risk. </dd>
+
+
+<dt>clip = "numeric", ErrorL2deriv = "UnivariateDistribution", Regressor = "numeric", risk = "asUnOvShoot", neighbor = "CondNeighborhood"</dt><dd>optimal clipping function for asymtotic under-/overshoot risk. </dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. <B>8</B>: 106&ndash;115.
+</p>
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('ROptEst', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, <code><a onclick="findlink('ROptEst', 'TotalVarIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">TotalVarIC-class</a></code>, 
+<code><a href="Av1CondContIC-class.html">Av1CondContIC-class</a></code>, <code><a href="Av2CondContIC-class.html">Av2CondContIC-class</a></code>, 
+<code><a href="Av1CondTotalVarIC-class.html">Av1CondTotalVarIC-class</a></code>, <code><a href="CondContIC-class.html">CondContIC-class</a></code>,
+<code><a href="CondTotalVarIC-class.html">CondTotalVarIC-class</a></code>
+</p>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

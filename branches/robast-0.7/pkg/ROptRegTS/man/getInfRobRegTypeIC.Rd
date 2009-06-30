@@ -243,4 +243,5 @@ getInfRobRegTypeIC(ErrorL2deriv, Regressor, risk, neighbor, ...)
 \seealso{\code{\link{InfRobRegTypeModel-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}
+

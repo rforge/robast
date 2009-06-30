@@ -67,3 +67,4 @@ L2RegTypeFamily()
 }
 \concept{regression}
 \keyword{models}
+\keyword{robust}

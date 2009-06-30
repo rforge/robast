@@ -21,3 +21,4 @@
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 \seealso{\code{\link[ROptEst]{getIneffDiff}}}
 \keyword{methods}
+\keyword{robust}

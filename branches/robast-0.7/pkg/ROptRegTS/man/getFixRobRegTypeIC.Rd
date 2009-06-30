@@ -59,4 +59,5 @@ getFixRobRegTypeIC(ErrorDistr, Regressor, risk, neighbor, ...)
 \seealso{\code{\link{FixRobRegTypeModel-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}
+

@@ -12,7 +12,7 @@ InfRobRegTypeModel(center = L2RegTypeFamily(), neighbor = ContNeighborhood())
   \item{center}{ object of class \code{"L2RegTypeFamily"} }
   \item{neighbor}{ object of class \code{"Neighborhood"} }
 }
-\details{}
+%\details{}
 \value{Object of class \code{"InfRobRegTypeModel"}}
 \references{
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
@@ -35,3 +35,4 @@ function(center = L2RegTypeFamily(), neighbor = ContNeighborhood()) {
 \concept{infinitesimal neighborhood}
 \concept{shrinking neighborhood}
 \keyword{models}
+\keyword{robust}

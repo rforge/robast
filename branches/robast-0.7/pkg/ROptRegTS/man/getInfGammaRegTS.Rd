@@ -58,10 +58,10 @@ getInfGammaRegTS(ErrorL2deriv, Regressor, risk, neighbor, ...)
                 Regressor, risk, neighbor, cent, clip)
 
 \S4method{getInfGammaRegTS}{UnivariateDistribution,numeric,asUnOvShoot,CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, cent, clip)
+                Regressor, risk, neighbor, clip)
 
 \S4method{getInfGammaRegTS}{UnivariateDistribution,numeric,asUnOvShoot,CondTotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, cent, clip)
+                Regressor, risk, neighbor, clip)
 }
 \arguments{
   \item{ErrorL2deriv}{ L2-derivative of \code{ErrorDistr}. }
@@ -141,4 +141,5 @@ getInfGammaRegTS(ErrorL2deriv, Regressor, risk, neighbor, ...)
         \code{\link{CondContIC-class}}, \code{\link{CondTotalVarIC-class}}}
 %\examples{}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}
+

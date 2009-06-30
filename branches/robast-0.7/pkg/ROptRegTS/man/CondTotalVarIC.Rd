@@ -58,4 +58,5 @@ IC1 <- CondTotalVarIC()
 IC1
 }
 \concept{influence curve}
-\keyword{}
+\keyword{robust}
+

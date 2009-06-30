@@ -49,3 +49,4 @@ new("Av2CondContNeighborhood")
 \concept{neighborhood}
 \keyword{classes}
 \keyword{models}
+\keyword{robust}

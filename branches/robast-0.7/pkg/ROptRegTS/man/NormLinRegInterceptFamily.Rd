@@ -43,3 +43,4 @@ checkL2deriv(LM1)
 \concept{linear regression}
 \concept{linear model}
 \keyword{models}
+\keyword{robust}

@@ -54,4 +54,5 @@ function(name, Curve = EuclRandVariable(Map = list(function(x){x[1]*x[2]}),
 }
 \concept{partial influence curve}
 \concept{influence curve}
-\keyword{}
+\keyword{robust}
+

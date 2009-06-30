@@ -16,3 +16,4 @@
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 \seealso{\code{\link[ROptEst]{leastFavorableRadius}}}
 \keyword{methods}
+\keyword{robust}

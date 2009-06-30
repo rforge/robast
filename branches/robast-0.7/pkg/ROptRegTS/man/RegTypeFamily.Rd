@@ -44,3 +44,4 @@ RegTypeFamily(name, distribution = LMCondDistribution(), distrSymm,
 RegTypeFamily()
 }
 \keyword{models}
+\keyword{robust}

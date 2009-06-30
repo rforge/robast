@@ -34,3 +34,4 @@ function(center = RegTypeFamily(), neighbor = ContNeighborhood()){
 \concept{robust model}
 \concept{fixed neighborhood}
 \keyword{models}
+\keyword{robust}
