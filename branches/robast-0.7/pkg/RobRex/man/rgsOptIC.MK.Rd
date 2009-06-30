@@ -42,10 +42,13 @@ rgsOptIC.MK(r, K, ggLo = 0.5, ggUp = 1, a1.start = -0.25, a3.start = 0.25,
 %\note{}
 \seealso{\code{IC-class}}
 \examples{
+## code takes some time
+\dontrun{
 K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
 IC1 <- rgsOptIC.MK(r = 0.1, K = K)
 checkIC(IC1)
 Risks(IC1)
+}
 }
 \concept{regression and scale}
 \concept{influence curve}

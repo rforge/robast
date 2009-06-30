@@ -1,0 +1,133 @@
+<html><head><title>Computation of the optimally robust IC for AL estimators</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>rgsOptIC.ALc(RobRex)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   rgsOptIC.ALc">
+<param name="keyword" value=" Computation of the optimally robust IC for AL estimators">
+</object>
+
+
+<h2>Computation of the optimally robust IC for AL estimators</h2>
+
+
+<h3>Description</h3>
+
+<p>
+The function <code>rgsOptIC.ALc</code> computes the optimally robust 
+conditionally centered IC for AL estimators in case of linear 
+regression with unknown scale and average conditional 
+(convex) contamination neighborhoods where the regressor is 
+random; confer Subsubsection 7.2.1.2 of Kohl (2005).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+rgsOptIC.ALc(r, K, theta, scale = 1, A.rg.start, a.sc.start, A.sc.start = 0.5, 
+             bUp = 1000, delta = 1e-06, itmax = 50, check = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>r</code></td>
+<td>
+non-negative real: neighborhood radius. </td></tr>
+<tr valign="top"><td><code>K</code></td>
+<td>
+object of class <code>"DiscreteDistribution"</code> or
+object of class <code>"DisreteMVDistribution"</code>. </td></tr>
+<tr valign="top"><td><code>theta</code></td>
+<td>
+specified regression parameter.</td></tr>
+<tr valign="top"><td><code>scale</code></td>
+<td>
+specified error scale.</td></tr>
+<tr valign="top"><td><code>A.rg.start</code></td>
+<td>
+positive definite and symmetric matrix:
+starting value for the standardizing matrix of the
+regression part. </td></tr>
+<tr valign="top"><td><code>a.sc.start</code></td>
+<td>
+real vector: starting values for centering
+function of the scale part. </td></tr>
+<tr valign="top"><td><code>A.sc.start</code></td>
+<td>
+positive real: starting value for 
+the standardizing constant of the scale part. </td></tr>
+<tr valign="top"><td><code>bUp</code></td>
+<td>
+positive real: the upper end point of the
+interval to be searched for b. </td></tr>
+<tr valign="top"><td><code>delta</code></td>
+<td>
+the desired accuracy (convergence tolerance). </td></tr>
+<tr valign="top"><td><code>itmax</code></td>
+<td>
+the maximum number of iterations. </td></tr>
+<tr valign="top"><td><code>check</code></td>
+<td>
+logical. Should constraints be checked. </td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+If <code>theta</code> is missing, it is set to 0.
+If <code>A.rg.start</code> is missing, the inverse of the 
+second moment matrix of <code>K</code> is used. In case 
+<code>a.sc.start</code> is missing, it is set to a null 
+vector with length of the support of <code>K</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"Av1CondContIC"</code></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code>Av1CondContIC-class</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+K &lt;- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+IC1 &lt;- rgsOptIC.ALc(r = 0.1, K = K)
+checkIC(IC1)
+Risks(IC1)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>RobRex</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

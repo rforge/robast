@@ -43,10 +43,13 @@ rgsOptIC.BM(r, K, b.rg.start = 2.5, b.sc.0.x.start, delta = 1e-06,
 %\note{}
 \seealso{\code{CondIC-class}}
 \examples{
+## code takes some time
+\dontrun{
 K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
 IC1 <- rgsOptIC.BM(r = 0.1, K = K)
 checkIC(IC1)
 Risks(IC1)
+}
 }
 \concept{regression and scale}
 \concept{influence curve}
