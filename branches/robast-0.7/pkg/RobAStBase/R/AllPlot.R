@@ -24,7 +24,6 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
         trafO <- trafo(L2Fam@param)
         dims  <- nrow(trafO)
-        dimm <- length(L2Fam@param)
         
         to.draw <- 1:dims
         dimnms  <- c(rownames(trafO))
@@ -91,7 +90,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         if(!is.null(dots[["xlab"]])) dots["xlab"] <- NULL
         if(!is.null(dots[["ylab"]])) dots["ylab"] <- NULL
 
-        IC1 <- as(diag(dimm) %*% x@Curve, "EuclRandVariable")
+        IC1 <- as(diag(dims) %*% x@Curve, "EuclRandVariable")
 
         mainL <- FALSE
         subL <- FALSE
