@@ -55,8 +55,8 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                 res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                      neighbor = model@neighbor, 
                                                      risk = risk))
-                    return(generateIC(model@neighbor, model@center, res))
-                }else{
+                return(generateIC(model@neighbor, model@center, res))
+            }else{
                 stop("not yet implemented")
             }
         }

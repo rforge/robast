@@ -153,21 +153,22 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
                                    neighbor = "ContNeighborhood", 
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, normtype, Distr, 
-             z.start, A.start,  z.comp, A.comp, trafo, maxiter,  tol){
+             z.start, A.start, z.comp, A.comp, trafo, maxiter, tol){
 
+        DA.comp <- abs(trafo) %*% A.comp != 0
         eerg <- .LowerCaseMultivariate(L2deriv, neighbor, biastype,
              normtype, Distr, trafo, z.start,
-             A.start, z.comp = z.comp, A.comp = A.comp,  maxiter, tol)
+             A.start, z.comp = z.comp, A.comp = DA.comp, maxiter, tol)
         erg <- eerg$erg
 
         b <- 1/erg$value
         param <- erg$par
-        lA.comp <- sum(A.comp)
+        lA.comp <- sum(DA.comp)
         
         p <- nrow(trafo)
         k <- ncol(trafo)
         A <- matrix(0, ncol=k, nrow=p)
-        A[A.comp] <- matrix(param[1:lA.comp], ncol=k, nrow=p)
+        A[DA.comp] <- matrix(param[1:lA.comp], ncol=k, nrow=p)
         z <- numeric(k)
         z[z.comp] <- param[(lA.comp+1):length(param)]
         a <- as.vector(A %*% z)
