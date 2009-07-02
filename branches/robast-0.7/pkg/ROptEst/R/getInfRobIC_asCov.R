@@ -20,8 +20,14 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                          asMSE = list(value = asCov + r^2*b^2, 
                                       r = r,
                                       at = neighbor))
+            w <- new("HampelWeight")
+            clip(w) <- b
+            cent(w) <- 0
+            stand(w) <- A
+            weight(w) <- getweight(w, neighbor = neighbor, biastype = symmetricBias(), 
+                                   normW = NormType())
 
-            return(list(A = A, a = 0, b = b, d = NULL, risk = Risk, info = info))
+            return(list(A = A, a = 0, b = b, d = NULL, w = w, risk = Risk, info = info))
     })
 setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution", 
                                    risk = "asCov", 
@@ -30,6 +36,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             info <- c("optimal IC in sense of Cramer-Rao bound")
             A <- trafo %*% solve(Finfo)
             b <- abs(as.vector(A))*(q(L2deriv)(1)-q(L2deriv)(0))
+            a <- -abs(as.vector(A))*q(L2deriv)(0)
             asCov <- A %*% t(trafo)
             r <- neighbor@radius
             Risk <- list(asCov = asCov, 
@@ -41,7 +48,13 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                       r = r,
                                       at = neighbor))
 
-            return(list(A = A, a = -b/2, b = b, d = NULL, risk = Risk, info = info))
+            w <- new("BdStWeight")
+            clip(w) <- c(0,b)+a
+            stand(w) <- A
+            weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
+                                   normW = NormType())
+
+            return(list(A = A, a = -b/2, b = b, d = NULL, w = w, risk = Risk, info = info))
     })
 setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable", 
                                    risk = "asCov", 
@@ -75,5 +88,13 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                          asMSE = list(value = trAsCov + r^2*b^2, 
                                       r = r,
                                       at = neighbor))
-            return(list(A = A, a = numeric(nrow(trafo)), b = b, d = NULL, risk = Risk, info = info))
+            w <- new("HampelWeight")
+            clip(w) <- b
+            cent(w) <- 0
+            stand(w) <- A
+            weight(w) <- getweight(w, neighbor = neighbor, biastype = symmetricBias(), 
+                                   normW = NormType())
+
+            return(list(A = A, a = numeric(nrow(trafo)), b = b, d = NULL, w = w, risk = Risk, 
+                        info = info))
     })
