@@ -1,10 +1,10 @@
 \name{oneStepEstimator}
 \alias{oneStepEstimator}
 \alias{oneStepEstimator-methods}
-\alias{oneStepEstimator,numeric,InfluenceCurve,numeric-method}
-\alias{oneStepEstimator,matrix,InfluenceCurve,numeric-method}
-\alias{oneStepEstimator,numeric,InfluenceCurve,Estimate-method}
-\alias{oneStepEstimator,matrix,InfluenceCurve,Estimate-method}
+\alias{oneStepEstimator,numeric,InfluenceCurve-method}
+\alias{oneStepEstimator,matrix,InfluenceCurve-method}
+\alias{oneStepEstimator,numeric,InfluenceCurve,ANY-method}
+\alias{oneStepEstimator,matrix,InfluenceCurve,ANY-method}
 
 \title{Generic function for the computation of one-step estimates}
 \description{
@@ -13,13 +13,9 @@
 \usage{
 oneStepEstimator(x, IC, start, ...)
 
-\S4method{oneStepEstimator}{numeric,InfluenceCurve,numeric}(x, IC, start, 
+\S4method{oneStepEstimator}{numeric,InfluenceCurve,ANY}(x, IC, start, 
     useLast = getRobAStBaseOption("kStepUseLast"))
-\S4method{oneStepEstimator}{matrix,InfluenceCurve,numeric}(x, IC, start, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-\S4method{oneStepEstimator}{numeric,InfluenceCurve,Estimate}(x, IC, start, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-\S4method{oneStepEstimator}{matrix,InfluenceCurve,Estimate}(x, IC, start, 
+\S4method{oneStepEstimator}{matrix,InfluenceCurve,ANY}(x, IC, start, 
     useLast = getRobAStBaseOption("kStepUseLast"))
 }
 \arguments{
@@ -61,13 +57,9 @@ oneStepEstimator(x, IC, start, ...)
 \value{Object of class \code{"kStepEstimate"}}
 \section{Methods}{
 \describe{
-  \item{x = "numeric", IC = "InfluenceCurve", start = "numeric"}{ 
+  \item{x = "numeric", IC = "InfluenceCurve", start = "ANY"}{ 
     univariate samples. }
-  \item{x = "matrix", IC = "InfluenceCurve", start = "numeric"}{ 
-    multivariate samples. }
-  \item{x = "matrix", IC = "InfluenceCurve", start = "Estimate"}{ 
-    multivariate samples. }
-  \item{x = "matrix", IC = "InfluenceCurve", start = "Estimate"}{ 
+  \item{x = "matrix", IC = "InfluenceCurve", start = "ANY"}{ 
     multivariate samples. }
 }}
 \references{
