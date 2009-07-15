@@ -25,9 +25,9 @@ setMethod("infoPlot", "IC",
         dimm <- length(L2Fam@param)
         
         to.draw <- 1:(dims+1)
-        dimnms  <- c(rownames(trafO))
+        dimnms <- rownames(trafO)
         if(is.null(dimnms))
-           dimnms <- paste("dim",1:dims,sep="")
+           dimnms <- names(main(L2Fam@param))# paste("dim",1:dims,sep="")
         pdimnms <- c("Abs",dimnms)
         if(! is.null(to.draw.arg)){
             if(is.character(to.draw.arg)) 
@@ -40,7 +40,7 @@ setMethod("infoPlot", "IC",
         dims0 <- length(to.draw1)
         nrows <- trunc(sqrt(dims0))
         ncols <- ceiling(dims0/nrows)
-        in1to.draw   <- (1%in%to.draw)
+        in1to.draw <- (1%in%to.draw)
 
         if(missing(legend.location)){
            legend.location <- distr:::.fillList(list("topright"), dims0+in1to.draw   )
@@ -180,10 +180,10 @@ setMethod("infoPlot", "IC",
             }else{if(any(is.na(inner))||any(!inner)) {
                      innerT <- as.list(rep("",1+dims)); innerL <- FALSE
                 }else{innerL <- TRUE
-                      tnm  <- c(rownames(trafO))
+                      tnm  <- rownames(trafO)
                       tnms <- if(is.null(tnm)) paste(1:dims) else 
                                                paste("'", tnm, "'", sep = "") 
-                      innerT <- as.list(paste(c( paste(gettext("Absolute information of (partial) IC for"), 
+                      innerT <- as.list(paste(c( paste(gettext("Absolute information of (partial) IC for "), 
                                        name(L2Fam)[1], sep =""),
                                    paste(gettext("Relative information of \ncomponent "),
                                        tnms, 
@@ -193,7 +193,7 @@ setMethod("infoPlot", "IC",
               }
 
 
-            QFc <- diag(dimm)
+            QFc <- diag(dims)
             if(is(object,"ContIC") & dims>1 )
                {if (is(normtype(object),"QFNorm")) QFc <- QuadForm(normtype(object))
                 QFc0 <- solve( trafo %*% solve(L2Fam@FisherInfo) %*% t(trafo ))
@@ -206,12 +206,12 @@ setMethod("infoPlot", "IC",
             absInfoClass <- t(classIC) %*% QFc %*% classIC
             absInfoClass <- sapply(x.vec, absInfoClass@Map[[1]])
 
-            QF <- diag(dimm)
+            QF <- diag(dims)
             if(is(object,"ContIC") & dims>1 )
                {if (is(normtype(object),"QFNorm")) QF <- QuadForm(normtype(object))}
             QF.5 <- sqrt(PosSemDefSymmMatrix(QF))
 
-            IC1 <- as(diag(dimm) %*% object@Curve, "EuclRandVariable")
+            IC1 <- as(diag(dims) %*% object@Curve, "EuclRandVariable")
             absInfo <- t(IC1) %*% QF %*% IC1
             absInfo <- sapply(x.vec, absInfo@Map[[1]])
 
