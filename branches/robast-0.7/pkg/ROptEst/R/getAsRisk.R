@@ -75,11 +75,12 @@ setMethod("getAsRisk", signature(risk = "asBias",
         comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
         z.comp <- comp$"z.comp"
         A.comp <- comp$"A.comp"
+        DA.comp <- abs(trafo) %*% A.comp != 0
         
         eerg <- .LowerCaseMultivariate(L2deriv = L2deriv, neighbor = neighbor, 
              biastype = biastype, normtype = normtype, Distr = Distr, 
              trafo = trafo, z.start = z.start, A.start, z.comp = z.comp, 
-             A.comp = A.comp,  maxiter = maxiter, tol = tol)
+             A.comp = DA.comp,  maxiter = maxiter, tol = tol)
         erg <- eerg$erg
         bias <- 1/erg$value
         
