@@ -4,7 +4,7 @@
 setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
     function(model, risk, z.start = NULL, A.start = NULL, upper = 1e4, 
              maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE, 
-             noLow = FALSE, verbose = FALSE){
+             noLow = FALSE, verbose = FALSE, ...){
         L2derivDim <- numberOfMaps(model@center@L2deriv)
         ow <- options("warn")
         on.exit(options(ow))
@@ -15,7 +15,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                         symm = model@center@L2derivDistrSymm[[1]],
                         Finfo = model@center@FisherInfo, trafo = trafo(model@center@param), 
                         upper = upper, maxiter = maxiter, tol = tol, warn = warn,
-                        noLow = noLow, verbose = verbose)
+                        noLow = noLow, verbose = verbose, ...)
             res$info <- c("optIC", res$info)
             res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                  neighbor = model@neighbor, 
@@ -49,7 +49,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                             L2derivDistrSymm = L2derivDistrSymm, Finfo = model@center@FisherInfo, 
                             trafo = trafo(model@center@param), z.start = z.start, A.start = A.start, 
                             upper = upper, maxiter = maxiter, tol = tol, warn = warn, 
-                            verbose = verbose)
+                            verbose = verbose, ...)
                 options(ow)
                 res$info <- c("optIC", res$info)
                 res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 

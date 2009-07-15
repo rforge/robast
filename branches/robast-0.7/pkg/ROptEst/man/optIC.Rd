@@ -15,7 +15,7 @@ optIC(model, risk, ...)
 \S4method{optIC}{InfRobModel,asRisk}(model, risk, z.start = NULL, A.start = NULL,
                                      upper = 1e4, maxiter = 50, 
                                      tol = .Machine$double.eps^0.4, warn = TRUE, 
-                                     noLow = FALSE, verbose = FALSE)
+                                     noLow = FALSE, verbose = FALSE, ...)
 
 \S4method{optIC}{InfRobModel,asUnOvShoot}(model, risk, upper = 1e4, maxiter = 50, 
                                           tol = .Machine$double.eps^0.4, warn = TRUE)

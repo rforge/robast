@@ -35,10 +35,11 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
              L2derivDistrSymm, z.start, A.start, Finfo, trafo, maxiter, tol, warn, verbose = FALSE, ...)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
+             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE, checkBounds = TRUE)
 
 \S4method{getInfRobIC}{RealRandVariable,asHampel,ContNeighborhood}(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper, maxiter, tol, warn, verbose = FALSE)
+             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper, maxiter, tol, warn, 
+             verbose = FALSE, checkBounds = TRUE)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
@@ -74,6 +75,8 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
                   \code{PosSemDefSymmMatrix} for use of different 
                   (standardizing) norm }
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
+  \item{checkBounds}{ logical: if \code{TRUE}, minimal and maximal clipping bound are 
+      computed to check if a valid bound was specified. }
 }
 %\details{}
 \value{The optimally robust IC is computed.}
