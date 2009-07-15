@@ -139,7 +139,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         mnms <- if(is.null(mnm)) NULL else paste("'", mnm, "' = ", sep = "") 
         mss  <- paste(mnms, round(L2Fam@param@main, 3), collapse=", ",sep="")
         innerT <- paste(gettextf("Component "),  tnms, 
-                        gettextf(" of L_2 derivative\nof"),
+                        gettextf("\nof"), #gettextf(" of L_2 derivative\nof"),
                         name(x)[1],
                         gettextf("\nwith main parameter ("), mss,")")
         if(!is.null(L2Fam@param@nuisance)){
