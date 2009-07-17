@@ -57,9 +57,9 @@ setMethod("%*%", signature(x = "matrix", y = "EuclRandMatrix"),
             stop("non-conformable arguments")
         map <- vector("list", dx[1]*dy[2])
 
-        for(i in 1:dx[1])
-            for(j in 1:dy[2])
-                map[[(i-1)*dy[2] + j]] <- Map(t(x[i,]) %*% y[,j])[[1]]
+        for(i in 1:dy[2])
+            for(j in 1:dx[1])
+                map[[(i-1)*dx[1] + j]] <- Map(t(x[j,]) %*% y[,i])[[1]]
         
         y@Map <- map
         y@Dim <- c(dx[1], dy[2])
@@ -194,9 +194,9 @@ setMethod("%*%", signature(x = "EuclRandMatrix", y = "EuclRandMatrix"),
             stop("the two random matrices have different ranges")
         map <- vector("list", dx[1]*dy[2])
 
-        for(i in 1:dx[1])
-            for(j in 1:dy[2])
-                map[[(i-1)*dy[2] + j]] <- Map(x[i,] %*% y[,j])[[1]]
+        for(i in 1:dy[2])
+            for(j in 1:dx[1])
+                map[[(i-1)*dx[1] + j]] <- Map(x[j,] %*% y[,i])[[1]]
         
         x@Map <- map
         x@Dim <- c(dx[1], dy[2])
