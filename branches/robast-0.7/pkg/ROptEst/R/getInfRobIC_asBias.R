@@ -196,7 +196,7 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
                                    neighbortype = class(neighbor)), 
                      asCov = Cov,
                      trAsCov = list(value = trAsCov, normtype = normtype),
-                     asMSE = list(value = r^2 * b^2 + trAsCov, 
+                     asMSE = list(value = asMSE, 
                                   r = r,
                                   at = neighbor))
         return(list(A = A, a = a, b = b, d = d, risk = Risk, info = info, 

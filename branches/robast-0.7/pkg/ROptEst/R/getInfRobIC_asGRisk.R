@@ -231,19 +231,21 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                              "=> the minimum asymptotic bias (lower case) solution is returned\n",
                              "If 'no' => Try again with modified starting values ",
                              "'z.start' and 'A.start'\n")
-                             res <- getInfRobIC(L2deriv = L2deriv, 
-                                        risk =  asBias(biastype = biastype(risk),
-                                                       normtype = normtype(risk)), 
-                                    neighbor = neighbor, Distr = Distr, DistrSymm = DistrSymm,
-                                    L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm,
-                                    z.start = z.start, A.start = A.start, trafo = trafo, 
-                                    maxiter = maxiter, tol = tol, warn = warn, Finfo = Finfo,
-                                    verbose = verbose)
-                             normtype(risk) <- res$normtype
-                             Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
-                                  biastype = biastype, clip = NULL,   
-                                  cent = res$a, stand = res$A, trafo = trafo)
-                res$risk <- c(Risk, res$risk)
+                res <- getInfRobIC(L2deriv = L2deriv, 
+                                   risk =  asBias(biastype = biastype(risk),
+                                                  normtype = normtype(risk)), 
+                                   neighbor = neighbor, Distr = Distr, DistrSymm = DistrSymm,
+                                   L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm,
+                                   z.start = z.start, A.start = A.start, trafo = trafo, 
+                                   maxiter = maxiter, tol = tol, warn = warn, Finfo = Finfo,
+                                   verbose = verbose)
+                normtype(risk) <- res$normtype
+                if(!is(risk, "asMSE")){
+                    Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
+                                      biastype = biastype, clip = NULL,   
+                                      cent = res$a, stand = res$A, trafo = trafo)
+                    res$risk <- c(Risk, res$risk)
+                }
                 return(res)
             }
             clip(w) <- b
