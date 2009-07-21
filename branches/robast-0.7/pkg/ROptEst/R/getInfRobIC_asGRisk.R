@@ -15,10 +15,12 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                         neighbor = neighbor, Finfo = Finfo, trafo = trafo,
                         verbose = verbose)
             res <- c(res, list(biastype = biastype, normtype = NormType()))
-            Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
-                              biastype = biastype, clip = res$b, cent = res$a, 
-                              stand = res$A, trafo = trafo)
-            res$risk <- c(Risk, res$risk)
+            if(!is(risk, "asMSE")){
+                Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
+                                  biastype = biastype, clip = res$b, cent = res$a, 
+                                  stand = res$A, trafo = trafo)
+                res$risk <- c(Risk, res$risk)
+            }
             Cov <- res$risk$asCov
             res$risk$asBias <- list(value = b, biastype = biastype, 
                                    normtype = NormType(), 
@@ -97,9 +99,13 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                      biastype = biastype, clip = c0, cent = z, trafo = trafo)
         a <- as.vector(A)*z
         b <- abs(as.vector(A))*c0
-        Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
-                          biastype = biastype, clip = b, cent = a, stand = A, 
-                          trafo = trafo)
+        if(!is(risk, "asMSE")){
+            Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
+                              biastype = biastype, clip = b, cent = a, stand = A, 
+                              trafo = trafo)
+        }else{
+            Risk <- NULL
+        }
         Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor, 
                        biastype = biastype, clip = c0, cent = z, stand = A)
 
@@ -161,18 +167,19 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                Distr = Distr, Finfo = Finfo, trafo = trafo, 
                                QuadForm = QF, verbose = verbose)
             res <- c(res, list(biastype = biastype, normtype = normtype))
-            Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
-                              biastype = biastype, cent = res$a, 
-                              stand = res$A, trafo = trafo)
-            res$risk <- c(Risk, res$risk)
+            if(!is(risk, "asMSE")){
+                Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
+                                  biastype = biastype, cent = res$a, 
+                                  stand = res$A, trafo = trafo)
+                res$risk <- c(Risk, res$risk)
+            }
             trAsCov <- sum(diag(QF%*%res$risk$asCov)); 
-            r <- neighbor@radius
             res$risk$trAsCov <- list(value = trAsCov, normtype = normtype)
             res$risk$asBias <- list(value = b, biastype = biastype, 
                                    normtype = normtype, 
                                    neighbortype = class(neighbor))
-            res$risk$asMSE <- list(value = trAsCov + r^2*b^2, 
-                                   r = r,
+            res$risk$asMSE <- list(value = trAsCov + radius^2*b^2, 
+                                   r = radius,
                                    at = neighbor)
             return(res)
         }
@@ -203,7 +210,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
             QF <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(nrow(A))
             upper0 <- sqrt( (sum( diag(QF%*%A%*%Finfo%*%t(A))) + t(A%*%z)%*%QF%*%(A%*%z)) / 
-                          ((1 + neighbor@radius^2)^2-1))
+                          ((1 + radius^2)^2-1))
 
             if (!is.null(upper)|(iter == 1)) 
                     {lower <- .Machine$double.eps^0.75; 
@@ -283,9 +290,13 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         a <- as.vector(A %*% z)
         info <- paste("optimally robust IC for", sQuote(class(risk)[1]))
-        Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
-                          biastype = biastype, clip = b, cent = a, stand = A, 
-                          trafo = trafo)
+        if(!is(risk, "asMSE")){
+            Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
+                              biastype = biastype, clip = b, cent = a, stand = A, 
+                              trafo = trafo)
+        }else{
+            Risk <- NULL
+        }
         Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor, 
                        biastype = biastype, Distr = Distr, 
                        V.comp = A.comp, cent = a, 
