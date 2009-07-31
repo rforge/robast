@@ -35,17 +35,17 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
              L2derivDistrSymm, z.start, A.start, Finfo, trafo, maxiter, tol, warn, verbose = FALSE, ...)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE, checkBounds = TRUE)
+             upper = NULL, maxiter, tol, warn, noLow = FALSE, verbose = FALSE, checkBounds = TRUE)
 
 \S4method{getInfRobIC}{RealRandVariable,asHampel,ContNeighborhood}(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper, maxiter, tol, warn, 
+             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper = NULL, maxiter, tol, warn,
              verbose = FALSE, checkBounds = TRUE)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
+             upper = NULL, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
 
 \S4method{getInfRobIC}{RealRandVariable,asGRisk,ContNeighborhood}(L2deriv, risk, neighbor,  Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper, maxiter, tol, warn, verbose = FALSE)
+             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper = NULL, maxiter, tol, warn, verbose = FALSE)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper, maxiter, tol, warn)

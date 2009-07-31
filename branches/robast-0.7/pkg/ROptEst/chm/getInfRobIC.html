@@ -64,23 +64,23 @@ getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm,
 ## S4 method for signature 'UnivariateDistribution,
 ##   asHampel, UncondNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE, checkBounds = TRUE)
+             upper = NULL, maxiter, tol, warn, noLow = FALSE, verbose = FALSE, checkBounds = TRUE)
 
 ## S4 method for signature 'RealRandVariable, asHampel,
 ##   ContNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper, maxiter, tol, warn, 
+             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper = NULL, maxiter, tol, warn,
              verbose = FALSE, checkBounds = TRUE)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asGRisk, UncondNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
+             upper = NULL, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
 
 ## S4 method for signature 'RealRandVariable, asGRisk,
 ##   ContNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor,  Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper, maxiter, tol, warn, verbose = FALSE)
+             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper = NULL, maxiter, tol, warn, verbose = FALSE)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asUnOvShoot, UncondNeighborhood':

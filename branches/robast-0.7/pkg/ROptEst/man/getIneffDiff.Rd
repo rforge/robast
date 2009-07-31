@@ -14,7 +14,7 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
 
 \S4method{getIneffDiff}{numeric,L2ParamFamily,UncondNeighborhood,asMSE}(
           radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
-          z.start = NULL, A.start = NULL, upper.b, MaxIter, eps, warn,
+          z.start = NULL, A.start = NULL, upper.b = NULL, MaxIter, eps, warn,
           loNorm = NULL, upNorm = NULL, verbose = FALSE)
 }
 \arguments{

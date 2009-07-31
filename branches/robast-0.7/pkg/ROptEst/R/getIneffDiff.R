@@ -6,7 +6,7 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                                     neighbor = "UncondNeighborhood",
                                     risk = "asMSE"),
     function(radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
-             z.start = NULL, A.start = NULL, upper.b, MaxIter, eps, warn,
+             z.start = NULL, A.start = NULL, upper.b = NULL, MaxIter, eps, warn,
              loNorm = NULL, upNorm = NULL, verbose = FALSE){
         L2derivDim <- numberOfMaps(L2Fam@L2deriv)
         if(L2derivDim == 1){

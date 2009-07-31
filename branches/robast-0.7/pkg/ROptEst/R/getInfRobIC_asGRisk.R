@@ -4,7 +4,7 @@
 setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution", 
                                    risk = "asGRisk", 
                                    neighbor = "UncondNeighborhood"),
-    function(L2deriv, risk, neighbor, symm, Finfo, trafo, upper, maxiter, tol, 
+    function(L2deriv, risk, neighbor, symm, Finfo, trafo, upper = NULL, maxiter, tol,
              warn, noLow = FALSE, verbose = FALSE){
         biastype <- biastype(risk)
         radius <- neighbor@radius
@@ -44,10 +44,10 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             z.old <- z
             c0.old <- c0
             ## new
-            lower0 <- getL1normL2deriv(L2deriv = L2deriv, cent = z) / 
+            lower0 <- getL1normL2deriv(L2deriv = L2deriv, cent = z) /
                                       (1 + neighbor@radius^2)
             upper0 <- sqrt( as.numeric( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) )
-            if (!is.null(upper)|(iter == 1)) 
+            if (!is.null(upper)|(iter == 1))
                     {lower <- .Machine$double.eps^0.75
                 }else{ lower <- lower0; upper <- upper0}
             ##
@@ -146,7 +146,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                    neighbor = "ContNeighborhood"),
     function(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, 
-             z.start, A.start, upper, maxiter, tol, warn, verbose = FALSE){
+             z.start, A.start, upper = NULL, maxiter, tol, warn, verbose = FALSE){
         biastype <- biastype(risk)
         normtype <- normtype(risk)
 

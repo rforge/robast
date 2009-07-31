@@ -4,7 +4,7 @@
 setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution", 
                                    risk = "asGRisk", 
                                    neighbor = "UncondNeighborhood"),
-    function(L2deriv, risk, neighbor, symm, Finfo, trafo, upper, maxiter, tol, 
+    function(L2deriv, risk, neighbor, symm, Finfo, trafo, upper, maxiter, tol,
              warn, noLow = FALSE, verbose = FALSE){
         biastype <- biastype(risk)
         radius <- neighbor@radius

@@ -5,7 +5,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    risk = "asHampel", 
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE,
+             upper = NULL, maxiter, tol, warn, noLow = FALSE, verbose = FALSE,
              checkBounds = TRUE){
         biastype <- biastype(risk)
         normtype <- normtype(risk)
@@ -133,7 +133,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                    neighbor = "ContNeighborhood"),
     function(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm,
              L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE,
-             z.start, A.start, upper, maxiter, tol, warn, verbose = FALSE,
+             z.start, A.start, upper = NULL, maxiter, tol, warn, verbose = FALSE,
              checkBounds = TRUE){
 
         biastype <- biastype(risk)
@@ -152,9 +152,9 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         if(checkBounds){
         ClassIC <- trafo %*% solve(Finfo) %*% L2deriv
-        lower <- q(Distr)(getdistrOption("TruncQuantile"))
-        upper <- q(Distr)(1-getdistrOption("TruncQuantile"))
-        x <- seq(from = lower, to = upper, length = 1000)
+        lower.x <- q(Distr)(getdistrOption("TruncQuantile"))
+        upper.x <- q(Distr)(1-getdistrOption("TruncQuantile"))
+        x <- seq(from = lower.x, to = upper.x, length = 1000)
         bmax <- sapply(x,function(x) evalRandVar(ClassIC,x))
         bmax <- sqrt(max(colSums(bmax^2)))
         cat("numerical approximation of maximal bound:\t", bmax, "\n")
