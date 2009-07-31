@@ -714,19 +714,19 @@
 <param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="oneStepEstimator,matrix,InfluenceCurve,Estimate-method">
+<param name="Name" value="oneStepEstimator,matrix,InfluenceCurve,ANY-method">
 <param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="oneStepEstimator,matrix,InfluenceCurve,numeric-method">
+<param name="Name" value="oneStepEstimator,matrix,InfluenceCurve-method">
 <param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="oneStepEstimator,numeric,InfluenceCurve,Estimate-method">
+<param name="Name" value="oneStepEstimator,numeric,InfluenceCurve,ANY-method">
 <param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="oneStepEstimator,numeric,InfluenceCurve,numeric-method">
+<param name="Name" value="oneStepEstimator,numeric,InfluenceCurve-method">
 <param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">

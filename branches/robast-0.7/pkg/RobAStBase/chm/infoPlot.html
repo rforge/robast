@@ -29,7 +29,7 @@ infoPlot(object,  ...)
 ## S4 method for signature 'IC':
 infoPlot(object, ..., withSweave = getdistrOption("withSweave"), 
              col = par("col"), lwd = par("lwd"), lty, 
-             colI = grey(0.5), lwdI = 0.7*par("lwd"), ltyI = 3,
+             colI = grey(0.5), lwdI = 0.7*par("lwd"), ltyI = "dotted",
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
@@ -94,13 +94,13 @@ line-type of the classically optimal IC</td></tr>
 <td>
 magnification to be used for inner titles relative
 to the current setting of <code>cex</code>; as in 
-<code><a onclick="findlink('stats', 'par.html')" style="text-decoration: underline; color: blue; cursor: hand">par</a></code></td></tr>
+<code><a onclick="findlink('graphics', 'par.html')" style="text-decoration: underline; color: blue; cursor: hand">par</a></code></td></tr>
 <tr valign="top"><td><code>col.inner</code></td>
 <td>
 character or integer code; color for the inner title</td></tr>
 <tr valign="top"><td><code>legend.location</code></td>
 <td>
-a valid argument <code>x</code> for <code><a onclick="findlink('PerformanceAnalytics', 'PerformanceAnalytics-internal.html')" style="text-decoration: underline; color: blue; cursor: hand">legend</a></code> &mdash;
+a valid argument <code>x</code> for <code><a onclick="findlink('graphics', 'legend.html')" style="text-decoration: underline; color: blue; cursor: hand">legend</a></code> &mdash;
 the place where to put the legend on the last issued
 plot &mdash; or a list of length (number of plotted panels) 
 of such arguments, one for each plotted panel.</td></tr>

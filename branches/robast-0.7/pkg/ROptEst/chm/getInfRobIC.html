@@ -64,12 +64,13 @@ getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm,
 ## S4 method for signature 'UnivariateDistribution,
 ##   asHampel, UncondNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
+             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE, checkBounds = TRUE)
 
 ## S4 method for signature 'RealRandVariable, asHampel,
 ##   ContNeighborhood':
 getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper, maxiter, tol, warn, verbose = FALSE)
+             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper, maxiter, tol, warn, 
+             verbose = FALSE, checkBounds = TRUE)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asGRisk, UncondNeighborhood':
@@ -157,6 +158,10 @@ matrix of (or which may coerced to) class
 <tr valign="top"><td><code>verbose</code></td>
 <td>
 logical: if <code>TRUE</code>, some messages are printed </td></tr>
+<tr valign="top"><td><code>checkBounds</code></td>
+<td>
+logical: if <code>TRUE</code>, minimal and maximal clipping bound are 
+computed to check if a valid bound was specified. </td></tr>
 </table>
 
 <h3>Value</h3>

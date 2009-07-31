@@ -28,8 +28,10 @@ respectively.
 <h3>Usage</h3>
 
 <pre>
-rowRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
-colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1)
+rowRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
+          fsCor = TRUE, mad0 = 1e-4)
+colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
+          fsCor = TRUE, mad0 = 1e-4)
 </pre>
 
 
@@ -65,6 +67,12 @@ median and/or MAD are used. </td></tr>
 <tr valign="top"><td><code>k</code></td>
 <td>
 positive integer. k-step is used to compute the optimally robust estimator.</td></tr>
+<tr valign="top"><td><code>fsCor</code></td>
+<td>
+logical: perform finite-sample correction. See function <code><a href="finiteSampleCorrection.html">finiteSampleCorrection</a></code>. </td></tr>
+<tr valign="top"><td><code>mad0</code></td>
+<td>
+scale estimate used if computed MAD is equal to zero</td></tr>
 </table>
 
 <h3>Details</h3>
@@ -108,7 +116,7 @@ respectively.
 </p>
 <p>
 If <code>eps</code> is missing, the radius-minimax estimator in sense of 
-Rieder et al. (2001), respectively Section 2.2 of Kohl (2005) is returned.
+Rieder et al. (2008), respectively Section 2.2 of Kohl (2005) is returned.
 </p>
 <p>
 In case of location, respectively scale one additionally has to specify
@@ -116,6 +124,12 @@ In case of location, respectively scale one additionally has to specify
 be a single number, i.e., identical for all rows, respectively columns,
 or a vector with length identical to the number of rows, respectively 
 columns.
+</p>
+<p>
+For sample size &lt;= 2, median and/or MAD are used for estimation.
+</p>
+<p>
+If <code>eps = 0</code>, mean and/or sd are computed.
 </p>
 
 
@@ -143,13 +157,7 @@ Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
 <p>
 Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
 the Radius. Statistical Methods and Applications <EM>17</EM>(1) 13-40.
-</p>
-<p>
-Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
-the Radius. Submitted. Appeared as discussion paper Nr. 81. 
-SFB 373 (Quantification and Simulation of Economic Processes),
-Humboldt University, Berlin; also available under
-<a href="www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf">www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf</a>
+Extended version: <a href="http://www.stamats.de/RRlong.pdf">http://www.stamats.de/RRlong.pdf</a>
 </p>
 
 
@@ -200,6 +208,6 @@ location.href = link;
 </script>
 
 
-<hr><div align="center">[Package <em>RobLox</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
+<hr><div align="center">[Package <em>RobLox</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 
 </body></html>

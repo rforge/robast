@@ -1747,12 +1747,12 @@
 <param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic function for the computation of optimally robust ICs">
-<param name="Local" value="optIC.html">
+<param name="Name" value="Generic Function for the Computation of Optimally Robust ICs">
+<param name="Local" value="getFixRobIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic Function for the Computation of Optimally Robust ICs ">
-<param name="Local" value="getInfRobIC.html">
+<param name="Name" value="Generic function for the computation of optimally robust ICs">
+<param name="Local" value="optIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic Function for the Computation of the Kolmogorov Minimum Distance Estimator">
@@ -1768,14 +1768,14 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic Function for the Computation of the Optimal Clipping Bound">
-<param name="Local" value="getInfGamma.html">
+<param name="Local" value="getFixClip.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic function for the computation of the radius minimax IC">
 <param name="Local" value="radiusMinimaxIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic Function for the Computation of the Standardizing Matrix ">
+<param name="Name" value="Generic Function for the Computation of the Standardizing Matrix">
 <param name="Local" value="getInfStand.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">

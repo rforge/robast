@@ -56,7 +56,7 @@ Class \code{"RandVariable"}, directly.
 \section{Methods}{
   \describe{
     \item{coerce}{\code{signature(from = "EuclRandVariable", to = "EuclRandMatrix")}: 
-      create a \newline \code{"EuclRandMatrix"} object from a Euclidean random variable. }
+      create a  \code{"EuclRandMatrix"} object from a Euclidean random variable. }
 
     \item{coerce}{\code{signature(from = "EuclRandVariable", to = "EuclRandVarList")}: 
       create a \code{"EuclRandVarList"} object from a Euclidean random variable. }

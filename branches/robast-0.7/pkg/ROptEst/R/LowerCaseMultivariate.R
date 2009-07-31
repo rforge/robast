@@ -1,6 +1,6 @@
 .LowerCaseMultivariate <- function(L2deriv, neighbor, biastype,
              normtype, Distr, trafo, z.start,
-             A.start, z.comp, A.comp, maxiter, tol){
+             A.start, z.comp, A.comp, maxiter, tol, verbose = FALSE){
 
         w <- new("HampelWeight")
 
@@ -26,7 +26,7 @@
             A[A.comp] <- param[1:lA.comp]
             z <- numeric(k)
             z[z.comp] <- param[(lA.comp+1):length(param)]
-            
+
 #            if(is(normtype,"SelfNorm")) 
 #               A <- A/max(A)
             
@@ -51,6 +51,12 @@
             erg <- E1/sum(diag(stA %*% t(trafo)))
             clip(w0) <- 1/erg
             w <<- w0
+            if(verbose){
+               cat("trying to find lower case solution;\n")
+               cat("current Lagrange Multiplier value:\n")
+               print(list(A=A, z=z,erg=erg))
+               }
+
             return(erg)
         }
 

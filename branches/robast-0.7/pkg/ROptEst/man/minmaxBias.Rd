@@ -29,7 +29,7 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
              maxiter, tol, warn, Finfo)
 
 \S4method{minmaxBias}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype, normtype, Distr, 
-             z.start, A.start,  z.comp, A.comp, trafo, maxiter, tol)
+             z.start, A.start,  z.comp, A.comp, trafo, maxiter, tol, verbose = FALSE)
 
 }
 \arguments{
@@ -50,6 +50,7 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
   \item{tol}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }
   \item{Finfo}{ Fisher information matrix. }
+  \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
 }
 %\details{}
 \value{The bias-optimally robust IC is computed.}

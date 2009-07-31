@@ -24,8 +24,8 @@ parametric families via k-step construction.
 <h3>Usage</h3>
 
 <pre>
-roptest(x, L2Fam, eps, eps.lower, eps.upper, initial.est, 
-        neighbor = ContNeighborhood(), risk = asMSE(), steps = 1, 
+roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est, 
+        neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
         distance = CvMDist, startPar = NULL, verbose = FALSE, 
         useLast = getRobAStBaseOption("kStepUseLast"), ...)
 </pre>
@@ -52,6 +52,10 @@ lower bound for the amount of gross errors. See details below. </td></tr>
 <td>
 positive real (<code>eps.lower</code> &lt;= <code>eps.upper</code> &lt;= 0.5): 
 upper bound for the amount of gross errors. See details below. </td></tr>
+<tr valign="top"><td><code>fsCor</code></td>
+<td>
+positive real: factor used to correct the neighborhood radius;
+see details. </td></tr>
 <tr valign="top"><td><code>initial.est</code></td>
 <td>
 initial estimate for unknown parameter. If missing 
@@ -122,6 +126,15 @@ respectively.
 <p>
 If <code>eps</code> is missing, the radius-minimax estimator in sense of 
 Rieder et al. (2001, 2008), respectively Section 2.2 of Kohl (2005) is returned.
+</p>
+<p>
+Finite-sample and higher order results suggest that the asymptotically
+optimal procedure is to liberal. Using <code>fsCor</code> the radius can be
+modified - as a rule enlarged - to obtain a more conservative estimate.
+In case of normal location and scale there is function 
+<code><a onclick="findlink('RobLox', 'finiteSampleCorrection.html')" style="text-decoration: underline; color: blue; cursor: hand">finiteSampleCorrection</a></code> which returns a finite-sample 
+corrected (enlarged) radius based on the results of large Monte-Carlo
+studies.
 </p>
 <p>
 The default value of argument <code>useLast</code> is set by the
@@ -277,6 +290,17 @@ confint(robest, symmetricBias())
 plot(pIC(robest))
 ## plot of relative and absolute information; cf. Kohl (2005)
 infoPlot(pIC(robest))
+
+## finite-sample correction
+if(require(RobLox)){
+    n &lt;- length(chem)
+    r &lt;- 0.05*sqrt(n)
+    r.fi &lt;- finiteSampleCorrection(n = n, r = r)
+    fsCor &lt;- r.fi/r
+    robest &lt;- roptest(chem, NormLocationScaleFamily(), eps = 0.05, 
+                      fsCor = fsCor, steps = 3)
+    estimate(robest)
+}
 
 ## compute optimally robust estimator (unknown contamination)
 ## takes some time -&gt; use package RobLox!

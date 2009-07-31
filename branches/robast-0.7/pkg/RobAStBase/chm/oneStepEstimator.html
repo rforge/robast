@@ -7,10 +7,10 @@
 <table width="100%"><tr><td>oneStepEstimator(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   oneStepEstimator">
 <param name="keyword" value="R:   oneStepEstimator-methods">
-<param name="keyword" value="R:   oneStepEstimator,numeric,InfluenceCurve,numeric-method">
-<param name="keyword" value="R:   oneStepEstimator,matrix,InfluenceCurve,numeric-method">
-<param name="keyword" value="R:   oneStepEstimator,numeric,InfluenceCurve,Estimate-method">
-<param name="keyword" value="R:   oneStepEstimator,matrix,InfluenceCurve,Estimate-method">
+<param name="keyword" value="R:   oneStepEstimator,numeric,InfluenceCurve-method">
+<param name="keyword" value="R:   oneStepEstimator,matrix,InfluenceCurve-method">
+<param name="keyword" value="R:   oneStepEstimator,numeric,InfluenceCurve,ANY-method">
+<param name="keyword" value="R:   oneStepEstimator,matrix,InfluenceCurve,ANY-method">
 <param name="keyword" value=" Generic function for the computation of one-step estimates">
 </object>
 
@@ -30,20 +30,10 @@ Generic function for the computation of one-step estimates.
 <pre>
 oneStepEstimator(x, IC, start, ...)
 
-## S4 method for signature 'numeric, InfluenceCurve,
-##   numeric':
+## S4 method for signature 'numeric, InfluenceCurve, ANY':
 oneStepEstimator(x, IC, start, 
     useLast = getRobAStBaseOption("kStepUseLast"))
-## S4 method for signature 'matrix, InfluenceCurve,
-##   numeric':
-oneStepEstimator(x, IC, start, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-## S4 method for signature 'numeric, InfluenceCurve,
-##   Estimate':
-oneStepEstimator(x, IC, start, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-## S4 method for signature 'matrix, InfluenceCurve,
-##   Estimate':
+## S4 method for signature 'matrix, InfluenceCurve, ANY':
 oneStepEstimator(x, IC, start, 
     useLast = getRobAStBaseOption("kStepUseLast"))
 </pre>
@@ -113,10 +103,8 @@ Object of class <code>"kStepEstimate"</code></p>
 <h3>Methods</h3>
 
 <dl>
-<dt>x = "numeric", IC = "InfluenceCurve", start = "numeric"</dt><dd>univariate samples. </dd>
-<dt>x = "matrix", IC = "InfluenceCurve", start = "numeric"</dt><dd>multivariate samples. </dd>
-<dt>x = "matrix", IC = "InfluenceCurve", start = "Estimate"</dt><dd>multivariate samples. </dd>
-<dt>x = "matrix", IC = "InfluenceCurve", start = "Estimate"</dt><dd>multivariate samples. </dd>
+<dt>x = "numeric", IC = "InfluenceCurve", start = "ANY"</dt><dd>univariate samples. </dd>
+<dt>x = "matrix", IC = "InfluenceCurve", start = "ANY"</dt><dd>multivariate samples. </dd>
 </dl>
 
 <h3>Author(s)</h3>
@@ -145,6 +133,6 @@ Bayreuth: Dissertation.
 
 
 
-<hr><div align="center">[Package <em>RobAStBase</em> version 0.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 
 </body></html>

@@ -619,7 +619,7 @@
 <param name="Local" value="getRiskIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic Function for the Computation of Bias-Optimally Robust ICs ">
+<param name="Name" value="Generic Function for the Computation of Bias-Optimally Robust ICs">
 <param name="Local" value="minmaxBias.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -635,12 +635,12 @@
 <param name="Local" value="leastFavorableRadius.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic function for the computation of optimally robust ICs">
-<param name="Local" value="optIC.html">
+<param name="Name" value="Generic Function for the Computation of Optimally Robust ICs">
+<param name="Local" value="getFixRobIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic Function for the Computation of Optimally Robust ICs ">
-<param name="Local" value="getInfRobIC.html">
+<param name="Name" value="Generic function for the computation of optimally robust ICs">
+<param name="Local" value="optIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic function for the computation of the asymptotic bias for an IC">
@@ -660,27 +660,27 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic Function for the Computation of the Optimal Clipping Bound">
-<param name="Local" value="getInfGamma.html">
+<param name="Local" value="getFixClip.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic function for the computation of the radius minimax IC">
 <param name="Local" value="radiusMinimaxIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic Function for the Computation of the Standardizing Matrix ">
+<param name="Name" value="Generic Function for the Computation of the Standardizing Matrix">
 <param name="Local" value="getInfStand.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic Functions for Computation and Plot of Cniper Contamination          and Cniper Points. ">
+<param name="Name" value="Generic Functions for Computation and Plot of Cniper Contamination and Cniper Points.">
 <param name="Local" value="cniperCont.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Methods for Function updateNorm in Package `ROptEst' ">
+<param name="Name" value="Methods for Function updateNorm in Package 'ROptEst'">
 <param name="Local" value="updateNorm-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Optimally robust estimation ">
-<param name="Local" value="roptest.html">
+<param name="Name" value="Optimally robust estimation">
+<param name="Local" value="0ROptEst-package.html">
 </OBJECT>
 </UL>
 </UL>

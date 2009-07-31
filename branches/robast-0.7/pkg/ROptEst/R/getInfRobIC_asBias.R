@@ -65,11 +65,11 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         z.comp <- comp$"z.comp"
         A.comp <- comp$"A.comp"
 
-        minmaxBias(L2deriv = L2deriv, neighbor = neighbor, 
+        return(minmaxBias(L2deriv = L2deriv, neighbor = neighbor,
                    biastype = biastype(risk), normtype = normtype(risk),
              Distr = Distr, z.start = z.start, A.start = A.start, 
              z.comp = z.comp, A.comp = A.comp, trafo = trafo,
-             maxiter = maxiter, tol = tol)
+             maxiter = maxiter, tol = tol, verbose = verbose))
     })
 
 
@@ -153,12 +153,14 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
                                    neighbor = "ContNeighborhood", 
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, normtype, Distr, 
-             z.start, A.start, z.comp, A.comp, trafo, maxiter, tol){
+             z.start, A.start,  z.comp, A.comp, trafo, maxiter,  tol,
+             verbose = FALSE){
 
         DA.comp <- abs(trafo) %*% A.comp != 0
         eerg <- .LowerCaseMultivariate(L2deriv, neighbor, biastype,
              normtype, Distr, trafo, z.start,
-             A.start, z.comp = z.comp, A.comp = DA.comp, maxiter, tol)
+             A.start, z.comp = z.comp, A.comp = DA.comp, maxiter, tol,
+             verbose = verbose)
         erg <- eerg$erg
 
         b <- 1/erg$value
