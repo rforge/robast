@@ -44,11 +44,13 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             z.old <- z
             c0.old <- c0
             ## new
-            lower0 <- getL1normL2deriv(L2deriv = L2deriv, cent = z) /
-                                      (1 + neighbor@radius^2)
-            upper0 <- sqrt( as.numeric( Finfo + z^2 )/(( 1 + neighbor@radius^2)^2 - 1) )
+            L1n <- getL1normL2deriv(L2deriv = L2deriv, cent = z)
+            lower0 <-  L1n/(1 + radius^2)
+            if(!is(neighbor,"ContNeighborhood")) lower0 <- lower0/2
+            upper0 <- max(L1n/radius,
+                 sqrt( as.numeric( Finfo + z^2 )/(( 1 + radius^2)^2 - 1) ))
             if (!is.null(upper)|(iter == 1))
-                    {lower <- .Machine$double.eps^0.75
+                    {lower <- .Machine$double.eps^0.6
                 }else{ lower <- lower0; upper <- upper0}
             ##
             c0 <- try(uniroot(getInfClip, 
@@ -213,18 +215,21 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             stand(w) <- A
 
             ## new
-            lower0 <- getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A, 
-                                       Distr = Distr, normtype = normtype)/(1+neighbor@radius^2)
+            L1n <- getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A,
+                                       Distr = Distr, normtype = normtype)
+            lower0 <- L1n/(1+radius^2)
 
             QF <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(nrow(A))
-            upper0 <- sqrt( (sum( diag(QF%*%A%*%Finfo%*%t(A))) + t(A%*%z)%*%QF%*%(A%*%z)) / 
-                          ((1 + radius^2)^2-1))
+            upper0 <- max(L1n/radius,
+                    sqrt( (sum( diag(QF%*%A%*%Finfo%*%t(A))) + t(A%*%z)%*%QF%*%(A%*%z)) /
+                          ((1 + radius^2)^2-1)))
 
             if (!is.null(upper)|(iter == 1)) 
-                    {lower <- .Machine$double.eps^0.75; 
+                    {lower <- .Machine$double.eps^0.6;
                      if(is.null(upper)) upper <- 10*upper0
                 }else{ lower <- lower0; upper <- upper0}
 
+            if(!is(neighbor,"ContNeighborhood")) lower0 <- lower0/2
             ##
             b <- try(uniroot(getInfClip, 
                   ## new
