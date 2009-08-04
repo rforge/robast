@@ -3,13 +3,13 @@
 \alias{getInfRobIC-methods}
 \alias{getInfRobIC,UnivariateDistribution,asCov,ContNeighborhood-method}
 \alias{getInfRobIC,UnivariateDistribution,asCov,TotalVarNeighborhood-method}
-\alias{getInfRobIC,RealRandVariable,asCov,ContNeighborhood-method}
+\alias{getInfRobIC,RealRandVariable,asCov,UncondNeighborhood-method}
 \alias{getInfRobIC,UnivariateDistribution,asBias,UncondNeighborhood-method}
 \alias{getInfRobIC,RealRandVariable,asBias,ContNeighborhood-method}
 \alias{getInfRobIC,UnivariateDistribution,asHampel,UncondNeighborhood-method}
-\alias{getInfRobIC,RealRandVariable,asHampel,ContNeighborhood-method}
+\alias{getInfRobIC,RealRandVariable,asHampel,UncondNeighborhood-method}
 \alias{getInfRobIC,UnivariateDistribution,asGRisk,UncondNeighborhood-method}
-\alias{getInfRobIC,RealRandVariable,asGRisk,ContNeighborhood-method}
+\alias{getInfRobIC,RealRandVariable,asGRisk,UncondNeighborhood-method}
 \alias{getInfRobIC,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method}
 
 \title{ Generic Function for the Computation of Optimally Robust ICs }
@@ -21,34 +21,48 @@
 \usage{
 getInfRobIC(L2deriv, risk, neighbor, ...)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asCov,ContNeighborhood}(L2deriv, risk, neighbor, Finfo, trafo, verbose = FALSE)
+\S4method{getInfRobIC}{UnivariateDistribution,asCov,ContNeighborhood}(L2deriv,
+                       risk, neighbor, Finfo, trafo, verbose = FALSE)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asCov,TotalVarNeighborhood}(L2deriv, risk, neighbor, Finfo, trafo, verbose = FALSE)
+\S4method{getInfRobIC}{UnivariateDistribution,asCov,TotalVarNeighborhood}(L2deriv,
+                       risk, neighbor, Finfo, trafo, verbose = FALSE)
 
-\S4method{getInfRobIC}{RealRandVariable,asCov,ContNeighborhood}(L2deriv, risk, neighbor, Distr, Finfo, trafo, 
+\S4method{getInfRobIC}{RealRandVariable,asCov,UncondNeighborhood}(L2deriv, risk,
+                       neighbor, Distr, Finfo, trafo,
                        QuadForm = diag(nrow(trafo)), verbose = FALSE)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asBias,UncondNeighborhood}(L2deriv, risk, neighbor, symm, trafo, 
-             maxiter, tol, warn, Finfo, verbose = FALSE, ...)
+\S4method{getInfRobIC}{UnivariateDistribution,asBias,UncondNeighborhood}(L2deriv,
+                       risk, neighbor, symm, trafo,
+                       maxiter, tol, warn, Finfo, verbose = FALSE, ...)
 
-\S4method{getInfRobIC}{RealRandVariable,asBias,ContNeighborhood}(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, z.start, A.start, Finfo, trafo, maxiter, tol, warn, verbose = FALSE, ...)
+\S4method{getInfRobIC}{RealRandVariable,asBias,ContNeighborhood}(L2deriv, risk,
+                       neighbor, Distr, DistrSymm, L2derivSymm,
+                       L2derivDistrSymm, z.start, A.start, Finfo, trafo,
+                       maxiter, tol, warn, verbose = FALSE, ...)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper = NULL, maxiter, tol, warn, noLow = FALSE, verbose = FALSE, checkBounds = TRUE)
+\S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv,
+                       risk, neighbor, symm, Finfo, trafo, upper = NULL, maxiter,
+                       tol, warn, noLow = FALSE, verbose = FALSE, checkBounds = TRUE)
 
-\S4method{getInfRobIC}{RealRandVariable,asHampel,ContNeighborhood}(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper = NULL, maxiter, tol, warn,
-             verbose = FALSE, checkBounds = TRUE)
+\S4method{getInfRobIC}{RealRandVariable,asHampel,UncondNeighborhood}(L2deriv, risk,
+                       neighbor, Distr, DistrSymm, L2derivSymm,
+                       L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start,
+                       A.start, upper = NULL, maxiter, tol, warn,
+                       verbose = FALSE, checkBounds = TRUE)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper = NULL, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
+\S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv,
+                       risk, neighbor, symm, Finfo, trafo,
+                       upper = NULL, maxiter, tol, warn, noLow = FALSE,
+                       verbose = FALSE)
 
-\S4method{getInfRobIC}{RealRandVariable,asGRisk,ContNeighborhood}(L2deriv, risk, neighbor,  Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper = NULL, maxiter, tol, warn, verbose = FALSE)
+\S4method{getInfRobIC}{RealRandVariable,asGRisk,UncondNeighborhood}(L2deriv, risk,
+                       neighbor,  Distr, DistrSymm, L2derivSymm,
+                       L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start,
+                       A.start, upper = NULL, maxiter, tol, warn, verbose = FALSE)
 
-\S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
+\S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(
+                       L2deriv, risk, neighbor, symm, Finfo, trafo,
+                       upper, maxiter, tol, warn)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
@@ -93,10 +107,13 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
     parametric families with unknown one-dimensional parameter. }
 
   \item{L2deriv = "RealRandVariable", risk = "asCov", 
-        neighbor = "ContNeighborhood"}{ 
+        neighbor = "UncondNeighborhood"}{
     computes the classical optimal influence curve for L2 differentiable 
     parametric families with unknown \eqn{k}-dimensional parameter 
-    (\eqn{k > 1}) where the underlying distribution is univariate. }
+    (\eqn{k > 1}) where the underlying distribution is univariate;
+    for total variation neighborhoods only is implemented for the case
+    where there is a \eqn{1\times k}{1 x k} transformation \code{trafo}
+    matrix. }
 
   \item{L2deriv = "UnivariateDistribution", risk = "asBias", 
         neighbor = "UncondNeighborhood"}{ 
@@ -115,10 +132,13 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
     parametric families with unknown one-dimensional parameter. }
 
   \item{L2deriv = "RealRandVariable", risk = "asHampel", 
-        neighbor = "ContNeighborhood"}{ 
+        neighbor = "UncondNeighborhood"}{
     computes the optimally robust influence curve for L2 differentiable 
     parametric families with unknown \eqn{k}-dimensional parameter 
-    (\eqn{k > 1}) where the underlying distribution is univariate. }
+    (\eqn{k > 1}) where the underlying distribution is univariate;
+    for total variation neighborhoods only is implemented for the case
+    where there is a \eqn{1\times k}{1 x k} transformation \code{trafo}
+    matrix. }
 
   \item{L2deriv = "UnivariateDistribution", risk = "asGRisk", 
         neighbor = "UncondNeighborhood"}{
@@ -126,10 +146,13 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
     parametric families with unknown one-dimensional parameter. }
 
   \item{L2deriv = "RealRandVariable", risk = "asGRisk", 
-        neighbor = "ContNeighborhood"}{ 
+        neighbor = "UncondNeighborhood"}{
     computes the optimally robust influence curve for L2 differentiable 
     parametric families with unknown \eqn{k}-dimensional parameter 
-    (\eqn{k > 1}) where the underlying distribution is univariate. }
+    (\eqn{k > 1}) where the underlying distribution is univariate;
+    for total variation neighborhoods only is implemented for the case
+    where there is a \eqn{1\times k}{1 x k} transformation \code{trafo}
+    matrix. }
 
   \item{L2deriv = "UnivariateDistribution", risk = "asUnOvShoot", 
         neighbor = "UncondNeighborhood"}{
@@ -151,7 +174,8 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 }
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de},\cr
+        Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
 \seealso{\code{\link[RobAStBase]{InfRobModel-class}}}
 %\examples{}

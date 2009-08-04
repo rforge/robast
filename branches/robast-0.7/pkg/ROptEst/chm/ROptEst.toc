@@ -282,15 +282,15 @@
 <param name="Local" value="getInfRobIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getInfRobIC,RealRandVariable,asCov,ContNeighborhood-method">
+<param name="Name" value="getInfRobIC,RealRandVariable,asCov,UncondNeighborhood-method">
 <param name="Local" value="getInfRobIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getInfRobIC,RealRandVariable,asGRisk,ContNeighborhood-method">
+<param name="Name" value="getInfRobIC,RealRandVariable,asGRisk,UncondNeighborhood-method">
 <param name="Local" value="getInfRobIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getInfRobIC,RealRandVariable,asHampel,ContNeighborhood-method">
+<param name="Name" value="getInfRobIC,RealRandVariable,asHampel,UncondNeighborhood-method">
 <param name="Local" value="getInfRobIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">

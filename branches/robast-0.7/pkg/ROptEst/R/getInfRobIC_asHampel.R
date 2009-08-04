@@ -130,7 +130,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
 
 setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable", 
                                    risk = "asHampel", 
-                                   neighbor = "ContNeighborhood"),
+                                   neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm,
              L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE,
              z.start, A.start, upper = NULL, maxiter, tol, warn, verbose = FALSE,
@@ -139,6 +139,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         biastype <- biastype(risk)
         normtype <- normtype(risk)
         p <- nrow(trafo)
+        if(! is(neighbor,"ContNeighborhood") && p>1)
+           stop("Not yet implemented")
 
         FI <- solve(trafo%*%solve(Finfo)%*%t(trafo))
         if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") ) 
@@ -151,52 +153,52 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         b <- risk@bound
 
         if(checkBounds){
-        ClassIC <- trafo %*% solve(Finfo) %*% L2deriv
-        lower.x <- q(Distr)(getdistrOption("TruncQuantile"))
-        upper.x <- q(Distr)(1-getdistrOption("TruncQuantile"))
-        x <- seq(from = lower.x, to = upper.x, length = 1000)
-        bmax <- sapply(x,function(x) evalRandVar(ClassIC,x))
-        bmax <- sqrt(max(colSums(bmax^2)))
-        cat("numerical approximation of maximal bound:\t", bmax, "\n")
-        if(b >= bmax){
-            if(warn) cat("'b >= maximum asymptotic bias' => (classical) optimal IC\n", 
-                         "in sense of Cramer-Rao bound is returned\n")
-            res <- getInfRobIC(L2deriv = L2deriv, risk = asCov(), neighbor = neighbor, 
-                                Distr = Distr, Finfo = Finfo, trafo = trafo, 
-                                QuadForm = std, verbose = verbose)
-            res <- c(res, list(biastype = biastype, normtype = normtype))
-            trAsCov <- sum(diag(std%*%res$risk$asCov)); 
-            r <- neighbor@radius
-            res$risk$trAsCov <- list(value = trAsCov, normtype = normtype)
-            res$risk$asBias <- list(value = b, biastype = biastype, 
-                                   normtype = normtype, 
-                                   neighbortype = class(neighbor))
-            res$risk$asMSE <- list(value = trAsCov + r^2*b^2, 
-                                   r = r,
-                                   at = neighbor)
-            return(res)
-        }
+            ClassIC <- trafo %*% solve(Finfo) %*% L2deriv
+            lower.x <- q(Distr)(getdistrOption("TruncQuantile"))
+            upper.x <- q(Distr)(1-getdistrOption("TruncQuantile"))
+            x <- seq(from = lower.x, to = upper.x, length = 1000)
+            bmax <- sapply(x,function(x) evalRandVar(ClassIC,x))
+            bmax <- sqrt(max(colSums(bmax^2)))
+            cat("numerical approximation of maximal bound:\t", bmax, "\n")
+            if(b >= bmax){
+                if(warn) cat("'b >= maximum asymptotic bias' => (classical) optimal IC\n",
+                             "in sense of Cramer-Rao bound is returned\n")
+                res <- getInfRobIC(L2deriv = L2deriv, risk = asCov(), neighbor = neighbor,
+                                    Distr = Distr, Finfo = Finfo, trafo = trafo,
+                                    QuadForm = std, verbose = verbose)
+                res <- c(res, list(biastype = biastype, normtype = normtype))
+                trAsCov <- sum(diag(std%*%res$risk$asCov));
+                r <- neighbor@radius
+                res$risk$trAsCov <- list(value = trAsCov, normtype = normtype)
+                res$risk$asBias <- list(value = b, biastype = biastype,
+                                       normtype = normtype,
+                                       neighbortype = class(neighbor))
+                res$risk$asMSE <- list(value = trAsCov + r^2*b^2,
+                                       r = r,
+                                       at = neighbor)
+                return(res)
+            }
 
-        res <- getInfRobIC(L2deriv = L2deriv, 
-                     risk = asBias(biastype = biastype, normtype = normtype), 
-                     neighbor = neighbor, Distr = Distr, DistrSymm = DistrSymm, 
-                     L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
-                     z.start = z.start, A.start = A.start, trafo = trafo, 
-                     maxiter = maxiter, tol = tol, warn = warn, Finfo = Finfo, 
-                     verbose = verbose)
-        bmin <- res$b
+            res <- getInfRobIC(L2deriv = L2deriv,
+                         risk = asBias(biastype = biastype, normtype = normtype),
+                         neighbor = neighbor, Distr = Distr, DistrSymm = DistrSymm,
+                         L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm,
+                         z.start = z.start, A.start = A.start, trafo = trafo,
+                         maxiter = maxiter, tol = tol, warn = warn, Finfo = Finfo,
+                         verbose = verbose)
+            bmin <- res$b
 
-        cat("minimal bound:\t", bmin, "\n")
-        if(b <= bmin){
-            if(warn) cat("'b <= minimum asymptotic bias'\n",
-                         "=> the minimum asymptotic bias (lower case) solution is returned\n")
+            cat("minimal bound:\t", bmin, "\n")
+            if(b <= bmin){
+                if(warn) cat("'b <= minimum asymptotic bias'\n",
+                             "=> the minimum asymptotic bias (lower case) solution is returned\n")
 
-            asMSE <- sum(diag(std%*%res$risk$asCov)) + neighbor@radius^2*bmin^2
-            if(!is.null(res$risk$asMSE)) res$risk$asMSE <- asMSE 
-               else     res$risk <- c(list(asMSE = asMSE), res$risk)
+                asMSE <- sum(diag(std%*%res$risk$asCov)) + neighbor@radius^2*bmin^2
+                if(!is.null(res$risk$asMSE)) res$risk$asMSE <- asMSE
+                   else     res$risk <- c(list(asMSE = asMSE), res$risk)
 
-            return(res)
-        }
+                return(res)
+            }
         }
 
         comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
@@ -204,17 +206,27 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         z.comp <- comp$"z.comp"
         A.comp <- comp$"A.comp"
 
-        w <- new("HampelWeight")
-        clip(w) <- b
         z <- z.start
         A <- A.start
+        if(is(neighbor,"ContNeighborhood")){
+            w <- new("HampelWeight")
+        }else{
+            w <- new("BdStWeight")
+        }
         iter <- 0
         repeat{
             iter <- iter + 1
             z.old <- z
             A.old <- A
-            cent(w) <- z 
-            stand(w) <- A 
+
+            if(is(neighbor,"ContNeighborhood")){
+                clip(w) <- b
+                cent(w) <- z
+                stand(w) <- A
+            }else{
+                clip(w) <- c(0,b)+as.numeric(A%*%z)
+                stand(w) <- A
+            }
 
             weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
                                    normW = normtype)

@@ -9,13 +9,13 @@
 <param name="keyword" value="R:   getInfRobIC-methods">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asCov,ContNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asCov,TotalVarNeighborhood-method">
-<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asCov,ContNeighborhood-method">
+<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asCov,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asBias,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,RealRandVariable,asBias,ContNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asHampel,UncondNeighborhood-method">
-<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asHampel,ContNeighborhood-method">
+<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asHampel,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asGRisk,UncondNeighborhood-method">
-<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asGRisk,ContNeighborhood-method">
+<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asGRisk,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method">
 <param name="keyword" value=" Generic Function for the Computation of Optimally Robust ICs">
 </object>
@@ -40,52 +40,66 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 
 ## S4 method for signature 'UnivariateDistribution, asCov,
 ##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Finfo, trafo, verbose = FALSE)
+getInfRobIC(L2deriv,
+                       risk, neighbor, Finfo, trafo, verbose = FALSE)
 
 ## S4 method for signature 'UnivariateDistribution, asCov,
 ##   TotalVarNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Finfo, trafo, verbose = FALSE)
+getInfRobIC(L2deriv,
+                       risk, neighbor, Finfo, trafo, verbose = FALSE)
 
 ## S4 method for signature 'RealRandVariable, asCov,
-##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Distr, Finfo, trafo, 
+##   UncondNeighborhood':
+getInfRobIC(L2deriv, risk,
+                       neighbor, Distr, Finfo, trafo,
                        QuadForm = diag(nrow(trafo)), verbose = FALSE)
 
 ## S4 method for signature 'UnivariateDistribution, asBias,
 ##   UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, symm, trafo, 
-             maxiter, tol, warn, Finfo, verbose = FALSE, ...)
+getInfRobIC(L2deriv,
+                       risk, neighbor, symm, trafo,
+                       maxiter, tol, warn, Finfo, verbose = FALSE, ...)
 
 ## S4 method for signature 'RealRandVariable, asBias,
 ##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, z.start, A.start, Finfo, trafo, maxiter, tol, warn, verbose = FALSE, ...)
+getInfRobIC(L2deriv, risk,
+                       neighbor, Distr, DistrSymm, L2derivSymm,
+                       L2derivDistrSymm, z.start, A.start, Finfo, trafo,
+                       maxiter, tol, warn, verbose = FALSE, ...)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asHampel, UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper = NULL, maxiter, tol, warn, noLow = FALSE, verbose = FALSE, checkBounds = TRUE)
+getInfRobIC(L2deriv,
+                       risk, neighbor, symm, Finfo, trafo, upper = NULL, maxiter,
+                       tol, warn, noLow = FALSE, verbose = FALSE, checkBounds = TRUE)
 
 ## S4 method for signature 'RealRandVariable, asHampel,
-##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper = NULL, maxiter, tol, warn,
-             verbose = FALSE, checkBounds = TRUE)
+##   UncondNeighborhood':
+getInfRobIC(L2deriv, risk,
+                       neighbor, Distr, DistrSymm, L2derivSymm,
+                       L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start,
+                       A.start, upper = NULL, maxiter, tol, warn,
+                       verbose = FALSE, checkBounds = TRUE)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asGRisk, UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper = NULL, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
+getInfRobIC(L2deriv,
+                       risk, neighbor, symm, Finfo, trafo,
+                       upper = NULL, maxiter, tol, warn, noLow = FALSE,
+                       verbose = FALSE)
 
 ## S4 method for signature 'RealRandVariable, asGRisk,
-##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor,  Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper = NULL, maxiter, tol, warn, verbose = FALSE)
+##   UncondNeighborhood':
+getInfRobIC(L2deriv, risk,
+                       neighbor,  Distr, DistrSymm, L2derivSymm,
+                       L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start,
+                       A.start, upper = NULL, maxiter, tol, warn, verbose = FALSE)
 
 ## S4 method for signature 'UnivariateDistribution,
 ##   asUnOvShoot, UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
+getInfRobIC(
+                       L2deriv, risk, neighbor, symm, Finfo, trafo,
+                       upper, maxiter, tol, warn)
 </pre>
 
 
@@ -183,9 +197,12 @@ parametric families with unknown one-dimensional parameter. </dd>
 
 
 <dt>L2deriv = "RealRandVariable", risk = "asCov", 
-neighbor = "ContNeighborhood"</dt><dd>computes the classical optimal influence curve for L2 differentiable 
+neighbor = "UncondNeighborhood"</dt><dd>computes the classical optimal influence curve for L2 differentiable 
 parametric families with unknown <i>k</i>-dimensional parameter 
-(<i>k &gt; 1</i>) where the underlying distribution is univariate. </dd>
+(<i>k &gt; 1</i>) where the underlying distribution is univariate;
+for total variation neighborhoods only is implemented for the case
+where there is a <i>1 x k</i> transformation <code>trafo</code>
+matrix. </dd>
 
 
 <dt>L2deriv = "UnivariateDistribution", risk = "asBias", 
@@ -205,9 +222,12 @@ parametric families with unknown one-dimensional parameter. </dd>
 
 
 <dt>L2deriv = "RealRandVariable", risk = "asHampel", 
-neighbor = "ContNeighborhood"</dt><dd>computes the optimally robust influence curve for L2 differentiable 
+neighbor = "UncondNeighborhood"</dt><dd>computes the optimally robust influence curve for L2 differentiable 
 parametric families with unknown <i>k</i>-dimensional parameter 
-(<i>k &gt; 1</i>) where the underlying distribution is univariate. </dd>
+(<i>k &gt; 1</i>) where the underlying distribution is univariate;
+for total variation neighborhoods only is implemented for the case
+where there is a <i>1 x k</i> transformation <code>trafo</code>
+matrix. </dd>
 
 
 <dt>L2deriv = "UnivariateDistribution", risk = "asGRisk", 
@@ -216,9 +236,12 @@ parametric families with unknown one-dimensional parameter. </dd>
 
 
 <dt>L2deriv = "RealRandVariable", risk = "asGRisk", 
-neighbor = "ContNeighborhood"</dt><dd>computes the optimally robust influence curve for L2 differentiable 
+neighbor = "UncondNeighborhood"</dt><dd>computes the optimally robust influence curve for L2 differentiable 
 parametric families with unknown <i>k</i>-dimensional parameter 
-(<i>k &gt; 1</i>) where the underlying distribution is univariate. </dd>
+(<i>k &gt; 1</i>) where the underlying distribution is univariate;
+for total variation neighborhoods only is implemented for the case
+where there is a <i>1 x k</i> transformation <code>trafo</code>
+matrix. </dd>
 
 
 <dt>L2deriv = "UnivariateDistribution", risk = "asUnOvShoot", 
@@ -230,7 +253,8 @@ asymptotic under-/overshoot risk. </dd>
 <h3>Author(s)</h3>
 
 <p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,<br>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a>
 </p>
 
 

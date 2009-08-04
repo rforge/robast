@@ -143,12 +143,15 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
 
 setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable", 
                                    risk = "asGRisk", 
-                                   neighbor = "ContNeighborhood"),
+                                   neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, 
              z.start, A.start, upper = NULL, maxiter, tol, warn, verbose = FALSE){
         biastype <- biastype(risk)
         normtype <- normtype(risk)
+        p <- nrow(trafo)
+        if(! is(neighbor,"ContNeighborhood") && p>1)
+           stop("Not yet implemented")
 
         FI <- solve(trafo%*%solve(Finfo)%*%t(trafo))
         if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") ) 
@@ -189,7 +192,11 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         z.comp <- comp$"z.comp"
         A.comp <- comp$"A.comp"
 
-        w <- new("HampelWeight")
+        if(is(neighbor,"ContNeighborhood")){
+            w <- new("HampelWeight")
+        }else{
+            w <- new("BdStWeight")
+        }
         z <- z.start
         A <- A.start
         b <- 0
@@ -201,8 +208,9 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             b.old <- b
             A.old <- A
             ##
-            cent(w) <- z 
-            stand(w) <- A 
+            if(is(neighbor,"ContNeighborhood"))
+               cent(w) <- z
+            stand(w) <- A
 
             ## new
             lower0 <- getL1normL2deriv(L2deriv = L2deriv, cent = z, stand = A, 
@@ -248,7 +256,11 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                 }
                 return(res)
             }
-            clip(w) <- b
+            if(is(neighbor,"ContNeighborhood")){
+                clip(w) <- b
+            }else{
+                clip(w) <- c(0,b)+as.numeric(A%*%z) ## =a
+            }
 
 
             weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
