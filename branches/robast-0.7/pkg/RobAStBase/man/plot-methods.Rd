@@ -3,6 +3,7 @@
 \alias{plot}
 \alias{plot-methods}
 \alias{plot,IC,missing-method}
+\alias{plot,IC,numeric-method}
 \title{ Methods for Function plot in Package `RobAStBase' }
 \description{plot-methods}
 \usage{plot(x, y, ...)
@@ -11,10 +12,13 @@
              col.inner = par("col.main"), cex.inner = 0.8,
              bmar = par("mar")[1], tmar = par("mar")[3],
              mfColRow = TRUE, to.draw.arg = NULL)
+\S4method{plot}{IC,numeric}(x, y, ..., cex.pts = 1,
+                            col.pts = par("col"), pch.pts = 1, jitter.fac = 1,
+                            with.lab = FALSE, lab.pts = NULL, lab.font = NULL)
 }
 \arguments{
   \item{x}{object of class \code{"IC"}: IC to be plotted }
-  \item{y}{ missing }
+  \item{y}{ missing or numeric (a dataset, e.g.)}
   \item{withSweave}{logical: if \code{TRUE} (for working with \command{Sweave})
         no extra device is opened}
   \item{main}{logical: is a main title to be used? or \cr
@@ -46,12 +50,22 @@
                          vector \code{"dim<dimnr>"}, \code{dimnr} running through 
                          the number of rows of the trafo matrix.
                          }
+  \item{cex.pts}{size of the points of the second argument plotted}
+  \item{col.pts}{color of the points of the second argument plotted}
+  \item{pch.pts}{symbol of the points of the second argument plotted}
+  \item{with.lab}{logical; shall labels be plotted to the observations?}
+  \item{lab.pts}{character or NULL; labels to be plotted to the observations; if \code{NULL}
+                 observation indices;}
+  \item{lab.font}{font to be used for labels}
+  \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
+                    for plotting points of the second argument in a jittered fashion.}
   \item{\dots}{further parameters for \code{plot}}
 }
 \details{
 Any parameters of \code{plot.default} may be passed on to this particular
 \code{plot} method.
 
+We start describing the \code{IC,missing}-method:
 For main-, inner, and subtitles given as arguments \code{main},
 \code{inner}, and \code{sub}, top and bottom margins are enlarged to 5 resp.
 6 by default but may also be specified by \code{tmar} / \code{bmar} arguments.
@@ -78,6 +92,10 @@ in panel "d",  the first two are for \code{ylim} resp. \code{xlim}
 for panels "p" and "q", and the last 2*(number of plotted dimensions)
 are the values for \code{ylim} for the plotted dimensions of the L2derivative, 
 one pair for each dimension.
+
+The \code{IC,numeric}-method calls the \code{IC,missing}-method but in
+addition plots the values of a dataset into the IC.
+
 }
 \examples{
 IC1 <- new("IC")
@@ -99,6 +117,11 @@ plot(IC2, main = TRUE, panel.first= grid(),
 plot(IC2, main = TRUE, panel.first= grid(), 
      ylim=c(-3,3,-1,3), xlim=c(-2,3))
 
+data <- r(N)(30)
+plot(IC2, data, panel.first= grid(),
+     ylim = c(-3,3,-1,3), xlim=c(-2,3),
+     pch.pts = 1:2, col.pts="green",
+     with.lab = TRUE)
 }
 \keyword{methods}
 \keyword{distribution}

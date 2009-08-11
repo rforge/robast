@@ -1,12 +1,16 @@
 setMethod("infoPlot", "IC",
-    function(object, ..., withSweave = getdistrOption("withSweave"), 
+    function(object, data = NULL,
+             ..., withSweave = getdistrOption("withSweave"),
              col = par("col"), lwd = par("lwd"), lty, 
              colI = grey(0.5), lwdI = 0.7*par("lwd"), ltyI = "dotted",
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
              legend.location = "bottomright", 
-             mfColRow = TRUE, to.draw.arg = NULL){
+             mfColRow = TRUE, to.draw.arg = NULL,
+             cex.pts = 1, col.pts = par("col"),
+             pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
+             lab.pts = NULL, lab.font = NULL){
 
         objectc <- match.call(call = sys.call(sys.parent(1)))$object
         dots <- match.call(call = sys.call(sys.parent(1)), 
@@ -15,7 +19,7 @@ setMethod("infoPlot", "IC",
 
         L2Fam <- eval(object@CallL2Fam)
         
-        
+
         if(!is.null(dots[["type"]])) dots["type"] <- NULL
         if(!is.null(dots[["xlab"]])) dots["xlab"] <- NULL
         if(!is.null(dots[["ylab"]])) dots["ylab"] <- NULL
@@ -200,11 +204,19 @@ setMethod("infoPlot", "IC",
                 if (is(normtype(object),"SelfNorm")|is(normtype(object),"InfoNorm")) 
                     QFc <- QFc0
                }
+
+            absInfoEval <- function(x,y, withNorm = FALSE){
+                       aI <- sapply(x, y@Map[[1]])
+                       if(withNorm) aI <- aI / max(aI)
+                       return(aI)
+            }
+
+
             QFc.5 <- sqrt(PosSemDefSymmMatrix(QFc))
 
             classIC <- as(trafo %*% solve(L2Fam@FisherInfo) %*% L2Fam@L2deriv, "EuclRandVariable")
-            absInfoClass <- t(classIC) %*% QFc %*% classIC
-            absInfoClass <- sapply(x.vec, absInfoClass@Map[[1]])
+            absInfoClass.f <- t(classIC) %*% QFc %*% classIC
+            absInfoClass <- absInfoEval(x.vec, absInfoClass.f)
 
             QF <- diag(dims)
             if(is(object,"ContIC") & dims>1 )
@@ -212,10 +224,10 @@ setMethod("infoPlot", "IC",
             QF.5 <- sqrt(PosSemDefSymmMatrix(QF))
 
             IC1 <- as(diag(dims) %*% object@Curve, "EuclRandVariable")
-            absInfo <- t(IC1) %*% QF %*% IC1
-            absInfo <- sapply(x.vec, absInfo@Map[[1]])
+            absInfo.f <- t(IC1) %*% QF %*% IC1
+            absInfo <- absInfoEval(x.vec, absInfo.f)
 
-            
+
             w0 <- getOption("warn")
             options(warn = -1)
             on.exit(options(warn = w0))
@@ -229,13 +241,95 @@ setMethod("infoPlot", "IC",
             do.call(par,args=parArgs)
 
             
-            
+            pL.rel <- pL.abs <- pL <- expression({})
+            if(!is.null(dotsP$panel.last))
+               {pL.rel <- pL.abs <- pL <- dotsP$panel.last}
+            dotsP$panel.last <- NULL
+
+            if(!is.null(data)){
+               n <- if(!is.null(dim(data))) nrow(data) else length(data)
+               oN <- 1:n
+               if (n==length(data)) {oN <- order(data); data <- sort(data)}
+
+               cex.pts <- rep(cex.pts, length.out=2)
+               if(missing(col.pts)) col.pts <- c(col, colI)
+               col.pts <- rep(col.pts, length.out=2)
+               pch.pts <- matrix(rep(pch.pts, length.out=2*n),n,2)
+               jitter.fac <- rep(jitter.fac, length.out=2)
+               with.lab <- rep(with.lab, length.out=2)
+               lab.pts <- if(is.null(lab.pts))
+                             matrix(paste(rep(oN,2)),n,2)
+                          else matrix(rep(lab.pts, length.out=2*n),n,2)
+               lab.font <- rep(lab.font, length.out=2)
+
+               absInfoClass.data <- absInfoEval(data,absInfoClass.f)
+               aIC.data.m <- max(absInfoClass.data)
+               absInfo.data <- absInfoEval(data,absInfo.f)
+               aI.data.m <- max(absInfo.data)
+
+               dots.points <- dots
+               dots.points$col <- dots.points$cex <- dots.points$pch <- NULL
+
+               pL.abs <- substitute({
+                   if(is(e1, "DiscreteDistribution")){
+                      ICy0 <- jitter(ICy0, factor = jitter.fac0[1])
+                      ICy0c <- jitter(ICy0c, factor = jitter.fac0[2])
+                   }
+                   do.call(points, args=c(list(y0, ICy0, cex = log(ICy0+1)*3*cex0[1],
+                                   col = col0[1], pch = pch0[,1]), dwo0))
+                   do.call(points, args=c(list(y0, ICy0c, cex = log(ICy0c+1)*3*cex0[2],
+                                   col = col0[2], pch = pch0[,2]), dwo0))
+                   if(with.lab0){
+                      text(x = y0, y = ICy0, labels = lab.pts0[,1],
+                           cex = log(ICy0+1)*1.5*cex0[1], col = col0[1])
+                      text(x = y0, y = ICy0c, labels = lab.pts0[,2],
+                           cex = log(ICy0+1)*1.5*cex0[2], col = col0[2])
+                   }
+                   pL0
+                   }, list(ICy0 = absInfo.data, ICy0c = absInfoClass.data,
+                           pL0 = pL, y0 = data,
+                           dwo0 = dots.points, cex0 = cex.pts, pch0 = pch.pts,
+                           col0 = col.pts, with.lab0 = with.lab,
+                           lab.pts0 = lab.pts, n0 = n,
+                           jitter.fac0 = jitter.fac, aIC.data.m0=aIC.data.m,
+                           aI.data.m0=aI.data.m
+                           ))
+
+               pL.rel <- substitute({
+                   y0.vec <- sapply(y0,  IC1.i.5@Map[[indi]])^2/ICy0
+                   y0c.vec <- sapply(y0, classIC.i.5@Map[[indi]])^2/ICy0c
+                   if(is(e1, "DiscreteDistribution")){
+                      y0.vec <- jitter(y0.vec, factor = jitter.fac0[1])
+                      y0c.vec <- jitter(y0c.vec, factor = jitter.fac0[2])
+                   }
+                   do.call(points, args=c(list(y0, y0.vec, cex = log(ICy0+1)*3*cex0[1],
+                                   col = col0[1], pch = pch0[,1]), dwo0))
+                   do.call(points, args=c(list(y0, y0c.vec, cex = log(ICy0c+1)*3*cex0[2],
+                                   col = col0[2], pch = pch0[,2]), dwo0))
+                   if(with.lab0){
+                      text(x = y0, y = y0.vec, labels = lab.pts0[,1],
+                           cex = log(ICy0+1)*1.5*cex0[1], col = col0[1])
+                      text(x = y0, y = y0c.vec, labels = lab.pts0[,2],
+                           cex = log(ICy0c+1)*1.5*cex0[2], col = col0[2])
+                   }
+                   pL0
+                   }, list(ICy0c = absInfoClass.data, ICy0 = absInfo.data,
+                           pL0 = pL, y0 = data,
+                           dwo0 = dots.points, cex0 = cex.pts, pch0 = pch.pts,
+                           col0 = col.pts, with.lab0 = with.lab,
+                           lab.pts0 = lab.pts, n0 = n,
+                           jitter.fac0 = jitter.fac
+                           ))
+            }
+
+
             if(!is.null(ylim)) 
                 dotsP$ylim <- ylim[,1]       
             if(1 %in% to.draw){
                do.call(plot, args=c(list(x.vec, absInfoClass, type = plty, 
                    lty = ltyI, col = colI, lwd = lwdI,
-                   xlab = "x", ylab = "absolute information"), dotsP))
+                   xlab = "x", ylab = "absolute information", panel.last = pL.abs),
+                   dotsP))
                do.call(lines, args=c(list(x.vec, absInfo, type = plty, 
                        lty = lty, lwd = lwd, col = col), dotsL))
                legend(legend.location[[1]],
@@ -276,7 +370,7 @@ setMethod("infoPlot", "IC",
                     do.call(plot, args=c(list(x.vec, y.vec, type = plty, 
                                   lty = lty, xlab = "x", 
                                   ylab = "relative information", 
-                                  col = col, lwd = lwd), dotsP))
+                                  col = col, lwd = lwd, panel.last = pL.rel), dotsP))
 
                     yc.vec <- sapply(x.vec, classIC.i.5@Map[[indi]])^2/absInfoClass
                     do.call(lines, args = c(list(x.vec, yc.vec, type = plty, 

@@ -766,6 +766,10 @@
 <param name="Local" value="plot-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="plot,IC,numeric-method">
+<param name="Local" value="plot-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="plot-methods">
 <param name="Local" value="plot-methods.html">
 </OBJECT>

@@ -1,12 +1,15 @@
 setMethod("comparePlot", signature("IC","IC"),
-    function(obj1,obj2, obj3 = NULL, obj4 = NULL, 
+    function(obj1,obj2, obj3 = NULL, obj4 = NULL, data = NULL,
              ..., withSweave = getdistrOption("withSweave"), 
              main = FALSE, inner = TRUE, sub = FALSE, 
              col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
              legend.location = "bottomright", 
-             mfColRow = TRUE, to.draw.arg = NULL){
+             mfColRow = TRUE, to.draw.arg = NULL,
+             cex.pts = 1, col.pts = par("col"),
+             pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
+             lab.pts = NULL, lab.font = NULL){
 
         xc1 <- as.character(deparse(match.call(call = sys.call(sys.parent(1)))$obj1))
         xc2 <- as.character(deparse(match.call(call = sys.call(sys.parent(1)))$obj2))
@@ -27,7 +30,8 @@ setMethod("comparePlot", signature("IC","IC"),
         if(missing(lwd))  lwd <- rep(1,ncomp)
            else lwd <- rep(lwd, length.out = ncomp)
         if(!missing(lty)) rep(lty, length.out = ncomp)
-        
+        if(missing(col.pts)) col.pts <- 1:ncomp
+
         
         if(!is.null(dots[["type"]])) dots["type"] <- NULL
         if(!is.null(dots[["xlab"]])) dots["xlab"] <- NULL
@@ -234,19 +238,113 @@ setMethod("comparePlot", signature("IC","IC"),
             dotsT["col.main"] <- NULL
             dotsT["line"] <- NULL
 
+        pL <- expression({})
+        if(!is.null(dotsP$panel.last))
+            pL <- dotsP$panel.last
+        dotsP$panel.last <- NULL
+
+        if(!is.null(data)){
+               n <- if(!is.null(dim(data))) nrow(data) else length(data)
+               oN <- 1:n
+               if (n==length(data)) {oN <- order(data); data <- sort(data)}
+
+               cex.pts <- rep(cex.pts, length.out=ncomp)
+               col.pts <- rep(col.pts, length.out=ncomp)
+               pch.pts <- matrix(rep(pch.pts, length.out=ncomp*n),n,ncomp)
+               jitter.fac <- rep(jitter.fac, length.out=ncomp)
+               with.lab <- rep(with.lab, length.out=ncomp)
+               lab.pts <- if(is.null(lab.pts))
+                             matrix(paste(rep(oN,ncomp)),n,ncomp)
+                          else matrix(rep(lab.pts, length.out = ncomp*n), n, ncomp)
+               lab.font <- rep(lab.font, length.out=ncomp)
+
+
+               absInfoEval <- function(x,object){
+                        QF <- diag(dims)
+                        if(is(object,"ContIC") & dims>1 )
+                           {if (is(normtype(object),"QFNorm"))
+                                QF <- QuadForm(normtype(object))}
+
+                        IC1 <- as(diag(dims) %*% object@Curve, "EuclRandVariable")
+                        absInfo.f <- t(IC1) %*% QF %*% IC1
+                        return(sapply(x, absInfo.f@Map[[1]]))}
+
+               aI1 <- absInfoEval(x=data,object=obj1)
+               aI2 <- absInfoEval(x=data,object=obj2)
+               aI3 <- if(is.null(obj3)) NULL else absInfoEval(x=data,object=obj3)
+               aI4 <- if(is.null(obj4)) NULL else absInfoEval(x=data,object=obj4)
+
+               dots.points <- dots
+               dots.points$col <- dots.points$cex <- dots.points$pch <- NULL
+
+
+               pL <- substitute({
+                   ICy1 <- sapply(y0,IC1@Map[[indi]])
+                   ICy2 <- sapply(y0,IC2@Map[[indi]])
+                   if(!is.null(obj30))
+                      ICy3 <- sapply(y0,IC3@Map[[indi]])
+                   if(!is.null(obj40))
+                      ICy3 <- sapply(y0,IC4@Map[[indi]])
+
+                   if(is(e1, "DiscreteDistribution")){
+                      ICy1 <- jitter(ICy1, factor = jitter.fac0[1])
+                      ICy2 <- jitter(ICy2, factor = jitter.fac0[2])
+                      if(!is.null(obj30))
+                          ICy3 <- jitter(ICy3, factor = jitter.fac0[3])
+                      if(!is.null(obj40))
+                          ICy4 <- jitter(ICy4, factor = jitter.fac0[4])
+                   }
+                   do.call(points, args=c(list(y0, ICy1, cex = log(aI10+1)*3*cex0[1],
+                                   col = col0[1], pch = pch0[,1]), dwo0))
+                   do.call(points, args=c(list(y0, ICy2, cex = log(aI20+1)*3*cex0[2],
+                                   col = col0[2], pch = pch0[,2]), dwo0))
+                   if(!is.null(obj30))
+                       do.call(points, args=c(list(y0, ICy3, cex = log(aI30+1)*3*cex0[3],
+                                   col = col0[3], pch = pch0[,3]), dwo0))
+                   if(!is.null(obj40))
+                       do.call(points, args=c(list(y0, ICy4, cex = log(aI40+1)*3*cex0[4],
+                                   col = col0[4], pch = pch0[,4]), dwo0))
+                   if(with.lab0){
+                      text(x = y0, y = ICy1, labels = lab.pts0[,1],
+                           cex = log(aI10+1)*1.5*cex0[1], col = col0[1])
+                      text(x = y0, y = ICy2, labels = lab.pts0[,2],
+                           cex = log(aI20+1)*1.5*cex0[2], col = col0[2])
+                      if(!is.null(obj30))
+                          text(x = y0, y = ICy3, labels = lab.pts0[,3],
+                               cex = log(aI30+1)*1.5*cex0[3], col = col0[3])
+                      if(!is.null(obj40))
+                          text(x = y0, y = ICy4, labels = lab.pts0[,4],
+                               cex = log(aI40+1)*1.5*cex0[4], col = col0[4])
+                   }
+                   pL0
+                   }, list(pL0 = pL, y0 = data, aI10 = aI1, aI20 = aI2,
+                           aI30 = aI3, aI40 = aI4, obj10 = obj1, obj20 = obj2,
+                           obj30 = obj3, obj40 = obj4,
+                           dwo0 = dots.points, cex0 = cex.pts, pch0 = pch.pts,
+                           col0 = col.pts, with.lab0 = with.lab,
+                           lab.pts0 = lab.pts, n0 = n,
+                           jitter.fac0 = jitter.fac
+                           ))
+
+            }
+
+
         for(i in 1:dims0){
             indi <- to.draw[i]
             if(!is.null(ylim)) dotsP$ylim <- ylim[,i]       
             matp  <- cbind(sapply(x.vec, IC1@Map[[indi]]),
                            sapply(x.vec, IC2@Map[[indi]]))
+
             if(is(obj3, "IC"))
                 matp  <- cbind(matp,sapply(x.vec, IC3@Map[[indi]]))
             if(is(obj4, "IC"))
                 matp  <- cbind(matp,sapply(x.vec, IC4@Map[[indi]]))
 
-            do.call(matplot, args=c(list( x= x.vec, y=matp,
-                 type = plty, lty = lty, col = col, lwd = lwd,
-                 xlab = "x", ylab = "(partial) IC"), dotsP))
+            do.call(plot, args=c(list( x = x.vec, y = matp[,1],
+                 type = plty, lty = lty, col = col[1], lwd = lwd,
+                 xlab = "x", ylab = "(partial) IC"), dotsP, list(panel.last = pL)))
+            do.call(matlines, args = c(list( x = x.vec, y = matp[,-1],
+                    lty = lty, col = col[-1], lwd = lwd), dotsL))
 
             if(is(e1, "DiscreteDistribution")){
                  matp1 <- cbind(sapply(x.vec1, IC1@Map[[indi]]),

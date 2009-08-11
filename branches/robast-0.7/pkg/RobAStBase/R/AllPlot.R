@@ -224,3 +224,60 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
         invisible()
     })
+
+
+setMethod("plot", signature(x = "IC",y = "numeric"),
+          function(x, y, ..., cex.pts = 1, col.pts = par("col"),
+          pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
+          lab.pts = NULL, lab.font = NULL){
+    dots <- match.call(call = sys.call(sys.parent(1)),
+                       expand.dots = FALSE)$"..."
+
+    n <- if(!is.null(dim(y))) nrow(y) else length(y)
+    oN <- 1:n
+    if (n==length(y)) {oN <- order(y); y <- sort(y)}
+    if(is.null(lab.pts)) lab.pts <- paste(oN)
+
+    L2Fam <- eval(x@CallL2Fam)
+    trafO <- trafo(L2Fam@param)
+    dims <- nrow(trafO)
+    dimm <- length(L2Fam@param)
+    QF <- diag(dims)
+
+    if(is(x,"ContIC") & dims>1 )
+      {if (is(normtype(x),"QFNorm")) QF <- QuadForm(normtype(x))}
+
+    IC1 <- as(diag(dims) %*% x@Curve, "EuclRandVariable")
+    absInfo <- t(IC1) %*% QF %*% IC1
+    ICMap <- IC1@Map
+
+    absInfo <- sapply(y, absInfo@Map[[1]])
+    absInfo <- absInfo/max(absInfo)
+
+    dots.without <- dots
+    dots.without$col <- dots.without$cex <- dots.without$pch <- NULL
+
+    pL <- expression({})
+    if(!is.null(dots$panel.last))
+        pL <- dots$panel.last
+    dots$panel.last <- NULL
+
+    pL <- substitute({
+        ICy <- sapply(y0,ICMap0[[indi]])
+        if(is(e1, "DiscreteDistribution"))
+           ICy <- jitter(ICy, factor = jitter.fac0)
+        do.call(points, args=c(list(y0, ICy, cex = log(absy0+1)*3*cex0,
+                        col = col0, pch = pch0), dwo0))
+        if(with.lab0){
+           text(x = y0, y = ICy, labels = lab.pts0,
+                cex = log(absy0+1)*1.5*cex0, col = col0)
+        }
+        pL0
+        }, list(pL0 = pL, ICMap0 = ICMap, y0 = y, absy0 = absInfo,
+                dwo0 = dots.without, cex0 = cex.pts, pch0 = pch.pts,
+                col0 = col.pts, with.lab0 = with.lab, lab.pts0 = lab.pts,
+                jitter.fac0 = jitter.fac
+                ))
+
+  do.call("plot", args = c(list(x = x, panel.last = pL), dots))
+})

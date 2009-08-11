@@ -11,20 +11,24 @@
 \usage{
 comparePlot(obj1, obj2, ... )
 \S4method{comparePlot}{IC,IC}(obj1, obj2, obj3 = NULL, obj4 = NULL, 
-             ..., withSweave = getdistrOption("withSweave"), 
+             data = NULL, ..., withSweave = getdistrOption("withSweave"),
              main = FALSE, inner = TRUE, sub = FALSE, 
              col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
              legend.location = "bottomright", 
-             mfColRow = TRUE, to.draw.arg = NULL)
+             mfColRow = TRUE, to.draw.arg = NULL,
+             cex.pts = 1, col.pts = par("col"),
+             pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
+             lab.pts = NULL, lab.font = NULL)
 }
 \arguments{
   \item{obj1}{ object of class \code{"InfluenceCurve"} }
   \item{obj2}{ object of class \code{"InfluenceCurve"} to be compared with \code{obj1}}
   \item{obj3}{ optional: object of class \code{"InfluenceCurve"} to be compared with \code{obj1}}
   \item{obj4}{ optional: object of class \code{"InfluenceCurve"} to be compared with \code{obj1}}
-  \item{withSweave}{logical: if \code{TRUE} (for working with \command{Sweave}) 
+  \item{data}{optional data argument --- for plotting observations into the plot;}
+  \item{withSweave}{logical: if \code{TRUE} (for working with \command{Sweave})
         no extra device is opened}
   \item{main}{logical: is a main title to be used? or \cr
               just as argument \code{main} in \code{\link{plot.default}}.}
@@ -61,6 +65,15 @@ comparePlot(obj1, obj2, ... )
                          vector \code{"dim<dimnr>"}, \code{dimnr} running through 
                          the number of rows of the trafo matrix.
                          }
+  \item{cex.pts}{size of the points of the \code{data} argument plotted}
+  \item{col.pts}{color of the points of the \code{data} argument plotted}
+  \item{pch.pts}{symbol of the points of the \code{data} argument plotted}
+  \item{with.lab}{logical; shall labels be plotted to the observations?}
+  \item{lab.pts}{character or NULL; labels to be plotted to the observations; if \code{NULL}
+                 observation indices;}
+  \item{lab.font}{font to be used for labels}
+  \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
+                    for plotting points of the \code{data} argument in a jittered fashion.}
   \item{\dots}{further arguments to be passed to \code{plot}}
 }
 \details{
@@ -113,6 +126,9 @@ IC2 <- optIC(model = N0.Rob1, risk = asMSE())
 
 comparePlot(IC1,IC2)
 
+data <- r(N0)(10)
+comparePlot(IC1, IC2, data=data, with.lab = TRUE)
+
 ## selection of subpanels for plotting
 par(mfrow=c(1,1))
 comparePlot(IC1, IC2 ,mfColRow = FALSE, to.draw.arg=c("mean"),
@@ -142,6 +158,7 @@ system.time(IC2.i <- optIC(model = G2.Rob1, risk = asMSE(normtype=InfoNorm())))
 system.time(IC2.s <- optIC(model = G2.Rob1, risk = asMSE(normtype=SelfNorm())))
 
 comparePlot(IC1,IC2, IC2.i, IC2.s)
+
 
 }
 }
