@@ -19,7 +19,7 @@ setMethod("getInfStand", signature(L2deriv = "UnivariateDistribution",
                 - (cent+clip)*m1df(D1, cent+clip)))
     })
 setMethod("getInfStand", signature(L2deriv = "RealRandVariable",
-                                   neighbor = "ContNeighborhood",
+                                   neighbor = "UncondNeighborhood",
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, 
              Distr, A.comp, cent, trafo, w){

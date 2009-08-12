@@ -14,15 +14,15 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
 
 \S4method{getIneffDiff}{numeric,L2ParamFamily,UncondNeighborhood,asMSE}(
           radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
-          z.start = NULL, A.start = NULL, upper.b = NULL, MaxIter, eps, warn,
-          loNorm = NULL, upNorm = NULL, verbose = FALSE)
+          z.start = NULL, A.start = NULL, upper.b = NULL, lower.b = NULL,
+          MaxIter, eps, warn,
+          loNorm = NULL, upNorm = NULL, verbose = FALSE, ...)
 }
 \arguments{
   \item{radius}{ neighborhood radius. }
   \item{L2Fam}{ L2-differentiable family of probability measures. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{risk}{ object of class \code{"RiskType"}. }
-  \item{\dots}{ additional parameters }
   \item{loRad}{ the lower end point of the interval to be searched. }
   \item{upRad}{ the upper end point of the interval to be searched. }
   \item{loRisk}{ the risk at the lower end point of the interval. }
@@ -30,6 +30,7 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
   \item{z.start}{ initial value for the centering constant. }
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{upper.b}{ upper bound for the optimal clipping bound. }
+  \item{lower.b}{ lower bound for the optimal clipping bound. }
   \item{MaxIter}{ the maximum number of iterations }
   \item{eps}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }  
@@ -40,6 +41,7 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
                 to evaluate the bias of the current IC in the norm of the upper 
                 bound}  
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
+  \item{\dots}{further arguments to be passed on to \code{getInfRobIC}}
 }
 %\details{}
 \value{The inefficieny difference between the left and

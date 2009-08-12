@@ -3,7 +3,7 @@
 \alias{getInfStand-methods}
 \alias{getInfStand,UnivariateDistribution,ContNeighborhood,BiasType-method}
 \alias{getInfStand,UnivariateDistribution,TotalVarNeighborhood,BiasType-method}
-\alias{getInfStand,RealRandVariable,ContNeighborhood,BiasType-method}
+\alias{getInfStand,RealRandVariable,UncondNeighborhood,BiasType-method}
 \alias{getInfStand,UnivariateDistribution,ContNeighborhood,onesidedBias-method}
 \alias{getInfStand,UnivariateDistribution,ContNeighborhood,asymmetricBias-method}
 
@@ -22,7 +22,7 @@ getInfStand(L2deriv, neighbor, biastype, ...)
 \S4method{getInfStand}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(L2deriv, 
      neighbor, biastype, clip, cent, trafo)
 
-\S4method{getInfStand}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, 
+\S4method{getInfStand}{RealRandVariable,UncondNeighborhood,BiasType}(L2deriv,
      neighbor, biastype, Distr, A.comp, cent, trafo, w)
 
 \S4method{getInfStand}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, 
@@ -57,7 +57,7 @@ getInfStand(L2deriv, neighbor, biastype, ...)
         biastype = "BiasType"}{ 
     computes standardizing matrix for symmetric bias. }
 
-  \item{L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", 
+  \item{L2deriv = "RealRandVariable", neighbor = "UncondNeighborhood",
         biastype = "BiasType"}{ 
     computes standardizing matrix for symmetric bias. }
 

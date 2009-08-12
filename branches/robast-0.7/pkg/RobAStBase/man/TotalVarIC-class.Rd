@@ -3,6 +3,7 @@
 \alias{TotalVarIC-class}
 \alias{CallL2Fam<-,TotalVarIC-method}
 \alias{clipLo}
+\alias{clip,TotalVarIC-method}
 \alias{clipLo,TotalVarIC-method}
 \alias{clipLo<-}
 \alias{clipLo<-,TotalVarIC-method}
@@ -97,6 +98,9 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
 
     \item{clipUp<-}{\code{signature(object = "TotalVarIC")}: 
       replacement function for slot \code{clipUp}. }
+
+    \item{clip}{\code{signature(object = "TotalVarIC")}:
+      returns \code{clipUp-clipLo}. }
 
     \item{stand<-}{\code{signature(object = "TotalVarIC")}:
       replacement function for slot \code{stand}. }

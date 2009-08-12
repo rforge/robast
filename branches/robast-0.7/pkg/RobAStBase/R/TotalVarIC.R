@@ -46,12 +46,12 @@ TotalVarIC <- function(name, CallL2Fam = call("L2ParamFamily"),
 setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood", 
                                   L2Fam = "L2ParamFamily"),
     function(neighbor, L2Fam, res){
-        A <- res$A
-        clipLo <- sign(as.vector(A))*res$a
-        b <- res$b
+        res$A <- A <- stand(res$w)
+        clipLo <- clip(res$w)[1]
+        clipUp <- clip(res$w)[2]
+#        clipLo <- sign(as.vector(A))*res$a
+        b <- clipUp-clipLo
         w <- res$w 
-        ICfct <- vector(mode = "list", length = 1)
-        Y <- as(A %*% L2Fam@L2deriv, "EuclRandVariable")
         if((clipLo == -Inf) & (b == Inf))
             clipUp <- Inf
         else
@@ -60,6 +60,7 @@ setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood",
         L2call <- L2Fam@fam.call
         L2call$trafo <- trafo(L2Fam)
 
+        cuv <- generateIC.fct(neighbor, L2Fam, res)
         return(TotalVarIC(
                 name = "IC of total variation type", 
                 CallL2Fam = L2call,
@@ -79,6 +80,7 @@ setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood",
     })
 
 ## Access methods
+setMethod("clip", "TotalVarIC", function(object) object@clipUp-object@clipLo)
 setMethod("clipLo", "TotalVarIC", function(object) object@clipLo)
 setMethod("clipUp", "TotalVarIC", function(object) object@clipUp)
 setMethod("neighbor", "TotalVarIC", function(object) TotalVarNeighborhood(radius = object@neighborRadius) )

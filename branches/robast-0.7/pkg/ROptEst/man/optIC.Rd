@@ -13,14 +13,15 @@
 optIC(model, risk, ...)
 
 \S4method{optIC}{InfRobModel,asRisk}(model, risk, z.start = NULL, A.start = NULL,
-                                     upper = 1e4, maxiter = 50, 
+                                     upper = 1e4, lower = 1e-4, maxiter = 50,
                                      tol = .Machine$double.eps^0.4, warn = TRUE, 
                                      noLow = FALSE, verbose = FALSE, ...)
 
-\S4method{optIC}{InfRobModel,asUnOvShoot}(model, risk, upper = 1e4, maxiter = 50, 
+\S4method{optIC}{InfRobModel,asUnOvShoot}(model, risk, upper = 1e4,
+                                          lower = 1e-4, maxiter = 50,
                                           tol = .Machine$double.eps^0.4, warn = TRUE)
 
-\S4method{optIC}{FixRobModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, 
+\S4method{optIC}{FixRobModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, lower = 1e-4,
                                           maxiter = 50, tol = .Machine$double.eps^0.4, 
                                           warn = TRUE, Algo = "A", cont = "left",
                                           verbose = FALSE)
@@ -32,6 +33,7 @@ optIC(model, risk, ...)
   \item{z.start}{ initial value for the centering constant. }
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{upper}{ upper bound for the optimal clipping bound. }
+  \item{lower}{ lower bound for the optimal clipping bound. }
   \item{maxiter}{ the maximum number of iterations. }
   \item{tol}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }  

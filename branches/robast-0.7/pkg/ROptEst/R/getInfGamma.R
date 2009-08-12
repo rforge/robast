@@ -28,19 +28,36 @@ setMethod("getInfGamma", signature(L2deriv = "RealRandVariable",
                                    neighbor = "ContNeighborhood",
                                    biastype = "BiasType"),
     function(L2deriv, risk, neighbor, biastype, Distr, 
-             stand, cent, clip){
-        integrandG <- function(x, L2, stand, cent, clip){ 
+             stand, cent, clip, power = 1L){
+        integrandG <- function(x, L2, stand, cent, clip){
             X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
             Y <- stand %*% X
             res <- norm(risk)(Y) - clip
 
-            return((res > 0)*res)
+            return((res > 0)*res^power)
         }
 
         return(-E(object = Distr, fun = integrandG, L2 = L2deriv, 
                   stand = stand, cent = cent, clip = clip, useApply = FALSE))
     })
 
+setMethod("getInfGamma", signature(L2deriv = "RealRandVariable",
+                                   risk = "asMSE",
+                                   neighbor = "TotalVarNeighborhood",
+                                   biastype = "BiasType"),
+    function(L2deriv, risk, neighbor, biastype, Distr,
+             stand, cent, clip, power = 1L){
+        integrandG <- function(x, L2, stand, cent, clip){
+            X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
+            Y <- stand %*% X
+            res <- Y - clip
+
+            return((res > 0)*res^power)
+        }
+
+        return(-E(object = Distr, fun = integrandG, L2 = L2deriv,
+                  stand = stand, cent = cent, clip = clip, useApply = FALSE))
+    })
 ###############################################################################
 ## gamma in case of asymptotic under-/overshoot risk
 ###############################################################################

@@ -12,23 +12,24 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
 
 \S4method{radiusMinimaxIC}{L2ParamFamily,UncondNeighborhood,asGRisk}(
         L2Fam, neighbor, risk, loRad, upRad, z.start = NULL, A.start = NULL, 
-        upper = 1e5, maxiter = 50, tol = .Machine$double.eps^0.4, 
-        warn = FALSE, verbose = FALSE)
+        upper = 1e5, lower =NULL, maxiter = 50, tol = .Machine$double.eps^0.4,
+        warn = FALSE, verbose = FALSE, ...)
 }
 \arguments{
   \item{L2Fam}{ L2-differentiable family of probability measures. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{risk}{ object of class \code{"RiskType"}. }
-  \item{\dots}{ additional parameters. }
   \item{loRad}{ the lower end point of the interval to be searched. }
   \item{upRad}{ the upper end point of the interval to be searched. }
   \item{z.start}{ initial value for the centering constant. }
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{upper}{ upper bound for the optimal clipping bound. }
+  \item{lower}{ lower bound for the optimal clipping bound. }
   \item{maxiter}{ the maximum number of iterations }
   \item{tol}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
+  \item{\dots}{further arguments to be passed on to \code{getInfRobIC}}
 }
 \details{
 In case the neighborhood radius is unknown, Rieder et al. (2001, 2008)

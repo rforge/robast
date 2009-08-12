@@ -2,9 +2,9 @@
 ## Optimally robust IC for infinitesimal robust model and asymptotic risks
 ###############################################################################
 setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
-    function(model, risk, z.start = NULL, A.start = NULL, upper = 1e4, 
-             maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE, 
-             noLow = FALSE, verbose = FALSE, ...){
+    function(model, risk, z.start = NULL, A.start = NULL, upper = 1e4,
+             lower = 1e-4, maxiter = 50, tol = .Machine$double.eps^0.4,
+             warn = TRUE, noLow = FALSE, verbose = FALSE, ...){
         L2derivDim <- numberOfMaps(model@center@L2deriv)
         ow <- options("warn")
         on.exit(options(ow))
@@ -14,7 +14,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                         neighbor = model@neighbor, risk = risk, 
                         symm = model@center@L2derivDistrSymm[[1]],
                         Finfo = model@center@FisherInfo, trafo = trafo(model@center@param), 
-                        upper = upper, maxiter = maxiter, tol = tol, warn = warn,
+                        upper = upper, lower = lower, maxiter = maxiter, tol = tol, warn = warn,
                         noLow = noLow, verbose = verbose, ...)
             res$info <- c("optIC", res$info)
             res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
@@ -48,7 +48,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                             DistrSymm = model@center@distrSymm, L2derivSymm = L2derivSymm,
                             L2derivDistrSymm = L2derivDistrSymm, Finfo = model@center@FisherInfo, 
                             trafo = trafo(model@center@param), z.start = z.start, A.start = A.start, 
-                            upper = upper, maxiter = maxiter, tol = tol, warn = warn, 
+                            upper = upper, lower = lower, maxiter = maxiter, tol = tol, warn = warn,
                             verbose = verbose, ...)
                 options(ow)
                 res$info <- c("optIC", res$info)
@@ -67,7 +67,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
 ## and asymptotic under-/overshoot risk
 ###############################################################################
 setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
-    function(model, risk, upper = 1e4, maxiter = 50, 
+    function(model, risk, upper = 1e4, lower = 1e-4, maxiter = 50,
              tol = .Machine$double.eps^0.4, warn = TRUE){
         L2derivDistr <- model@center@L2derivDistr[[1]]
         ow <- options("warn")
@@ -102,7 +102,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
 ## and finite-sample under-/overshoot risk
 ###############################################################################
 setMethod("optIC", signature(model = "FixRobModel", risk = "fiUnOvShoot"),
-    function(model, risk, sampleSize, upper = 1e4, maxiter = 50, 
+    function(model, risk, sampleSize, upper = 1e4, lower = 1e-4, maxiter = 50,
              tol = .Machine$double.eps^0.4, warn = TRUE, Algo = "A", 
              cont = "left", verbose = FALSE){
         ow <- options("warn")

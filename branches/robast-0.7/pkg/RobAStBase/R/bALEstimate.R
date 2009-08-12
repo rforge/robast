@@ -16,7 +16,7 @@ setMethod("confint", signature(object="ALEstimate", method="missing"),
         return(NULL) 
     }
 
-    sd0 <- sqrt(diag(object@asvar)/object@samplesize)
+    sd0 <- sqrt(diag(as.matrix(object@asvar))/object@samplesize)
     names(sd0) <- names(object@estimate)
 
 ### code borrowed from confint.default from package stats
@@ -52,7 +52,7 @@ setMethod("confint", signature(object="ALEstimate", method="symmetricBias"),
         return(confint(object)) 
     }
 
-    sd0 <- sqrt(diag(object@asvar)/object@samplesize)
+    sd0 <- sqrt(diag(as.matrix(object@asvar))/object@samplesize)
     names(sd0) <- names(object@estimate)
 
 ### code borrowed from confint.default from package stats
@@ -91,7 +91,7 @@ setMethod("confint", signature(object="ALEstimate", method="onesidedBias"),
         return(confint(object)) 
     }
 
-    sd0 <- sqrt(diag(object@asvar)/object@samplesize)
+    sd0 <- sqrt(diag(as.matrix(object@asvar))/object@samplesize)
     names(sd0) <- names(object@estimate)
 
 ### code borrowed from confint.default from package stats
@@ -134,7 +134,7 @@ setMethod("confint", signature(object="ALEstimate", method="asymmetricBias"),
         return(confint(object)) 
     }
 
-    sd0 <- sqrt(diag(object@asvar)/object@samplesize)
+    sd0 <- sqrt(diag(as.matrix(object@asvar))/object@samplesize)
     names(sd0) <- names(object@estimate)
 
 ### code borrowed from confint.default from package stats

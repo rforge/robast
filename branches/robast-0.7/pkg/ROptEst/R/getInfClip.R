@@ -30,7 +30,7 @@ setMethod("getInfClip", signature(clip = "numeric",
 setMethod("getInfClip", signature(clip = "numeric", 
                                   L2deriv = "EuclRandVariable",
                                   risk = "asMSE", 
-                                  neighbor = "ContNeighborhood"),
+                                  neighbor = "UncondNeighborhood"),
     function(clip, L2deriv, risk, neighbor, biastype, 
              Distr, stand, cent, trafo){
         return(neighbor@radius^2*clip + 

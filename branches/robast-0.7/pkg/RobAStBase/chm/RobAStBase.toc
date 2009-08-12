@@ -142,6 +142,10 @@
 <param name="Local" value="ContIC-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="clip,TotalVarIC-method">
+<param name="Local" value="TotalVarIC-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="clip<-">
 <param name="Local" value="ContIC-class.html">
 </OBJECT>

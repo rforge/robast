@@ -41,35 +41,37 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
                        maxiter, tol, warn, verbose = FALSE, ...)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv,
-                       risk, neighbor, symm, Finfo, trafo, upper = NULL, maxiter,
-                       tol, warn, noLow = FALSE, verbose = FALSE, checkBounds = TRUE)
+                       risk, neighbor, symm, Finfo, trafo, upper = NULL, lower=NULL,
+                       maxiter, tol, warn, noLow = FALSE, verbose = FALSE, checkBounds = TRUE)
 
 \S4method{getInfRobIC}{RealRandVariable,asHampel,UncondNeighborhood}(L2deriv, risk,
                        neighbor, Distr, DistrSymm, L2derivSymm,
                        L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start,
-                       A.start, upper = NULL, maxiter, tol, warn,
-                       verbose = FALSE, checkBounds = TRUE)
+                       A.start, upper = NULL, lower=NULL, OptOrIter = "iterate", maxiter,
+                       tol, warn, verbose = FALSE, checkBounds = TRUE, ...)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv,
                        risk, neighbor, symm, Finfo, trafo,
-                       upper = NULL, maxiter, tol, warn, noLow = FALSE,
+                       upper = NULL, lower = NULL,
+                       maxiter, tol, warn, noLow = FALSE,
                        verbose = FALSE)
 
 \S4method{getInfRobIC}{RealRandVariable,asGRisk,UncondNeighborhood}(L2deriv, risk,
                        neighbor,  Distr, DistrSymm, L2derivSymm,
                        L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start,
-                       A.start, upper = NULL, maxiter, tol, warn, verbose = FALSE)
+                       A.start, upper = NULL, lower = NULL, OptOrIter = "iterate",
+                       maxiter, tol, warn, verbose = FALSE, ...)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(
                        L2deriv, risk, neighbor, symm, Finfo, trafo,
-                       upper, maxiter, tol, warn)
+                       upper, lower, maxiter, tol, warn)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
     of probability measures. }
   \item{risk}{ object of class \code{"RiskType"}. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
-  \item{\dots}{ additional parameters. }
+  \item{\dots}{ additional parameters (mainly for \code{optim}). }
   \item{Distr}{ object of class \code{"Distribution"}. }
   \item{symm}{ logical: indicating symmetry of \code{L2deriv}. }
   \item{DistrSymm}{ object of class \code{"DistributionSymmetry"}. }
@@ -80,6 +82,15 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{trafo}{ matrix: transformation of the parameter. }
   \item{upper}{ upper bound for the optimal clipping bound. }
+  \item{lower}{ lower bound for the optimal clipping bound. }
+  \item{OptOrIter}{character; which method to be used for determining Lagrange
+  multipliers \code{A} and \code{a}: if (partially) matched to \code{"optimize"}
+  (and by default) \code{getLagrangeMultByOptim} is used; else if matched to
+  \code{"iterate"}, (or in case \code{risk} is of class \code{"asGRisk"}
+  \code{"doubleiterate"}) \code{getLagrangeMultByIter} is used ---
+  in case \code{risk} is of class \code{"asGRisk"} if matched to \code{"iterate"}
+  with only one (inner) iteration, if matched to \code{"doubleiterate"} maximally
+  \code{Maxiter} (inner) iterations.}
   \item{maxiter}{ the maximum number of iterations. }
   \item{tol}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }

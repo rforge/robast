@@ -6,14 +6,15 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                                     neighbor = "UncondNeighborhood",
                                     risk = "asMSE"),
     function(radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
-             z.start = NULL, A.start = NULL, upper.b = NULL, MaxIter, eps, warn,
-             loNorm = NULL, upNorm = NULL, verbose = FALSE){
+             z.start = NULL, A.start = NULL, upper.b = NULL, lower.b = NULL,
+             MaxIter, eps, warn,
+             loNorm = NULL, upNorm = NULL, verbose = FALSE, ...){
         L2derivDim <- numberOfMaps(L2Fam@L2deriv)
         if(L2derivDim == 1){
             neighbor@radius <- radius
             res <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
                         risk = risk, symm = L2Fam@L2derivDistrSymm[[1]], 
-                        Finfo = L2Fam@FisherInfo, upper = upper.b,
+                        Finfo = L2Fam@FisherInfo, upper = upper.b, lower = lower.b,
                         trafo = trafo(L2Fam@param), maxiter = MaxIter, tol = eps, 
                         warn = warn, verbose = verbose)
             trafo <- as.vector(trafo(L2Fam@param))
@@ -52,10 +53,12 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                             Distr = L2Fam@distribution, DistrSymm = L2Fam@distrSymm, 
                             L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                             Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
-                            A.start = A.start, upper = upper.b, maxiter = MaxIter, 
-                            tol = eps, warn = warn, verbose = verbose)
+                            A.start = A.start, upper = upper.b, lower = lower.b,
+                            maxiter = MaxIter,
+                            tol = eps, warn = warn, verbose = verbose, ...)
                 normtype(risk) <- res$normtype
-                std <- if(is(normtype(risk),"QFNorm")) QuadForm(normtype(risk)) else diag(p)
+                std <- if(is(normtype(risk),"QFNorm"))
+                          QuadForm(normtype(risk)) else diag(p)
 
                 biasLo <- biasUp <- res$b
 

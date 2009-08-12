@@ -3,7 +3,7 @@
 ###############################################################################
 roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est, 
                     neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
-                    distance = CvMDist, startPar = NULL, verbose = FALSE, 
+                    distance = CvMDist, startPar = NULL, verbose = FALSE,
                     useLast = getRobAStBaseOption("kStepUseLast"), ...){
     es.call <- match.call()
     if(missing(x))
@@ -70,16 +70,16 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         r.lower <- sqrtn*eps.lower
         r.upper <- sqrtn*eps.upper
         ICstart <- radiusMinimaxIC(L2Fam = L2FamStart, neighbor = neighbor, risk = risk, 
-                                   loRad = r.lower, upRad = r.upper, verbose = verbose)
+                                   loRad = r.lower, upRad = r.upper, verbose = verbose, ...)
         if(!isTRUE(all.equal(fsCor, 1, tol = 1e-3))){
             neighbor@radius <- neighborRadius(ICstart)*fsCor
             infMod <- InfRobModel(center = L2FamStart, neighbor = neighbor)
-            ICstart <- optIC(model = infMod, risk = risk, verbose = verbose)
+            ICstart <- optIC(model = infMod, risk = risk, verbose = verbose, ...)
         }    
     }else{
         neighbor@radius <- sqrtn*eps*fsCor
         infMod <- InfRobModel(center = L2FamStart, neighbor = neighbor)
-        ICstart <- optIC(model = infMod, risk = risk, verbose = verbose)
+        ICstart <- optIC(model = infMod, risk = risk, verbose = verbose, ...)
     }
     res <- kStepEstimator(x, IC = ICstart, start = initial.est, steps = steps, useLast = useLast)
     res@estimate.call <- es.call
