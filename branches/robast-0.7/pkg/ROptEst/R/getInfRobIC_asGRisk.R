@@ -89,15 +89,19 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
 
             prec.old <- prec
             prec <- max(abs(z - z.old), abs(c0-c0.old))
-            if(verbose)
-                cat("current precision in IC algo:\t", prec, "\n")
+            if(iter>1){
+               if(verbose)
+                  cat("current precision in IC algo:\t", prec, "\n")
+            }
             if(prec < tol) break
             if(abs(prec.old - prec) < 1e-10){
-                cat("algorithm did not converge!\n", "achieved precision:\t", prec, "\n")
+                if(iter>1)
+                   cat("algorithm did not converge!\n", "achieved precision:\t", prec, "\n")
                 break
             }
             if(iter > maxiter){
-                cat("maximum iterations reached!\n", "achieved precision:\t", prec, "\n")
+                if(iter>1)
+                   cat("maximum iterations reached!\n", "achieved precision:\t", prec, "\n")
                 break
             }
         }
@@ -217,11 +221,6 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         prec <- 1
         iter.In <- 0
 
-        if(is(neighbor,"ContNeighborhood")){
-               w <- new("HampelWeight")
-        }else if(is(neighbor,"TotalVarNeighborhood")){
-               w <- new("BdStWeight")
-        }
 
         ## determining A,a,b with either optimization of iteration:
         if(OptOrIter == 1){
@@ -244,19 +243,15 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             Cov <- 0
             Risk <- 1e10
             normtype.old <- normtype
-            z.opt <- z
-            A.opt <- A
-            a.opt <- as.numeric(A.opt %*% z.opt)
-            w.opt <- w
-            std.opt <- std
+            a <- as.numeric(A%*% z)
             normtype.opt <- normtype
 
             asGRiskb <- function(b0){
                iter <<- iter + 1
                erg <- getLagrangeMultByOptim(b = b0, L2deriv = L2deriv, risk = risk,
                          FI = Finfo, trafo = trafo, neighbor = neighbor,
-                         biastype = biastype, normtype = normtype.opt, Distr = Distr,
-                         z.start = z.opt, A.start = A.opt, w.start = w.opt, std = std.opt,
+                         biastype = biastype, normtype = normtype, Distr = Distr,
+                         z.start = z, A.start = A, w.start = w, std = std,
                          z.comp = z.comp, A.comp = A.comp,
                          maxiter = round(maxiter/50*iter^5), tol = tol^(iter^5/40),
                          onesetLM = onesetLM, verbose = verbose, ...)
@@ -265,9 +260,9 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                A0 <- erg$A
                a0 <- erg$a
                z0 <- erg$z
-               std0 <- erg$std
+               std0 <- if(is.null(erg$std)) std else erg$std
                biastype0 <- erg$biastype
-               normtype.old0 <- normtype
+               normtype.old0 <- erg$normtype.old
                normtype0 <- erg$normtype
                risk0 <- erg$risk
                iter.In <<- iter.In + erg$iter
@@ -289,31 +284,29 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 #               print("A")
 #               print(list(Risk=Risk0,A=A0,a=a0,z=z0,b=b0))
 #               print("...")
-               w.opt <<- w <<- w0
-               A.opt <<- A <<- A0
-               a.opt <<- a <<- a0
-               z.opt <<- z <<- z0
+               w <<- w0
+               A <<- A0
+               a <<- a0
+               z <<- z0
                b <<- b0
-               std.opt <<- std <<- std0
+               std <<- std0
                biastype <<- biastype0
                normtype.old <<- normtype.old0
-               normtype.opt <<- normtype <<- normtype0
+               normtype <<- normtype0
                risk <<- risk0
                prec.In <<- erg$prec
                OptIterCall <<- erg$call
                Cov <<- Cov0
-
-               return(Risk0-sum(diag(std0%*%A0%*%t(trafo))))
+#               print(c(b0,Risk0))
+               return((Risk0-sum(diag(std0%*%A0%*%t(trafo))))^2)
             }
             tol0 <- tol^.5
-            f.l <- asGRiskb(lower)
-            f.u <- asGRiskb(upper)
+#            f.l <- asGRiskb(lower)
+#            f.u <- asGRiskb(upper)
 
-            du <- uniroot(asGRiskb, interval = c(lower,upper), tol = tol0,
-                           f.lower=f.l, f.upper=f.u)
-#            du <- optimize(asGRiskb, interval = c(lower,upper), tol = tol0,
-#                           A.o = A.opt, z.o = z.opt, a.o = a.opt, w.o = w.opt,
-#                           std.o = std.opt, normtype.o = normtype.opt)
+#            du <- uniroot(asGRiskb, interval = c(lower,upper), tol = tol0,
+#                           f.lower=f.l, f.upper=f.u)
+            du <- optimize(asGRiskb, interval = c(1e-4,1e8), tol = tol0^2)
         }else{
             repeat{
                 iter <- iter + 1
@@ -325,8 +318,16 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                 LUB <- .getLowUpB(L2deriv = L2deriv, Finfo = Finfo, Distr = Distr,
                                   normtype = normtype, z = z, A = A, radius = radius,
                                   iter = iter)
-                lower <- LUB$lower
-                upper <- if(is.null(upper)) LUB$upper else min(upper,LUB$upper)
+
+                if (!is.null(upper)|(iter == 1))
+                    {lower <- .Machine$double.eps^0.75;
+                      if(is.null(upper)) upper <- 10*LUB$upper
+                }else{ lower <- LUB$lower; upper <- LUB$upper}
+
+            ##
+
+#                lower <- LUB$lower
+#                upper <- if(is.null(upper)) LUB$upper else min(upper,LUB$upper)
 
 #                print(c(lower,upper))
                 ## solve for b
@@ -355,7 +356,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                               z.start = z, A.start = A, w.start = w,
                               std = std, z.comp = z.comp,
                               A.comp = A.comp, maxiter = maxit2, tol = tol,
-                              onesetLM = onesetLM, verbose = verbose, warnit = (OptOrIter!=2))
+                              verbose = verbose, warnit = (OptOrIter!=2))
 
                  ## read out solution
                  w <- erg$w
@@ -363,25 +364,15 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                  a <- erg$a
                  z <- erg$z
                  biastype <- erg$biastype
-                 normtype.old <- normtype
+                 normtype.old <- erg$normtype.old
                  normtype <- erg$normtype
                  risk <- erg$risk
                  iter.In <- iter.In + erg$iter
                  prec.In <- erg$prec
                  OptIterCall <- erg$call
-                 std <- erg$std
+                 std <- if(is.null(erg$std)) std else erg$std
 #                 print(list(z=z,A=A,b=b))
 
-                 if (onesetLM&&maxiter>1){
-                     if(is(neighbor,"ContNeighborhood"))
-                           cent(w) <- as.numeric(z)
-                     if(is(neighbor,"TotalVarNeighborhood"))
-                           clip(w) <- c(0,b)+a
-                     stand(w) <- A
-                     weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype,
-                                            normW = normtype)
-                     }
-                 else normtype <- normtype.old
 
                  ## check precision and number of iterations in outer b-loop
                  prec.old <- prec
@@ -398,6 +389,18 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                      break
                  }
             }
+
+        if (onesetLM){
+            if(is(neighbor,"ContNeighborhood"))
+                  cent(w) <- as.numeric(z)
+            if(is(neighbor,"TotalVarNeighborhood"))
+                  clip(w) <- c(0,b)+a
+            stand(w) <- A
+            weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype,
+                                   normW = normtype)
+            }
+        else normtype <- normtype.old
+
         ### issue some diagnostics if wanted
           if(verbose){
              cat("Iterations needed: outer (b-loop):",
@@ -405,11 +408,14 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
              cat("Precision achieved: all in all (b+A,a-loop):",
                  prec," inner (A,a-loop):", prec.In,"\n")
           }
+
+
         ### determine Covariance of pIC
           Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor,
                        biastype = biastype, Distr = Distr,
                        V.comp = A.comp, cent = a,
                        stand = A, w = w)
+          print(list(Cov=Cov,A=A,c=a,w=w))
           if(!is(risk, "asMSE")){
               Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,
                                 biastype = biastype, clip = b, cent = a, stand = A,
@@ -485,7 +491,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                    neighbor = neighbor, Distr = Distr, DistrSymm = DistrSymm,
                                    L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm,
                                    z.start = z.start, A.start = A.start, trafo = trafo,
-                                   maxiter = maxiter, tol = tol, warn = warn, Finfo = Finfo,
+                                   maxiter = round(maxiter), tol = tol, warn = warn, Finfo = Finfo,
                                    verbose = verbose)
                 normtype(risk) <- res$normtype
                 if(!is(risk, "asMSE")){

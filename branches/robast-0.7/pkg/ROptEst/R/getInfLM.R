@@ -5,7 +5,7 @@
 getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
                       neighbor, biastype, normtype, Distr,
                       z.start, A.start, w.start, std, z.comp, A.comp, maxiter, tol,
-                      onesetLM, verbose, warnit = TRUE){
+                      verbose, warnit = TRUE){
         LMcall <- match.call()
 
         ## initialization
@@ -47,6 +47,7 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
                   zc <- z
             }
 
+            # update standardization
             A <- getInfStand(L2deriv = L2deriv, neighbor = neighbor,
                          biastype = biastype, Distr = Distr, A.comp = A.comp,
                          cent = zc, trafo = trafo, w = w)
@@ -57,7 +58,6 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
                normtype(risk) <- normtype <- updateNorm(normtype = normtype,
                    L2 = L2deriv, neighbor = neighbor, biastype = biastype,
                    Distr = Distr, V.comp = A.comp, cent = z, stand = A, w = w)
-               std <- QuadForm(normtype)
             }
 
             ## precision and iteration counting
@@ -72,33 +72,26 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
                 break
             }
         }
-        ## shall Lagrange-Multipliers inside weight and outside coincide
-        if (onesetLM&&maxiter>=1){
-            if(is(neighbor,"ContNeighborhood"))
-               cent(w) <- as.numeric(z)
-            if(is(neighbor,"TotalVarNeighborhood"))
-               clip(w) <- c(0,b)+a
-            stand(w) <- A
-
-            weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype,
-                                   normW = normtype)
-        }
-        else normtype <- normtype.old
 
         ## determine LM a
         if(is(neighbor,"ContNeighborhood"))
            a <- as.vector(A %*% z)
 
+        std <- if(is(normtype,"QFNorm"))
+                  QuadForm(normtype) else NULL
+
         return(list(A = A, a = a, z = z, w = w,
                     biastype = biastype, normtype = normtype,
-                    risk = risk, std = std, iter = iter, prec = prec, b = b,
+                    normtype.old = normtype.old,
+                    risk = risk, std = std,
+                    iter = iter, prec = prec, b = b,
                     call = LMcall ))
 }
 
 getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
                       neighbor, biastype, normtype, Distr,
                       z.start, A.start, w.start, std, z.comp, A.comp, maxiter, tol,
-                      onesetLM, verbose, ...){
+                      verbose, ...){
 
         LMcall <- match.call()
         ### manipulate dots in call -> set control argument for optim
@@ -106,11 +99,11 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
         if(is.null(dots$method)) dots$method <- "L-BFGS-B"
 
         if(!is.null(dots$control)){
-            if(is.null(dots$control$maxit)) dots$control$maxit <-  maxiter
+            if(is.null(dots$control$maxit)) dots$control$maxit <-  round(maxiter)
             if(is.null(dots$control$reltol)) dots$control$reltol <- tol
             if(is.null(dots$control$abstol)) dots$control$abstol <- tol
         }else{
-            dots$control = list(maxit=maxiter, reltol=tol, abstol=tol)
+            dots$control = list(maxit=min(round(maxiter),1e8), reltol=tol, abstol=tol)
         }
         #print(dots$control)
         ## initialization
@@ -125,7 +118,7 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
         A0log <- as.logical(cbind(A.comp, as.logical(A.comp%*%as.numeric(z.comp)>0)))
         lvlog <- lvec0[A0log]
         A0vec1 <- A0vec0[A0log]
-
+#        print(list(A0vec0,A0log,lvlog,A0vec1))
 
         iter1 <- 0
         stdC  <- stdC.opt <- std
@@ -143,9 +136,13 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
             A0vecA <- numeric(p*(k+1))
 
             A0vecA[lvlog] <- A0vec
+
             ### read out current value of LM in usual format
             A0 <- matrix(A0vecA[1:(p*k)],nrow=p,ncol=k)
             a0 <- as.numeric(A0vecA[(p*k)+(1:p)])
+
+#            print(list(A0vecA,A0,a0))
+
             z0 <- as.numeric(solve(A0,a0))
             std0 <- stdC
             w0 <- w1
@@ -189,30 +186,49 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
             ###### for gamma([Q,]A,b) = E[{Y_A (1-w_b(|Y_A|_Q))}^2]
 
             riskA <- risk0
-            if(is(riskA, "asHampel"))
+            if(is(riskA, "asHampel")){
                riskA <- asMSE(biastype=biastype, normtype=normtype)
+               val <-   (as.numeric(t(a0)%*%std0%*%a0)/2 +
+                          sum(diag(std0%*%A0%*%FI%*%t(A0)))/2 +
+                          ## ~ E |Y_A|_Q^2 / 2
+                          getInfGamma(L2deriv = L2deriv, risk = riskA,
+                                 neighbor = neighbor, biastype = biastype,
+                                 Distr = Distr, stand = A0, cent = z0, clip = b,
+                                 power = 2)/2 -
+                           # ~ - E[|Y_A|_Q^2 (1-w_b(|Y_A|_Q))^2]/2
+                           sum(diag(std0%*%A0%*%t(trafo)) ))
+                        ## ~tr_Q AD'
 
+               ## in case TotalVarNeighborhood additional correction term:
+               if(is(neighbor,"TotalVarNeighborhood"))
+                  val <- (val -a0^2/2 -
+                          E(Distr, fun = function(x){ ## ~ - E Y_-^2/2
+                              L2 <- evalRandVar(L2deriv, as.matrix(x)) [,,1]- z0
+                              Y <- A0 %*% L2
+                              return(Y^2*(Y<0))
+                              },  useApply = FALSE)/2)
 
-            val <-   (as.numeric(t(z0)%*%t(A0)%*%std0%*%A0%*%z0)/2 +
-                       sum(diag(std0%*%A0%*%FI%*%t(A0)))/2 +
-                       ## ~ E |Y_A|_Q^2 / 2
-
-                       getInfGamma(L2deriv = L2deriv, risk = riskA,
-                              neighbor = neighbor, biastype = biastype,
-                              Distr = Distr, stand = A0, cent = z0, clip = b,
-                              power = 2)/2 -
-                        # ~ - E[|Y_A|_Q^2 (1-w_b(|Y_A|_Q))^2]/2
-                        sum(diag(std0%*%A0%*%t(trafo)) ))
+            }else if(is(risk0,"asMSE")){
+               val <- (E(object = Distr, fun = function(x){
+                          X <- evalRandVar(L2deriv, as.matrix(x))[,,1] - z0
+                          Y <- A0 %*% X
+                          nY <- norm(risk0)(Y)
+                          return(nY^2*weight(w0)(X))
+                        },  # E|Y|^2 w
+                        useApply=FALSE) /2 -
+                       sum(diag(std0%*%A0%*%t(trafo)) ))
                      ## ~tr_Q AD'
 
-            ## in case TotalVarNeighborhood additional correction term:
-            if(is(neighbor,"TotalVarNeighborhood"))
-               val <- val -E(Distr, fun = function(x){ ## ~ - E Y_-^2/2
-                                  L2 <- evalRandVar(L2deriv, as.matrix(x)) [,,1]
-                                        - z0
-                                  Y <- stand %*% L2
-                                  return(Y^2*(Y<0)/2)
-                                  },  useApply = FALSE)
+               ## in case TotalVarNeighborhood additional correction term:
+               if(is(neighbor,"TotalVarNeighborhood"))
+                  val <- (val -a0^2/2 -
+                          E(Distr, fun = function(x){
+                              X <- evalRandVar(L2deriv, as.matrix(x))[,,1] - z0
+                              Y <- A0 %*% X
+                              return(Y^2*(Y<0))
+                             },
+                            useApply=FALSE)/2)
+            }
 
             ## if this is the current optimum
             ## transport some values outside the optimizer:
@@ -243,24 +259,13 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
         a <- as.numeric(Aoptvec[(p*k)+(1:p)])
         z <- z1.opt
         w <- w1.opt
-        risk1 <- risk1.opt
-        stdC <- stdC.opt
-        ## shall Lagrange-Multipliers inside weight and outside coincide
-        if (onesetLM&&maxiter>1){
-            if(is(neighbor,"ContNeighborhood"))
-               cent(w) <- as.numeric(z)
-            if(is(neighbor,"TotalVarNeighborhood"))
-               clip(w) <- c(0,b)+a
-            stand(w) <- A
 
-            weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype,
-                                   normW = normtype1.opt)
-        }
-        else normtype1 <- normtype1.opt.old
 
         return(list(A = A, a = a, z = z, w = w,
-                    biastype = biastype, normtype = normtype,
-                    risk = risk1, std = stdC, iter = iter1,
+                    biastype = biastype, normtype = normtype1.opt,
+                    normtype.old = normtype1.opt.old,
+                    risk = risk1.opt, std = stdC.opt, iter = iter1,
                     prec = opterg$convergence, b = b,
                     call = LMcall ))
 }
+

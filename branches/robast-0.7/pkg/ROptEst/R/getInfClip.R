@@ -33,7 +33,7 @@ setMethod("getInfClip", signature(clip = "numeric",
                                   neighbor = "UncondNeighborhood"),
     function(clip, L2deriv, risk, neighbor, biastype, 
              Distr, stand, cent, trafo){
-        return(neighbor@radius^2*clip + 
+        return(neighbor@radius^2*clip +
                 getInfGamma(L2deriv = L2deriv, risk = risk, neighbor = neighbor, 
                             biastype = biastype, Distr = Distr, stand = stand, 
                             cent = cent, clip = clip))

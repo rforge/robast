@@ -208,7 +208,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                       biastype = biastype, normtype = normtype, Distr = Distr,
                       z.start = z.start, A.start = A.start, w.start = w, std = std,
                       z.comp = z.comp, A.comp = A.comp, maxiter = maxiter,
-                      tol = tol, onesetLM = onesetLM, verbose = verbose, ...)
+                      tol = tol, verbose = verbose, ...)
         else{
            erg <- getLagrangeMultByIter(b = b, L2deriv = L2deriv, risk = risk,
                       trafo = trafo, neighbor = neighbor, biastype = biastype,
@@ -216,7 +216,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                       z.start = z.start, A.start = A.start, w.start = w,
                       std = std, z.comp = z.comp,
                       A.comp = A.comp, maxiter = maxiter, tol = tol,
-                      onesetLM = onesetLM, verbose = verbose)
+                      verbose = verbose)
         }
 
         ## read out solution
@@ -225,6 +225,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         a <- erg$a
         z <- erg$z
         biastype <- erg$biastype
+        normtype.old <- erg$normtype.old
         normtype <- erg$normtype
         risk <- erg$risk
         iter <- erg$iter
@@ -237,6 +238,20 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
            cat("Iterations needed:",iter,"\n")
            cat("Precision achieved:", prec,"\n")
         }
+
+        ## shall Lagrange-Multipliers inside weight and outside coincide
+        if (onesetLM){
+            if(is(neighbor,"ContNeighborhood"))
+               cent(w) <- as.numeric(z)
+            if(is(neighbor,"TotalVarNeighborhood"))
+               clip(w) <- c(0,b)+a
+            stand(w) <- A
+
+            weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype,
+                                   normW = normtype)
+        }
+        else normtype <- normtype.old
+
 
         ### determine Covariance of pIC
         Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor,
