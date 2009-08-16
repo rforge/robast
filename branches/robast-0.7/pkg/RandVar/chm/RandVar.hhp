@@ -12,17 +12,5 @@ Title=R Help for package RandVar
 
 [FILES]
 00Index.html
-0RandVar-package.html
-EuclRandMatrix-class.html
-EuclRandMatrix.html
-EuclRandVarList-class.html
-EuclRandVarList.html
-EuclRandVariable-class.html
-EuclRandVariable.html
-OptionalrSpace-class.html
-RandVar-package.html
-RandVariable-class.html
-RandVariable.html
-RealRandVariable-class.html
-RealRandVariable.html
+
 util.html

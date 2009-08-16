@@ -1,10 +1,10 @@
 <html><head><title>Computation of the optimally robust IC for M estimators</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>rgsOptIC.M(RobRex)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>rgsOptIC.M(RobRex)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   rgsOptIC.M">
 <param name="keyword" value=" Computation of the optimally robust IC for M estimators">
 </object>
@@ -37,75 +37,74 @@ rgsOptIC.M(r, K, A.start, gg.start = 0.6, a1.start = -0.25,
 <table summary="R argblock">
 <tr valign="top"><td><code>r</code></td>
 <td>
-non-negative real: neighborhood radius. </td></tr>
+ non-negative real: neighborhood radius. </td></tr>
 <tr valign="top"><td><code>K</code></td>
 <td>
-object of class <code>"Distribution"</code>. </td></tr>
+ object of class <code>"Distribution"</code>. </td></tr>
 <tr valign="top"><td><code>A.start</code></td>
 <td>
-positive definite and symmetric matrix:
+ positive definite and symmetric matrix:
 starting value for the standardizing matrix of the
 regression part. </td></tr>
 <tr valign="top"><td><code>gg.start</code></td>
 <td>
-positive real: starting value for 
+ positive real: starting value for 
 the standardizing constant <i>gamma</i> 
-of the scale part. </td></tr>
+of the scale part. </td></tr>                                                                                                                                            
 <tr valign="top"><td><code>a1.start</code></td>
 <td>
-real: starting value for 
+ real: starting value for 
 Lagrange multiplier <i>alpha_1</i>. </td></tr>
 <tr valign="top"><td><code>a3.start</code></td>
 <td>
-real: starting value for 
+ real: starting value for 
 Lagrange multiplier <i>alpha_3</i>. </td></tr>
 <tr valign="top"><td><code>B.start</code></td>
 <td>
-symmetric matrix: starting value for 
+ symmetric matrix: starting value for 
 Lagrange multiplier B. </td></tr>
 <tr valign="top"><td><code>bUp</code></td>
 <td>
-positive real: the upper end point of the
+ positive real: the upper end point of the
 interval to be searched for b. </td></tr>
 <tr valign="top"><td><code>delta</code></td>
 <td>
-the desired accuracy (convergence tolerance). </td></tr>
+ the desired accuracy (convergence tolerance). </td></tr>
 <tr valign="top"><td><code>MAX</code></td>
 <td>
-if A or <i>gamma</i> are beyond the 
+ if A or <i>gamma</i> are beyond the 
 admitted values, <code>MAX</code> is returned. </td></tr>
 <tr valign="top"><td><code>itmax</code></td>
 <td>
-the maximum number of iterations. </td></tr>
+ the maximum number of iterations. </td></tr>
 <tr valign="top"><td><code>check</code></td>
 <td>
-logical. Should constraints be checked. </td></tr>
+ logical. Should constraints be checked. </td></tr>
 </table>
+
 
 <h3>Details</h3>
 
 <p>
 The computation of the optimally robust IC for M estimators
 is based on <code>optim</code> where <code>MAX</code> is used to
-control the constraints on A and <i>gamma</i>.
+control the constraints on A and <i>gamma</i>. 
 </p>
 
 
 <h3>Value</h3>
 
-<p>
-Object of class <code>"IC"</code></p>
+<p>Object of class <code>"IC"</code></p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>References</h3>
 
-<p>
+<p> 
 Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
 Bayreuth: Dissertation.
 </p>
@@ -113,22 +112,21 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code>IC-class</code>
-</p>
+<p><code>IC-class</code></p>
 
 
 <h3>Examples</h3>
 
 <pre>
+## code takes some time
+## Not run: 
 K &lt;- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
 IC1 &lt;- rgsOptIC.M(r = 0.1, K = K)
 checkIC(IC1)
 Risks(IC1)
+
+## End(Not run)
 </pre>
 
-
-
-<hr><div align="center">[Package <em>RobRex</em> version 0.7 <a href="00Index.html">Index</a>]</div>
-
+<hr><div align="center">[Package <em>RobRex</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
 </body></html>
