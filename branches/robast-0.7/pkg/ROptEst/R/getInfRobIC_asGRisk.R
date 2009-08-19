@@ -415,7 +415,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                        biastype = biastype, Distr = Distr,
                        V.comp = A.comp, cent = a,
                        stand = A, w = w)
-          print(list(Cov=Cov,A=A,c=a,w=w))
+          if(verbose) print(list(Cov=Cov,A=A,c=a,w=w))
           if(!is(risk, "asMSE")){
               Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,
                                 biastype = biastype, clip = b, cent = a, stand = A,
