@@ -1,5 +1,10 @@
 \name{internals_for_ROptEst}
 \alias{internals_for_ROptEst}
+\alias{.checkUpLow}
+\alias{.getUpperSol}
+\alias{.getLowerSol}
+\alias{.getLowUpB}
+\alias{.checkPIC}
 
 \title{Internal / Helper functions of package ROptEst}
 
@@ -30,6 +35,11 @@ These functions are used internally by package \pkg{ROptEst}.}
 ### helper function to return upper & lower bounds for b for b-search
 .getLowUpB(L2deriv, Finfo, Distr, normtype, z, A, radius, iter)
 
+### helper function to check whether (TotalVariation) weight w has already been modified
+.isVirginW(w)
+
+### helper function to check whether (intermediate) results give a pIC
+.checkPIC(L2deriv, neighbor, Distr, trafo, z, A, w, z.comp, A.comp, ...)
 }
 
 \arguments{
@@ -59,9 +69,15 @@ These functions are used internally by package \pkg{ROptEst}.}
   \item{radius}{radius of the neighborhood.}
   \item{z}{centering constant (in \code{k}-space)}
   \item{A}{standardizing matrix.}
+  \item{w}{a weight of class \code{"BdStWeight"}}
+  \item{z.comp}{logical vector: indicator which components of \code{z} need
+                to be computed}
+  \item{A.comp}{logical matrix: indicator which components of \code{A} need
+                to be computed}
   \item{iter}{the number of iterations computed so far; used for specifying
               a different value of the clipping component of the weight in
               total variation case in the very first iteration.}
+  \item{\dots}{further arguments to be passed on \code{E()}.}
 }
 
 \details{
@@ -69,11 +85,14 @@ These functions are used internally by package \pkg{ROptEst}.}
     \eqn{(b_{\rm\scriptstyle min},b_{\rm\scriptstyle min})}{(b_min,b_max)};
 \code{.getUpperSol} determines the upper case/classical solution and computes
   corresponding risks
-\code{.nonNumericb} determines the lower case (minimax bias) solution and computes
+\code{.getLowerSol} determines the lower case (minimax bias) solution and computes
   corresponding risks
 \code{.getLowUpB} determines a search interval for \code{b} to given radius
 \code{r}, i.e., lower and upper bounds for
 \eqn{(b_{\rm\scriptstyle min},b_{\rm\scriptstyle min})}{(b_min,b_max)}
+\code{.isVirginW} checks whether the (total variation) weight \code{w} in
+the argument has already been modified since creation (\code{TRUE} if not)
+\code{.checkPIC} checks whether (intermediate) results give a pIC
 }
 
 
@@ -88,6 +107,8 @@ These functions are used internally by package \pkg{ROptEst}.}
 \item{.getUpperSol}{a return list for \code{getInfRobIC}}
 \item{.getLowerSol}{a return list for \code{getInfRobIC}}
 \item{.checkUpLow}{a list with items \code{lower} and \code{upper} (both numeric).}
+\item{.isVirginW}{\code{TRUE} or \code{FALSE}}
+\item{.checkPIC}{nothing is returned; precision values are issued.}
 }
 
 

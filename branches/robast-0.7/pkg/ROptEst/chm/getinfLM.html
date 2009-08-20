@@ -30,11 +30,11 @@ rarely called directly.
 <pre>
 getLagrangeMultByIter(b, L2deriv, risk, trafo,
                       neighbor, biastype, normtype, Distr,
-                      z.start, A.start, w.start, std, z.comp, A.comp, maxiter, tol,
+                      a.start, z.start, A.start, w.start, std, z.comp, A.comp, maxiter, tol,
                       verbose, warnit = TRUE)
 getLagrangeMultByOptim(b, L2deriv, risk, FI, trafo,
                       neighbor, biastype, normtype, Distr,
-                      z.start, A.start, w.start,  std, z.comp, A.comp, maxiter, tol,
+                      a.start, z.start, A.start, w.start,  std, z.comp, A.comp, maxiter, tol,
                       verbose, ...)
 
 </pre>
@@ -72,9 +72,12 @@ object of class <code>"NormType"</code> &mdash; the norm type with we work.</td>
 <tr valign="top"><td><code>Distr</code></td>
 <td>
  object of class <code>"Distribution"</code>. </td></tr>
+<tr valign="top"><td><code>a.start</code></td>
+<td>
+ initial value for the centering constant (in <code>p</code>-space). </td></tr>
 <tr valign="top"><td><code>z.start</code></td>
 <td>
- initial value for the centering constant. </td></tr>
+ initial value for the centering constant (in <code>k</code>-space). </td></tr>
 <tr valign="top"><td><code>A.start</code></td>
 <td>
  initial value for the standardizing matrix. </td></tr>
@@ -191,7 +194,7 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p><code><a href="../../RobAStBase/html/InfRobModel-class.html">InfRobModel-class</a></code></p>
+<p><code><a onclick="findlink('RobAStBase', 'InfRobModel-class.html')" style="text-decoration: underline; color: blue; cursor: hand">InfRobModel-class</a></code></p>
 
 <script Language="JScript">
 function findlink(pkg, fn) {

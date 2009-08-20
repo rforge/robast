@@ -187,7 +187,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         ## starting values
         if(is.null(z.start)) z.start <- numeric(k)
         if(is.null(A.start)) A.start <- trafo %*% solve(Finfo)
-
+        a.start <- as.numeric(A.start %*% z.start)
 
         ## sort out upper solution if radius = 0
         if(identical(all.equal(radius, 0), TRUE))
@@ -198,10 +198,16 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                QF = std, verbose = verbose, warn = warn))
 
         ## determine which entries must be computed
-        comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
-        z.comp <- comp$"z.comp"
-        A.comp <- comp$"A.comp"
+        # by default everything
+        z.comp <- rep(TRUE,k)
+        A.comp <- matrix(rep(TRUE,k*k),nrow=k)
 
+        # otherwise if trafo == unitMatrix may use symmetry info
+        if(distrMod:::.isUnitMatrix(trafo)){
+            comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
+            z.comp <- comp$"z.comp"
+            A.comp <- comp$"A.comp"
+        }
         ## selection of the algorithm
         pM <- pmatch(tolower(OptOrIter),c("optimize","iterate", "doubleiterate"))
         OptOrIter <- pM
@@ -216,7 +222,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         z <- z.start
         A <- A.start
         b <- 0
-        a <- 0
+        a <- a.start
         iter <- 0
         prec <- 1
         iter.In <- 0
@@ -243,7 +249,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             Cov <- 0
             Risk <- 1e10
             normtype.old <- normtype
-            a <- as.numeric(A%*% z)
+            a <- as.numeric(A %*% z)
             normtype.opt <- normtype
 
             asGRiskb <- function(b0){
@@ -251,7 +257,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                erg <- getLagrangeMultByOptim(b = b0, L2deriv = L2deriv, risk = risk,
                          FI = Finfo, trafo = trafo, neighbor = neighbor,
                          biastype = biastype, normtype = normtype, Distr = Distr,
-                         z.start = z, A.start = A, w.start = w, std = std,
+                         a.start = a, z.start = z, A.start = A, w.start = w, std = std,
                          z.comp = z.comp, A.comp = A.comp,
                          maxiter = round(maxiter/50*iter^5), tol = tol^(iter^5/40),
                          onesetLM = onesetLM, verbose = verbose, ...)
@@ -310,6 +316,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         }else{
             repeat{
                 iter <- iter + 1
+                a.old <- a
                 z.old <- z
                 b.old <- b
                 A.old <- A
@@ -353,7 +360,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                 erg <- getLagrangeMultByIter(b = b, L2deriv = L2deriv, risk = risk,
                               trafo = trafo, neighbor = neighbor, biastype = biastype,
                               normtype = normtype, Distr = Distr,
-                              z.start = z, A.start = A, w.start = w,
+                              a.start = a, z.start = z, A.start = A, w.start = w,
                               std = std, z.comp = z.comp,
                               A.comp = A.comp, maxiter = maxit2, tol = tol,
                               verbose = verbose, warnit = (OptOrIter!=2))
@@ -376,7 +383,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
                  ## check precision and number of iterations in outer b-loop
                  prec.old <- prec
-                 prec <- max(abs(b-b.old), max(abs(A-A.old)), max(abs(z-z.old)))
+                 prec <- max(abs(b-b.old), max(abs(A-A.old)),
+                             max(abs(z-z.old), max(abs(a-a.old))))
                  if(verbose)
                      cat("current precision in IC algo:\t", prec, "\n")
                  if(prec < tol) break
@@ -415,7 +423,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                        biastype = biastype, Distr = Distr,
                        V.comp = A.comp, cent = a,
                        stand = A, w = w)
-          if(verbose) print(list(Cov=Cov,A=A,c=a,w=w))
+          if(verbose) print(list(Cov=Cov,A=A,a=a,w=w))
           if(!is(risk, "asMSE")){
               Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,
                                 biastype = biastype, clip = b, cent = a, stand = A,
@@ -439,6 +447,11 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                      asMSE = list(value = trAsCov + radius^2*b^2,
                                   r = radius,
                                   at = neighbor)))
+
+        if(verbose)
+           .checkPIC(L2deriv = L2deriv, neighbor = neighbor,
+                     Distr = Distr, trafo = trafo, z = z, A = A, w = w,
+                     z.comp = z.comp, A.comp = A.comp, ...)
 
         return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info, w = w,
                     biastype = biastype, normtype = normtype,
@@ -528,6 +541,68 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
             ##
             return(list(lower=lower, upper=upper))
+}
+
+
+### helper function to check whether (TotalVariation) weight w has already been modified
+.isVirginW <- function(w){
+  w0 <- new("BdStWeight")
+  identical(body(weight(w0)),body(weight(w)))
+}
+
+
+.checkPIC <- function(L2deriv, neighbor, Distr, trafo, z, A, w, z.comp, A.comp, ...){
+         cat("some check:\n-----------\n")
+         nrvalues <- ncol(trafo)
+         pvalues <- nrow(trafo)
+         if(is(neighbor,"ContNeighborhood"))
+              zx <- as.numeric(z)
+         else zx <- numeric(nrvalues)
+
+         L2v.f <- function(x)
+              evalRandVar(L2deriv, as.matrix(x)) [,,1]
+
+         w.f <- function(x) weight(w)(L2v.f(x))
+
+         integrand0 <- function(x,...,ixx){
+           L2v <- as.matrix(L2v.f(x)) - zx
+           wv <- w.f(x)
+           as.numeric(L2v[ixx,]*wv)
+           }
+
+         integrand1 <- function(x,...,ixx){
+           L2v <- as.matrix(L2v.f(x)) - zx
+           AL2v <- A %*% L2v
+           wv <- w.f(x)
+           as.numeric(AL2v[ixx,]*wv)
+           }
+
+         integrand2 <- function(x,...,ixx,jxx){
+           L2v <- as.matrix(L2v.f(x)) - zx
+           AL2v <- integrand1(x,...,ixx = ixx)
+           as.numeric(AL2v*L2v[jxx,])
+           }
+
+         cent0 <- numeric(nrvalues)
+         for(i in 1:nrvalues)
+             if(z.comp[i]) cent0[i] <- E(Distr,integrand0,...,ixx=i)
+
+         cent1 <- numeric(pvalues)
+         for(i in 1:pvalues)
+             cent1[i] <- E(Distr,integrand1,...,ixx=i)
+
+         consist <- 0*trafo
+         for(i in 1:pvalues){
+             for(j in 1:nrvalues){
+                 if(A.comp[i,j])
+                    consist[i,j] <- E(Distr,integrand2,...,ixx=i,jxx=j)
+             }
+         }
+         consist <- consist-trafo
+         cat("centering (k-space):",cent0,"\n")
+         cat("centering (p-space):",cent1,"\n")
+         cat("Fisher consistency:\n")
+         print(consist)
 }
 
 ################################################################################

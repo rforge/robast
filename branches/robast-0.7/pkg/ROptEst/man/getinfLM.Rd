@@ -13,11 +13,11 @@
 \usage{
 getLagrangeMultByIter(b, L2deriv, risk, trafo,
                       neighbor, biastype, normtype, Distr,
-                      z.start, A.start, w.start, std, z.comp, A.comp, maxiter, tol,
+                      a.start, z.start, A.start, w.start, std, z.comp, A.comp, maxiter, tol,
                       verbose, warnit = TRUE)
 getLagrangeMultByOptim(b, L2deriv, risk, FI, trafo,
                       neighbor, biastype, normtype, Distr,
-                      z.start, A.start, w.start,  std, z.comp, A.comp, maxiter, tol,
+                      a.start, z.start, A.start, w.start,  std, z.comp, A.comp, maxiter, tol,
                       verbose, ...)
 
 }
@@ -33,7 +33,8 @@ getLagrangeMultByOptim(b, L2deriv, risk, FI, trafo,
   \item{biastype}{object of class \code{"BiasType"} --- the bias type with we work.}
   \item{normtype}{object of class \code{"NormType"} --- the norm type with we work.}
   \item{Distr}{ object of class \code{"Distribution"}. }
-  \item{z.start}{ initial value for the centering constant. }
+  \item{a.start}{ initial value for the centering constant (in \code{p}-space). }
+  \item{z.start}{ initial value for the centering constant (in \code{k}-space). }
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{w.start}{ initial value for the weight function. }
   \item{std}{ matrix of (or which may coerced to) class

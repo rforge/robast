@@ -167,7 +167,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         ## starting values
         if(is.null(z.start)) z.start <- numeric(k)
-        if(is.null(A.start)) A.start <- trafo
+        if(is.null(A.start)) A.start <- trafo%*%solve(Finfo)
+        a.start <- as.numeric(A.start %*% z.start)
 
         ## initialize
         if(is(neighbor,"ContNeighborhood")){
@@ -192,9 +193,16 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         }
 
         ## determine which entries must be computed
-        comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
-        z.comp <- comp$"z.comp"
-        A.comp <- comp$"A.comp"
+        # by default everything
+        z.comp <- rep(TRUE,k)
+        A.comp <- matrix(rep(TRUE,k*k),nrow=k)
+
+        # otherwise if trafo == unitMatrix may use symmetry info
+        if(distrMod:::.isUnitMatrix(trafo)){
+            comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
+            z.comp <- comp$"z.comp"
+            A.comp <- comp$"A.comp"
+        }
 
         ## selection of the algorithm
         pM <- pmatch(tolower(OptOrIter),c("optimize","iterate"))
@@ -206,14 +214,16 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
            erg <- getLagrangeMultByOptim(b = b, L2deriv = L2deriv, risk = risk,
                       FI = Finfo, trafo = trafo, neighbor = neighbor,
                       biastype = biastype, normtype = normtype, Distr = Distr,
-                      z.start = z.start, A.start = A.start, w.start = w, std = std,
+                      a.start = a.start, z.start = z.start, A.start = A.start,
+                      w.start = w, std = std,
                       z.comp = z.comp, A.comp = A.comp, maxiter = maxiter,
                       tol = tol, verbose = verbose, ...)
         else{
            erg <- getLagrangeMultByIter(b = b, L2deriv = L2deriv, risk = risk,
                       trafo = trafo, neighbor = neighbor, biastype = biastype,
                       normtype = normtype, Distr = Distr,
-                      z.start = z.start, A.start = A.start, w.start = w,
+                      a.start = a.start, z.start = z.start, A.start = A.start,
+                      w.start = w,
                       std = std, z.comp = z.comp,
                       A.comp = A.comp, maxiter = maxiter, tol = tol,
                       verbose = verbose)
@@ -254,10 +264,10 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
 
         ### determine Covariance of pIC
-        Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor,
+        Cov <- as.matrix(getInfV(L2deriv = L2deriv, neighbor = neighbor,
                        biastype = biastype, Distr = Distr,
                        V.comp = A.comp, cent = a,
-                       stand = A, w = w)
+                       stand = A, w = w))
 
         #getAsRisk(risk = asCov(), L2deriv = L2deriv, neighbor = neighbor,
         #          biastype = biastype, Distr = Distr, clip = b, cent = a,
@@ -265,7 +275,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         ### add some further informations for the pIC-slots info and risk
         info <- paste("optimally robust IC for 'asHampel' with bound =", round(b,3))
-        trAsCov <- sum(diag(std%*%Cov)); r <- neighbor@radius
+        trAsCov <- sum(diag(std %*% Cov)); r <- neighbor@radius
         Risk <- list(trAsCov = list(value = trAsCov,
                                     normtype = normtype),
                      asCov = Cov,
@@ -275,6 +285,11 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                      asMSE = list(value = trAsCov + r^2*b^2,
                                   r = r,
                                   at = neighbor))
+
+        if(verbose)
+           .checkPIC(L2deriv = L2deriv, neighbor = neighbor,
+                     Distr = Distr, trafo = trafo, z = z, A = A, w = w,
+                     z.comp = z.comp, A.comp = A.comp, ...)
 
         return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info,
                     w = w, biastype = biastype, normtype = normtype,
@@ -297,7 +312,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             upper.x <- getUp(Distr)
             x <- seq(from = lower.x, to = upper.x, length = nrvalpts)
             bmax <- sapply(x,function(x) evalRandVar(ClassIC,x))
-            bmax <- sqrt(max(colSums(bmax^2)))
+            bmax <- sqrt(max(colSums(as.matrix(bmax^2))))
             cat("numerical approximation of maximal bound:\t", bmax, "\n")
 
             if(b >= bmax){

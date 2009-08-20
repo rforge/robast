@@ -4,7 +4,8 @@
 
 getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
                       neighbor, biastype, normtype, Distr,
-                      z.start, A.start, w.start, std, z.comp, A.comp, maxiter, tol,
+                      a.start, z.start, A.start, w.start, std,
+                      z.comp, A.comp, maxiter, tol,
                       verbose, warnit = TRUE){
         LMcall <- match.call()
 
@@ -13,12 +14,13 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
         A <- A.start
         w <- w.start
         iter <- 0
-        a <- 0
+        a <- a.start
 
         ## iteration-loop
         repeat{
             ## increment
             iter <- iter + 1
+            a.old <- a
             z.old <- z
             A.old <- A
 
@@ -28,17 +30,18 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
                 cent(w) <- as.numeric(z)
                 stand(w) <- A
             }else if(is(neighbor,"TotalVarNeighborhood")){
-                clip(w) <- if(iter==1) c(-b,b)/2 else c(0,b)+a
+                clip(w) <- if(.isVirginW(w)) c(-b,b)/2 else c(0,b)+a
                 stand(w) <- A
             }
             weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype,
                                    normW = normtype)
 
-            #print(w)
+        #     print(w)
             ## update centering
             z <- getInfCent(L2deriv = L2deriv, neighbor = neighbor,
                             biastype = biastype, Distr = Distr, z.comp = z.comp,
                             w = w, tol.z = .Machine$double.eps^.5)
+        #     print(c("z"=z))
             if(is(neighbor,"TotalVarNeighborhood")){
                   a <- z
                   z <- as.numeric(solve(A,a))
@@ -52,17 +55,23 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
                          biastype = biastype, Distr = Distr, A.comp = A.comp,
                          cent = zc, trafo = trafo, w = w)
 
+        #     print(c("A"=A))
             ## in case of self-standardization: update norm
             normtype.old <- normtype
             if(is(normtype,"SelfNorm")){
                normtype(risk) <- normtype <- updateNorm(normtype = normtype,
                    L2 = L2deriv, neighbor = neighbor, biastype = biastype,
-                   Distr = Distr, V.comp = A.comp, cent = z, stand = A, w = w)
+                   Distr = Distr, V.comp = A.comp, cent = zc, stand = A, w = w)
             }
 
             ## precision and iteration counting
-            prec <- max(max(abs(A-A.old)), max(abs(z-z.old)))
-            if(verbose)
+            prec <- max(max(abs(A-A.old)), max(abs(a-a.old)),max(abs(z-z.old)))
+#            if(verbose)
+#              .checkPIC(L2deriv = L2deriv, neighbor = neighbor,
+#                     Distr = Distr, trafo = trafo, z = zc, A = A, w = w,
+#                     z.comp = z.comp, A.comp = A.comp)
+
+            if(verbose && iter < maxiter)
                 cat("current precision in IC algo:\t", prec, "\n")
             if(prec < tol) break
             if(iter > maxiter){
@@ -75,12 +84,11 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
 
         ## determine LM a
         if(is(neighbor,"ContNeighborhood"))
-           a <- as.vector(A %*% z)
+           a <- as.vector(A %*% zc)
 
-        std <- if(is(normtype,"QFNorm"))
-                  QuadForm(normtype) else NULL
+        if(is(normtype,"QFNorm")) std <- QuadForm(normtype)
 
-        return(list(A = A, a = a, z = z, w = w,
+        return(list(A = A, a = a, z = zc, w = w,
                     biastype = biastype, normtype = normtype,
                     normtype.old = normtype.old,
                     risk = risk, std = std,
@@ -90,7 +98,7 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
 
 getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
                       neighbor, biastype, normtype, Distr,
-                      z.start, A.start, w.start, std, z.comp, A.comp, maxiter, tol,
+                      a.start, z.start, A.start, w.start, std, z.comp, A.comp, maxiter, tol,
                       verbose, ...){
 
         LMcall <- match.call()
@@ -154,7 +162,7 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
                 cent(w0) <- as.numeric(z0)
                 stand(w0) <- A0
             }else if(is(neighbor,"TotalVarNeighborhood")){
-                clip(w0) <- if(iter1==1) c(-b,b)/2 else c(0,b)+a0
+                clip(w0) <- if(.isVirginW(w0)) c(-b,b)/2 else c(0,b)+a0
                 stand(w0) <- A0
             }
             weight(w0) <- getweight(w0, neighbor = neighbor, biastype = biastype,

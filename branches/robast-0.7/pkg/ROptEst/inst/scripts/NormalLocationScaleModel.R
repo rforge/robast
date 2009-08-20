@@ -92,8 +92,54 @@ infoPlot(N0.IC4.s)
 ## (may take quite some time!)
 N0.r.rho1 <- leastFavorableRadius(L2Fam=N0, neighbor=ContNeighborhood(),
                     risk=asMSE(), rho=0.5)
+###############################################################################
+# a non-trivial trafo:
+###############################################################################
 
+tfct <- function(x){
+    nms0 <- c("mean","sd")
+    nms  <- "comb"
+    fval0 <- x[1]+2*x[2]
+    names(fval0) <- nms
+    mat0 <- matrix(c(1,2), nrow = 1, dimnames = list(nms,nms0))
+    return(list(fval = fval0, mat = mat0))
+}
+
+## corresponding ideal and robust models
+N1.traf <- NormLocationScaleFamily(mean = 0, sd = 1, trafo= tfct)
+N1R.traf <- InfRobModel(center = N1.traf, neighbor = ContNeighborhood(radius = 0.5))
+N2R.traf <- InfRobModel(center = N1.traf, neighbor = TotalVarNeighborhood(radius = 0.5))
+
+### classical solution
+IC.traf.class <- optIC(model=N1.traf,risk=asCov())
+plot(IC.traf.class)
+checkIC(IC.traf.class)
+
+### Hampel solution *=c
+IC.traf.CV.H <- optIC(model = N1R.traf, risk = asHampel(bound = 3),verbose=TRUE)
+plot(IC.traf.CV.H)
+checkIC(IC.traf.CV.H)
+
+### MSE solution *=c
+IC.traf.CV.MSE <- optIC(model = N1R.traf, risk = asMSE(),verbose=TRUE)
+plot(IC.traf.CV.MSE)
+checkIC(IC.traf.CV.MSE)
+
+### Hampel solution *=v
+IC.traf.TV.H <- optIC(model = N2R.traf, risk = asHampel(bound = 6),
+                      verbose=TRUE, checkBounds=FALSE)
+plot(IC.traf.TV.H)
+checkIC(IC.traf.TV.H)
+
+### MSE solution *=v
+IC.traf.TV.MSE <- optIC(model = N2R.traf, risk = asMSE(),verbose=TRUE)
+plot(IC.traf.TV.MSE)
+checkIC(IC.traf.TV.MSE)
+
+
+###############################################################################
 ## one-step estimation
+###############################################################################
 ## 1. generate a contaminated sample
 ind <- rbinom(100, size=1, prob=0.05) 
 x <- rnorm(100, mean=0, sd=(1-ind) + ind*9)

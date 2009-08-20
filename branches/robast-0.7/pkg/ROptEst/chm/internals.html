@@ -6,6 +6,11 @@
 <table width="100%"><tr><td>internals_for_ROptEst(ROptEst)</td><td align="right">R Documentation</td></tr></table>
 <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   internals_for_ROptEst">
+<param name="keyword" value="R:   .checkUpLow">
+<param name="keyword" value="R:   .getUpperSol">
+<param name="keyword" value="R:   .getLowerSol">
+<param name="keyword" value="R:   .getLowUpB">
+<param name="keyword" value="R:   .checkPIC">
 <param name="keyword" value=" Internal / Helper functions of package ROptEst">
 </object>
 
@@ -45,6 +50,11 @@ These functions are used internally by package <span class="pkg">ROptEst</span>.
 ### helper function to return upper &amp; lower bounds for b for b-search
 .getLowUpB(L2deriv, Finfo, Distr, normtype, z, A, radius, iter)
 
+### helper function to check whether (TotalVariation) weight w has already been modified
+.isVirginW(w)
+
+### helper function to check whether (intermediate) results give a pIC
+.checkPIC(L2deriv, neighbor, Distr, trafo, z, A, w, z.comp, A.comp, ...)
 </pre>
 
 
@@ -123,11 +133,25 @@ centering constant (in <code>k</code>-space)</td></tr>
 <tr valign="top"><td><code>A</code></td>
 <td>
 standardizing matrix.</td></tr>
+<tr valign="top"><td><code>w</code></td>
+<td>
+a weight of class <code>"BdStWeight"</code></td></tr>
+<tr valign="top"><td><code>z.comp</code></td>
+<td>
+logical vector: indicator which components of <code>z</code> need
+to be computed</td></tr>
+<tr valign="top"><td><code>A.comp</code></td>
+<td>
+logical matrix: indicator which components of <code>A</code> need
+to be computed</td></tr>
 <tr valign="top"><td><code>iter</code></td>
 <td>
 the number of iterations computed so far; used for specifying
 a different value of the clipping component of the weight in
 total variation case in the very first iteration.</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+further arguments to be passed on <code>E()</code>.</td></tr>
 </table>
 
 
@@ -138,11 +162,14 @@ total variation case in the very first iteration.</td></tr>
 <i>(b_min,b_max)</i>;
 <code>.getUpperSol</code> determines the upper case/classical solution and computes
 corresponding risks
-<code>.nonNumericb</code> determines the lower case (minimax bias) solution and computes
+<code>.getLowerSol</code> determines the lower case (minimax bias) solution and computes
 corresponding risks
 <code>.getLowUpB</code> determines a search interval for <code>b</code> to given radius
 <code>r</code>, i.e., lower and upper bounds for
 <i>(b_min,b_max)</i>
+<code>.isVirginW</code> checks whether the (total variation) weight <code>w</code> in
+the argument has already been modified since creation (<code>TRUE</code> if not)
+<code>.checkPIC</code> checks whether (intermediate) results give a pIC
 </p>
 
 
@@ -168,6 +195,12 @@ a return list for <code>getInfRobIC</code></td></tr>
 <tr valign="top"><td><code>.checkUpLow</code></td>
 <td>
 a list with items <code>lower</code> and <code>upper</code> (both numeric).</td></tr>
+<tr valign="top"><td><code>.isVirginW</code></td>
+<td>
+<code>TRUE</code> or <code>FALSE</code></td></tr>
+<tr valign="top"><td><code>.checkPIC</code></td>
+<td>
+nothing is returned; precision values are issued.</td></tr>
 </table>
 </p>
 
