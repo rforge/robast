@@ -22,10 +22,14 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
     })
 setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable", 
                                    risk = "asBias", 
-                                   neighbor = "ContNeighborhood"),
+                                   neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, z.start, 
              A.start, Finfo, trafo, maxiter, tol, warn, verbose = FALSE, ...){
+
+        k <- ncol(trafo); p <- nrow(trafo)
+        if(is(neighbor,"TotalVarNeighborhood") && p>1)
+           stop("Not yet implemented.")
 
         normtype <- normtype(risk)
         if(is(normtype,"SelfNorm")){
@@ -59,18 +63,25 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
            {QuadForm(normtype) <- PosSemDefSymmMatrix(FI); 
             normtype(risk) <- normtype}
 
-        comp <- .getComp(L2deriv, DistrSymm, L2derivSymm,
-             L2derivDistrSymm)
+        ## determine which entries must be computed
+        # by default everything
+        z.comp <- rep(TRUE,k)
+        A.comp <- matrix(rep(TRUE,k*k),nrow=k)
 
-        z.comp <- comp$"z.comp"
-        A.comp <- comp$"A.comp"
+        # otherwise if trafo == unitMatrix may use symmetry info
+        if(distrMod:::.isUnitMatrix(trafo)){
+            comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
+            z.comp <- comp$"z.comp"
+            A.comp <- comp$"A.comp"
+        }
 
         return(minmaxBias(L2deriv = L2deriv, neighbor = neighbor,
                    biastype = biastype(risk), normtype = normtype(risk),
              Distr = Distr, z.start = z.start, A.start = A.start, 
-             z.comp = z.comp, A.comp = A.comp, trafo = trafo,
+             z.comp = z.comp, A.comp = A.comp, Finfo = Finfo, trafo = trafo,
              maxiter = maxiter, tol = tol, verbose = verbose))
     })
+
 
 
 ###############################################################################
@@ -153,12 +164,12 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
                                    neighbor = "ContNeighborhood", 
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, normtype, Distr, 
-             z.start, A.start,  z.comp, A.comp, trafo, maxiter,  tol,
+             z.start, A.start,  z.comp, A.comp, Finfo, trafo, maxiter,  tol,
              verbose = FALSE){
 
         DA.comp <- abs(trafo) %*% A.comp != 0
         eerg <- .LowerCaseMultivariate(L2deriv, neighbor, biastype,
-             normtype, Distr, trafo, z.start,
+             normtype, Distr, Finfo, trafo, z.start,
              A.start, z.comp = z.comp, A.comp = DA.comp, maxiter, tol,
              verbose = verbose)
         erg <- eerg$erg
@@ -182,6 +193,10 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
         w <- eerg$w
         normtype <- eerg$normtype
 
+        if(verbose)
+           .checkPIC(L2deriv, neighbor, Distr, trafo, z, A, w, z.comp, A.comp)
+
+
         Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor, 
                        biastype = biastype, Distr = Distr, 
                        V.comp = A.comp, cent = a, 
@@ -204,6 +219,63 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
         return(list(A = A, a = a, b = b, d = d, risk = Risk, info = info, 
                     w = w, biastype = biastype, normtype = normtype))
     })
+
+
+setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
+                                   neighbor = "TotalVarNeighborhood",
+                                   biastype = "BiasType"),
+    function(L2deriv, neighbor, biastype, normtype, Distr,
+             z.start, A.start,  z.comp, A.comp, Finfo, trafo, maxiter,  tol,
+             verbose = FALSE){
+
+        eerg <- .LowerCaseMultivariateTV(L2deriv = L2deriv,
+             neighbor = neighbor, biastype = biastype,
+             normtype = normtype, Distr = Distr, Finfo = Finfo, trafo = trafo,
+             A.start = A.start, maxiter = maxiter,
+             tol = tol, verbose = verbose)
+
+
+        p <- nrow(trafo)
+        k <- ncol(trafo)
+
+        A <- eerg$A
+        b <- eerg$b
+        w <- eerg$w
+        a <- eerg$a
+        z <- numeric(k)
+        d <- 0
+
+        # to be done:
+        # computation of 'd', in case 'L2derivDistr' not abs. cont.
+
+        if(verbose)
+           .checkPIC(L2deriv, neighbor, Distr, trafo, z, A, w,
+                     z.comp=rep(TRUE,k), A.comp=matrix(TRUE,k,k))
+
+
+        Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor,
+                       biastype = biastype, Distr = Distr,
+                       V.comp = matrix(TRUE), cent = numeric(k),
+                       stand = A, w = w)
+
+        std <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(p)
+
+        info <- c("minimum asymptotic bias (lower case) solution")
+        trAsCov <- sum(diag(std%*%Cov))
+        r <- neighbor@radius
+        asMSE <- r^2 * b^2 + trAsCov
+        Risk <- list(asBias = list(value = b, biastype = biastype,
+                                   normtype = normtype,
+                                   neighbortype = class(neighbor)),
+                     asCov = Cov,
+                     trAsCov = list(value = trAsCov, normtype = normtype),
+                     asMSE = list(value = asMSE,
+                                  r = r,
+                                  at = neighbor))
+        return(list(A = A, a = a, b = b, d = d, risk = Risk, info = info,
+                    w = w, biastype = biastype, normtype = normtype))
+    })
+
 
 setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution", 
                                    neighbor = "ContNeighborhood", 

@@ -11,7 +11,7 @@
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asCov,TotalVarNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,RealRandVariable,asCov,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asBias,UncondNeighborhood-method">
-<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asBias,ContNeighborhood-method">
+<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asBias,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asHampel,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,RealRandVariable,asHampel,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asGRisk,UncondNeighborhood-method">
@@ -56,7 +56,7 @@ getInfRobIC(L2deriv,
                        risk, neighbor, symm, trafo,
                        maxiter, tol, warn, Finfo, verbose = FALSE, ...)
 
-## S4 method for signature 'RealRandVariable,asBias,ContNeighborhood':
+## S4 method for signature 'RealRandVariable,asBias,UncondNeighborhood':
 getInfRobIC(L2deriv, risk,
                        neighbor, Distr, DistrSymm, L2derivSymm,
                        L2derivDistrSymm, z.start, A.start, Finfo, trafo,
@@ -223,7 +223,7 @@ parametric families with unknown one-dimensional parameter. </dd>
 </p>
 <p>
 <dt>L2deriv = "RealRandVariable", risk = "asBias", 
-neighbor = "ContNeighborhood"</dt><dd> 
+neighbor = "UncondNeighborhood"</dt><dd>
 computes the bias optimal influence curve for L2 differentiable 
 parametric families with unknown <i>k</i>-dimensional parameter 
 (<i>k &gt; 1</i>) where the underlying distribution is univariate. </dd>
@@ -300,7 +300,7 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p><code><a href="../../RobAStBase/html/InfRobModel-class.html">InfRobModel-class</a></code></p>
+<p><code><a onclick="findlink('RobAStBase', 'InfRobModel-class.html')" style="text-decoration: underline; color: blue; cursor: hand">InfRobModel-class</a></code></p>
 
 <script Language="JScript">
 function findlink(pkg, fn) {

@@ -11,6 +11,8 @@
 <param name="keyword" value="R:   .getLowerSol">
 <param name="keyword" value="R:   .getLowUpB">
 <param name="keyword" value="R:   .checkPIC">
+<param name="keyword" value="R:   .LowerCaseMultivariate">
+<param name="keyword" value="R:   .LowerCaseMultivariateTV">
 <param name="keyword" value=" Internal / Helper functions of package ROptEst">
 </object>
 
@@ -55,6 +57,14 @@ These functions are used internally by package <span class="pkg">ROptEst</span>.
 
 ### helper function to check whether (intermediate) results give a pIC
 .checkPIC(L2deriv, neighbor, Distr, trafo, z, A, w, z.comp, A.comp, ...)
+
+.LowerCaseMultivariatefunction(L2deriv, neighbor, biastype,
+             normtype, Distr, Finfo, trafo, z.start,
+             A.start, z.comp, A.comp, maxiter, tol, verbose = FALSE)
+
+.LowerCaseMultivariateTV(L2deriv, neighbor, biastype,
+             normtype, Distr, Finfo, trafo,
+             A.start,  maxiter, tol, verbose = FALSE)
 </pre>
 
 
@@ -170,6 +180,12 @@ corresponding risks
 <code>.isVirginW</code> checks whether the (total variation) weight <code>w</code> in
 the argument has already been modified since creation (<code>TRUE</code> if not)
 <code>.checkPIC</code> checks whether (intermediate) results give a pIC
+<code>.LowerCaseMultivariatefunction</code> determines the Lagrange multipliers for
+the multivariate lower case solution for convex contamination
+by solving a corresponding dual problem (Rieder[94],p.199 eq.(18)).
+<code>.LowerCaseMultivariatefunctionTV</code> determines the Lagrange multipliers for
+the multivariate lower case solution for total variation in dimension <i>p=1</i>
+and <i>k&gt;1</i> by solving a corresponding dual problem (Rieder[94],p.205 eq.(58)).
 </p>
 
 
@@ -201,6 +217,20 @@ a list with items <code>lower</code> and <code>upper</code> (both numeric).</td>
 <tr valign="top"><td><code>.checkPIC</code></td>
 <td>
 nothing is returned; precision values are issued.</td></tr>
+<tr valign="top"><td><code>.LowerCaseMultivariatefunction</code></td>
+<td>
+a list with elements
+<code>erg</code> the return value of the corresponding call to <code>optim</code>,
+<code>w</code> the corresponding weight (of class <code>HampelWeight</code>),
+<code>normtype</code> the norm &mdash;possibly modified,
+<code>z.comp</code> the indices of non-null entries in <code>z</code>.</td></tr>
+<tr valign="top"><td><code>.LowerCaseMultivariatefunctionTV</code></td>
+<td>
+a list with elements
+<code>A</code> the standardization matrix,
+<code>b</code> the minimax bias,
+<code>w</code> the corresponding weight (of class <code>BdStWeight</code>),
+<code>a</code> the corresponding infimum of the [p]IC.</td></tr>
 </table>
 </p>
 
@@ -209,6 +239,13 @@ nothing is returned; precision values are issued.</td></tr>
 
 <p>
 Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
 </p>
 
 <hr><div align="center">[Package <em>ROptEst</em> version 0.7 <a href="00Index.html">Index</a>]</div>

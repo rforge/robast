@@ -5,6 +5,8 @@
 \alias{.getLowerSol}
 \alias{.getLowUpB}
 \alias{.checkPIC}
+\alias{.LowerCaseMultivariate}
+\alias{.LowerCaseMultivariateTV}
 
 \title{Internal / Helper functions of package ROptEst}
 
@@ -40,6 +42,14 @@ These functions are used internally by package \pkg{ROptEst}.}
 
 ### helper function to check whether (intermediate) results give a pIC
 .checkPIC(L2deriv, neighbor, Distr, trafo, z, A, w, z.comp, A.comp, ...)
+
+.LowerCaseMultivariate(L2deriv, neighbor, biastype,
+             normtype, Distr, Finfo, trafo, z.start,
+             A.start, z.comp, A.comp, maxiter, tol, verbose = FALSE)
+
+.LowerCaseMultivariateTV(L2deriv, neighbor, biastype,
+             normtype, Distr, Finfo, trafo,
+             A.start,  maxiter, tol, verbose = FALSE)
 }
 
 \arguments{
@@ -93,6 +103,12 @@ These functions are used internally by package \pkg{ROptEst}.}
 \code{.isVirginW} checks whether the (total variation) weight \code{w} in
 the argument has already been modified since creation (\code{TRUE} if not)
 \code{.checkPIC} checks whether (intermediate) results give a pIC
+\code{.LowerCaseMultivariatefunction} determines the Lagrange multipliers for
+the multivariate lower case solution for convex contamination
+by solving a corresponding dual problem (Rieder[94],p.199 eq.(18)).
+\code{.LowerCaseMultivariatefunctionTV} determines the Lagrange multipliers for
+the multivariate lower case solution for total variation in dimension \eqn{p=1}
+and \eqn{k>1} by solving a corresponding dual problem (Rieder[94],p.205 eq.(58)).
 }
 
 
@@ -109,8 +125,21 @@ the argument has already been modified since creation (\code{TRUE} if not)
 \item{.checkUpLow}{a list with items \code{lower} and \code{upper} (both numeric).}
 \item{.isVirginW}{\code{TRUE} or \code{FALSE}}
 \item{.checkPIC}{nothing is returned; precision values are issued.}
+\item{.LowerCaseMultivariatefunction}{a list with elements
+\code{erg} the return value of the corresponding call to \code{optim},
+\code{w} the corresponding weight (of class \code{HampelWeight}),
+\code{normtype} the norm ---possibly modified,
+\code{z.comp} the indices of non-null entries in \code{z}.}
+\item{.LowerCaseMultivariatefunctionTV}{a list with elements
+\code{A} the standardization matrix,
+\code{b} the minimax bias,
+\code{w} the corresponding weight (of class \code{BdStWeight}),
+\code{a} the corresponding infimum of the [p]IC.}
 }
 
+\references{
+  Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
+}
 
 \author{
   Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}

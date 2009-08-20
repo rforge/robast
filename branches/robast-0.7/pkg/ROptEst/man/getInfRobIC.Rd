@@ -5,7 +5,7 @@
 \alias{getInfRobIC,UnivariateDistribution,asCov,TotalVarNeighborhood-method}
 \alias{getInfRobIC,RealRandVariable,asCov,UncondNeighborhood-method}
 \alias{getInfRobIC,UnivariateDistribution,asBias,UncondNeighborhood-method}
-\alias{getInfRobIC,RealRandVariable,asBias,ContNeighborhood-method}
+\alias{getInfRobIC,RealRandVariable,asBias,UncondNeighborhood-method}
 \alias{getInfRobIC,UnivariateDistribution,asHampel,UncondNeighborhood-method}
 \alias{getInfRobIC,RealRandVariable,asHampel,UncondNeighborhood-method}
 \alias{getInfRobIC,UnivariateDistribution,asGRisk,UncondNeighborhood-method}
@@ -35,7 +35,7 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
                        risk, neighbor, symm, trafo,
                        maxiter, tol, warn, Finfo, verbose = FALSE, ...)
 
-\S4method{getInfRobIC}{RealRandVariable,asBias,ContNeighborhood}(L2deriv, risk,
+\S4method{getInfRobIC}{RealRandVariable,asBias,UncondNeighborhood}(L2deriv, risk,
                        neighbor, Distr, DistrSymm, L2derivSymm,
                        L2derivDistrSymm, z.start, A.start, Finfo, trafo,
                        maxiter, tol, warn, verbose = FALSE, ...)
@@ -132,7 +132,7 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
     parametric families with unknown one-dimensional parameter. }
 
   \item{L2deriv = "RealRandVariable", risk = "asBias", 
-        neighbor = "ContNeighborhood"}{ 
+        neighbor = "UncondNeighborhood"}{
     computes the bias optimal influence curve for L2 differentiable 
     parametric families with unknown \eqn{k}-dimensional parameter 
     (\eqn{k > 1}) where the underlying distribution is univariate. }

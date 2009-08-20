@@ -125,6 +125,11 @@ IC.traf.CV.MSE <- optIC(model = N1R.traf, risk = asMSE(),verbose=TRUE)
 plot(IC.traf.CV.MSE)
 checkIC(IC.traf.CV.MSE)
 
+### lower case solution *=c
+IC.traf.CV.BIAS <- optIC(model = N1R.traf, risk = asBias(),verbose=TRUE)
+plot(IC.traf.CV.BIAS)
+checkIC(IC.traf.CV.BIAS)
+
 ### Hampel solution *=v
 IC.traf.TV.H <- optIC(model = N2R.traf, risk = asHampel(bound = 6),
                       verbose=TRUE, checkBounds=FALSE)
@@ -135,6 +140,11 @@ checkIC(IC.traf.TV.H)
 IC.traf.TV.MSE <- optIC(model = N2R.traf, risk = asMSE(),verbose=TRUE)
 plot(IC.traf.TV.MSE)
 checkIC(IC.traf.TV.MSE)
+
+### lower case solution *=v
+IC.traf.TV.BIAS <- optIC(model = N2R.traf, risk = asBias(),verbose=TRUE)
+plot(IC.traf.TV.BIAS)
+checkIC(IC.traf.TV.BIAS)
 
 
 ###############################################################################

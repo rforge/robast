@@ -290,7 +290,7 @@
 <param name="Local" value="getInfRobIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getInfRobIC,RealRandVariable,asBias,ContNeighborhood-method">
+<param name="Name" value="getInfRobIC,RealRandVariable,asBias,UncondNeighborhood-method">
 <param name="Local" value="getInfRobIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -519,6 +519,10 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="minmaxBias,RealRandVariable,ContNeighborhood,BiasType-method">
+<param name="Local" value="minmaxBias.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="minmaxBias,RealRandVariable,TotalVarNeighborhood,BiasType-method">
 <param name="Local" value="minmaxBias.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">

@@ -6,6 +6,7 @@
 \alias{minmaxBias,UnivariateDistribution,ContNeighborhood,asymmetricBias-method}
 \alias{minmaxBias,UnivariateDistribution,TotalVarNeighborhood,BiasType-method}
 \alias{minmaxBias,RealRandVariable,ContNeighborhood,BiasType-method}
+\alias{minmaxBias,RealRandVariable,TotalVarNeighborhood,BiasType-method}
 
 \title{ Generic Function for the Computation of Bias-Optimally Robust ICs }
 \description{
@@ -29,8 +30,10 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
              maxiter, tol, warn, Finfo)
 
 \S4method{minmaxBias}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype, normtype, Distr, 
-             z.start, A.start,  z.comp, A.comp, trafo, maxiter, tol, verbose = FALSE)
+             z.start, A.start,  z.comp, A.comp, Finfo, trafo, maxiter, tol, verbose = FALSE)
 
+\S4method{minmaxBias}{RealRandVariable,TotalVarNeighborhood,BiasType}(L2deriv, neighbor, biastype, normtype, Distr,
+             z.start, A.start,  z.comp, A.comp, Finfo, trafo, maxiter, tol, verbose = FALSE)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
@@ -77,6 +80,12 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
     parametric families with unknown \eqn{k}-dimensional parameter 
     (\eqn{k > 1}) where the underlying distribution is univariate. }
 
+  \item{L2deriv = "RealRandVariable", neighbor = "TotalNeighborhood",
+        biastype = "BiasType"}{
+    computes the bias optimal influence curve for symmetric bias for L2 differentiable
+    parametric families in a setting where we are interested in a \eqn{p=1}
+    dimensional aspect of an unknown \eqn{k}-dimensional parameter
+    (\eqn{k > 1}) where the underlying distribution is univariate. }
 }}
 \references{
   Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. \bold{8}: 106--115.

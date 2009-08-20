@@ -51,7 +51,7 @@ getInfCent(L2deriv, neighbor, biastype, ...)
   \item{Distr}{object of class \code{Distribution}. }
   \item{z.comp}{ logical vector: indication which components of the 
     centering constant have to be computed. }
-  \item{w}{object of class \code{RobWeight}; current weight}  
+  \item{w}{object of class \code{RobWeight}; current weight}
 }
 %\details{}
 \value{The optimal centering constant is computed.}

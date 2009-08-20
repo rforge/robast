@@ -46,11 +46,11 @@ setMethod("getInfCent", signature(L2deriv = "RealRandVariable",
         b <- clip[2]-clip[1]
         ### if(symm) return(b/2)
 
-        g.fct <- function(g, c0, D1){
+        g.fct <- function(g, c0){
             fct <- function(x){
                   Lx <- evalRandVar(L2deriv, as.matrix(x)) [,,1]
-                  D1 <- as.numeric(stand%*%Lx)
-                  pmin(pmax(g,D1),g+c0)
+                  Y <- as.numeric(stand%*%Lx)
+                  pmin(pmax(g,Y),g+c0)
                   }
             return(E(object = Distr, fun = fct, useApply = FALSE))
         }
@@ -58,7 +58,7 @@ setMethod("getInfCent", signature(L2deriv = "RealRandVariable",
         upper <- 0
 
         return(uniroot(g.fct, lower = lower, upper = upper, tol = tol.z,
-                    c0 = b, D1 = D1)$root)
+                    c0 = b)$root)
     })
 
 setMethod("getInfCent", signature(L2deriv = "RealRandVariable",

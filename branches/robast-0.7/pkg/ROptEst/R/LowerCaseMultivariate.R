@@ -1,11 +1,11 @@
 .LowerCaseMultivariate <- function(L2deriv, neighbor, biastype,
-             normtype, Distr, trafo, z.start,
+             normtype, Distr, Finfo, trafo, z.start,
              A.start, z.comp, A.comp, maxiter, tol, verbose = FALSE){
 
         w <- new("HampelWeight")
 
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
-        if(is.null(A.start)) A.start <- trafo
+        if(is.null(A.start)) A.start <- trafo%*%solve(Finfo)
         if(is.null(A.comp)) 
            A.comp <- matrix(TRUE, nrow = nrow(trafo), ncol = ncol(trafo))
         if(is.null(z.comp)) 
@@ -67,7 +67,61 @@
                     control = list(reltol = tol, maxit = 100*maxiter),
                     L2deriv = L2deriv, Distr = Distr, trafo = trafo)
 
+
         return(list(erg=erg, w=w, normtype = normtype, z.comp = z.comp))
     }
 
+
+.LowerCaseMultivariateTV <- function(L2deriv, neighbor, biastype,
+             normtype, Distr, Finfo, trafo,
+             A.start,  maxiter, tol, verbose = FALSE){
+
+        w <- new("BdStWeight")
+        k <- ncol(trafo)
+
+        if(is.null(A.start)) A.start <- trafo%*%solve(Finfo)
+
+        pos.fct <- function(x, L2, stand){
+            X <- evalRandVar(L2, as.matrix(x))[,,1]
+            Y <- stand %*% X
+            return(Y*(Y>0))
+        }
+
+        bmin.fct <- function(param, L2deriv, Distr, trafo){
+            p <- 1
+            A <- matrix(param, ncol = k, nrow = 1)
+         #   print(A)
+            E1 <- E(object = Distr, fun = pos.fct, L2 = L2deriv, stand = A,
+                    useApply = FALSE)
+            erg <- E1/sum(diag(A %*% t(trafo)))
+            return(erg)
+        }
+
+        erg <- optim(as.numeric(A.start), bmin.fct, method = "Nelder-Mead",
+                    control = list(reltol = tol, maxit = 100*maxiter),
+                    L2deriv = L2deriv, Distr = Distr, trafo = trafo)
+
+        A <- matrix(erg$par, ncol = k, nrow = 1)
+        b <- 1/erg$value
+        stand(w) <- A
+
+        pr.fct <- function(x, L2, pr.sign=1){
+                  X <- evalRandVar(L2, as.matrix(x)) [,,1]
+                  Y <- as.numeric(A %*% X)
+                  return(as.numeric(pr.sign*Y>0))
+                  }
+        p.p   <- E(object = Distr, fun = pr.fct, L2 = L2deriv,
+                   useApply = FALSE, pr.sign =  1)
+        m.p   <- E(object = Distr, fun = pr.fct, L2 = L2deriv,
+                   useApply = FALSE, pr.sign = -1)
+
+
+        a <- -b * p.p/(p.p+m.p)
+        
+        clip(w) <- c(0,b)+a
+        weight(w) <- minbiasweight(w, neighbor = neighbor,
+                                           biastype = biastype,
+                                           normW = normtype)
+        return(list(A=A,b=b, w=w, a=a))
+    }
 
