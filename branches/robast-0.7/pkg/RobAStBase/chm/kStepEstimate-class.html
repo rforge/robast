@@ -1,10 +1,10 @@
 <html><head><title>kStepEstimate-class.</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>kStepEstimate-class(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>kStepEstimate-class(RobAStBase)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   kStepEstimate-class">
 <param name="keyword" value="R:   steps">
 <param name="keyword" value="R:   steps,kStepEstimate-method">
@@ -18,9 +18,7 @@
 
 <h3>Description</h3>
 
-<p>
-Class of asymptotically linear estimates.
-</p>
+<p>Class of asymptotically linear estimates.</p>
 
 
 <h3>Objects from the Class</h3>
@@ -34,27 +32,32 @@ More frequently they are created via the generating function
 
 <h3>Slots</h3>
 
+<p>
+
 <dl>
-<dt><code>name</code>:</dt><dd>Object of class <code>"character"</code>:
+<dt><code>name</code></dt><dd>Object of class <code>"character"</code>:
 name of the estimator. </dd>
-<dt><code>estimate</code>:</dt><dd>Object of class <code>"ANY"</code>:
+<dt><code>estimate</code></dt><dd>Object of class <code>"ANY"</code>:
 estimate. </dd>
-<dt><code>samplesize</code>:</dt><dd>Object of class <code>"numeric"</code>:
+<dt><code>samplesize</code></dt><dd>Object of class <code>"numeric"</code>:
 sample size. </dd>
-<dt><code>asvar</code>:</dt><dd>Optional object of class <code>"matrix"</code>:
+<dt><code>asvar</code></dt><dd>Optional object of class <code>"matrix"</code>:
 asymptotic variance. </dd>
-<dt><code>asbias</code>:</dt><dd>Optional object of class <code>"numeric"</code>:
+<dt><code>asbias</code></dt><dd>Optional object of class <code>"numeric"</code>:
 asymptotic bias. </dd>
-<dt><code>pIC</code>:</dt><dd>Optional object of class <code>InfluenceCurve</code>:
+<dt><code>pIC</code></dt><dd>Optional object of class <code>InfluenceCurve</code>:
 influence curve. </dd>
-<dt><code>nuis.idx</code>:</dt><dd>object of class <code>"OptionalNumeric"</code>: 
+<dt><code>nuis.idx</code></dt><dd> object of class <code>"OptionalNumeric"</code>: 
 indices of <code>estimate</code> belonging to the nuisance part. </dd>
-<dt><code>steps</code>:</dt><dd>Object of class <code>"integer"</code>: number
+<dt><code>steps</code></dt><dd>Object of class <code>"integer"</code>: number
 of steps. </dd>
-<dt><code>Infos</code>:</dt><dd>object of class <code>"matrix"</code>
+<dt><code>Infos</code></dt><dd> object of class <code>"matrix"</code>
 with two columns named <code>method</code> and <code>message</code>:
 additional informations. </dd>
 </dl>
+
+</p>
+
 
 <h3>Extends</h3>
 
@@ -66,29 +69,37 @@ Class <code>"Estimate"</code>, by class <code>"ALEstimate"</code>
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
 <dt>steps</dt><dd><code>signature(object = "kStepEstimate")</code>: 
 accessor function for slot <code>steps</code>. </dd>
-
-
+</p>
+<p>
 <dt>show</dt><dd><code>signature(object = "kStepEstimate")</code> </dd>
 </dl>
 
+</p>
+
+
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>See Also</h3>
 
-<p>
-<code><a href="ALEstimate-class.html">ALEstimate-class</a></code>
-</p>
+<p><code></code></p>
 
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
-
-<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.0 <a href="00Index.html">Index]</a></div>
-
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 </body></html>

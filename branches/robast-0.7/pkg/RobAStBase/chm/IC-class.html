@@ -1,10 +1,10 @@
 <html><head><title>Influence curve</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>IC-class(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>IC-class(RobAStBase)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   IC-class">
 <param name="keyword" value="R:   CallL2Fam">
 <param name="keyword" value="R:   CallL2Fam,IC-method">
@@ -26,9 +26,7 @@
 
 <h3>Description</h3>
 
-<p>
-Class of (partial) influence curves.
-</p>
+<p>Class of (partial) influence curves.</p>
 
 
 <h3>Objects from the Class</h3>
@@ -36,29 +34,34 @@ Class of (partial) influence curves.
 <p>
 Objects can be created by calls of the form <code>new("IC", ...)</code>.
 More frequently they are created via the generating function 
-<code>IC</code>.
+<code>IC</code>. 
 </p>
 
 
 <h3>Slots</h3>
 
+<p>
+
 <dl>
-<dt><code>CallL2Fam</code>:</dt><dd>Object of class <code>"call"</code>:
+<dt><code>CallL2Fam</code></dt><dd>Object of class <code>"call"</code>:
 creates an object of the underlying L2-differentiable 
 parametric family. </dd>
-<dt><code>modifyIC</code>:</dt><dd>Object of class <code>"OptionalFunction"</code>:
+<dt><code>modifyIC</code></dt><dd> Object of class <code>"OptionalFunction"</code>:
 function of two arguments, which are an L2 parametric family 
 and an optional influence curve. Returns an object of 
 class <code>"IC"</code>. This slot is mainly used for internal
 computations! </dd>
-<dt><code>name</code>:</dt><dd>Object of class <code>"character"</code>. </dd>
-<dt><code>Curve</code>:</dt><dd>Object of class <code>"EuclRandVarList"</code>.</dd>
-<dt><code>Risks</code>:</dt><dd>Object of class <code>"list"</code>: 
+<dt><code>name</code></dt><dd>Object of class <code>"character"</code>. </dd>
+<dt><code>Curve</code></dt><dd>Object of class <code>"EuclRandVarList"</code>.</dd>
+<dt><code>Risks</code></dt><dd>Object of class <code>"list"</code>: 
 list of risks; cf. <code><a onclick="findlink('distrMod', 'RiskType-class.html')" style="text-decoration: underline; color: blue; cursor: hand">RiskType-class</a></code>. </dd>
-<dt><code>Infos</code>:</dt><dd>Object of class <code>"matrix"</code>
+<dt><code>Infos</code></dt><dd>Object of class <code>"matrix"</code>
 with two columns named <code>method</code> and <code>message</code>:
 additional informations. </dd>
 </dl>
+
+</p>
+
 
 <h3>Extends</h3>
 
@@ -69,53 +72,56 @@ Class <code>"InfluenceCurve"</code>, directly.
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
 <dt>CallL2Fam</dt><dd><code>signature(object = "IC")</code>: 
 accessor function for slot <code>CallL2Fam</code>. </dd>
-
-
+</p>
+<p>
 <dt>CallL2Fam&lt;-</dt><dd><code>signature(object = "IC")</code>: 
 replacement function for slot <code>CallL2Fam</code>. </dd>
-
-
+</p>
+<p>
 <dt>modifyIC</dt><dd><code>signature(object = "IC")</code>: 
 accessor function for slot <code>modifyIC</code>. </dd>
-
-
+</p>
+<p>
 <dt>checkIC</dt><dd><code>signature(IC = "IC", L2Fam = "missing")</code>: 
 check centering and Fisher consistency of <code>IC</code> assuming
 the L2-differentiable parametric family which can 
 be generated via the slot <code>CallL2Fam</code> of <code>IC</code>. </dd>
-
-
+</p>
+<p>
 <dt>checkIC</dt><dd><code>signature(IC = "IC", L2Fam = "L2ParamFamily")</code>: 
 check centering and Fisher consistency of <code>IC</code> assuming
 the L2-differentiable parametric family <code>L2Fam</code>. </dd>
-
-
+</p>
+<p>
 <dt>evalIC</dt><dd><code>signature(IC = "IC", x = "numeric")</code>: 
 evaluate <code>IC</code> at <code>x</code>. </dd>
-
-
+</p>
+<p>
 <dt>evalIC</dt><dd><code>signature(IC = "IC", x = "matrix")</code>: 
 evaluate <code>IC</code> at the rows of <code>x</code>. </dd>
-
-
+</p>
+<p>
 <dt>infoPlot</dt><dd><code>signature(object = "IC")</code>: 
 Plot absolute and relative information of <code>IC</code>. </dd>
-
-
+</p>
+<p>
 <dt>plot</dt><dd><code>signature(x = "IC", y = "missing")</code></dd>
-
-
+</p>
+<p>
 <dt>show</dt><dd><code>signature(object = "IC")</code></dd>
 </dl>
 
+</p>
+
+
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>References</h3>
@@ -135,9 +141,7 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a href="InfluenceCurve-class.html">InfluenceCurve-class</a></code>, <code><a href="IC.html">IC</a></code>
-</p>
+<p><code></code>, <code></code></p>
 
 
 <h3>Examples</h3>
@@ -157,7 +161,5 @@ location.href = link;
 }
 </script>
 
-
-<hr><div align="center">[Package <em>RobAStBase</em> version 0.2 <a href="00Index.html">Index</a>]</div>
-
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 </body></html>

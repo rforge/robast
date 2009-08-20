@@ -1,10 +1,10 @@
 <html><head><title>Generating function for L2RegTypeFamily-class</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>L2RegTypeFamily(ROptRegTS)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>L2RegTypeFamily(ROptRegTS)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   L2RegTypeFamily">
 <param name="keyword" value=" Generating function for L2RegTypeFamily-class">
 </object>
@@ -41,67 +41,68 @@ L2RegTypeFamily(name, distribution = LMCondDistribution(), distrSymm,
 <table summary="R argblock">
 <tr valign="top"><td><code>name</code></td>
 <td>
-name of the family </td></tr>
+ name of the family </td></tr>
 <tr valign="top"><td><code>distribution</code></td>
 <td>
-conditional distribution (given the regressor) </td></tr>
+ conditional distribution (given the regressor) </td></tr>
 <tr valign="top"><td><code>distrSymm</code></td>
 <td>
-symmetry of <code>distribution</code> </td></tr>
+ symmetry of <code>distribution</code> </td></tr>
 <tr valign="top"><td><code>ErrorDistr</code></td>
 <td>
-error distribution </td></tr>
+ error distribution </td></tr>
 <tr valign="top"><td><code>ErrorSymm</code></td>
 <td>
-object of class <code>"DistributionSymmetry"</code>: 
+ object of class <code>"DistributionSymmetry"</code>: 
 symmetry of <code>ErrorDistr</code> </td></tr>
 <tr valign="top"><td><code>main</code></td>
 <td>
-main parameter </td></tr>
+ main parameter </td></tr>
 <tr valign="top"><td><code>nuisance</code></td>
 <td>
-optional nuisance parameter </td></tr>
+ optional nuisance parameter </td></tr>
 <tr valign="top"><td><code>trafo</code></td>
 <td>
-matrix: optional transformation of the parameter </td></tr>
+ matrix: optional transformation of the parameter </td></tr>
 <tr valign="top"><td><code>param</code></td>
 <td>
-parameter of the family </td></tr>
+ parameter of the family </td></tr>
 <tr valign="top"><td><code>props</code></td>
 <td>
-properties of the family </td></tr>
+ properties of the family </td></tr>
 <tr valign="top"><td><code>RegDistr</code></td>
 <td>
-regressor distribution </td></tr>
+ regressor distribution </td></tr>
 <tr valign="top"><td><code>RegSymm</code></td>
 <td>
-object of class <code>"DistributionSymmetry"</code>: 
+ object of class <code>"DistributionSymmetry"</code>: 
 symmetry of <code>RegDistr</code> </td></tr>
 <tr valign="top"><td><code>Regressor</code></td>
 <td>
-regressor </td></tr>
+ regressor </td></tr>
 <tr valign="top"><td><code>L2deriv</code></td>
 <td>
-object of class <code>"EuclRandVariable"</code>: L2 derivative </td></tr>
+ object of class <code>"EuclRandVariable"</code>: L2 derivative </td></tr>
 <tr valign="top"><td><code>ErrorL2deriv</code></td>
 <td>
-object of class <code>"EuclRandVariable"</code>: 
+ object of class <code>"EuclRandVariable"</code>: 
 L2 derivative of <code>ErrorDistr</code> </td></tr>
 <tr valign="top"><td><code>ErrorL2derivDistr</code></td>
 <td>
-distribution of <code>ErrorL2deriv</code> </td></tr>
+ distribution of <code>ErrorL2deriv</code> </td></tr>
 <tr valign="top"><td><code>ErrorL2derivSymm</code></td>
 <td>
-object of class <code>"FunSymmList"</code>: 
+ object of class <code>"FunSymmList"</code>: 
 symmetry of <code>ErrorL2deriv</code> </td></tr>
 <tr valign="top"><td><code>ErrorL2derivDistrSymm</code></td>
 <td>
-object of class <code>"DistrSymmList"</code>: 
+ object of class <code>"DistrSymmList"</code>: 
 symmetry of <code>ErrorL2derivDistr</code> </td></tr>
 <tr valign="top"><td><code>FisherInfo</code></td>
 <td>
-Fisher information matrix </td></tr>
+ Fisher information matrix </td></tr>
 </table>
+
 
 <h3>Details</h3>
 
@@ -119,14 +120,12 @@ it is computed via numerical integration.
 
 <h3>Value</h3>
 
-<p>
-Object of class <code>"L2RegTypeFamily"</code></p>
+<p>Object of class <code>"L2RegTypeFamily"</code></p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>References</h3>
@@ -139,9 +138,7 @@ the Asymptotic Theory of Robustness</EM>. Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a href="L2RegTypeFamily-class.html">L2RegTypeFamily-class</a></code>
-</p>
+<p><code></code></p>
 
 
 <h3>Examples</h3>
@@ -150,8 +147,15 @@ the Asymptotic Theory of Robustness</EM>. Bayreuth: Dissertation.
 L2RegTypeFamily()
 </pre>
 
-
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
 <hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
-
 </body></html>

@@ -1,10 +1,10 @@
 <html><head><title>Generic Function for Computation of Asymptotic Risks in case of Regression-Type Models</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>getAsRiskRegTS(ROptRegTS)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>getAsRiskRegTS(ROptRegTS)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   getAsRiskRegTS">
 <param name="keyword" value="R:   getAsRiskRegTS-methods">
 <param name="keyword" value="R:   getAsRiskRegTS,asMSE,UnivariateDistribution,Distribution,Neighborhood-method">
@@ -42,76 +42,59 @@ It is used by other functions.
 <pre>
 getAsRiskRegTS(risk, ErrorL2deriv, Regressor, neighbor, ...)
 
-## S4 method for signature 'asMSE, UnivariateDistribution,
-##   Distribution, Neighborhood':
+## S4 method for signature 'asMSE,UnivariateDistribution,Distribution,Neighborhood':
 getAsRiskRegTS(risk, ErrorL2deriv, 
                 Regressor, neighbor, clip, cent, stand, trafo)
 
-## S4 method for signature 'asMSE, UnivariateDistribution,
-##   Distribution, Av2CondContNeighborhood':
+## S4 method for signature 'asMSE,UnivariateDistribution,Distribution,Av2CondContNeighborhood':
 getAsRiskRegTS(risk, ErrorL2deriv, 
                 Regressor, neighbor, clip, cent, stand, trafo)
 
-## S4 method for signature 'asMSE, EuclRandVariable,
-##   Distribution, Neighborhood':
+## S4 method for signature 'asMSE,EuclRandVariable,Distribution,Neighborhood':
 getAsRiskRegTS(risk, ErrorL2deriv, 
                 Regressor, neighbor, clip, cent, stand, trafo)
 
-## S4 method for signature 'asBias, UnivariateDistribution,
-##   UnivariateDistribution, ContNeighborhood':
+## S4 method for signature 'asBias,UnivariateDistribution,UnivariateDistribution,ContNeighborhood':
 getAsRiskRegTS(risk, ErrorL2deriv, 
                 Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
 
-## S4 method for signature 'asBias, UnivariateDistribution,
-##   UnivariateDistribution, Av1CondContNeighborhood':
+## S4 method for signature 'asBias,UnivariateDistribution,UnivariateDistribution,Av1CondContNeighborhood':
 getAsRiskRegTS(risk, 
                 ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
 
-## S4 method for signature 'asBias, UnivariateDistribution,
-##   UnivariateDistribution, Av1CondTotalVarNeighborhood':
+## S4 method for signature 'asBias,UnivariateDistribution,UnivariateDistribution,Av1CondTotalVarNeighborhood':
 getAsRiskRegTS(risk, 
                 ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
 
-## S4 method for signature 'asBias, UnivariateDistribution,
-##   MultivariateDistribution, ContNeighborhood':
+## S4 method for signature 'asBias,UnivariateDistribution,MultivariateDistribution,ContNeighborhood':
 getAsRiskRegTS(risk, 
                 ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
 
-## S4 method for signature 'asBias, UnivariateDistribution,
-##   MultivariateDistribution, Av1CondContNeighborhood':
+## S4 method for signature 'asBias,UnivariateDistribution,MultivariateDistribution,Av1CondContNeighborhood':
 getAsRiskRegTS(risk, 
                 ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
 
-## S4 method for signature 'asBias, UnivariateDistribution,
-##   MultivariateDistribution,
-##   Av1CondTotalVarNeighborhood':
+## S4 method for signature 'asBias,UnivariateDistribution,MultivariateDistribution,Av1CondTotalVarNeighborhood':
 getAsRiskRegTS(risk, 
                 ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
 
-## S4 method for signature 'asBias, UnivariateDistribution,
-##   Distribution, Av2CondContNeighborhood':
+## S4 method for signature 'asBias,UnivariateDistribution,Distribution,Av2CondContNeighborhood':
 getAsRiskRegTS(risk, 
                 ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
 
-## S4 method for signature 'asBias, RealRandVariable,
-##   Distribution, ContNeighborhood':
+## S4 method for signature 'asBias,RealRandVariable,Distribution,ContNeighborhood':
 getAsRiskRegTS(risk, 
                 ErrorL2deriv, Regressor, neighbor, ErrorDistr, trafo, z.start, A.start, maxiter, tol)
 
-## S4 method for signature 'asBias, RealRandVariable,
-##   Distribution, Av1CondContNeighborhood':
+## S4 method for signature 'asBias,RealRandVariable,Distribution,Av1CondContNeighborhood':
 getAsRiskRegTS(risk, 
                 ErrorL2deriv, Regressor, neighbor, ErrorDistr, trafo, z.start, A.start, maxiter, tol)
 
-## S4 method for signature 'asUnOvShoot,
-##   UnivariateDistribution, UnivariateDistribution,
-##   UncondNeighborhood':
+## S4 method for signature 'asUnOvShoot,UnivariateDistribution,UnivariateDistribution,UncondNeighborhood':
 getAsRiskRegTS(risk, 
                 ErrorL2deriv, Regressor, neighbor, clip, cent, stand)
 
-## S4 method for signature 'asUnOvShoot,
-##   UnivariateDistribution, UnivariateDistribution,
-##   CondNeighborhood':
+## S4 method for signature 'asUnOvShoot,UnivariateDistribution,UnivariateDistribution,CondNeighborhood':
 getAsRiskRegTS(risk, 
                 ErrorL2deriv, Regressor, neighbor, clip, cent, stand)
 </pre>
@@ -122,106 +105,123 @@ getAsRiskRegTS(risk,
 <table summary="R argblock">
 <tr valign="top"><td><code>risk</code></td>
 <td>
-object of class <code>"asRisk"</code>. </td></tr>
+ object of class <code>"asRisk"</code>. </td></tr>
 <tr valign="top"><td><code>ErrorL2deriv</code></td>
 <td>
-L2-derivative of <code>ErrorDistr</code>. </td></tr>
+ L2-derivative of <code>ErrorDistr</code>. </td></tr>
 <tr valign="top"><td><code>Regressor</code></td>
 <td>
-regressor. </td></tr>
+ regressor. </td></tr>
 <tr valign="top"><td><code>neighbor</code></td>
 <td>
-object of class <code>"Neighborhood"</code>. </td></tr>
+ object of class <code>"Neighborhood"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-additional parameters. </td></tr>
+ additional parameters. </td></tr>
 <tr valign="top"><td><code>clip</code></td>
 <td>
-optimal clipping bound. </td></tr>
+ optimal clipping bound. </td></tr>
 <tr valign="top"><td><code>cent</code></td>
 <td>
-optimal centering constant/function. </td></tr>
+ optimal centering constant/function. </td></tr>
 <tr valign="top"><td><code>stand</code></td>
 <td>
-standardizing matrix. </td></tr>
+ standardizing matrix. </td></tr>
 <tr valign="top"><td><code>trafo</code></td>
 <td>
-matrix: transformation of the parameter. </td></tr>
+ matrix: transformation of the parameter. </td></tr>
 <tr valign="top"><td><code>ErrorDistr</code></td>
 <td>
-error distribution. </td></tr>
+ error distribution. </td></tr>
 <tr valign="top"><td><code>ErrorL2derivDistrSymm</code></td>
 <td>
-symmetry of <code>ErrorL2derivDistr</code>. </td></tr>
+ symmetry of <code>ErrorL2derivDistr</code>. </td></tr>
 <tr valign="top"><td><code>maxiter</code></td>
 <td>
-the maximum number of iterations </td></tr>
+ the maximum number of iterations </td></tr>
 <tr valign="top"><td><code>tol</code></td>
 <td>
-the desired accuracy (convergence tolerance). </td></tr>
+ the desired accuracy (convergence tolerance). </td></tr>
 <tr valign="top"><td><code>z.start</code></td>
 <td>
-initial value for the centering constant/function. </td></tr>
+ initial value for the centering constant/function. </td></tr>
 <tr valign="top"><td><code>A.start</code></td>
 <td>
-initial value for the standardizing matrix. </td></tr>
+ initial value for the standardizing matrix. </td></tr>
 </table>
+
 
 <h3>Value</h3>
 
-<p>
-The asymptotic risk is computed.</p>
+<p>The asymptotic risk is computed.</p>
+
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
-<dt>risk = "asMSE", ErrorL2deriv = "UnivariateDistribution", Regressor = "Distribution", neighbor = "Neighborhood"</dt><dd>computes asymptotic mean square error in methods for function <code>getInfRobRegTypeIC</code>. </dd>
-
-
-<dt>risk = "asMSE", ErrorL2deriv = "UnivariateDistribution", Regressor = "Distribution", neighbor = "Av2CondContNeighborhood"</dt><dd>computes asymptotic mean square error in methods for function <code>getInfRobRegTypeIC</code>. </dd>
-
-
-<dt>risk = "asMSE", ErrorL2deriv = "EuclRandVariable", Regressor = "Distribution", neighbor = "Neighborhood"</dt><dd>computes asymptotic mean square error in methods for function <code>getInfRobRegTypeIC</code>. </dd>
-
-
-<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "ContNeighborhood"</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
-
-
-<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "Av1CondContNeighborhood"</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
-
-
-<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
-
-
-<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "ContNeighborhood"</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
-
-
-<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "Av1CondContNeighborhood"</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
-
-
-<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
-
-
-<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "Distribution", neighbor = "Av2CondContNeighborhood"</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
-
-
-<dt>risk = "asBias", ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", neighbor = "ContNeighborhood"</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
-
-
-<dt>risk = "asBias", ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", neighbor = "Av1CondContNeighborhood"</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
-
-
-<dt>risk = "asUnOvShoot", ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "UncondNeighborhood"</dt><dd>computes asymptotic under-/overshoot risk in methods for function <code>getInfRobRegTypeIC</code>. </dd>
-
-
-<dt>risk = "asUnOvShoot", ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "CondNeighborhood"</dt><dd>computes asymptotic under-/overshoot risk in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+<dt>risk = "asMSE", ErrorL2deriv = "UnivariateDistribution", Regressor = "Distribution", neighbor = "Neighborhood"</dt><dd>
+computes asymptotic mean square error in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+</p>
+<p>
+<dt>risk = "asMSE", ErrorL2deriv = "UnivariateDistribution", Regressor = "Distribution", neighbor = "Av2CondContNeighborhood"</dt><dd> 
+computes asymptotic mean square error in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+</p>
+<p>
+<dt>risk = "asMSE", ErrorL2deriv = "EuclRandVariable", Regressor = "Distribution", neighbor = "Neighborhood"</dt><dd>
+computes asymptotic mean square error in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+</p>
+<p>
+<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "ContNeighborhood"</dt><dd>
+computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+</p>
+<p>
+<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "Av1CondContNeighborhood"</dt><dd> 
+computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+</p>
+<p>
+<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd> 
+computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+</p>
+<p>
+<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "ContNeighborhood"</dt><dd>
+computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+</p>
+<p>
+<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "Av1CondContNeighborhood"</dt><dd> 
+computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+</p>
+<p>
+<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd> 
+computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+</p>
+<p>
+<dt>risk = "asBias", ErrorL2deriv = "UnivariateDistribution", Regressor = "Distribution", neighbor = "Av2CondContNeighborhood"</dt><dd> 
+computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+</p>
+<p>
+<dt>risk = "asBias", ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", neighbor = "ContNeighborhood"</dt><dd> 
+computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+</p>
+<p>
+<dt>risk = "asBias", ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", neighbor = "Av1CondContNeighborhood"</dt><dd> 
+computes standardized asymptotic bias in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+</p>
+<p>
+<dt>risk = "asUnOvShoot", ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "UncondNeighborhood"</dt><dd>
+computes asymptotic under-/overshoot risk in methods for function <code>getInfRobRegTypeIC</code>. </dd>
+</p>
+<p>
+<dt>risk = "asUnOvShoot", ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "CondNeighborhood"</dt><dd>
+computes asymptotic under-/overshoot risk in methods for function <code>getInfRobRegTypeIC</code>. </dd>
 </dl>
+</p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>References</h3>
@@ -244,9 +244,7 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a onclick="findlink('ROptEst', 'asRisk-class.html')" style="text-decoration: underline; color: blue; cursor: hand">asRisk-class</a></code>
-</p>
+<p><code><a onclick="findlink('ROptEst', 'asRisk-class.html')" style="text-decoration: underline; color: blue; cursor: hand">asRisk-class</a></code></p>
 
 <script Language="JScript">
 function findlink(pkg, fn) {
@@ -258,7 +256,5 @@ location.href = link;
 }
 </script>
 
-
 <hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
-
 </body></html>

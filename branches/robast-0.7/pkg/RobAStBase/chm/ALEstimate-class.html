@@ -1,10 +1,10 @@
 <html><head><title>ALEstimate-class.</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>ALEstimate-class(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>ALEstimate-class(RobAStBase)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   ALEstimate-class">
 <param name="keyword" value="R:   pIC">
 <param name="keyword" value="R:   pIC,ALEstimate-method">
@@ -24,9 +24,7 @@
 
 <h3>Description</h3>
 
-<p>
-Class of asymptotically linear estimates.
-</p>
+<p>Class of asymptotically linear estimates.</p>
 
 
 <h3>Objects from the Class</h3>
@@ -38,25 +36,30 @@ Objects can be created by calls of the form <code>new("ALEstimate", ...)</code>.
 
 <h3>Slots</h3>
 
+<p>
+
 <dl>
-<dt><code>name</code>:</dt><dd>Object of class <code>"character"</code>:
+<dt><code>name</code></dt><dd>Object of class <code>"character"</code>:
 name of the estimator. </dd>
-<dt><code>estimate</code>:</dt><dd>Object of class <code>"ANY"</code>:
+<dt><code>estimate</code></dt><dd>Object of class <code>"ANY"</code>:
 estimate. </dd>
-<dt><code>samplesize</code>:</dt><dd>Object of class <code>"numeric"</code>:
+<dt><code>samplesize</code></dt><dd>Object of class <code>"numeric"</code>:
 sample size. </dd>
-<dt><code>asvar</code>:</dt><dd>Optional object of class <code>"matrix"</code>:
+<dt><code>asvar</code></dt><dd>Optional object of class <code>"matrix"</code>:
 asymptotic variance. </dd>
-<dt><code>asbias</code>:</dt><dd>Optional object of class <code>"numeric"</code>:
+<dt><code>asbias</code></dt><dd>Optional object of class <code>"numeric"</code>:
 asymptotic bias. </dd>
-<dt><code>pIC</code>:</dt><dd>Optional object of class <code>InfluenceCurve</code>:
+<dt><code>pIC</code></dt><dd>Optional object of class <code>InfluenceCurve</code>:
 influence curve. </dd>
-<dt><code>nuis.idx</code>:</dt><dd>object of class <code>"OptionalNumeric"</code>: 
+<dt><code>nuis.idx</code></dt><dd> object of class <code>"OptionalNumeric"</code>: 
 indices of <code>estimate</code> belonging to the nuisance part. </dd>
-<dt><code>Infos</code>:</dt><dd>object of class <code>"matrix"</code>
+<dt><code>Infos</code></dt><dd> object of class <code>"matrix"</code>
 with two columns named <code>method</code> and <code>message</code>:
 additional informations. </dd>
 </dl>
+
+</p>
+
 
 <h3>Extends</h3>
 
@@ -67,45 +70,46 @@ Class <code>"Estimate"</code>, directly.
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
 <dt>pIC</dt><dd><code>signature(object = "ALEstimate")</code>: 
 accessor function for slot <code>pIC</code>. </dd>
-
-
+</p>
+<p>
 <dt>show</dt><dd><code>signature(object = "ALEstimate")</code> </dd>
-
-
+</p>
+<p>
 <dt>confint</dt><dd><code>signature(object = "ALEstimate", method = "missing")</code>: 
 compute asymptotic (LAN-based) confidence interval neglecting any bias. </dd>
-
-
+</p>
+<p>
 <dt>confint</dt><dd><code>signature(object = "ALEstimate", method = "symmetricBias")</code>: 
 compute asymptotic (LAN-based) confidence interval incorporating bias
 symmetrically. </dd>
-
-
+</p>
+<p>
 <dt>confint</dt><dd><code>signature(object = "ALEstimate", method = "onesidedBias")</code>: 
 compute asymptotic (LAN-based) confidence interval incorporating bias
 one-sided; i.e., positive or negative, respectively. </dd>
-
-
+</p>
+<p>
 <dt>confint</dt><dd><code>signature(object = "ALEstimate", method = "asymmetricBias")</code>: 
 compute asymptotic (LAN-based) confidence interval incorporating bias
 asymmetrically. </dd>
 </dl>
 
+</p>
+
+
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>See Also</h3>
 
-<p>
-<code><a onclick="findlink('distrMod', 'Estimate-class.html')" style="text-decoration: underline; color: blue; cursor: hand">Estimate-class</a></code>
-</p>
+<p><code><a onclick="findlink('distrMod', 'Estimate-class.html')" style="text-decoration: underline; color: blue; cursor: hand">Estimate-class</a></code></p>
 
 
 <h3>Examples</h3>
@@ -125,7 +129,5 @@ location.href = link;
 }
 </script>
 
-
-<hr><div align="center">[Package <em>RobAStBase</em> version 0.2 <a href="00Index.html">Index</a>]</div>
-
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 </body></html>

@@ -1,10 +1,10 @@
 <html><head><title>Generating function for CondIC-class</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>CondIC(ROptRegTS)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>CondIC(ROptRegTS)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   CondIC">
 <param name="keyword" value=" Generating function for CondIC-class">
 </object>
@@ -24,7 +24,7 @@ Generates an object of class <code>"CondIC"</code>.
 
 <pre>
 CondIC(name, Curve = EuclRandVarList(EuclRandVariable(Map = list(function(x){x[1] * x[2]}), 
-                                                      Domain = EuclideanSpace(dimension = 2))), 
+						      Domain = EuclideanSpace(dimension = 2))), 
        Risks, Infos, CallL2Fam = call("L2RegTypeFamily"))
 </pre>
 
@@ -34,34 +34,33 @@ CondIC(name, Curve = EuclRandVarList(EuclRandVariable(Map = list(function(x){x[1
 <table summary="R argblock">
 <tr valign="top"><td><code>name</code></td>
 <td>
-character string: name. </td></tr>
+ character string: name. </td></tr>
 <tr valign="top"><td><code>CallL2Fam</code></td>
 <td>
-object of class <code>"call"</code>:
+ object of class <code>"call"</code>:
 creates an object of <code>"L2RegTypeFamily"</code>. </td></tr>
 <tr valign="top"><td><code>Curve</code></td>
 <td>
-object of class <code>"EuclRandVariable"</code>: curve </td></tr>
+ object of class <code>"EuclRandVariable"</code>: curve </td></tr>
 <tr valign="top"><td><code>Risks</code></td>
 <td>
-object of class <code>"list"</code>: 
+ object of class <code>"list"</code>: 
 list of risks; cf. <code>RiskType-class</code>. </td></tr>
 <tr valign="top"><td><code>Infos</code></td>
 <td>
-matrix of characters with two columns 
+ matrix of characters with two columns 
 named <code>method</code> and <code>message</code>: additional informations. </td></tr>
 </table>
 
+
 <h3>Value</h3>
 
-<p>
-Object of class <code>"CondIC"</code></p>
+<p>Object of class <code>"CondIC"</code></p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>References</h3>
@@ -81,9 +80,7 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a href="CondIC-class.html">CondIC-class</a></code>
-</p>
+<p><code></code></p>
 
 
 <h3>Examples</h3>
@@ -107,8 +104,15 @@ function(name, Curve = EuclRandVariable(Map = list(function(x){x[1]*x[2]}),
   }
 </pre>
 
-
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
 <hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
-
 </body></html>

@@ -1,10 +1,10 @@
 <html><head><title>Generic Function for Computation of Finite-Sample Risks</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>getFiRiskRegTS(ROptRegTS)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>getFiRiskRegTS(ROptRegTS)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   getFiRiskRegTS">
 <param name="keyword" value="R:   getFiRiskRegTS-methods">
 <param name="keyword" value="R:   getFiRiskRegTS,fiUnOvShoot,Norm,UnivariateDistribution,ContNeighborhood-method">
@@ -32,23 +32,19 @@ It is used by other functions.
 <pre>
 getFiRiskRegTS(risk, ErrorDistr, Regressor, neighbor, ...)
 
-## S4 method for signature 'fiUnOvShoot, Norm,
-##   UnivariateDistribution, ContNeighborhood':
+## S4 method for signature 'fiUnOvShoot,Norm,UnivariateDistribution,ContNeighborhood':
 getFiRiskRegTS(risk, 
             ErrorDistr, Regressor, neighbor, clip, stand, sampleSize, Algo, cont)
 
-## S4 method for signature 'fiUnOvShoot, Norm,
-##   UnivariateDistribution, TotalVarNeighborhood':
+## S4 method for signature 'fiUnOvShoot,Norm,UnivariateDistribution,TotalVarNeighborhood':
 getFiRiskRegTS(risk, 
             ErrorDistr, Regressor, neighbor, clip, stand, sampleSize, Algo, cont)
 
-## S4 method for signature 'fiUnOvShoot, Norm,
-##   UnivariateDistribution, CondContNeighborhood':
+## S4 method for signature 'fiUnOvShoot,Norm,UnivariateDistribution,CondContNeighborhood':
 getFiRiskRegTS(risk, 
             ErrorDistr, Regressor, neighbor, clip, stand, sampleSize, cont)
 
-## S4 method for signature 'fiUnOvShoot, Norm,
-##   UnivariateDistribution, CondTotalVarNeighborhood':
+## S4 method for signature 'fiUnOvShoot,Norm,UnivariateDistribution,CondTotalVarNeighborhood':
 getFiRiskRegTS(risk, 
             ErrorDistr, Regressor, neighbor, clip, stand, sampleSize, cont)
 </pre>
@@ -59,19 +55,19 @@ getFiRiskRegTS(risk,
 <table summary="R argblock">
 <tr valign="top"><td><code>risk</code></td>
 <td>
-object of class <code>"RiskType"</code>. </td></tr>
+ object of class <code>"RiskType"</code>. </td></tr>
 <tr valign="top"><td><code>ErrorDistr</code></td>
 <td>
-error distribution </td></tr>
+ error distribution </td></tr>
 <tr valign="top"><td><code>Regressor</code></td>
 <td>
-regressor </td></tr>
+ regressor </td></tr>
 <tr valign="top"><td><code>neighbor</code></td>
 <td>
-object of class <code>"Neighborhood"</code>. </td></tr>
+ object of class <code>"Neighborhood"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-additional parameters. </td></tr>
+ additional parameters. </td></tr>
 <tr valign="top"><td><code>clip</code></td>
 <td>
 optimal clipping bound/function.</td></tr>
@@ -80,14 +76,15 @@ optimal clipping bound/function.</td></tr>
 standardizing matrix.</td></tr>
 <tr valign="top"><td><code>sampleSize</code></td>
 <td>
-integer: sample size. </td></tr>
+ integer: sample size. </td></tr>  
 <tr valign="top"><td><code>Algo</code></td>
 <td>
-"A" or "B". </td></tr>
+ "A" or "B". </td></tr>
 <tr valign="top"><td><code>cont</code></td>
 <td>
-"left" or "right". </td></tr>
+ "left" or "right". </td></tr>  
 </table>
+
 
 <h3>Details</h3>
 
@@ -100,33 +97,39 @@ and 12.2.3 of Kohl (2005).
 
 <h3>Value</h3>
 
-<p>
-The finite-sample risk is computed.</p>
+<p>The finite-sample risk is computed.</p>
+
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
-<dt>risk = "fiUnOvShoot", ErrorDistr = "Norm", Regressor = "UnivariateDistribution", neighbor = "ContNeighborhood"</dt><dd>computes finite-sample under-/overshoot risk in methods for 
+<dt>risk = "fiUnOvShoot", ErrorDistr = "Norm", Regressor = "UnivariateDistribution", neighbor = "ContNeighborhood"</dt><dd> 
+computes finite-sample under-/overshoot risk in methods for 
 function 'getFixRobRegTypeIC'. </dd>
-
-
-<dt>risk = "fiUnOvShoot", ErrorDistr = "Norm", Regressor = "UnivariateDistribution", neighbor = "TotalVarNeighborhood"</dt><dd>computes finite-sample under-/overshoot risk in methods for 
+</p>
+<p>
+<dt>risk = "fiUnOvShoot", ErrorDistr = "Norm", Regressor = "UnivariateDistribution", neighbor = "TotalVarNeighborhood"</dt><dd> 
+computes finite-sample under-/overshoot risk in methods for 
 function 'getFixRobRegTypeIC'. </dd>
-
-
-<dt>risk = "fiUnOvShoot", ErrorDistr = "Norm", Regressor = "UnivariateDistribution", neighbor = "CondContNeighborhood"</dt><dd>computes finite-sample under-/overshoot risk in methods for 
+</p>
+<p>
+<dt>risk = "fiUnOvShoot", ErrorDistr = "Norm", Regressor = "UnivariateDistribution", neighbor = "CondContNeighborhood"</dt><dd> 
+computes finite-sample under-/overshoot risk in methods for 
 function 'getFixRobRegTypeIC'. </dd>
-
-
-<dt>risk = "fiUnOvShoot", ErrorDistr = "Norm", Regressor = "UnivariateDistribution", neighbor = "CondTotalVarNeighborhood"</dt><dd>computes finite-sample under-/overshoot risk in methods for 
+</p>
+<p>
+<dt>risk = "fiUnOvShoot", ErrorDistr = "Norm", Regressor = "UnivariateDistribution", neighbor = "CondTotalVarNeighborhood"</dt><dd> 
+computes finite-sample under-/overshoot risk in methods for 
 function 'getFixRobRegTypeIC'. </dd>
 </dl>
+</p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>References</h3>
@@ -147,9 +150,7 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a onclick="findlink('ROptEst', 'fiRisk-class.html')" style="text-decoration: underline; color: blue; cursor: hand">fiRisk-class</a></code>
-</p>
+<p> <code><a onclick="findlink('ROptEst', 'fiRisk-class.html')" style="text-decoration: underline; color: blue; cursor: hand">fiRisk-class</a></code> </p>
 
 <script Language="JScript">
 function findlink(pkg, fn) {
@@ -161,7 +162,5 @@ location.href = link;
 }
 </script>
 
-
 <hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
-
 </body></html>

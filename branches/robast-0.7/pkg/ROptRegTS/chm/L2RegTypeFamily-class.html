@@ -1,10 +1,10 @@
 <html><head><title>L2 differentiable parametric regression-type family</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>L2RegTypeFamily-class(ROptRegTS)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>L2RegTypeFamily-class(ROptRegTS)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   L2RegTypeFamily-class">
 <param name="keyword" value="R:   ErrorL2deriv">
 <param name="keyword" value="R:   ErrorL2deriv,L2RegTypeFamily-method">
@@ -32,9 +32,7 @@
 
 <h3>Description</h3>
 
-<p>
-Class for L2 differentiable parametric regression-type families.
-</p>
+<p>Class for L2 differentiable parametric regression-type families.</p>
 
 
 <h3>Objects from the Class</h3>
@@ -42,11 +40,13 @@ Class for L2 differentiable parametric regression-type families.
 <p>
 Objects can be created by calls of the form <code>new("L2RegTypeFamily", ...)</code>.
 More frequently they are created via the generating function 
-<code>L2RegTypeFamily</code>.
+<code>L2RegTypeFamily</code>. 
 </p>
 
 
 <h3>Slots</h3>
+
+<p>
 
 <dl>
 <dt><code>L2deriv</code>:</dt><dd>Object of class <code>"EuclRandVarList"</code>: L2 derivative. </dd>
@@ -82,6 +82,9 @@ conditional distribution given the regressor. </dd>
 symmetry of <code>distribution</code>. </dd>
 </dl>
 
+</p>
+
+
 <h3>Extends</h3>
 
 <p>
@@ -93,67 +96,70 @@ Class <code>"ProbFamily"</code>, by class <code>"RegTypeFamily"</code>.
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
 <dt>L2deriv</dt><dd><code>signature(object = "L2RegTypeFamily")</code>:
 acessor function for slot <code>L2deriv</code> </dd>
-
-
+</p>
+<p>
 <dt>FisherInfo</dt><dd><code>signature(object = "L2RegTypeFamily")</code>:
 acessor function for slot <code>FisherInfo</code> </dd>
-
-
+</p>
+<p>
 <dt>ErrorL2deriv</dt><dd><code>signature(object = "L2RegTypeFamily")</code>: 
 acessor function for slot <code>ErrorL2deriv</code>. </dd>
-
-
+</p>
+<p>
 <dt>ErrorL2derivDistr</dt><dd><code>signature(object = "L2RegTypeFamily")</code>: 
 acessor function for slot <code>ErrorL2derivDistr</code>. </dd>
-
-
+</p>
+<p>
 <dt>ErrorL2derivSymm</dt><dd><code>signature(object = "L2RegTypeFamily")</code>: 
 acessor function for slot <code>ErrorL2derivSymm</code> </dd>
-
-
+</p>
+<p>
 <dt>ErrorL2derivDistrSymm</dt><dd><code>signature(object = "L2RegTypeFamily")</code>: 
 acessor function for slot <code>ErrorL2derivDistrSymm</code> </dd>
-
-
+</p>
+<p>
 <dt>checkL2deriv</dt><dd><code>signature(object = "L2RegTypeFamily")</code>: 
 check centering of <code>L2deriv</code> and compute precision 
 of Fisher information. </dd>
-
-
+</p>
+<p>
 <dt>checkIC</dt><dd><code>signature(IC = "IC", L2Fam = "missing")</code>: 
 check centering and Fisher consistency of <code>IC</code> assuming the 
 L2-differentiable regression-type family which can be created via 
 the slot <code>CallL2Fam</code> of <code>IC</code>. </dd>
-
-
+</p>
+<p>
 <dt>checkIC</dt><dd><code>signature(IC = "IC", L2Fam = "L2RegTypeFamily")</code>: 
 check centering and Fisher consistency of <code>IC</code> assuming the 
 L2-differentiable regression-type family <code>L2Fam</code>. </dd>
-
-
+</p>
+<p>
 <dt>E</dt><dd><code>signature(object = "L2RegTypeFamily", fun = "EuclRandVariable", cond = "missing")</code>:
 expectation of <code>fun</code> under <code>object</code>. </dd>
-
-
+</p>
+<p>
 <dt>E</dt><dd><code>signature(object = "L2RegTypeFamily", fun = "EuclRandMatrix", cond = "missing")</code>:
 expectation of <code>fun</code> under <code>object</code>. </dd>
-
-
+</p>
+<p>
 <dt>E</dt><dd><code>signature(object = "L2RegTypeFamily", fun = "EuclRandVarList", cond = "missing")</code>:
 expectation of <code>fun</code> under <code>object</code>. </dd>
-
-
+</p>
+<p>
 <dt>show</dt><dd><code>signature(object = "L2RegTypeFamily")</code></dd>
 </dl>
 
+</p>
+
+
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>References</h3>
@@ -166,9 +172,7 @@ the Asymptotic Theory of Robustness</EM>. Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a href="RegTypeFamily-class.html">RegTypeFamily-class</a></code>
-</p>
+<p><code></code></p>
 
 
 <h3>Examples</h3>
@@ -177,8 +181,15 @@ the Asymptotic Theory of Robustness</EM>. Bayreuth: Dissertation.
 new("L2RegTypeFamily")
 </pre>
 
-
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
 <hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
-
 </body></html>
