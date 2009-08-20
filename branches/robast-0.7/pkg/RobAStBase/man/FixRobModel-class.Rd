@@ -13,8 +13,8 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{center}:}{Object of class \code{"ProbFamily"}. }
-    \item{\code{neighbor}:}{Object of class \code{"UncondNeighborhood"}.}
+    \item{\code{center}}{Object of class \code{"ProbFamily"}. }
+    \item{\code{neighbor}}{Object of class \code{"UncondNeighborhood"}.}
   }
 }
 \section{Extends}{

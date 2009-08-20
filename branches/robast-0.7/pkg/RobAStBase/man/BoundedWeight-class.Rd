@@ -11,9 +11,9 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{name}:}{Object of class \code{"character"}; inherited from class \code{RobWeight}. }
-    \item{\code{weight}:}{Object of class \code{"function"} --- the weight function; inherited from class \code{RobWeight}.}
-    \item{\code{clip}:}{Object of class \code{"numeric"} --- clipping bound(s).}
+    \item{\code{name}}{Object of class \code{"character"}; inherited from class \code{RobWeight}. }
+    \item{\code{weight}}{Object of class \code{"function"} --- the weight function; inherited from class \code{RobWeight}.}
+    \item{\code{clip}}{Object of class \code{"numeric"} --- clipping bound(s).}
   }
 }
 \section{Extends}{

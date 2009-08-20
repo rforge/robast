@@ -13,11 +13,11 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{name}:}{Object of class \code{"character"}; inherited from class \code{RobWeight}. }
-    \item{\code{weight}:}{Object of class \code{"function"} --- the weight function; inherited from class \code{RobWeight}.}
-    \item{\code{clip}:}{Object of class \code{"numeric"} --- clipping bound(s); inherited from class \code{BoundedWeight}.}
-    \item{\code{stand}:}{Object of class \code{"matrix"} --- standardization; inherited from class \code{BdStWeight}.}
-    \item{\code{cent}:}{Object of class \code{"numeric"} --- centering.}
+    \item{\code{name}}{Object of class \code{"character"}; inherited from class \code{RobWeight}. }
+    \item{\code{weight}}{Object of class \code{"function"} --- the weight function; inherited from class \code{RobWeight}.}
+    \item{\code{clip}}{Object of class \code{"numeric"} --- clipping bound(s); inherited from class \code{BoundedWeight}.}
+    \item{\code{stand}}{Object of class \code{"matrix"} --- standardization; inherited from class \code{BdStWeight}.}
+    \item{\code{cent}}{Object of class \code{"numeric"} --- centering.}
   }
 }
 \section{Extends}{

@@ -11,10 +11,10 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{type}:}{Object of class \code{"character"}:
+    \item{\code{type}}{Object of class \code{"character"}:
       \dQuote{(uncond.) convex contamination neighborhood}. }
 
-    \item{\code{radius}:}{Object of class \code{"numeric"}: 
+    \item{\code{radius}}{Object of class \code{"numeric"}: 
       neighborhood radius. }
   }
 }

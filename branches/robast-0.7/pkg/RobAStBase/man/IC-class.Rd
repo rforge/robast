@@ -22,19 +22,19 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{CallL2Fam}:}{Object of class \code{"call"}:
+    \item{\code{CallL2Fam}}{Object of class \code{"call"}:
       creates an object of the underlying L2-differentiable 
       parametric family. }
-    \item{\code{modifyIC}:}{ Object of class \code{"OptionalFunction"}:
+    \item{\code{modifyIC}}{ Object of class \code{"OptionalFunction"}:
       function of two arguments, which are an L2 parametric family 
       and an optional influence curve. Returns an object of 
       class \code{"IC"}. This slot is mainly used for internal
       computations! }
-    \item{\code{name}:}{Object of class \code{"character"}. }
-    \item{\code{Curve}:}{Object of class \code{"EuclRandVarList"}.}
-    \item{\code{Risks}:}{Object of class \code{"list"}: 
+    \item{\code{name}}{Object of class \code{"character"}. }
+    \item{\code{Curve}}{Object of class \code{"EuclRandVarList"}.}
+    \item{\code{Risks}}{Object of class \code{"list"}: 
       list of risks; cf. \code{\link[distrMod]{RiskType-class}}. }
-    \item{\code{Infos}:}{Object of class \code{"matrix"}
+    \item{\code{Infos}}{Object of class \code{"matrix"}
       with two columns named \code{method} and \code{message}:
       additional informations. }
   }

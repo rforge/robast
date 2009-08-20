@@ -16,8 +16,8 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{name}:}{Object of class \code{"character"}. }
-    \item{\code{weight}:}{Object of class \code{"function"} --- the weight function.}
+    \item{\code{name}}{Object of class \code{"character"}. }
+    \item{\code{weight}}{Object of class \code{"function"} --- the weight function.}
   }
 }
 \section{Methods}{

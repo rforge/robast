@@ -103,7 +103,7 @@ and a "generated on <data>"-tag in case of \code{sub}.
 Of course, if \code{main} / \code{inner} / \code{sub} are \code{character}, this
 is used for the title; in case of \code{inner} it is then checked whether it
 has correct length. In all title arguments, the following patterns are substituted:
-\itemize{
+\describe{
 \item{\code{"\%C"}}{class of argument \code{object}}
 \item{\code{"\%A"}}{deparsed argument  \code{object}}
 \item{\code{"\%D"}}{time/date-string when the plot was generated}

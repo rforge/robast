@@ -11,7 +11,7 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{name}:}{Object of class \code{"character"}:
+    \item{\code{name}}{Object of class \code{"character"}:
       name of the control object. }
   }
 }
@@ -22,7 +22,6 @@
 
     \item{name<-}{\code{signature(object = "RobAStControl", value = "character")}: 
       replacement function for slot \code{name}. }
-
   }
 }
 \references{

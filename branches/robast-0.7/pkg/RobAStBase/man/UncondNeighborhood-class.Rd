@@ -7,9 +7,9 @@
 \section{Objects from the Class}{A virtual Class: No objects may be created from it.}
 \section{Slots}{
   \describe{
-    \item{\code{type}:}{Object of class \code{"character"}:
+    \item{\code{type}}{Object of class \code{"character"}:
       type of the neighborhood. }
-    \item{\code{radius}:}{Object of class \code{"numeric"}:
+    \item{\code{radius}}{Object of class \code{"numeric"}:
       neighborhood radius. }
   }
 }

@@ -18,8 +18,8 @@
 \section{Objects from the Class}{A virtual Class: No objects may be created from it.}
 \section{Slots}{
   \describe{
-    \item{\code{center}:}{Object of class \code{"ProbFamily"} }
-    \item{\code{neighbor}:}{Object of class \code{"Neighborhood"}}
+    \item{\code{center}}{Object of class \code{"ProbFamily"} }
+    \item{\code{neighbor}}{Object of class \code{"Neighborhood"}}
   }
 }
 \section{Methods}{

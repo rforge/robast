@@ -37,7 +37,7 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{.Data}:}{Object of class \code{"list"}. A list of Euclidean
+    \item{\code{.Data}}{Object of class \code{"list"}. A list of Euclidean
       random variables. }
   }
 }
