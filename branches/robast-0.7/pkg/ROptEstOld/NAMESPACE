@@ -2,19 +2,11 @@ import("distr")
 import("distrEx")
 import("RandVar")
 
-exportClasses("PosDefSymmMatrix",
-              "OptionalNumeric") 
-exportClasses("Symmetry", 
-              "DistributionSymmetry",  
-              "NoSymmetry", 
-              "EllipticalSymmetry", 
-              "SphericalSymmetry", 
-              "FunctionSymmetry",
+exportClasses("FunctionSymmetry",
               "NonSymmetric",
               "EvenSymmetric",
               "OddSymmetric",
-              "FunSymmList",
-              "DistrSymmList")
+              "FunSymmList")
 exportClasses("ParamFamParameter", 
               "ProbFamily", 
               "ParamFamily", 
@@ -108,14 +100,9 @@ exportMethods("ksEstimator",
               "oneStepEstimator", 
               "locMEstimator")
 
-export("PosDefSymmMatrix")
-export("NoSymmetry", 
-       "EllipticalSymmetry", 
-       "SphericalSymmetry", 
-       "NonSymmetric",
+export("NonSymmetric",
        "EvenSymmetric",
        "OddSymmetric",
-       "DistrSymmList",
        "FunSymmList") 
 export("ParamFamParameter", 
        "ParamFamily", 
