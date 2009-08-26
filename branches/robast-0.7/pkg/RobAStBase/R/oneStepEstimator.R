@@ -40,7 +40,7 @@ oneStepEstimator <- function(x, IC, start,
 
 
         res <- start.val + rowMeans(evalIC(IC, x0), na.rm = na.rm)
-        if(!is.null(dim(res))) nms <- colnames(res)
+        nms <- if(!is.null(dim(res))) colnames(res)  else names(start.val)
         dim(res) <- NULL
         if(is.null(names(res))) names(res) <- nms
         Infos <- matrix(c("oneStepEstimator", "1-step estimate"), ncol = 2)
