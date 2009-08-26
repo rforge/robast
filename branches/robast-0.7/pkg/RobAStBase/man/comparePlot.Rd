@@ -20,7 +20,8 @@ comparePlot(obj1, obj2, ... )
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
-             lab.pts = NULL, lab.font = NULL)
+             lab.pts = NULL, lab.font = NULL,
+             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE)
 }
 \arguments{
   \item{obj1}{ object of class \code{"InfluenceCurve"} }
@@ -74,6 +75,21 @@ comparePlot(obj1, obj2, ... )
   \item{lab.font}{font to be used for labels}
   \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
                     for plotting points of the \code{data} argument in a jittered fashion.}
+  \item{which.lbs}{either an integer vector with the indices of the observations
+          to be plotted into graph or \code{NULL} --- then no observation is excluded}
+  \item{which.Order}{for each of the given ICs, we order the observations
+           according to the norm given by the corresponding \code{normtype(object)};
+           then \code{which.Order} either is an integer vector with the indices of the \emph{ordered}
+           observations (remaining after a possible reduction by argument \code{which.lbs})
+           to be plotted into graph or \code{NULL} --- then no (further) observation
+           is excluded.}
+  \item{return.Order}{logical; if \code{TRUE}, a list of length maximally four
+    with order vectors is returned --- one for the ordering w.r.t. each of
+    the given ICs; more specifically, the order of the (remaining) observations
+    given by their original index is returned (remaining means: after a possible
+    reduction by argument \code{which.lbs}, and ordering is according to the norm given by
+           \code{normtype(object)});
+   othervise we return \code{invisible()} as usual.}
   \item{\dots}{further arguments to be passed to \code{plot}}
 }
 \details{
@@ -126,8 +142,11 @@ IC2 <- optIC(model = N0.Rob1, risk = asMSE())
 
 comparePlot(IC1,IC2)
 
-data <- r(N0)(10)
-comparePlot(IC1, IC2, data=data, with.lab = TRUE)
+data <- r(N0)(20)
+comparePlot(IC1, IC2, data=data, with.lab = TRUE,
+            which.lbs = c(1:4,15:20),
+            which.Order = 1:6,
+            return.Order = TRUE)
 
 ## selection of subpanels for plotting
 par(mfrow=c(1,1))

@@ -41,9 +41,7 @@ exportMethods("Curve",
               "clipLo", "clipLo<-", 
               "clipUp", "clipUp<-",
               "optIC") 
-exportMethods("oneStepEstimator",
-              "kStepEstimator",
-              "locMEstimator")
+exportMethods("locMEstimator")
 exportMethods("weight", "weight<-", 
               "getweight", 
               "minbiasweight", 
@@ -54,13 +52,14 @@ exportMethods("getBiasIC")
 exportMethods("comparePlot")
 exportMethods("pIC", "asbias", 
               "steps", 
-              "Mroot")
+              "Mroot","kStepEstimator.start")
 exportMethods("ddPlot")
 exportMethods("cutoff.quantile", "cutoff.quantile<-")
+export("oneStepEstimator", "kStepEstimator")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 
 export("InfluenceCurve", "IC", "ContIC", "TotalVarIC")
-export(".eq", ".getDistr")
+export(".eq", ".getDistr", "getBoundedIC")
 export("RobAStBaseOptions", "getRobAStBaseOption")
 export("cutoff","cutoff.chisq","cutoff.sememp")
 export("outlyingPlotIC")

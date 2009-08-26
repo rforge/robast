@@ -358,6 +358,10 @@
 <param name="Local" value="getBiasIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getBoundedIC">
+<param name="Local" value="getBoundedIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getRiskIC">
 <param name="Local" value="getRiskIC.html">
 </OBJECT>
@@ -506,24 +510,24 @@
 <param name="Local" value="kStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="kStepEstimator,matrix,IC,Estimate-method">
-<param name="Local" value="kStepEstimator.html">
+<param name="Name" value="kStepEstimator.start">
+<param name="Local" value="kStepEstimatorStart-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="kStepEstimator,matrix,IC,numeric-method">
-<param name="Local" value="kStepEstimator.html">
+<param name="Name" value="kStepEstimator.start,Estimate-method">
+<param name="Local" value="kStepEstimatorStart-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="kStepEstimator,numeric,IC,Estimate-method">
-<param name="Local" value="kStepEstimator.html">
+<param name="Name" value="kStepEstimator.start,function-method">
+<param name="Local" value="kStepEstimatorStart-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="kStepEstimator,numeric,IC,numeric-method">
-<param name="Local" value="kStepEstimator.html">
+<param name="Name" value="kStepEstimator.start,numeric-method">
+<param name="Local" value="kStepEstimatorStart-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="kStepEstimator-methods">
-<param name="Local" value="kStepEstimator.html">
+<param name="Name" value="kStepEstimator.start-methods">
+<param name="Local" value="kStepEstimatorStart-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="kStepUseLast">
@@ -718,26 +722,6 @@
 <param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="oneStepEstimator,matrix,InfluenceCurve,ANY-method">
-<param name="Local" value="oneStepEstimator.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="oneStepEstimator,matrix,InfluenceCurve-method">
-<param name="Local" value="oneStepEstimator.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="oneStepEstimator,numeric,InfluenceCurve,ANY-method">
-<param name="Local" value="oneStepEstimator.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="oneStepEstimator,numeric,InfluenceCurve-method">
-<param name="Local" value="oneStepEstimator.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="oneStepEstimator-methods">
-<param name="Local" value="oneStepEstimator.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="optIC">
 <param name="Local" value="optIC.html">
 </OBJECT>
@@ -918,6 +902,14 @@
 <param name="Local" value="TotalVarNeighborhood-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="trafo,RobModel,missing-method">
+<param name="Local" value="RobModel-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="trafo<-,RobModel-method">
+<param name="Local" value="RobModel-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="type,Neighborhood-method">
 <param name="Local" value="Neighborhood-class.html">
 </OBJECT>
@@ -973,6 +965,14 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Cutoff class for distance-distance plots">
 <param name="Local" value="cutoff-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function for the computation of k-step estimates">
+<param name="Local" value="kStepEstimator.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function for the computation of one-step estimates">
+<param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Function outlyingPlotIC in Package 'RobAStBase'">
@@ -1039,16 +1039,8 @@
 <param name="Local" value="getRiskIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic function for the computation of k-step estimates">
-<param name="Local" value="kStepEstimator.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic function for the computation of location M estimates">
 <param name="Local" value="locMEstimator.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic function for the computation of one-step estimates">
-<param name="Local" value="oneStepEstimator.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic function for the computation of optimally robust ICs">
@@ -1061,6 +1053,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic function for the generation of influence curves">
 <param name="Local" value="generateIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getBoundedIC">
+<param name="Local" value="getBoundedIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Influence curve">
@@ -1089,6 +1085,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Methods for Function ddPlot in Package 'RobAStBase'">
 <param name="Local" value="ddPlot-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Methods for function kStepEstimator.start in Package 'RobAStBase'">
+<param name="Local" value="kStepEstimatorStart-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Methods for Function plot in Package 'RobAStBase'">

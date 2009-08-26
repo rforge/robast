@@ -4,7 +4,7 @@
 setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution", 
                                    risk = "asCov", 
                                    neighbor = "ContNeighborhood"),
-    function(L2deriv, risk, neighbor, Finfo, trafo, verbose = FALSE){
+    function(L2deriv, risk, neighbor, Finfo, trafo, verbose = getRobAStBaseOption("all.verbose")){
             info <- c("optimal IC in sense of Cramer-Rao bound")
             A <- trafo %*% solve(Finfo)
             
@@ -33,7 +33,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
 setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution", 
                                    risk = "asCov", 
                                    neighbor = "TotalVarNeighborhood"),
-    function(L2deriv, risk, neighbor, Finfo, trafo, verbose = FALSE){
+    function(L2deriv, risk, neighbor, Finfo, trafo, verbose = getRobAStBaseOption("all.verbose")){
             info <- c("optimal IC in sense of Cramer-Rao bound")
             A <- trafo %*% solve(Finfo)
             b <- abs(as.vector(A))*(q(L2deriv)(1)-q(L2deriv)(0))
@@ -62,7 +62,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                    risk = "asCov", 
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, Distr, Finfo, trafo, 
-             QuadForm = diag(nrow(trafo)), verbose = FALSE){
+             QuadForm = diag(nrow(trafo)), verbose = getRobAStBaseOption("all.verbose")){
 
             Cont <- is(neighbor,"ContNeighborhood")
             p <- nrow(trafo)

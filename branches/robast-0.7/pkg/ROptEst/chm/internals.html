@@ -58,13 +58,15 @@ These functions are used internally by package <span class="pkg">ROptEst</span>.
 ### helper function to check whether (intermediate) results give a pIC
 .checkPIC(L2deriv, neighbor, Distr, trafo, z, A, w, z.comp, A.comp, ...)
 
-.LowerCaseMultivariatefunction(L2deriv, neighbor, biastype,
+.LowerCaseMultivariate(L2deriv, neighbor, biastype,
              normtype, Distr, Finfo, trafo, z.start,
-             A.start, z.comp, A.comp, maxiter, tol, verbose = FALSE)
+             A.start, z.comp, A.comp, maxiter, tol,
+             verbose = getRobAStBaseOption("all.verbose"))
 
 .LowerCaseMultivariateTV(L2deriv, neighbor, biastype,
              normtype, Distr, Finfo, trafo,
-             A.start,  maxiter, tol, verbose = FALSE)
+             A.start,  maxiter, tol,
+             verbose = getRobAStBaseOption("all.verbose"))
 </pre>
 
 

@@ -166,7 +166,7 @@
 ## optimally robust estimator for normal location and/or scale
 ###############################################################################
 roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L, 
-                   fsCor = TRUE, returnIC = FALSE, mad0 = 1e-4){
+                   fsCor = TRUE, returnIC = FALSE, mad0 = 1e-4, na.rm = TRUE){
     es.call <- match.call()
     if(missing(x))
         stop("'x' is missing with no default")
@@ -182,6 +182,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
             stop("number of rows and columns/variables > 1. Please, do use 'rowRoblox'
                   resp. 'colRoblox'.")
     }
+
+    completecases <- complete.cases(x)
+    if(na.rm) x <- na.omit(x)
+
     if(length(x) <= 2){
         if(missing(mean) && missing(sd)){
             warning("Sample size <= 2! => Median and MAD are used for estimation.")
@@ -191,6 +195,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                   paste("median and MAD")),
                                   ncol = 2, dimnames = list(NULL, c("method", "message")))
             return(new("ALEstimate", name = "Median and MAD", 
+                       completecases = completecases,
                        estimate.call = es.call, estimate = robEst, 
                        samplesize = length(x), asvar = NULL,
                        asbias = NULL, pIC = NULL, Infos = Info.matrix))
@@ -203,7 +208,8 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                   paste("median")),
                                   ncol = 2, dimnames = list(NULL, c("method", "message")))
             return(new("ALEstimate", name = "Median", 
-                       estimate.call = es.call, estimate = robEst, 
+                       completecases = completecases,
+                       estimate.call = es.call, estimate = robEst,
                        samplesize = length(x), asvar = NULL,
                        asbias = NULL, pIC = NULL, Infos = Info.matrix))
         }
@@ -217,7 +223,8 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                   paste("MAD")),
                                   ncol = 2, dimnames = list(NULL, c("method", "message")))
             return(new("ALEstimate", name = "MAD", 
-                       estimate.call = es.call, estimate = robEst, 
+                       completecases = completecases,
+                       estimate.call = es.call, estimate = robEst,
                        samplesize = length(x), asvar = NULL,
                        asbias = NULL, pIC = NULL, Infos = Info.matrix))
         }
@@ -252,7 +259,8 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                       paste("mean and sd")),
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
                 return(new("ALEstimate", name = "Mean and sd", 
-                          estimate.call = es.call, estimate = robEst, 
+                          completecases = completecases,
+                          estimate.call = es.call, estimate = robEst,
                           samplesize = n, asvar = NULL,
                           asbias = NULL, pIC = NULL, Infos = Info.matrix))
             }
@@ -264,7 +272,8 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                       paste("mean")),
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
                 return(new("ALEstimate", name = "Mean", 
-                          estimate.call = es.call, estimate = robEst, 
+                          completecases = completecases,
+                          estimate.call = es.call, estimate = robEst,
                           samplesize = length(x), asvar = NULL,
                           asbias = NULL, pIC = NULL, Infos = Info.matrix))
             }
@@ -277,7 +286,8 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                       paste("sd")),
                                       ncol = 2, dimnames = list(NULL, c("method", "message")))
                 return(new("ALEstimate", name = "sd", 
-                          estimate.call = es.call, estimate = robEst, 
+                          completecases = completecases,
+                          estimate.call = es.call, estimate = robEst,
                           samplesize = n, asvar = NULL,
                           asbias = NULL, pIC = NULL, Infos = Info.matrix))
             }
@@ -400,12 +410,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                       normtype = NormType(), modifyIC = modIC))
                 Infos(IC1) <- Info.matrix
                 return(new("kStepEstimate", name = "Optimally robust estimate", 
-                           estimate.call = es.call, estimate = robEst$est, 
+                           completecases = completecases,
+                           estimate.call = es.call, estimate = robEst$est,
                            samplesize = length(x), asvar = robEst$asvar,
                            asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix))
             }else
                 return(new("kStepEstimate", name = "Optimally robust estimate", 
-                           estimate.call = es.call, estimate = robEst$est, 
+                           completecases = completecases,
+                           estimate.call = es.call, estimate = robEst$est,
                            samplesize = length(x), asvar = robEst$asvar,
                            asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix))
         }else{
@@ -523,12 +535,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                       normtype = NormType(), modifyIC = modIC))
                 Infos(IC1) <- Info.matrix
                 return(new("kStepEstimate", name = "Optimally robust estimate", 
-                           estimate.call = es.call, estimate = robEst$est, 
+                           completecases = completecases,
+                           estimate.call = es.call, estimate = robEst$est,
                            samplesize = length(x), asvar = robEst$asvar,
                            asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix))
             }else
                 return(new("kStepEstimate", name = "Optimally robust estimate", 
-                           estimate.call = es.call, estimate = robEst$est, 
+                           completecases = completecases,
+                           estimate.call = es.call, estimate = robEst$est,
                            samplesize = length(x), asvar = robEst$asvar,
                            asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix))
         }
@@ -598,12 +612,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                           modifyIC = modIC))
                     Infos(IC1) <- Info.matrix
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call, estimate = robEst, 
+                               completecases = completecases,
+                               estimate.call = es.call, estimate = robEst,
                                samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
                                asbias = r*b, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call, estimate = robEst, 
+                               completecases = completecases,
+                               estimate.call = es.call, estimate = robEst,
                                samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
                                asbias = r*b, steps = k, pIC = NULL, Infos = Info.matrix))
             }else{
@@ -683,12 +699,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                           modifyIC = modIC))
                     Infos(IC1) <- Info.matrix
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call, estimate = robEst, 
+                               completecases = completecases,
+                               estimate.call = es.call, estimate = robEst,
                                samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
                                asbias = r*b, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call, estimate = robEst, 
+                               completecases = completecases,
+                               estimate.call = es.call, estimate = robEst,
                                samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
                                asbias = r*b, steps = k, pIC = NULL, Infos = Info.matrix))
             }
@@ -786,12 +804,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                           modifyIC = modIC))
                     Infos(IC1) <- Info.matrix
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call, estimate = robEst$est, 
+                               completecases = completecases,
+                               estimate.call = es.call, estimate = robEst$est,
                                samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
                                asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call, estimate = robEst$est, 
+                               completecases = completecases,
+                               estimate.call = es.call, estimate = robEst$est,
                                samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
                                asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix))
             }else{
@@ -893,12 +913,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                           modifyIC = modIC))
                     Infos(IC1) <- Info.matrix
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call, estimate = robEst$est, 
+                               completecases = completecases,
+                               estimate.call = es.call, estimate = robEst$est,
                                samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
                                asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
-                               estimate.call = es.call, estimate = robEst$est, 
+                               completecases = completecases,
+                               estimate.call = es.call, estimate = robEst$est,
                                samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
                                asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix))
             }

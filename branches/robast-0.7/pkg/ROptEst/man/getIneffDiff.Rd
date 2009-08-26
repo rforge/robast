@@ -16,7 +16,8 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
           radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
           z.start = NULL, A.start = NULL, upper.b = NULL, lower.b = NULL,
           MaxIter, eps, warn,
-          loNorm = NULL, upNorm = NULL, verbose = FALSE, ...)
+          loNorm = NULL, upNorm = NULL,
+          verbose = getRobAStBaseOption("all.verbose"), ...)
 }
 \arguments{
   \item{radius}{ neighborhood radius. }

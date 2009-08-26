@@ -254,24 +254,12 @@
 <param name="Local" value="ProbFamily-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="DistributionSymmetry-class">
-<param name="Local" value="DistributionSymmetry-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="distrSymm">
 <param name="Local" value="ProbFamily-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="distrSymm,ProbFamily-method">
 <param name="Local" value="ProbFamily-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="DistrSymmList">
-<param name="Local" value="DistrSymmList.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="DistrSymmList-class">
-<param name="Local" value="DistrSymmList-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Domain,InfluenceCurve-method">
@@ -288,14 +276,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="E,L2ParamFamily,EuclRandVarList,missing-method">
 <param name="Local" value="L2ParamFamily-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="EllipticalSymmetry">
-<param name="Local" value="EllipticalSymmetry.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="EllipticalSymmetry-class">
-<param name="Local" value="EllipticalSymmetry-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="evalIC">
@@ -1034,14 +1014,6 @@
 <param name="Local" value="NormScaleFamily.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="NoSymmetry">
-<param name="Local" value="NoSymmetry.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="NoSymmetry-class">
-<param name="Local" value="NoSymmetry-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="nuisance">
 <param name="Local" value="ParamFamParameter-class.html">
 </OBJECT>
@@ -1118,10 +1090,6 @@
 <param name="Local" value="optIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="OptionalNumeric-class">
-<param name="Local" value="OptionalNumeric-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="optRisk">
 <param name="Local" value="optRisk.html">
 </OBJECT>
@@ -1176,14 +1144,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="PoisFamily">
 <param name="Local" value="PoisFamily.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="PosDefSymmMatrix">
-<param name="Local" value="PosDefSymmMatrix.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="PosDefSymmMatrix-class">
-<param name="Local" value="PosDefSymmMatrix-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ProbFamily-class">
@@ -1306,20 +1266,8 @@
 <param name="Local" value="RiskType-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="show,Symmetry-method">
-<param name="Local" value="Symmetry-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="show,TotalVarIC-method">
 <param name="Local" value="TotalVarIC-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="SphericalSymmetry">
-<param name="Local" value="SphericalSymmetry.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="SphericalSymmetry-class">
-<param name="Local" value="SphericalSymmetry-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="stand">
@@ -1344,18 +1292,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="stand<-,TotalVarIC-method">
 <param name="Local" value="TotalVarIC-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="SymmCenter">
-<param name="Local" value="Symmetry-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="SymmCenter,Symmetry-method">
-<param name="Local" value="Symmetry-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Symmetry-class">
-<param name="Local" value="Symmetry-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="TotalVarIC">
@@ -1410,20 +1346,12 @@
 <param name="Local" value="trFiCov-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="type">
-<param name="Local" value="Symmetry-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="type,Neighborhood-method">
 <param name="Local" value="Neighborhood-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="type,RiskType-method">
 <param name="Local" value="RiskType-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="type,Symmetry-method">
-<param name="Local" value="Symmetry-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="UncondNeighborhood-class">
@@ -1467,16 +1395,8 @@
 <param name="Local" value="asRisk-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Class for Elliptically Symmetric Distributions">
-<param name="Local" value="EllipticalSymmetry-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Class for Even Functions">
 <param name="Local" value="EvenSymmetric-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Class for Non-symmetric Distributions">
-<param name="Local" value="NoSymmetry-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Class for Non-symmetric Functions">
@@ -1485,18 +1405,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Class for Odd Functions">
 <param name="Local" value="OddSymmetric-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Class for Spherical Symmetric Distributions">
-<param name="Local" value="SphericalSymmetry-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Class of Symmetries">
-<param name="Local" value="Symmetry-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Class of Symmetries for Distributions">
-<param name="Local" value="DistributionSymmetry-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Class of Symmetries for Functions">
@@ -1573,14 +1481,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generating function for ContNeighborhood-class">
 <param name="Local" value="ContNeighborhood.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generating function for DistrSymmList-class">
-<param name="Local" value="DistrSymmList.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generating function for EllipticalSymmetry-class">
-<param name="Local" value="EllipticalSymmetry.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generating function for EvenSymmetric-class">
@@ -1663,10 +1563,6 @@
 <param name="Local" value="NormScaleFamily.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generating function for NoSymmetry-class">
-<param name="Local" value="NoSymmetry.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generating function for OddSymmetric-class">
 <param name="Local" value="OddSymmetric.html">
 </OBJECT>
@@ -1681,14 +1577,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generating function for Poisson families">
 <param name="Local" value="PoisFamily.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generating function for PosDefSymmMatrix-class">
-<param name="Local" value="PosDefSymmMatrix.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generating function for SphericalSymmetry-class">
-<param name="Local" value="SphericalSymmetry.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generating function for TotalVarIC-class">
@@ -1799,20 +1687,12 @@
 <param name="Local" value="L2ParamFamily-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="List of Symmetries for a List of Distributions">
-<param name="Local" value="DistrSymmList-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="List of Symmetries for a List of Functions">
 <param name="Local" value="FunSymmList-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Neighborhood">
 <param name="Local" value="Neighborhood-class.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Optional numeric">
-<param name="Local" value="OptionalNumeric-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Parameter of a parametric family of probability measures">
@@ -1825,10 +1705,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Plot absolute and relative information">
 <param name="Local" value="infoPlot.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Positive-definite, symmetric matrices">
-<param name="Local" value="PosDefSymmMatrix-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Risk">

@@ -6,7 +6,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, symm, Finfo, trafo, upper = NULL,
              lower = NULL, maxiter, tol,
-             warn, noLow = FALSE, verbose = FALSE){
+             warn, noLow = FALSE, verbose = getRobAStBaseOption("all.verbose")){
         biastype <- biastype(risk)
         radius <- neighbor@radius
         if(identical(all.equal(radius, 0), TRUE)){
@@ -160,7 +160,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
              L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE,
              z.start, A.start, upper = NULL, lower = NULL,
              OptOrIter = "iterate",
-             maxiter, tol, warn, verbose = FALSE, ...){
+             maxiter, tol, warn, verbose = getRobAStBaseOption("all.verbose"),
+             ...){
 
         mc <- match.call()
 

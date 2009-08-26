@@ -7,7 +7,8 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                        risk = "asGRisk"),
     function(L2Fam, neighbor, risk, loRad, upRad, z.start = NULL, 
              A.start = NULL, upper = 1e5, lower=NULL, maxiter = 50,
-             tol = .Machine$double.eps^0.4, warn = FALSE, verbose = FALSE, ...){
+             tol = .Machine$double.eps^0.4, warn = FALSE,
+             verbose = getRobAStBaseOption("all.verbose"), ...){
         ow <- options("warn")
         on.exit(options(ow))
         if(length(loRad) != 1)

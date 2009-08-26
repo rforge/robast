@@ -37,7 +37,8 @@ comparePlot(obj1, obj2, obj3 = NULL, obj4 = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
-             lab.pts = NULL, lab.font = NULL)
+             lab.pts = NULL, lab.font = NULL,
+             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE)
 </pre>
 
 
@@ -147,6 +148,27 @@ font to be used for labels</td></tr>
 <td>
 jittering factor used in case of a <code>DiscreteDistribution</code>
 for plotting points of the <code>data</code> argument in a jittered fashion.</td></tr>
+<tr valign="top"><td><code>which.lbs</code></td>
+<td>
+either an integer vector with the indices of the observations
+to be plotted into graph or <code>NULL</code> &mdash; then no observation is excluded</td></tr>
+<tr valign="top"><td><code>which.Order</code></td>
+<td>
+for each of the given ICs, we order the observations
+according to the norm given by the corresponding <code>normtype(object)</code>;
+then <code>which.Order</code> either is an integer vector with the indices of the <EM>ordered</EM>
+observations (remaining after a possible reduction by argument <code>which.lbs</code>)
+to be plotted into graph or <code>NULL</code> &mdash; then no (further) observation
+is excluded.</td></tr>
+<tr valign="top"><td><code>return.Order</code></td>
+<td>
+logical; if <code>TRUE</code>, a list of length maximally four
+with order vectors is returned &mdash; one for the ordering w.r.t. each of
+the given ICs; more specifically, the order of the (remaining) observations
+given by their original index is returned (remaining means: after a possible
+reduction by argument <code>which.lbs</code>, and ordering is according to the norm given by
+<code>normtype(object)</code>);
+othervise we return <code>invisible()</code> as usual.</td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 further arguments to be passed to <code>plot</code></td></tr>
@@ -222,8 +244,11 @@ IC2 &lt;- optIC(model = N0.Rob1, risk = asMSE())
 
 comparePlot(IC1,IC2)
 
-data &lt;- r(N0)(10)
-comparePlot(IC1, IC2, data=data, with.lab = TRUE)
+data &lt;- r(N0)(20)
+comparePlot(IC1, IC2, data=data, with.lab = TRUE,
+            which.lbs = c(1:4,15:20),
+            which.Order = 1:6,
+            return.Order = TRUE)
 
 ## selection of subpanels for plotting
 par(mfrow=c(1,1))

@@ -10,6 +10,8 @@
 \alias{neighbor,RobModel-method}
 \alias{neighbor<-}
 \alias{neighbor<-,RobModel-method}
+\alias{trafo,RobModel,missing-method}
+\alias{trafo<-,RobModel-method}
 
 \title{Robust model}
 \description{Class of robust models. A robust model consists 
@@ -32,6 +34,11 @@
       accessor function for slot \code{neighbor}. }
     \item{neighbor<-}{\code{signature(object = "RobModel")}: 
       replacement function for slot \code{neighbor}. }
+    \item{trafo}{\code{signature(object = "RobModel", param = "missing")}:
+      accessor function for slot \code{trafo} of slot \code{center}. }
+    \item{trafo<-}{\code{signature(object = "RobModel")}:
+      replacement function for slot \code{trafo}
+      of slot \code{center}. }
   }
 }
 \references{

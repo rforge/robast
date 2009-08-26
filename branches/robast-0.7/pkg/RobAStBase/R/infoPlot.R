@@ -10,7 +10,8 @@ setMethod("infoPlot", "IC",
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
-             lab.pts = NULL, lab.font = NULL){
+             lab.pts = NULL, lab.font = NULL,
+             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE){
 
         objectc <- match.call(call = sys.call(sys.parent(1)))$object
         dots <- match.call(call = sys.call(sys.parent(1)), 
@@ -247,9 +248,16 @@ setMethod("infoPlot", "IC",
             dotsP$panel.last <- NULL
 
             if(!is.null(data)){
+
                n <- if(!is.null(dim(data))) nrow(data) else length(data)
-               oN <- 1:n
-               if (n==length(data)) {oN <- order(data); data <- sort(data)}
+               oN0 <- oN0Class <- NULL
+               if(is.null(which.lbs))
+                  which.lbs <- 1:n
+               which.lbs0 <- (1:n) %in% which.lbs
+               which.lbx <- rep(which.lbs0, length.out=length(data))
+               data0C <- data0 <- data[which.lbx]
+               n <- if(!is.null(dim(data0))) nrow(data0) else length(data0)
+               oNC <- oN <- (1:n)[which.lbs0]
 
                cex.pts <- rep(cex.pts, length.out=2)
                if(missing(col.pts)) col.pts <- c(col, colI)
@@ -257,15 +265,42 @@ setMethod("infoPlot", "IC",
                pch.pts <- matrix(rep(pch.pts, length.out=2*n),n,2)
                jitter.fac <- rep(jitter.fac, length.out=2)
                with.lab <- rep(with.lab, length.out=2)
-               lab.pts <- if(is.null(lab.pts))
-                             matrix(paste(rep(oN,2)),n,2)
-                          else matrix(rep(lab.pts, length.out=2*n),n,2)
                lab.font <- rep(lab.font, length.out=2)
 
                absInfoClass.data <- absInfoEval(data,absInfoClass.f)
-               aIC.data.m <- max(absInfoClass.data)
                absInfo.data <- absInfoEval(data,absInfo.f)
-               aI.data.m <- max(absInfo.data)
+
+               absInfo0.data <- absInfo.data[which.lbs]
+               absInfo0Class.data <- absInfoClass.data[which.lbs]
+               aIC.data.m <- max(absInfo0Class.data)
+               aI.data.m <- max(absInfo0.data)
+
+               if (n==length(data0)) {
+                   oN <-  order(absInfo0.data)
+                   oNC <-  order(absInfo0Class.data)
+
+                   oN0 <- order(absInfo.data)
+                   oN0 <- oN0[oN0 %in% which.lbs]
+                   oN0Class <- order(absInfoClass.data)
+                   oN0Class <- oN0Class[oN0Class %in% which.lbs]
+
+                   data0 <-  data0[oN0]
+                   data0C <- data0[oN0Class]
+
+                   if(!is.null(which.Order)){
+                       oN <-  oN0[which.Order]
+                       oNC <- oN0Class[which.Order]
+                       data0 <- data[oN]
+                       data0C <- data[oNC]
+                       absInfo0.data <- absInfo.data[oN]
+                       absInfo0Class.data <- absInfoClass.data[oNC]
+                   }
+                   n <- length(oN)
+               }
+               lab.pts <- if(is.null(lab.pts))
+                               matrix(paste(c(oN,oNC)),n,2)
+                          else matrix(rep(lab.pts, length.out=2*n),n,2)
+
 
                dots.points <- dots
                dots.points$col <- dots.points$cex <- dots.points$pch <- NULL
@@ -277,17 +312,17 @@ setMethod("infoPlot", "IC",
                    }
                    do.call(points, args=c(list(y0, ICy0, cex = log(ICy0+1)*3*cex0[1],
                                    col = col0[1], pch = pch0[,1]), dwo0))
-                   do.call(points, args=c(list(y0, ICy0c, cex = log(ICy0c+1)*3*cex0[2],
+                   do.call(points, args=c(list(y0c, ICy0c, cex = log(ICy0c+1)*3*cex0[2],
                                    col = col0[2], pch = pch0[,2]), dwo0))
                    if(with.lab0){
                       text(x = y0, y = ICy0, labels = lab.pts0[,1],
                            cex = log(ICy0+1)*1.5*cex0[1], col = col0[1])
-                      text(x = y0, y = ICy0c, labels = lab.pts0[,2],
+                      text(x = y0c, y = ICy0c, labels = lab.pts0[,2],
                            cex = log(ICy0+1)*1.5*cex0[2], col = col0[2])
                    }
                    pL0
-                   }, list(ICy0 = absInfo.data, ICy0c = absInfoClass.data,
-                           pL0 = pL, y0 = data,
+                   }, list(ICy0 = absInfo0.data, ICy0c = absInfo0Class.data,
+                           pL0 = pL, y0 = data0, y0c = data0C,
                            dwo0 = dots.points, cex0 = cex.pts, pch0 = pch.pts,
                            col0 = col.pts, with.lab0 = with.lab,
                            lab.pts0 = lab.pts, n0 = n,
@@ -297,7 +332,7 @@ setMethod("infoPlot", "IC",
 
                pL.rel <- substitute({
                    y0.vec <- sapply(y0,  IC1.i.5@Map[[indi]])^2/ICy0
-                   y0c.vec <- sapply(y0, classIC.i.5@Map[[indi]])^2/ICy0c
+                   y0c.vec <- sapply(y0c, classIC.i.5@Map[[indi]])^2/ICy0c
                    if(is(e1, "DiscreteDistribution")){
                       y0.vec <- jitter(y0.vec, factor = jitter.fac0[1])
                       y0c.vec <- jitter(y0c.vec, factor = jitter.fac0[2])
@@ -313,8 +348,8 @@ setMethod("infoPlot", "IC",
                            cex = log(ICy0c+1)*1.5*cex0[2], col = col0[2])
                    }
                    pL0
-                   }, list(ICy0c = absInfoClass.data, ICy0 = absInfo.data,
-                           pL0 = pL, y0 = data,
+                   }, list(ICy0c = absInfo0Class.data, ICy0 = absInfo0.data,
+                           pL0 = pL, y0 = data0, y0c = data0C,
                            dwo0 = dots.points, cex0 = cex.pts, pch0 = pch.pts,
                            col0 = col.pts, with.lab0 = with.lab,
                            lab.pts0 = lab.pts, n0 = n,
@@ -397,6 +432,7 @@ setMethod("infoPlot", "IC",
             mtext(text = sub, side = 1, cex = cex.sub, adj = .5,
                   outer = TRUE, line = -1.6, col = col.sub)
 
+        if(return.Order) return(list(IC=oN0,IC.class=oN0Class))
 
         invisible()
         }

@@ -13,12 +13,15 @@
 \usage{
 getLagrangeMultByIter(b, L2deriv, risk, trafo,
                       neighbor, biastype, normtype, Distr,
-                      a.start, z.start, A.start, w.start, std, z.comp, A.comp, maxiter, tol,
-                      verbose, warnit = TRUE)
+                      a.start, z.start, A.start, w.start, std, z.comp,
+                      A.comp, maxiter, tol,
+                      verbose = getRobAStBaseOption("all.verbose"),
+                      warnit = TRUE)
 getLagrangeMultByOptim(b, L2deriv, risk, FI, trafo,
                       neighbor, biastype, normtype, Distr,
-                      a.start, z.start, A.start, w.start,  std, z.comp, A.comp, maxiter, tol,
-                      verbose, ...)
+                      a.start, z.start, A.start, w.start,  std, z.comp,
+                      A.comp, maxiter, tol,
+                      verbose = getRobAStBaseOption("all.verbose"), ...)
 
 }
 \arguments{

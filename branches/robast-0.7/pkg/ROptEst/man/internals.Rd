@@ -45,11 +45,13 @@ These functions are used internally by package \pkg{ROptEst}.}
 
 .LowerCaseMultivariate(L2deriv, neighbor, biastype,
              normtype, Distr, Finfo, trafo, z.start,
-             A.start, z.comp, A.comp, maxiter, tol, verbose = FALSE)
+             A.start, z.comp, A.comp, maxiter, tol,
+             verbose = getRobAStBaseOption("all.verbose"))
 
 .LowerCaseMultivariateTV(L2deriv, neighbor, biastype,
              normtype, Distr, Finfo, trafo,
-             A.start,  maxiter, tol, verbose = FALSE)
+             A.start,  maxiter, tol,
+             verbose = getRobAStBaseOption("all.verbose"))
 }
 
 \arguments{

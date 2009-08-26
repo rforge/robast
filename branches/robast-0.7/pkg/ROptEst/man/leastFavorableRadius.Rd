@@ -13,7 +13,7 @@ leastFavorableRadius(L2Fam, neighbor, risk, ...)
 \S4method{leastFavorableRadius}{L2ParamFamily,UncondNeighborhood,asGRisk}(
           L2Fam, neighbor, risk, rho, upRad = 1, 
             z.start = NULL, A.start = NULL, upper = 100, maxiter = 100, 
-            tol = .Machine$double.eps^0.4, warn = FALSE, verbose = FALSE)
+            tol = .Machine$double.eps^0.4, warn = FALSE, verbose = getRobAStBaseOption("all.verbose"))
 }
 \arguments{
   \item{L2Fam}{ L2-differentiable family of probability measures. }

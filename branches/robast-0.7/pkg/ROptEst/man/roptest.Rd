@@ -9,7 +9,10 @@
 roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est, 
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
         distance = CvMDist, startPar = NULL, verbose = FALSE, 
-        useLast = getRobAStBaseOption("kStepUseLast"), ...)
+        useLast = getRobAStBaseOption("kStepUseLast"),
+        withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+        IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+        na.rm = TRUE, ...)
 }
 \arguments{
   \item{x}{ sample }
@@ -38,6 +41,12 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   \item{useLast}{ which parameter estimate (initial estimate or
     k-step estimate) shall be used to fill the slots \code{pIC},
     \code{asvar} and \code{asbias} of the return value. }
+  \item{withUpdateInKer}{if there is a non-trivial trafo in the model with matrix \eqn{D}, shall
+  the parameter be updated on \eqn{{\rm ker}(D)}{ker(D)}?}
+  \item{IC.UpdateInKer}{if there is a non-trivial trafo in the model with matrix \eqn{D},
+  the IC to be used for this; if \code{NULL} the result of \code{getboundedIC(L2Fam,D)} is taken;
+  this IC will then be projected onto \eqn{{\rm ker}(D)}{ker(D)}.}
+  \item{na.rm}{logical: if  \code{TRUE}, the estimator is evaluated at \code{complete.cases(x)}.}
   \item{\dots}{ further arguments }
 }
 \details{
@@ -106,7 +115,8 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   Humboldt University, Berlin; also available under
   \url{www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf}
 }
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de},\cr
+        Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
 \seealso{ \code{\link[RobLox]{roblox}}, 
           \code{\link[distrMod]{L2ParamFamily-class}}

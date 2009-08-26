@@ -1,6 +1,7 @@
 .LowerCaseMultivariate <- function(L2deriv, neighbor, biastype,
              normtype, Distr, Finfo, trafo, z.start,
-             A.start, z.comp, A.comp, maxiter, tol, verbose = FALSE){
+             A.start, z.comp, A.comp, maxiter, tol,
+             verbose = getRobAStBaseOption("all.verbose")){
 
         w <- new("HampelWeight")
 
@@ -74,7 +75,8 @@
 
 .LowerCaseMultivariateTV <- function(L2deriv, neighbor, biastype,
              normtype, Distr, Finfo, trafo,
-             A.start,  maxiter, tol, verbose = FALSE){
+             A.start,  maxiter, tol,
+             verbose = getRobAStBaseOption("all.verbose")){
 
         w <- new("BdStWeight")
         k <- ncol(trafo)

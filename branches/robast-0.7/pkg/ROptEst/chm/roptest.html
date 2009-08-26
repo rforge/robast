@@ -27,7 +27,10 @@ parametric families via k-step construction.
 roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est, 
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
         distance = CvMDist, startPar = NULL, verbose = FALSE, 
-        useLast = getRobAStBaseOption("kStepUseLast"), ...)
+        useLast = getRobAStBaseOption("kStepUseLast"),
+        withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+        IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+        na.rm = TRUE, ...)
 </pre>
 
 
@@ -88,6 +91,18 @@ in which case slot <code>untransformed.estimate</code> is used.</td></tr>
  which parameter estimate (initial estimate or
 k-step estimate) shall be used to fill the slots <code>pIC</code>,
 <code>asvar</code> and <code>asbias</code> of the return value. </td></tr>
+<tr valign="top"><td><code>withUpdateInKer</code></td>
+<td>
+if there is a non-trivial trafo in the model with matrix <i>D</i>, shall
+the parameter be updated on <i>ker(D)</i>?</td></tr>
+<tr valign="top"><td><code>IC.UpdateInKer</code></td>
+<td>
+if there is a non-trivial trafo in the model with matrix <i>D</i>,
+the IC to be used for this; if <code>NULL</code> the result of <code>getboundedIC(L2Fam,D)</code> is taken;
+this IC will then be projected onto <i>ker(D)</i>.</td></tr>
+<tr valign="top"><td><code>na.rm</code></td>
+<td>
+logical: if  <code>TRUE</code>, the estimator is evaluated at <code>complete.cases(x)</code>.</td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
  further arguments </td></tr>
@@ -99,7 +114,7 @@ k-step estimate) shall be used to fill the slots <code>pIC</code>,
 <p>
 Computes the optimally robust estimator for a given L2 differentiable
 parametric family. The computation uses a k-step construction with an 
-appropriate initial estimate; cf. also <code><a href="../../RobAStBase/html/kStepEstimator.html">kStepEstimator</a></code>. 
+appropriate initial estimate; cf. also <code><a onclick="findlink('RobAStBase', 'kStepEstimator.html')" style="text-decoration: underline; color: blue; cursor: hand">kStepEstimator</a></code>. 
 Valid candidates are e.g. Kolmogorov(-Smirnov) or von Mises minimum 
 distance estimators (default); cf. Rieder (1994) and Kohl (2005).
 </p>
@@ -133,7 +148,7 @@ Finite-sample and higher order results suggest that the asymptotically
 optimal procedure is to liberal. Using <code>fsCor</code> the radius can be
 modified - as a rule enlarged - to obtain a more conservative estimate.
 In case of normal location and scale there is function 
-<code><a href="../../RobLox/html/finiteSampleCorrection.html">finiteSampleCorrection</a></code> which returns a finite-sample 
+<code><a onclick="findlink('RobLox', 'finiteSampleCorrection.html')" style="text-decoration: underline; color: blue; cursor: hand">finiteSampleCorrection</a></code> which returns a finite-sample 
 corrected (enlarged) radius based on the results of large Monte-Carlo
 studies.
 </p>
@@ -163,7 +178,8 @@ If <code>useLast</code> is set to <code>TRUE</code> the computation of <code>asv
 
 <h3>Author(s)</h3>
 
-<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,<br>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a></p>
 
 
 <h3>References</h3>
@@ -190,10 +206,10 @@ Humboldt University, Berlin; also available under
 
 <h3>See Also</h3>
 
-<p> <code><a href="../../RobLox/html/roblox.html">roblox</a></code>, 
-<code><a href="../../distrMod/html/L2ParamFamily-class.html">L2ParamFamily-class</a></code>
-<code><a href="../../RobAStBase/html/UncondNeighborhood-class.html">UncondNeighborhood-class</a></code>,
-<code><a href="../../distrMod/html/RiskType-class.html">RiskType-class</a></code> </p>
+<p> <code><a onclick="findlink('RobLox', 'roblox.html')" style="text-decoration: underline; color: blue; cursor: hand">roblox</a></code>, 
+<code><a onclick="findlink('distrMod', 'L2ParamFamily-class.html')" style="text-decoration: underline; color: blue; cursor: hand">L2ParamFamily-class</a></code>
+<code><a onclick="findlink('RobAStBase', 'UncondNeighborhood-class.html')" style="text-decoration: underline; color: blue; cursor: hand">UncondNeighborhood-class</a></code>,
+<code><a onclick="findlink('distrMod', 'RiskType-class.html')" style="text-decoration: underline; color: blue; cursor: hand">RiskType-class</a></code> </p>
 
 
 <h3>Examples</h3>

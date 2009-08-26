@@ -5,8 +5,8 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    risk = "asHampel", 
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper = NULL, lower = NULL,
-             maxiter, tol, warn, noLow = FALSE, verbose = FALSE,
+             upper = NULL, lower = NULL, maxiter, tol, warn, noLow = FALSE,
+             verbose = getRobAStBaseOption("all.verbose"),
              checkBounds = TRUE){
         biastype <- biastype(risk)
         normtype <- normtype(risk)
@@ -139,8 +139,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
     function(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm,
              L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE,
              z.start, A.start, upper = NULL, lower = NULL,
-             OptOrIter = "iterate",
-             maxiter, tol, warn, verbose = FALSE,
+             OptOrIter = "iterate", maxiter, tol, warn,
+             verbose = getRobAStBaseOption("all.verbose"),
              checkBounds = TRUE, ...){
 
         mc <- match.call()

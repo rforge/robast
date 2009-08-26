@@ -8,7 +8,8 @@ setMethod("getIneffDiff", signature(radius = "numeric",
     function(radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
              z.start = NULL, A.start = NULL, upper.b = NULL, lower.b = NULL,
              MaxIter, eps, warn,
-             loNorm = NULL, upNorm = NULL, verbose = FALSE, ...){
+             loNorm = NULL, upNorm = NULL,
+             verbose = getRobAStBaseOption("all.verbose"), ...){
         L2derivDim <- numberOfMaps(L2Fam@L2deriv)
         if(L2derivDim == 1){
             neighbor@radius <- radius

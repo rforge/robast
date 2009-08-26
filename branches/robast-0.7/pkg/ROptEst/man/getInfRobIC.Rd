@@ -22,45 +22,55 @@
 getInfRobIC(L2deriv, risk, neighbor, ...)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asCov,ContNeighborhood}(L2deriv,
-                       risk, neighbor, Finfo, trafo, verbose = FALSE)
+                       risk, neighbor, Finfo, trafo,
+                       verbose = getRobAStBaseOption("all.verbose"))
 
 \S4method{getInfRobIC}{UnivariateDistribution,asCov,TotalVarNeighborhood}(L2deriv,
-                       risk, neighbor, Finfo, trafo, verbose = FALSE)
+                       risk, neighbor, Finfo, trafo,
+                       verbose = getRobAStBaseOption("all.verbose"))
 
 \S4method{getInfRobIC}{RealRandVariable,asCov,UncondNeighborhood}(L2deriv, risk,
                        neighbor, Distr, Finfo, trafo,
-                       QuadForm = diag(nrow(trafo)), verbose = FALSE)
+                       QuadForm = diag(nrow(trafo)),
+                       verbose = getRobAStBaseOption("all.verbose"))
 
 \S4method{getInfRobIC}{UnivariateDistribution,asBias,UncondNeighborhood}(L2deriv,
                        risk, neighbor, symm, trafo,
-                       maxiter, tol, warn, Finfo, verbose = FALSE, ...)
+                       maxiter, tol, warn, Finfo,
+                       verbose = getRobAStBaseOption("all.verbose"), ...)
 
 \S4method{getInfRobIC}{RealRandVariable,asBias,UncondNeighborhood}(L2deriv, risk,
                        neighbor, Distr, DistrSymm, L2derivSymm,
                        L2derivDistrSymm, z.start, A.start, Finfo, trafo,
-                       maxiter, tol, warn, verbose = FALSE, ...)
+                       maxiter, tol, warn,
+                       verbose = getRobAStBaseOption("all.verbose"), ...)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv,
-                       risk, neighbor, symm, Finfo, trafo, upper = NULL, lower=NULL,
-                       maxiter, tol, warn, noLow = FALSE, verbose = FALSE, checkBounds = TRUE)
+                       risk, neighbor, symm, Finfo, trafo, upper = NULL,
+                       lower=NULL, maxiter, tol, warn, noLow = FALSE,
+                       verbose = getRobAStBaseOption("all.verbose"),
+                       checkBounds = TRUE)
 
 \S4method{getInfRobIC}{RealRandVariable,asHampel,UncondNeighborhood}(L2deriv, risk,
                        neighbor, Distr, DistrSymm, L2derivSymm,
-                       L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start,
-                       A.start, upper = NULL, lower=NULL, OptOrIter = "iterate", maxiter,
-                       tol, warn, verbose = FALSE, checkBounds = TRUE, ...)
+                       L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE,
+                       z.start, A.start, upper = NULL, lower=NULL,
+                       OptOrIter = "iterate", maxiter, tol, warn,
+                       verbose = getRobAStBaseOption("all.verbose"),
+                       checkBounds = TRUE, ...)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv,
                        risk, neighbor, symm, Finfo, trafo,
                        upper = NULL, lower = NULL,
                        maxiter, tol, warn, noLow = FALSE,
-                       verbose = FALSE)
+                       verbose = getRobAStBaseOption("all.verbose"))
 
 \S4method{getInfRobIC}{RealRandVariable,asGRisk,UncondNeighborhood}(L2deriv, risk,
                        neighbor,  Distr, DistrSymm, L2derivSymm,
                        L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start,
                        A.start, upper = NULL, lower = NULL, OptOrIter = "iterate",
-                       maxiter, tol, warn, verbose = FALSE, ...)
+                       maxiter, tol, warn,
+                       verbose = getRobAStBaseOption("all.verbose"), ...)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(
                        L2deriv, risk, neighbor, symm, Finfo, trafo,

@@ -33,7 +33,7 @@ optIC(model, risk, ...)
 optIC(model, risk, z.start = NULL, A.start = NULL,
                                      upper = 1e4, lower = 1e-4, maxiter = 50,
                                      tol = .Machine$double.eps^0.4, warn = TRUE, 
-                                     noLow = FALSE, verbose = FALSE, ...)
+                                     noLow = FALSE, verbose = getRobAStBaseOption("all.verbose"), ...)
 
 ## S4 method for signature 'InfRobModel,asUnOvShoot':
 optIC(model, risk, upper = 1e4,
@@ -44,7 +44,7 @@ optIC(model, risk, upper = 1e4,
 optIC(model, risk, sampleSize, upper = 1e4, lower = 1e-4,
                                           maxiter = 50, tol = .Machine$double.eps^0.4, 
                                           warn = TRUE, Algo = "A", cont = "left",
-                                          verbose = FALSE)
+                                          verbose = getRobAStBaseOption("all.verbose"))
 </pre>
 
 
@@ -162,7 +162,7 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p><code><a href="../../RobAStBase/html/InfluenceCurve-class.html">InfluenceCurve-class</a></code>, <code><a href="../../distrMod/html/RiskType-class.html">RiskType-class</a></code></p>
+<p><code><a onclick="findlink('RobAStBase', 'InfluenceCurve-class.html')" style="text-decoration: underline; color: blue; cursor: hand">InfluenceCurve-class</a></code>, <code><a onclick="findlink('distrMod', 'RiskType-class.html')" style="text-decoration: underline; color: blue; cursor: hand">RiskType-class</a></code></p>
 
 
 <h3>Examples</h3>

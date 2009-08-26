@@ -10,7 +10,7 @@
 }
 \usage{
 roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L, 
-       fsCor = TRUE, returnIC = FALSE, mad0 = 1e-4)
+       fsCor = TRUE, returnIC = FALSE, mad0 = 1e-4, na.rm = TRUE)
 }
 \arguments{
   \item{x}{ vector \code{x} of data values, may also be a matrix or data.frame
@@ -29,6 +29,7 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
   \item{fsCor}{ logical: perform finite-sample correction. See function \code{\link{finiteSampleCorrection}}. }
   \item{returnIC}{ logical: should IC be returned. See details below. }
   \item{mad0}{ scale estimate used if computed MAD is equal to zero}
+  \item{na.rm}{logical: if  \code{TRUE}, the estimator is evaluated at \code{complete.cases(x)}.}
 }
 \details{
   Computes the optimally robust estimator for location with scale specified,

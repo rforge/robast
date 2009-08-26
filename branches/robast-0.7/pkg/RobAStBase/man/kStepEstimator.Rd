@@ -1,35 +1,35 @@
 \name{kStepEstimator}
 \alias{kStepEstimator}
-\alias{kStepEstimator-methods}
-\alias{kStepEstimator,numeric,IC,numeric-method}
-\alias{kStepEstimator,matrix,IC,numeric-method}
-\alias{kStepEstimator,numeric,IC,Estimate-method}
-\alias{kStepEstimator,matrix,IC,Estimate-method}
 
-\title{Generic function for the computation of k-step estimates}
+\title{Function for the computation of k-step estimates}
 \description{
-  Generic function for the computation of k-step estimates.
+  Function for the computation of k-step estimates.
 }
 \usage{
-kStepEstimator(x, IC, start, ...)
-
-\S4method{kStepEstimator}{numeric,IC,numeric}(x, IC, start, steps = 1L, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-\S4method{kStepEstimator}{matrix,IC,numeric}(x, IC, start, steps = 1L, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-\S4method{kStepEstimator}{numeric,IC,Estimate}(x, IC, start, steps = 1L, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-\S4method{kStepEstimator}{matrix,IC,Estimate}(x, IC, start, steps = 1L, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
+kStepEstimator(x, IC, start, steps = 1L,
+      useLast = getRobAStBaseOption("kStepUseLast"),
+      withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+      IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+      na.rm = TRUE, ...)
 }
 \arguments{
   \item{x}{ sample }
   \item{IC}{ object of class \code{"IC"} }
-  \item{start}{ initial estimate }
+  \item{start}{ initial estimate (for full parameter,i.e. in dimension \eqn{k} respective
+   joint length of main and nuisance part of the parameter):
+   either a numerical value, or an object of class \code{"Estimate"} or
+   a function producing either a numerical value, or an object of class \code{"Estimate"}
+   when evaluated at \code{x,...}}
   \item{steps}{ integer: number of steps }
   \item{useLast}{ which parameter estimate (initial estimate or
     k-step estimate) shall be used to fill the slots \code{pIC},
     \code{asvar} and \code{asbias} of the return value. }
+  \item{withUpdateInKer}{if there is a non-trivial trafo in the model with matrix \eqn{D}, shall
+  the parameter be updated on \eqn{{\rm ker}(D)}{ker(D)}?}
+  \item{IC.UpdateInKer}{if there is a non-trivial trafo in the model with matrix \eqn{D},
+  the IC to be used for this; if \code{NULL} the result of \code{getboundedIC(L2Fam,D)} is taken;
+  this IC will then be projected onto \eqn{{\rm ker}(D)}{ker(D)}.}
+  \item{na.rm}{logical: if  \code{TRUE}, the estimator is evaluated at \code{complete.cases(x)}.}
   \item{...}{ additional parameters }
 }
 \details{
@@ -56,24 +56,15 @@ kStepEstimator(x, IC, start, ...)
   based on the k-step estimate.
 }
 \value{Object of class \code{"kStepEstimate"}.}
-\section{Methods}{
-\describe{
-  \item{x = "numeric", IC = "IC", start = "numeric"}{ 
-    univariate samples. }
-  \item{x = "matrix", IC = "IC", start = "numeric"}{ 
-    multivariate samples. }
-  \item{x = "matrix", IC = "IC", start = "Estimate"}{ 
-    multivariate samples. }
-  \item{x = "matrix", IC = "IC", start = "Estimate"}{ 
-    multivariate samples. }
-}}
+
 \references{
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 }
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de},\cr
+        Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
 \seealso{\code{\link{IC-class}}, \code{\link{kStepEstimate-class}} }
 %\examples{}

@@ -17,7 +17,8 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             if(is(neighbor, "ContNeighborhoood")){
                 res.c <- getInfRobIC(L2deriv = L2deriv, risk = asCov(), 
                          neighbor = ContNeighborhood(radius = neighbor@radius),  
-                         Finfo = Finfo, trafo = trafo, verbose = FALSE)
+                         Finfo = Finfo, trafo = trafo,
+                         verbose = getRobAStBaseOption("all.verbose"))
                 res$risk <- res.c$risk
             }
             Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,  

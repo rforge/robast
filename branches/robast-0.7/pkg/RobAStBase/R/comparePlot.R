@@ -9,7 +9,8 @@ setMethod("comparePlot", signature("IC","IC"),
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
-             lab.pts = NULL, lab.font = NULL){
+             lab.pts = NULL, lab.font = NULL,
+             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE){
 
         xc1 <- as.character(deparse(match.call(call = sys.call(sys.parent(1)))$obj1))
         xc2 <- as.character(deparse(match.call(call = sys.call(sys.parent(1)))$obj2))
@@ -245,17 +246,20 @@ setMethod("comparePlot", signature("IC","IC"),
 
         if(!is.null(data)){
                n <- if(!is.null(dim(data))) nrow(data) else length(data)
-               oN <- 1:n
-               if (n==length(data)) {oN <- order(data); data <- sort(data)}
+               oN01 <- oN02 <- oN03 <- oN04 <- NULL
+               if(is.null(which.lbs))
+                  which.lbs <- 1:n
+               which.lbs0 <- (1:n) %in% which.lbs
+               which.lbx <- rep(which.lbs0, length.out=length(data))
+               data0 <- data[which.lbx]
+               n <- if(!is.null(dim(data0))) nrow(data0) else length(data0)
+               oN <- (1:n)[which.lbs0]
 
                cex.pts <- rep(cex.pts, length.out=ncomp)
                col.pts <- rep(col.pts, length.out=ncomp)
                pch.pts <- matrix(rep(pch.pts, length.out=ncomp*n),n,ncomp)
                jitter.fac <- rep(jitter.fac, length.out=ncomp)
                with.lab <- rep(with.lab, length.out=ncomp)
-               lab.pts <- if(is.null(lab.pts))
-                             matrix(paste(rep(oN,ncomp)),n,ncomp)
-                          else matrix(rep(lab.pts, length.out = ncomp*n), n, ncomp)
                lab.font <- rep(lab.font, length.out=ncomp)
 
 
@@ -269,22 +273,80 @@ setMethod("comparePlot", signature("IC","IC"),
                         absInfo.f <- t(IC1) %*% QF %*% IC1
                         return(sapply(x, absInfo.f@Map[[1]]))}
 
+
                aI1 <- absInfoEval(x=data,object=obj1)
                aI2 <- absInfoEval(x=data,object=obj2)
                aI3 <- if(is.null(obj3)) NULL else absInfoEval(x=data,object=obj3)
                aI4 <- if(is.null(obj4)) NULL else absInfoEval(x=data,object=obj4)
+
+
+               aI10 <- aI1[which.lbs]
+               aI20 <- aI2[which.lbs]
+               aI30 <- if(is.null(obj3)) NULL else aI3[which.lbs]
+               aI40 <- if(is.null(obj4)) NULL else aI4[which.lbs]
+
+               data01 <- data02 <- data03 <- data04 <- data0
+
+               if (n==length(data0)) {
+                   oN1 <-  order(aI10)
+                   oN2 <-  order(aI20)
+                   oN3 <-  if(is.null(obj3)) NULL else order(aI30)
+                   oN4 <-  if(is.null(obj4)) NULL else order(aI40)
+
+                   oN01 <- order(aI1)
+                   oN01 <- oN01[oN2 %in% which.lbs]
+                   data01 <- data0[oN1]
+                   oN02 <- order(aI2)
+                   oN02 <- oN01[oN02 %in% which.lbs]
+                   data02 <- data0[oN2]
+                   if(!is.null(obj3)){
+                     oN03 <- order(aI3)
+                     oN03 <- oN01[oN03 %in% which.lbs]
+                     data03 <- data0[oN3]
+                   }
+                   if(!is.null(obj4)){
+                     oN04 <- order(aI4)
+                     oN04 <- oN01[oN04 %in% which.lbs]
+                     data04 <- data0[oN4]
+                   }
+                   if(!is.null(which.Order)){
+                       oN1 <- oN01[which.Order]
+                       oN2 <- oN02[which.Order]
+                       data01 <- data[oN1]
+                       data02 <- data[oN2]
+                       aI10 <- aI1[oN1]
+                       aI20 <- aI2[oN2]
+                       if(!is.null(obj3)){
+                           oN3 <- oN03[which.Order]
+                           data03 <- data[oN3]
+                           aI30 <- aI1[oN3]
+                       }
+                       if(!is.null(obj4)){
+                           oN4 <- oN04[which.Order]
+                           data04 <- data[oN4]
+                           aI40 <- aI4[oN4]
+                       }
+                       n <- length(oN1)
+                   }
+               }
+               if(is.null(lab.pts)){
+                    lab.pts <- matrix(paste(c(oN1,oN2)),n,2)
+                    if(is.null(obj3)) lab.pts <- cbind(lab.pts, paste(oN3))
+                    if(is.null(obj4)) lab.pts <- cbind(lab.pts, paste(oN4))
+               }else
+                  lab.pts <- matrix(rep(lab.pts, length.out = ncomp*n), n, ncomp)
 
                dots.points <- dots
                dots.points$col <- dots.points$cex <- dots.points$pch <- NULL
 
 
                pL <- substitute({
-                   ICy1 <- sapply(y0,IC1@Map[[indi]])
-                   ICy2 <- sapply(y0,IC2@Map[[indi]])
+                   ICy1 <- sapply(y01,IC1@Map[[indi]])
+                   ICy2 <- sapply(y02,IC2@Map[[indi]])
                    if(!is.null(obj30))
-                      ICy3 <- sapply(y0,IC3@Map[[indi]])
+                      ICy3 <- sapply(y03,IC3@Map[[indi]])
                    if(!is.null(obj40))
-                      ICy3 <- sapply(y0,IC4@Map[[indi]])
+                      ICy3 <- sapply(y04,IC4@Map[[indi]])
 
                    if(is(e1, "DiscreteDistribution")){
                       ICy1 <- jitter(ICy1, factor = jitter.fac0[1])
@@ -294,32 +356,33 @@ setMethod("comparePlot", signature("IC","IC"),
                       if(!is.null(obj40))
                           ICy4 <- jitter(ICy4, factor = jitter.fac0[4])
                    }
-                   do.call(points, args=c(list(y0, ICy1, cex = log(aI10+1)*3*cex0[1],
+                   do.call(points, args=c(list(y01, ICy1, cex = log(aI10+1)*3*cex0[1],
                                    col = col0[1], pch = pch0[,1]), dwo0))
-                   do.call(points, args=c(list(y0, ICy2, cex = log(aI20+1)*3*cex0[2],
+                   do.call(points, args=c(list(y02, ICy2, cex = log(aI20+1)*3*cex0[2],
                                    col = col0[2], pch = pch0[,2]), dwo0))
                    if(!is.null(obj30))
-                       do.call(points, args=c(list(y0, ICy3, cex = log(aI30+1)*3*cex0[3],
+                       do.call(points, args=c(list(y03, ICy3, cex = log(aI30+1)*3*cex0[3],
                                    col = col0[3], pch = pch0[,3]), dwo0))
                    if(!is.null(obj40))
-                       do.call(points, args=c(list(y0, ICy4, cex = log(aI40+1)*3*cex0[4],
+                       do.call(points, args=c(list(y04, ICy4, cex = log(aI40+1)*3*cex0[4],
                                    col = col0[4], pch = pch0[,4]), dwo0))
                    if(with.lab0){
-                      text(x = y0, y = ICy1, labels = lab.pts0[,1],
-                           cex = log(aI10+1)*1.5*cex0[1], col = col0[1])
-                      text(x = y0, y = ICy2, labels = lab.pts0[,2],
-                           cex = log(aI20+1)*1.5*cex0[2], col = col0[2])
+                      text(x = y01, y = ICy1, labels = lab.pts0[,1],
+                           cex = log(aI10s+1)*1.5*cex0[1], col = col0[1])
+                      text(x = y02, y = ICy2, labels = lab.pts0[,2],
+                           cex = log(aI20s+1)*1.5*cex0[2], col = col0[2])
                       if(!is.null(obj30))
-                          text(x = y0, y = ICy3, labels = lab.pts0[,3],
-                               cex = log(aI30+1)*1.5*cex0[3], col = col0[3])
+                          text(x = y03, y = ICy3, labels = lab.pts0[,3],
+                               cex = log(aI30s+1)*1.5*cex0[3], col = col0[3])
                       if(!is.null(obj40))
-                          text(x = y0, y = ICy4, labels = lab.pts0[,4],
-                               cex = log(aI40+1)*1.5*cex0[4], col = col0[4])
+                          text(x = y04, y = ICy4, labels = lab.pts0[,4],
+                               cex = log(aI40s+1)*1.5*cex0[4], col = col0[4])
                    }
                    pL0
-                   }, list(pL0 = pL, y0 = data, aI10 = aI1, aI20 = aI2,
-                           aI30 = aI3, aI40 = aI4, obj10 = obj1, obj20 = obj2,
-                           obj30 = obj3, obj40 = obj4,
+                   }, list(pL0 = pL,
+                           y01 = data01, y02 = data02, y03 = data03, y04 = data04,
+                           aI10s = aI10, aI20s = aI20, aI30s = aI30, aI40s = aI40,
+                           obj10 = obj1, obj20 = obj2, obj30 = obj3, obj40 = obj4,
                            dwo0 = dots.points, cex0 = cex.pts, pch0 = pch.pts,
                            col0 = col.pts, with.lab0 = with.lab,
                            lab.pts0 = lab.pts, n0 = n,
@@ -377,6 +440,6 @@ setMethod("comparePlot", signature("IC","IC"),
             mtext(text = sub, side = 1, cex = cex.sub, adj = .5,
                   outer = TRUE, line = -1.6, col = col.sub)
 
-
+        if(return.Order) return(list(obj1=oN01,obj2=oN02,obj3=oN03,obj4=oN04))
         invisible()
     })

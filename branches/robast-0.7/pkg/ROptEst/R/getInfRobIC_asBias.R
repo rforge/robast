@@ -5,7 +5,8 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    risk = "asBias", 
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, symm, trafo, maxiter, 
-             tol, warn, Finfo, verbose = FALSE, ...){
+             tol, warn, Finfo,
+             verbose = getRobAStBaseOption("all.verbose"), ...){
         erg <- minmaxBias(L2deriv = L2deriv, neighbor = neighbor, 
                    biastype = biastype(risk), symm = symm, 
                    trafo = trafo, maxiter = maxiter, 
@@ -25,7 +26,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, z.start, 
-             A.start, Finfo, trafo, maxiter, tol, warn, verbose = FALSE, ...){
+             A.start, Finfo, trafo, maxiter, tol, warn,
+             verbose = getRobAStBaseOption("all.verbose"), ...){
 
         k <- ncol(trafo); p <- nrow(trafo)
         if(is(neighbor,"TotalVarNeighborhood") && p>1)
@@ -165,7 +167,7 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, normtype, Distr, 
              z.start, A.start,  z.comp, A.comp, Finfo, trafo, maxiter,  tol,
-             verbose = FALSE){
+             verbose = getRobAStBaseOption("all.verbose")){
 
         DA.comp <- abs(trafo) %*% A.comp != 0
         eerg <- .LowerCaseMultivariate(L2deriv, neighbor, biastype,
@@ -226,7 +228,7 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, normtype, Distr,
              z.start, A.start,  z.comp, A.comp, Finfo, trafo, maxiter,  tol,
-             verbose = FALSE){
+             verbose = getRobAStBaseOption("all.verbose")){
 
         eerg <- .LowerCaseMultivariateTV(L2deriv = L2deriv,
              neighbor = neighbor, biastype = biastype,

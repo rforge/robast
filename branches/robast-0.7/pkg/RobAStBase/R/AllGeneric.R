@@ -85,14 +85,14 @@ if(!isGeneric("clipUp")){
 if(!isGeneric("clipUp<-")){
     setGeneric("clipUp<-", function(object, value) standardGeneric("clipUp<-"))
 }
-if(!isGeneric("oneStepEstimator")){
-    setGeneric("oneStepEstimator", 
-        function(x, IC, start, ...) standardGeneric("oneStepEstimator"))
-}
-if(!isGeneric("kStepEstimator")){
-    setGeneric("kStepEstimator", 
-        function(x, IC, start, ...) standardGeneric("kStepEstimator"))
-}
+#if(!isGeneric("oneStepEstimator")){
+#    setGeneric("oneStepEstimator",
+#        function(x, IC, start, ...) standardGeneric("oneStepEstimator"))
+#}
+#if(!isGeneric("kStepEstimator")){
+#    setGeneric("kStepEstimator",
+#        function(x, IC, start, ...) standardGeneric("kStepEstimator"))
+#}
 if(!isGeneric("locMEstimator")){
     setGeneric("locMEstimator", function(x, IC, ...) standardGeneric("locMEstimator"))
 }
@@ -189,4 +189,8 @@ if(!isGeneric("cutoff.quantile<-")){
 if(!isGeneric("ddPlot")){
     setGeneric("ddPlot", function(data, dist.x, dist.y, cutoff.x, cutoff.y,...)
                                   standardGeneric("ddPlot"))
+}
+if(!isGeneric("kStepEstimator.start")){
+    setGeneric("kStepEstimator.start",
+                function(start,...) standardGeneric("kStepEstimator.start"))
 }

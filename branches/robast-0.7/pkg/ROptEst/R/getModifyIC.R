@@ -4,17 +4,18 @@
 
 setMethod("getModifyIC", signature(L2FamIC = "L2ParamFamily", 
                                    neighbor = "Neighborhood", risk = "asRisk"),
-    function(L2FamIC, neighbor, risk){
+    function(L2FamIC, neighbor, risk, ...){
         modIC <- function(L2Fam, IC){}
-        body(modIC) <- substitute({ infMod <- InfRobModel(L2Fam, nghb)
-                                    optIC(infMod, R) },
+        body(modIC) <- substitute({ verbose <- getRobAStBaseOption("all.verbose")
+                                    infMod <- InfRobModel(L2Fam, nghb)
+                                    optIC(infMod, risk=R, verbose=verbose, ...) },
                                   list(nghb = neighbor, R = risk))
         return(modIC)
     })
 
 setMethod("getModifyIC", signature(L2FamIC = "L2LocationFamily", 
                                    neighbor = "UncondNeighborhood", risk = "asGRisk"),
-    function(L2FamIC, neighbor, risk){
+    function(L2FamIC, neighbor, risk, ...){
         modIC <- function(L2Fam, IC){
             D <- distribution(eval(CallL2Fam(IC)))
             if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), class(D))){
@@ -35,7 +36,7 @@ setMethod("getModifyIC", signature(L2FamIC = "L2LocationFamily",
 
 setMethod("getModifyIC", signature(L2FamIC = "L2ScaleFamily", 
                                    neighbor = "ContNeighborhood", risk = "asGRisk"),
-    function(L2FamIC, neighbor, risk){
+    function(L2FamIC, neighbor, risk, ...){
         modIC <- function(L2Fam, IC){
             ICL2Fam <- eval(CallL2Fam(IC))
             if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), class(distribution(ICL2Fam)))){
@@ -70,7 +71,7 @@ setMethod("getModifyIC", signature(L2FamIC = "L2ScaleFamily",
 
 setMethod("getModifyIC", signature(L2FamIC = "L2ScaleFamily", 
                                    neighbor = "TotalVarNeighborhood", risk = "asGRisk"),
-    function(L2FamIC, neighbor, risk){
+    function(L2FamIC, neighbor, risk, ...){
         modIC <- function(L2Fam, IC){
             ICL2Fam <- eval(CallL2Fam(IC))
             if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), class(distribution(ICL2Fam)))){
@@ -105,7 +106,7 @@ setMethod("getModifyIC", signature(L2FamIC = "L2ScaleFamily",
 
 setMethod("getModifyIC", signature(L2FamIC = "L2LocationScaleFamily", 
                                    neighbor = "ContNeighborhood", risk = "asGRisk"),
-    function(L2FamIC, neighbor, risk){
+    function(L2FamIC, neighbor, risk, ...){
         modIC <- function(L2Fam, IC){
             ICL2Fam <- eval(CallL2Fam(IC))
             if(is(L2Fam, "L2LocationScaleFamily") && is(distribution(L2Fam), class(distribution(ICL2Fam)))){

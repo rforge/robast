@@ -1,10 +1,10 @@
 <html><head><title>Optimally robust estimation for location and/or scale</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>rowRoblox and colRoblox(RobLox)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>rowRoblox and colRoblox(RobLox)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   rowRoblox">
 <param name="keyword" value="R:   colRoblox">
 <param name="keyword" value=" Optimally robust estimation for location and/or scale">
@@ -29,9 +29,9 @@ respectively.
 
 <pre>
 rowRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
-          fsCor = TRUE, mad0 = 1e-4)
+          fsCor = TRUE, mad0 = 1e-4, na.rm = TRUE)
 colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
-          fsCor = TRUE, mad0 = 1e-4)
+          fsCor = TRUE, mad0 = 1e-4, na.rm = TRUE)
 </pre>
 
 
@@ -40,40 +40,44 @@ colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
 <table summary="R argblock">
 <tr valign="top"><td><code>x</code></td>
 <td>
-matrix or data.frame of (numeric) data values. </td></tr>
+ matrix or data.frame of (numeric) data values. </td></tr>
 <tr valign="top"><td><code>mean</code></td>
 <td>
-specified mean. See details below. </td></tr>
+ specified mean. See details below. </td></tr>
 <tr valign="top"><td><code>sd</code></td>
 <td>
-specified standard deviation which has to be positive. 
+ specified standard deviation which has to be positive. 
 See also details below. </td></tr>
 <tr valign="top"><td><code>eps</code></td>
 <td>
-positive real (0 &lt; <code>eps</code> &lt;= 0.5): amount of gross errors. 
+ positive real (0 &lt; <code>eps</code> &lt;= 0.5): amount of gross errors. 
 See details below. </td></tr>
 <tr valign="top"><td><code>eps.lower</code></td>
 <td>
-positive real (0 &lt;= <code>eps.lower</code> &lt;= <code>eps.upper</code>): 
+ positive real (0 &lt;= <code>eps.lower</code> &lt;= <code>eps.upper</code>): 
 lower bound for the amount of gross errors. See details below. </td></tr>
 <tr valign="top"><td><code>eps.upper</code></td>
 <td>
-positive real (<code>eps.lower</code> &lt;= <code>eps.upper</code> &lt;= 0.5): 
+ positive real (<code>eps.lower</code> &lt;= <code>eps.upper</code> &lt;= 0.5): 
 upper bound for the amount of gross errors. See details below. </td></tr>
 <tr valign="top"><td><code>initial.est</code></td>
 <td>
-initial estimate for <code>mean</code> and/or <code>sd</code>. If missing 
+ initial estimate for <code>mean</code> and/or <code>sd</code>. If missing 
 median and/or MAD are used. </td></tr>
 <tr valign="top"><td><code>k</code></td>
 <td>
-positive integer. k-step is used to compute the optimally robust estimator.</td></tr>
+ positive integer. k-step is used to compute the optimally robust estimator.</td></tr>
 <tr valign="top"><td><code>fsCor</code></td>
 <td>
-logical: perform finite-sample correction. See function <code><a href="finiteSampleCorrection.html">finiteSampleCorrection</a></code>. </td></tr>
+ logical: perform finite-sample correction. See function <code></code>. </td></tr>
 <tr valign="top"><td><code>mad0</code></td>
 <td>
-scale estimate used if computed MAD is equal to zero</td></tr>
+ scale estimate used if computed MAD is equal to zero</td></tr>
+<tr valign="top"><td><code>na.rm</code></td>
+<td>
+logical: if  <code>TRUE</code>, the estimator is evaluated at <code>complete.cases(x)</code>.</td></tr>
 </table>
+
 
 <h3>Details</h3>
 
@@ -82,7 +86,7 @@ Computes the optimally robust estimator for location with scale specified,
 scale with location specified, or both if neither is specified. The computation
 uses a k-step construction with an appropriate initial estimate for location
 or scale or location and scale, respectively. Valid candidates are e.g. 
-median and/or MAD (default) as well as Kolmogorov(-Smirnov) or Cram'er von 
+median and/or MAD (default) as well as Kolmogorov(-Smirnov) or Cram\'er von 
 Mises minimum distance estimators; cf. Rieder (1994) and Kohl (2005). In case 
 package Biobase from Bioconductor is installed as is suggested, 
 median and/or MAD are computed using function <code>rowMedians</code>.
@@ -135,14 +139,12 @@ If <code>eps = 0</code>, mean and/or sd are computed.
 
 <h3>Value</h3>
 
-<p>
-Object of class <code>"kStepEstimate"</code>.</p>
+<p>Object of class <code>"kStepEstimate"</code>. </p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>References</h3>
@@ -163,9 +165,7 @@ Extended version: <a href="http://www.stamats.de/RRlong.pdf">http://www.stamats.
 
 <h3>See Also</h3>
 
-<p>
-<code><a href="roblox.html">roblox</a></code>, <code><a onclick="findlink('RobAStBase', 'kStepEstimate-class.html')" style="text-decoration: underline; color: blue; cursor: hand">kStepEstimate-class</a></code>
-</p>
+<p><code></code>, <code><a onclick="findlink('RobAStBase', 'kStepEstimate-class.html')" style="text-decoration: underline; color: blue; cursor: hand">kStepEstimate-class</a></code> </p>
 
 
 <h3>Examples</h3>
@@ -207,7 +207,5 @@ location.href = link;
 }
 </script>
 
-
 <hr><div align="center">[Package <em>RobLox</em> version 0.7 <a href="00Index.html">Index</a>]</div>
-
 </body></html>

@@ -1,30 +1,34 @@
 \name{oneStepEstimator}
 \alias{oneStepEstimator}
-\alias{oneStepEstimator-methods}
-\alias{oneStepEstimator,numeric,InfluenceCurve-method}
-\alias{oneStepEstimator,matrix,InfluenceCurve-method}
-\alias{oneStepEstimator,numeric,InfluenceCurve,ANY-method}
-\alias{oneStepEstimator,matrix,InfluenceCurve,ANY-method}
 
-\title{Generic function for the computation of one-step estimates}
+\title{Function for the computation of one-step estimates}
 \description{
-  Generic function for the computation of one-step estimates.
+  Function for the computation of one-step estimates.
 }
 \usage{
-oneStepEstimator(x, IC, start, ...)
-
-\S4method{oneStepEstimator}{numeric,InfluenceCurve,ANY}(x, IC, start, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-\S4method{oneStepEstimator}{matrix,InfluenceCurve,ANY}(x, IC, start, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
+oneStepEstimator(x, IC, start,
+      useLast = getRobAStBaseOption("kStepUseLast"),
+      withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+      IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+      na.rm = TRUE, ...)
 }
 \arguments{
   \item{x}{ sample }
   \item{IC}{ object of class \code{"InfluenceCurve"} }
-  \item{start}{ initial estimate }
+  \item{start}{ initial estimate (for full parameter,i.e. in dimension \eqn{k} respective
+   joint length of main and nuisance part of the parameter):
+   either a numerical value, or an object of class \code{"Estimate"} or
+   a function producing either a numerical value, or an object of class \code{"Estimate"}
+   when evaluated at \code{x,...}}
   \item{useLast}{ which parameter estimate (initial estimate or
     one-step estimate) shall be used to fill the slots \code{pIC},
     \code{asvar} and \code{asbias} of the return value. }
+  \item{withUpdateInKer}{if there is a non-trivial trafo in the model with matrix \eqn{D}, shall
+  the parameter be updated on \eqn{{\rm ker}(D)}{ker(D)}?}
+  \item{IC.UpdateInKer}{if there is a non-trivial trafo in the model with matrix \eqn{D},
+  the IC to be used for this; if \code{NULL} the result of \code{getboundedIC(L2Fam,D)} is taken;
+  this IC will then be projected onto \eqn{{\rm ker}(D)}{ker(D)}.}
+  \item{na.rm}{logical: if  \code{TRUE}, the estimator is evaluated at \code{complete.cases(x)}.}
   \item{...}{ additional arguments }
 }
 \details{
@@ -55,20 +59,15 @@ oneStepEstimator(x, IC, start, ...)
   based on the one-step estimate.
 }
 \value{Object of class \code{"kStepEstimate"}}
-\section{Methods}{
-\describe{
-  \item{x = "numeric", IC = "InfluenceCurve", start = "ANY"}{ 
-    univariate samples. }
-  \item{x = "matrix", IC = "InfluenceCurve", start = "ANY"}{ 
-    multivariate samples. }
-}}
+
 \references{
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 }
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de},\cr
+        Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
 \seealso{\code{\link{InfluenceCurve-class}}, \code{\link{kStepEstimate-class}} }
 %\examples{}

@@ -14,7 +14,8 @@
              mfColRow = TRUE, to.draw.arg = NULL)
 \S4method{plot}{IC,numeric}(x, y, ..., cex.pts = 1,
                             col.pts = par("col"), pch.pts = 1, jitter.fac = 1,
-                            with.lab = FALSE, lab.pts = NULL, lab.font = NULL)
+                            with.lab = FALSE, lab.pts = NULL, lab.font = NULL,
+             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE)
 }
 \arguments{
   \item{x}{object of class \code{"IC"}: IC to be plotted }
@@ -59,6 +60,20 @@
   \item{lab.font}{font to be used for labels}
   \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
                     for plotting points of the second argument in a jittered fashion.}
+  \item{which.lbs}{either an integer vector with the indices of the observations
+          to be plotted into graph or \code{NULL} --- then no observation is excluded}
+  \item{which.Order}{we order the observations according to the norm given by
+           \code{normtype(object)}; then \code{which.Order}
+           either is an integer vector with the indices of the \emph{ordered}
+           observations (remaining after a possible reduction by argument \code{which.lbs})
+           to be plotted into graph or \code{NULL} --- then no (further) observation
+           is excluded.}
+  \item{return.Order}{logical; if \code{TRUE}, an order vector
+    is returned; more specifically, the order of the (remaining) observations
+    given by their original index is returned (remaining means: after a possible
+    reduction by argument \code{which.lbs}, and ordering is according to the norm given by
+           \code{normtype(object)});
+   othervise we return \code{invisible()} as usual.}
   \item{\dots}{further parameters for \code{plot}}
 }
 \details{
@@ -120,8 +135,9 @@ plot(IC2, main = TRUE, panel.first= grid(),
 data <- r(N)(30)
 plot(IC2, data, panel.first= grid(),
      ylim = c(-3,3,-1,3), xlim=c(-2,3),
-     pch.pts = 1:2, col.pts="green",
-     with.lab = TRUE)
+     cex.pts = 3, pch.pts = 1:2, col.pts="green",
+     with.lab = TRUE, which.lbs = c(1:4,15:20),
+     which.Order = 1:6, return.Order = TRUE)
 }
 \keyword{methods}
 \keyword{distribution}

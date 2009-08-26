@@ -11,9 +11,9 @@
 }
 \usage{
 rowRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
-          fsCor = TRUE, mad0 = 1e-4)
+          fsCor = TRUE, mad0 = 1e-4, na.rm = TRUE)
 colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
-          fsCor = TRUE, mad0 = 1e-4)
+          fsCor = TRUE, mad0 = 1e-4, na.rm = TRUE)
 }
 \arguments{
   \item{x}{ matrix or data.frame of (numeric) data values. }
@@ -31,6 +31,7 @@ colRoblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
   \item{k}{ positive integer. k-step is used to compute the optimally robust estimator.}
   \item{fsCor}{ logical: perform finite-sample correction. See function \code{\link{finiteSampleCorrection}}. }
   \item{mad0}{ scale estimate used if computed MAD is equal to zero}
+  \item{na.rm}{logical: if  \code{TRUE}, the estimator is evaluated at \code{complete.cases(x)}.}
 }
 \details{
   Computes the optimally robust estimator for location with scale specified,

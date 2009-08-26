@@ -116,7 +116,7 @@ plot(IC.traf.class)
 checkIC(IC.traf.class)
 
 ### Hampel solution *=c
-IC.traf.CV.H <- optIC(model = N1R.traf, risk = asHampel(bound = 3),verbose=TRUE)
+IC.traf.CV.H <- optIC(model = N1R.traf, risk = asHampel(bound = 8),verbose=TRUE)
 plot(IC.traf.CV.H)
 checkIC(IC.traf.CV.H)
 
@@ -172,6 +172,13 @@ IC2 <- radiusMinimaxIC(L2Fam=N1, neighbor=ContNeighborhood(),risk=asMSE(),
                        loRad=0.1, upRad=1.0) 
 (est2 <- oneStepEstimator(x, IC2, est0))
 
+########### again with trafo
+N1R.traf <- N1.Rob; trafo(N1R.traf) <- tfct
+IC1.traf <- optIC(model = N1R.traf, risk = asMSE())
+(est1.traf <- kStepEstimator(x, IC1.traf, est0, steps = 3))
+# or simply
+(est2.traf <- oneStepEstimator(x, IC1.traf, est0))
+
 
 ## a simple example
 library(MASS)
@@ -191,3 +198,10 @@ estimate(ROest2)
 ## confidence intervals
 confint(ROest1, symmetricBias())
 confint(ROest2, symmetricBias())
+
+########### again with trafo
+N1.traf <- N1; trafo(N1.traf) <- tfct
+system.time(ROest1.traf <- roptest(chem, N1.traf, eps.upper = 0.1, steps = 3L,
+                              initial.est = initial.est, useLast = TRUE))
+estimate(ROest1.traf)
+confint(ROest1.traf, symmetricBias())

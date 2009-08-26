@@ -4,7 +4,7 @@
 setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
     function(model, risk, z.start = NULL, A.start = NULL, upper = 1e4,
              lower = 1e-4, maxiter = 50, tol = .Machine$double.eps^0.4,
-             warn = TRUE, noLow = FALSE, verbose = FALSE, ...){
+             warn = TRUE, noLow = FALSE, verbose = getRobAStBaseOption("all.verbose"), ...){
         L2derivDim <- numberOfMaps(model@center@L2deriv)
         ow <- options("warn")
         on.exit(options(ow))
@@ -54,7 +54,8 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                 res$info <- c("optIC", res$info)
                 res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                      neighbor = model@neighbor, 
-                                                     risk = risk))
+                                                     risk = risk, verbose = verbose,
+                                                     ...))
                 return(generateIC(model@neighbor, model@center, res))
             }else{
                 stop("not yet implemented")
@@ -89,7 +90,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
                   res$info <- c("optIC", res$info)
                res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                     neighbor = model@neighbor, 
-                                                    risk = risk))
+                                                    risk = risk, verbose = verbose))
                return(generateIC(TotalVarNeighborhood(radius = model@neighbor@radius), model@center, res))
            }    
         }else{
@@ -104,7 +105,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
 setMethod("optIC", signature(model = "FixRobModel", risk = "fiUnOvShoot"),
     function(model, risk, sampleSize, upper = 1e4, lower = 1e-4, maxiter = 50,
              tol = .Machine$double.eps^0.4, warn = TRUE, Algo = "A", 
-             cont = "left", verbose = FALSE){
+             cont = "left", verbose = getRobAStBaseOption("all.verbose")){
         ow <- options("warn")
         on.exit(options(ow))
         if(!identical(all.equal(sampleSize, trunc(sampleSize)), TRUE))
@@ -122,7 +123,7 @@ setMethod("optIC", signature(model = "FixRobModel", risk = "fiUnOvShoot"),
                 res$info <- c("optIC", res$info)
             res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                  neighbor = model@neighbor, 
-                                                 risk = risk))
+                                                 risk = risk, verbose = verbose))
             return(generateIC(TotalVarNeighborhood(radius = model@neighbor@radius), model@center, res))
         }else{
             stop("restricted to 1-dimensional parametric models")

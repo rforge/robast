@@ -1,41 +1,33 @@
-<html><head><title>Generic function for the computation of one-step estimates</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<html><head><title>Function for the computation of one-step estimates</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>oneStepEstimator(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>oneStepEstimator(RobAStBase)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   oneStepEstimator">
-<param name="keyword" value="R:   oneStepEstimator-methods">
-<param name="keyword" value="R:   oneStepEstimator,numeric,InfluenceCurve-method">
-<param name="keyword" value="R:   oneStepEstimator,matrix,InfluenceCurve-method">
-<param name="keyword" value="R:   oneStepEstimator,numeric,InfluenceCurve,ANY-method">
-<param name="keyword" value="R:   oneStepEstimator,matrix,InfluenceCurve,ANY-method">
-<param name="keyword" value=" Generic function for the computation of one-step estimates">
+<param name="keyword" value=" Function for the computation of one-step estimates">
 </object>
 
 
-<h2>Generic function for the computation of one-step estimates</h2>
+<h2>Function for the computation of one-step estimates</h2>
 
 
 <h3>Description</h3>
 
 <p>
-Generic function for the computation of one-step estimates.
+Function for the computation of one-step estimates.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-oneStepEstimator(x, IC, start, ...)
-
-## S4 method for signature 'numeric, InfluenceCurve, ANY':
-oneStepEstimator(x, IC, start, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-## S4 method for signature 'matrix, InfluenceCurve, ANY':
-oneStepEstimator(x, IC, start, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
+oneStepEstimator(x, IC, start,
+      useLast = getRobAStBaseOption("kStepUseLast"),
+      withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+      IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+      na.rm = TRUE, ...)
 </pre>
 
 
@@ -44,22 +36,39 @@ oneStepEstimator(x, IC, start,
 <table summary="R argblock">
 <tr valign="top"><td><code>x</code></td>
 <td>
-sample </td></tr>
+ sample </td></tr>
 <tr valign="top"><td><code>IC</code></td>
 <td>
-object of class <code>"InfluenceCurve"</code> </td></tr>
+ object of class <code>"InfluenceCurve"</code> </td></tr>
 <tr valign="top"><td><code>start</code></td>
 <td>
-initial estimate </td></tr>
+ initial estimate (for full parameter,i.e. in dimension <i>k</i> respective
+joint length of main and nuisance part of the parameter):
+either a numerical value, or an object of class <code>"Estimate"</code> or
+a function producing either a numerical value, or an object of class <code>"Estimate"</code>
+when evaluated at <code>x,...</code></td></tr>
 <tr valign="top"><td><code>useLast</code></td>
 <td>
-which parameter estimate (initial estimate or
+ which parameter estimate (initial estimate or
 one-step estimate) shall be used to fill the slots <code>pIC</code>,
 <code>asvar</code> and <code>asbias</code> of the return value. </td></tr>
+<tr valign="top"><td><code>withUpdateInKer</code></td>
+<td>
+if there is a non-trivial trafo in the model with matrix <i>D</i>, shall
+the parameter be updated on <i>ker(D)</i>?</td></tr>
+<tr valign="top"><td><code>IC.UpdateInKer</code></td>
+<td>
+if there is a non-trivial trafo in the model with matrix <i>D</i>,
+the IC to be used for this; if <code>NULL</code> the result of <code>getboundedIC(L2Fam,D)</code> is taken;
+this IC will then be projected onto <i>ker(D)</i>.</td></tr>
+<tr valign="top"><td><code>na.rm</code></td>
+<td>
+logical: if  <code>TRUE</code>, the estimator is evaluated at <code>complete.cases(x)</code>.</td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-additional arguments </td></tr>
+ additional arguments </td></tr>
 </table>
+
 
 <h3>Details</h3>
 
@@ -97,21 +106,13 @@ based on the one-step estimate.
 
 <h3>Value</h3>
 
-<p>
-Object of class <code>"kStepEstimate"</code></p>
+<p>Object of class <code>"kStepEstimate"</code></p>
 
-<h3>Methods</h3>
-
-<dl>
-<dt>x = "numeric", IC = "InfluenceCurve", start = "ANY"</dt><dd>univariate samples. </dd>
-<dt>x = "matrix", IC = "InfluenceCurve", start = "ANY"</dt><dd>multivariate samples. </dd>
-</dl>
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,<br>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a></p>
 
 
 <h3>References</h3>
@@ -127,12 +128,17 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a href="InfluenceCurve-class.html">InfluenceCurve-class</a></code>, <code><a href="kStepEstimate-class.html">kStepEstimate-class</a></code>
-</p>
+<p><code></code>, <code></code> </p>
 
-
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
 <hr><div align="center">[Package <em>RobAStBase</em> version 0.7 <a href="00Index.html">Index</a>]</div>
-
 </body></html>

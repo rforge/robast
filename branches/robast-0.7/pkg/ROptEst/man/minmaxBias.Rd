@@ -17,23 +17,25 @@
 \usage{
 minmaxBias(L2deriv, neighbor, biastype, ...)
 
-\S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype, symm, trafo, 
-             maxiter, tol, warn, Finfo)
+\S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv,
+     neighbor, biastype, symm, trafo, maxiter, tol, warn, Finfo)
 
-\S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(L2deriv, neighbor, biastype, symm, trafo, 
-             maxiter, tol, warn, Finfo)
+\S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(
+     L2deriv, neighbor, biastype, symm, trafo, maxiter, tol, warn, Finfo)
 
-\S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv, neighbor, biastype, symm, trafo, 
-             maxiter, tol, warn, Finfo)
+\S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,onesidedBias}(
+     L2deriv, neighbor, biastype, symm, trafo, maxiter, tol, warn, Finfo)
 
-\S4method{minmaxBias}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(L2deriv, neighbor, biastype, symm, trafo, 
-             maxiter, tol, warn, Finfo)
+\S4method{minmaxBias}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(
+     L2deriv, neighbor, biastype, symm, trafo, maxiter, tol, warn, Finfo)
 
-\S4method{minmaxBias}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, neighbor, biastype, normtype, Distr, 
-             z.start, A.start,  z.comp, A.comp, Finfo, trafo, maxiter, tol, verbose = FALSE)
+\S4method{minmaxBias}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv,
+     neighbor, biastype, normtype, Distr, z.start, A.start,  z.comp, A.comp,
+     Finfo, trafo, maxiter, tol, verbose = getRobAStBaseOption("all.verbose"))
 
-\S4method{minmaxBias}{RealRandVariable,TotalVarNeighborhood,BiasType}(L2deriv, neighbor, biastype, normtype, Distr,
-             z.start, A.start,  z.comp, A.comp, Finfo, trafo, maxiter, tol, verbose = FALSE)
+\S4method{minmaxBias}{RealRandVariable,TotalVarNeighborhood,BiasType}(L2deriv,
+     neighbor, biastype, normtype, Distr, z.start, A.start,  z.comp, A.comp,
+     Finfo, trafo, maxiter, tol, verbose = getRobAStBaseOption("all.verbose"))
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 

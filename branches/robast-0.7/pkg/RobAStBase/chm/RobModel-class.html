@@ -15,6 +15,8 @@
 <param name="keyword" value="R:   neighbor,RobModel-method">
 <param name="keyword" value="R:   neighbor<-">
 <param name="keyword" value="R:   neighbor<-,RobModel-method">
+<param name="keyword" value="R:   trafo,RobModel,missing-method">
+<param name="keyword" value="R:   trafo<-,RobModel-method">
 <param name="keyword" value=" Robust model">
 </object>
 
@@ -59,6 +61,11 @@ replacement function for slot <code>center</code>. </dd>
 accessor function for slot <code>neighbor</code>. </dd>
 <dt>neighbor&lt;-</dt><dd><code>signature(object = "RobModel")</code>: 
 replacement function for slot <code>neighbor</code>. </dd>
+<dt>trafo</dt><dd><code>signature(object = "RobModel", param = "missing")</code>:
+accessor function for slot <code>trafo</code> of slot <code>center</code>. </dd>
+<dt>trafo&lt;-</dt><dd><code>signature(object = "RobModel")</code>:
+replacement function for slot <code>trafo</code>
+of slot <code>center</code>. </dd>
 </dl>
 
 </p>
