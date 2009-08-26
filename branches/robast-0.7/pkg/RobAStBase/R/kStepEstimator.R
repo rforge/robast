@@ -184,6 +184,9 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
 
         if(is.null(names(theta))) names(theta) <- rownames(Dtau)
         if(is.null(names(u.theta))) names(u.theta) <- colnames(u.theta)
+        dim(theta) <- NULL
+        dim(u.theta) <- NULL
+        
         nuis.idx <- if(is(start,"Estimate")) start@nuis.idx else NULL
         fixed <- if(is(start,"Estimate")) start@fixed else NULL
 
