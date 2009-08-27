@@ -20,7 +20,7 @@ exportClasses("ALEstimate", "kStepEstimate", "MEstimate")
 exportClasses("cutoff")
 exportMethods("show", 
               "plot")
-exportMethods("type", "radius")
+exportMethods("type", "radius", "radius<-")
 exportMethods("name", "name<-", 
               "infoPlot")
 exportMethods("center", "center<-", 

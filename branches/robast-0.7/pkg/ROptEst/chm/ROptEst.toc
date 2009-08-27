@@ -434,7 +434,7 @@
 <param name="Local" value="getModifyIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getModifyIC,L2LocationScaleFamily,ContNeighborhood,asGRisk-method">
+<param name="Name" value="getModifyIC,L2LocationScaleFamily,UncondNeighborhood,asGRisk-method">
 <param name="Local" value="getModifyIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -442,11 +442,7 @@
 <param name="Local" value="getModifyIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getModifyIC,L2ScaleFamily,ContNeighborhood,asGRisk-method">
-<param name="Local" value="getModifyIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getModifyIC,L2ScaleFamily,TotalVarNeighborhood,asGRisk-method">
+<param name="Name" value="getModifyIC,L2ScaleFamily,UncondNeighborhood,asGRisk-method">
 <param name="Local" value="getModifyIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -604,6 +600,26 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="roptest">
 <param name="Local" value="roptest.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="scaleUpdateIC">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="scaleUpdateIC,ContNeighborhood-method">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="scaleUpdateIC,TotalVarNeighborhood-method">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="scaleUpdateIC,UncondNeighborhood-method">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="scaleUpdateIC-methods">
+<param name="Local" value="getModifyIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="updateNorm">

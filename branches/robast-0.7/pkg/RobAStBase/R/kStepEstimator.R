@@ -2,9 +2,9 @@
 ## k-step estimator
 ###############################################################################
 
-### helper function from distrMod:
+### helper functions from distrMod:
 .isUnitMatrix <- distrMod:::.isUnitMatrix
-
+.deleteDim <- distrMod:::.deleteDim
 
 ### no dispatch on top layer -> keep product structure of dependence
 kStepEstimator <- function(x, IC, start, steps = 1L,
@@ -13,18 +13,38 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
                            IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
                            na.rm = TRUE, ...){
 ## save call
-
         es.call <- match.call()
         es.call[[1]] <- as.name("kStepEstimator")
 
 ## get some dimensions
         L2Fam <- eval(CallL2Fam(IC))
         Param <- param(L2Fam)
+
         tf <- trafo(L2Fam,Param)
         Dtau <- tf$mat
         trafoF <- tf$fct
+
+        hasnodim.main <- is.null(dim(main(L2Fam)))
+        hasnodim.nuis <- is.null(dim(nuisance(L2Fam)))
+
         p <- nrow(Dtau)
         k <- ncol(Dtau)
+
+        lmx <- length(main(L2Fam))
+        lnx <- length(nuisance(L2Fam))
+        idx <- 1:lmx
+        nuis.idx <- if(lnx) lmx + 1:lnx else NULL
+
+        var.to.be.c <- ("asCov" %in% names(Risks(IC))) | (lnx == 0)
+
+        fixed <- fixed(L2Fam)
+
+## names of the estimator components
+        par.names  <- names(main(L2Fam))
+        if(lnx)
+           par.names  <- c(par.names, names(nuisance(L2Fam)) )
+        est.names   <- if(.isUnitMatrix(Dtau)) par.names else rownames(Dtau)
+        u.est.names <- par.names
 
 ## check input
         if(!is.integer(steps))
@@ -43,7 +63,8 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
         if(na.rm) x0 <- na.omit(x0)
 
 ### use dispatch here  (dispatch only on start)
-
+        a.var <- if( is(start, "Estimate")) asvar(start) else NULL
+        IC.UpdateInKer.0 <- if(is(start,"ALEstimate")) start@pIC else NULL
         start.val <- kStepEstimator.start(start, x=x0, nrvalues = k, na.rm = na.rm, ...)
 
 
@@ -53,7 +74,8 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
                  else trafoF(u.theta)$fval
 
         ### update - function
-        updateStep <- function(u.theta, theta, IC, L2Fam, Param, withModif = TRUE){
+        updateStep <- function(u.theta, theta, IC, L2Fam, Param,
+                               withModif = TRUE, with.u.var = FALSE){
 
                 IC.c <- as(diag(p) %*% IC@Curve, "EuclRandVariable")
 
@@ -61,27 +83,33 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
                 theta <- theta + rowMeans(evalRandVar(IC.c, x0),
                                           na.rm = na.rm )
 
+#                print(theta)
                 tf <- trafo(L2Fam, Param)
                 Dtau <- tf$mat
-
+                IC.tot.0 <- NULL
+#                print(Dtau)
                 if(!.isUnitMatrix(Dtau)){
                      Dminus <- solve(Dtau, generalized = TRUE)
-                     projtau <- diag(k) - Dminus %*% Dtau
+                     projker <- diag(k) - Dminus %*% Dtau
 
                      IC.tot1 <- Dminus %*% IC.c
                      IC.tot2 <- 0 * IC.tot1
 
-                     if(sum(diag(projtau))>0.5 && ### is EM-D^-D != 0 (i.e. rk D<p)
+                     if(sum(diag(projker))>0.5 && ### is EM-D^-D != 0 (i.e. rk D<p)
                         withUpdateInKer){
                             if(!is.null(IC.UpdateInKer)&&!is(IC.UpdateInKer,"IC"))
                                warning("'IC.UpdateInKer' is not of class 'IC'; we use default instead.")
                             IC.tot2 <- if(is.null(IC.UpdateInKer))
-                                 getBoundedIC(L2Fam, D = projtau) else
-                                 as(projtau %*% IC.UpdateInKer@Curve,
+                                 getBoundedIC(L2Fam, D = projker) else
+                                 as(projker %*% IC.UpdateInKer@Curve,
                                     "EuclRandVariable")
+                            IC.tot.0 <- IC.tot1 + IC.tot2
+                     }else{
+                            IC.tot.0 <- if(!is.null(IC.UpdateInKer.0))
+                              IC.tot1 + as(projker %*% IC.UpdateInKer.0@Curve,
+                                    "EuclRandVariable") else NULL
                      }
                      IC.tot <- IC.tot1 + IC.tot2
-
                      u.theta <- u.theta + rowMeans(evalRandVar(IC.tot, x0),
                                                    na.rm = na.rm)
                 }else{
@@ -89,18 +117,29 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
                      u.theta <- theta
                 }
 
-                cnms <-  if(is.null(names(u.theta))) colnames(Dtau) else names(u.theta)
-                u.var <- matrix(E(L2Fam, IC.tot %*% t(IC.tot)),
+                var0 <- u.var <- NULL
+                if(with.u.var){
+                   cnms <-  if(is.null(names(u.theta))) colnames(Dtau) else names(u.theta)
+                   if(!is.null(IC.tot.0))
+                      u.var <- matrix(E(L2Fam, IC.tot.0 %*% t(IC.tot.0)),
                                   k,k, dimnames = list(cnms,cnms))
+                   if(!var.to.be.c)
+                       var0 <- matrix(E(L2Fam, IC.c %*% t(IC.c)),p,p)
+                }
 
                 if(withModif){
-                   main(Param)[] <- as.numeric(u.theta)
+                   main(Param)[] <- .deleteDim(u.theta[idx])
+                   if (lnx) nuisance(Param)[] <- .deleteDim(u.theta[nuis.idx])
+#                   print(L2Fam)
                    L2Fam <- modifyModel(L2Fam, Param)
+#                   print(L2Fam)
                    IC <- modifyIC(IC)(L2Fam, IC)
+#                   print(IC)
                 }
 
                 return(list(IC = IC, Param = Param, L2Fam = L2Fam,
-                            theta = theta, u.theta = u.theta, u.var = u.var))
+                            theta = theta, u.theta = u.theta, u.var = u.var,
+                            var = var0))
         }
 
         Infos <- matrix(c("kStepEstimator",
@@ -111,6 +150,8 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
 
         ### iteration
 
+#        print(IC@Risks$asCov)
+#        print(Risks(IC)$asCov)
 
         if(!is(modifyIC(IC), "NULL") ){
            for(i in 1:steps){
@@ -121,10 +162,12 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
                   tf <- trafo(L2Fam, Param)
                }
                upd <- updateStep(u.theta,theta,IC, L2Fam, Param,
-                                 withModif = (steps>1) | useLast)
+                                 withModif = (steps>1) | useLast,
+                                 with.u.var = i==steps)
                u.theta <- upd$u.theta
                theta <- upd$theta
                u.var <- upd$u.var
+               var0 <- upd$var
            }
            if(useLast){
               IC <- upd$IC
@@ -144,6 +187,7 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
            u.theta <- upd$u.theta
            theta <- upd$theta
            u.var <- upd$u.var
+           var0 <- upd$var
            if(useLast){
               warning("'useLast = TRUE' only possible if slot 'modifyIC' of 'IC'
                      is filled with some function!")
@@ -154,20 +198,29 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
             "computation of IC, asvar and asbias via useLast = FALSE"))
         }
 
+        ## if non-trivial trafo: info on how update was done
+#        print(IC@Risks$asCov)
+#        print(Risks(IC)$asCov)
+
         if(! distrMod:::.isUnitMatrix(trafo(L2Fam)))
              Infos <- rbind(Infos, c("kStepEstimator",
                             paste("computation of IC",
                                    ifelse(withUpdateInKer,"with","without") ,
                                    "modification in ker(trafo)")))
 
-        if("asCov" %in% names(Risks(IC)))
+        ## some risks
+#        print(list(u.theta=u.theta,theta=theta,u.var=u.var,var=var0))
+        if(var.to.be.c){
+           if("asCov" %in% names(Risks(IC)))
                 if(is.matrix(Risks(IC)$asCov) || length(Risks(IC)$asCov) == 1)
                     asVar <- Risks(IC)$asCov
                 else
                     asVar <- Risks(IC)$asCov$value
-        else
+           else
                 asVar <- getRiskIC(IC, risk = asCov())$asCov$value
 
+        }else asVar <- var0
+#        print(asVar)
         if("asBias" %in% names(Risks(IC))){
                 if(length(Risks(IC)$asBias) == 1)
                     asBias <- neighborRadius(IC)*Risks(IC)$asBias
@@ -182,23 +235,32 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
                 }
         }
 
-        if(is.null(names(theta))) names(theta) <- rownames(Dtau)
-        if(is.null(names(u.theta))) names(u.theta) <- colnames(u.theta)
-        dim(theta) <- NULL
-        dim(u.theta) <- NULL
-        
-        nuis.idx <- if(is(start,"Estimate")) start@nuis.idx else NULL
-        fixed <- if(is(start,"Estimate")) start@fixed else NULL
+        if(hasnodim.main) theta <- .deleteDim(theta)
+        if(hasnodim.nuis) u.theta <- .deleteDim(u.theta)
+        names(theta) <- est.names
+        names(u.theta) <- u.est.names
+
+        if(lnx){
+          nms.theta.idx <- est.names[idx]
+
+          theta <- theta[idx]
+#          print(asVar);print(idx)
+          asVar <- asVar[idx,idx,drop=FALSE]
+#          print(asVar)
+          names(theta) <- nms.theta.idx
+          dimnames(asVar) <- list(nms.theta.idx,nms.theta.idx)
+        }
 
         return(new("kStepEstimate", estimate.call = es.call,
                        name = paste(steps, "-step estimate", sep = ""),
                        estimate = theta, samplesize = nrow(x0), asvar = asVar,
                        trafo = tf, fixed = fixed,
                        nuis.idx = nuis.idx, untransformed.estimate = u.theta,
-                       completecases= completecases,
+                       completecases = completecases,
                        untransformed.asvar = u.var,
                        asbias = asBias, pIC = IC, steps = steps, Infos = Infos))
 }
+#  (est1.NS <- kStepEstimator(x, IC2.NS, est0, steps = 1))
 
 #### old method:
 

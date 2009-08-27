@@ -74,6 +74,9 @@ if(!isGeneric("updateNorm")){
 if(!isGeneric("getModifyIC")){
     setGeneric("getModifyIC", function(L2FamIC, neighbor, risk, ...) standardGeneric("getModifyIC"))
 }
+if(!isGeneric("scaleUpdateIC")){
+    setGeneric("scaleUpdateIC", function(neighbor, ...) standardGeneric("scaleUpdateIC"))
+}
 if(!isGeneric("cniperCont")){
     setGeneric("cniperCont", function(IC1, IC2, L2Fam, neighbor, risk, ...) standardGeneric("cniperCont"))
 }

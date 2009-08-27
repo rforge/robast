@@ -770,6 +770,14 @@
 <param name="Local" value="Neighborhood-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="radius<-">
+<param name="Local" value="Neighborhood-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="radius<-,Neighborhood-method">
+<param name="Local" value="Neighborhood-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Range,InfluenceCurve-method">
 <param name="Local" value="InfluenceCurve-class.html">
 </OBJECT>

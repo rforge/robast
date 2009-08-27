@@ -1,7 +1,10 @@
 if(!isGeneric("radius")){ 
     setGeneric("radius", function(object) standardGeneric("radius"))
 }
-if(!isGeneric("center")){ 
+if(!isGeneric("radius<-")){
+    setGeneric("radius<-", function(object,value) standardGeneric("radius<-"))
+}
+if(!isGeneric("center")){
     setGeneric("center", function(object) standardGeneric("center"))
 }
 if(!isGeneric("center<-")){

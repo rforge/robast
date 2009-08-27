@@ -173,11 +173,22 @@ IC2 <- radiusMinimaxIC(L2Fam=N1, neighbor=ContNeighborhood(),risk=asMSE(),
 (est2 <- oneStepEstimator(x, IC2, est0))
 
 ########### again with trafo
+N1.traf <- N1; trafo(N1.traf) <- tfct
 N1R.traf <- N1.Rob; trafo(N1R.traf) <- tfct
 IC1.traf <- optIC(model = N1R.traf, risk = asMSE())
+(est0.traf <- MDEstimator(x, N1.traf))
 (est1.traf <- kStepEstimator(x, IC1.traf, est0, steps = 3))
 # or simply
 (est2.traf <- oneStepEstimator(x, IC1.traf, est0))
+
+### main: location; nuisance: scale
+N1.NS <- L2LocationUnknownScaleFamily()
+N1R.NS <- InfRobModel(center = N1.NS, neighbor = ContNeighborhood(radius = 0.5))
+IC1.NS <- optIC(model = N1.NS, risk = asCov())
+IC2.NS <- optIC(model = N1R.NS, risk = asMSE())
+(est0.NS <- MDEstimator(x, N1.NS))
+(est1.NS <- kStepEstimator(x, IC2.NS, est0, steps = 3))
+(est2.NS <- oneStepEstimator(x, IC2.NS, est0))
 
 
 ## a simple example
@@ -200,7 +211,6 @@ confint(ROest1, symmetricBias())
 confint(ROest2, symmetricBias())
 
 ########### again with trafo
-N1.traf <- N1; trafo(N1.traf) <- tfct
 system.time(ROest1.traf <- roptest(chem, N1.traf, eps.upper = 0.1, steps = 3L,
                               initial.est = initial.est, useLast = TRUE))
 estimate(ROest1.traf)

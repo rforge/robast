@@ -3,6 +3,8 @@
 \alias{Neighborhood-class}
 \alias{radius}
 \alias{radius,Neighborhood-method}
+\alias{radius<-}
+\alias{radius<-,Neighborhood-method}
 \alias{show,Neighborhood-method}
 \alias{type,Neighborhood-method}
 
@@ -24,6 +26,8 @@
     \item{radius}{\code{signature(object = "Neighborhood")}: 
       accessor function for slot \code{radius}. }
     \item{show}{\code{signature(object = "Neighborhood")}}
+    \item{radius<-}{\code{signature(object = "Neighborhood")}:
+      replacement function for slot \code{radius}. }
   }
 }
 \references{

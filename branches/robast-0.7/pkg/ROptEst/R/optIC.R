@@ -10,7 +10,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
         on.exit(options(ow))
         if(L2derivDim == 1){
             options(warn = -1)
-            res <- getInfRobIC(L2deriv = model@center@L2derivDistr[[1]], 
+            res <- getInfRobIC(L2deriv = model@center@L2derivDistr[[1]],
                         neighbor = model@neighbor, risk = risk, 
                         symm = model@center@L2derivDistrSymm[[1]],
                         Finfo = model@center@FisherInfo, trafo = trafo(model@center@param), 
@@ -43,7 +43,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                     }
                 }
                 options(warn = -1)
-                res <- getInfRobIC(L2deriv = L2deriv, neighbor = model@neighbor, 
+                res <- getInfRobIC(L2deriv = L2deriv, neighbor = model@neighbor,
                             risk = risk,  Distr = model@center@distribution, 
                             DistrSymm = model@center@distrSymm, L2derivSymm = L2derivSymm,
                             L2derivDistrSymm = L2derivDistrSymm, Finfo = model@center@FisherInfo, 

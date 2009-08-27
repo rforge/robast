@@ -6,13 +6,17 @@
 <table width="100%"><tr><td>getModifyIC(ROptEst)</td><td align="right">R Documentation</td></tr></table>
 <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   getModifyIC">
+<param name="keyword" value="R:   scaleUpdateIC">
 <param name="keyword" value="R:   getModifyIC-methods">
+<param name="keyword" value="R:   scaleUpdateIC-methods">
+<param name="keyword" value="R:   scaleUpdateIC,UncondNeighborhood-method">
+<param name="keyword" value="R:   scaleUpdateIC,ContNeighborhood-method">
+<param name="keyword" value="R:   scaleUpdateIC,TotalVarNeighborhood-method">
 <param name="keyword" value="R:   getModifyIC,L2ParamFamily,Neighborhood,asRisk-method">
 <param name="keyword" value="R:   getModifyIC,L2LocationFamily,UncondNeighborhood,asGRisk-method">
 <param name="keyword" value="R:   getModifyIC,L2LocationFamily,UncondNeighborhood,fiUnOvShoot-method">
-<param name="keyword" value="R:   getModifyIC,L2ScaleFamily,ContNeighborhood,asGRisk-method">
-<param name="keyword" value="R:   getModifyIC,L2ScaleFamily,TotalVarNeighborhood,asGRisk-method">
-<param name="keyword" value="R:   getModifyIC,L2LocationScaleFamily,ContNeighborhood,asGRisk-method">
+<param name="keyword" value="R:   getModifyIC,L2ScaleFamily,UncondNeighborhood,asGRisk-method">
+<param name="keyword" value="R:   getModifyIC,L2LocationScaleFamily,UncondNeighborhood,asGRisk-method">
 <param name="keyword" value=" Generic Function for the Computation of Functions for Slot modifyIC">
 </object>
 
@@ -23,7 +27,7 @@
 <h3>Description</h3>
 
 <p>
-This function is used by internal computations and is rarely called directly.
+These function is used by internal computations and is rarely called directly.
 </p>
 
 
@@ -40,15 +44,20 @@ getModifyIC(L2FamIC,
 ## S4 method for signature 'L2LocationFamily,UncondNeighborhood,fiUnOvShoot':
 getModifyIC(L2FamIC,
           neighbor, risk, ...)
-## S4 method for signature 'L2ScaleFamily,ContNeighborhood,asGRisk':
+## S4 method for signature 'L2ScaleFamily,UncondNeighborhood,asGRisk':
 getModifyIC(L2FamIC,
           neighbor, risk, ...)
-## S4 method for signature 'L2ScaleFamily,TotalVarNeighborhood,asGRisk':
+## S4 method for signature 'L2LocationScaleFamily,UncondNeighborhood,asGRisk':
 getModifyIC(L2FamIC,
           neighbor, risk, ...)
-## S4 method for signature 'L2LocationScaleFamily,ContNeighborhood,asGRisk':
-getModifyIC(L2FamIC,
-          neighbor, risk, ...)
+
+scaleUpdateIC(neighbor,...)
+## S4 method for signature 'UncondNeighborhood':
+scaleUpdateIC(neighbor, sdneu, sdalt, IC)
+## S4 method for signature 'ContNeighborhood':
+scaleUpdateIC(neighbor, sdneu, sdalt, IC)
+## S4 method for signature 'TotalVarNeighborhood':
+scaleUpdateIC(neighbor, sdneu, sdalt, IC)
 </pre>
 
 
@@ -67,6 +76,15 @@ getModifyIC(L2FamIC,
 <tr valign="top"><td><code>...</code></td>
 <td>
 further arguments to be passed over to <code>optIC</code>.</td></tr>
+<tr valign="top"><td><code>sdneu</code></td>
+<td>
+positive numeric of length one; the new scale.</td></tr>
+<tr valign="top"><td><code>sdalt</code></td>
+<td>
+positive numeric of length one; the new scale.</td></tr>
+<tr valign="top"><td><code>IC</code></td>
+<td>
+a Hampel-IC to be updated.</td></tr>
 </table>
 
 
@@ -81,7 +99,7 @@ calls to <code>optIC</code> with argument <code>verbose=TRUE</code>.
 
 <h3>Value</h3>
 
-<p> Function for slot <code>modifyIC</code> of <code>IC</code>s </p>
+<p></p>
 
 
 <h3>Author(s)</h3>
