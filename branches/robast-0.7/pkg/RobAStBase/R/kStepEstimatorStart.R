@@ -21,9 +21,9 @@ setMethod("kStepEstimator.start", signature(start = "Estimate"),
 })
 
 setMethod("kStepEstimator.start", signature(start = "function"),
-        function(start, x, nrvalues, na.rm, ...){
+        function(start, x, nrvalues, na.rm, L2Fam, startList){
            if(na.rm) x <- na.omit(x)
-           start0 <- start(x, ...)
+           start0 <- do.call(start, args=c(list(x,L2Fam),startList))
            return(kStepEstimator.start(start0,nrvalues))
 })
 

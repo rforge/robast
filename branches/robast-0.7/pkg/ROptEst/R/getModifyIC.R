@@ -49,12 +49,25 @@ setMethod("scaleUpdateIC", signature(neighbor="UncondNeighborhood"),
      risk <- NULL
      risk$asMSE <- if(is.numeric(risk0$asMSE))
                    risk0$asMSE * sdneu^2 / sdalt^2 else NULL
+     if(is.list(risk0$asMSE)){
+        amse <- risk0$asMSE; risk$asCov <- amse
+        if(is.numeric(amse$value))
+          risk$asMSE$value <- amse$value * sdneu^2 / sdalt^2
+     }
      risk$asCov <- if(is.numeric(risk0$asCov))
                    risk0$asCov * sdneu^2 / sdalt^2 else NULL
-     if(is.numeric(risk0$asCov$value))
-        risk$asCov$value <- risk0$asCov$value * sdneu^2 / sdalt^2
+     if(is.list(risk0$asCov)){
+        aCov <- risk0$asCov; risk$asCov <- aCov
+        if(is.numeric(aCov$value))
+          risk$asCov$value <- aCov$value * sdneu^2 / sdalt^2
+     }
      risk$asBias <- if(is.numeric(risk0$asBias))
         risk0$asBias * sdneu / sdalt else NULL
+     if(is.list(risk0$asBias)){
+        abias <- risk0$asBias; risk$asBias <- abias
+        if(is.numeric(abias$value))
+          risk$asBias$value <- abias$value * sdneu / sdalt
+     }
      return(list(A = A,  d = NULL,
                  info = Infos(IC), w = w, risk = risk,
                  normtype = normtype(IC), biastype = biastype(IC),

@@ -7,7 +7,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     useLast = getRobAStBaseOption("kStepUseLast"),
                     withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
                     IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
-                    na.rm = TRUE, ...){
+                    na.rm = TRUE, initial.est.ArgList, ...){
     es.call <- match.call()
     if(missing(x))
         stop("'x' is missing with no default")
@@ -67,7 +67,8 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     nrvalues <-  length(L2Fam@param)
     initial.est <- kStepEstimator.start(initial.est, x = x,
                                         nrvalues = nrvalues, na.rm = na.rm,
-                                        ...)
+                                        L2Fam = L2Fam,
+                                        startList = initial.est.ArgList)
 
     newParam <- param(L2Fam)
     main(newParam)[] <- as.numeric(initial.est)

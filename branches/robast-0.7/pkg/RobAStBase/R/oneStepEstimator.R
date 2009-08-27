@@ -6,7 +6,7 @@ oneStepEstimator <- function(x, IC, start,
                              useLast = getRobAStBaseOption("kStepUseLast"),
                              withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
                              IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
-                             na.rm = TRUE, ...){
+                             na.rm = TRUE, startArgList = NULL, ...){
         es.call <- match.call()
         es.call[[1]] <- as.name("oneStepEstimator")
 
@@ -16,7 +16,8 @@ oneStepEstimator <- function(x, IC, start,
         if(is(IC, "IC")){
             erg <- kStepEstimator(x = x, IC = IC, start = start, steps = 1L,
                            useLast = useLast, withUpdateInKer = withUpdateInKer,
-                           IC.UpdateInKer = IC.UpdateInKer, na.rm = na.rm)
+                           IC.UpdateInKer = IC.UpdateInKer, na.rm = na.rm,
+                           startArgList = startArgList, ...)
             Infos(erg) <- gsub("kStep","oneStep", Infos(erg))
             erg@estimate.call <- es.call
             return(erg)
@@ -36,8 +37,8 @@ oneStepEstimator <- function(x, IC, start,
         if(na.rm) x0 <- na.omit(x0)
 
         nrvalues <- dimension(IC@Curve)
-        start.val <- kStepEstimator.start(start, x=x0, nrvalues = nrvalues, na.rm = na.rm,...)
-
+        start.val <- kStepEstimator.start(start, x=x0, nrvalues = nrvalues, na.rm = na.rm,
+                                          L2Fam = NULL, startList = startArgList)
 
         res <- start.val + rowMeans(evalIC(IC, x0), na.rm = na.rm)
         nms <- if(!is.null(dim(res))) colnames(res)  else names(start.val)

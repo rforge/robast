@@ -27,7 +27,7 @@ kStepEstimator(x, IC, start, steps = 1L,
       useLast = getRobAStBaseOption("kStepUseLast"),
       withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
       IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
-      na.rm = TRUE, ...)
+      na.rm = TRUE, startArgList = NULL, ...)
 </pre>
 
 
@@ -67,6 +67,11 @@ this IC will then be projected onto <i>ker(D)</i>.</td></tr>
 <tr valign="top"><td><code>na.rm</code></td>
 <td>
 logical: if  <code>TRUE</code>, the estimator is evaluated at <code>complete.cases(x)</code>.</td></tr>
+<tr valign="top"><td><code>startArgList</code></td>
+<td>
+a list of arguments to be given to argument <code>start</code> if the latter
+is a function; this list by default already starts with two unnamed items,
+the sample <code>x</code>, and the model <code>eval(CallL2Fam(IC))</code>.</td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
  additional parameters </td></tr>

@@ -12,7 +12,7 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         useLast = getRobAStBaseOption("kStepUseLast"),
         withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
         IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
-        na.rm = TRUE, ...)
+        na.rm = TRUE, initial.est.ArgList, ...)
 }
 \arguments{
   \item{x}{ sample }
@@ -47,6 +47,9 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   the IC to be used for this; if \code{NULL} the result of \code{getboundedIC(L2Fam,D)} is taken;
   this IC will then be projected onto \eqn{{\rm ker}(D)}{ker(D)}.}
   \item{na.rm}{logical: if  \code{TRUE}, the estimator is evaluated at \code{complete.cases(x)}.}
+  \item{initial.est.ArgList}{a list of arguments to be given to argument \code{start} if the latter
+   is a function; this list by default already starts with two unnamed items,
+   the sample \code{x}, and the model \code{L2Fam}.}
   \item{\dots}{ further arguments }
 }
 \details{

@@ -10,7 +10,7 @@ oneStepEstimator(x, IC, start,
       useLast = getRobAStBaseOption("kStepUseLast"),
       withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
       IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
-      na.rm = TRUE, ...)
+      na.rm = TRUE, startArgList = NULL, ...)
 }
 \arguments{
   \item{x}{ sample }
@@ -29,6 +29,11 @@ oneStepEstimator(x, IC, start,
   the IC to be used for this; if \code{NULL} the result of \code{getboundedIC(L2Fam,D)} is taken;
   this IC will then be projected onto \eqn{{\rm ker}(D)}{ker(D)}.}
   \item{na.rm}{logical: if  \code{TRUE}, the estimator is evaluated at \code{complete.cases(x)}.}
+  \item{startArgList}{a list of arguments to be given to argument \code{start} if the latter
+   is a function; this list by default already starts with two unnamed items,
+   the sample \code{x}, and the model \code{eval(CallL2Fam(IC))}; in case \code{IC}
+   is not of class \code{IC}, the model argument \code{L2Fam} will be set
+   to \code{NULL}.}
   \item{...}{ additional arguments }
 }
 \details{

@@ -11,7 +11,7 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
                            useLast = getRobAStBaseOption("kStepUseLast"),
                            withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
                            IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
-                           na.rm = TRUE, ...){
+                           na.rm = TRUE, startArgList = NULL, ...){
 ## save call
         es.call <- match.call()
         es.call[[1]] <- as.name("kStepEstimator")
@@ -65,7 +65,9 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
 ### use dispatch here  (dispatch only on start)
         a.var <- if( is(start, "Estimate")) asvar(start) else NULL
         IC.UpdateInKer.0 <- if(is(start,"ALEstimate")) start@pIC else NULL
-        start.val <- kStepEstimator.start(start, x=x0, nrvalues = k, na.rm = na.rm, ...)
+        start.val <- kStepEstimator.start(start, x=x0, nrvalues = k,
+                         na.rm = na.rm, L2Fam = L2Fam,
+                         startList = startArgList)
 
 
 ### a starting value in k-space
