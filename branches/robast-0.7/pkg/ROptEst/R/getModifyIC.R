@@ -5,11 +5,14 @@
 setMethod("getModifyIC", signature(L2FamIC = "L2ParamFamily", 
                                    neighbor = "Neighborhood", risk = "asRisk"),
     function(L2FamIC, neighbor, risk, ...){
+        dots <- list(...)
+        dots$verbose <- NULL
         modIC <- function(L2Fam, IC){}
         body(modIC) <- substitute({ verbose <- getRobAStBaseOption("all.verbose")
                                     infMod <- InfRobModel(L2Fam, nghb)
-                                    optIC(infMod, risk=R, verbose=verbose, ...) },
-                                  list(nghb = neighbor, R = risk))
+                                    do.call(optIC, args = c(list(infMod, risk=R),
+                                                            dots0)) },
+                                  list(nghb = neighbor, R = risk, dots0 = dots))
         return(modIC)
     })
 
