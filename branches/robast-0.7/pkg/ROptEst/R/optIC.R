@@ -4,7 +4,9 @@
 setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
     function(model, risk, z.start = NULL, A.start = NULL, upper = 1e4,
              lower = 1e-4, maxiter = 50, tol = .Machine$double.eps^0.4,
-             warn = TRUE, noLow = FALSE, verbose = getRobAStBaseOption("all.verbose"), ...){
+             warn = TRUE, noLow = FALSE, verbose = NULL, ...){
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
         L2derivDim <- numberOfMaps(model@center@L2deriv)
         ow <- options("warn")
         on.exit(options(ow))
@@ -105,7 +107,9 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
 setMethod("optIC", signature(model = "FixRobModel", risk = "fiUnOvShoot"),
     function(model, risk, sampleSize, upper = 1e4, lower = 1e-4, maxiter = 50,
              tol = .Machine$double.eps^0.4, warn = TRUE, Algo = "A", 
-             cont = "left", verbose = getRobAStBaseOption("all.verbose")){
+             cont = "left", verbose = NULL){
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
         ow <- options("warn")
         on.exit(options(ow))
         if(!identical(all.equal(sampleSize, trunc(sampleSize)), TRUE))

@@ -6,8 +6,11 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, symm, trafo, maxiter, 
              tol, warn, Finfo,
-             verbose = getRobAStBaseOption("all.verbose"), ...){
-        erg <- minmaxBias(L2deriv = L2deriv, neighbor = neighbor, 
+             verbose = NULL, ...){
+
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
+        erg <- minmaxBias(L2deriv = L2deriv, neighbor = neighbor,
                    biastype = biastype(risk), symm = symm, 
                    trafo = trafo, maxiter = maxiter, 
                    tol = tol, warn = warn, Finfo = Finfo)
@@ -27,7 +30,10 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
     function(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
              L2derivDistrSymm, z.start, 
              A.start, Finfo, trafo, maxiter, tol, warn,
-             verbose = getRobAStBaseOption("all.verbose"), ...){
+             verbose = NULL, ...){
+
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
 
         k <- ncol(trafo); p <- nrow(trafo)
         if(is(neighbor,"TotalVarNeighborhood") && p>1)
@@ -157,8 +163,7 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
         stand(w) <- A
         clip(w) <- c(a, a+b)
         weight(w) <- minbiasweight(w, neighbor = neighbor, biastype = biastype)
-
-        return(list(A = A, a = a, b = b, d = 0, risk = Risk, info = info, 
+        return(list(A = A, a = a, b = b, d = 0, risk = Risk, info = info,
                     w = w, biastype = biastype, normtype = NormType()))
     })
 
@@ -167,8 +172,10 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, normtype, Distr, 
              z.start, A.start,  z.comp, A.comp, Finfo, trafo, maxiter,  tol,
-             verbose = getRobAStBaseOption("all.verbose")){
+             verbose = NULL){
 
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
         DA.comp <- abs(trafo) %*% A.comp != 0
         eerg <- .LowerCaseMultivariate(L2deriv, neighbor, biastype,
              normtype, Distr, Finfo, trafo, z.start,
@@ -228,7 +235,9 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, normtype, Distr,
              z.start, A.start,  z.comp, A.comp, Finfo, trafo, maxiter,  tol,
-             verbose = getRobAStBaseOption("all.verbose")){
+             verbose = NULL){
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
 
         eerg <- .LowerCaseMultivariateTV(L2deriv = L2deriv,
              neighbor = neighbor, biastype = biastype,

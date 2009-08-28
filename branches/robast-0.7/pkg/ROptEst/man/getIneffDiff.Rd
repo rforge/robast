@@ -15,9 +15,8 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
 \S4method{getIneffDiff}{numeric,L2ParamFamily,UncondNeighborhood,asMSE}(
           radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
           z.start = NULL, A.start = NULL, upper.b = NULL, lower.b = NULL,
-          MaxIter, eps, warn,
-          loNorm = NULL, upNorm = NULL,
-          verbose = getRobAStBaseOption("all.verbose"), ...)
+          MaxIter, eps, warn, loNorm = NULL, upNorm = NULL,
+          verbose = NULL, ...)
 }
 \arguments{
   \item{radius}{ neighborhood radius. }

@@ -28,10 +28,9 @@ setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
         g.fct <- function(g, c0, D1){
             return(g*p(D1)(g) + (g+c0)*(p(D1)(g+c0, lower.tail = FALSE)) - m1df(D1, g) + m1df(D1, g+c0))
         }
-        lower <- getLow(L2deriv)
-        upper <- getUp(L2deriv)
-
-        return(uniroot(g.fct, lower = lower, upper = upper, tol = tol.z, 
+        lower <- -clip
+        upper <- 0
+        return(uniroot(g.fct, lower = lower, upper = upper, tol = tol.z,
                     c0 = clip, D1 = D1)$root)
     })
 

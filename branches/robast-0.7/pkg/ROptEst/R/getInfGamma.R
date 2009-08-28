@@ -9,7 +9,7 @@ setMethod("getInfGamma", signature(L2deriv = "UnivariateDistribution",
         c1 <- cent - clip
         c2 <- cent + clip
         return(m1df(L2deriv, c2) + m1df(L2deriv, c1) 
-                    - c1*p(L2deriv)(c1) + c2*(1-p(L2deriv)(c2)))
+                    - c1*p(L2deriv)(c1) + c2*p(L2deriv)(c2, lower.tail = FALSE))
     })
 ###############################################################################
 ## r^2 b = E(c - A Lambda)_+ Probleme mit Startwerten!!!
@@ -20,7 +20,8 @@ setMethod("getInfGamma", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "TotalVarNeighborhood",
                                    biastype = "BiasType"),
     function(L2deriv, risk, neighbor, biastype, cent, clip){
-        return(m1df(L2deriv, cent+clip) + (cent+clip)*(1-p(L2deriv)(cent+clip)))
+        return(m1df(L2deriv, cent+clip) + (cent+clip)*p(L2deriv)(cent+clip,
+               lower.tail = FALSE))
     })
 
 setMethod("getInfGamma", signature(L2deriv = "RealRandVariable",

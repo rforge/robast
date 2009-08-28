@@ -31,11 +31,11 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
 
 \S4method{minmaxBias}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv,
      neighbor, biastype, normtype, Distr, z.start, A.start,  z.comp, A.comp,
-     Finfo, trafo, maxiter, tol, verbose = getRobAStBaseOption("all.verbose"))
+     Finfo, trafo, maxiter, tol, verbose = NULL)
 
 \S4method{minmaxBias}{RealRandVariable,TotalVarNeighborhood,BiasType}(L2deriv,
      neighbor, biastype, normtype, Distr, z.start, A.start,  z.comp, A.comp,
-     Finfo, trafo, maxiter, tol, verbose = getRobAStBaseOption("all.verbose"))
+     Finfo, trafo, maxiter, tol, verbose = NULL)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 

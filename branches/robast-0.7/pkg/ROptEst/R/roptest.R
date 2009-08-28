@@ -3,11 +3,13 @@
 ###############################################################################
 roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
-                    distance = CvMDist, startPar = NULL, verbose = FALSE,
+                    distance = CvMDist, startPar = NULL, verbose = NULL,
                     useLast = getRobAStBaseOption("kStepUseLast"),
                     withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
                     IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
                     na.rm = TRUE, initial.est.ArgList, ...){
+    if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
     es.call <- match.call()
     if(missing(x))
         stop("'x' is missing with no default")

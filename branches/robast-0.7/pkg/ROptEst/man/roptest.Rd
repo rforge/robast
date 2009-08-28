@@ -8,7 +8,7 @@
 \usage{
 roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est, 
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
-        distance = CvMDist, startPar = NULL, verbose = FALSE, 
+        distance = CvMDist, startPar = NULL, verbose = NULL,
         useLast = getRobAStBaseOption("kStepUseLast"),
         withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
         IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),

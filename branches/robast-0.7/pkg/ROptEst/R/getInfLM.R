@@ -6,8 +6,9 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
                       neighbor, biastype, normtype, Distr,
                       a.start, z.start, A.start, w.start, std,
                       z.comp, A.comp, maxiter, tol,
-                      verbose = getRobAStBaseOption("all.verbose"),
-                      warnit = TRUE){
+                      verbose = NULL, warnit = TRUE){
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
         LMcall <- match.call()
 
         ## initialization
@@ -100,9 +101,10 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
 getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
                       neighbor, biastype, normtype, Distr,
                       a.start, z.start, A.start, w.start, std, z.comp,
-                      A.comp, maxiter, tol,
-                      verbose = getRobAStBaseOption("all.verbose"), ...){
+                      A.comp, maxiter, tol, verbose = NULL, ...){
 
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
         LMcall <- match.call()
         ### manipulate dots in call -> set control argument for optim
         dots <- list(...)

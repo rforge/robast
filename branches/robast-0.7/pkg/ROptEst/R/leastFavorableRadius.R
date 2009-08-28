@@ -7,7 +7,9 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                             risk = "asGRisk"),
     function(L2Fam, neighbor, risk, rho, upRad = 1, z.start = NULL, 
             A.start = NULL, upper = 100, maxiter = 100, 
-            tol = .Machine$double.eps^0.4, warn = FALSE, verbose = getRobAStBaseOption("all.verbose")){
+            tol = .Machine$double.eps^0.4, warn = FALSE, verbose = NULL){
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
         if(length(rho) != 1)
             stop("'rho' is not of length == 1")
         if((rho <= 0)||(rho >= 1))

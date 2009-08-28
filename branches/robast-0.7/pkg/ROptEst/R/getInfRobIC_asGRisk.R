@@ -6,9 +6,14 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, symm, Finfo, trafo, upper = NULL,
              lower = NULL, maxiter, tol,
-             warn, noLow = FALSE, verbose = getRobAStBaseOption("all.verbose")){
+             warn, noLow = FALSE, verbose = NULL){
+
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
+
         biastype <- biastype(risk)
         radius <- neighbor@radius
+
         if(identical(all.equal(radius, 0), TRUE)){
             if(warn) cat("'radius == 0' => (classical) optimal IC\n", 
                          "in sense of Cramer-Rao bound is returned\n")
@@ -34,11 +39,13 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
         z <- 0
         c0 <- 0
         iter <- 0
-        if(is(symm, "SphericalSymmetry")) 
+        if(is(symm, "SphericalSymmetry"))
             S <- symm@SymmCenter == 0
         else
             S <- FALSE
-
+### print ---
+##        assign("l2D",L2deriv,.GlobalEnv)
+###
         prec <- 1
         repeat{
             iter <- iter + 1
@@ -47,16 +54,18 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             ## new
             L1n <- getL1normL2deriv(L2deriv = L2deriv, cent = z)
             lower0 <-  L1n/(1 + radius^2)
-            if(is(neighbor,"TotalVarNeighborhood")) {
-                   lower0 <- (L1n-z)/(1 + radius^2)/2}
+#            if(is(neighbor,"TotalVarNeighborhood")) {
+#                   lower0 <- (L1n-z)/(1 + radius^2)/2}
             upper0 <- max(L1n/radius,
                  sqrt( as.numeric( Finfo + z^2 )/(( 1 + radius^2)^2 - 1) ))
-            if (is.null(lower)|(iter == 1))
-                  lower <- .Machine$double.eps^0.6
-            else {if(iter>1) lower <- max(lower0,lower)}
-            if (is.null(upper)|(iter == 1))
-                  upper <- 5* max(abs(trafo))*max(Finfo)
-            else {if(iter>1) upper <- min(upper,upper0)}
+            if (is.null(lower))
+                  lower <- .Machine$double.eps^0.75
+            else {if(iter>1) lower <- min(lower0,2*lower)}
+            if (is.null(upper))#|(iter == 1))
+                  upper <- getUp(L2deriv)
+            else {if(iter>1) upper <- max(0.5*upper,3*upper0)}
+##            print(c(lower,upper))
+            #lower <- 0; upper <- 100
             ##
             c0 <- try(uniroot(getInfClip, 
                   ## new
@@ -66,6 +75,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                         neighbor = neighbor,  biastype = biastype,
                         cent = z, symm = S, 
                         trafo = trafo)$root, silent = TRUE)
+
             if(!is.numeric(c0)){
                 if(warn) cat("The IC algorithm did not converge!\n", 
                              "'radius >= maximum radius' for the given risk?\n",
@@ -84,10 +94,12 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             }
             z <- getInfCent(L2deriv = L2deriv, neighbor = neighbor,  biastype = biastype,
                             clip = c0, cent = z, symm = S, trafo = trafo, tol.z = tol)
-#            cat("c0:\t", c0, "c0.old:\t", c0.old, "z:\t", z, "z.old:\t", z.old, "\n")
+##            cat("c0:\t", c0, "c0.old:\t", c0.old, "z:\t", z, "z.old:\t", z.old, "\n")
+
             if(S) break
 
             prec.old <- prec
+##            print(c(c0,z))
             prec <- max(abs(z - z.old), abs(c0-c0.old))
             if(iter>1){
                if(verbose)
@@ -142,7 +154,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
 
         weight(w) <- getweight(w, neighbor = neighbor, biastype = biastype, 
                                normW = NormType())
-
+##        print(list(A = A, a = a, b = b))
         return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info, w = w,
                     biastype = biastype, normtype = normtype(risk)))
     })
@@ -160,8 +172,11 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
              L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE,
              z.start, A.start, upper = NULL, lower = NULL,
              OptOrIter = "iterate",
-             maxiter, tol, warn, verbose = getRobAStBaseOption("all.verbose"),
+             maxiter, tol, warn, verbose = NULL,
              ...){
+
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
 
         mc <- match.call()
 

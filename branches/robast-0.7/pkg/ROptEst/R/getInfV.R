@@ -10,7 +10,7 @@ setMethod("getInfV", signature(L2deriv = "UnivariateDistribution",
         return(stand^2*(m2df(L2deriv, c2) - m2df(L2deriv, c1)
                 + 2 * cent *(m1df(L2deriv, c1) - m1df(L2deriv, c2))
                 + cent^2 * (p(L2deriv)(c2) -p(L2deriv)(c1))
-                + clip^2 * (p(L2deriv)(c2, lower.tail=FALSE) +p(L2deriv)(c1))
+                + clip^2 * (p(L2deriv)(c2, lower.tail = FALSE) +p(L2deriv)(c1))
                 ))
     })
 
@@ -22,7 +22,7 @@ setMethod("getInfV", signature(L2deriv = "UnivariateDistribution",
         c1 <- cent
         c2 <- clip+clip
         return(stand^2*(m2df(L2deriv, c2) - m2df(L2deriv, c1)
-                + c2^2 * (p(L2deriv)(c2, lower.tail=FALSE))
+                + c2^2 * (p(L2deriv)(c2, lower.tail = FALSE))
                 + c1^2* p(L2deriv)(c1)
                 ))
     })

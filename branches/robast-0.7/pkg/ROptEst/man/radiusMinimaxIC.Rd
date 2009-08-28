@@ -13,7 +13,7 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
 \S4method{radiusMinimaxIC}{L2ParamFamily,UncondNeighborhood,asGRisk}(
         L2Fam, neighbor, risk, loRad, upRad, z.start = NULL, A.start = NULL, 
         upper = 1e5, lower =NULL, maxiter = 50, tol = .Machine$double.eps^0.4,
-        warn = FALSE, verbose = getRobAStBaseOption("all.verbose"), ...)
+        warn = FALSE, verbose = NULL, ...)
 }
 \arguments{
   \item{L2Fam}{ L2-differentiable family of probability measures. }

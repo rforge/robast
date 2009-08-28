@@ -9,9 +9,13 @@ setMethod("getIneffDiff", signature(radius = "numeric",
              z.start = NULL, A.start = NULL, upper.b = NULL, lower.b = NULL,
              MaxIter, eps, warn,
              loNorm = NULL, upNorm = NULL,
-             verbose = getRobAStBaseOption("all.verbose"), ...){
+             verbose = NULL, ...){
+
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
         L2derivDim <- numberOfMaps(L2Fam@L2deriv)
         if(L2derivDim == 1){
+            ##print(radius)
             neighbor@radius <- radius
             res <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
                         risk = risk, symm = L2Fam@L2derivDistrSymm[[1]], 
@@ -20,11 +24,18 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                         warn = warn, verbose = verbose)
             trafo <- as.vector(trafo(L2Fam@param))
             ineffLo <- (as.vector(res$A)*trafo - res$b^2*(radius^2-loRad^2))/loRisk
+            ####cat("---------------\n")
+            ##res00=res;res00$w <- NULL; res00$biastype <- NULL; res00$d <- NULL
+            ##res00$normtype <- NULL;res00$info <- NULL;res00$risk <- NULL;
+            ##print(res00)
+            ##print(c(lower.b,upper.b,loRisk,"upR"=upRisk))
+            ####cat("---------------\n")
             if(upRad == Inf)
                 ineffUp <- res$b^2/upRisk
             else
                 ineffUp <- (as.vector(res$A)*trafo - res$b^2*(radius^2-upRad^2))/upRisk
             assign("ineff", ineffUp, envir = sys.frame(which = -4))
+            ##print(c(ineffUp,ineffLo,ineffUp - ineffLo))
             return(ineffUp - ineffLo)
         }else{
             if(is(L2Fam@distribution, "UnivariateDistribution")){

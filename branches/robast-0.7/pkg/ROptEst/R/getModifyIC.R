@@ -44,7 +44,7 @@ setMethod("scaleUpdateIC", signature(neighbor="UncondNeighborhood"),
      w <- weight(IC)
      clip(w) <- sdneu*clip(w)/sdalt
      stand(w) <- sdneu^2*stand(w)/sdalt^2
-     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r),
+     weight(w) <- getweight(w, neighbor = neighbor,
                    biastype = biastype(IC),
                    normW = normtype(IC))
      A <- sdneu^2*stand(IC)/sdalt^2
