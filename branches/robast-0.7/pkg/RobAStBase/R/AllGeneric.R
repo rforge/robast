@@ -47,7 +47,7 @@ if(!isGeneric("makeIC")){
     setGeneric("makeIC", function(IC, L2Fam, ...) standardGeneric("makeIC"))
 }
 if(!isGeneric("clip")){
-    setGeneric("clip", function(object) standardGeneric("clip"))
+    setGeneric("clip", function(x1, ...) standardGeneric("clip"))
 }
 if(!isGeneric("clip<-")){
     setGeneric("clip<-", function(object, value) standardGeneric("clip<-"))
@@ -115,10 +115,6 @@ if(!isGeneric("weight<-")){
     setGeneric("weight<-",
         function(object, value) standardGeneric("weight<-"))
 }
-if(!isGeneric("clip")){
-    setGeneric("clip",
-        function(object, ...) standardGeneric("clip"))
-}
 if(!isGeneric("clip<-")){
     setGeneric("clip<-",
         function(object, value, ...) standardGeneric("clip<-"))
@@ -183,7 +179,7 @@ if(!isGeneric("uksteps")){
     setGeneric("uksteps", function(object,...) standardGeneric("uksteps"))
 }
 if(!isGeneric("start")){
-    setGeneric("start", function(object) standardGeneric("start"))
+    setGeneric("start", function(x, ...) standardGeneric("start"))
 }
 if(!isGeneric("startval")){
     setGeneric("startval", function(object) standardGeneric("startval"))

@@ -123,3 +123,22 @@ setMethod("show", "MEstimate",
             print(Mroot(object), quote = FALSE)
         }
     })
+setMethod("show", "OptionalpICList", function(object){
+  if(is.null(object)) return(invisible(NULL))
+  getMethod("show","pICList")(as(object,"pICList"))
+})
+setMethod("show", "pICList", function(object){
+  if(!length(object)) return(invisible(NULL))
+  cat("List of intermediate [p]IC's\n")
+  for(i in 1:length(object)){
+    oI <- object[[i]]
+    cat("[p]IC number", i,":\n")
+
+    if(is(oI,"IC"))
+       show(oI)
+    else{oIC <- object[[i]]@Curve
+         for(j in 1:length(oIC))
+             show(oIC[[j]]@Map)
+    }
+  }
+})

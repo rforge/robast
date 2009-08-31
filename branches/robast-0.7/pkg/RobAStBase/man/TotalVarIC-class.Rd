@@ -99,7 +99,7 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
     \item{clipUp<-}{\code{signature(object = "TotalVarIC")}: 
       replacement function for slot \code{clipUp}. }
 
-    \item{clip}{\code{signature(object = "TotalVarIC")}:
+    \item{clip}{\code{signature(x1 = "TotalVarIC")}:
       returns \code{clipUp-clipLo}. }
 
     \item{stand<-}{\code{signature(object = "TotalVarIC")}:

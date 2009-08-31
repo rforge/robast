@@ -76,14 +76,14 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
         u.theta <- start.val
         theta <- if(is(start.val,"Estimate")) estimate(start.val)
                  else trafoF(u.theta)$fval
-        u.start.val <- matrix(start.val,nrow=1)
+        u.start.val <- matrix(start.val,ncol=1)
         start.val <- matrix(theta,ncol=1)
         rownames(u.start.val) <- u.est.names
         rownames(start.val) <- est.names
 
 ### shall intermediate IC's / pIC's be stored?
         pICList <- if(withPICList) vector("list", steps) else NULL
-        ICList <- if(withICList) vector("list", steps) else NULL
+        ICList  <- if(withICList)  vector("list", steps) else NULL
 
         ### update - function
         updateStep <- function(u.theta, theta, IC, L2Fam, Param,
@@ -151,7 +151,7 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
 
                 return(list(IC = IC, Param = Param, L2Fam = L2Fam,
                             theta = theta, u.theta = u.theta, u.var = u.var,
-                            var = var0, IC.tot = IC.tot, IC.c = IC.c))
+                            var = var0, IC.tot = IC.tot, IC.c = IC))
         }
 
         Infos <- matrix(c("kStepEstimator",
@@ -189,11 +189,7 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
                                       Infos = matrix(c("",""),ncol=2),
                                       Curve =  EuclRandVarList(upd$IC.tot))
                if(withPICList)
-                  pICList[[i]] <- new("InfluenceCurve",
-                                      name = paste(gettext("pIC in step"),i),
-                                      Risks = list(),
-                                      Infos = matrix(c("",""),ncol=2),
-                                      Curve =  EuclRandVarList(upd$IC.c))
+                  pICList[[i]] <- upd$IC.c
                u.var <- upd$u.var
                var0 <- upd$var
            }

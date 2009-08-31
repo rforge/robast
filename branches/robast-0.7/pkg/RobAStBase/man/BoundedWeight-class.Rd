@@ -21,7 +21,7 @@ Class \code{"RobWeight"}, directly.
 }
 \section{Methods}{
   \describe{
-    \item{clip}{\code{signature(object = "BoundedWeight")}:
+    \item{clip}{\code{signature(x1 = "BoundedWeight")}:
       accessor function for slot \code{clip}. }
 
     \item{clip<-}{\code{signature(object = "BoundedWeight", value = "numeric")}:

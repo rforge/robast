@@ -81,7 +81,7 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
     })
 
 ## Access methods
-setMethod("clip", "ContIC", function(object) object@clip)
+setMethod("clip", "ContIC", function(x1) x1@clip)
 setMethod("cent", "ContIC", function(object) object@cent)
 setMethod("neighbor", "ContIC", function(object) ContNeighborhood(radius = object@neighborRadius) )
 

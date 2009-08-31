@@ -5,9 +5,26 @@
     require("distrMod", character = TRUE, quietly = TRUE)
     require("RandVar", character = TRUE, quietly = TRUE)
 }
+
 .onAttach <- function(library, pkg){
     unlockBinding(".RobAStBaseOptions", asNamespace("RobAStBase"))
+    msga <- gettext(
+    "Some functions from pkg's 'stats' and 'graphics' are intentionally masked ---see RobAStBaseMASK().\n"
+                   )
+    msgb <- gettext(
+    "Note that global options are controlled by RobAStBaseoptions() ---c.f. ?\"RobAStBaseoptions\"."
+                   )
+    buildStartupMessage(pkg = "RobAStBase", msga, msgb,
+                        library = library, packageHelp = TRUE
+        #                    , MANUAL="http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf"
+        #                    , VIGNETTE = gettext("Package \"distrDoc\" provides a vignette to this package as well as to several related packages; try vignette(\"distr\").")
+        )
     invisible()
+}
+
+RobAStBaseMASK <- function(library = NULL)
+{
+    infoShow(pkg = "RobAStBase", filename = "MASKING", library = library)
 }
 
 ## neighborhood

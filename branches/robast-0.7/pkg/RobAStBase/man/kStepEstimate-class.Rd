@@ -11,7 +11,6 @@
 \alias{ICList,kStepEstimate-method}
 \alias{pICList}
 \alias{pICList,kStepEstimate-method}
-\alias{start}
 \alias{start,kStepEstimate-method}
 \alias{startval}
 \alias{startval,kStepEstimate-method}

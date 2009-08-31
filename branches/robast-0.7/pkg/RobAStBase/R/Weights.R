@@ -6,7 +6,7 @@ setReplaceMethod("name", "RobWeight",
     })
 
 
-setMethod("clip", "BoundedWeight", function(object) object@clip)
+setMethod("clip", "BoundedWeight", function(x1) x1@clip)
 setReplaceMethod("clip", "BoundedWeight", 
     function(object, value){
         object@clip <- value

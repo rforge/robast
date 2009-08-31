@@ -80,7 +80,7 @@ setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood",
     })
 
 ## Access methods
-setMethod("clip", "TotalVarIC", function(object) object@clipUp-object@clipLo)
+setMethod("clip", "TotalVarIC", function(x1) x1@clipUp-x1@clipLo)
 setMethod("clipLo", "TotalVarIC", function(object) object@clipLo)
 setMethod("clipUp", "TotalVarIC", function(object) object@clipUp)
 setMethod("neighbor", "TotalVarIC", function(object) TotalVarNeighborhood(radius = object@neighborRadius) )

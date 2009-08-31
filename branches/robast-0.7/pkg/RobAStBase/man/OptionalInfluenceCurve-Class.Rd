@@ -4,6 +4,8 @@
 \alias{OptionalpICList-class}
 \alias{StartClass-class}
 \alias{pICList-class}
+\alias{show,pICList-method}
+\alias{show,OptionalpICList-method}
 
 \title{Some helper Classes in package 'RobAStBase'}
 \description{Some helper Classes in package 'RobAStBase':
@@ -24,6 +26,13 @@ Classes \code{OptionalInfluenceCurve}, \code{OptionalpICList},
  \code{pICList} is a descendant of class \code{list} which requires
  its members ---if any--- to be of class \code{pIC}.
 }
+\section{Methods}{
+  \describe{
+    \item{show}{\code{signature(object = "OptionalpICList")}:
+      particular show-method. }
+    \item{show}{\code{signature(object = "pICList")}:
+      particular show-method. }
+}}
 \references{
   Hampel et al. (1986) \emph{Robust Statistics}.
   The Approach Based on Influence Functions. New York: Wiley.

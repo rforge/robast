@@ -131,7 +131,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="clip">
-<param name="Local" value="ContIC-class.html">
+<param name="Local" value="masked-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="clip,ANY-method">
+<param name="Local" value="masked-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="clip,BoundedWeight-method">
@@ -144,6 +148,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="clip,TotalVarIC-method">
 <param name="Local" value="TotalVarIC-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="clip-methods">
+<param name="Local" value="masked-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="clip<-">
@@ -602,6 +610,14 @@
 <param name="Local" value="InfluenceCurve-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="maskedMethods">
+<param name="Local" value="masked-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="MASKING">
+<param name="Local" value="RobAStBaseMASK.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="MEstimate-class">
 <param name="Local" value="MEstimate-class.html">
 </OBJECT>
@@ -838,6 +854,10 @@
 <param name="Local" value="0RobAStBase-package.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="RobAStBaseMASK">
+<param name="Local" value="RobAStBaseMASK.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="RobAStBaseOptions">
 <param name="Local" value="RobAStBaseOptions.html">
 </OBJECT>
@@ -890,6 +910,14 @@
 <param name="Local" value="Neighborhood-class.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="show,OptionalpICList-method">
+<param name="Local" value="OptionalInfluenceCurve-Class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="show,pICList-method">
+<param name="Local" value="OptionalInfluenceCurve-Class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="show,TotalVarIC-method">
 <param name="Local" value="TotalVarIC-class.html">
 </OBJECT>
@@ -923,11 +951,19 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="start">
-<param name="Local" value="kStepEstimate-class.html">
+<param name="Local" value="masked-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="start,ANY-method">
+<param name="Local" value="masked-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="start,kStepEstimate-method">
 <param name="Local" value="kStepEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="start-methods">
+<param name="Local" value="masked-methods.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="StartClass-class">
@@ -1157,6 +1193,14 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="kStepEstimate-class.">
 <param name="Local" value="kStepEstimate-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Masked Methods from Packages 'stats' and 'graphics' in Package 'RobAStBase'">
+<param name="Local" value="masked-methods.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Masking of/by other functions in package "RobAStBase"">
+<param name="Local" value="RobAStBaseMASK.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="MEstimate-class.">

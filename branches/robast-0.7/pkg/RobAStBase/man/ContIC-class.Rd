@@ -6,7 +6,6 @@
 \alias{cent,ContIC-method}
 \alias{cent<-}
 \alias{cent<-,ContIC-method}
-\alias{clip}
 \alias{clip,ContIC-method}
 \alias{clip<-}
 \alias{clip<-,ContIC-method}
@@ -97,7 +96,7 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
     \item{cent<-}{\code{signature(object = "ContIC")}: 
       replacement function for slot \code{cent}. }
 
-    \item{clip}{\code{signature(object = "ContIC")}: 
+    \item{clip}{\code{signature(x1 = "ContIC")}:
       accessor function for slot \code{clip}. }
 
     \item{clip<-}{\code{signature(object = "ContIC")}: 
