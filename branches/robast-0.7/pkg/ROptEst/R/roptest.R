@@ -115,5 +115,6 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                             paste("computation of IC, asvar and asbias via useLast =", useLast)))
     Infos(res) <- Infos
     res@completecases <- completecases
+    res@start <- initial.est
     return(res)
 }
