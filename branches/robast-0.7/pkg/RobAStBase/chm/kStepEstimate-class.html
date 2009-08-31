@@ -8,6 +8,20 @@
 <param name="keyword" value="R:   kStepEstimate-class">
 <param name="keyword" value="R:   steps">
 <param name="keyword" value="R:   steps,kStepEstimate-method">
+<param name="keyword" value="R:   ksteps">
+<param name="keyword" value="R:   ksteps,kStepEstimate-method">
+<param name="keyword" value="R:   uksteps">
+<param name="keyword" value="R:   uksteps,kStepEstimate-method">
+<param name="keyword" value="R:   ICList">
+<param name="keyword" value="R:   ICList,kStepEstimate-method">
+<param name="keyword" value="R:   pICList">
+<param name="keyword" value="R:   pICList,kStepEstimate-method">
+<param name="keyword" value="R:   start">
+<param name="keyword" value="R:   start,kStepEstimate-method">
+<param name="keyword" value="R:   startval">
+<param name="keyword" value="R:   startval,kStepEstimate-method">
+<param name="keyword" value="R:   ustartval">
+<param name="keyword" value="R:   ustartval,kStepEstimate-method">
 <param name="keyword" value="R:   show,kStepEstimate-method">
 <param name="keyword" value=" kStepEstimate-class.">
 </object>
@@ -68,6 +82,28 @@ untransformed estimate.</dd>
 <dt><code>untransformed.asvar</code>:</dt><dd> object of class <code>"OptionalNumericOrMatrix"</code>
 which may contain the asymptotic (co)variance of the untransformed
 estimator. </dd>
+<dt><code>pICList</code></dt><dd>Optional object of class <code>"OptionalpICList"</code>:
+the list of (intermediate) (partial) influence curves used;
+only filled when called from <code>kStepEstimator</code> with argument
+<code>withPICList==TRUE</code>. </dd>
+<dt><code>ICList</code></dt><dd>Optional object of class <code>"OptionalpICList"</code>:
+the list of (intermediate) (total) influence curves used;
+only filled when called from <code>kStepEstimator</code> with argument
+<code>withICList==TRUE</code>. </dd>
+<dt><code>start</code></dt><dd>The argument <code>start</code> &mdash; of class <code>"StartClass"</code>
+used in call to <code>kStepEstimator</code>. </dd>
+<dt><code>startval</code></dt><dd>Object of class <code>matrix</code>:
+the starting value with which the k-step Estimator was initialized
+(in <i>p</i>-space / transformed). </dd>
+<dt><code>ustartval</code></dt><dd>Object of class <code>matrix</code>:
+the starting value with which the k-step Estimator was initialized
+(in <i>k</i>-space / untransformed). </dd>
+<dt><code>ksteps</code></dt><dd>Object of class <code>"OptionalMatrix"</code>:
+the intermediate estimates (in <i>p</i>-space) for the parameter;
+only filled when called from <code>kStepEstimator</code>. </dd>
+<dt><code>uksteps</code></dt><dd>Object of class <code>"OptionalMatrix"</code>:
+the intermediate estimates (in <i>k</i>-space) for the parameter;
+only filled when called from <code>kStepEstimator</code>. </dd>
 </dl>
 
 </p>
@@ -88,6 +124,40 @@ Class <code>"Estimate"</code>, by class <code>"ALEstimate"</code>
 <dl>
 <dt>steps</dt><dd><code>signature(object = "kStepEstimate")</code>: 
 accessor function for slot <code>steps</code>. </dd>
+</p>
+<p>
+<dt>ksteps</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>ksteps</code>; has additional argument
+<code>diff</code>, defaulting to <code>FALSE</code>; if the latter is <code>TRUE</code>,
+the starting value from slot <code>startval</code> is prepended as first column;
+otherwise we return the corresponding increments in each step. </dd>
+</p>
+<p>
+<dt>uksteps</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>uksteps</code>; has additional argument
+<code>diff</code>, defaulting to <code>FALSE</code>; if the latter is <code>TRUE</code>,
+the starting value from slot <code>ustartval</code> is prepended as first column;
+otherwise we return the corresponding increments in each step. </dd>
+</p>
+<p>
+<dt>start</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>start</code>. </dd>
+</p>
+<p>
+<dt>startval</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>startval</code>. </dd>
+</p>
+<p>
+<dt>ustartval</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>startval</code>. </dd>
+</p>
+<p>
+<dt>ICList</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>ICList</code>. </dd>
+</p>
+<p>
+<dt>pICList</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>pICList</code>. </dd>
 </p>
 <p>
 <dt>show</dt><dd><code>signature(object = "kStepEstimate")</code>: a show method; </dd>

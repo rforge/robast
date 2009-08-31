@@ -176,6 +176,27 @@ if(!isGeneric("asbias")){
 if(!isGeneric("steps")){
     setGeneric("steps", function(object) standardGeneric("steps"))
 }
+if(!isGeneric("ksteps")){
+    setGeneric("ksteps", function(object,...) standardGeneric("ksteps"))
+}
+if(!isGeneric("uksteps")){
+    setGeneric("uksteps", function(object,...) standardGeneric("uksteps"))
+}
+if(!isGeneric("start")){
+    setGeneric("start", function(object) standardGeneric("start"))
+}
+if(!isGeneric("startval")){
+    setGeneric("startval", function(object) standardGeneric("startval"))
+}
+if(!isGeneric("ustartval")){
+    setGeneric("ustartval", function(object) standardGeneric("ustartval"))
+}
+if(!isGeneric("ICList")){
+    setGeneric("ICList", function(object) standardGeneric("ICList"))
+}
+if(!isGeneric("pICList")){
+    setGeneric("pICList", function(object) standardGeneric("pICList"))
+}
 if(!isGeneric("Mroot")){
     setGeneric("Mroot", function(object) standardGeneric("Mroot"))
 }

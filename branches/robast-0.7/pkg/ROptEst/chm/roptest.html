@@ -30,6 +30,8 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         useLast = getRobAStBaseOption("kStepUseLast"),
         withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
         IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+        withICList = getRobAStBaseOption("withICList"),
+        withPICList = getRobAStBaseOption("withPICList"),
         na.rm = TRUE, initial.est.ArgList, ...)
 </pre>
 
@@ -100,6 +102,14 @@ the parameter be updated on <i>ker(D)</i>?</td></tr>
 if there is a non-trivial trafo in the model with matrix <i>D</i>,
 the IC to be used for this; if <code>NULL</code> the result of <code>getboundedIC(L2Fam,D)</code> is taken;
 this IC will then be projected onto <i>ker(D)</i>.</td></tr>
+<tr valign="top"><td><code>withPICList</code></td>
+<td>
+logical: shall slot <code>pICList</code> of return value
+be filled?</td></tr>
+<tr valign="top"><td><code>withICList</code></td>
+<td>
+logical: shall slot <code>ICList</code> of return value
+be filled?</td></tr>
 <tr valign="top"><td><code>na.rm</code></td>
 <td>
 logical: if  <code>TRUE</code>, the estimator is evaluated at <code>complete.cases(x)</code>.</td></tr>

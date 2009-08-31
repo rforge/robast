@@ -11,6 +11,8 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
                            useLast = getRobAStBaseOption("kStepUseLast"),
                            withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
                            IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+                           withICList = getRobAStBaseOption("withICList"),
+                           withPICList = getRobAStBaseOption("withPICList"),
                            na.rm = TRUE, startArgList = NULL, ...){
 ## save call
         es.call <- match.call()
@@ -74,6 +76,14 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
         u.theta <- start.val
         theta <- if(is(start.val,"Estimate")) estimate(start.val)
                  else trafoF(u.theta)$fval
+        u.start.val <- matrix(start.val,nrow=1)
+        start.val <- matrix(theta,ncol=1)
+        rownames(u.start.val) <- u.est.names
+        rownames(start.val) <- est.names
+
+### shall intermediate IC's / pIC's be stored?
+        pICList <- if(withPICList) vector("list", steps) else NULL
+        ICList <- if(withICList) vector("list", steps) else NULL
 
         ### update - function
         updateStep <- function(u.theta, theta, IC, L2Fam, Param,
@@ -141,7 +151,7 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
 
                 return(list(IC = IC, Param = Param, L2Fam = L2Fam,
                             theta = theta, u.theta = u.theta, u.var = u.var,
-                            var = var0))
+                            var = var0, IC.tot = IC.tot, IC.c = IC.c))
         }
 
         Infos <- matrix(c("kStepEstimator",
@@ -155,6 +165,10 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
 #        print(IC@Risks$asCov)
 #        print(Risks(IC)$asCov)
 
+        uksteps = matrix(0,ncol=steps, nrow = k)
+        ksteps = matrix(0,ncol=steps, nrow = p)
+        rownames(ksteps) <- est.names
+        rownames(uksteps) <- u.est.names
         if(!is(modifyIC(IC), "NULL") ){
            for(i in 1:steps){
                if(i>1){
@@ -166,11 +180,25 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
                upd <- updateStep(u.theta,theta,IC, L2Fam, Param,
                                  withModif = (steps>1) | useLast,
                                  with.u.var = i==steps)
-               u.theta <- upd$u.theta
-               theta <- upd$theta
+               uksteps[,i] <- u.theta <- upd$u.theta
+               ksteps[,i] <- theta <- upd$theta
+               if(withICList)
+                  ICList[[i]] <- new("InfluenceCurve",
+                                      name = paste(gettext("(total) IC in step"),i),
+                                      Risks = list(),
+                                      Infos = matrix(c("",""),ncol=2),
+                                      Curve =  EuclRandVarList(upd$IC.tot))
+               if(withPICList)
+                  pICList[[i]] <- new("InfluenceCurve",
+                                      name = paste(gettext("pIC in step"),i),
+                                      Risks = list(),
+                                      Infos = matrix(c("",""),ncol=2),
+                                      Curve =  EuclRandVarList(upd$IC.c))
                u.var <- upd$u.var
                var0 <- upd$var
            }
+           if(withICList) ICList <- new("pICList",ICList)
+           if(withPICList) pICList <- new("pICList",pICList)
            if(useLast){
               IC <- upd$IC
               L2Fam <- upd$L2Fam
@@ -187,7 +215,9 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
               stop("slot 'modifyIC' of 'IC' is 'NULL'!")
            upd <- updateStep(u.theta,theta,IC, L2Fam, Param, withModif = FALSE)
            u.theta <- upd$u.theta
+           uksteps <- NULL
            theta <- upd$theta
+           ksteps <- NULL
            u.var <- upd$u.var
            var0 <- upd$var
            if(useLast){
@@ -260,7 +290,10 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
                        nuis.idx = nuis.idx, untransformed.estimate = u.theta,
                        completecases = completecases,
                        untransformed.asvar = u.var,
-                       asbias = asBias, pIC = IC, steps = steps, Infos = Infos))
+                       asbias = asBias, pIC = IC, steps = steps, Infos = Infos,
+                       start = start, startval = start.val, ustartval = u.start.val,
+                       ksteps = ksteps, uksteps = uksteps,
+                       pICList = pICList, ICList = ICList))
 }
 #  (est1.NS <- kStepEstimator(x, IC2.NS, est0, steps = 1))
 

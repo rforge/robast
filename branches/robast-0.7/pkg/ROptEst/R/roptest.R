@@ -7,6 +7,8 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     useLast = getRobAStBaseOption("kStepUseLast"),
                     withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
                     IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+                    withICList = getRobAStBaseOption("withICList"),
+                    withPICList = getRobAStBaseOption("withPICList"),
                     na.rm = TRUE, initial.est.ArgList, ...){
     if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
@@ -96,7 +98,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     }
     res <- kStepEstimator(x, IC = ICstart, start = initial.est, steps = steps, useLast = useLast,
                           withUpdateInKer = withUpdateInKer, IC.UpdateInKer = IC.UpdateInKer,
-                          na.rm = na.rm)
+                          withICList = withICList, withPICList = withPICList, na.rm = na.rm)
     res@estimate.call <- es.call
     Infos <- matrix(c("roptest", 
                       paste(steps, "-step estimate for ", name(L2Fam), sep = "")),

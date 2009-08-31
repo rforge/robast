@@ -12,6 +12,8 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         useLast = getRobAStBaseOption("kStepUseLast"),
         withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
         IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+        withICList = getRobAStBaseOption("withICList"),
+        withPICList = getRobAStBaseOption("withPICList"),
         na.rm = TRUE, initial.est.ArgList, ...)
 }
 \arguments{
@@ -46,6 +48,10 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   \item{IC.UpdateInKer}{if there is a non-trivial trafo in the model with matrix \eqn{D},
   the IC to be used for this; if \code{NULL} the result of \code{getboundedIC(L2Fam,D)} is taken;
   this IC will then be projected onto \eqn{{\rm ker}(D)}{ker(D)}.}
+  \item{withPICList}{logical: shall slot \code{pICList} of return value
+  be filled?}
+  \item{withICList}{logical: shall slot \code{ICList} of return value
+  be filled?}
   \item{na.rm}{logical: if  \code{TRUE}, the estimator is evaluated at \code{complete.cases(x)}.}
   \item{initial.est.ArgList}{a list of arguments to be given to argument \code{start} if the latter
    is a function; this list by default already starts with two unnamed items,

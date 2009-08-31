@@ -10,6 +10,8 @@ kStepEstimator(x, IC, start, steps = 1L,
       useLast = getRobAStBaseOption("kStepUseLast"),
       withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
       IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+      withICList = getRobAStBaseOption("withICList"),
+      withPICList = getRobAStBaseOption("withPICList"),
       na.rm = TRUE, startArgList = NULL, ...)
 }
 \arguments{
@@ -33,6 +35,10 @@ kStepEstimator(x, IC, start, steps = 1L,
   \item{startArgList}{a list of arguments to be given to argument \code{start} if the latter
    is a function; this list by default already starts with two unnamed items,
    the sample \code{x}, and the model \code{eval(CallL2Fam(IC))}.}
+  \item{withPICList}{logical: shall slot \code{pICList} of return value
+  be filled?}
+  \item{withICList}{logical: shall slot \code{ICList} of return value
+  be filled?}
   \item{...}{ additional parameters }
 }
 \details{

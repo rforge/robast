@@ -198,7 +198,21 @@ setClass("TotalVarIC",
 
 ## ALEstimate
 setClassUnion("OptionalInfluenceCurve", c("InfluenceCurve", "NULL"))
-setClass("ALEstimate", 
+setClassUnion("StartClass", c("numeric", "function", "Estimate"))
+setClass("pICList",
+          prototype = prototype(list()),
+            contains = "list",
+            validity = function(object){
+                nrvalues <- length(object)
+                if(nrvalues){
+                for(i in 1:nrvalues)
+                    if(!is(object[[i]], "OptionalInfluenceCurve"))
+                        stop("element ", i, " is no 'OptionalInfluenceCurve'")
+                }
+                return(TRUE)
+            })
+setClassUnion("OptionalpICList", c("pICList", "NULL"))
+setClass("ALEstimate",
          representation(pIC = "OptionalInfluenceCurve",
                         asbias = "OptionalNumeric"),
          prototype(name = "Asymptotically linear estimate",
@@ -219,7 +233,14 @@ setClass("ALEstimate",
                    untransformed.asvar = NULL),
          contains = "Estimate")
 setClass("kStepEstimate", 
-         representation(steps = "integer"),
+         representation(steps = "integer",
+                        pICList = "OptionalpICList",
+                        ICList = "OptionalpICList",
+                        start = "StartClass",
+                        startval = "matrix",
+                        ustartval = "matrix",
+                        ksteps = "OptionalMatrix",
+                        uksteps = "OptionalMatrix"),
          prototype(name = "Asymptotically linear estimate",
                    estimate = numeric(0),
                    samplesize = numeric(0),
@@ -229,6 +250,13 @@ setClass("kStepEstimate",
                    asvar = NULL,
                    asbias = NULL,
                    pIC = NULL,
+                   pICList = NULL,
+                   ICList = NULL,
+                   ksteps = NULL,
+                   uksteps = NULL,
+                   start = NULL,
+                   startval = matrix(0),
+                   ustartval = matrix(0),
                    nuis.idx = NULL,
                    trafo = list(fct = function(x){
                                       list(fval = x, mat = matrix(1))},

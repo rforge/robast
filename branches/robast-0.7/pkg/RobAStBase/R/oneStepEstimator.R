@@ -57,7 +57,8 @@ oneStepEstimator <- function(x, IC, start,
              fixed = fixed, nuis.idx = nuis.idx,
              completecases = completecases,
             estimate.call = es.call, samplesize = nrow(x0), asvar = asVar,
-            asbias = asBias, pIC = IC, steps = 1L, Infos = Infos)
+            asbias = asBias, pIC = IC, steps = 1L, Infos = Infos,
+            start = start, startval = start.val, ustartval = start.val)
     }
 
 

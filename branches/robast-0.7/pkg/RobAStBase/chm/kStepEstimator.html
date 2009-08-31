@@ -27,6 +27,8 @@ kStepEstimator(x, IC, start, steps = 1L,
       useLast = getRobAStBaseOption("kStepUseLast"),
       withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
       IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+      withICList = getRobAStBaseOption("withICList"),
+      withPICList = getRobAStBaseOption("withPICList"),
       na.rm = TRUE, startArgList = NULL, ...)
 </pre>
 
@@ -72,6 +74,14 @@ logical: if  <code>TRUE</code>, the estimator is evaluated at <code>complete.cas
 a list of arguments to be given to argument <code>start</code> if the latter
 is a function; this list by default already starts with two unnamed items,
 the sample <code>x</code>, and the model <code>eval(CallL2Fam(IC))</code>.</td></tr>
+<tr valign="top"><td><code>withPICList</code></td>
+<td>
+logical: shall slot <code>pICList</code> of return value
+be filled?</td></tr>
+<tr valign="top"><td><code>withICList</code></td>
+<td>
+logical: shall slot <code>ICList</code> of return value
+be filled?</td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
  additional parameters </td></tr>

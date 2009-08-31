@@ -3,6 +3,20 @@
 \alias{kStepEstimate-class}
 \alias{steps}
 \alias{steps,kStepEstimate-method}
+\alias{ksteps}
+\alias{ksteps,kStepEstimate-method}
+\alias{uksteps}
+\alias{uksteps,kStepEstimate-method}
+\alias{ICList}
+\alias{ICList,kStepEstimate-method}
+\alias{pICList}
+\alias{pICList,kStepEstimate-method}
+\alias{start}
+\alias{start,kStepEstimate-method}
+\alias{startval}
+\alias{startval,kStepEstimate-method}
+\alias{ustartval}
+\alias{ustartval,kStepEstimate-method}
 \alias{show,kStepEstimate-method}
 
 \title{kStepEstimate-class.}
@@ -47,6 +61,28 @@
     \item{\code{untransformed.asvar}:}{ object of class \code{"OptionalNumericOrMatrix"}
       which may contain the asymptotic (co)variance of the untransformed
       estimator. }
+    \item{\code{pICList}}{Optional object of class \code{"OptionalpICList"}:
+      the list of (intermediate) (partial) influence curves used;
+      only filled when called from \code{kStepEstimator} with argument
+      \code{withPICList==TRUE}. }
+    \item{\code{ICList}}{Optional object of class \code{"OptionalpICList"}:
+      the list of (intermediate) (total) influence curves used;
+      only filled when called from \code{kStepEstimator} with argument
+      \code{withICList==TRUE}. }
+    \item{\code{start}}{The argument \code{start} --- of class \code{"StartClass"}
+    used in call to \code{kStepEstimator}. }
+    \item{\code{startval}}{Object of class \code{matrix}:
+      the starting value with which the k-step Estimator was initialized
+      (in \eqn{p}-space / transformed). }
+    \item{\code{ustartval}}{Object of class \code{matrix}:
+      the starting value with which the k-step Estimator was initialized
+      (in \eqn{k}-space / untransformed). }
+    \item{\code{ksteps}}{Object of class \code{"OptionalMatrix"}:
+    the intermediate estimates (in \eqn{p}-space) for the parameter;
+    only filled when called from \code{kStepEstimator}. }
+    \item{\code{uksteps}}{Object of class \code{"OptionalMatrix"}:
+    the intermediate estimates (in \eqn{k}-space) for the parameter;
+    only filled when called from \code{kStepEstimator}. }
   }
 }
 \section{Extends}{
@@ -57,6 +93,33 @@ Class \code{"Estimate"}, by class \code{"ALEstimate"}
   \describe{
     \item{steps}{\code{signature(object = "kStepEstimate")}: 
       accessor function for slot \code{steps}. }
+
+    \item{ksteps}{\code{signature(object = "kStepEstimate")}:
+      accessor function for slot \code{ksteps}; has additional argument
+      \code{diff}, defaulting to \code{FALSE}; if the latter is \code{TRUE},
+      the starting value from slot \code{startval} is prepended as first column;
+      otherwise we return the corresponding increments in each step. }
+
+    \item{uksteps}{\code{signature(object = "kStepEstimate")}:
+      accessor function for slot \code{uksteps}; has additional argument
+      \code{diff}, defaulting to \code{FALSE}; if the latter is \code{TRUE},
+      the starting value from slot \code{ustartval} is prepended as first column;
+      otherwise we return the corresponding increments in each step. }
+
+    \item{start}{\code{signature(object = "kStepEstimate")}:
+      accessor function for slot \code{start}. }
+
+    \item{startval}{\code{signature(object = "kStepEstimate")}:
+      accessor function for slot \code{startval}. }
+
+    \item{ustartval}{\code{signature(object = "kStepEstimate")}:
+      accessor function for slot \code{startval}. }
+
+    \item{ICList}{\code{signature(object = "kStepEstimate")}:
+      accessor function for slot \code{ICList}. }
+
+    \item{pICList}{\code{signature(object = "kStepEstimate")}:
+      accessor function for slot \code{pICList}. }
 
     \item{show}{\code{signature(object = "kStepEstimate")}: a show method; }
   }

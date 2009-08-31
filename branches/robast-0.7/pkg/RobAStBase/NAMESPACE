@@ -18,6 +18,7 @@ exportClasses("RobAStControl", "RobWeight", "BoundedWeight",
               "BdStWeight", "HampelWeight")
 exportClasses("ALEstimate", "kStepEstimate", "MEstimate")
 exportClasses("cutoff")
+exportClasses("StartClass", "pICList", "OptionalpICList")
 exportMethods("show", 
               "plot")
 exportMethods("type", "radius", "radius<-")
@@ -40,7 +41,7 @@ exportMethods("Curve",
               "neighborRadius", "neighborRadius<-", 
               "clipLo", "clipLo<-", 
               "clipUp", "clipUp<-",
-              "optIC") 
+              "optIC", "start", "startval", "pICList") 
 exportMethods("locMEstimator")
 exportMethods("weight", "weight<-", 
               "getweight", 
@@ -53,6 +54,8 @@ exportMethods("comparePlot")
 exportMethods("pIC", "asbias", 
               "steps", 
               "Mroot","kStepEstimator.start")
+exportMethods("pICList","ICList", "ksteps", "uksteps", 
+              "start", "startval", "ustartval")
 exportMethods("ddPlot")
 exportMethods("cutoff.quantile", "cutoff.quantile<-")
 export("oneStepEstimator", "kStepEstimator")

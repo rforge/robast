@@ -37,6 +37,10 @@ getRobAStBaseOption(x)
   \item{all.verbose:}{argument \code{verbose} passed on by default to many calls of
   \code{optIC}, \code{radiusminimaxIC}, \code{getinfRobIC} etc.; well suited
   for testing purposes.}
+  \item{withPICList:}{logical: shall slot \code{pICList} of return value of \code{kStepEstimator}
+  be filled?}
+  \item{withICList:}{logical: shall slot \code{ICList} of return value of \code{kStepEstimator}
+  be filled?}
 }
 }
 %\references{}
