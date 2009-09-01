@@ -2,7 +2,7 @@
 ## one-step estimator
 ###############################################################################
 
-oneStepEstimator <- function(x, IC, start,
+oneStepEstimator <- function(x, IC, start = NULL,
                              useLast = getRobAStBaseOption("kStepUseLast"),
                              withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
                              IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
@@ -35,6 +35,9 @@ oneStepEstimator <- function(x, IC, start,
               }
         completecases <- complete.cases(x0)
         if(na.rm) x0 <- na.omit(x0)
+
+        if(missing(start)||is.null(start))
+           stop("In case arg 'IC' is not of class 'IC', arg 'start' must not be missing.")
 
         nrvalues <- dimension(IC@Curve)
         start.val <- kStepEstimator.start(start, x=x0, nrvalues = nrvalues, na.rm = na.rm,

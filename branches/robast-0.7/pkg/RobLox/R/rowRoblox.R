@@ -246,6 +246,7 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                       a location and scale estimate.")
                 sd[sd == 0] <- mad0
             }
+            mean.sd <- cbind(mean=mean,sd=sd)
         }else{
             if(nrow(initial.est) != nrow(x) || ncol(initial.est) != 2)
                 stop("'initial.est' has wrong dimension")
@@ -253,6 +254,7 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
             sd <- initial.est[,2]
             if(any(sd <= 0))
                 stop("initial estimate for scale <= 0 which is no valid scale estimate")
+            mean.sd <- initial.est
         }
 
         if(!missing(eps)){
@@ -283,7 +285,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                        completecases = completecases,
                        estimate.call = es.call, estimate = robEst$est,
                        samplesize = ncol(x), steps = k, 
-                       pIC = NULL, Infos = Info.matrix))
+                       pIC = NULL, Infos = Info.matrix,
+                       start = mean.sd, startval = mean.sd, ustartval = mean.sd))
 ## we need a class like "list of estimates" to set asvar and asbias consistently ...
 #            return(new("kStepEstimate", name = "Optimally robust estimate",
 #                       estimate = robEst$est, samplesize = ncol(x), asvar = NULL, 
@@ -337,7 +340,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                        completecases = completecases,
                        estimate.call = es.call, estimate = robEst$est, #
                        samplesize = ncol(x), steps = k, 
-                       pIC = NULL, Infos = Info.matrix))
+                       pIC = NULL, Infos = Info.matrix,
+                       start = mean.sd, startval = mean.sd, ustartval = mean.sd))
 ## we need a class like "list of estimates" to set asvar and asbias consistently ...
 #            return(new("kStepEstimate", name = "Optimally robust estimate",
 #                       estimate = robEst$est, samplesize = ncol(x), asvar = NULL, 
@@ -364,6 +368,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
             if(length(sd) == 1)
                 sd <- rep(sd, length(mean))
 
+            mean.sd <- cbind(mean=mean,sd=sd)
+
             if(!missing(eps)){
                 r <- sqrt(ncol(x))*eps
                 if(fsCor) r <- finiteSampleCorrection(r = r, n = ncol(x), model = "loc")
@@ -384,7 +390,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                        completecases = completecases,
                            estimate.call = es.call, estimate = robEst,
                            samplesize = ncol(x), steps = k, 
-                           pIC = NULL, Infos = Info.matrix))
+                           pIC = NULL, Infos = Info.matrix,
+                       start = mean.sd[,1,drop=F], startval = mean.sd[,1,drop=F], ustartval = mean.sd))
 ## we need a class like "list of estimates" to set asvar and asbias consistently ...
 #                return(new("kStepEstimate", name = "Optimally robust estimate",
 #                           estimate = robEst$est, samplesize = ncol(x), asvar = as.matrix(A - r^2*b^2), 
@@ -429,7 +436,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                        completecases = completecases,
                            estimate.call = es.call, estimate = robEst,
                            samplesize = ncol(x), steps = k, 
-                           pIC = NULL, Infos = Info.matrix))
+                           pIC = NULL, Infos = Info.matrix,
+                       start = mean.sd[,1,drop=F], startval = mean.sd[,1,drop=F], ustartval = mean.sd))
 ## we need a class like "list of estimates" to set asvar and asbias consistently ...
 #                return(new("kStepEstimate", name = "Optimally robust estimate",
 #                           estimate = robEst$est, samplesize = ncol(x), asvar = as.matrix(A - r^2*b^2), 
@@ -460,6 +468,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                 sd <- initial.est
             }
 
+            mean.sd <- cbind(mean=mean,sd=sd)
+
             if(!missing(eps)){
                 r <- sqrt(ncol(x))*eps
                 if(fsCor) r <- finiteSampleCorrection(r = r, n = ncol(x), model = "sc")
@@ -483,7 +493,8 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                        completecases = completecases,
                            estimate.call = es.call, estimate = robEst$est,
                            samplesize = ncol(x), steps = k, 
-                           pIC = NULL, Infos = Info.matrix))
+                           pIC = NULL, Infos = Info.matrix,
+                       start = mean.sd[,2,drop=F], startval = mean.sd[,2,drop=F], ustartval = mean.sd))
 ## we need a class like "list of estimates" to set asvar and asbias consistently ...
 #                return(new("kStepEstimate", name = "Optimally robust estimate",
 #                           estimate = robEst$est, samplesize = ncol(x), asvar = as.matrix(robEst$A - r^2*robEst$b^2), 
@@ -531,7 +542,9 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
                        completecases = completecases,
                            estimate.call = es.call, estimate = robEst$est,
                            samplesize = ncol(x), steps = k, 
-                           pIC = NULL, Infos = Info.matrix))
+                           pIC = NULL, Infos = Info.matrix,
+                       start = mean.sd[,2,drop=F], startval = mean.sd[,2,drop=F],
+                       ustartval = mean.sd))
 ## we need a class like "list of estimates" to set asvar and asbias consistently ...
 #                return(new("kStepEstimate", name = "Optimally robust estimate",
 #                           estimate = robEst$est, samplesize = ncol(x), asvar = as.matrix(robEst$A - r^2*robEst$b^2), 

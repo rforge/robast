@@ -23,7 +23,7 @@ Function for the computation of one-step estimates.
 <h3>Usage</h3>
 
 <pre>
-oneStepEstimator(x, IC, start,
+oneStepEstimator(x, IC, start = NULL,
       useLast = getRobAStBaseOption("kStepUseLast"),
       withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
       IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
@@ -46,7 +46,8 @@ oneStepEstimator(x, IC, start,
 joint length of main and nuisance part of the parameter):
 either a numerical value, or an object of class <code>"Estimate"</code> or
 a function producing either a numerical value, or an object of class <code>"Estimate"</code>
-when evaluated at <code>x,...</code></td></tr>
+when evaluated at <code>x,...</code>; if missing or <code>NULL</code>, we use slot <code>startPar</code>
+of the L2family <code>L2Fam</code> from within <code>IC</code>.</td></tr>
 <tr valign="top"><td><code>useLast</code></td>
 <td>
  which parameter estimate (initial estimate or

@@ -6,7 +6,7 @@
   Function for the computation of k-step estimates.
 }
 \usage{
-kStepEstimator(x, IC, start, steps = 1L,
+kStepEstimator(x, IC, start = NULL, steps = 1L,
       useLast = getRobAStBaseOption("kStepUseLast"),
       withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
       IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
@@ -21,7 +21,8 @@ kStepEstimator(x, IC, start, steps = 1L,
    joint length of main and nuisance part of the parameter):
    either a numerical value, or an object of class \code{"Estimate"} or
    a function producing either a numerical value, or an object of class \code{"Estimate"}
-   when evaluated at \code{x,...}}
+   when evaluated at \code{x,...}; if missing or \code{NULL}, we use slot \code{startPar}
+   of the L2family \code{L2Fam} from within \code{IC}}
   \item{steps}{ integer: number of steps }
   \item{useLast}{ which parameter estimate (initial estimate or
     k-step estimate) shall be used to fill the slots \code{pIC},

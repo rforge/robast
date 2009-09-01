@@ -6,7 +6,7 @@
   Function for the computation of one-step estimates.
 }
 \usage{
-oneStepEstimator(x, IC, start,
+oneStepEstimator(x, IC, start = NULL,
       useLast = getRobAStBaseOption("kStepUseLast"),
       withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
       IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
@@ -19,7 +19,8 @@ oneStepEstimator(x, IC, start,
    joint length of main and nuisance part of the parameter):
    either a numerical value, or an object of class \code{"Estimate"} or
    a function producing either a numerical value, or an object of class \code{"Estimate"}
-   when evaluated at \code{x,...}}
+   when evaluated at \code{x,...}; if missing or \code{NULL}, we use slot \code{startPar}
+   of the L2family \code{L2Fam} from within \code{IC}.}
   \item{useLast}{ which parameter estimate (initial estimate or
     one-step estimate) shall be used to fill the slots \code{pIC},
     \code{asvar} and \code{asbias} of the return value. }

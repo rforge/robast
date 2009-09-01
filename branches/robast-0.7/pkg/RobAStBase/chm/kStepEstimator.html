@@ -23,7 +23,7 @@ Function for the computation of k-step estimates.
 <h3>Usage</h3>
 
 <pre>
-kStepEstimator(x, IC, start, steps = 1L,
+kStepEstimator(x, IC, start = NULL, steps = 1L,
       useLast = getRobAStBaseOption("kStepUseLast"),
       withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
       IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
@@ -48,7 +48,8 @@ kStepEstimator(x, IC, start, steps = 1L,
 joint length of main and nuisance part of the parameter):
 either a numerical value, or an object of class <code>"Estimate"</code> or
 a function producing either a numerical value, or an object of class <code>"Estimate"</code>
-when evaluated at <code>x,...</code></td></tr>
+when evaluated at <code>x,...</code>; if missing or <code>NULL</code>, we use slot <code>startPar</code>
+of the L2family <code>L2Fam</code> from within <code>IC</code></td></tr>
 <tr valign="top"><td><code>steps</code></td>
 <td>
  integer: number of steps </td></tr>

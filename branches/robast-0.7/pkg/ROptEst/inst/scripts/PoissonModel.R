@@ -4,7 +4,7 @@
 require(ROptEst)
 options("newDevice"=TRUE)
 
-distroptions("TruncQuantile", 1e-10) # increases numerical support of Pois; 
+distroptions("TruncQuantile"= 1e-10) # increases numerical support of Pois;
                                      # i.e., increases precision of the 
                                      # computations
 ## generates Poisson Family with theta = 4.5
@@ -292,4 +292,4 @@ confint(est323, symmetricBias())
 confint(est324, symmetricBias())
 confint(est325, symmetricBias())
 
-distroptions("TruncQuantile", 1e-5) # default
+distroptions("TruncQuantile"= 1e-5) # default

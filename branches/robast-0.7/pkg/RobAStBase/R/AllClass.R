@@ -215,7 +215,7 @@ setClass("TotalVarIC",
 
 ## ALEstimate
 setClassUnion("OptionalInfluenceCurve", c("InfluenceCurve", "NULL"))
-setClassUnion("StartClass", c("numeric", "function", "Estimate"))
+setClassUnion("StartClass", c("numeric", "matrix", "function", "Estimate"))
 setClass("pICList",
           prototype = prototype(list()),
             contains = "list",
@@ -271,7 +271,7 @@ setClass("kStepEstimate",
                    ICList = NULL,
                    ksteps = NULL,
                    uksteps = NULL,
-                   start = NULL,
+                   start = matrix(0),
                    startval = matrix(0),
                    ustartval = matrix(0),
                    nuis.idx = NULL,

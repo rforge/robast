@@ -7,7 +7,7 @@
 .deleteDim <- distrMod:::.deleteDim
 
 ### no dispatch on top layer -> keep product structure of dependence
-kStepEstimator <- function(x, IC, start, steps = 1L,
+kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                            useLast = getRobAStBaseOption("kStepUseLast"),
                            withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
                            IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
@@ -63,6 +63,9 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
                 }
         completecases <- complete.cases(x0)
         if(na.rm) x0 <- na.omit(x0)
+
+        if(missing(start)||is.null(start))
+           start <- L2Fam@startPar
 
 ### use dispatch here  (dispatch only on start)
         a.var <- if( is(start, "Estimate")) asvar(start) else NULL
@@ -165,8 +168,8 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
 #        print(IC@Risks$asCov)
 #        print(Risks(IC)$asCov)
 
-        uksteps = matrix(0,ncol=steps, nrow = k)
-        ksteps = matrix(0,ncol=steps, nrow = p)
+        ksteps  <- matrix(0,ncol=steps, nrow = p)
+        uksteps <- matrix(0,ncol=steps, nrow = k)
         rownames(ksteps) <- est.names
         rownames(uksteps) <- u.est.names
         if(!is(modifyIC(IC), "NULL") ){
@@ -210,12 +213,12 @@ kStepEstimator <- function(x, IC, start, steps = 1L,
            if(steps > 1)
               stop("slot 'modifyIC' of 'IC' is 'NULL'!")
            upd <- updateStep(u.theta,theta,IC, L2Fam, Param, withModif = FALSE)
-           u.theta <- upd$u.theta
-           uksteps <- NULL
            theta <- upd$theta
-           ksteps <- NULL
-           u.var <- upd$u.var
+           u.theta <- upd$u.theta
            var0 <- upd$var
+           u.var <- upd$u.var
+           ksteps <- NULL
+           uksteps <- NULL
            if(useLast){
               warning("'useLast = TRUE' only possible if slot 'modifyIC' of 'IC'
                      is filled with some function!")
