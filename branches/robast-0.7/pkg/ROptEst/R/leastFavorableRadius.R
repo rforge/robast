@@ -153,10 +153,10 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                       DistrSymm = L2Fam@distrSymm, 
                                       L2derivSymm = L2derivSymm, 
                                       L2derivDistrSymm= L2derivDistrSymm,                                       
-                                trafo = trafo, z.start = z.start, 
-                                A.start = A.start, 
+                                Finfo = L2Fam@FisherInfo, trafo = trafo,
+                                z.start = z.start, A.start = A.start,
                                 maxiter = maxiter, tol = tol, 
-                                warn = warn)
+                                warn = warn, verbose = verbose)
                         bmin <- biasR$asBias
                         upRisk <- bmin^2
                         upNorm <- biasR$normtype
@@ -183,7 +183,16 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                     eps = eps, MaxIter = MaxIter, warn = warn, 
                                     loNorm = loNorm, upNorm = upNorm)$root
                     options(ow)
-                    cat("current radius:\t", r, "\tinefficiency:\t", ineff, "\n")
+
+                    if(verbose)
+                       cat(paste(rep("-",75), sep = "", collapse = ""),"\n")
+                    cat("current radius:   ", round(radius,4),
+                        "\tinefficiency:   ", round(ineff,4))
+                    if(verbose)
+                       cat(paste("\n",paste(rep("-",75), sep = "",
+                                        collapse = ""),"\n",sep=""))
+                    else cat("\n")
+
                     return(ineff)
                 }
                 if(is.null(z.start)) z.start <- numeric(L2derivDim)

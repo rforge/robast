@@ -13,7 +13,7 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
 \S4method{radiusMinimaxIC}{L2ParamFamily,UncondNeighborhood,asGRisk}(
         L2Fam, neighbor, risk, loRad = 0, upRad = Inf, z.start = NULL, A.start = NULL, 
         upper = NULL, lower = NULL, maxiter = 50, tol = .Machine$double.eps^0.4,
-        warn = FALSE, verbose = NULL, ...)
+        warn = FALSE, verbose = NULL, loRad0 = 1e-3, ...)
 }
 \arguments{
   \item{L2Fam}{ L2-differentiable family of probability measures. }
@@ -29,6 +29,8 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
   \item{tol}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
+  \item{loRad0}{ for numerical reasons: the effective lower bound for the zero search;
+   internally set to \code{max(loRad,loRad0)}.}
   \item{\dots}{further arguments to be passed on to \code{getInfRobIC}}
 }
 \details{

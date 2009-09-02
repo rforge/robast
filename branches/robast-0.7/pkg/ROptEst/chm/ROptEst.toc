@@ -58,6 +58,10 @@
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getAsRisk,asBias,RealRandVariable,TotalVarNeighborhood,ANY-method">
+<param name="Local" value="getAsRisk.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,ANY-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>

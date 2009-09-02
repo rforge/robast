@@ -31,7 +31,7 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
 radiusMinimaxIC(
         L2Fam, neighbor, risk, loRad = 0, upRad = Inf, z.start = NULL, A.start = NULL, 
         upper = NULL, lower = NULL, maxiter = 50, tol = .Machine$double.eps^0.4,
-        warn = FALSE, verbose = NULL, ...)
+        warn = FALSE, verbose = NULL, loRad0 = 1e-3, ...)
 </pre>
 
 
@@ -77,6 +77,10 @@ radiusMinimaxIC(
 <tr valign="top"><td><code>verbose</code></td>
 <td>
  logical: if <code>TRUE</code>, some messages are printed </td></tr>
+<tr valign="top"><td><code>loRad0</code></td>
+<td>
+ for numerical reasons: the effective lower bound for the zero search;
+internally set to <code>max(loRad,loRad0)</code>.</td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 further arguments to be passed on to <code>getInfRobIC</code></td></tr>

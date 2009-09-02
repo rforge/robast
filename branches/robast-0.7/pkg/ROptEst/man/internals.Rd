@@ -44,9 +44,9 @@ These functions are used internally by package \pkg{ROptEst}.}
 .checkPIC(L2deriv, neighbor, Distr, trafo, z, A, w, z.comp, A.comp, ...)
 
 .LowerCaseMultivariate(L2deriv, neighbor, biastype,
-             normtype, Distr, Finfo, trafo, z.start,
-             A.start, z.comp, A.comp, maxiter, tol,
-             verbose = NULL)
+             normtype, Distr, Finfo, trafo, z.start = NULL,
+             A.start = NULL, z.comp = NULL, A.comp = NULL,
+             maxiter, tol, verbose = NULL)
 
 .LowerCaseMultivariateTV(L2deriv, neighbor, biastype,
              normtype, Distr, Finfo, trafo,

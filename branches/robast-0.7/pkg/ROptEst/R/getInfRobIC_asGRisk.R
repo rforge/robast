@@ -102,8 +102,10 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
 ##            print(c(c0,z))
             prec <- max(abs(z - z.old), abs(c0-c0.old))
             if(iter>1){
-               if(verbose)
+               if(verbose && iter%%5==1){
                   cat("current precision in IC algo:\t", prec, "\n")
+                  print(round(c(r=radius,c=c0,z=z),3))
+               }
             }
             if(prec < tol) break
             if(abs(prec.old - prec) < 1e-10){
@@ -172,7 +174,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
              L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE,
              z.start, A.start, upper = NULL, lower = NULL,
              OptOrIter = "iterate",
-             maxiter, tol, warn, verbose = NULL,
+             maxiter, tol, warn, verbose = NULL, withPICcheck = TRUE,
              ...){
 
         if(missing(verbose)|| is.null(verbose))
@@ -401,8 +403,10 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                  prec.old <- prec
                  prec <- max(abs(b-b.old), max(abs(A-A.old)),
                              max(abs(z-z.old), max(abs(a-a.old))))
-                 if(verbose)
-                     cat("current precision in IC algo:\t", prec, "\n")
+                 if(verbose && iter%%5==1){
+                    cat("current precision in IC algo:\t", prec, "\n")
+                    print(round(c(r=radius,b=b,A=A,a=a),3))
+                 }
                  if(prec < tol) break
                  if(abs(prec.old - prec) < 1e-10){
                      cat("algorithm did not converge!\n", "achieved precision:\t", prec, "\n")
@@ -426,7 +430,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         else normtype <- normtype.old
 
         ### issue some diagnostics if wanted
-          if(verbose){
+          if(verbose && withPICcheck){
              cat("Iterations needed: outer (b-loop):",
                   iter," inner (A,a-loop):", iter.In,"\n")
              cat("Precision achieved: all in all (b+A,a-loop):",
@@ -439,7 +443,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                        biastype = biastype, Distr = Distr,
                        V.comp = A.comp, cent = a,
                        stand = A, w = w)
-          if(verbose) print(list(Cov=Cov,A=A,a=a,w=w))
+          if(verbose && withPICcheck) print(list(Cov=Cov,A=A,a=a,w=w))
           if(!is(risk, "asMSE")){
               Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,
                                 biastype = biastype, clip = b, cent = a, stand = A,
@@ -464,7 +468,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                   r = radius,
                                   at = neighbor)))
 
-        if(verbose)
+        if(verbose && withPICcheck)
            .checkPIC(L2deriv = L2deriv, neighbor = neighbor,
                      Distr = Distr, trafo = trafo, z = z, A = A, w = w,
                      z.comp = z.comp, A.comp = A.comp, ...)

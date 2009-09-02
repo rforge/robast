@@ -66,7 +66,7 @@ infoPlot(N0.IC3)
 ## radius minimax IC
 ## (may take quite some time!)
 system.time(N0.IC4 <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(), 
-                risk=asMSE(), loRad=0, upRad=Inf))
+                risk=asMSE(), loRad=0, upRad=Inf, verbose = TRUE))
 checkIC(N0.IC4)
 Risks(N0.IC4)
 plot(N0.IC4) 

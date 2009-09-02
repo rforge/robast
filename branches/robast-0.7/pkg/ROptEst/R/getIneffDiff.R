@@ -67,7 +67,8 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                             Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
                             A.start = A.start, upper = upper.b, lower = lower.b,
                             maxiter = MaxIter,
-                            tol = eps, warn = warn, verbose = verbose, ...)
+                            tol = eps, warn = warn, verbose = verbose,
+                            withPICcheck = FALSE,...)
                 normtype(risk) <- res$normtype
                 std <- if(is(normtype(risk),"QFNorm"))
                           QuadForm(normtype(risk)) else diag(p)
@@ -99,7 +100,13 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                                 biasUp^2*(radius^2-upRad^2))/upRisk}
                 assign("ineff", ineffUp, envir = sys.frame(which = -4))
                 if(verbose)
-                    cat("current radius:\t", radius, "\tMSE-inefficiency difference:\t", ineffUp - ineffLo, "\n")
+                    cat(paste(rep("-",75), sep = "", collapse = ""),"\n",
+                        "current radius:   ", round(radius,4),
+                        "\tMSE-inefficiency difference:   ",
+                        round(ineffUp - ineffLo,4),
+                        paste("\n",paste(rep("-",75), sep = "",
+                                         collapse = ""),"\n",sep="")
+                        )
 
                 return(ineffUp - ineffLo)
             }else{

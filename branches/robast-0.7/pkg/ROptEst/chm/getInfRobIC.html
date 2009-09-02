@@ -87,7 +87,7 @@ getInfRobIC(L2deriv, risk,
                        neighbor,  Distr, DistrSymm, L2derivSymm,
                        L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start,
                        A.start, upper = NULL, lower = NULL, OptOrIter = "iterate",
-                       maxiter, tol, warn, verbose = NULL, ...)
+                       maxiter, tol, warn, verbose = NULL, withPICcheck = TRUE, ...)
 
 ## S4 method for signature 'UnivariateDistribution,asUnOvShoot,UncondNeighborhood':
 getInfRobIC(
@@ -182,6 +182,11 @@ with only one (inner) iteration, if matched to <code>"doubleiterate"</code> maxi
 <td>
  logical: if <code>TRUE</code>, minimal and maximal clipping bound are 
 computed to check if a valid bound was specified. </td></tr>
+<tr valign="top"><td><code>withPICcheck</code></td>
+<td>
+logical: at the end of the algorithm, shall we check
+how accurately this is a pIC; this will only be done if
+<code>withPICcheck &amp;&amp; verbose</code>.</td></tr>
 </table>
 
 

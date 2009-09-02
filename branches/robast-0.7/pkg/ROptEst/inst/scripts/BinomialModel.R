@@ -312,10 +312,23 @@ getRiskIC(IC1, asMSE(), ContNeighborhood(radius = 0.5))
 #            prob
 #prob 0.008544305
 
-###ERROR
+
 (mse1 <- getRiskIC(IC1, asMSE(), TotalVarNeighborhood(radius = 0.5)))
 
-#(bias1 <- getRiskIC(IC1, asBias(), TotalVarNeighborhood()))
+#$asMSE
+#$asMSE$distribution
+#[1] "Binom(25, 0.25)"
+#
+#$asMSE$neighborhood
+#[1] "(uncond.) total variation neighborhood with radius 0.5"
+#
+#$asMSE$radius
+#[1] 0.5
+#
+#$asMSE$value
+#[1] 0.01222674
+
+(bias1 <- getRiskIC(IC1, asBias(), TotalVarNeighborhood()))
 #
 #$asBias
 #$asBias$distribution

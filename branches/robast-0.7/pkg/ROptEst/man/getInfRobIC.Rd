@@ -61,7 +61,7 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
                        neighbor,  Distr, DistrSymm, L2derivSymm,
                        L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start,
                        A.start, upper = NULL, lower = NULL, OptOrIter = "iterate",
-                       maxiter, tol, warn, verbose = NULL, ...)
+                       maxiter, tol, warn, verbose = NULL, withPICcheck = TRUE, ...)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(
                        L2deriv, risk, neighbor, symm, Finfo, trafo,
@@ -103,6 +103,9 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
   \item{checkBounds}{ logical: if \code{TRUE}, minimal and maximal clipping bound are 
       computed to check if a valid bound was specified. }
+  \item{withPICcheck}{logical: at the end of the algorithm, shall we check
+  how accurately this is a pIC; this will only be done if
+  \code{withPICcheck && verbose}.}
 }
 %\details{}
 \value{The optimally robust IC is computed.}

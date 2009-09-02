@@ -78,7 +78,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 ### a starting value in k-space
         u.theta <- start.val
         theta <- if(is(start.val,"Estimate")) estimate(start.val)
-                 else trafoF(u.theta)$fval
+                 else trafoF(u.theta[idx])$fval
         u.start.val <- matrix(start.val,ncol=1)
         start.val <- matrix(theta,ncol=1)
         rownames(u.start.val) <- u.est.names

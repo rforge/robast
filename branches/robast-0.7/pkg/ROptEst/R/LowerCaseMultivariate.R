@@ -1,6 +1,6 @@
 .LowerCaseMultivariate <- function(L2deriv, neighbor, biastype,
-             normtype, Distr, Finfo, trafo, z.start,
-             A.start, z.comp, A.comp, maxiter, tol,
+             normtype, Distr, Finfo, trafo, z.start = NULL,
+             A.start = NULL, z.comp = NULL, A.comp = NULL, maxiter, tol,
              verbose = NULL){
 
         if(missing(verbose)|| is.null(verbose))
@@ -9,7 +9,7 @@
         w <- new("HampelWeight")
 
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
-        if(is.null(A.start)) A.start <- trafo%*%solve(Finfo)
+        if(is.null(A.start)) A.start <- trafo%*%solve(as.matrix(Finfo))
         if(is.null(A.comp)) 
            A.comp <- matrix(TRUE, nrow = nrow(trafo), ncol = ncol(trafo))
         if(is.null(z.comp)) 
@@ -23,7 +23,9 @@
             return(fct(normtype)(Y))
         }
 
+        itermin <- 0
         bmin.fct <- function(param, L2deriv, Distr, trafo){
+            itermin <<- itermin + 1
             p <- nrow(trafo)
             k <- ncol(trafo)
             A <- matrix(0, ncol = k, nrow = p)
@@ -55,7 +57,7 @@
             erg <- E1/sum(diag(stA %*% t(trafo)))
             clip(w0) <- 1/erg
             w <<- w0
-            if(verbose){
+            if(verbose && itermin %% 15 == 1){
                cat("trying to find lower case solution;\n")
                cat("current Lagrange Multiplier value:\n")
                print(list(A=A, z=z,erg=erg))
@@ -72,13 +74,13 @@
                     L2deriv = L2deriv, Distr = Distr, trafo = trafo)
 
 
-        return(list(erg=erg, w=w, normtype = normtype, z.comp = z.comp))
+        return(list(erg=erg, w=w, normtype = normtype, z.comp = z.comp, itermin = itermin))
     }
 
 
 .LowerCaseMultivariateTV <- function(L2deriv, neighbor, biastype,
              normtype, Distr, Finfo, trafo,
-             A.start,  maxiter, tol,
+             A.start = NULL,  maxiter, tol,
              verbose = NULL){
 
         if(missing(verbose)|| is.null(verbose))
@@ -95,7 +97,10 @@
             return(Y*(Y>0))
         }
 
+        itermin <- 0
+
         bmin.fct <- function(param, L2deriv, Distr, trafo){
+            itermin <<- itermin + 1
             p <- 1
             A <- matrix(param, ncol = k, nrow = 1)
          #   print(A)
@@ -130,6 +135,6 @@
         weight(w) <- minbiasweight(w, neighbor = neighbor,
                                            biastype = biastype,
                                            normW = normtype)
-        return(list(A=A,b=b, w=w, a=a))
+        return(list(A=A,b=b, w=w, a=a, itermin = itermin))
     }
 

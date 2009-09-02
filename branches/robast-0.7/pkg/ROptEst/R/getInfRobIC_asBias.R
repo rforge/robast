@@ -177,10 +177,10 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         DA.comp <- abs(trafo) %*% A.comp != 0
-        eerg <- .LowerCaseMultivariate(L2deriv, neighbor, biastype,
-             normtype, Distr, Finfo, trafo, z.start,
-             A.start, z.comp = z.comp, A.comp = DA.comp, maxiter, tol,
-             verbose = verbose)
+        eerg <- .LowerCaseMultivariate(L2deriv = L2deriv, neighbor = neighbor,
+             biastype = biastype, normtype = normtype, Distr = Distr,
+             Finfo = Finfo, trafo, z.start, A.start = A.start, z.comp = z.comp,
+             A.comp = DA.comp, maxiter = maxiter, tol = tol, verbose = verbose)
         erg <- eerg$erg
 
         b <- 1/erg$value

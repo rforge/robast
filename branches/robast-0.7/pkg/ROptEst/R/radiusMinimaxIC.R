@@ -8,7 +8,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
     function(L2Fam, neighbor, risk, loRad = 0, upRad = Inf, z.start = NULL,
              A.start = NULL, upper = NULL, lower = NULL, maxiter = 50,
              tol = .Machine$double.eps^0.4, warn = FALSE,
-             verbose = NULL, ...){
+             verbose = NULL, loRad0 = 1e-3, ...){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         ow <- options("warn")
@@ -30,7 +30,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
             options(warn = -1)
             upper.b <- upper
             lower.b <- lower
-            lower <- if(identical(all.equal(loRad, 0), TRUE)) 1e-4 else loRad
+            lower <- max(loRad, loRad0)
             upper <- if(upRad == Inf) max(lower+2, 4) else upRad
             if(is(neighbor,"TotalVarNeighborhood")) {upper <- upper/2}
             if(identical(all.equal(loRad, 0), TRUE)){
@@ -68,8 +68,8 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                     stand = resUp$A, trafo = trafo)[[1]]
             }
 
-#            print(c(loRad,loRisk,lower,lower.b,upRad,upRisk,upper,upper.b))
             loNorm<- upNorm <- NormType()
+##            print(c(loRad=loRad,loRisk=loRisk,lower=lower,upRad=upRad,upRisk=upRisk,upper=upper))
             leastFavR <- uniroot(getIneffDiff, lower = lower, upper = upper,
                             tol = .Machine$double.eps^0.25, L2Fam = L2Fam, neighbor = neighbor, 
                             upper.b = upper.b, lower.b = lower.b, risk = risk, loRad = loRad, upRad = upRad,
@@ -164,10 +164,10 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                       DistrSymm = L2Fam@distrSymm, 
                                       L2derivSymm = L2derivSymm, 
                                       L2derivDistrSymm= L2derivDistrSymm,
-                                trafo = trafo, z.start = z.start, 
-                                A.start = A.start, 
+                                Finfo = L2Fam@FisherInfo, trafo = trafo,
+                                z.start = z.start, A.start = A.start,
                                 maxiter = maxiter, tol = tol,
-                                warn = warn)
+                                warn = warn, verbose = verbose)
                     bmin <- biasR$asBias
                     upNorm <- biasR$normtype
                     upRisk <- bmin^2
@@ -187,7 +187,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                 stand = resUp$A, trafo = trafo)[[1]]
                     upNorm <- resUp$normtype
                 }
-                leastFavR <- uniroot(getIneffDiff, lower = lower, upper = upper, 
+                leastFavR <- uniroot(getIneffDiff, lower = lower, upper = upper,
                                 tol = .Machine$double.eps^0.25, L2Fam = L2Fam, neighbor = neighbor, 
                                 z.start = z.start, A.start = A.start, upper.b = upper.b,
                                 lower.b = lower.b, risk = risk,

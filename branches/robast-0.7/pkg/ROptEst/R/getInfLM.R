@@ -73,8 +73,10 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
 #                     Distr = Distr, trafo = trafo, z = zc, A = A, w = w,
 #                     z.comp = z.comp, A.comp = A.comp)
 
-            if(verbose && iter < maxiter)
+            if(verbose && iter>1 && iter < maxiter && iter%%5 == 1){
                 cat("current precision in IC algo:\t", prec, "\n")
+                print(round(c(A=A,a=a),3))
+            }
             if(prec < tol) break
             if(iter > maxiter){
                 if(warnit)

@@ -92,6 +92,11 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                          biastype = biastype,
                          clip = c0, cent = z, trafo = trafo, tol.z = tol, symm = S)
             if(max(abs(as.vector(A-A.old)), abs(z-z.old)) < tol) break
+            if(verbose && iter%%5==1){
+               cat("current precision in IC algo:\t",
+                    max(abs(as.vector(A-A.old)), abs(z-z.old)), "\n")
+                    print(round(c(A=A,z=z),3))
+            }
             if(iter > maxiter){
                 cat("maximum iterations reached!\n", "achieved precision:\t", 
                     max(abs(as.vector(A-A.old)), abs(z-z.old)), "\n")
