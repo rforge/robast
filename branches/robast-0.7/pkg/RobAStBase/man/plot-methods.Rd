@@ -62,7 +62,7 @@
                     for plotting points of the second argument in a jittered fashion.}
   \item{which.lbs}{either an integer vector with the indices of the observations
           to be plotted into graph or \code{NULL} --- then no observation is excluded}
-  \item{which.Order}{we order the observations according to the norm given by
+  \item{which.Order}{we order the observations (descending) according to the norm given by
            \code{normtype(object)}; then \code{which.Order}
            either is an integer vector with the indices of the \emph{ordered}
            observations (remaining after a possible reduction by argument \code{which.lbs})

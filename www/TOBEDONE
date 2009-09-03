@@ -1,0 +1,72 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+to be done in packages in RobASt Family of packages
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
++general treatment of scripts 
++produce automatic pdf out of result for later reference
++!!! unit tests -> comparison with former values.
+
++stricter use of encapsulation 
+
+
+###########################################################
+## Testing existing code
+###########################################################
+possibilities:
+1) compare section 1.1.3 in Writing R extensions
+-> subfolder  tests  with .R (oder .Rin) and corresponding .Rout.save files
+-> possibly subfolder tests/Examples with file "pkg"-Ex.Rout.save for 
+   checking examples
+
+2) Package RUnit: 
+   Standard Unit Testing framework, with additional code inspection 
+   and report generation tools
+
+3) Package svUnit: 
+   A complete unit test system and functions to implement its GUI part
+
+
+###########################################################
+## S4 classe(s) with control structures
+###########################################################
+examples:
+- managing tuning parameters for optimization O
+- control of intermediate output - refined verbose 
+  possibilities for degrees of detailedness:
+  -> simple progress bar (with possibly estimated time ahead)
+  -> detailed output of intermediate results
+
+
+###########################################################
+## S4 class  for Risks slot in class InfluenceCurve
+###########################################################
+- up to now use list
+- Problem: no clear-cut structure
+
+
+###########################################################
+## RandVar: Symmetry properties
+###########################################################
+- Move  symmetry properties from RobAStBase to RandVar
+- check operations acting on RVs whether they retain/generate
+  symmetry
+
+###########################################################
+## Bootstrap (RobAStBase)
+###########################################################
+- for approximation of finite-sample covariance / confidence intervals
+- in particular for getting this information in case p<k for k-space
+
+
+###########################################################
+## Model diagnostics resp. robust model diagnostics
+###########################################################
+- qq-Plot mit coloring suspicious value
+
+
+###########################################################
+## k-Step Estimation
+###########################################################
+- graphical display for pICList 
+- (more complete) adjustment RobLox for new slots of kStepEstimate
+

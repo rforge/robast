@@ -288,8 +288,8 @@ setMethod("infoPlot", "IC",
                    data0C <- data0[oN0Class]
 
                    if(!is.null(which.Order)){
-                       oN <-  oN0[which.Order]
-                       oNC <- oN0Class[which.Order]
+                       oN <-  oN0[(n+1)-which.Order]
+                       oNC <- oN0Class[(n+1)-which.Order]
                        data0 <- data[oN]
                        data0C <- data[oNC]
                        absInfo0.data <- absInfo.data[oN]

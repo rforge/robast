@@ -77,7 +77,7 @@ comparePlot(obj1, obj2, ... )
                     for plotting points of the \code{data} argument in a jittered fashion.}
   \item{which.lbs}{either an integer vector with the indices of the observations
           to be plotted into graph or \code{NULL} --- then no observation is excluded}
-  \item{which.Order}{for each of the given ICs, we order the observations
+  \item{which.Order}{for each of the given ICs, we order the observations (descending)
            according to the norm given by the corresponding \code{normtype(object)};
            then \code{which.Order} either is an integer vector with the indices of the \emph{ordered}
            observations (remaining after a possible reduction by argument \code{which.lbs})

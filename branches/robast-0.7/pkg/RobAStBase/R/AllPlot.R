@@ -267,7 +267,7 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
         oN0 <- oN0[oN0 %in% which.lbs]
         y0 <- y0[oN]
         if(!is.null(which.Order)){
-            oN <- oN0[which.Order]
+            oN <- oN0[(n+1)-which.Order]
             y0 <- y[oN]
             absInfo0 <- absInfo[oN]/max(absInfo[oN])
         }

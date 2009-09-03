@@ -273,7 +273,7 @@ setMethod("comparePlot", signature("IC","IC"),
                         absInfo.f <- t(IC1) %*% QF %*% IC1
                         return(sapply(x, absInfo.f@Map[[1]]))}
 
-
+               lD <- length(data)+1
                aI1 <- absInfoEval(x=data,object=obj1)
                aI2 <- absInfoEval(x=data,object=obj2)
                aI3 <- if(is.null(obj3)) NULL else absInfoEval(x=data,object=obj3)
@@ -310,19 +310,19 @@ setMethod("comparePlot", signature("IC","IC"),
                      data04 <- data0[oN4]
                    }
                    if(!is.null(which.Order)){
-                       oN1 <- oN01[which.Order]
-                       oN2 <- oN02[which.Order]
+                       oN1 <- oN01[lD-which.Order]
+                       oN2 <- oN02[lD-which.Order]
                        data01 <- data[oN1]
                        data02 <- data[oN2]
                        aI10 <- aI1[oN1]
                        aI20 <- aI2[oN2]
                        if(!is.null(obj3)){
-                           oN3 <- oN03[which.Order]
+                           oN3 <- oN03[lD-which.Order]
                            data03 <- data[oN3]
                            aI30 <- aI1[oN3]
                        }
                        if(!is.null(obj4)){
-                           oN4 <- oN04[which.Order]
+                           oN4 <- oN04[lD-which.Order]
                            data04 <- data[oN4]
                            aI40 <- aI4[oN4]
                        }
