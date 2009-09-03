@@ -30,7 +30,7 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
   Dissertation. University of Bayreuth.
 }
 \seealso{
-\code{\link[distr]{distr-package}}, \code{\link[distrEx]{distrEx-package}}
+\code{\link[distr]{0distr-package}}, \code{\link[distrEx]{0distrEx-package}}
 }
 \examples{
 library(RandVar)
