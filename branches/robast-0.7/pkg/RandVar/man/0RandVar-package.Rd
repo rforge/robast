@@ -32,6 +32,13 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
 \seealso{
 \code{\link[distr:0distr-package]{distr-package}}, \code{\link[distrEx:0distrEx-package]{distrEx-package}}
 }
+\section{Package versions}{
+Note: The first two numbers of package versions do not necessarily reflect
+ package-individual development, but rather are chosen for the
+ RobAStXXX family as a whole in order to ease updating "depends"
+ information.
+}
+
 \examples{
 library(RandVar)
 #vignette("RandVar")

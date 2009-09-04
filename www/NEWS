@@ -1,0 +1,11 @@
+######################################################################
+#  News: to folder 'www'
+######################################################################
+
+++++ folder data +++++
+
++ added data directory in www
++ data updated
++ added colnames
++ added sample size n = 69 to minKD_norm.RData
++ Illumina results for minimum Kolmogorov distance

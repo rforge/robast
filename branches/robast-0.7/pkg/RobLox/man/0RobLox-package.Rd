@@ -32,6 +32,12 @@ URL: \tab http://robast.r-forge.r-project.org/\cr
   Extended version: \url{http://www.stamats.de/RRlong.pdf}
 }
 \seealso{ \code{\link[RobAStBase]{RobAStBase-package}} }
+\section{Package versions}{
+Note: The first two numbers of package versions do not necessarily reflect
+ package-individual development, but rather are chosen for the
+ RobAStXXX family as a whole in order to ease updating "depends"
+ information.
+}
 \examples{
 library(RobLox)
 ind <- rbinom(100, size=1, prob=0.05) 

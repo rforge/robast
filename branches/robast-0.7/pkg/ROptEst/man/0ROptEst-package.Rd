@@ -34,6 +34,12 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
 \code{\link[distrMod]{distrMod-package}}, \code{\link[RandVar]{RandVar-package}},
 \code{\link[RobAStBase]{RobAStBase-package}}
 }
+\section{Package versions}{
+Note: The first two numbers of package versions do not necessarily reflect
+ package-individual development, but rather are chosen for the
+ RobAStXXX family as a whole in order to ease updating "depends"
+ information.
+}
 \examples{
 library(ROptEst)
 

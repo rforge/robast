@@ -1,5 +1,5 @@
 Package: ROptRegTS
-Version: 0.6.1
+Version: 0.7
 Date: 2009-09-04
 Title: Optimally robust estimation for regression-type models
 Description: Optimally robust estimation for regression-type models using S4 classes and methods

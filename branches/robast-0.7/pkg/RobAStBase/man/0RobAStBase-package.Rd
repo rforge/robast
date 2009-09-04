@@ -33,6 +33,12 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
 \code{\link[distr]{distr-package}}, \code{\link[distrEx]{distrEx-package}},
 \code{\link[distrMod]{distrMod-package}}
 }
+\section{Package versions}{
+Note: The first two numbers of package versions do not necessarily reflect
+ package-individual development, but rather are chosen for the
+ RobAStXXX family as a whole in order to ease updating "depends"
+ information.
+}
 \examples{
 library(RobAStBase)
 
