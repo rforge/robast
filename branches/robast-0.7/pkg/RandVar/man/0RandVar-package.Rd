@@ -10,13 +10,13 @@ Implementation of random variables by means of S4 classes and methods.
 }
 \details{
 \tabular{ll}{
-Package: \tab RandVar\cr
+Package: \tab RandVar \cr
 Version: \tab 0.7 \cr
-Date: \tab 2009-04-14 \cr
+Date: \tab 2009-09-04 \cr
 Depends: \tab R (>= 2.7.0), methods, startupmsg, distr(>= 2.0), distrEx(>=
 2.0)\cr
-LazyLoad: \tab yes\cr
-License: \tab LGPL-3\cr
+LazyLoad: \tab yes \cr
+License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
 }
 }

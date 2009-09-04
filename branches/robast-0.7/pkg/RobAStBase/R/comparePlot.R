@@ -294,33 +294,43 @@ setMethod("comparePlot", signature("IC","IC"),
                    oN4 <-  if(is.null(obj4)) NULL else order(aI40)
 
                    oN01 <- order(aI1)
-                   oN01 <- oN01[oN2 %in% which.lbs]
+                   oN01 <- oN01[oN01 %in% which.lbs]
                    data01 <- data0[oN1]
+                   aI10 <- aI1[oN1]
+
                    oN02 <- order(aI2)
-                   oN02 <- oN01[oN02 %in% which.lbs]
+                   oN02 <- oN02[oN02 %in% which.lbs]
                    data02 <- data0[oN2]
+                   aI20 <- aI2[oN2]
+
                    if(!is.null(obj3)){
                      oN03 <- order(aI3)
-                     oN03 <- oN01[oN03 %in% which.lbs]
+                     oN03 <- oN03[oN03 %in% which.lbs]
                      data03 <- data0[oN3]
+                     aI30 <- aI3[oN3]
                    }
                    if(!is.null(obj4)){
                      oN04 <- order(aI4)
-                     oN04 <- oN01[oN04 %in% which.lbs]
+                     oN04 <- oN04[oN04 %in% which.lbs]
                      data04 <- data0[oN4]
+                     aI40 <- aI4[oN4]
                    }
                    if(!is.null(which.Order)){
+                       lD <- length(oN01)
                        oN1 <- oN01[lD-which.Order]
-                       oN2 <- oN02[lD-which.Order]
                        data01 <- data[oN1]
-                       data02 <- data[oN2]
                        aI10 <- aI1[oN1]
+
+                       oN2 <- oN02[lD-which.Order]
+                       data02 <- data[oN2]
                        aI20 <- aI2[oN2]
+
                        if(!is.null(obj3)){
                            oN3 <- oN03[lD-which.Order]
                            data03 <- data[oN3]
-                           aI30 <- aI1[oN3]
+                           aI30 <- aI3[oN3]
                        }
+
                        if(!is.null(obj4)){
                            oN4 <- oN04[lD-which.Order]
                            data04 <- data[oN4]
