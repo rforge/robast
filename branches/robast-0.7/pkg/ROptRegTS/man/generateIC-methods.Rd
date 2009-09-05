@@ -17,7 +17,7 @@
     generate an object of class \code{"TotalVarIC"}. Rarely called directly. }
 }}
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
-\seealso{\code{\link[ROptEst]{generateIC}}}
+\seealso{\code{\link[ROptEstOld]{generateIC}}}
 \concept{influence curve}
 \keyword{methods}
 \keyword{robust}

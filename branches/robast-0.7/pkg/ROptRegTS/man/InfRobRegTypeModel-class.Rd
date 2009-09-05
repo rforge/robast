@@ -37,7 +37,7 @@ Class \code{"RobModel"}, directly.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{L2RegTypeFamily-class}}, \code{Neighborhood-class},
+\seealso{\code{\link{L2RegTypeFamily-class}}, \code{\link[ROptEstOld]{Neighborhood-class}},
   \code{\link{InfRobRegTypeModel}}}
 \examples{
 new("InfRobRegTypeModel")

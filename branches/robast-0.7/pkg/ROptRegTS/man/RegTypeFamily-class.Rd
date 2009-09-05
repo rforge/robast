@@ -69,7 +69,7 @@ Class \code{"ProbFamily"}, by class \code{"ParamFamily"}.
 %\references{}
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{ParamFamily-class}}
+\seealso{\code{\link[ROptEstOld]{ParamFamily-class}}}
 \examples{
 new("RegTypeFamily")
 }

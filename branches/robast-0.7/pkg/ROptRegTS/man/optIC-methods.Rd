@@ -74,7 +74,7 @@
   Bayreuth: Dissertation.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
-\seealso{\code{\link[ROptEst]{optIC}}}
+\seealso{\code{\link[ROptEstOld]{optIC}}}
 \concept{robust influence curve}
 \concept{influence curve}
 \keyword{methods}

@@ -14,6 +14,6 @@
     regression-type family. }
 }}
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
-\seealso{\code{\link[ROptEst]{radiusMinimaxIC}}}
+\seealso{\code{\link[ROptEstOld]{radiusMinimaxIC}}}
 \keyword{methods}
 \keyword{robust}
