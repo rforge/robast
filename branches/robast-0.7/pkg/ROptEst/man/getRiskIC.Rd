@@ -57,7 +57,7 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
 }
 \author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 \note{This generic function is still under construction.}
-\seealso{\code{\link[ROptEst]{getRiskIC-methods}}, \code{\link[RobAStBase]{InfRobModel-class}}}
+\seealso{\code{\link[ROptEst]{getRiskIC}}, \code{\link[RobAStBase]{InfRobModel-class}}}
 %\examples{}
 \concept{influence curve}
 \keyword{robust}

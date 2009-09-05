@@ -30,9 +30,11 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
   Dissertation. University of Bayreuth.
 }
 \seealso{
-\code{\link[distr]{distr-package}}, \code{\link[distrEx]{distrEx-package}},
-\code{\link[distrMod]{distrMod-package}}, \code{\link[RandVar]{RandVar-package}},
-\code{\link[RobAStBase]{RobAStBase-package}}
+\code{\link[distr:0distr-package]{distr-package}}, 
+\code{\link[distrEx:0distrEx-package]{distrEx-package}},
+\code{\link[distrMod:0distrMod-package]{distrMod-package}}, 
+\code{\link[RandVar:0RandVar-package]{RandVar-package}},
+\code{\link[RobAStBase:0RobAStBase-package]{RobAStBase-package}}
 }
 \section{Package versions}{
 Note: The first two numbers of package versions do not necessarily reflect
