@@ -27,7 +27,7 @@ KolmogorovMinDist(x, D, ...)
   \item{mad0}{ scale estimate used if computed MAD is equal to zero. 
     Median and MAD are used as start parameter for optimization. }
   \item{bg.correct}{ if \code{TRUE} MAS 5.0 background correction is performed;
-    confer \code{\link[affy]{bg.correct.mas}}. }
+    confer \code{\link[affy:bgc]{bg.correct.mas}}. }
   \item{pmcorrect}{ if \code{TRUE} \code{log2(PM/MM)} is used. 
     If \code{FALSE} only \code{log2(PM)} is used. }
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed. }
