@@ -31,7 +31,7 @@ URL: \tab http://robast.r-forge.r-project.org/\cr
   the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
   Extended version: \url{http://www.stamats.de/RRlong.pdf}
 }
-\seealso{ \code{\link[RobAStBase]{RobAStBase-package}} }
+\seealso{ \code{\link[RobAStBase:0RobAStBase-package]{RobAStBase-package}} }
 \section{Package versions}{
 Note: The first two numbers of package versions do not necessarily reflect
  package-individual development, but rather are chosen for the
