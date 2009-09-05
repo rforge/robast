@@ -32,7 +32,7 @@ comparePlot(obj1, obj2, ... )
   \item{withSweave}{logical: if \code{TRUE} (for working with \command{Sweave})
         no extra device is opened}
   \item{main}{logical: is a main title to be used? or \cr
-              just as argument \code{main} in \code{\link{plot.default}}.}
+              just as argument \code{main} in \code{\link[graphics]{plot.default}}.}
   \item{col}{color[s] of ICs in arguments \code{obj1} [,\ldots,\code{obj4}].}
   \item{lwd}{linewidth[s] of ICs in arguments \code{obj1} [,\ldots,\code{obj4}].}
   \item{lty}{line-type[s] of ICs in arguments \code{obj1} [,\ldots,\code{obj4}].}
@@ -42,9 +42,9 @@ comparePlot(obj1, obj2, ... )
                if argument \code{to.draw.arg} is used, this refers to 
                a vector of length \code{length(to.draw.arg)}, the 
                actually plotted dimensions. For further information, see also 
-               description of argument \code{main} in \code{\link{plot.default}}.} 
+               description of argument \code{main} in \code{\link[graphics]{plot.default}}.} 
   \item{sub}{logical: is a sub-title to be used? or \cr
-              just as argument \code{sub} in \code{\link{plot.default}}.}
+              just as argument \code{sub} in \code{\link[graphics]{plot.default}}.}
   \item{tmar}{top margin -- useful for non-standard main title sizes}
   \item{bmar}{bottom margin -- useful for non-standard sub title sizes}
   \item{cex.inner}{magnification to be used for inner titles relative
@@ -130,7 +130,7 @@ one pair for each dimension.
 }
 \author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
-\seealso{\code{\link[distrMod]{L2ParamFamily-class}}, \code{\link{IC-class}}, \code{\link[base]{plot}}}
+\seealso{\code{\link[distrMod]{L2ParamFamily-class}}, \code{\link{IC-class}}, \code{\link[graphics]{plot}}}
 \examples{
 if(require(ROptEst)){
 

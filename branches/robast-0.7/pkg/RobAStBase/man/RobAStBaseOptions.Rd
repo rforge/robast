@@ -46,7 +46,7 @@ getRobAStBaseOption(x)
 %\references{}
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link[base]{options}}, \code{\link[base]{getOption}}}
+\seealso{\code{\link[base]{options}}, \code{\link[base:options]{getOption}}}
 \examples{
 RobAStBaseOptions()
 RobAStBaseOptions("kStepUseLast")
