@@ -27,6 +27,7 @@ parametric families via k-step construction.
 roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est, 
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
         distance = CvMDist, startPar = NULL, verbose = NULL,
+        OptOrIter = "iterate",
         useLast = getRobAStBaseOption("kStepUseLast"),
         withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
         IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
@@ -93,6 +94,17 @@ in which case slot <code>untransformed.estimate</code> is used.</td></tr>
  which parameter estimate (initial estimate or
 k-step estimate) shall be used to fill the slots <code>pIC</code>,
 <code>asvar</code> and <code>asbias</code> of the return value. </td></tr>
+<tr valign="top"><td><code>OptOrIter</code></td>
+<td>
+character; which method to be used for determining Lagrange
+multipliers <code>A</code> and <code>a</code>: if (partially) matched to <code>"optimize"</code>,
+<code>getLagrangeMultByOptim</code> is used; otherwise: by default, or if matched to
+<code>"iterate"</code> or to <code>"doubleiterate"</code>,
+<code>getLagrangeMultByIter</code> is used. More specifically,
+when using <code>getLagrangeMultByIter</code>, and if argument <code>risk</code> is of
+class <code>"asGRisk"</code>, by default and if matched to <code>"iterate"</code>
+we use only one (inner) iteration, if matched to <code>"doubleiterate"</code>
+we use up to <code>Maxiter</code> (inner) iterations.</td></tr>
 <tr valign="top"><td><code>withUpdateInKer</code></td>
 <td>
 if there is a non-trivial trafo in the model with matrix <i>D</i>, shall

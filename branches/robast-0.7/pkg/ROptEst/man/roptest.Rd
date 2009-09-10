@@ -9,6 +9,7 @@
 roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est, 
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
         distance = CvMDist, startPar = NULL, verbose = NULL,
+        OptOrIter = "iterate",
         useLast = getRobAStBaseOption("kStepUseLast"),
         withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
         IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
@@ -43,6 +44,15 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   \item{useLast}{ which parameter estimate (initial estimate or
     k-step estimate) shall be used to fill the slots \code{pIC},
     \code{asvar} and \code{asbias} of the return value. }
+  \item{OptOrIter}{character; which method to be used for determining Lagrange
+  multipliers \code{A} and \code{a}: if (partially) matched to \code{"optimize"},
+  \code{getLagrangeMultByOptim} is used; otherwise: by default, or if matched to
+  \code{"iterate"} or to \code{"doubleiterate"},
+  \code{getLagrangeMultByIter} is used. More specifically,
+  when using \code{getLagrangeMultByIter}, and if argument \code{risk} is of
+  class \code{"asGRisk"}, by default and if matched to \code{"iterate"}
+  we use only one (inner) iteration, if matched to \code{"doubleiterate"}
+  we use up to \code{Maxiter} (inner) iterations.}
   \item{withUpdateInKer}{if there is a non-trivial trafo in the model with matrix \eqn{D}, shall
   the parameter be updated on \eqn{{\rm ker}(D)}{ker(D)}?}
   \item{IC.UpdateInKer}{if there is a non-trivial trafo in the model with matrix \eqn{D},

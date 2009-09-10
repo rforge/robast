@@ -5,8 +5,9 @@
 setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily", 
                                             neighbor = "UncondNeighborhood",
                                             risk = "asGRisk"),
-    function(L2Fam, neighbor, risk, rho, upRad = 1, z.start = NULL, 
-            A.start = NULL, upper = 100, maxiter = 100, 
+    function(L2Fam, neighbor, risk, rho, upRad = 1,
+            z.start = NULL, A.start = NULL, upper = 100,
+            OptOrIter = "iterate", maxiter = 100,
             tol = .Machine$double.eps^0.4, warn = FALSE, verbose = NULL){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
@@ -135,7 +136,8 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                     Distr = L2Fam@distribution, DistrSymm = L2Fam@distrSymm, 
                                     L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                                     Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
-                                    A.start = A.start, upper = upper.b, maxiter = MaxIter, 
+                                    A.start = A.start, upper = upper.b,
+                                    OptOrIter = OptOrIter, maxiter = MaxIter,
                                     tol = eps, warn = warn, verbose = verbose)
                         riskLo <- risk
                         normtype(riskLo) <- resLo$normtype
@@ -166,7 +168,8 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                     Distr = L2Fam@distribution, DistrSymm = L2Fam@distrSymm, 
                                     L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                                     Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
-                                    A.start = A.start, upper = upper.b, maxiter = maxiter, 
+                                    A.start = A.start, upper = upper.b,
+                                    OptOrIter = OptOrIter, maxiter = maxiter,
                                     tol = tol, warn = warn, verbose = verbose)
                          riskUp <- risk
                          normtype(riskUp) <- resUp$normtype
@@ -176,11 +179,14 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                          upNorm <- resUp$normtype                    
                     }
                     leastFavR <- uniroot(getIneffDiff, lower = lower, upper = upper, 
-                                    tol = .Machine$double.eps^0.25, L2Fam = L2Fam, neighbor = neighbor, 
-                                    z.start = z.start, A.start = A.start, upper.b = upper.b, 
+                                    tol = .Machine$double.eps^0.25, L2Fam = L2Fam,
+                                    neighbor = neighbor, z.start = z.start,
+                                    A.start = A.start, upper.b = upper.b,
                                     risk = risk, 
-                                    loRad = loRad, upRad = upRad, loRisk = loRisk, upRisk = upRisk,
-                                    eps = eps, MaxIter = MaxIter, warn = warn, 
+                                    loRad = loRad, upRad = upRad,
+                                    loRisk = loRisk, upRisk = upRisk,
+                                    eps = eps, OptOrIter = OptOrIter,
+                                    MaxIter = MaxIter, warn = warn,
                                     loNorm = loNorm, upNorm = upNorm)$root
                     options(ow)
 

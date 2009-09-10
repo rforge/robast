@@ -273,7 +273,8 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
         }
     }
     if(is.null(lab.pts)) lab.pts <- paste(oN)
-
+    else {lab.pts <- rep(lab.pts, length.out=length(y)
+          lab.pts <- lab.pts[oN]}
 
     dots.without <- dots
     dots.without$col <- dots.without$cex <- dots.without$pch <- NULL

@@ -3,7 +3,8 @@
 ###############################################################################
 setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
     function(model, risk, z.start = NULL, A.start = NULL, upper = 1e4,
-             lower = 1e-4, maxiter = 50, tol = .Machine$double.eps^0.4,
+             lower = 1e-4, OptOrIter = "iterate",
+             maxiter = 50, tol = .Machine$double.eps^0.4,
              warn = TRUE, noLow = FALSE, verbose = NULL, ...){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
@@ -50,7 +51,8 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                             DistrSymm = model@center@distrSymm, L2derivSymm = L2derivSymm,
                             L2derivDistrSymm = L2derivDistrSymm, Finfo = model@center@FisherInfo, 
                             trafo = trafo(model@center@param), z.start = z.start, A.start = A.start, 
-                            upper = upper, lower = lower, maxiter = maxiter, tol = tol, warn = warn,
+                            upper = upper, lower = lower, OptOrIter = OptOrIter,
+                            maxiter = maxiter, tol = tol, warn = warn,
                             verbose = verbose, ...)
                 options(ow)
                 res$info <- c("optIC", res$info)

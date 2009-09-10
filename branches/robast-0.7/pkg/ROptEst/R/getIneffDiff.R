@@ -7,7 +7,7 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                                     risk = "asMSE"),
     function(radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
              z.start = NULL, A.start = NULL, upper.b = NULL, lower.b = NULL,
-             MaxIter, eps, warn,
+             OptOrIter = "iterate", MaxIter, eps, warn,
              loNorm = NULL, upNorm = NULL,
              verbose = NULL, ...){
 
@@ -20,7 +20,8 @@ setMethod("getIneffDiff", signature(radius = "numeric",
             res <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
                         risk = risk, symm = L2Fam@L2derivDistrSymm[[1]], 
                         Finfo = L2Fam@FisherInfo, upper = upper.b, lower = lower.b,
-                        trafo = trafo(L2Fam@param), maxiter = MaxIter, tol = eps, 
+                        trafo = trafo(L2Fam@param),
+                        maxiter = MaxIter, tol = eps,
                         warn = warn, verbose = verbose)
             trafo <- as.vector(trafo(L2Fam@param))
             ineffLo <- (as.vector(res$A)*trafo - res$b^2*(radius^2-loRad^2))/loRisk
@@ -66,7 +67,7 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                             L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                             Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
                             A.start = A.start, upper = upper.b, lower = lower.b,
-                            maxiter = MaxIter,
+                            OptOrIter = OptOrIter, maxiter = MaxIter,
                             tol = eps, warn = warn, verbose = verbose,
                             withPICcheck = FALSE,...)
                 normtype(risk) <- res$normtype

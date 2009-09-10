@@ -13,7 +13,8 @@
 optIC(model, risk, ...)
 
 \S4method{optIC}{InfRobModel,asRisk}(model, risk, z.start = NULL, A.start = NULL,
-                                     upper = 1e4, lower = 1e-4, maxiter = 50,
+                                     upper = 1e4, lower = 1e-4,
+                                     OptOrIter = "iterate", maxiter = 50,
                                      tol = .Machine$double.eps^0.4, warn = TRUE, 
                                      noLow = FALSE, verbose = NULL, ...)
 
@@ -41,6 +42,15 @@ optIC(model, risk, ...)
   \item{Algo}{ "A" or "B". }
   \item{cont}{ "left" or "right". }
   \item{noLow}{ logical: is lower case to be computed? }
+  \item{OptOrIter}{character; which method to be used for determining Lagrange
+  multipliers \code{A} and \code{a}: if (partially) matched to \code{"optimize"},
+  \code{getLagrangeMultByOptim} is used; otherwise: by default, or if matched to
+  \code{"iterate"} or to \code{"doubleiterate"},
+  \code{getLagrangeMultByIter} is used. More specifically,
+  when using \code{getLagrangeMultByIter}, and if argument \code{risk} is of
+  class \code{"asGRisk"}, by default and if matched to \code{"iterate"}
+  we use only one (inner) iteration, if matched to \code{"doubleiterate"}
+  we use up to \code{Maxiter} (inner) iterations.}
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
 }
 \details{ In case of the finite-sample risk \code{"fiUnOvShoot"} one can choose

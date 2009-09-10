@@ -261,8 +261,6 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             #if(is.null(upper))
                upper <- 5*max(solve(Finfo))
 
-            iter.In <- 0
-            prec.In <- 0
             OptIterCall <- numeric(1)
             Cov <- 0
             Risk <- 1e10
@@ -270,67 +268,41 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             a <- as.numeric(A %*% z)
             normtype.opt <- normtype
 
-            asGRiskb <- function(b0){
-               iter <<- iter + 1
-               erg <- getLagrangeMultByOptim(b = b0, L2deriv = L2deriv, risk = risk,
+#            asGRiskb <- function(b0){
+#               iter <<- iter + 1
+            erg <- getLagrangeMultByOptim(b = 1, L2deriv = L2deriv, risk = risk,
                          FI = Finfo, trafo = trafo, neighbor = neighbor,
                          biastype = biastype, normtype = normtype, Distr = Distr,
                          a.start = a, z.start = z, A.start = A, w.start = w, std = std,
                          z.comp = z.comp, A.comp = A.comp,
                          maxiter = round(maxiter/50*iter^5), tol = tol^(iter^5/40),
-                         onesetLM = onesetLM, verbose = verbose, ...)
+                         verbose = verbose, ...)
 
-               w0 <- erg$w
-               A0 <- erg$A
-               a0 <- erg$a
-               z0 <- erg$z
-               std0 <- if(is.null(erg$std)) std else erg$std
-               biastype0 <- erg$biastype
-               normtype.old0 <- erg$normtype.old
-               normtype0 <- erg$normtype
-               risk0 <- erg$risk
-               iter.In <<- iter.In + erg$iter
-#               cat("Iteration ",iter  ,"--innen:", erg$iter,"\n")
-#               print(round(c(maxiter = maxiter/30*iter, tol = tol^(iter/15)),4))
-               Cov0 <- getInfV(L2deriv = L2deriv, neighbor = neighbor,
+            w <- erg$w
+            A <- erg$A
+            a <- erg$a
+            z <- erg$z
+            b <- erg$b
+            OptIterCall <- erg$call
+            std <- if(is.null(erg$std)) std else erg$std
+            biastype <- erg$biastype
+            normtype.old <- erg$normtype.old
+            normtype <- erg$normtype
+            risk <- erg$risk
+            iter <- erg$iter
+            prec <- prec.In <- iter.In <- NULL
+            Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor,
                               biastype = biastype, Distr = Distr,
-                              V.comp = A.comp, cent = a0,
-                              stand = A0, w = w0)
+                              V.comp = A.comp, cent = a,
+                              stand = A, w = w)
 
-               if(!is(risk, "asMSE")){
-                   Risk0 <- getAsRisk(risk = risk0, L2deriv = L2deriv, neighbor = neighbor,
-                                     biastype = biastype0, clip = b0, cent = a0, stand = A0,
+            if(!is(risk, "asMSE")){
+                   Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,
+                                     biastype = biastype, clip = b, cent = a, stand = A,
                                      trafo = trafo)
-               }else{
-                   Risk0 <- sum(diag(std0%*%Cov0)) + radius^2 * b0^2
-               }
-               Risk <<- Risk0
-#               print("A")
-#               print(list(Risk=Risk0,A=A0,a=a0,z=z0,b=b0))
-#               print("...")
-               w <<- w0
-               A <<- A0
-               a <<- a0
-               z <<- z0
-               b <<- b0
-               std <<- std0
-               biastype <<- biastype0
-               normtype.old <<- normtype.old0
-               normtype <<- normtype0
-               risk <<- risk0
-               prec.In <<- erg$prec
-               OptIterCall <<- erg$call
-               Cov <<- Cov0
-#               print(c(b0,Risk0))
-               return((Risk0-sum(diag(std0%*%A0%*%t(trafo))))^2)
+            }else{
+                   Risk <- sum(diag(std%*%Cov)) + radius^2 * b^2
             }
-            tol0 <- tol^.5
-#            f.l <- asGRiskb(lower)
-#            f.u <- asGRiskb(upper)
-
-#            du <- uniroot(asGRiskb, interval = c(lower,upper), tol = tol0,
-#                           f.lower=f.l, f.upper=f.u)
-            du <- optimize(asGRiskb, interval = c(1e-4,1e8), tol = tol0^2)
         }else{
             repeat{
                 iter <- iter + 1

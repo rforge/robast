@@ -143,6 +143,7 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
         normtype1.opt <- normtype1.opt.old <- normtype
         w1.opt <- w1 <- w.start
         z1.opt <- numeric(k)
+        b.opt <- b
 
         optimfct <- function(A0vec){
             iter1 <<- iter1 + 1
@@ -161,14 +162,27 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
             std0 <- stdC
             w0 <- w1
             risk0 <- risk1
+            b0 <- b
             
+            if(is(risk0,"asMSE")){
+            funint.opt <-
+                   function(b1){
+                      -getInfGamma(L2deriv = L2deriv, risk = risk0,
+                                 neighbor = neighbor, biastype = biastype,
+                                 Distr = Distr, stand = A0, cent = z0, clip = b1,
+                                 power = 2)+radius(neighbor)^2*b1^2
+                      }
+
+            b0 <- optimize(funint.opt, interval=c(1e-8,1e8))$minimum
+            }
+
             ### determine corresponding weight
             if(is(neighbor,"ContNeighborhood")){
-                clip(w0) <- b
+                clip(w0) <- b0
                 cent(w0) <- as.numeric(z0)
                 stand(w0) <- A0
             }else if(is(neighbor,"TotalVarNeighborhood")){
-                clip(w0) <- if(.isVirginW(w0)) c(-b,b)/2 else c(0,b)+a0
+                clip(w0) <- if(.isVirginW(w0)) c(-b0,b0)/2 else c(0,b0)+a0
                 stand(w0) <- A0
             }
             weight(w0) <- getweight(w0, neighbor = neighbor, biastype = biastype,
@@ -207,7 +221,7 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
                           ## ~ E |Y_A|_Q^2 / 2
                           getInfGamma(L2deriv = L2deriv, risk = riskA,
                                  neighbor = neighbor, biastype = biastype,
-                                 Distr = Distr, stand = A0, cent = z0, clip = b,
+                                 Distr = Distr, stand = A0, cent = z0, clip = b0,
                                  power = 2)/2 -
                            # ~ - E[|Y_A|_Q^2 (1-w_b(|Y_A|_Q))^2]/2
                            sum(diag(std0%*%A0%*%t(trafo)) ))
@@ -222,7 +236,7 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
                               return(Y^2*(Y<0))
                               },  useApply = FALSE)/2)
 
-            }else if(is(risk0,"asMSE")){
+            }else if(is(riskA,"asMSE")){
                val <- (E(object = Distr, fun = function(x){
                           X <- evalRandVar(L2deriv, as.matrix(x))[,,1] - z0
                           Y <- A0 %*% X
@@ -252,11 +266,17 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
                optV <<- val
                w1.opt <<- w0
                z1.opt <<- z0
+               b.opt <<- b0
                normtype1.opt.old <<- normtype1.opt
                normtype1.opt <<- normtype1
                risk1.opt <<- risk0
                stdC.opt <<- stdC
             }
+
+            if(verbose && iter1>1 && iter1 < maxiter && iter1%%8 == 1){
+                print(round(c(val=val,A=A0,a=a0,b=b0),4))
+            }
+
             return(val)
         }
 
@@ -273,7 +293,7 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
         a <- as.numeric(Aoptvec[(p*k)+(1:p)])
         z <- z1.opt
         w <- w1.opt
-
+        b <- b.opt
 
         return(list(A = A, a = a, z = z, w = w,
                     biastype = biastype, normtype = normtype1.opt,

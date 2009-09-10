@@ -148,13 +148,14 @@ of probability measures. </td></tr>
 <tr valign="top"><td><code>OptOrIter</code></td>
 <td>
 character; which method to be used for determining Lagrange
-multipliers <code>A</code> and <code>a</code>: if (partially) matched to <code>"optimize"</code>
-(and by default) <code>getLagrangeMultByOptim</code> is used; else if matched to
-<code>"iterate"</code>, (or in case <code>risk</code> is of class <code>"asGRisk"</code>
-<code>"doubleiterate"</code>) <code>getLagrangeMultByIter</code> is used &mdash;
-in case <code>risk</code> is of class <code>"asGRisk"</code> if matched to <code>"iterate"</code>
-with only one (inner) iteration, if matched to <code>"doubleiterate"</code> maximally
-<code>Maxiter</code> (inner) iterations.</td></tr>
+multipliers <code>A</code> and <code>a</code>: if (partially) matched to <code>"optimize"</code>,
+<code>getLagrangeMultByOptim</code> is used; otherwise: by default, or if matched to
+<code>"iterate"</code> or to <code>"doubleiterate"</code>,
+<code>getLagrangeMultByIter</code> is used. More specifically,
+when using <code>getLagrangeMultByIter</code>, and if argument <code>risk</code> is of
+class <code>"asGRisk"</code>, by default and if matched to <code>"iterate"</code>
+we use only one (inner) iteration, if matched to <code>"doubleiterate"</code>
+we use up to <code>Maxiter</code> (inner) iterations.</td></tr>
 <tr valign="top"><td><code>maxiter</code></td>
 <td>
  the maximum number of iterations. </td></tr>

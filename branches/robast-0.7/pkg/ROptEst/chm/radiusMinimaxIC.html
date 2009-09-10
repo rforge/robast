@@ -30,7 +30,8 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
 ## S4 method for signature 'L2ParamFamily,UncondNeighborhood,asGRisk':
 radiusMinimaxIC(
         L2Fam, neighbor, risk, loRad = 0, upRad = Inf, z.start = NULL, A.start = NULL, 
-        upper = NULL, lower = NULL, maxiter = 50, tol = .Machine$double.eps^0.4,
+        upper = NULL, lower = NULL, OptOrIter = "iterate",
+        maxiter = 50, tol = .Machine$double.eps^0.4,
         warn = FALSE, verbose = NULL, loRad0 = 1e-3, ...)
 </pre>
 
@@ -65,6 +66,17 @@ radiusMinimaxIC(
 <tr valign="top"><td><code>lower</code></td>
 <td>
  lower bound for the optimal clipping bound. </td></tr>
+<tr valign="top"><td><code>OptOrIter</code></td>
+<td>
+character; which method to be used for determining Lagrange
+multipliers <code>A</code> and <code>a</code>: if (partially) matched to <code>"optimize"</code>,
+<code>getLagrangeMultByOptim</code> is used; otherwise: by default, or if matched to
+<code>"iterate"</code> or to <code>"doubleiterate"</code>,
+<code>getLagrangeMultByIter</code> is used. More specifically,
+when using <code>getLagrangeMultByIter</code>, and if argument <code>risk</code> is of
+class <code>"asGRisk"</code>, by default and if matched to <code>"iterate"</code>
+we use only one (inner) iteration, if matched to <code>"doubleiterate"</code>
+we use up to <code>Maxiter</code> (inner) iterations.</td></tr>
 <tr valign="top"><td><code>maxiter</code></td>
 <td>
  the maximum number of iterations </td></tr>

@@ -15,7 +15,7 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
 \S4method{getIneffDiff}{numeric,L2ParamFamily,UncondNeighborhood,asMSE}(
           radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
           z.start = NULL, A.start = NULL, upper.b = NULL, lower.b = NULL,
-          MaxIter, eps, warn, loNorm = NULL, upNorm = NULL,
+          OptOrIter = "iterate", MaxIter, eps, warn, loNorm = NULL, upNorm = NULL,
           verbose = NULL, ...)
 }
 \arguments{
@@ -31,6 +31,15 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{upper.b}{ upper bound for the optimal clipping bound. }
   \item{lower.b}{ lower bound for the optimal clipping bound. }
+  \item{OptOrIter}{character; which method to be used for determining Lagrange
+  multipliers \code{A} and \code{a}: if (partially) matched to \code{"optimize"},
+  \code{getLagrangeMultByOptim} is used; otherwise: by default, or if matched to
+  \code{"iterate"} or to \code{"doubleiterate"},
+  \code{getLagrangeMultByIter} is used. More specifically,
+  when using \code{getLagrangeMultByIter}, and if argument \code{risk} is of
+  class \code{"asGRisk"}, by default and if matched to \code{"iterate"}
+  we use only one (inner) iteration, if matched to \code{"doubleiterate"}
+  we use up to \code{Maxiter} (inner) iterations.}
   \item{MaxIter}{ the maximum number of iterations }
   \item{eps}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }  

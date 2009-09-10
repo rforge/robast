@@ -6,7 +6,8 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                        neighbor = "UncondNeighborhood",
                                        risk = "asGRisk"),
     function(L2Fam, neighbor, risk, loRad = 0, upRad = Inf, z.start = NULL,
-             A.start = NULL, upper = NULL, lower = NULL, maxiter = 50,
+             A.start = NULL, upper = NULL, lower = NULL,
+             OptOrIter = "iterate", maxiter = 50,
              tol = .Machine$double.eps^0.4, warn = FALSE,
              verbose = NULL, loRad0 = 1e-3, ...){
         if(missing(verbose)|| is.null(verbose))
@@ -60,7 +61,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                 resUp <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
                             risk = risk, symm = L2Fam@L2derivDistrSymm[[1]],
                             Finfo = L2Fam@FisherInfo, upper = upper.b, lower=lower.b,
-                            trafo = trafo, maxiter = maxiter, tol = tol, 
+                            trafo = trafo, maxiter = maxiter, tol = tol,
                             warn = warn, verbose = verbose)
                 upRisk <- getAsRisk(risk = risk, L2deriv = L2Fam@L2derivDistr[[1]], 
                                     neighbor = neighbor, biastype = biastype, 
@@ -145,7 +146,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                 L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                                 Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
                                 A.start = A.start, upper = upper.b, lower = lower.b,
-                                maxiter = maxiter,
+                                OptOrIter = OptOrIter, maxiter = maxiter,
                                 tol = tol, warn = warn, verbose = verbose, ...)
                     riskLo <- risk
                     normtype(riskLo) <- resLo$normtype
@@ -178,7 +179,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                 L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                                 Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
                                 A.start = A.start, upper = upper.b, lower = lower.b,
-                                maxiter = maxiter,
+                                OptOrIter = OptOrIter, maxiter = maxiter,
                                 tol = tol, warn = warn, verbose = verbose, ...)
                     riskUp <- risk
                     normtype(riskUp) <- resUp$normtype
@@ -192,14 +193,15 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                 z.start = z.start, A.start = A.start, upper.b = upper.b,
                                 lower.b = lower.b, risk = risk,
                                 loRad = loRad, upRad = upRad, loRisk = loRisk, upRisk = upRisk, 
-                                eps = tol, MaxIter = maxiter, warn = warn, 
+                                OptOrIter = OptOrIter, eps = tol, MaxIter = maxiter, warn = warn,
                                 loNorm = loNorm, upNorm = upNorm, verbose = verbose, ...)$root
                 neighbor@radius <- leastFavR
                 res <- getInfRobIC(L2deriv = L2deriv, neighbor = neighbor, risk = risk, 
                             Distr = L2Fam@distribution, DistrSymm = L2Fam@distrSymm, 
                             L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                             Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
-                            A.start = A.start, upper = upper.b, lower = lower.b, maxiter = maxiter,
+                            A.start = A.start, upper = upper.b, lower = lower.b,
+                            OptOrIter = OptOrIter, maxiter = maxiter,
                             tol = tol, warn = warn, verbose = verbose, ...)
                 res$info <- c("radiusMinimaxIC", paste("radius minimax IC for radius interval [", 
                                 round(loRad, 3), ", ", round(upRad, 3), "]", sep=""))
