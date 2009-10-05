@@ -110,7 +110,6 @@ setMethod("qqplot", signature(x = "ANY",
       mcl$col.pch <- .fadeColor(col.pch,wx^exp.fadcol.pch, bg = bg)
     }
 
-    print(mcl)
     return(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
             args=mcl))
     })
