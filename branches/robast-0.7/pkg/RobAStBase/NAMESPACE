@@ -56,7 +56,7 @@ exportMethods("pIC", "asbias",
               "Mroot","kStepEstimator.start")
 exportMethods("pICList","ICList", "ksteps", "uksteps", 
               "start", "startval", "ustartval")
-exportMethods("ddPlot")
+exportMethods("ddPlot", "qqplot")
 exportMethods("cutoff.quantile", "cutoff.quantile<-")
 export("oneStepEstimator", "kStepEstimator")
 export("ContNeighborhood", "TotalVarNeighborhood") 
