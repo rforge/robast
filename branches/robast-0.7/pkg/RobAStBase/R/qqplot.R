@@ -46,13 +46,11 @@ setMethod("qqplot", signature(x = "ANY",
 
 
 ## into RobAStBase
-setMethod("qqplot", signature(x = "ANY",
-                              y = "InfRobModel"), function(x, y,
-                              n = length(x), withIdLine = TRUE, withConf = TRUE,
-             withConf.pw  = withConf,   ### shall pointwise confidence lines be plotted
-             withConf.sim = withConf,   ### shall simultaneous confidence lines be plotted
-    plot.it = TRUE, xlab = deparse(substitute(x)),
-    ylab = deparse(substitute(y)), ..., n.adj = TRUE){
+setMethod("qqplot", signature(x = "ANY", y = "InfRobModel"),
+      function(x, y, n = length(x), withIdLine = TRUE, withConf = TRUE,
+               withConf.pw  = withConf,  withConf.sim = withConf,
+               plot.it = TRUE, xlab = deparse(substitute(x)),
+               ylab = deparse(substitute(y)), ..., n.adj = TRUE){
 
     mc <- match.call(call = sys.call(sys.parent(1)))
     if(missing(xlab)) mc$xlab <- as.character(deparse(mc$x))
@@ -68,10 +66,10 @@ setMethod("qqplot", signature(x = "ANY",
     mcl$n <- n
     mcl$y <- y@center
 
-    L2D <- L2deriv(y@center)
     FI <- PosSemDefSymmMatrix(FisherInfo(y@center))
-    L2Dx <- sapply(x, function(z) evalRandVar(L2D,z)[[1]])
-    scx <-  solve(sqrt(FI),matrix(L2Dx,ncol=length(x)))
+    L2D <- as(diag(nrow(FI)) %*% L2deriv(y@center), "EuclRandVariable")
+    L2Dx <- evalRandVar(L2D,matrix(x))[,,1]
+    scx <-  solve(sqrt(FI),L2Dx)
     xD <- fct(distance)(scx)
     x.cex <- 3/(1+log(1+xD))
     mcl$cex.pch <- x.cex

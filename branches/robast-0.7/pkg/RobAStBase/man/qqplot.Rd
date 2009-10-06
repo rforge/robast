@@ -124,9 +124,10 @@ for negative exponents the same is true for decreasing weight; higher
 
 \examples{
 qqplot(r(Norm(15,sqrt(30)))(40), Chisq(df=15))
-RobM <- InfRobModel(center = NormLocationFamily(),
+RobM <- InfRobModel(center = NormLocationFamily(mean=13,sd=sqrt(28)),
                     neighbor = ContNeighborhood(radius = 0.4))
-qqplot(r(Norm(15,sqrt(30)))(40), RobM)
+x <- r(Norm(15,sqrt(30)))(20)
+qqplot(x, RobM)
 ## further examples for ANY,kStepEstimator-method
 ## in example to roptest() in package ROptEst
 }
