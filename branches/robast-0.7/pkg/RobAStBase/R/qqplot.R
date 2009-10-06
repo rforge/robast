@@ -95,8 +95,8 @@ setMethod("qqplot", signature(x = "ANY",
     mcl$y <- L2Fam
 
     if(is(IC,"HampIC")){
-      w.fct <- weight(weight(IC))
-      wx <- sapply(x,w.fct)
+      w.fct <- function(x) sapply(x, weight(weight(IC)))
+      wx <- w.fct(x)
       mcl$order.traf <- function(x) 1/w.fct(x)
 
       cex.lbl <- if(is.null(mcl$cex.lbl))  par("cex")  else eval(mcl$cex.lbl)
