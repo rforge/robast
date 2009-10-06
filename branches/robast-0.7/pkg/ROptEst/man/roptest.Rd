@@ -241,7 +241,7 @@ qqplot(chem, robest, cex.pch=1.5, exp.cex2.pch = -.25,
        exp.fadcol.pch = .55, withLab = TRUE, which.Order=1:4,
        exp.cex2.lbl = .12,exp.fadcol.lbl = .45,
        nosym.pCI = TRUE, adj.lbl=c(1.7,.2),
-       exact.pCI = FALSE)
+       exact.pCI = FALSE, log ="xy")
 
 ## finite-sample correction
 if(require(RobLox)){
