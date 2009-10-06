@@ -14,6 +14,14 @@ version 0.7
 user-visible CHANGES:
 
 + enhanced plotting:
+  * new diagnostic function qqplot to check the quality of a model fit
+    + special methods for second argument of class 
+      "RobModel", "InfRobModel", and "kStepEstimate"
+    + comes with corresponding (pointwise/simultaneous) confidence intervals
+    + for "RobModel", "InfRobModel": sizing of points and labels according to 
+      Mahalanobis size of points / any other distance function
+    + for "kStepEstimate": fading / sizing of points and labels according to 
+      weight of corresponding [p]IC
   * suggestions by A. Unwin, Augsburg;
     plot for ICs, infoPlot, and comparePlot may be restricted to selected subplots;
   * ylim can now be matrix-valued...
@@ -25,7 +33,7 @@ user-visible CHANGES:
     - which.lbs : select some data indices for plotting, 
     - which.Order : select some order statistics from the remaining data 
                     for plotting (ordered; w.r.t. norm of IC) (in descending order)
-    - return.Order : shall ordering be printed out?
+    - return.Order : shall ordering be printed out?  
 + documentation
   * added some UML class diagrams
 + checking functions

@@ -2,10 +2,6 @@
 to be done in package RobAStBase
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-+ model diagnostics: qqplot adapted for robust model fits
-  (choose color of plots according to robust distances) 
-  (see distrMod for further ideas)
-
 + MEstimator (repeats k-steps until convergence)
 
 + S4 class(es) for slot Risk, with corresponding scalable output

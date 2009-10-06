@@ -20,13 +20,20 @@ setMethod("qqplot", signature(x = "ANY",
                               n = length(x), withIdLine = TRUE, withConf = TRUE,
     withConf.pw  = withConf,  withConf.sim = withConf,
     plot.it = TRUE, xlab = deparse(substitute(x)),
-    ylab = deparse(substitute(y)), ..., distance = NormType()){
+    ylab = deparse(substitute(y)), ..., distance = NormType(),
+    n.adj = TRUE){
 
     mc <- match.call(call = sys.call(sys.parent(1)))
     if(missing(xlab)) mc$xlab <- as.character(deparse(mc$x))
     if(missing(ylab)) mc$ylab <- as.character(deparse(mc$y))
     mcl <- as.list(mc)[-1]
 
+    if(is.null(mcl$n.CI)) mcl$n.CI <- n
+    if(n.adj){
+       r <- radius(neighbor(y))
+       n <- floor((1-r)*n)
+    }
+    mcl$n <- n
     mcl$y <- y@center
 
     xD <- fct(distance)(x)
@@ -45,7 +52,7 @@ setMethod("qqplot", signature(x = "ANY",
              withConf.pw  = withConf,   ### shall pointwise confidence lines be plotted
              withConf.sim = withConf,   ### shall simultaneous confidence lines be plotted
     plot.it = TRUE, xlab = deparse(substitute(x)),
-    ylab = deparse(substitute(y)), ...){
+    ylab = deparse(substitute(y)), ..., n.adj = TRUE){
 
     mc <- match.call(call = sys.call(sys.parent(1)))
     if(missing(xlab)) mc$xlab <- as.character(deparse(mc$x))
@@ -53,6 +60,12 @@ setMethod("qqplot", signature(x = "ANY",
     mcl <- as.list(mc)[-1]
     if(is.null(mcl$distance)) distance <- NormType()
 
+    if(is.null(mcl$n.CI)) mcl$n.CI <- n
+    if(n.adj){
+       r <- radius(neighbor(y))
+       n <- floor((1-r/sqrt(n))*n)
+    }
+    mcl$n <- n
     mcl$y <- y@center
 
     L2D <- L2deriv(y@center)
@@ -95,7 +108,13 @@ setMethod("qqplot", signature(x = "ANY",
     mcl$y <- L2Fam
 
     if(is(IC,"HampIC")){
-      w.fct <- function(x) sapply(x, weight(weight(IC)))
+      dim0 <- nrow(FisherInfo(L2Fam))
+      L <- as(diag(dim0)%*%L2Fam@L2deriv, "EuclRandVariable")
+      L.fct <- function(x) evalRandVar(L,x)
+
+      w.fct <- function(x)
+               weight(weight(IC))(L.fct(matrix(x))[,,1])
+
       wx <- w.fct(x)
       mcl$order.traf <- function(x) 1/w.fct(x)
 

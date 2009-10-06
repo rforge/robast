@@ -36,7 +36,7 @@ USER-VISIBLE CHANGES:
 *** others
 
 + added argument fsCor to function roptest enabling a finite-sample correction of the radius ...
-
++ added QQ plots in examples to roptest
 
 SCRIPTS
 

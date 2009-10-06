@@ -7,12 +7,13 @@ qqplot(x, y, ...)
    n = length(x), withIdLine = TRUE, withConf = TRUE,
    withConf.pw  = withConf,  withConf.sim = withConf,
     plot.it = TRUE, xlab = deparse(substitute(x)),
-    ylab = deparse(substitute(y)), ..., distance = NormType())
+    ylab = deparse(substitute(y)), ..., distance = NormType(),
+    n.adj = TRUE)
 \S4method{qqplot}{ANY,InfRobModel}(x, y,
    n = length(x), withIdLine = TRUE, withConf = TRUE,
    withConf.pw  = withConf,  withConf.sim = withConf,
     plot.it = TRUE, xlab = deparse(substitute(x)),
-    ylab = deparse(substitute(y)), ...)
+    ylab = deparse(substitute(y)), ..., n.adj = TRUE)
 \S4method{qqplot}{ANY,kStepEstimate}(x, y,
    n = length(x), withIdLine = TRUE, withConf = TRUE,
    withConf.pw  = withConf,  withConf.sim = withConf,
@@ -43,7 +44,9 @@ class \code{"kStepEstimate"}.}
 \item{xlab}{x-label}
 \item{ylab}{y-label}
 \item{\dots}{further parameters for method \code{qqplot} with signature
-\code{ANY,ProbFamily} or with function \code{plot}}
+\code{ANY,ProbFamily} (see \code{\link[distrMod]{qqplot}}) or with function \code{plot}}
+\item{n.adj}{logical; shall sample size be adjusted for possible outliers according
+to radius of the corresponding neighborhood?}
 \item{distance}{a function mapping observations \code{x} to the positive reals;
 used to determine the size of the plotted points (the larger \code{distance(x)},
 the smaller the points are plotted.}
@@ -103,13 +106,29 @@ quantiles of distribution of infinitesimally robust model \code{y}.}
 \item{qqplot}{\code{signature(x = "ANY", y = "kStepEstimate")}:
 produces a QQ plot of a dataset \code{x} against the theoretical
 quantiles of the model distribution of model at which
-the corresponding \code{kStepEstimate} \code{y} had been calibrated at.}
+the corresponding \code{kStepEstimate} \code{y} had been calibrated at.
+By default, if the [p]IC of the \code{kStepEstimate} is of class
+\code{HampIC}, i.e.; has a corresponding weight function,
+points (and, if \code{withLab==TRUE}, labels) are
+scaled and faded according to this weight function. Corresponding
+arguments \code{exp.cex2.pch} and \code{exp.fadcol.pch} control this
+scaling and fading, respectively
+(and analogously \code{exp.cex2.lbl} and \code{exp.fadcol.lbl} for the labels).
+The choice of these arguments has to be done on a case-by-case basis.
+Positive exponents induce fading, magnification with increasing weight,
+for negative exponents the same is true for decreasing weight; higher
+(absolute) values increase the speed of fading / magnification.
+}
 }
 }
 
 \examples{
 qqplot(r(Norm(15,sqrt(30)))(40), Chisq(df=15))
-qqplot(r(Norm(15,sqrt(30)))(40), NormLocationFamily())
+RobM <- InfRobModel(center = NormLocationFamily(),
+                    neighbor = ContNeighborhood(radius = 0.4))
+qqplot(r(Norm(15,sqrt(30)))(40), RobM)
+## further examples for ANY,kStepEstimator-method
+## in example to roptest() in package ROptEst
 }
 \keyword{hplot}
 \keyword{distribution}
