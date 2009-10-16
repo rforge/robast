@@ -1,19 +1,21 @@
 
-R version 2.10.0 Under development (unstable) (2009-08-31 r49488)
+R version 2.10.0 beta (2009-10-15 r50107)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
-R ist freie Software und kommt OHNE JEGLICHE GARANTIE.
-Sie sind eingeladen, es unter bestimmten Bedingungen weiter zu verbreiten.
-Tippen Sie 'license()' or 'licence()' für Details dazu.
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
 
-R ist ein Gemeinschaftsprojekt mit vielen Beitragenden.
-Tippen Sie 'contributors()' für mehr Information und 'citation()',
-um zu erfahren, wie R oder R packages in Publikationen zitiert werden können.
+  Natural language support but running in an English locale
 
-Tippen Sie 'demo()' für einige Demos, 'help()' für on-line Hilfe, oder
-'help.start()' für eine HTML Browserschnittstelle zur Hilfe.
-Tippen Sie 'q()', um R zu verlassen.
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
 
 > ### * <HEADER>
 > ###
@@ -84,15 +86,15 @@ Tippen Sie 'q()', um R zu verlassen.
 > options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
 > options(warn = 1)
 > library('RandVar')
-Lade nötiges Paket: startupmsg
+Loading required package: startupmsg
 :startupmsg>  Utilities for start-up messages (version 0.7)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
 
-Lade nötiges Paket: distr
-Lade nötiges Paket: sfsmisc
-Lade nötiges Paket: SweaveListingUtils
+Loading required package: distr
+Loading required package: sfsmisc
+Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave together with
 :SweaveListingUtils>  TeX listings package (version 0.4)
 :SweaveListingUtils> 
@@ -113,7 +115,7 @@ Lade nötiges Paket: SweaveListingUtils
 :SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
 
 
-Attache Paket: 'SweaveListingUtils'
+Attaching package: 'SweaveListingUtils'
 
 
 	The following object(s) are masked from package:base :
@@ -141,19 +143,20 @@ Attache Paket: 'SweaveListingUtils'
 :distr>  vignette("distr").
 
 
-Attache Paket: 'distr'
+Attaching package: 'distr'
 
 
 	The following object(s) are masked from package:stats :
 
 	 df,
+	 qqplot,
 	 sd 
 
-Lade nötiges Paket: distrEx
-Lade nötiges Paket: evd
-Lade nötiges Paket: actuar
+Loading required package: distrEx
+Loading required package: evd
+Loading required package: actuar
 
-Attache Paket: 'actuar'
+Attaching package: 'actuar'
 
 
 	The following object(s) are masked from package:grDevices :
@@ -173,7 +176,7 @@ Attache Paket: 'actuar'
 :distrEx>  vignette("distr").
 
 
-Attache Paket: 'distrEx'
+Attaching package: 'distrEx'
 
 
 	The following object(s) are masked from package:stats :
@@ -282,7 +285,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x79b7130>
+<environment: 0x644d848>
 
 > 
 > R2 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
@@ -294,10 +297,10 @@ An object of class "DistrList"
  [[2]] Distribution Object of Class: AbscontDistribution
  [[3]] Distribution Object of Class: AbscontDistribution
  [[4]] Distribution Object of Class: AbscontDistribution
-Warnung in function (object)  :
+Warning in function (object)  :
   arithmetics on distributions are understood as operations on r.v.'s
 see 'distrARITH()'; for switching off this warning see '?distroptions'
-Warnung in function (object)  :
+Warning in function (object)  :
   slots d,p,q have been filled using simulations; for switching off this warning see '?distroptions'
 > plot(DL)
 > 
@@ -311,7 +314,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x6a09c30>
+<environment: 0x5921648>
 
 [[2]]
 function (x) 
@@ -322,7 +325,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x6a09c30>
+<environment: 0x5921648>
 
 [[3]]
 function (x) 
@@ -333,7 +336,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x6a09c30>
+<environment: 0x5921648>
 
 [[4]]
 function (x) 
@@ -344,7 +347,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x6a09c30>
+<environment: 0x5921648>
 
 > 
 > ## "Arith" group
@@ -358,7 +361,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x68b36c8>
+<environment: 0x686cc60>
 
 [[2]]
 function (x) 
@@ -369,7 +372,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x68b36c8>
+<environment: 0x686cc60>
 
 [[3]]
 function (x) 
@@ -380,7 +383,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x68b36c8>
+<environment: 0x686cc60>
 
 [[4]]
 function (x) 
@@ -391,7 +394,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x68b36c8>
+<environment: 0x686cc60>
 
 [[5]]
 function (x) 
@@ -402,7 +405,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x68b36c8>
+<environment: 0x686cc60>
 
 [[6]]
 function (x) 
@@ -413,7 +416,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x68b36c8>
+<environment: 0x686cc60>
 
 > Map(R2 * R2)
 [[1]]
@@ -429,7 +432,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x65a0fb8>
+<environment: 0x6756b00>
 
 [[2]]
 function (x) 
@@ -444,7 +447,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x65a0fb8>
+<environment: 0x6756b00>
 
 [[3]]
 function (x) 
@@ -459,7 +462,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x65a0fb8>
+<environment: 0x6756b00>
 
 [[4]]
 function (x) 
@@ -474,7 +477,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x65a0fb8>
+<environment: 0x6756b00>
 
 > 
 > 
@@ -524,7 +527,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x5dc4600>
+<environment: 0x62cc628>
 
 > 
 > R2 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
@@ -534,10 +537,10 @@ An object of class "DistrList"
  [[2]] Distribution Object of Class: AbscontDistribution
  [[3]] Distribution Object of Class: AbscontDistribution
  [[4]] Distribution Object of Class: AbscontDistribution
-Warnung in function (object)  :
+Warning in function (object)  :
   arithmetics on distributions are understood as operations on r.v.'s
 see 'distrARITH()'; for switching off this warning see '?distroptions'
-Warnung in function (object)  :
+Warning in function (object)  :
   slots d,p,q have been filled using simulations; for switching off this warning see '?distroptions'
 > plot(DL)
 > 
@@ -551,7 +554,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x67493c0>
+<environment: 0x59d6db0>
 
 [[2]]
 function (x) 
@@ -562,7 +565,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x67493c0>
+<environment: 0x59d6db0>
 
 [[3]]
 function (x) 
@@ -573,7 +576,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x67493c0>
+<environment: 0x59d6db0>
 
 [[4]]
 function (x) 
@@ -584,7 +587,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x67493c0>
+<environment: 0x59d6db0>
 
 > 
 > ## "Arith" group
@@ -598,7 +601,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x654b358>
+<environment: 0x59314f0>
 
 [[2]]
 function (x) 
@@ -609,7 +612,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x654b358>
+<environment: 0x59314f0>
 
 [[3]]
 function (x) 
@@ -620,7 +623,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x654b358>
+<environment: 0x59314f0>
 
 [[4]]
 function (x) 
@@ -631,7 +634,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x654b358>
+<environment: 0x59314f0>
 
 [[5]]
 function (x) 
@@ -642,7 +645,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x654b358>
+<environment: 0x59314f0>
 
 [[6]]
 function (x) 
@@ -653,7 +656,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x654b358>
+<environment: 0x59314f0>
 
 > Map(R2 * R2)
 [[1]]
@@ -669,7 +672,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x6274068>
+<environment: 0x57d5bb8>
 
 [[2]]
 function (x) 
@@ -684,7 +687,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x6274068>
+<environment: 0x57d5bb8>
 
 [[3]]
 function (x) 
@@ -699,7 +702,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x6274068>
+<environment: 0x57d5bb8>
 
 [[4]]
 function (x) 
@@ -714,7 +717,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x6274068>
+<environment: 0x57d5bb8>
 
 > 
 > 
@@ -831,7 +834,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x7a0b310>
+<environment: 0x48a6100>
 
 [[2]]
 function (x) 
@@ -842,7 +845,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x7a0b310>
+<environment: 0x48a6100>
 
 [[3]]
 function (x) 
@@ -853,7 +856,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x7a0b310>
+<environment: 0x48a6100>
 
 [[4]]
 function (x) 
@@ -864,7 +867,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x7a0b310>
+<environment: 0x48a6100>
 
 > 
 > ## "Arith" group
@@ -878,7 +881,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x8a058c0>
+<environment: 0x4363ff8>
 
 [[2]]
 function (x) 
@@ -889,7 +892,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x8a058c0>
+<environment: 0x4363ff8>
 
 [[3]]
 function (x) 
@@ -900,7 +903,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x8a058c0>
+<environment: 0x4363ff8>
 
 [[4]]
 function (x) 
@@ -911,7 +914,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x8a058c0>
+<environment: 0x4363ff8>
 
 > Map((RL1 * 2)[[2]])
 [[1]]
@@ -923,7 +926,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x8466f88>
+<environment: 0x5bbaa18>
 
 [[2]]
 function (x) 
@@ -934,7 +937,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x8466f88>
+<environment: 0x5bbaa18>
 
 [[3]]
 function (x) 
@@ -945,7 +948,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x8466f88>
+<environment: 0x5bbaa18>
 
 [[4]]
 function (x) 
@@ -956,7 +959,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x8466f88>
+<environment: 0x5bbaa18>
 
 [[5]]
 function (x) 
@@ -967,7 +970,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x8466f88>
+<environment: 0x5bbaa18>
 
 [[6]]
 function (x) 
@@ -978,7 +981,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x8466f88>
+<environment: 0x5bbaa18>
 
 > Map((RL1 / RL1)[[3]])
 [[1]]
@@ -994,7 +997,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x8d0ee68>
+<environment: 0x711acc8>
 
 [[2]]
 function (x) 
@@ -1009,7 +1012,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x8d0ee68>
+<environment: 0x711acc8>
 
 [[3]]
 function (x) 
@@ -1024,7 +1027,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x8d0ee68>
+<environment: 0x711acc8>
 
 [[4]]
 function (x) 
@@ -1039,7 +1042,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x8d0ee68>
+<environment: 0x711acc8>
 
 > 
 > 
@@ -1104,7 +1107,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x765b870>
+<environment: 0x6e2a820>
 
 [[2]]
 function (x) 
@@ -1115,7 +1118,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x765b870>
+<environment: 0x6e2a820>
 
 [[3]]
 function (x) 
@@ -1126,7 +1129,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x765b870>
+<environment: 0x6e2a820>
 
 [[4]]
 function (x) 
@@ -1137,7 +1140,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x765b870>
+<environment: 0x6e2a820>
 
 > 
 > ## "Arith" group
@@ -1151,7 +1154,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x73de250>
+<environment: 0x68ff6a8>
 
 [[2]]
 function (x) 
@@ -1162,7 +1165,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x73de250>
+<environment: 0x68ff6a8>
 
 [[3]]
 function (x) 
@@ -1173,7 +1176,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x73de250>
+<environment: 0x68ff6a8>
 
 [[4]]
 function (x) 
@@ -1184,7 +1187,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x73de250>
+<environment: 0x68ff6a8>
 
 > Map((RL1 * 2)[[2]])
 [[1]]
@@ -1196,7 +1199,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x71cca40>
+<environment: 0x6542588>
 
 [[2]]
 function (x) 
@@ -1207,7 +1210,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x71cca40>
+<environment: 0x6542588>
 
 [[3]]
 function (x) 
@@ -1218,7 +1221,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x71cca40>
+<environment: 0x6542588>
 
 [[4]]
 function (x) 
@@ -1229,7 +1232,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x71cca40>
+<environment: 0x6542588>
 
 [[5]]
 function (x) 
@@ -1240,7 +1243,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x71cca40>
+<environment: 0x6542588>
 
 [[6]]
 function (x) 
@@ -1251,7 +1254,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x71cca40>
+<environment: 0x6542588>
 
 > Map((RL1 / RL1)[[3]])
 [[1]]
@@ -1267,7 +1270,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x6d5b150>
+<environment: 0x6213da0>
 
 [[2]]
 function (x) 
@@ -1282,7 +1285,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x6d5b150>
+<environment: 0x6213da0>
 
 [[3]]
 function (x) 
@@ -1297,7 +1300,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x6d5b150>
+<environment: 0x6213da0>
 
 [[4]]
 function (x) 
@@ -1312,7 +1315,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x6d5b150>
+<environment: 0x6213da0>
 
 > 
 > ## The function is currently defined as
@@ -1511,7 +1514,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x6db7798>
+<environment: 0x5b07ff8>
 
 [[2]]
 function (x) 
@@ -1526,7 +1529,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x6db7798>
+<environment: 0x5b07ff8>
 
 [[3]]
 function (x) 
@@ -1541,7 +1544,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x6db7798>
+<environment: 0x5b07ff8>
 
 [[4]]
 function (x) 
@@ -1556,7 +1559,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x6db7798>
+<environment: 0x5b07ff8>
 
 > 
 > # "Arith" group generic
@@ -1570,7 +1573,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x6d875d8>
+<environment: 0x5adaf00>
 
 [[2]]
 function (x) 
@@ -1581,7 +1584,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x6d875d8>
+<environment: 0x5adaf00>
 
 [[3]]
 function (x) 
@@ -1592,7 +1595,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x6d875d8>
+<environment: 0x5adaf00>
 
 [[4]]
 function (x) 
@@ -1603,10 +1606,10 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x6d875d8>
+<environment: 0x5adaf00>
 
 > Map(c(1,3,5) * R1)
-Warnung in c(1, 3, 5) * R1 :
+Warning in c(1, 3, 5) * R1 :
   longer object length is not a multiple of shorter object length
 [[1]]
 function (x) 
@@ -1617,7 +1620,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x6cfda38>
+<environment: 0x5a782e0>
 
 [[2]]
 function (x) 
@@ -1628,7 +1631,7 @@ function (x)
     }
     3 * f2(x)
 }
-<environment: 0x6cfda38>
+<environment: 0x5a782e0>
 
 [[3]]
 function (x) 
@@ -1639,7 +1642,7 @@ function (x)
     }
     5 * f2(x)
 }
-<environment: 0x6cfda38>
+<environment: 0x5a782e0>
 
 [[4]]
 function (x) 
@@ -1650,7 +1653,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x6cfda38>
+<environment: 0x5a782e0>
 
 > try(1:5 * R1) # error
 Error in 1:5 * R1 : 
@@ -1665,7 +1668,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x6b6b460>
+<environment: 0x58eea48>
 
 [[2]]
 function (x) 
@@ -1676,7 +1679,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x6b6b460>
+<environment: 0x58eea48>
 
 [[3]]
 function (x) 
@@ -1687,7 +1690,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x6b6b460>
+<environment: 0x58eea48>
 
 [[4]]
 function (x) 
@@ -1698,7 +1701,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x6b6b460>
+<environment: 0x58eea48>
 
 > Map(R2 - 5)
 [[1]]
@@ -1710,7 +1713,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x6ae9798>
+<environment: 0x5835b18>
 
 [[2]]
 function (x) 
@@ -1721,7 +1724,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x6ae9798>
+<environment: 0x5835b18>
 
 [[3]]
 function (x) 
@@ -1732,7 +1735,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x6ae9798>
+<environment: 0x5835b18>
 
 [[4]]
 function (x) 
@@ -1743,7 +1746,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x6ae9798>
+<environment: 0x5835b18>
 
 > Map(R1 ^ R1)
 [[1]]
@@ -1759,7 +1762,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x6a6bcd8>
+<environment: 0x57a3ff8>
 
 [[2]]
 function (x) 
@@ -1774,7 +1777,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x6a6bcd8>
+<environment: 0x57a3ff8>
 
 [[3]]
 function (x) 
@@ -1789,7 +1792,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x6a6bcd8>
+<environment: 0x57a3ff8>
 
 [[4]]
 function (x) 
@@ -1804,7 +1807,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x6a6bcd8>
+<environment: 0x57a3ff8>
 
 > 
 > 
@@ -1962,7 +1965,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x6e51368>
+<environment: 0x6192378>
 
 [[2]]
 function (x) 
@@ -1977,7 +1980,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x6e51368>
+<environment: 0x6192378>
 
 [[3]]
 function (x) 
@@ -1992,7 +1995,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x6e51368>
+<environment: 0x6192378>
 
 [[4]]
 function (x) 
@@ -2007,7 +2010,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x6e51368>
+<environment: 0x6192378>
 
 > 
 > # "Arith" group generic
@@ -2021,7 +2024,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x6e20fb0>
+<environment: 0x6174cb0>
 
 [[2]]
 function (x) 
@@ -2032,7 +2035,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x6e20fb0>
+<environment: 0x6174cb0>
 
 [[3]]
 function (x) 
@@ -2043,7 +2046,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x6e20fb0>
+<environment: 0x6174cb0>
 
 [[4]]
 function (x) 
@@ -2054,10 +2057,10 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x6e20fb0>
+<environment: 0x6174cb0>
 
 > Map(c(1,3,5) * R1)
-Warnung in c(1, 3, 5) * R1 :
+Warning in c(1, 3, 5) * R1 :
   longer object length is not a multiple of shorter object length
 [[1]]
 function (x) 
@@ -2068,7 +2071,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x6dd35b8>
+<environment: 0x614be68>
 
 [[2]]
 function (x) 
@@ -2079,7 +2082,7 @@ function (x)
     }
     3 * f2(x)
 }
-<environment: 0x6dd35b8>
+<environment: 0x614be68>
 
 [[3]]
 function (x) 
@@ -2090,7 +2093,7 @@ function (x)
     }
     5 * f2(x)
 }
-<environment: 0x6dd35b8>
+<environment: 0x614be68>
 
 [[4]]
 function (x) 
@@ -2101,7 +2104,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x6dd35b8>
+<environment: 0x614be68>
 
 > try(1:5 * R1) # error
 Error in 1:5 * R1 : 
@@ -2116,7 +2119,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x6d4a2b8>
+<environment: 0x60fb660>
 
 [[2]]
 function (x) 
@@ -2127,7 +2130,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x6d4a2b8>
+<environment: 0x60fb660>
 
 [[3]]
 function (x) 
@@ -2138,7 +2141,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x6d4a2b8>
+<environment: 0x60fb660>
 
 [[4]]
 function (x) 
@@ -2149,7 +2152,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x6d4a2b8>
+<environment: 0x60fb660>
 
 > Map(R2 - 5)
 [[1]]
@@ -2161,7 +2164,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x6d0a090>
+<environment: 0x5f72990>
 
 [[2]]
 function (x) 
@@ -2172,7 +2175,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x6d0a090>
+<environment: 0x5f72990>
 
 [[3]]
 function (x) 
@@ -2183,7 +2186,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x6d0a090>
+<environment: 0x5f72990>
 
 [[4]]
 function (x) 
@@ -2194,7 +2197,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x6d0a090>
+<environment: 0x5f72990>
 
 > Map(R1 ^ R1)
 [[1]]
@@ -2210,7 +2213,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x6cd1410>
+<environment: 0x5f328b8>
 
 [[2]]
 function (x) 
@@ -2225,7 +2228,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x6cd1410>
+<environment: 0x5f328b8>
 
 [[3]]
 function (x) 
@@ -2240,7 +2243,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x6cd1410>
+<environment: 0x5f328b8>
 
 [[4]]
 function (x) 
@@ -2255,7 +2258,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x6cd1410>
+<environment: 0x5f328b8>
 
 > 
 > 
@@ -2377,7 +2380,7 @@ Range:	NULL
 function (x) 
 {
 }
-<environment: 0x67844d0>
+<environment: 0x5adfa00>
 
 > Domain(R1)
 NULL
@@ -2497,7 +2500,7 @@ function (Map = list(function(x) {
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  8.528 0.088 8.664 0.004 0.004 
+Time elapsed:  9.892 0.112 10.888 0.008 0.008 
 > grDevices::dev.off()
 null device 
           1 
