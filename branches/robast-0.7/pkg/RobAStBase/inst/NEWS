@@ -73,6 +73,8 @@ user-visible CHANGES:
 
 GENERAL ENHANCEMENTS:
 
++ added tests/Examples folder with file RobAStBase-Ex.Rout.save to have
+  some automatic testing
 + added TOBEDONE (sic!) files; in English (for possible collaborators) 
 + added keyword robust and made some minor corrections ...
 + added/updated NEWS files, updated CITATION files using code by A. Zeileis

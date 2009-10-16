@@ -1,0 +1,1667 @@
+
+R version 2.10.0 beta (2009-10-15 r50107)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### * <HEADER>
+> ###
+> attach(NULL, name = "CheckExEnv")
+> assign("nameEx",
++        local({
++ 	   s <- "__{must remake R-ex/*.R}__"
++            function(new) {
++                if(!missing(new)) s <<- new else s
++            }
++        }),
++        pos = "CheckExEnv")
+> ## Add some hooks to label plot pages for base and grid graphics
+> assign("base_plot_hook",
++        function() {
++            pp <- par(c("mfg","mfcol","oma","mar"))
++            if(all(pp$mfg[1:2] == c(1, pp$mfcol[2]))) {
++                outer <- (oma4 <- pp$oma[4]) > 0; mar4 <- pp$mar[4]
++                mtext(sprintf("help(\"%s\")", nameEx()), side = 4,
++                      line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
++                outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
++            }
++        },
++        pos = "CheckExEnv")
+> assign("grid_plot_hook",
++        function() {
++            grid::pushViewport(grid::viewport(width=grid::unit(1, "npc") -
++                               grid::unit(1, "lines"), x=0, just="left"))
++            grid::grid.text(sprintf("help(\"%s\")", nameEx()),
++                            x=grid::unit(1, "npc") + grid::unit(0.5, "lines"),
++                            y=grid::unit(0.8, "npc"), rot=90,
++                            gp=grid::gpar(col="orchid"))
++        },
++        pos = "CheckExEnv")
+> setHook("plot.new",     get("base_plot_hook", pos = "CheckExEnv"))
+> setHook("persp",        get("base_plot_hook", pos = "CheckExEnv"))
+> setHook("grid.newpage", get("grid_plot_hook", pos = "CheckExEnv"))
+> assign("cleanEx",
++        function(env = .GlobalEnv) {
++ 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
++            RNGkind("default", "default")
++ 	   set.seed(1)
++    	   options(warn = 1)
++ 	   .CheckExEnv <- as.environment("CheckExEnv")
++ 	   delayedAssign("T", stop("T used instead of TRUE"),
++ 		  assign.env = .CheckExEnv)
++ 	   delayedAssign("F", stop("F used instead of FALSE"),
++ 		  assign.env = .CheckExEnv)
++ 	   sch <- search()
++ 	   newitems <- sch[! sch %in% .oldSearch]
++ 	   for(item in rev(newitems))
++                eval(substitute(detach(item), list(item=item)))
++ 	   missitems <- .oldSearch[! .oldSearch %in% sch]
++ 	   if(length(missitems))
++ 	       warning("items ", paste(missitems, collapse=", "),
++ 		       " have been removed from the search path")
++        },
++        pos = "CheckExEnv")
+> assign("ptime", proc.time(), pos = "CheckExEnv")
+> ## at least one package changes these via ps.options(), so do this
+> ## before loading the package.
+> ## Use postscript as incomplete files may be viewable, unlike PDF.
+> ## Choose a size that is close to on-screen devices, fix paper
+> grDevices::ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
+> grDevices::postscript("RobAStBase-Ex.ps")
+> 
+> assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
+> options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
+> options(warn = 1)
+> library('RobAStBase')
+Loading required package: distr
+Loading required package: startupmsg
+:startupmsg>  Utilities for start-up messages (version 0.7)
+:startupmsg> 
+:startupmsg>  For more information see ?"startupmsg",
+:startupmsg>  NEWS("startupmsg")
+
+Loading required package: sfsmisc
+Loading required package: SweaveListingUtils
+:SweaveListingUtils>  Utilities for Sweave together with
+:SweaveListingUtils>  TeX listings package (version 0.4)
+:SweaveListingUtils> 
+:SweaveListingUtils>  Some functions from package 'base'
+:SweaveListingUtils>  are intentionally masked ---see
+:SweaveListingUtils>  SweaveListingMASK().
+:SweaveListingUtils> 
+:SweaveListingUtils>  Note that global options are
+:SweaveListingUtils>  controlled by
+:SweaveListingUtils>  SweaveListingoptions() ---c.f.
+:SweaveListingUtils>  ?"SweaveListingoptions".
+:SweaveListingUtils> 
+:SweaveListingUtils>  For more information see
+:SweaveListingUtils>  ?"SweaveListingUtils",
+:SweaveListingUtils>  NEWS("SweaveListingUtils")
+:SweaveListingUtils>  There is a vignette to this
+:SweaveListingUtils>  package; try
+:SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
+
+
+Attaching package: 'SweaveListingUtils'
+
+
+	The following object(s) are masked from package:base :
+
+	 library,
+	 require 
+
+:distr>  Object orientated implementation of distributions (version
+:distr>  2.2)
+:distr> 
+:distr>  Attention: Arithmetics on distribution objects are
+:distr>  understood as operations on corresponding random variables
+:distr>  (r.v.s); see distrARITH().
+:distr> 
+:distr>  Some functions from package 'stats' are intentionally masked
+:distr>  ---see distrMASK().
+:distr> 
+:distr>  Note that global options are controlled by distroptions()
+:distr>  ---c.f. ?"distroptions".
+:distr> 
+:distr>  For more information see ?"distr", NEWS("distr"), as well as
+:distr>    http://distr.r-forge.r-project.org/
+:distr>  Package "distrDoc" provides a vignette to this package as
+:distr>  well as to several extension packages; try
+:distr>  vignette("distr").
+
+
+Attaching package: 'distr'
+
+
+	The following object(s) are masked from package:stats :
+
+	 df,
+	 qqplot,
+	 sd 
+
+Loading required package: distrEx
+Loading required package: evd
+Loading required package: actuar
+
+Attaching package: 'actuar'
+
+
+	The following object(s) are masked from package:grDevices :
+
+	 cm 
+
+:distrEx>  Extensions of package distr (version 2.2)
+:distrEx> 
+:distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
+:distrEx>  attached /before/ package "distrEx". See distrExMASK().
+:distrEx> 
+:distrEx>  For more information see ?"distrEx", NEWS("distrEx"), as
+:distrEx>  well as
+:distrEx>    http://distr.r-forge.r-project.org/
+:distrEx>  Package "distrDoc" provides a vignette to this package
+:distrEx>  as well as to several related packages; try
+:distrEx>  vignette("distr").
+
+
+Attaching package: 'distrEx'
+
+
+	The following object(s) are masked from package:stats :
+
+	 IQR,
+	 mad,
+	 median,
+	 var 
+
+Loading required package: distrMod
+Loading required package: RandVar
+:RandVar>  Implementation of random variables (version 0.7)
+:RandVar> 
+:RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
+:RandVar>  well as
+:RandVar>    http://robast.r-forge.r-project.org/
+:RandVar>  This package also includes a vignette; try
+:RandVar>  vignette("RandVar").
+
+Loading required package: MASS
+Loading required package: stats4
+:distrMod>  Object orientated implementation of probability models
+:distrMod>  (version 2.2)
+:distrMod> 
+:distrMod>  Some functions from pkg's 'base' and 'stats' are
+:distrMod>  intentionally masked ---see distrModMASK().
+:distrMod> 
+:distrMod>  Note that global options are controlled by
+:distrMod>  distrModoptions() ---c.f. ?"distrModoptions".
+:distrMod> 
+:distrMod>  For more information see ?"distrMod",
+:distrMod>  NEWS("distrMod"), as well as
+:distrMod>    http://distr.r-forge.r-project.org/
+:distrMod>  Package "distrDoc" provides a vignette to this package
+:distrMod>  as well as to several related packages; try
+:distrMod>  vignette("distr").
+
+
+Attaching package: 'distrMod'
+
+
+	The following object(s) are masked from package:stats4 :
+
+	 confint 
+
+
+	The following object(s) are masked from package:stats :
+
+	 confint 
+
+:RobAStBase>  Robust Asymptotic Statistics (version 0.7)
+:RobAStBase> 
+:RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
+:RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
+:RobAStBase> 
+:RobAStBase>  Note that global options are controlled by
+:RobAStBase>  RobAStBaseoptions() ---c.f. ?"RobAStBaseoptions".
+:RobAStBase> 
+:RobAStBase>  For more information see ?"RobAStBase",
+:RobAStBase>  NEWS("RobAStBase"), as well as
+:RobAStBase>    http://robast.r-forge.r-project.org/
+
+
+Attaching package: 'RobAStBase'
+
+
+	The following object(s) are masked from package:stats :
+
+	 start 
+
+
+	The following object(s) are masked from package:graphics :
+
+	 clip 
+
+> 
+> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> assign(".oldNS", loadedNamespaces(), pos = 'CheckExEnv')
+> cleanEx(); nameEx("0RobAStBase-package")
+> ### * 0RobAStBase-package
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RobAStBase-package
+> ### Title: Robust Asymptotic Statistics
+> ### Aliases: RobAStBase-package RobAStBase
+> ### Keywords: package
+> 
+> ### ** Examples
+> 
+> library(RobAStBase)
+> 
+> ## some L2 differentiable parametric family from package distrMod, e.g.
+> B <- BinomFamily(size = 25, prob = 0.25) 
+> 
+> ## classical optimal IC
+> IC0 <- optIC(model = B, risk = asCov())
+> plot(IC0) # plot IC
+> checkIC(IC0, B)
+precision of centering:	 -4.254490e-18 
+precision of Fisher consistency:
+             prob
+prob 2.220446e-16
+maximum deviation 
+     2.220446e-16 
+> 
+> 
+> 
+> cleanEx(); nameEx("ALEstimate-class")
+> ### * ALEstimate-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ALEstimate-class
+> ### Title: ALEstimate-class.
+> ### Aliases: ALEstimate-class pIC pIC,ALEstimate-method asbias
+> ###   asbias,ALEstimate-method show,ALEstimate-method
+> ###   confint,ALEstimate,missing-method
+> ###   confint,ALEstimate,symmetricBias-method
+> ###   confint,ALEstimate,onesidedBias-method
+> ###   confint,ALEstimate,asymmetricBias-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> ## prototype
+> new("ALEstimate")
+Evaluations of Asymptotically linear estimate:
+----------------------------------------------
+An object of class “Estimate” 
+generated by call
+  `{}`()
+estimate:
+numeric(0)
+asymptotic bias:
+NULL
+> 
+> 
+> 
+> cleanEx(); nameEx("BdStWeight-class")
+> ### * BdStWeight-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: BdStWeight-class
+> ### Title: Robust Weight classes for bounded, standardized weights
+> ### Aliases: BdStWeight-class stand,BdStWeight-method
+> ###   stand<-,BdStWeight-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> ## prototype
+> new("BdStWeight")
+An object of class “BdStWeight”
+Slot "stand":
+     [,1]
+[1,]    1
+
+Slot "clip":
+[1] 1
+
+Slot "name":
+[1] "some weight"
+
+Slot "weight":
+function (x) 
+1
+<environment: namespace:RobAStBase>
+
+> 
+> 
+> 
+> cleanEx(); nameEx("BoundedWeight-class")
+> ### * BoundedWeight-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: BoundedWeight-class
+> ### Title: Robust Weight classes for bounded weights
+> ### Aliases: BoundedWeight-class clip,BoundedWeight-method
+> ###   clip<-,BoundedWeight-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> ## prototype
+> new("BoundedWeight")
+An object of class “BoundedWeight”
+Slot "clip":
+[1] 1
+
+Slot "name":
+[1] "some weight"
+
+Slot "weight":
+function (x) 
+1
+<environment: namespace:RobAStBase>
+
+> 
+> 
+> 
+> cleanEx(); nameEx("ContIC-class")
+> ### * ContIC-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ContIC-class
+> ### Title: Influence curve of contamination type
+> ### Aliases: ContIC-class CallL2Fam<-,ContIC-method cent cent,ContIC-method
+> ###   cent<- cent<-,ContIC-method clip,ContIC-method clip<-
+> ###   clip<-,ContIC-method lowerCase<- lowerCase<-,ContIC-method stand<-
+> ###   stand<-,ContIC-method neighbor,ContIC-method
+> ###   generateIC,ContNeighborhood,L2ParamFamily-method show,ContIC-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> IC1 <- new("ContIC")
+> plot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("ContIC")
+> ### * ContIC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ContIC
+> ### Title: Generating function for ContIC-class
+> ### Aliases: ContIC
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- ContIC()
+> plot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("ContNeighborhood-class")
+> ### * ContNeighborhood-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ContNeighborhood-class
+> ### Title: Contamination Neighborhood
+> ### Aliases: ContNeighborhood-class
+> ### Keywords: classes models
+> 
+> ### ** Examples
+> 
+> new("ContNeighborhood")
+An object of class “ContNeighborhood” 
+type:	 (uncond.) convex contamination neighborhood 
+radius:	 0 
+> 
+> 
+> 
+> cleanEx(); nameEx("ContNeighborhood")
+> ### * ContNeighborhood
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ContNeighborhood
+> ### Title: Generating function for ContNeighborhood-class
+> ### Aliases: ContNeighborhood
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> ContNeighborhood()
+An object of class “ContNeighborhood” 
+type:	 (uncond.) convex contamination neighborhood 
+radius:	 0 
+> 
+> ## The function is currently defined as
+> function(radius = 0){ 
++     new("ContNeighborhood", radius = radius) 
++ }
+function (radius = 0) 
+{
+    new("ContNeighborhood", radius = radius)
+}
+> 
+> 
+> 
+> cleanEx(); nameEx("FixRobModel-class")
+> ### * FixRobModel-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: FixRobModel-class
+> ### Title: Robust model with fixed (unconditional) neighborhood
+> ### Aliases: FixRobModel-class neighbor<-,FixRobModel-method
+> ###   show,FixRobModel-method
+> ### Keywords: classes models
+> 
+> ### ** Examples
+> 
+> new("FixRobModel")
+An object of class “FixRobModel” 
+###### center:	An object of class "ParamFamily"
+### name:	parametric family of probability measures
+
+### distribution:	Distribution Object of Class: Norm
+ mean: 0
+ sd: 1
+
+### param:	An object of class "ParamFamParameter"
+name:	parameter of a parametric family of probability measures
+main:	0
+
+###### neighborhood:	An object of class “ContNeighborhood” 
+type:	 (uncond.) convex contamination neighborhood 
+radius:	 0 
+> 
+> 
+> 
+> cleanEx(); nameEx("FixRobModel")
+> ### * FixRobModel
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: FixRobModel
+> ### Title: Generating function for FixRobModel-class
+> ### Aliases: FixRobModel
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> (M1 <- FixRobModel())
+An object of class “FixRobModel” 
+###### center:	An object of class "ParamFamily"
+### name:	parametric family of probability measures
+
+### distribution:	Distribution Object of Class: Norm
+ mean: 0
+ sd: 1
+
+### param:	An object of class "ParamFamParameter"
+name:	location
+main:	0
+
+###### neighborhood:	An object of class “ContNeighborhood” 
+type:	 (uncond.) convex contamination neighborhood 
+radius:	 0 
+> 
+> ## The function is currently defined as
+> function(center = ParamFamily(), neighbor = ContNeighborhood()){
++     new("FixRobModel", center = center, neighbor = neighbor)
++ }
+function (center = ParamFamily(), neighbor = ContNeighborhood()) 
+{
+    new("FixRobModel", center = center, neighbor = neighbor)
+}
+> 
+> 
+> 
+> cleanEx(); nameEx("HampIC-class")
+> ### * HampIC-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: HampIC-class
+> ### Title: Influence curve of Hampel type
+> ### Aliases: HampIC-class lowerCase lowerCase,HampIC-method neighborRadius
+> ###   neighborRadius,HampIC-method neighborRadius<-
+> ###   neighborRadius<-,HampIC-method stand stand,HampIC-method
+> ###   weight,HampIC-method biastype,HampIC-method normtype,HampIC-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> IC1 <- new("HampIC")
+> plot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("HampelWeight-class")
+> ### * HampelWeight-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: HampelWeight-class
+> ### Title: Robust Weight classes for weights of Hampel type
+> ### Aliases: HampelWeight-class cent,HampelWeight-method
+> ###   cent<-,HampelWeight-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> ## prototype
+> new("HampelWeight")
+An object of class “HampelWeight”
+Slot "cent":
+[1] 0
+
+Slot "stand":
+     [,1]
+[1,]    1
+
+Slot "clip":
+[1] 1
+
+Slot "name":
+[1] "some weight"
+
+Slot "weight":
+function (x) 
+1
+<environment: namespace:RobAStBase>
+
+> 
+> 
+> 
+> cleanEx(); nameEx("IC-class")
+> ### * IC-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: IC-class
+> ### Title: Influence curve
+> ### Aliases: IC-class CallL2Fam CallL2Fam,IC-method CallL2Fam<-
+> ###   CallL2Fam<-,IC-method modifyIC modifyIC,IC-method
+> ###   checkIC,IC,missing-method checkIC,IC,L2ParamFamily-method
+> ###   evalIC,IC,numeric-method evalIC,IC,matrix-method show,IC-method
+> ### Keywords: classes robust
+> 
+> ### ** Examples
+> 
+> IC1 <- new("IC")
+> plot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("IC")
+> ### * IC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: IC
+> ### Title: Generating function for IC-class
+> ### Aliases: IC
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- IC()
+> plot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("InfRobModel-class")
+> ### * InfRobModel-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: InfRobModel-class
+> ### Title: Robust model with infinitesimal (unconditional) neighborhood
+> ### Aliases: InfRobModel-class neighbor<-,InfRobModel-method
+> ###   show,InfRobModel-method
+> ### Keywords: classes models
+> 
+> ### ** Examples
+> 
+> new("InfRobModel")
+An object of class “InfRobModel” 
+###### center:	An object of class "L2ParamFamily"
+### name:	L_2 differentiable parametric family of probability measures
+
+### distribution:	Distribution Object of Class: Norm
+ mean: 0
+ sd: 1
+
+### param:	An object of class "ParamFamParameter"
+name:	parameter of a parametric family of probability measures
+main:	0
+
+###### neighborhood:	An object of class “ContNeighborhood” 
+type:	 (uncond.) convex contamination neighborhood 
+radius:	 0 
+> 
+> 
+> 
+> cleanEx(); nameEx("InfRobModel")
+> ### * InfRobModel
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: InfRobModel
+> ### Title: Generating function for InfRobModel-class
+> ### Aliases: InfRobModel
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> (M1 <- InfRobModel())
+An object of class “InfRobModel” 
+###### center:	An object of class "L2ParamFamily"
+### name:	L_2 differentiable parametric family of probability measures
+
+### distribution:	Distribution Object of Class: Norm
+ mean: 0
+ sd: 1
+
+### param:	An object of class "ParamFamParameter"
+name:	location
+main:	0
+
+###### neighborhood:	An object of class “ContNeighborhood” 
+type:	 (uncond.) convex contamination neighborhood 
+radius:	 0 
+> 
+> ## The function is currently defined as
+> function(center = L2ParamFamily(), neighbor = ContNeighborhood()){
++     new("InfRobModel", center = center, neighbor = neighbor)
++ }
+function (center = L2ParamFamily(), neighbor = ContNeighborhood()) 
+{
+    new("InfRobModel", center = center, neighbor = neighbor)
+}
+> 
+> 
+> 
+> cleanEx(); nameEx("InfluenceCurve-class")
+> ### * InfluenceCurve-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: InfluenceCurve-class
+> ### Title: Influence curve
+> ### Aliases: InfluenceCurve-class addInfo<- addInfo<-,InfluenceCurve-method
+> ###   addRisk<- addRisk<-,InfluenceCurve-method Curve
+> ###   Curve,InfluenceCurve-method Domain,InfluenceCurve-method Infos
+> ###   Infos,InfluenceCurve-method Infos<- Infos<-,InfluenceCurve-method
+> ###   Map,InfluenceCurve-method name,InfluenceCurve-method
+> ###   name<-,InfluenceCurve-method Range,InfluenceCurve-method Risks
+> ###   Risks,InfluenceCurve-method Risks<- Risks<-,InfluenceCurve-method
+> ###   show,InfluenceCurve-method
+> ### Keywords: classes robust
+> 
+> ### ** Examples
+> 
+> new("InfluenceCurve")
+An object of class “InfluenceCurve” 
+### name:	  
+
+### 'Curve':	An object of class “EuclRandVarList” 
+Domain:	NULL
+[[1]]
+length of Map:	 1 
+Range:	Euclidean Space with dimension 1 
+
+### Infos:
+<0 x 0 matrix>
+> 
+> 
+> 
+> cleanEx(); nameEx("InfluenceCurve")
+> ### * InfluenceCurve
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: InfluenceCurve
+> ### Title: Generating function for InfluenceCurve-class
+> ### Aliases: InfluenceCurve
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> InfluenceCurve()
+An object of class “InfluenceCurve” 
+### name:	 influence curve 
+
+### 'Curve':	An object of class “EuclRandVarList” 
+Domain:	Real Space with dimension 1 
+[[1]]
+length of Map:	 1 
+Range:	Euclidean Space with dimension 1 
+
+### Infos:
+     method message
+> 
+> ## The function is currently defined as
+> InfluenceCurve <- function(name, Curve = EuclRandVarList(EuclRandVariable(Domain = Reals())), 
++                            Risks, Infos){
++     if(missing(name))
++         name <- "influence curve"
++     if(missing(Risks))
++         Risks <- list()
++     if(missing(Infos))
++         Infos <- matrix(c(character(0),character(0)), ncol=2,
++                      dimnames=list(character(0), c("method", "message")))
++     
++     return(new("InfluenceCurve", name = name, Curve = Curve, 
++                Risks = Risks, Infos = Infos))
++ }
+> 
+> 
+> 
+> cleanEx(); nameEx("MEstimate-class")
+> ### * MEstimate-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MEstimate-class
+> ### Title: MEstimate-class.
+> ### Aliases: MEstimate-class Mroot Mroot,MEstimate-method
+> ###   show,MEstimate-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> ## prototype
+> new("MEstimate")
+Evaluations of Asymptotically linear estimate:
+----------------------------------------------
+An object of class “Estimate” 
+generated by call
+  `{}`()
+estimate:
+numeric(0)
+asymptotic bias:
+NULL
+value of M equation:
+numeric(0)
+> 
+> 
+> 
+> cleanEx(); nameEx("RobAStBaseMASK")
+> ### * RobAStBaseMASK
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RobAStBaseMASK
+> ### Title: Masking of/by other functions in package "RobAStBase"
+> ### Aliases: RobAStBaseMASK MASKING
+> ### Keywords: programming distribution documentation
+> 
+> ### ** Examples
+> 
+> RobAStBaseMASK()
+######################################################################
+#  On masking of and by other functions in package "RobAStBase"       
+######################################################################
+
+Attention:
+
+*** intentional masking: ***
+
+To be able to use the same symbol for objects of S4-classes 'kStepEstimate',
+respectively of classes 'ContIC','TotalVarIC','BoundedWeight',
+we intentionally mask the following function[s] --- however this/these 
+function[s] may still be used in exactly the same way as before 
+masking:
+
++start()    (package "stats")
++clip()    (package "graphics")
+ 
+ 
+
+> 
+> 
+> 
+> cleanEx(); nameEx("RobAStBaseOptions")
+> ### * RobAStBaseOptions
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RobAStBaseOptions
+> ### Title: Function to change the global variables of the package
+> ###   `RobAStBase'
+> ### Aliases: RobAStBaseOptions getRobAStBaseOption kStepUseLast
+> ### Keywords: misc robust
+> 
+> ### ** Examples
+> 
+> RobAStBaseOptions()
+$kStepUseLast
+[1] FALSE
+
+$withUpdateInKer
+[1] FALSE
+
+$IC.UpdateInKer
+NULL
+
+$all.verbose
+[1] FALSE
+
+$withICList
+[1] FALSE
+
+$withPICList
+[1] FALSE
+
+> RobAStBaseOptions("kStepUseLast")
+$kStepUseLast
+[1] FALSE
+
+> RobAStBaseOptions("kStepUseLast" = TRUE)
+> # or
+> RobAStBaseOptions(kStepUseLast = 1e-6)
+> getRobAStBaseOption("kStepUseLast")
+[1] 1e-06
+> 
+> 
+> 
+> cleanEx(); nameEx("RobWeight-class")
+> ### * RobWeight-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RobWeight-class
+> ### Title: Robust Weight classes
+> ### Aliases: RobWeight-class name,RobWeight-method name<-,RobWeight-method
+> ###   weight weight,RobWeight-method weight<- weight<--methods
+> ###   weight<-,RobWeight-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> ## prototype
+> new("RobWeight")
+An object of class “RobWeight”
+Slot "name":
+[1] "some weight"
+
+Slot "weight":
+function (x) 
+1
+<environment: namespace:RobAStBase>
+
+> 
+> 
+> 
+> cleanEx(); nameEx("TotalVarIC-class")
+> ### * TotalVarIC-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: TotalVarIC-class
+> ### Title: Influence curve of total variation type
+> ### Aliases: TotalVarIC-class CallL2Fam<-,TotalVarIC-method clipLo
+> ###   clip,TotalVarIC-method clipLo,TotalVarIC-method clipLo<-
+> ###   clipLo<-,TotalVarIC-method clipUp clipUp,TotalVarIC-method clipUp<-
+> ###   clipUp<-,TotalVarIC-method lowerCase<-,TotalVarIC-method
+> ###   neighbor,TotalVarIC-method show,TotalVarIC-method
+> ###   stand<-,TotalVarIC-method
+> ###   generateIC,TotalVarNeighborhood,L2ParamFamily-method
+> ### Keywords: classes robust
+> 
+> ### ** Examples
+> 
+> IC1 <- new("TotalVarIC")
+> plot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("TotalVarIC")
+> ### * TotalVarIC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: TotalVarIC
+> ### Title: Generating function for TotalVarIC-class
+> ### Aliases: TotalVarIC
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- TotalVarIC()
+> plot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("TotalVarNeighborhood-class")
+> ### * TotalVarNeighborhood-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: TotalVarNeighborhood-class
+> ### Title: Total variation neighborhood
+> ### Aliases: TotalVarNeighborhood-class
+> ### Keywords: classes models
+> 
+> ### ** Examples
+> 
+> new("TotalVarNeighborhood")
+An object of class “TotalVarNeighborhood” 
+type:	 (uncond.) total variation neighborhood 
+radius:	 0 
+> 
+> 
+> 
+> cleanEx(); nameEx("TotalVarNeighborhood")
+> ### * TotalVarNeighborhood
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: TotalVarNeighborhood
+> ### Title: Generating function for TotalVarNeighborhood-class
+> ### Aliases: TotalVarNeighborhood
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> TotalVarNeighborhood()
+An object of class “TotalVarNeighborhood” 
+type:	 (uncond.) total variation neighborhood 
+radius:	 0 
+> 
+> ## The function is currently defined as
+> function(radius = 0){ 
++     new("TotalVarNeighborhood", radius = radius) 
++ }
+function (radius = 0) 
+{
+    new("TotalVarNeighborhood", radius = radius)
+}
+> 
+> 
+> 
+> cleanEx(); nameEx("checkIC")
+> ### * checkIC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: checkIC
+> ### Title: Generic Function for Checking ICs
+> ### Aliases: checkIC
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- new("IC")
+> checkIC(IC1)
+precision of centering:	 0 
+precision of Fisher consistency:
+              [,1]
+[1,] -5.794001e-06
+maximum deviation 
+     5.794001e-06 
+> 
+> 
+> 
+> cleanEx(); nameEx("comparePlot")
+> ### * comparePlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: comparePlot-methods
+> ### Title: Compare - Plots
+> ### Aliases: comparePlot comparePlot-methods comparePlot,IC,IC-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> if(require(ROptEst)){
++ 
++ N0 <- NormLocationScaleFamily(mean=0, sd=1) 
++ N0.Rob1 <- InfRobModel(center = N0, neighbor = ContNeighborhood(radius = 0.5))
++ 
++ IC1 <- optIC(model = N0, risk = asCov())
++ IC2 <- optIC(model = N0.Rob1, risk = asMSE())
++ 
++ comparePlot(IC1,IC2)
++ 
++ data <- r(N0)(20)
++ comparePlot(IC1, IC2, data=data, with.lab = TRUE,
++             which.lbs = c(1:4,15:20),
++             which.Order = 1:6,
++             return.Order = TRUE)
++ 
++ ## selection of subpanels for plotting
++ par(mfrow=c(1,1))
++ comparePlot(IC1, IC2 ,mfColRow = FALSE, to.draw.arg=c("mean"),
++             panel.first= grid(),ylim=c(-4,4),xlim=c(-6,6))
++ ## matrix-valued ylim
++ comparePlot(IC1, IC2, panel.first= grid(),ylim=c(-4,4,0,4),xlim=c(-6,6))
++ 
++ ## with use of trafo-matrix:
++ G <- GammaFamily(scale = 1, shape = 2)
++ ## explicitely transforming to
++ ## MASS parametrization:
++ mtrafo <- function(x){
++      nms0 <- names(c(main(param(G)),nuisance(param(G))))
++      nms <- c("shape","rate")
++      fval0 <- c(x[2], 1/x[1])
++      names(fval0) <- nms
++      mat0 <- matrix( c(0, -1/x[1]^2, 1, 0), nrow = 2, ncol = 2,
++                      dimnames = list(nms,nms0))                          
++      list(fval = fval0, mat = mat0)}
++ G2 <- G
++ trafo(G2) <- mtrafo
++ G2
++ G2.Rob1 <- InfRobModel(center = G2, neighbor = ContNeighborhood(radius = 0.5))
++ system.time(IC1 <- optIC(model = G2, risk = asCov()))
++ system.time(IC2 <- optIC(model = G2.Rob1, risk = asMSE()))
++ system.time(IC2.i <- optIC(model = G2.Rob1, risk = asMSE(normtype=InfoNorm())))
++ system.time(IC2.s <- optIC(model = G2.Rob1, risk = asMSE(normtype=SelfNorm())))
++ 
++ comparePlot(IC1,IC2, IC2.i, IC2.s)
++ 
++ 
++ }
+Loading required package: ROptEst
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx(); nameEx("cutoff-class")
+> ### * cutoff-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cutoff-class
+> ### Title: Cutoff class for distance-distance plots
+> ### Aliases: cutoff-class cutoff.quantile<-,cutoff-method cutoff.quantile<-
+> ###   cutoff.quantile,cutoff-method cutoff.quantile name,cutoff-method
+> ###   fct,cutoff-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> cutoff()
+An object of class “cutoff”
+Slot "name":
+[1] "empirical"
+
+Slot "fct":
+function (data) 
+{
+    {
+        QF <- if (is(norm, "QFNorm")) 
+            QuadForm(norm)
+        else diag(nrow(data))
+    }
+    quantile(slot(norm, "fct")(data), cutoff.quantile)
+}
+<environment: 0x97faf80>
+
+Slot "cutoff.quantile":
+[1] 0.95
+
+> 
+> 
+> 
+> cleanEx(); nameEx("cutoff")
+> ### * cutoff
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cutoff
+> ### Title: Generating function(s) for class 'cutoff'
+> ### Aliases: cutoff cutoff.sememp cutoff.chisq
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> cutoff()
+An object of class “cutoff”
+Slot "name":
+[1] "empirical"
+
+Slot "fct":
+function (data) 
+{
+    {
+        QF <- if (is(norm, "QFNorm")) 
+            QuadForm(norm)
+        else diag(nrow(data))
+    }
+    quantile(slot(norm, "fct")(data), cutoff.quantile)
+}
+<environment: 0x8571d20>
+
+Slot "cutoff.quantile":
+[1] 0.95
+
+> cutoff.sememp()
+An object of class “cutoff”
+Slot "name":
+[1] "semi-empirical"
+
+Slot "fct":
+function (data) 
+{
+    {
+        QF <- if (is(norm, "QFNorm")) 
+            QuadForm(norm)
+        else diag(nrow(data))
+    }
+    {
+        n.05 <- chol(QF)
+        N0 <- matrix(rnorm(nsim * nrow(QF)), ncol = ncol(QF))
+        N0 <- N0 %*% n.05
+        quantile((rowSums(N0^2))^0.5, cutoff.quantile)
+    }
+}
+<environment: 0x971e850>
+
+Slot "cutoff.quantile":
+[1] 0.95
+
+> cutoff.chisq()
+An object of class “cutoff”
+Slot "name":
+[1] "chisq"
+
+Slot "fct":
+function (data) 
+{
+    {
+        QF <- if (is(norm, "QFNorm")) 
+            QuadForm(norm)
+        else diag(nrow(data))
+    }
+    {
+        dim = nrow(data)
+        qchisq(df = dim, cutoff.quantile)^0.5
+    }
+}
+<environment: 0x863dc88>
+
+Slot "cutoff.quantile":
+[1] 0.95
+
+> 
+> 
+> 
+> cleanEx(); nameEx("ddPlot-methods")
+> ### * ddPlot-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ddPlot-methods
+> ### Title: Methods for Function ddPlot in Package `RobAStBase'
+> ### Aliases: ddPlot ddPlot-methods ddPlot,matrix-method
+> ###   ddPlot,numeric-method ddPlot,data.frame-method
+> ### Keywords: methods hplot
+> 
+> ### ** Examples
+> 
+> MX <- matrix(rnorm(1500),nrow=6)
+> QM <- matrix(rnorm(36),nrow=6); QM <- QM %*% t(QM)
+> ddPlot(data=MX, dist.y=QFNorm(QuadF=PosSemDefSymmMatrix(QM)))
+$id.x
+ [1]  35  75  81  83 103 134 141 156 161 195 201 216 241
+
+$id.y
+ [1]   3  83  85  92  93 103 141 161 177 190 197 199 216
+
+$id.xy
+[1]  83 103 141 161 216
+
+$qtx
+       0%       25%       50%       75%      100% 
+0.8082529 1.8923066 2.3790813 2.8897964 4.2364298 
+
+$qty
+        0%        25%        50%        75%       100% 
+ 0.9448272  4.1291471  5.9492604  8.1544779 17.8387159 
+
+$cutoff.x.v
+     95% 
+3.513026 
+
+$cutoff.y.v
+     95% 
+10.60745 
+
+> 
+> 
+> 
+> cleanEx(); nameEx("infoPlot")
+> ### * infoPlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: infoPlot
+> ### Title: Plot absolute and relative information
+> ### Aliases: infoPlot infoPlot-methods infoPlot,IC-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> N <- NormLocationScaleFamily(mean=0, sd=1) 
+> IC1 <- optIC(model = N, risk = asCov())
+> infoPlot(IC1)
+> ## selection of subpanels for plotting
+> par(mfrow=c(1,2))
+> infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"))
+> infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
++               panel.first= grid(), ylim = c(0,4), xlim = c(-6,6))
+> infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
++               panel.first= grid(), ylim = c(0,4,-3,3), xlim = c(-6,6))
+> par(mfrow=c(1,3))
+> infoPlot(IC1, mfColRow = FALSE, panel.first= grid(),
++          ylim = c(0,4,0,.3,0,.8), xlim=c(-6,6))
+> par(mfrow=c(1,1))
+> data <- r(N)(20)
+> par(mfrow=c(1,3))
+> infoPlot(IC1, data=data, mfColRow = FALSE, panel.first= grid(),
++          with.lab = TRUE, cex.pts=2,
++          which.lbs = c(1:4,15:20), which.Order = 1:6,
++          return.Order = TRUE)
+$IC
+ [1] 17 16  2 20  1 19  3 18 15  4
+
+$IC.class
+ [1] 17 16  2 20  1 19  3 18 15  4
+
+> infoPlot(IC1, data=data[1:10], mfColRow = FALSE, panel.first= grid(),
++          with.lab = TRUE, cex.pts=0.7)
+> par(mfrow=c(1,1))
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx(); nameEx("internals_ddPlot")
+> ### * internals_ddPlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: internals_for_RobAStBase_ddPlot
+> ### Title: Internal / Helper functions of package RobAStBase for ddPlot
+> ### Aliases: internals_for_RobAStBase_ddPlot .ddPlot.MatNtNtCoCo
+> ### Keywords: internal hplot
+> 
+> ### ** Examples
+> 
+> MX <- matrix(rnorm(1500),nrow=6)
+> QM <- matrix(rnorm(36),nrow=6); QM <- QM %*% t(QM)
+> RobAStBase:::.ddPlot.MatNtNtCoCo(data=MX, 
++         dist.y=QFNorm(QuadF=PosSemDefSymmMatrix(QM)),
++         xlab="Norm.x",ylab="Norm.y", cex.idn = 1.3, offset=0,
++         lwd=2, lwd.cutoff=4, lty=2, col.cutoff =2, col.idn="green",
++         col = "blue", adj=0.4, pos=4,id.n = sample(1:200,size=100),
++         lab.pts=letters,log="x", main="GA", sub="NO",cex.sub=0.2)
+$id.x
+[1]  83 161 156 134  81 177
+
+$id.y
+[1]  83  85 161  93 177
+
+$id.xy
+[1]  83 161 177
+
+$qtx
+       0%       25%       50%       75%      100% 
+0.8082529 1.8790815 2.4615238 2.9567433 4.2266258 
+
+$qty
+       0%       25%       50%       75%      100% 
+ 1.382379  4.188070  6.092054  8.546559 15.779126 
+
+$cutoff.x.v
+     95% 
+3.495733 
+
+$cutoff.y.v
+     95% 
+11.26504 
+
+> 
+> 
+> 
+> cleanEx(); nameEx("kStepEstimator")
+> ### * kStepEstimator
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: kStepEstimator
+> ### Title: Function for the computation of k-step estimates
+> ### Aliases: kStepEstimator
+> ### Keywords: univar robust
+> 
+> ### ** Examples
+> 
+> if(require(ROptEst)){
++ ## 1. generate a contaminated sample
++ ind <- rbinom(100, size=1, prob=0.05)
++ x <- rnorm(100, mean=0, sd=(1-ind) + ind*9)
++ 
++ ## 2. Kolmogorov(-Smirnov) minimum distance estimator
++ (est0 <- MDEstimator(x=x, NormLocationScaleFamily()))
++ 
++ ## 3. k-step estimation: radius known
++ N1 <- NormLocationScaleFamily(mean=estimate(est0)["mean"], sd=estimate(est0)["sd"])
++ N1.Rob <- InfRobModel(center = N1, neighbor = ContNeighborhood(radius = 0.5))
++ IC1 <- optIC(model = N1.Rob, risk = asMSE())
++ (est1 <- kStepEstimator(x, IC1, est0, steps = 3, withPIC = TRUE))
++ estimate(est1)
++ ksteps(est1)
++ pICList(est1)
++ start(est1)
++ 
++ ## a transformed model
++ tfct <- function(x){
++     nms0 <- c("mean","sd")
++     nms  <- "comb"
++     fval0 <- x[1]+2*x[2]
++     names(fval0) <- nms
++     mat0 <- matrix(c(1,2), nrow = 1, dimnames = list(nms,nms0))
++     return(list(fval = fval0, mat = mat0))
++ }
++ 
++ N1.traf <- N1; trafo(N1.traf) <- tfct
++ N1R.traf <- N1.Rob; trafo(N1R.traf) <- tfct
++ IC1.traf <- optIC(model = N1R.traf, risk = asMSE())
++ (est0.traf <- MDEstimator(x, N1.traf))
++ (est1.traf <- kStepEstimator(x, IC1.traf, est0, steps = 3,
++                 withIC = TRUE, withPIC = TRUE, withUpdateInKer = FALSE))
++ (est1a.traf <- kStepEstimator(x, IC1.traf, est0, steps = 3,
++                 withIC = TRUE, withPIC = TRUE, withUpdateInKer = TRUE))
++ estimate(est1.traf)
++ ksteps(est1.traf)
++ pICList(est1.traf)
++ startval(est1.traf)
++ 
++ untransformed.estimate(est1.traf)
++ uksteps(est1.traf)
++ ICList(est1.traf)
++ ustartval(est1.traf)
++ 
++ estimate(est1a.traf)
++ ksteps(est1a.traf)
++ pICList(est1a.traf)
++ startval(est1a.traf)
++ 
++ untransformed.estimate(est1a.traf)
++ uksteps(est1a.traf)
++ ICList(est1a.traf)
++ ustartval(est1a.traf)
++ }
+Loading required package: ROptEst
+            [,1]
+mean -0.05297991
+sd    0.92479741
+> 
+> 
+> 
+> cleanEx(); nameEx("makeIC-methods")
+> ### * makeIC-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: makeIC-methods
+> ### Title: Generic Function for making ICs consistent at a possibly
+> ###   different model
+> ### Aliases: makeIC makeIC-methods makeIC,IC,missing-method
+> ###   makeIC,IC,L2ParamFamily-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## default IC
+> IC1 <- new("IC")
+> 
+> ## L2-differentiable parametric family
+> B <- BinomFamily(13, 0.3)
+> 
+> ## check IC properties
+> checkIC(IC1, B)
+precision of centering:	 3.9 
+precision of Fisher consistency:
+     prob
+prob   12
+maximum deviation 
+               12 
+> 
+> ## make IC
+> IC2 <- makeIC(IC1, B)
+> 
+> ## check IC properties
+> checkIC(IC2)
+precision of centering:	 7.272702e-17 
+precision of Fisher consistency:
+              prob
+prob -1.110223e-16
+maximum deviation 
+     1.110223e-16 
+> 
+> ## slot modifyIC is filled in case of IC2
+> IC3 <- modifyIC(IC2)(BinomFamily(13, 0.2), IC2)
+> checkIC(IC3)
+precision of centering:	 -3.091672e-18 
+precision of Fisher consistency:
+     prob
+prob    0
+maximum deviation 
+     3.091672e-18 
+> ## identical to
+> checkIC(IC3, BinomFamily(13, 0.2))
+precision of centering:	 -3.091672e-18 
+precision of Fisher consistency:
+     prob
+prob    0
+maximum deviation 
+     3.091672e-18 
+> 
+> 
+> 
+> cleanEx(); nameEx("optIC")
+> ### * optIC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: optIC
+> ### Title: Generic function for the computation of optimally robust ICs
+> ### Aliases: optIC optIC-methods optIC,L2ParamFamily,asCov-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> B <- BinomFamily(size = 25, prob = 0.25) 
+> 
+> ## classical optimal IC
+> IC0 <- optIC(model = B, risk = asCov())
+> plot(IC0) # plot IC
+> checkIC(IC0, B)
+precision of centering:	 -4.254490e-18 
+precision of Fisher consistency:
+             prob
+prob 2.220446e-16
+maximum deviation 
+     2.220446e-16 
+> 
+> 
+> 
+> cleanEx(); nameEx("outlyingPlotIC")
+> ### * outlyingPlotIC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: outlyingPlotIC
+> ### Title: Function outlyingPlotIC in Package `RobAStBase'
+> ### Aliases: outlyingPlotIC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> if(require(ROptEst)){
++ ## generates normal location and scale family with mean = -2 and sd = 3
++ N0 <- NormLocationScaleFamily()
++ N0.IC0 <- optIC(model = N0, risk = asCov())
++ N0.Rob1 <- InfRobModel(center = N0, neighbor = ContNeighborhood(radius = 0.5))
++ N0.IC1 <- optIC(model = N0.Rob1, risk = asMSE())
++ xn <- c(rnorm(100),rcauchy(20)+20)
++ outlyingPlotIC(xn, IC.x=N0.IC0)
++ outlyingPlotIC(xn, IC.x=N0.IC1)
++ }
+Loading required package: ROptEst
+$id.x
+integer(0)
+
+$id.y
+integer(0)
+
+$id.xy
+integer(0)
+
+$qtx
+       0%       25%       50%       75%      100% 
+0.8655423 0.9150693 1.1443918 1.9218962 1.9218963 
+
+$qty
+      0%      25%      50%      75%     100% 
+0.986385 1.009222 1.056527 1.982846 2.333311 
+
+$cutoff.x.v
+     95% 
+2.439106 
+
+$cutoff.y.v
+[1] 2.447747
+
+> 
+> 
+> 
+> cleanEx(); nameEx("plot-methods")
+> ### * plot-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot-methods
+> ### Title: Methods for Function plot in Package `RobAStBase'
+> ### Aliases: plot plot-methods plot,IC,missing-method
+> ###   plot,IC,numeric-method
+> ### Keywords: methods distribution
+> 
+> ### ** Examples
+> 
+> IC1 <- new("IC")
+> plot(IC1)
+> plot(IC1, main = TRUE, panel.first= grid(),
++      col = "blue", cex.main = 2, cex.inner = 1)
+> 
+> ### selection of subpanels for plotting
+> N <- NormLocationScaleFamily(mean=0, sd=1) 
+> IC2 <- optIC(model = N, risk = asCov())
+> par(mfrow=c(1,1))
+> plot(IC2, main = TRUE, panel.first= grid(),
++      col = "blue", cex.main = 2, cex.inner = 0.6,
++      mfColRow = FALSE, to.draw.arg=c("sd"))
+> 
+> ## xlim and ylim arguments
+> plot(IC2, main = TRUE, panel.first= grid(), 
++      ylim=c(-3,3), xlim=c(-2,3))
+> plot(IC2, main = TRUE, panel.first= grid(), 
++      ylim=c(-3,3,-1,3), xlim=c(-2,3))
+> 
+> data <- r(N)(30)
+> plot(IC2, data, panel.first= grid(),
++      ylim = c(-3,3,-1,3), xlim=c(-2,3),
++      cex.pts = 3, pch.pts = 1:2, col.pts="green",
++      with.lab = TRUE, which.lbs = c(1:4,15:20),
++      which.Order = 1:6, return.Order = TRUE)
+ [1] 17 16  2 20  1 19  3 18 15  4
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx(); nameEx("qqplot")
+> ### * qqplot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: qqplot
+> ### Title: Methods for Function qqplot in Package `RobAStBase'
+> ### Aliases: qqplot qqplot-methods qqplot,ANY,RobModel-method
+> ###   qqplot,ANY,InfRobModel-method qqplot,ANY,kStepEstimate-method
+> ### Keywords: hplot distribution
+> 
+> ### ** Examples
+> 
+> qqplot(r(Norm(15,sqrt(30)))(40), Chisq(df=15))
+$x
+ [1]  2.869589  4.103872  6.944357  7.457534 10.423074 10.506110 11.568771
+ [8] 11.597325 12.381064 12.726981 12.840385 13.327319 14.146673 14.437008
+[15] 14.675127 14.692570 14.705298 14.753888 14.911322 15.408409 16.005856
+[22] 16.804788 17.123365 17.135259 17.289160 17.669759 18.153684 18.252932
+[29] 18.394925 19.043971 19.180086 19.283937 19.498014 20.033446 20.169604
+[36] 21.025087 21.161500 22.441794 23.280366 23.737713
+
+$y
+ [1]  5.456913  6.818180  7.637289  8.270052  8.804812  9.278699  9.711238
+ [8] 10.114131 10.495045 10.859344 11.210980 11.552993 11.887815 12.217460
+[15] 12.543650 12.867908 13.191621 13.516092 13.842583 14.172349 14.506674
+[22] 14.846908 15.194499 15.551043 15.918333 16.298428 16.693737 17.107140
+[29] 17.542150 18.003150 18.495741 19.027288 19.607791 20.251382 20.979051
+[36] 21.824094 22.844394 24.155466 26.050039 29.843102
+
+> RobM <- InfRobModel(center = NormLocationFamily(mean=13,sd=sqrt(28)),
++                     neighbor = ContNeighborhood(radius = 0.4))
+> x <- r(Norm(15,sqrt(30)))(20)
+> qqplot(x, RobM)
+$x
+ [1]  8.814224  9.497963 11.149040 11.375858 12.278782 13.355490 13.955754
+ [8] 14.231792 14.377338 16.875949 17.029301 17.435943 18.078416 18.489453
+[15] 19.071074 19.680944 22.493351 25.847097
+
+$y
+ [1]  2.869387  5.681883  7.257000  8.440661  9.430936 10.309334 11.118922
+ [8] 11.886518 12.631262 13.368738 14.113482 14.881078 15.690666 16.569064
+[15] 17.559339 18.743000 20.318117 23.130613
+
+> ## further examples for ANY,kStepEstimator-method
+> ## in example to roptest() in package ROptEst
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  88.217 0.196 90.784 0.008 0.008 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')
