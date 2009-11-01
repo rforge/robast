@@ -12,8 +12,8 @@ and estimators for preprocessing omics data, in particular gene expression data.
 \details{
 \tabular{ll}{
 Package: \tab RobLoxBioC \cr
-Version: \tab 0.5 \cr
-Date: \tab 2009-09-04 \cr
+Version: \tab 0.7 \cr
+Date: \tab 2009-11-01 \cr
 Depends: \tab R(>= 2.8.1), methods, Biobase, affy, beadarray, distr, RobLox, lattice, RColorBrewer \cr
 LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
