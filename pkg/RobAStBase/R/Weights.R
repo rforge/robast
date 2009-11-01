@@ -6,7 +6,7 @@ setReplaceMethod("name", "RobWeight",
     })
 
 
-setMethod("clip", "BoundedWeight", function(object) object@clip)
+setMethod("clip", "BoundedWeight", function(x1) x1@clip)
 setReplaceMethod("clip", "BoundedWeight", 
     function(object, value){
         object@clip <- value
@@ -63,7 +63,7 @@ setMethod("getweight",
                 b <- clip(Weight)
                 z <- cent(Weight)
                 function(x){
-                   y <- A*(x-z)*sign(biastype) 
+                   y <- as.numeric(as.matrix(A)%*%(x-z))*sign(biastype)
                    norm1 <- pmax(y,b/2)
                    pmin(1,b/norm1) 
                    }
@@ -80,7 +80,7 @@ setMethod("getweight",
                 b2 <- b/nu(biastype)[2]
                 z <- cent(Weight)
                 function(x){
-                   y <- A*(x-z)
+                   y <- as.numeric(as.matrix(A)%*%(x-z))
                    norm1 <- pmax(-y,b1/2)
                    norm2 <- pmax(y,b2/2)
                    pmin(1,b1/norm1,b2/norm2) 
@@ -98,7 +98,7 @@ setMethod("getweight",
                 b1 <- -b[1]
                 b2 <- b[2]
                 function(x){
-                   y <- A*x
+                   y <- as.numeric(as.matrix(A)%*%x)
                    norm1 <- pmax(-y,b1/2)
                    norm2 <- pmax(y,b2/2)
                    pmin(1,b1/norm1,b2/norm2) 
@@ -133,7 +133,7 @@ setMethod("minbiasweight",
                 b2 <- b[2]
                 z <- cent(Weight)
                 function(x){
-                   y <- A*(x-z)
+                   y <- as.numeric(as.matrix(A)%*%(x-z))
                    indp <- (y>0)
                    ind0 <- .eq(y)
                    indm <- (y<0)
@@ -150,7 +150,7 @@ setMethod("minbiasweight",
                 b <- clip(Weight)
                 z <- cent(Weight)
                 function(x){
-                   y <- A*(x-z)
+                   y <- as.numeric(as.matrix(A)%*%(x-z))
                    ind <- (y*sign(biastype) >0)
                    ind0 <- .eq(y)
                    ind*b/(y+ind0)+(1-ind)
@@ -168,7 +168,7 @@ setMethod("minbiasweight",
                 b1 <- b[1]
                 b2 <- b[2]
                 function(x){
-                   y <- A*x
+                   y <- as.numeric(as.matrix(A)%*%(x))
                    indp <- (y>0)
                    ind0 <- .eq(y)
                    indm <- (y<0)

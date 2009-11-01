@@ -1,10 +1,10 @@
 <html><head><title>Function to change the global variables of the package &lsquo;RobAStBase&rsquo;</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>RobAStBaseOptions(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>RobAStBaseOptions(RobAStBase)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   RobAStBaseOptions">
 <param name="keyword" value="R:   getRobAStBaseOption">
 <param name="keyword" value="R:   kStepUseLast">
@@ -17,10 +17,8 @@
 
 <h3>Description</h3>
 
-<p>
-With <code>RobAStBaseOptions</code> you can inspect and change 
-the global variables of the package <span class="pkg">RobAStBase</span>.
-</p>
+<p>With <code>RobAStBaseOptions</code> you can inspect and change 
+the global variables of the package <span class="pkg">RobAStBase</span>. </p>
 
 
 <h3>Usage</h3>
@@ -36,43 +34,59 @@ getRobAStBaseOption(x)
 <table summary="R argblock">
 <tr valign="top"><td><code>...</code></td>
 <td>
-any options can be defined, using name = value or by passing a list of such tagged values. </td></tr>
+ any options can be defined, using name = value or by passing a list of such tagged values. </td></tr>
 <tr valign="top"><td><code>x</code></td>
 <td>
-a character string holding an option name.</td></tr>
+ a character string holding an option name.</td></tr>
 </table>
+
 
 <h3>Value</h3>
 
 <p>
-<code>RobAStBaseOptions()</code> returns a list of the global variables.newline
-<code>RobAStBaseOptions(x)</code> returns the global variable <VAR>x</VAR>.newline
-<code>getRobAStBaseOption(x)</code> returns the global variable <VAR>x</VAR>.newline
-<code>RobAStBaseOptions(x=y)</code> sets the value of the global variable <VAR>x</VAR> to <VAR>y</VAR>.</p>
+<code>RobAStBaseOptions()</code> returns a list of the global variables.<br>
+<code>RobAStBaseOptions(x)</code> returns the global variable <VAR>x</VAR>.<br>
+<code>getRobAStBaseOption(x)</code> returns the global variable <VAR>x</VAR>.<br>
+<code>RobAStBaseOptions(x=y)</code> sets the value of the global variable <VAR>x</VAR> to <VAR>y</VAR>.
+</p>
+
 
 <h3>Global Options</h3>
 
+<p>
+
 <dl>
-<dt>kStepUseLast:</dt><dd>The default value of argument <code>kStepUseLast</code> is
+<dt>kStepUseLast:</dt><dd> The default value of argument <code>kStepUseLast</code> is
 <code>FALSE</code>. Explicitly setting <code>kStepUseLast</code> to <code>TRUE</code> should
 be done with care as in this situation the influence curve in case of
 <code>oneStepEstimator</code> and <code>kStepEstimator</code> is re-computed using 
 the value of the one- resp. k-step estimate which may take quite a long 
 time depending on the model. </dd>
+<dt>withUpdateInKer:</dt><dd>if there is a non-trivial trafo in the model with matrix <i>D</i>, shall
+the parameter be updated on <i>ker(D)</i>? defaults to <code>FALSE</code>.</dd>
+<dt>IC.UpdateInKer:</dt><dd>if there is a non-trivial trafo in the model with matrix <i>D</i>,
+the IC to be used for this; if <code>NULL</code> the result of <code>getboundedIC(L2Fam,D)</code> is taken;
+this IC will then be projected onto <i>ker(D)</i>; defaults to <code>NULL</code>.</dd>
+<dt>all.verbose:</dt><dd>argument <code>verbose</code> passed on by default to many calls of
+<code>optIC</code>, <code>radiusminimaxIC</code>, <code>getinfRobIC</code> etc.; well suited
+for testing purposes.</dd>
+<dt>withPICList:</dt><dd>logical: shall slot <code>pICList</code> of return value of <code>kStepEstimator</code>
+be filled?</dd>
+<dt>withICList:</dt><dd>logical: shall slot <code>ICList</code> of return value of <code>kStepEstimator</code>
+be filled?</dd>
 </dl>
+
+</p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>See Also</h3>
 
-<p>
-<code><a onclick="findlink('base', 'options.html')" style="text-decoration: underline; color: blue; cursor: hand">options</a></code>, <code><a onclick="findlink('base', 'getOption.html')" style="text-decoration: underline; color: blue; cursor: hand">getOption</a></code>
-</p>
+<p><code><a onclick="findlink('base', 'options.html')" style="text-decoration: underline; color: blue; cursor: hand">options</a></code>, <code><a onclick="findlink('base', 'getOption.html')" style="text-decoration: underline; color: blue; cursor: hand">getOption</a></code></p>
 
 
 <h3>Examples</h3>
@@ -96,7 +110,5 @@ location.href = link;
 }
 </script>
 
-
-<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.0 <a href="00Index.html">Index]</a></div>
-
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 </body></html>

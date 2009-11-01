@@ -4,6 +4,7 @@
 \alias{getInfV,UnivariateDistribution,ContNeighborhood,BiasType-method}
 \alias{getInfV,UnivariateDistribution,TotalVarNeighborhood,BiasType-method}
 \alias{getInfV,RealRandVariable,ContNeighborhood,BiasType-method}
+\alias{getInfV,RealRandVariable,TotalVarNeighborhood,BiasType-method}
 \alias{getInfV,UnivariateDistribution,ContNeighborhood,onesidedBias-method}
 \alias{getInfV,UnivariateDistribution,ContNeighborhood,asymmetricBias-method}
 
@@ -22,7 +23,10 @@ getInfV(L2deriv, neighbor, biastype, ...)
 \S4method{getInfV}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, 
          neighbor, biastype, Distr, V.comp, cent, stand, 
          w)
-\S4method{getInfV}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv, 
+\S4method{getInfV}{RealRandVariable,TotalVarNeighborhood,BiasType}(L2deriv,
+         neighbor, biastype, Distr, V.comp, cent, stand,
+         w)
+\S4method{getInfV}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv,
          neighbor, biastype, clip, cent, stand)
 \S4method{getInfV}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(L2deriv, 
          neighbor, biastype, clip, cent, stand)

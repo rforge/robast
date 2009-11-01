@@ -10,13 +10,13 @@ Implementation of random variables by means of S4 classes and methods.
 }
 \details{
 \tabular{ll}{
-Package: \tab RandVar\cr
+Package: \tab RandVar \cr
 Version: \tab 0.7 \cr
-Date: \tab 2009-04-14 \cr
+Date: \tab 2009-09-04 \cr
 Depends: \tab R (>= 2.7.0), methods, startupmsg, distr(>= 2.0), distrEx(>=
 2.0)\cr
-LazyLoad: \tab yes\cr
-License: \tab LGPL-3\cr
+LazyLoad: \tab yes \cr
+License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
 }
 }
@@ -30,8 +30,15 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
   Dissertation. University of Bayreuth.
 }
 \seealso{
-\code{\link[distr]{distr-package}}, \code{\link[distrEx]{distrEx-package}}
+\code{\link[distr:0distr-package]{distr-package}}, \code{\link[distrEx:0distrEx-package]{distrEx-package}}
 }
+\section{Package versions}{
+Note: The first two numbers of package versions do not necessarily reflect
+ package-individual development, but rather are chosen for the
+ RobAStXXX family as a whole in order to ease updating "depends"
+ information.
+}
+
 \examples{
 library(RandVar)
 #vignette("RandVar")

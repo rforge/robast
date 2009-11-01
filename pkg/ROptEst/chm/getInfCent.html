@@ -1,15 +1,16 @@
 <html><head><title>Generic Function for the Computation of the Optimal Centering Constant/Lower Clipping Bound</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>getInfCent(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>getInfCent(ROptEst)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   getInfCent">
 <param name="keyword" value="R:   getInfCent-methods">
 <param name="keyword" value="R:   getInfCent,UnivariateDistribution,ContNeighborhood,BiasType-method">
 <param name="keyword" value="R:   getInfCent,UnivariateDistribution,TotalVarNeighborhood,BiasType-method">
 <param name="keyword" value="R:   getInfCent,RealRandVariable,ContNeighborhood,BiasType-method">
+<param name="keyword" value="R:   getInfCent,RealRandVariable,TotalVarNeighborhood,BiasType-method">
 <param name="keyword" value="R:   getInfCent,UnivariateDistribution,ContNeighborhood,onesidedBias-method">
 <param name="keyword" value="R:   getInfCent,UnivariateDistribution,ContNeighborhood,asymmetricBias-method">
 <param name="keyword" value=" Generic Function for the Computation of the Optimal Centering Constant/Lower Clipping Bound">
@@ -35,28 +36,27 @@ compute optimally robust ICs.
 <pre>
 getInfCent(L2deriv, neighbor, biastype, ...)
 
-## S4 method for signature 'UnivariateDistribution,
-##   ContNeighborhood, BiasType':
+## S4 method for signature 'UnivariateDistribution,ContNeighborhood,BiasType':
 getInfCent(L2deriv, 
      neighbor, biastype, clip, cent, tol.z, symm, trafo)
 
-## S4 method for signature 'UnivariateDistribution,
-##   TotalVarNeighborhood, BiasType':
+## S4 method for signature 'UnivariateDistribution,TotalVarNeighborhood,BiasType':
 getInfCent(L2deriv, 
      neighbor, biastype, clip, cent, tol.z, symm, trafo)
 
-## S4 method for signature 'RealRandVariable,
-##   ContNeighborhood, BiasType':
-getInfCent(L2deriv, 
-     neighbor, biastype, Distr, z.comp, w)
+## S4 method for signature 'RealRandVariable,ContNeighborhood,BiasType':
+getInfCent(L2deriv,
+     neighbor, biastype, Distr, z.comp, w, tol.z = .Machine$double.eps^.5)
 
-## S4 method for signature 'UnivariateDistribution,
-##   ContNeighborhood, onesidedBias':
-getInfCent(L2deriv, 
+## S4 method for signature 'RealRandVariable,TotalVarNeighborhood,BiasType':
+getInfCent(L2deriv,
+     neighbor, biastype, Distr, z.comp, w, tol.z = .Machine$double.eps^.5)
+
+## S4 method for signature 'UnivariateDistribution,ContNeighborhood,onesidedBias':
+getInfCent(L2deriv,
      neighbor, biastype, clip, cent, tol.z, symm, trafo)
 
-## S4 method for signature 'UnivariateDistribution,
-##   ContNeighborhood, asymmetricBias':
+## S4 method for signature 'UnivariateDistribution,ContNeighborhood,asymmetricBias':
 getInfCent(L2deriv, 
      neighbor, biastype, clip, cent, tol.z, symm, trafo)
 </pre>
@@ -67,73 +67,85 @@ getInfCent(L2deriv,
 <table summary="R argblock">
 <tr valign="top"><td><code>L2deriv</code></td>
 <td>
-L2-derivative of some L2-differentiable family 
+ L2-derivative of some L2-differentiable family 
 of probability measures. </td></tr>
 <tr valign="top"><td><code>neighbor</code></td>
 <td>
-object of class <code>"Neighborhood"</code>. </td></tr>
+ object of class <code>"Neighborhood"</code>. </td></tr>
 <tr valign="top"><td><code>biastype</code></td>
 <td>
-object of class <code>"BiasType"</code> </td></tr>
+ object of class <code>"BiasType"</code> </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-additional parameters. </td></tr>
+ additional parameters. </td></tr>
 <tr valign="top"><td><code>clip</code></td>
 <td>
-optimal clipping bound. </td></tr>
+ optimal clipping bound. </td></tr>
 <tr valign="top"><td><code>cent</code></td>
 <td>
-optimal centering constant. </td></tr>
+ optimal centering constant. </td></tr>
 <tr valign="top"><td><code>tol.z</code></td>
 <td>
-the desired accuracy (convergence tolerance). </td></tr>
+ the desired accuracy (convergence tolerance). </td></tr>
 <tr valign="top"><td><code>symm</code></td>
 <td>
-logical: indicating symmetry of <code>L2deriv</code>. </td></tr>
+ logical: indicating symmetry of <code>L2deriv</code>. </td></tr>
 <tr valign="top"><td><code>trafo</code></td>
 <td>
-matrix: transformation of the parameter. </td></tr>
+ matrix: transformation of the parameter. </td></tr>
 <tr valign="top"><td><code>Distr</code></td>
 <td>
 object of class <code>Distribution</code>. </td></tr>
 <tr valign="top"><td><code>z.comp</code></td>
 <td>
-logical vector: indication which components of the 
+ logical vector: indication which components of the 
 centering constant have to be computed. </td></tr>
 <tr valign="top"><td><code>w</code></td>
 <td>
 object of class <code>RobWeight</code>; current weight</td></tr>
 </table>
 
+
 <h3>Value</h3>
 
-<p>
-The optimal centering constant is computed.</p>
+<p>The optimal centering constant is computed.</p>
+
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
-<dt>L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "BiasType"</dt><dd>computation of optimal centering constant for symmetric bias. </dd>
-
-
-<dt>L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", biastype = "BiasType"</dt><dd>computation of optimal lower clipping bound for symmetric bias. </dd>
-
-
-<dt>L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", biastype = "BiasType"</dt><dd>computation of optimal centering constant for symmetric bias. </dd>
-
-
-<dt>L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "onesidedBias"</dt><dd>computation of optimal centering constant for onesided bias. </dd>
-
-
-<dt>L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "asymmetricBias"</dt><dd>computation of optimal centering constant for asymmetric bias. </dd>
+<dt>L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "BiasType"</dt><dd> 
+computation of optimal centering constant for symmetric bias. </dd>
+</p>
+<p>
+<dt>L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", biastype = "BiasType"</dt><dd> 
+computation of optimal lower clipping bound for symmetric bias. </dd>
+</p>
+<p>
+<dt>L2deriv = "RealRandVariable", neighbor = "TotalVarNeighborhood", biastype = "BiasType"</dt><dd>
+computation of optimal centering constant for symmetric bias. </dd>
+</p>
+<p>
+<dt>L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", biastype = "BiasType"</dt><dd>
+computation of optimal centering constant for symmetric bias. </dd>
+</p>
+<p>
+<dt>L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "onesidedBias"</dt><dd>
+computation of optimal centering constant for onesided bias. </dd>
+</p>
+<p>
+<dt>L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "asymmetricBias"</dt><dd> 
+computation of optimal centering constant for asymmetric bias. </dd>
 </dl>
+</p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,
-Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a></p>
 
 
 <h3>References</h3>
@@ -153,9 +165,7 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a onclick="findlink('RobAStBase', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, <code><a onclick="findlink('RobAStBase', 'TotalVarIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">TotalVarIC-class</a></code>
-</p>
+<p><code><a onclick="findlink('RobAStBase', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, <code><a onclick="findlink('RobAStBase', 'TotalVarIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">TotalVarIC-class</a></code></p>
 
 <script Language="JScript">
 function findlink(pkg, fn) {
@@ -167,7 +177,5 @@ location.href = link;
 }
 </script>
 
-
-<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
-
+<hr><div align="center">[Package <em>ROptEst</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 </body></html>

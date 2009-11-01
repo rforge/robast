@@ -59,6 +59,9 @@
     \item{\code{stand}:}{ object of class \code{"matrix"}:
       standardizing matrix. }
 
+    \item{lowerCase}{ object of class \code{"OptionalNumeric"}: 
+      optional constant for lower case solution. }
+  
     \item{\code{neighborRadius}:}{ object of class \code{"numeric"}:
       radius of the corresponding (unconditional) contamination 
       neighborhood. }

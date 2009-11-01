@@ -5,9 +5,26 @@
     require("distrMod", character = TRUE, quietly = TRUE)
     require("RandVar", character = TRUE, quietly = TRUE)
 }
+
 .onAttach <- function(library, pkg){
     unlockBinding(".RobAStBaseOptions", asNamespace("RobAStBase"))
+    msga <- gettext(
+    "Some functions from pkg's 'stats' and 'graphics' are intentionally masked ---see RobAStBaseMASK().\n"
+                   )
+    msgb <- gettext(
+    "Note that global options are controlled by RobAStBaseoptions() ---c.f. ?\"RobAStBaseoptions\"."
+                   )
+    buildStartupMessage(pkg = "RobAStBase", msga, msgb,
+                        library = library, packageHelp = TRUE
+        #                    , MANUAL="http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf"
+        #                    , VIGNETTE = gettext("Package \"distrDoc\" provides a vignette to this package as well as to several related packages; try vignette(\"distr\").")
+        )
     invisible()
+}
+
+RobAStBaseMASK <- function(library = NULL)
+{
+    infoShow(pkg = "RobAStBase", filename = "MASKING", library = library)
 }
 
 ## neighborhood
@@ -102,7 +119,7 @@ setClass("IC", representation(CallL2Fam = "call",
             contains = "InfluenceCurve",
             validity = function(object){
                 L2Fam <- eval(object@CallL2Fam)
-                trafo <- L2Fam@param@trafo
+                trafo <- trafo(L2Fam@param)
                 if(nrow(trafo) != dimension(object@Curve))
                     stop("wrong dimension of 'Curve'")
                 if(dimension(Domain(L2Fam@L2deriv[[1]])) != dimension(Domain(object@Curve[[1]])))
@@ -139,7 +156,7 @@ setClass("HampIC",
                     if(length(object@lowerCase) != nrow(object@stand))
                         stop("length of 'lowerCase' != nrow of standardizing matrix")
                 L2Fam <- eval(object@CallL2Fam)
-                if(!identical(dim(L2Fam@param@trafo), dim(object@stand)))
+                if(!identical(dim(trafo(L2Fam@param)), dim(object@stand)))
                     stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
                 return(TRUE)
             })
@@ -198,7 +215,21 @@ setClass("TotalVarIC",
 
 ## ALEstimate
 setClassUnion("OptionalInfluenceCurve", c("InfluenceCurve", "NULL"))
-setClass("ALEstimate", 
+setClassUnion("StartClass", c("numeric", "matrix", "function", "Estimate"))
+setClass("pICList",
+          prototype = prototype(list()),
+            contains = "list",
+            validity = function(object){
+                nrvalues <- length(object)
+                if(nrvalues){
+                for(i in 1:nrvalues)
+                    if(!is(object[[i]], "OptionalInfluenceCurve"))
+                        stop("element ", i, " is no 'OptionalInfluenceCurve'")
+                }
+                return(TRUE)
+            })
+setClassUnion("OptionalpICList", c("pICList", "NULL"))
+setClass("ALEstimate",
          representation(pIC = "OptionalInfluenceCurve",
                         asbias = "OptionalNumeric"),
          prototype(name = "Asymptotically linear estimate",
@@ -210,26 +241,42 @@ setClass("ALEstimate",
                    pIC = NULL,
                    nuis.idx = NULL,
                    trafo = list(fct = function(x){
-                                      list(fval = x, mat = matrix(0))}, 
+                                      list(fval = x, mat = matrix(1))},
                                 mat = matrix(1)), ### necessary for comparison with unit matrix
                    Infos = matrix(c(character(0),character(0)), ncol=2,
                                   dimnames=list(character(0), c("method", "message"))),
+                   completecases = logical(0),
                    untransformed.estimate = NULL,
                    untransformed.asvar = NULL),
          contains = "Estimate")
 setClass("kStepEstimate", 
-         representation(steps = "integer"),
+         representation(steps = "integer",
+                        pICList = "OptionalpICList",
+                        ICList = "OptionalpICList",
+                        start = "StartClass",
+                        startval = "matrix",
+                        ustartval = "matrix",
+                        ksteps = "OptionalMatrix",
+                        uksteps = "OptionalMatrix"),
          prototype(name = "Asymptotically linear estimate",
                    estimate = numeric(0),
                    samplesize = numeric(0),
+                   completecases = logical(0),
                    estimate.call = call("{}"),
                    steps = integer(0),
                    asvar = NULL,
                    asbias = NULL,
                    pIC = NULL,
+                   pICList = NULL,
+                   ICList = NULL,
+                   ksteps = NULL,
+                   uksteps = NULL,
+                   start = matrix(0),
+                   startval = matrix(0),
+                   ustartval = matrix(0),
                    nuis.idx = NULL,
                    trafo = list(fct = function(x){
-                                      list(fval = x, mat = matrix(0))}, 
+                                      list(fval = x, mat = matrix(1))},
                                 mat = matrix(1)), ### necessary for comparison with unit matrix
                    Infos = matrix(c(character(0),character(0)), ncol=2,
                                   dimnames=list(character(0), c("method", "message"))),
@@ -241,6 +288,7 @@ setClass("MEstimate",
          prototype(name = "Asymptotically linear estimate",
                    estimate = numeric(0),
                    samplesize = numeric(0),
+                   completecases = logical(0),
                    estimate.call = call("{}"),
                    Mroot = numeric(0),
                    asvar = NULL,
@@ -248,7 +296,7 @@ setClass("MEstimate",
                    pIC = NULL,
                    nuis.idx = NULL,
                    trafo = list(fct = function(x){
-                                      list(fval = x, mat = matrix(0))}, 
+                                      list(fval = x, mat = matrix(1))},
                                 mat = matrix(1)), ### necessary for comparison with unit matrix
                    Infos = matrix(c(character(0),character(0)), ncol=2,
                                   dimnames=list(character(0), c("method", "message"))),

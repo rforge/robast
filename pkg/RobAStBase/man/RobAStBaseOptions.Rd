@@ -29,12 +29,24 @@ getRobAStBaseOption(x)
     \code{oneStepEstimator} and \code{kStepEstimator} is re-computed using 
     the value of the one- resp. k-step estimate which may take quite a long 
     time depending on the model. }
+  \item{withUpdateInKer:}{if there is a non-trivial trafo in the model with matrix \eqn{D}, shall
+  the parameter be updated on \eqn{{\rm ker}(D)}{ker(D)}? defaults to \code{FALSE}.}
+  \item{IC.UpdateInKer:}{if there is a non-trivial trafo in the model with matrix \eqn{D},
+  the IC to be used for this; if \code{NULL} the result of \code{getboundedIC(L2Fam,D)} is taken;
+  this IC will then be projected onto \eqn{{\rm ker}(D)}{ker(D)}; defaults to \code{NULL}.}
+  \item{all.verbose:}{argument \code{verbose} passed on by default to many calls of
+  \code{optIC}, \code{radiusminimaxIC}, \code{getinfRobIC} etc.; well suited
+  for testing purposes.}
+  \item{withPICList:}{logical: shall slot \code{pICList} of return value of \code{kStepEstimator}
+  be filled?}
+  \item{withICList:}{logical: shall slot \code{ICList} of return value of \code{kStepEstimator}
+  be filled?}
 }
 }
 %\references{}
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link[base]{options}}, \code{\link[base]{getOption}}}
+\seealso{\code{\link[base]{options}}, \code{\link[base:options]{getOption}}}
 \examples{
 RobAStBaseOptions()
 RobAStBaseOptions("kStepUseLast")

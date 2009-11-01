@@ -55,7 +55,7 @@ performs the plotting for \code{\link{ddPlot}} and \code{\link{outlyingPlotIC}};
 all arguments except for \code{data} are optional. In case they are missing
 default values are used as usual; for those arguments without default arguments,
 we do
-\itemize{
+\describe{
 \item{transform.x}{defaults to identity, internally}.
 \item{id.n}{defaults to \code{1:ncol(data)}, internally}.
 \item{lab.pts}{defaults to \code{(1:ncol(data))[id.n]}, internally}.

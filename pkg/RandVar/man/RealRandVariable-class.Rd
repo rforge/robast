@@ -12,10 +12,10 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{Map}:}{Object of class \code{"list"}: list of functions. }
-    \item{\code{Domain}:}{Object of class \code{"OptionalrSpace"}: 
+    \item{\code{Map}}{Object of class \code{"list"}: list of functions. }
+    \item{\code{Domain}}{Object of class \code{"OptionalrSpace"}: 
       domain of the random variable. }
-    \item{\code{Range}:}{Object of class \code{"Reals"}:
+    \item{\code{Range}}{Object of class \code{"Reals"}:
       range of the random variable. }
   }
 }

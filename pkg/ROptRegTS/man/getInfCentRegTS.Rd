@@ -116,7 +116,7 @@ getInfCentRegTS(ErrorL2deriv, Regressor, neighbor, ...)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link[ROptEst]{ContIC-class}}, \code{\link{Av1CondContIC-class}}, 
+\seealso{\code{\link[ROptEstOld]{ContIC-class}}, \code{\link{Av1CondContIC-class}}, 
         \code{\link{Av2CondContIC-class}}, \code{\link{Av1CondTotalVarIC-class}}, 
         \code{\link{CondContIC-class}}, \code{\link{CondTotalVarIC-class}}}
 %\examples{}

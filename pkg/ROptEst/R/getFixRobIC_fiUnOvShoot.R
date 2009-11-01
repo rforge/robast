@@ -4,7 +4,7 @@
 setMethod("getFixRobIC", signature(Distr = "Norm", 
                                    risk = "fiUnOvShoot", 
                                    neighbor = "UncondNeighborhood"),
-    function(Distr, risk, neighbor, sampleSize, upper, maxiter, tol, warn, 
+    function(Distr, risk, neighbor, sampleSize, upper, lower, maxiter, tol, warn,
              Algo, cont){
         radius <- neighbor@radius
         if(identical(all.equal(radius, 0), TRUE)){

@@ -43,11 +43,11 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{Dim}:}{ vector of positive integers: Dimensions of the random matrix. }
-    \item{\code{Map}:}{ Object of class \code{"list"}: list of functions. }
-    \item{\code{Domain}:}{ Object of class \code{"OptionalrSpace"} 
+    \item{\code{Dim}}{ vector of positive integers: Dimensions of the random matrix. }
+    \item{\code{Map}}{ Object of class \code{"list"}: list of functions. }
+    \item{\code{Domain}}{ Object of class \code{"OptionalrSpace"} 
       domain of the random matrix. }
-    \item{\code{Range}:}{ Object of class \code{"OptionalrSpace"} 
+    \item{\code{Range}}{ Object of class \code{"OptionalrSpace"} 
       range of the random matrix. }
   }
 }

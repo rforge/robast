@@ -11,13 +11,6 @@ setMethod("show", "ParamFamParameter",
             print(object@trafo)
         }
     })
-setMethod("show", "Symmetry", 
-    function(object){ 
-        cat("type of symmetry:\t", object@type, "\n") 
-        if(!is.null(object@SymmCenter))
-            cat("center of symmetry:\n") 
-            print(object@SymmCenter)
-    })
 setMethod("show", "ParamFamily", 
     function(object){
         cat(paste("An object of class", dQuote(class(object)), "\n"))

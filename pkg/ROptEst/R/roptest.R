@@ -1,10 +1,18 @@
 ###############################################################################
 ## Optimally robust estimation
 ###############################################################################
-roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est, 
+roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
-                    distance = CvMDist, startPar = NULL, verbose = FALSE, 
-                    useLast = getRobAStBaseOption("kStepUseLast"), ...){
+                    distance = CvMDist, startPar = NULL, verbose = NULL,
+                    OptOrIter = "iterate",
+                    useLast = getRobAStBaseOption("kStepUseLast"),
+                    withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+                    IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+                    withICList = getRobAStBaseOption("withICList"),
+                    withPICList = getRobAStBaseOption("withPICList"),
+                    na.rm = TRUE, initial.est.ArgList, ...){
+    if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
     es.call <- match.call()
     if(missing(x))
         stop("'x' is missing with no default")
@@ -18,6 +26,9 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         if(!is.matrix(x))
             stop("'x' has to be a numeric vector resp. a matrix or data.frame")
     }
+    completecases <- complete.cases(x)
+    if(na.rm) x <- na.omit(x)
+
     if(missing(eps) && missing(eps.lower) && missing(eps.upper)){
         eps.lower <- 0
         eps.upper <- 0.5
@@ -58,9 +69,14 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     if(missing(initial.est))
         initial.est <- MDEstimator(x = x, ParamFamily = L2Fam, distance = distance,
                                             startPar = startPar, ...)
-    if(is(initial.est, "Estimate")) initial.est <- estimate(initial.est)
+    nrvalues <-  length(L2Fam@param)
+    initial.est <- kStepEstimator.start(initial.est, x = x,
+                                        nrvalues = nrvalues, na.rm = na.rm,
+                                        L2Fam = L2Fam,
+                                        startList = initial.est.ArgList)
+
     newParam <- param(L2Fam)
-    main(newParam)[] <- initial.est
+    main(newParam)[] <- as.numeric(initial.est)
     L2FamStart <- modifyModel(L2Fam, newParam)
     if(is.matrix(x))
         sqrtn <- sqrt(ncol(x))
@@ -70,25 +86,39 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         r.lower <- sqrtn*eps.lower
         r.upper <- sqrtn*eps.upper
         ICstart <- radiusMinimaxIC(L2Fam = L2FamStart, neighbor = neighbor, risk = risk, 
-                                   loRad = r.lower, upRad = r.upper, verbose = verbose)
+                                   loRad = r.lower, upRad = r.upper, verbose = verbose,
+                                   OptOrIter = OptOrIter, ...)
         if(!isTRUE(all.equal(fsCor, 1, tol = 1e-3))){
             neighbor@radius <- neighborRadius(ICstart)*fsCor
             infMod <- InfRobModel(center = L2FamStart, neighbor = neighbor)
-            ICstart <- optIC(model = infMod, risk = risk, verbose = verbose)
+            ICstart <- optIC(model = infMod, risk = risk, verbose = verbose,
+                             OptOrIter = OptOrIter, ...)
         }    
     }else{
         neighbor@radius <- sqrtn*eps*fsCor
         infMod <- InfRobModel(center = L2FamStart, neighbor = neighbor)
-        ICstart <- optIC(model = infMod, risk = risk, verbose = verbose)
+        ICstart <- optIC(model = infMod, risk = risk, verbose = verbose,
+                         OptOrIter = OptOrIter, ...)
     }
-    res <- kStepEstimator(x, IC = ICstart, start = initial.est, steps = steps, useLast = useLast)
+    res <- kStepEstimator(x, IC = ICstart, start = initial.est, steps = steps, useLast = useLast,
+                          withUpdateInKer = withUpdateInKer, IC.UpdateInKer = IC.UpdateInKer,
+                          withICList = withICList, withPICList = withPICList, na.rm = na.rm)
     res@estimate.call <- es.call
     Infos <- matrix(c("roptest", 
                       paste(steps, "-step estimate for ", name(L2Fam), sep = "")),
                     ncol = 2)
     colnames(Infos) <- c("method", "message")
-    Infos <- rbind(Infos, c("roptest", 
+
+    if(! distrMod:::.isUnitMatrix(trafo(L2Fam)))
+       Infos <- rbind(Infos, c("roptest",
+                            paste("computation of IC",
+                                   ifelse(withUpdateInKer,"with","without") ,
+                                   "modification in ker(trafo)")))
+
+    Infos <- rbind(Infos, c("roptest",
                             paste("computation of IC, asvar and asbias via useLast =", useLast)))
     Infos(res) <- Infos
+    res@completecases <- completecases
+    res@start <- initial.est
     return(res)
 }

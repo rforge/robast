@@ -22,42 +22,43 @@ used as common mother class for classes \code{ContIC} and \code{TotalVarIC}.
 }
 \section{Slots}{
   \describe{
-    \item{\code{CallL2Fam}:}{ object of class \code{"call"}:
+    \item{\code{CallL2Fam}}{ object of class \code{"call"}:
       creates an object of the underlying L2-differentiable
       parametric family. }
 
-    \item{\code{name}:}{ object of class \code{"character"} }
+    \item{\code{name}}{ object of class \code{"character"} }
 
-    \item{\code{Curve}:}{ object of class \code{"EuclRandVarList"}}
+    \item{\code{Curve}}{ object of class \code{"EuclRandVarList"}}
 
-    \item{\code{modifyIC}:}{ Object of class \code{"OptionalFunction"}:
+    \item{\code{modifyIC}}{ Object of class \code{"OptionalFunction"}:
       function of two arguments, which are an L2 parametric family 
       and an optional influence curve. Returns an object of 
       class \code{"IC"}. This slot is mainly used for internal
       computations! }
 
-    \item{\code{Risks}:}{ object of class \code{"list"}:
+    \item{\code{Risks}}{ object of class \code{"list"}:
       list of risks; cf. \code{\link[distrMod]{RiskType-class}}. }
 
-    \item{\code{Infos}:}{ object of class \code{"matrix"}
+    \item{\code{Infos}}{ object of class \code{"matrix"}
       with two columns named \code{method} and \code{message}:
       additional informations. }
 
-    \item{\code{stand}:}{ object of class \code{"matrix"}:
+    \item{\code{stand}}{ object of class \code{"matrix"}:
       standardizing matrix. }
 
-    \item{\code{weight}:}{ object of class \code{"RobWeight"}:
+    \item{\code{weight}}{ object of class \code{"RobWeight"}:
       weight function }
 
-    \item{\code{biastype}:}{ object of class \code{"BiasType"}:
+    \item{\code{biastype}}{ object of class \code{"BiasType"}:
       bias type (symmetric/onsided/asymmetric) }
-    \item{\code{normtype}:}{ object of class \code{"NormType"}:
+
+    \item{\code{normtype}}{ object of class \code{"NormType"}:
       norm type (Euclidean, information/self-standardized)}
 
-    \item{\code{lowerCase}:}{ object of class \code{"OptionalNumeric"}:
+    \item{\code{lowerCase}}{ object of class \code{"OptionalNumeric"}:
       optional constant for lower case solution. }
 
-    \item{\code{neighborRadius}:}{ object of class \code{"numeric"}:
+    \item{\code{neighborRadius}}{ object of class \code{"numeric"}:
       radius of the corresponding (unconditional) contamination
       neighborhood. }
   }

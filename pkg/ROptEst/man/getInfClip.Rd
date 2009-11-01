@@ -3,7 +3,7 @@
 \alias{getInfClip-methods}
 \alias{getInfClip,numeric,UnivariateDistribution,asMSE,ContNeighborhood-method}
 \alias{getInfClip,numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood-method}
-\alias{getInfClip,numeric,EuclRandVariable,asMSE,ContNeighborhood-method}
+\alias{getInfClip,numeric,EuclRandVariable,asMSE,UncondNeighborhood-method}
 \alias{getInfClip,numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method}
 \alias{getInfClip,numeric,UnivariateDistribution,asSemivar,ContNeighborhood-method}
 
@@ -22,7 +22,7 @@ getInfClip(clip, L2deriv, risk, neighbor, ...)
 \S4method{getInfClip}{numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood}(clip, L2deriv, 
                                                     risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfClip}{numeric,EuclRandVariable,asMSE,ContNeighborhood}(clip, L2deriv, risk, 
+\S4method{getInfClip}{numeric,EuclRandVariable,asMSE,UncondNeighborhood}(clip, L2deriv, risk,
                                               neighbor, biastype, Distr, stand, cent, trafo)
 
 \S4method{getInfClip}{numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(clip, L2deriv, 
@@ -59,7 +59,7 @@ getInfClip(clip, L2deriv, risk, neighbor, ...)
     optimal clipping bound for asymtotic mean square error. }
 
   \item{clip = "numeric", L2deriv = "EuclRandVariable", 
-        risk = "asMSE", neighbor = "ContNeighborhood"}{ 
+        risk = "asMSE", neighbor = "UncondNeighborhood"}{
     optimal clipping bound for asymtotic mean square error. }
 
   \item{clip = "numeric", L2deriv = "UnivariateDistribution", 

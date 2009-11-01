@@ -1,5 +1,10 @@
 .RobAStBaseOptions <- list(
-    kStepUseLast = FALSE
+    kStepUseLast = FALSE,
+    withUpdateInKer = FALSE,
+    IC.UpdateInKer = NULL,
+    all.verbose = FALSE,
+    withICList = FALSE,
+    withPICList = FALSE
 )
 
 RobAStBaseOptions <- function(...) {

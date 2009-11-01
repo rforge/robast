@@ -5,9 +5,13 @@
 setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily", 
                                        neighbor = "UncondNeighborhood",
                                        risk = "asGRisk"),
-    function(L2Fam, neighbor, risk, loRad, upRad, z.start = NULL, 
-             A.start = NULL, upper = 1e5, maxiter = 50, 
-             tol = .Machine$double.eps^0.4, warn = FALSE, verbose = FALSE){
+    function(L2Fam, neighbor, risk, loRad = 0, upRad = Inf, z.start = NULL,
+             A.start = NULL, upper = NULL, lower = NULL,
+             OptOrIter = "iterate", maxiter = 50,
+             tol = .Machine$double.eps^0.4, warn = FALSE,
+             verbose = NULL, loRad0 = 1e-3, ...){
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
         ow <- options("warn")
         on.exit(options(ow))
         if(length(loRad) != 1)
@@ -18,6 +22,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
             stop("'upRad < loRad' is not fulfilled")
         biastype <- biastype(risk)
         L2derivDim <- numberOfMaps(L2Fam@L2deriv)
+        trafo <- trafo(L2Fam@param)
 
         if(is(normtype(risk),"SelfNorm")||is(normtype(risk),"InfoNorm"))
            upRad <- min(upRad,10) 
@@ -25,9 +30,10 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
         if(L2derivDim == 1){
             options(warn = -1)
             upper.b <- upper
-            lower <- ifelse(identical(all.equal(loRad, 0), TRUE), 1e-4, loRad)
-            upper <- ifelse(upRad == Inf, max(loRad+1, 2), upRad)
-
+            lower.b <- lower
+            lower <- max(loRad, loRad0)
+            upper <- if(upRad == Inf) max(lower+2, 4) else upRad
+            if(is(neighbor,"TotalVarNeighborhood")) {upper <- upper/2}
             if(identical(all.equal(loRad, 0), TRUE)){
                 loRad <- 0
                 loRisk <- 1/as.vector(L2Fam@FisherInfo)
@@ -35,46 +41,47 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                 neighbor@radius <- loRad
                 resLo <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
                             risk = risk, symm = L2Fam@L2derivDistrSymm[[1]],
-                            Finfo = L2Fam@FisherInfo, upper = upper.b,
-                            trafo = L2Fam@param@trafo, maxiter = maxiter, tol = tol, 
+                            Finfo = L2Fam@FisherInfo, upper = upper.b, lower = lower.b,
+                            trafo = trafo, maxiter = maxiter*6, tol = tol,
                             warn = warn, verbose = verbose)
                 loRisk <- getAsRisk(risk = risk, L2deriv = L2Fam@L2derivDistr[[1]], 
                                     neighbor = neighbor, biastype = biastype,
                                     clip = resLo$b, cent = resLo$a, 
-                                    stand = resLo$A, trafo = L2Fam@param@trafo)[[1]]
+                                    stand = resLo$A, trafo = trafo)[[1]]
             }
 
             if(upRad == Inf){
                 bmin <- getAsRisk(risk = asBias(biastype = biastype), 
                                   L2deriv = L2Fam@L2derivDistr[[1]], 
                                   neighbor = neighbor, biastype = biastype, 
-                                  trafo = L2Fam@param@trafo)$asBias
+                                  trafo = trafo)$asBias
                 upRisk <- bmin^2
             }else{
                 neighbor@radius <- upRad
                 resUp <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
                             risk = risk, symm = L2Fam@L2derivDistrSymm[[1]],
-                            Finfo = L2Fam@FisherInfo, upper = upper.b,
-                            trafo = L2Fam@param@trafo, maxiter = maxiter, tol = tol, 
+                            Finfo = L2Fam@FisherInfo, upper = upper.b, lower=lower.b,
+                            trafo = trafo, maxiter = maxiter, tol = tol,
                             warn = warn, verbose = verbose)
                 upRisk <- getAsRisk(risk = risk, L2deriv = L2Fam@L2derivDistr[[1]], 
                                     neighbor = neighbor, biastype = biastype, 
                                     clip = resUp$b, cent = resUp$a, 
-                                    stand = resUp$A, trafo = L2Fam@param@trafo)[[1]]
+                                    stand = resUp$A, trafo = trafo)[[1]]
             }
 
             loNorm<- upNorm <- NormType()
-            leastFavR <- uniroot(getIneffDiff, lower = lower, upper = upper, 
+##            print(c(loRad=loRad,loRisk=loRisk,lower=lower,upRad=upRad,upRisk=upRisk,upper=upper))
+            leastFavR <- uniroot(getIneffDiff, lower = lower, upper = upper,
                             tol = .Machine$double.eps^0.25, L2Fam = L2Fam, neighbor = neighbor, 
-                            upper.b = upper.b, risk = risk, loRad = loRad, upRad = upRad, 
+                            upper.b = upper.b, lower.b = lower.b, risk = risk, loRad = loRad, upRad = upRad,
                             loRisk = loRisk, upRisk = upRisk, eps = tol, 
                             MaxIter = maxiter, warn = warn, 
-                            loNorm = loNorm, upNorm = upNorm)$root
+                            loNorm = loNorm, upNorm = upNorm, verbose=verbose)$root
             neighbor@radius <- leastFavR
             res <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
                         risk = risk, symm = L2Fam@L2derivSymm[[1]],
-                        Finfo = L2Fam@FisherInfo, upper = upper.b,
-                        trafo = L2Fam@param@trafo, maxiter = maxiter, tol = tol, 
+                        Finfo = L2Fam@FisherInfo, upper = upper.b, lower = lower.b,
+                        trafo = trafo, maxiter = maxiter, tol = tol, 
                         warn = warn, verbose = verbose)
             options(ow)
             res$info <- c("radiusMinimaxIC", paste("radius minimax IC for radius interval [", 
@@ -112,7 +119,6 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                 normtype <- normtype(risk)
 
                 Finfo <- L2Fam@FisherInfo
-                trafo <- L2Fam@param@trafo
 
                 p <- nrow(trafo)
                 FI0 <- trafo%*%solve(Finfo)%*%t(trafo)
@@ -125,6 +131,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
 
                 options(warn = -1)
                 upper.b <- upper
+                lower.b <- lower
                 lower <- ifelse(identical(all.equal(loRad, 0), TRUE), 1e-4, loRad)
                 upper <- ifelse(upRad == Inf, max(loRad+1, 2), upRad)
 
@@ -138,8 +145,9 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                 Distr = L2Fam@distribution, DistrSymm = L2Fam@distrSymm, 
                                 L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                                 Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
-                                A.start = A.start, upper = upper.b, maxiter = maxiter, 
-                                tol = tol, warn = warn, verbose = verbose)
+                                A.start = A.start, upper = upper.b, lower = lower.b,
+                                OptOrIter = OptOrIter, maxiter = maxiter,
+                                tol = tol, warn = warn, verbose = verbose, ...)
                     riskLo <- risk
                     normtype(riskLo) <- resLo$normtype
                     loRisk <- getAsRisk(risk = riskLo, L2deriv = L2deriv, 
@@ -157,10 +165,10 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                       DistrSymm = L2Fam@distrSymm, 
                                       L2derivSymm = L2derivSymm, 
                                       L2derivDistrSymm= L2derivDistrSymm,
-                                trafo = trafo, z.start = z.start, 
-                                A.start = A.start, 
+                                Finfo = L2Fam@FisherInfo, trafo = trafo,
+                                z.start = z.start, A.start = A.start,
                                 maxiter = maxiter, tol = tol,
-                                warn = warn)
+                                warn = warn, verbose = verbose)
                     bmin <- biasR$asBias
                     upNorm <- biasR$normtype
                     upRisk <- bmin^2
@@ -170,27 +178,31 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                                 Distr = L2Fam@distribution, DistrSymm = L2Fam@distrSymm, 
                                 L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                                 Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
-                                A.start = A.start, upper = upper.b, maxiter = maxiter, 
-                                tol = tol, warn = warn, verbose = verbose)
+                                A.start = A.start, upper = upper.b, lower = lower.b,
+                                OptOrIter = OptOrIter, maxiter = maxiter,
+                                tol = tol, warn = warn, verbose = verbose, ...)
                     riskUp <- risk
                     normtype(riskUp) <- resUp$normtype
                     upRisk <- getAsRisk(risk = riskUp, L2deriv = L2deriv, neighbor = neighbor, 
-                                biastype = biastype, clip = resUp$b, cent = resUp$a, stand = resUp$A, trafo = trafo)[[1]]
+                                biastype = biastype, clip = resUp$b, cent = resUp$a,
+                                stand = resUp$A, trafo = trafo)[[1]]
                     upNorm <- resUp$normtype
                 }
-                leastFavR <- uniroot(getIneffDiff, lower = lower, upper = upper, 
+                leastFavR <- uniroot(getIneffDiff, lower = lower, upper = upper,
                                 tol = .Machine$double.eps^0.25, L2Fam = L2Fam, neighbor = neighbor, 
-                                z.start = z.start, A.start = A.start, upper.b = upper.b, risk = risk, 
+                                z.start = z.start, A.start = A.start, upper.b = upper.b,
+                                lower.b = lower.b, risk = risk,
                                 loRad = loRad, upRad = upRad, loRisk = loRisk, upRisk = upRisk, 
-                                eps = tol, MaxIter = maxiter, warn = warn, 
-                                loNorm = loNorm, upNorm = upNorm, verbose = verbose)$root
+                                OptOrIter = OptOrIter, eps = tol, MaxIter = maxiter, warn = warn,
+                                loNorm = loNorm, upNorm = upNorm, verbose = verbose, ...)$root
                 neighbor@radius <- leastFavR
                 res <- getInfRobIC(L2deriv = L2deriv, neighbor = neighbor, risk = risk, 
                             Distr = L2Fam@distribution, DistrSymm = L2Fam@distrSymm, 
                             L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                             Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
-                            A.start = A.start, upper = upper.b, maxiter = maxiter, 
-                            tol = tol, warn = warn, verbose = verbose)
+                            A.start = A.start, upper = upper.b, lower = lower.b,
+                            OptOrIter = OptOrIter, maxiter = maxiter,
+                            tol = tol, warn = warn, verbose = verbose, ...)
                 res$info <- c("radiusMinimaxIC", paste("radius minimax IC for radius interval [", 
                                 round(loRad, 3), ", ", round(upRad, 3), "]", sep=""))
                 res$info <- rbind(res$info, c("radiusMinimaxIC", 

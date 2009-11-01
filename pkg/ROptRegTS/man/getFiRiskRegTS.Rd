@@ -75,7 +75,7 @@ getFiRiskRegTS(risk, ErrorDistr, Regressor, neighbor, ...)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{ \code{\link[ROptEst]{fiRisk-class}} }
+\seealso{ \code{\link[ROptEstOld]{fiRisk-class}} }
 %\examples{}
 \concept{finite-sample risk}
 \concept{risk}

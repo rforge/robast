@@ -11,12 +11,12 @@ estimators in case of normal location and/or scale.
 }
 \details{
 \tabular{ll}{
-Package: \tab RobLox\cr
-Version: \tab 0.7\cr
-Date: \tab 2009-04-21\cr
-Depends: \tab R(>= 2.7.0), stats, distrMod(>= 2.0.1), RobAStBase(>= 0.1.1)\cr
-LazyLoad: \tab yes\cr
-License: \tab LGPL-3\cr
+Package: \tab RobLox \cr
+Version: \tab 0.7 \cr
+Date: \tab 2009-09-04 \cr
+Depends: \tab R(>= 2.7.0), stats, distrMod(>= 2.0.1), RobAStBase(>= 0.1.1) \cr
+LazyLoad: \tab yes \cr
+License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
 }
 }
@@ -31,7 +31,13 @@ URL: \tab http://robast.r-forge.r-project.org/\cr
   the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
   Extended version: \url{http://www.stamats.de/RRlong.pdf}
 }
-\seealso{ \code{\link[RobAStBase]{RobAStBase-package}} }
+\seealso{ \code{\link[RobAStBase:0RobAStBase-package]{RobAStBase-package}} }
+\section{Package versions}{
+Note: The first two numbers of package versions do not necessarily reflect
+ package-individual development, but rather are chosen for the
+ RobAStXXX family as a whole in order to ease updating "depends"
+ information.
+}
 \examples{
 library(RobLox)
 ind <- rbinom(100, size=1, prob=0.05) 

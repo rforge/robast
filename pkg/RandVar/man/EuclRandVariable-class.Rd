@@ -43,10 +43,10 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{Map}:}{Object of class \code{"list"}: list of functions. }
-    \item{\code{Domain}:}{Object of class \code{"OptionalrSpace"}: 
+    \item{\code{Map}}{Object of class \code{"list"}: list of functions. }
+    \item{\code{Domain}}{Object of class \code{"OptionalrSpace"}: 
       domain of the random variable. }
-    \item{\code{Range}:}{Object of class \code{"EuclideanSpace"}:
+    \item{\code{Range}}{Object of class \code{"EuclideanSpace"}:
       range of the random variable. }
   }
 }
@@ -56,7 +56,7 @@ Class \code{"RandVariable"}, directly.
 \section{Methods}{
   \describe{
     \item{coerce}{\code{signature(from = "EuclRandVariable", to = "EuclRandMatrix")}: 
-      create a  \code{"EuclRandMatrix"} object from a Euclidean random variable. }
+      create a \code{"EuclRandMatrix"} object from a Euclidean random variable. }
 
     \item{coerce}{\code{signature(from = "EuclRandVariable", to = "EuclRandVarList")}: 
       create a \code{"EuclRandVarList"} object from a Euclidean random variable. }

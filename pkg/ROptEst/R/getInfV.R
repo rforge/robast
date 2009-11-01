@@ -10,7 +10,7 @@ setMethod("getInfV", signature(L2deriv = "UnivariateDistribution",
         return(stand^2*(m2df(L2deriv, c2) - m2df(L2deriv, c1)
                 + 2 * cent *(m1df(L2deriv, c1) - m1df(L2deriv, c2))
                 + cent^2 * (p(L2deriv)(c2) -p(L2deriv)(c1))
-                + clip^2 * (1-p(L2deriv)(c2) +p(L2deriv)(c1))
+                + clip^2 * (p(L2deriv)(c2, lower.tail = FALSE) +p(L2deriv)(c1))
                 ))
     })
 
@@ -22,7 +22,8 @@ setMethod("getInfV", signature(L2deriv = "UnivariateDistribution",
         c1 <- cent
         c2 <- clip+clip
         return(stand^2*(m2df(L2deriv, c2) - m2df(L2deriv, c1)
-                + c2^2 * (1-p(L2deriv)(c2)) + c1^2* p(L2deriv)(c1)
+                + c2^2 * (p(L2deriv)(c2, lower.tail = FALSE))
+                + c1^2* p(L2deriv)(c1)
                 ))
     })
 
@@ -36,6 +37,7 @@ setMethod("getInfV", signature(L2deriv = "RealRandVariable",
         }
         
         cent0 <- solve(stand, cent)
+
 
         integrandV <- function(x, L2.i, L2.j, i, j){
             return((L2.i(x) - cent0[i])*(L2.j(x) - cent0[j])*w.fct(x = x))
@@ -54,6 +56,26 @@ setMethod("getInfV", signature(L2deriv = "RealRandVariable",
         erg[col(erg) < row(erg)] <- erg[col(erg) > row(erg)]
 
         return(stand %*% erg %*% t(stand))
+    })
+setMethod("getInfV", signature(L2deriv = "RealRandVariable",
+                                   neighbor = "TotalVarNeighborhood",
+                                   biastype = "BiasType"),
+    function(L2deriv, neighbor, biastype, Distr, V.comp,
+             cent, stand, w){
+        w.fct <- function(x){
+            (weight(w)(evalRandVar(L2deriv, as.matrix(x)) [,,1]))^2
+        }
+
+
+        integrandV <- function(x){
+            L2 <- evalRandVar(L2deriv, as.matrix(x)) [,,1]
+            Y <- stand %*% L2
+            return(Y^2 * w.fct(x = x))
+        }
+
+        return(matrix(E(object = Distr, fun = integrandV, useApply = FALSE),
+                        ncol = 1, nrow = 1))
+
     })
 ###############################################################################
 ## standardizing constant for one-sided bias
@@ -95,7 +117,7 @@ setMethod("getInfV", signature(L2deriv = "UnivariateDistribution",
         V0 <- m2df(L2deriv, c2) - m2df(L2deriv, c1)
         V1 <- m1df(L2deriv, c2) - m1df(L2deriv, c1)
         V2 <- p(L2deriv)(c2) -p(L2deriv)(c1)
-        V3 <- (1-p(L2deriv)(c2))/nu2^2 +p(L2deriv)(c1)/nu1^2
+        V3 <- (p(L2deriv)(c2, lower.tail=FALSE))/nu2^2 +p(L2deriv)(c1)/nu1^2
         V <- stand^2*( V0 - 2 * cent * V1 + cent^2 * V2 + clip^2 * V3)
         return(V)
     })

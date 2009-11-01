@@ -58,10 +58,15 @@ setMethod("getAsRisk", signature(risk = "asBias",
                                  neighbor = "ContNeighborhood", 
                                  biastype = "ANY"),
     function(risk, L2deriv, neighbor, biastype, Distr, DistrSymm, L2derivSymm,
-             L2derivDistrSymm, trafo, z.start, A.start,  maxiter, tol, warn){                
+             L2derivDistrSymm, Finfo, trafo, z.start, A.start,  maxiter, tol, warn,
+             verbose = NULL){
         
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
+
         normtype <- normtype(risk)
         biastype <- biastype(risk)
+
 
         if(is(normtype,"SelfNorm")){
                 warntxt <- paste(gettext(
@@ -75,14 +80,39 @@ setMethod("getAsRisk", signature(risk = "asBias",
         comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
         z.comp <- comp$"z.comp"
         A.comp <- comp$"A.comp"
+        DA.comp <- abs(trafo) %*% A.comp != 0
         
         eerg <- .LowerCaseMultivariate(L2deriv = L2deriv, neighbor = neighbor, 
-             biastype = biastype, normtype = normtype, Distr = Distr, 
-             trafo = trafo, z.start = z.start, A.start, z.comp = z.comp, 
-             A.comp = A.comp,  maxiter = maxiter, tol = tol)
+             biastype = biastype, normtype = normtype, Distr = Distr,  Finfo = Finfo,
+             trafo = trafo, z.start = z.start, A.start = A.start, z.comp = z.comp,
+             A.comp = DA.comp,  maxiter = maxiter, tol = tol, verbose = verbose)
         erg <- eerg$erg
         bias <- 1/erg$value
         
+        return(list(asBias = bias, normtype = eerg$normtype))
+    })
+setMethod("getAsRisk", signature(risk = "asBias",
+                                 L2deriv = "RealRandVariable",
+                                 neighbor = "TotalVarNeighborhood",
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype, Distr, DistrSymm, L2derivSymm,
+             L2derivDistrSymm, Finfo, trafo, z.start, A.start,  maxiter, tol, warn,
+             verbose = NULL){
+
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
+
+        normtype <- normtype(risk)
+        biastype <- biastype(risk)
+        Finfo <- FisherInfo(L2deriv)
+
+        eerg <- .LowerCaseMultivariateTV(L2deriv = L2deriv,
+             neighbor = neighbor, biastype = biastype,
+             normtype = normtype, Distr = Distr, Finfo = Finfo, trafo = trafo,
+             A.start = A.start, maxiter = maxiter,
+             tol = tol, verbose = verbose)
+        erg <- eerg$b
+
         return(list(asBias = bias, normtype = eerg$normtype))
     })
 

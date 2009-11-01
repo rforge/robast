@@ -10,13 +10,14 @@
 \usage{
 locMEstimator(x, IC, ...)
 
-\S4method{locMEstimator}{numeric,InfluenceCurve}(x, IC, eps = .Machine$double.eps^0.5)
+\S4method{locMEstimator}{numeric,InfluenceCurve}(x, IC, eps = .Machine$double.eps^0.5, na.rm = TRUE)
 }
 \arguments{
   \item{x}{ sample }
   \item{IC}{ object of class \code{"InfluenceCurve"} }
   \item{\dots}{ additional parameters }
   \item{eps}{ the desired accuracy (convergence tolerance). }  
+  \item{na.rm}{logical: if  \code{TRUE}, the estimator is evaluated at \code{complete.cases(x)}.}
 }
 \details{ Given some sample \code{x} and some influence curve \code{IC}
           an M estimate is computed by solving the corresponding 

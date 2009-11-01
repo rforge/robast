@@ -3,6 +3,8 @@
 \alias{Neighborhood-class}
 \alias{radius}
 \alias{radius,Neighborhood-method}
+\alias{radius<-}
+\alias{radius<-,Neighborhood-method}
 \alias{show,Neighborhood-method}
 \alias{type,Neighborhood-method}
 
@@ -11,9 +13,9 @@
 \section{Objects from the Class}{A virtual Class: No objects may be created from it.}
 \section{Slots}{
   \describe{
-    \item{\code{type}:}{Object of class \code{"character"}: 
+    \item{\code{type}}{Object of class \code{"character"}: 
       type of the neighborhood. }
-    \item{\code{radius}:}{Object of class \code{"numeric"}:
+    \item{\code{radius}}{Object of class \code{"numeric"}:
       neighborhood radius. }
   }
 }
@@ -24,6 +26,8 @@
     \item{radius}{\code{signature(object = "Neighborhood")}: 
       accessor function for slot \code{radius}. }
     \item{show}{\code{signature(object = "Neighborhood")}}
+    \item{radius<-}{\code{signature(object = "Neighborhood")}:
+      replacement function for slot \code{radius}. }
   }
 }
 \references{

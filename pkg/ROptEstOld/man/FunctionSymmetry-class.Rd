@@ -26,7 +26,8 @@ Class \code{"Symmetry"}, directly.
 %\references{}
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{Symmetry-class}}, \code{\link{OptionalNumeric-class}}}
+\seealso{\code{\link[distr]{Symmetry-class}}, 
+\code{\link[distr:internalClassUnions-class]{OptionalNumeric-class}}}
 %\examples{}
 \concept{symmetry}
 \keyword{classes}

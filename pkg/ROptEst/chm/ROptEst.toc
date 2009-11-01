@@ -58,6 +58,10 @@
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getAsRisk,asBias,RealRandVariable,TotalVarNeighborhood,ANY-method">
+<param name="Local" value="getAsRisk.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,ANY-method">
 <param name="Local" value="getAsRisk.html">
 </OBJECT>
@@ -194,6 +198,10 @@
 <param name="Local" value="getInfCent.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getInfCent,RealRandVariable,TotalVarNeighborhood,BiasType-method">
+<param name="Local" value="getInfCent.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getInfCent,UnivariateDistribution,ContNeighborhood,asymmetricBias-method">
 <param name="Local" value="getInfCent.html">
 </OBJECT>
@@ -218,7 +226,7 @@
 <param name="Local" value="getInfClip.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getInfClip,numeric,EuclRandVariable,asMSE,ContNeighborhood-method">
+<param name="Name" value="getInfClip,numeric,EuclRandVariable,asMSE,UncondNeighborhood-method">
 <param name="Local" value="getInfClip.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -250,6 +258,10 @@
 <param name="Local" value="getInfGamma.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getInfGamma,RealRandVariable,asMSE,TotalVarNeighborhood,BiasType-method">
+<param name="Local" value="getInfGamma.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getInfGamma,UnivariateDistribution,asGRisk,TotalVarNeighborhood,BiasType-method">
 <param name="Local" value="getInfGamma.html">
 </OBJECT>
@@ -274,23 +286,27 @@
 <param name="Local" value="getInfGamma.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getInfLM">
+<param name="Local" value="getinfLM.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getInfRobIC">
 <param name="Local" value="getInfRobIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getInfRobIC,RealRandVariable,asBias,ContNeighborhood-method">
+<param name="Name" value="getInfRobIC,RealRandVariable,asBias,UncondNeighborhood-method">
 <param name="Local" value="getInfRobIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getInfRobIC,RealRandVariable,asCov,ContNeighborhood-method">
+<param name="Name" value="getInfRobIC,RealRandVariable,asCov,UncondNeighborhood-method">
 <param name="Local" value="getInfRobIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getInfRobIC,RealRandVariable,asGRisk,ContNeighborhood-method">
+<param name="Name" value="getInfRobIC,RealRandVariable,asGRisk,UncondNeighborhood-method">
 <param name="Local" value="getInfRobIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getInfRobIC,RealRandVariable,asHampel,ContNeighborhood-method">
+<param name="Name" value="getInfRobIC,RealRandVariable,asHampel,UncondNeighborhood-method">
 <param name="Local" value="getInfRobIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -326,7 +342,7 @@
 <param name="Local" value="getInfStand.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getInfStand,RealRandVariable,ContNeighborhood,BiasType-method">
+<param name="Name" value="getInfStand,RealRandVariable,UncondNeighborhood,BiasType-method">
 <param name="Local" value="getInfStand.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -355,6 +371,10 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getInfV,RealRandVariable,ContNeighborhood,BiasType-method">
+<param name="Local" value="getInfV.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getInfV,RealRandVariable,TotalVarNeighborhood,BiasType-method">
 <param name="Local" value="getInfV.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -398,6 +418,14 @@
 <param name="Local" value="getL2normL2deriv.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getLagrangeMultByIter">
+<param name="Local" value="getinfLM.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="getLagrangeMultByOptim">
+<param name="Local" value="getinfLM.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getModifyIC">
 <param name="Local" value="getModifyIC.html">
 </OBJECT>
@@ -410,7 +438,7 @@
 <param name="Local" value="getModifyIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getModifyIC,L2LocationScaleFamily,ContNeighborhood,asGRisk-method">
+<param name="Name" value="getModifyIC,L2LocationScaleFamily,UncondNeighborhood,asGRisk-method">
 <param name="Local" value="getModifyIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -418,11 +446,7 @@
 <param name="Local" value="getModifyIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getModifyIC,L2ScaleFamily,ContNeighborhood,asGRisk-method">
-<param name="Local" value="getModifyIC.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="getModifyIC,L2ScaleFamily,TotalVarNeighborhood,asGRisk-method">
+<param name="Name" value="getModifyIC,L2ScaleFamily,UncondNeighborhood,asGRisk-method">
 <param name="Local" value="getModifyIC.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -495,6 +519,10 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="minmaxBias,RealRandVariable,ContNeighborhood,BiasType-method">
+<param name="Local" value="minmaxBias.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="minmaxBias,RealRandVariable,TotalVarNeighborhood,BiasType-method">
 <param name="Local" value="minmaxBias.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -578,6 +606,26 @@
 <param name="Local" value="roptest.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="scaleUpdateIC">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="scaleUpdateIC,ContNeighborhood-method">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="scaleUpdateIC,TotalVarNeighborhood-method">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="scaleUpdateIC,UncondNeighborhood-method">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="scaleUpdateIC-methods">
+<param name="Local" value="getModifyIC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="updateNorm">
 <param name="Local" value="updateNorm-methods.html">
 </OBJECT>
@@ -605,6 +653,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Computation of the lower case radius">
 <param name="Local" value="lowerCaseRadius.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Functions to determine Lagrange multipliers">
+<param name="Local" value="getinfLM.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generic Function for Computation of Asymptotic Risks">
@@ -671,7 +723,8 @@
 <param name="Local" value="getInfStand.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Generic Functions for Computation and Plot of Cniper Contamination and Cniper Points.">
+<param name="Name" value="Generic Functions for Computation and Plot of Cniper Contamination 
+        and Cniper Points.">
 <param name="Local" value="cniperCont.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">

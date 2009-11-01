@@ -37,7 +37,7 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{.Data}:}{Object of class \code{"list"}. A list of Euclidean
+    \item{\code{.Data}}{Object of class \code{"list"}. A list of Euclidean
       random variables. }
   }
 }
@@ -51,7 +51,7 @@ Class \code{"vector"}, by class \code{"list"}.
       create a \code{"EuclRandVarList"} object from a Euclidean random variable. }
 
     \item{coerce}{\code{signature(from = "EuclRandMatrix", to = "EuclRandVarList")}: 
-      create a  \code{"EuclRandVarList"} object from a Euclidean random matrix. }
+      create a \code{"EuclRandVarList"} object from a Euclidean random matrix. }
 
     \item{numberOfMaps}{\code{signature(object = "EuclRandVarList")}:
       number of functions contained in the slots \code{Map} of
@@ -90,7 +90,7 @@ Class \code{"vector"}, by class \code{"list"}.
 
     \item{\%m\%}{\code{signature(x = "EuclRandVarList", y = "EuclRandVarList")}: 
       matrix multiplication for objects of class \code{"EuclRandVarList"}. 
-     Generates an object of class  \code{"EuclRandVarList"}.}
+     Generates an object of class \code{"EuclRandVarList"}.}
 
     \item{\%*\%}{\code{signature(x = "matrix", y = "EuclRandVarList")}:  
       matrix multiplication of \code{x} and \code{y}. Generates 

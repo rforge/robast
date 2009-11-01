@@ -24,7 +24,7 @@ ContIC <- function(name, CallL2Fam = call("L2ParamFamily"),
         if(length(lowerCase) != nrow(stand))
             stop("length of 'lowerCase' != nrow of standardizing matrix")
     L2Fam <- eval(CallL2Fam)
-    if(!identical(dim(L2Fam@param@trafo), dim(stand)))
+    if(!identical(dim(trafo(L2Fam@param)), dim(stand)))
         stop(paste("dimension of 'trafo' of 'param' != dimension of 'stand'"))
  
     contIC <- new("ContIC")
@@ -60,9 +60,11 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
         normtype <- res$normtype
         biastype <- res$biastype
         w <- res$w
+        L2call <- L2Fam@fam.call
+        L2call$trafo <- trafo(L2Fam)
         return(ContIC(
                 name = "IC of contamination type", 
-                CallL2Fam = L2Fam@fam.call,
+                CallL2Fam = L2call,
                 Curve = generateIC.fct(neighbor, L2Fam, res),
                 clip = b,
                 cent = a,
@@ -79,7 +81,7 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
     })
 
 ## Access methods
-setMethod("clip", "ContIC", function(object) object@clip)
+setMethod("clip", "ContIC", function(x1) x1@clip)
 setMethod("cent", "ContIC", function(object) object@cent)
 setMethod("neighbor", "ContIC", function(object) ContNeighborhood(radius = object@neighborRadius) )
 

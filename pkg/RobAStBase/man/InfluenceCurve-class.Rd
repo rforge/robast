@@ -31,11 +31,11 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{name}:}{ object of class \code{"character"} }
-    \item{\code{Curve}:}{ object of class \code{"EuclRandVarList"} }
-    \item{\code{Risks}:}{ object of class \code{"list"}: 
+    \item{\code{name}}{ object of class \code{"character"} }
+    \item{\code{Curve}}{ object of class \code{"EuclRandVarList"} }
+    \item{\code{Risks}}{ object of class \code{"list"}: 
       list of risks; cf. \code{\link[distrMod]{RiskType-class}}. }
-    \item{\code{Infos}:}{ object of class \code{"matrix"}
+    \item{\code{Infos}}{ object of class \code{"matrix"}
       with two columns named \code{method} and \code{message}:
       additional informations. }
   }

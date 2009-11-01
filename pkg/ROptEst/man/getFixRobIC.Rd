@@ -13,7 +13,7 @@
 getFixRobIC(Distr, risk, neighbor, ...)
 
 \S4method{getFixRobIC}{Norm,fiUnOvShoot,UncondNeighborhood}(Distr, risk, neighbor, 
-          sampleSize, upper, maxiter, tol, warn, Algo, cont)
+          sampleSize, upper, lower, maxiter, tol, warn, Algo, cont)
 }
 \arguments{
   \item{Distr}{ object of class \code{"Distribution"}. }
@@ -22,6 +22,7 @@ getFixRobIC(Distr, risk, neighbor, ...)
   \item{\dots}{ additional parameters. }
   \item{sampleSize}{ integer: sample size. }  
   \item{upper}{ upper bound for the optimal clipping bound. }
+  \item{lower}{ lower bound for the optimal clipping bound. }
   \item{maxiter}{ the maximum number of iterations. }
   \item{tol}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }

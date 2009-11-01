@@ -14,23 +14,23 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{name}:}{Object of class \code{"character"}:
+    \item{\code{name}}{Object of class \code{"character"}:
       name of the estimator. }
-    \item{\code{estimate}:}{Object of class \code{"ANY"}:
+    \item{\code{estimate}}{Object of class \code{"ANY"}:
       estimate. }
-    \item{\code{samplesize}:}{Object of class \code{"numeric"}:
+    \item{\code{samplesize}}{Object of class \code{"numeric"}:
       sample size. }
-    \item{\code{asvar}:}{Optional object of class \code{"matrix"}:
+    \item{\code{asvar}}{Optional object of class \code{"matrix"}:
       asymptotic variance. }
-    \item{\code{asbias}:}{Optional object of class \code{"numeric"}:
+    \item{\code{asbias}}{Optional object of class \code{"numeric"}:
       asymptotic bias. }
-    \item{\code{pIC}:}{Optional object of class \code{InfluenceCurve}:
+    \item{\code{pIC}}{Optional object of class \code{InfluenceCurve}:
       influence curve. }
-    \item{\code{nuis.idx}:}{ object of class \code{"OptionalNumeric"}: 
+    \item{\code{nuis.idx}}{ object of class \code{"OptionalNumeric"}: 
      indices of \code{estimate} belonging to the nuisance part. }
-    \item{\code{Mroot}:}{Object of class \code{"numeric"}: value of
+    \item{\code{Mroot}}{Object of class \code{"numeric"}: value of
       the M equation at the estimate. }
-    \item{\code{Infos}:}{ object of class \code{"matrix"}
+    \item{\code{Infos}}{ object of class \code{"matrix"}
       with two columns named \code{method} and \code{message}:
       additional informations. }
   }

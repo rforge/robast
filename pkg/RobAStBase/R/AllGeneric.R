@@ -1,7 +1,10 @@
 if(!isGeneric("radius")){ 
     setGeneric("radius", function(object) standardGeneric("radius"))
 }
-if(!isGeneric("center")){ 
+if(!isGeneric("radius<-")){
+    setGeneric("radius<-", function(object,value) standardGeneric("radius<-"))
+}
+if(!isGeneric("center")){
     setGeneric("center", function(object) standardGeneric("center"))
 }
 if(!isGeneric("center<-")){
@@ -44,7 +47,7 @@ if(!isGeneric("makeIC")){
     setGeneric("makeIC", function(IC, L2Fam, ...) standardGeneric("makeIC"))
 }
 if(!isGeneric("clip")){
-    setGeneric("clip", function(object) standardGeneric("clip"))
+    setGeneric("clip", function(x1, ...) standardGeneric("clip"))
 }
 if(!isGeneric("clip<-")){
     setGeneric("clip<-", function(object, value) standardGeneric("clip<-"))
@@ -85,14 +88,14 @@ if(!isGeneric("clipUp")){
 if(!isGeneric("clipUp<-")){
     setGeneric("clipUp<-", function(object, value) standardGeneric("clipUp<-"))
 }
-if(!isGeneric("oneStepEstimator")){
-    setGeneric("oneStepEstimator", 
-        function(x, IC, start, ...) standardGeneric("oneStepEstimator"))
-}
-if(!isGeneric("kStepEstimator")){
-    setGeneric("kStepEstimator", 
-        function(x, IC, start, ...) standardGeneric("kStepEstimator"))
-}
+#if(!isGeneric("oneStepEstimator")){
+#    setGeneric("oneStepEstimator",
+#        function(x, IC, start, ...) standardGeneric("oneStepEstimator"))
+#}
+#if(!isGeneric("kStepEstimator")){
+#    setGeneric("kStepEstimator",
+#        function(x, IC, start, ...) standardGeneric("kStepEstimator"))
+#}
 if(!isGeneric("locMEstimator")){
     setGeneric("locMEstimator", function(x, IC, ...) standardGeneric("locMEstimator"))
 }
@@ -111,10 +114,6 @@ if(!isGeneric("weight")){
 if(!isGeneric("weight<-")){
     setGeneric("weight<-",
         function(object, value) standardGeneric("weight<-"))
-}
-if(!isGeneric("clip")){
-    setGeneric("clip",
-        function(object, ...) standardGeneric("clip"))
 }
 if(!isGeneric("clip<-")){
     setGeneric("clip<-",
@@ -173,6 +172,27 @@ if(!isGeneric("asbias")){
 if(!isGeneric("steps")){
     setGeneric("steps", function(object) standardGeneric("steps"))
 }
+if(!isGeneric("ksteps")){
+    setGeneric("ksteps", function(object,...) standardGeneric("ksteps"))
+}
+if(!isGeneric("uksteps")){
+    setGeneric("uksteps", function(object,...) standardGeneric("uksteps"))
+}
+if(!isGeneric("start")){
+    setGeneric("start", function(x, ...) standardGeneric("start"))
+}
+if(!isGeneric("startval")){
+    setGeneric("startval", function(object) standardGeneric("startval"))
+}
+if(!isGeneric("ustartval")){
+    setGeneric("ustartval", function(object) standardGeneric("ustartval"))
+}
+if(!isGeneric("ICList")){
+    setGeneric("ICList", function(object) standardGeneric("ICList"))
+}
+if(!isGeneric("pICList")){
+    setGeneric("pICList", function(object) standardGeneric("pICList"))
+}
 if(!isGeneric("Mroot")){
     setGeneric("Mroot", function(object) standardGeneric("Mroot"))
 }
@@ -189,4 +209,8 @@ if(!isGeneric("cutoff.quantile<-")){
 if(!isGeneric("ddPlot")){
     setGeneric("ddPlot", function(data, dist.x, dist.y, cutoff.x, cutoff.y,...)
                                   standardGeneric("ddPlot"))
+}
+if(!isGeneric("kStepEstimator.start")){
+    setGeneric("kStepEstimator.start",
+                function(start,...) standardGeneric("kStepEstimator.start"))
 }

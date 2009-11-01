@@ -1,10 +1,10 @@
 <html><head><title>Internal / Helper functions of package RobAStBase for ddPlot</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>internals_for_RobAStBase_ddPlot(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>internals_for_RobAStBase_ddPlot(RobAStBase)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   internals_for_RobAStBase_ddPlot">
 <param name="keyword" value="R:   .ddPlot.MatNtNtCoCo">
 <param name="keyword" value=" Internal / Helper functions of package RobAStBase for ddPlot">
@@ -17,8 +17,7 @@
 <h3>Description</h3>
 
 <p>
-This function is an internally used helper function for <code><a href="ddPlot-methods.html">ddPlot</a></code> in package <span class="pkg">RobAStBase</span>.
-</p>
+This function is an internally used helper function for <code></code> in package <span class="pkg">RobAStBase</span>.</p>
 
 
 <h3>Usage</h3>
@@ -105,27 +104,39 @@ the corresponding <code>col</code> argument for
 <code><a onclick="findlink('graphics', 'abline.html')" style="text-decoration: underline; color: blue; cursor: hand">abline</a></code> for drawing the cutoff lines.</td></tr>
 </table>
 
+
 <h3>Details</h3>
 
 <p>
-performs the plotting for <code><a href="ddPlot-methods.html">ddPlot</a></code> and <code><a href="outlyingPlotIC.html">outlyingPlotIC</a></code>;
+performs the plotting for <code></code> and <code></code>;
 all arguments except for <code>data</code> are optional. In case they are missing
 default values are used as usual; for those arguments without default arguments,
 we do
-<ul>
-<dt>transform.x</dt><dd>defaults to identity, internally</dd>.
-<dt>id.n</dt><dd>defaults to <code>1:ncol(data)</code>, internally</dd>.
-<dt>lab.pts</dt><dd>defaults to <code>(1:ncol(data))[id.n]</code>, internally</dd>.
-<dt>lwd.cutoff</dt><dd>defaults to argument <code>lwd</code>, if given, else to <code>par{lwd}</code>, internally</dd>.
-<dt>lty.cutoff</dt><dd>defaults to argument <code>lty</code>, if given, else to <code>par{lty}</code>, internally</dd>.
-</ul>
+
+<dl>
+<dt>transform.x</dt><dd>defaults to identity, internally</dd></dl>
+.
+<dl>
+<dt>id.n</dt><dd>defaults to <code>1:ncol(data)</code>, internally</dd></dl>
+.
+<dl>
+<dt>lab.pts</dt><dd>defaults to <code>(1:ncol(data))[id.n]</code>, internally</dd></dl>
+.
+<dl>
+<dt>lwd.cutoff</dt><dd>defaults to argument <code>lwd</code>, if given, else to <code>par{lwd}</code>, internally</dd></dl>
+.
+<dl>
+<dt>lty.cutoff</dt><dd>defaults to argument <code>lty</code>, if given, else to <code>par{lty}</code>, internally</dd></dl>
+.
+
+</p>
+
 
 <h3>Value</h3>
 
 <p>
 a list with items
-</p>
-<table summary="R argblock">
+<table summary="R valueblock">
 <tr valign="top"><td><code>id.x</code></td>
 <td>
 the indices of (possibly transformed) data (within subset <code>id.n</code>) beyond the <code>x</code>-cutoff</td></tr>
@@ -148,6 +159,8 @@ the cutoff value in <code>x</code> direction</td></tr>
 <td>
 the cutoff value in <code>y</code> direction</td></tr>
 </table>
+</p>
+
 
 <h3>Author(s)</h3>
 
@@ -158,10 +171,8 @@ Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ru
 
 <h3>See Also</h3>
 
-<p>
-<code><a onclick="findlink('graphics', 'plot.default.html')" style="text-decoration: underline; color: blue; cursor: hand">plot.default</a></code>, <code><a onclick="findlink('graphics', 'par.html')" style="text-decoration: underline; color: blue; cursor: hand">par</a></code>,
-<code><a href="ddPlot-methods.html">ddPlot</a></code>, <code><a href="outlyingPlotIC.html">outlyingPlotIC</a></code>
-</p>
+<p><code><a onclick="findlink('graphics', 'plot.default.html')" style="text-decoration: underline; color: blue; cursor: hand">plot.default</a></code>, <code><a onclick="findlink('graphics', 'par.html')" style="text-decoration: underline; color: blue; cursor: hand">par</a></code>,
+<code></code>, <code></code></p>
 
 
 <h3>Examples</h3>
@@ -187,7 +198,5 @@ location.href = link;
 }
 </script>
 
-
-<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.2 <a href="00Index.html">Index]</a></div>
-
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 </body></html>

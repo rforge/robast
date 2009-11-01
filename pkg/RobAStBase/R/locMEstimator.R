@@ -2,12 +2,15 @@
 ## Location M estimator (univariate location)
 ###############################################################################
 setMethod("locMEstimator", signature(x = "numeric", IC = "InfluenceCurve"),
-    function(x, IC, eps = .Machine$double.eps^0.5){
+    function(x, IC, eps = .Machine$double.eps^0.5, na.rm = TRUE){
         es.call <- match.call()
         es.call[[1]] <- as.name("locMEstimator")
         if(numberOfMaps(IC@Curve) > 1)
             stop("number of Maps of 'IC' has to be 1")
 
+        completecases <- complete.cases(x)
+        if(na.rm) x <- na.omit(x)
+        
         mest <- function(theta, x, IC){
             return(rowSums(evalIC(IC, as.matrix(x-theta))))
         }
@@ -35,6 +38,7 @@ setMethod("locMEstimator", signature(x = "numeric", IC = "InfluenceCurve"),
             asvar <- NULL
         }
         new("MEstimate", name = "Location M estimate", estimate = res$root, 
+            completecases = completecases,
             estimate.call = es.call, pIC = IC, Mroot = res$f.root, 
             Infos = Infos, samplesize = length(x), asvar = asVar, asbias = asBias)
     })

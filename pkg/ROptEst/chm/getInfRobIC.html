@@ -1,21 +1,21 @@
 <html><head><title>Generic Function for the Computation of Optimally Robust ICs</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>getInfRobIC(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>getInfRobIC(ROptEst)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   getInfRobIC">
 <param name="keyword" value="R:   getInfRobIC-methods">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asCov,ContNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asCov,TotalVarNeighborhood-method">
-<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asCov,ContNeighborhood-method">
+<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asCov,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asBias,UncondNeighborhood-method">
-<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asBias,ContNeighborhood-method">
+<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asBias,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asHampel,UncondNeighborhood-method">
-<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asHampel,ContNeighborhood-method">
+<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asHampel,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asGRisk,UncondNeighborhood-method">
-<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asGRisk,ContNeighborhood-method">
+<param name="keyword" value="R:   getInfRobIC,RealRandVariable,asGRisk,UncondNeighborhood-method">
 <param name="keyword" value="R:   getInfRobIC,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method">
 <param name="keyword" value=" Generic Function for the Computation of Optimally Robust ICs">
 </object>
@@ -29,7 +29,7 @@
 <p>
 Generic function for the computation of optimally robust ICs 
 in case of infinitesimal robust models. This function is 
-rarely called directly.
+rarely called directly. 
 </p>
 
 
@@ -38,53 +38,61 @@ rarely called directly.
 <pre>
 getInfRobIC(L2deriv, risk, neighbor, ...)
 
-## S4 method for signature 'UnivariateDistribution, asCov,
-##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Finfo, trafo, verbose = FALSE)
+## S4 method for signature 'UnivariateDistribution,asCov,ContNeighborhood':
+getInfRobIC(L2deriv,
+                       risk, neighbor, Finfo, trafo, verbose = NULL)
 
-## S4 method for signature 'UnivariateDistribution, asCov,
-##   TotalVarNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Finfo, trafo, verbose = FALSE)
+## S4 method for signature 'UnivariateDistribution,asCov,TotalVarNeighborhood':
+getInfRobIC(L2deriv,
+                       risk, neighbor, Finfo, trafo, verbose = NULL)
 
-## S4 method for signature 'RealRandVariable, asCov,
-##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Distr, Finfo, trafo, 
-                       QuadForm = diag(nrow(trafo)), verbose = FALSE)
+## S4 method for signature 'RealRandVariable,asCov,UncondNeighborhood':
+getInfRobIC(L2deriv, risk,
+                       neighbor, Distr, Finfo, trafo, QuadForm = diag(nrow(trafo)),
+                       verbose = NULL)
 
-## S4 method for signature 'UnivariateDistribution, asBias,
-##   UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, symm, trafo, 
-             maxiter, tol, warn, Finfo, verbose = FALSE, ...)
+## S4 method for signature 'UnivariateDistribution,asBias,UncondNeighborhood':
+getInfRobIC(L2deriv,
+                       risk, neighbor, symm, trafo, maxiter, tol, warn, Finfo,
+                       verbose = NULL, ...)
 
-## S4 method for signature 'RealRandVariable, asBias,
-##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, z.start, A.start, Finfo, trafo, maxiter, tol, warn, verbose = FALSE, ...)
+## S4 method for signature 'RealRandVariable,asBias,UncondNeighborhood':
+getInfRobIC(L2deriv, risk,
+                       neighbor, Distr, DistrSymm, L2derivSymm,
+                       L2derivDistrSymm, z.start, A.start, Finfo, trafo,
+                       maxiter, tol, warn, verbose = NULL, ...)
 
-## S4 method for signature 'UnivariateDistribution,
-##   asHampel, UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
+## S4 method for signature 'UnivariateDistribution,asHampel,UncondNeighborhood':
+getInfRobIC(L2deriv,
+                       risk, neighbor, symm, Finfo, trafo, upper = NULL,
+                       lower=NULL, maxiter, tol, warn, noLow = FALSE,
+                       verbose = NULL, checkBounds = TRUE)
 
-## S4 method for signature 'RealRandVariable, asHampel,
-##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper, maxiter, tol, warn, verbose = FALSE)
+## S4 method for signature 'RealRandVariable,asHampel,UncondNeighborhood':
+getInfRobIC(L2deriv, risk,
+                       neighbor, Distr, DistrSymm, L2derivSymm,
+                       L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE,
+                       z.start, A.start, upper = NULL, lower=NULL,
+                       OptOrIter = "iterate", maxiter, tol, warn,
+                       verbose = NULL, checkBounds = TRUE, ...)
 
-## S4 method for signature 'UnivariateDistribution,
-##   asGRisk, UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn, noLow = FALSE, verbose = FALSE)
+## S4 method for signature 'UnivariateDistribution,asGRisk,UncondNeighborhood':
+getInfRobIC(L2deriv,
+                       risk, neighbor, symm, Finfo, trafo, upper = NULL,
+                       lower = NULL, maxiter, tol, warn, noLow = FALSE,
+                       verbose = NULL)
 
-## S4 method for signature 'RealRandVariable, asGRisk,
-##   ContNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor,  Distr, DistrSymm, L2derivSymm, 
-             L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start, A.start, upper, maxiter, tol, warn, verbose = FALSE)
+## S4 method for signature 'RealRandVariable,asGRisk,UncondNeighborhood':
+getInfRobIC(L2deriv, risk,
+                       neighbor,  Distr, DistrSymm, L2derivSymm,
+                       L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start,
+                       A.start, upper = NULL, lower = NULL, OptOrIter = "iterate",
+                       maxiter, tol, warn, verbose = NULL, withPICcheck = TRUE, ...)
 
-## S4 method for signature 'UnivariateDistribution,
-##   asUnOvShoot, UncondNeighborhood':
-getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-             upper, maxiter, tol, warn)
+## S4 method for signature 'UnivariateDistribution,asUnOvShoot,UncondNeighborhood':
+getInfRobIC(
+                       L2deriv, risk, neighbor, symm, Finfo, trafo,
+                       upper, lower, maxiter, tol, warn)
 </pre>
 
 
@@ -93,140 +101,186 @@ getInfRobIC(L2deriv, risk, neighbor, symm, Finfo, trafo,
 <table summary="R argblock">
 <tr valign="top"><td><code>L2deriv</code></td>
 <td>
-L2-derivative of some L2-differentiable family 
+ L2-derivative of some L2-differentiable family 
 of probability measures. </td></tr>
 <tr valign="top"><td><code>risk</code></td>
 <td>
-object of class <code>"RiskType"</code>. </td></tr>
+ object of class <code>"RiskType"</code>. </td></tr>
 <tr valign="top"><td><code>neighbor</code></td>
 <td>
-object of class <code>"Neighborhood"</code>. </td></tr>
+ object of class <code>"Neighborhood"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-additional parameters. </td></tr>
+ additional parameters (mainly for <code>optim</code>). </td></tr>
 <tr valign="top"><td><code>Distr</code></td>
 <td>
-object of class <code>"Distribution"</code>. </td></tr>
+ object of class <code>"Distribution"</code>. </td></tr>
 <tr valign="top"><td><code>symm</code></td>
 <td>
-logical: indicating symmetry of <code>L2deriv</code>. </td></tr>
+ logical: indicating symmetry of <code>L2deriv</code>. </td></tr>
 <tr valign="top"><td><code>DistrSymm</code></td>
 <td>
-object of class <code>"DistributionSymmetry"</code>. </td></tr>
+ object of class <code>"DistributionSymmetry"</code>. </td></tr>
 <tr valign="top"><td><code>L2derivSymm</code></td>
 <td>
-object of class <code>"FunSymmList"</code>. </td></tr>
+ object of class <code>"FunSymmList"</code>. </td></tr>
 <tr valign="top"><td><code>L2derivDistrSymm</code></td>
 <td>
-object of class <code>"DistrSymmList"</code>. </td></tr>
+ object of class <code>"DistrSymmList"</code>. </td></tr>
 <tr valign="top"><td><code>Finfo</code></td>
 <td>
-Fisher information matrix. </td></tr>
+ Fisher information matrix. </td></tr>
 <tr valign="top"><td><code>z.start</code></td>
 <td>
-initial value for the centering constant. </td></tr>
+ initial value for the centering constant. </td></tr>
 <tr valign="top"><td><code>A.start</code></td>
 <td>
-initial value for the standardizing matrix. </td></tr>
+ initial value for the standardizing matrix. </td></tr>
 <tr valign="top"><td><code>trafo</code></td>
 <td>
-matrix: transformation of the parameter. </td></tr>
+ matrix: transformation of the parameter. </td></tr>
 <tr valign="top"><td><code>upper</code></td>
 <td>
-upper bound for the optimal clipping bound. </td></tr>
+ upper bound for the optimal clipping bound. </td></tr>
+<tr valign="top"><td><code>lower</code></td>
+<td>
+ lower bound for the optimal clipping bound. </td></tr>
+<tr valign="top"><td><code>OptOrIter</code></td>
+<td>
+character; which method to be used for determining Lagrange
+multipliers <code>A</code> and <code>a</code>: if (partially) matched to <code>"optimize"</code>,
+<code>getLagrangeMultByOptim</code> is used; otherwise: by default, or if matched to
+<code>"iterate"</code> or to <code>"doubleiterate"</code>,
+<code>getLagrangeMultByIter</code> is used. More specifically,
+when using <code>getLagrangeMultByIter</code>, and if argument <code>risk</code> is of
+class <code>"asGRisk"</code>, by default and if matched to <code>"iterate"</code>
+we use only one (inner) iteration, if matched to <code>"doubleiterate"</code>
+we use up to <code>Maxiter</code> (inner) iterations.</td></tr>
 <tr valign="top"><td><code>maxiter</code></td>
 <td>
-the maximum number of iterations. </td></tr>
+ the maximum number of iterations. </td></tr>
 <tr valign="top"><td><code>tol</code></td>
 <td>
-the desired accuracy (convergence tolerance).</td></tr>
+ the desired accuracy (convergence tolerance).</td></tr>
 <tr valign="top"><td><code>warn</code></td>
 <td>
-logical: print warnings. </td></tr>
+ logical: print warnings. </td></tr>
 <tr valign="top"><td><code>noLow</code></td>
 <td>
-logical: is lower case to be computed? </td></tr>
+ logical: is lower case to be computed? </td></tr>
 <tr valign="top"><td><code>onesetLM</code></td>
 <td>
-logical: use one set of Lagrange multipliers? </td></tr>
+ logical: use one set of Lagrange multipliers? </td></tr>
 <tr valign="top"><td><code>QuadForm</code></td>
 <td>
-matrix of (or which may coerced to) class 
+ matrix of (or which may coerced to) class 
 <code>PosSemDefSymmMatrix</code> for use of different 
 (standardizing) norm </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>
-logical: if <code>TRUE</code>, some messages are printed </td></tr>
+ logical: if <code>TRUE</code>, some messages are printed </td></tr>
+<tr valign="top"><td><code>checkBounds</code></td>
+<td>
+ logical: if <code>TRUE</code>, minimal and maximal clipping bound are 
+computed to check if a valid bound was specified. </td></tr>
+<tr valign="top"><td><code>withPICcheck</code></td>
+<td>
+logical: at the end of the algorithm, shall we check
+how accurately this is a pIC; this will only be done if
+<code>withPICcheck &amp;&amp; verbose</code>.</td></tr>
 </table>
+
 
 <h3>Value</h3>
 
-<p>
-The optimally robust IC is computed.</p>
+<p>The optimally robust IC is computed.</p>
+
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
 <dt>L2deriv = "UnivariateDistribution", risk = "asCov", 
-neighbor = "ContNeighborhood"</dt><dd>computes the classical optimal influence curve for L2 differentiable 
+neighbor = "ContNeighborhood"</dt><dd> 
+computes the classical optimal influence curve for L2 differentiable 
 parametric families with unknown one-dimensional parameter. </dd>
-
-
+</p>
+<p>
 <dt>L2deriv = "UnivariateDistribution", risk = "asCov", 
-neighbor = "TotalVarNeighborhood"</dt><dd>computes the classical optimal influence curve for L2 differentiable 
+neighbor = "TotalVarNeighborhood"</dt><dd>
+computes the classical optimal influence curve for L2 differentiable 
 parametric families with unknown one-dimensional parameter. </dd>
-
-
+</p>
+<p>
 <dt>L2deriv = "RealRandVariable", risk = "asCov", 
-neighbor = "ContNeighborhood"</dt><dd>computes the classical optimal influence curve for L2 differentiable 
+neighbor = "UncondNeighborhood"</dt><dd>
+computes the classical optimal influence curve for L2 differentiable 
 parametric families with unknown <i>k</i>-dimensional parameter 
-(<i>k &gt; 1</i>) where the underlying distribution is univariate. </dd>
-
-
+(<i>k &gt; 1</i>) where the underlying distribution is univariate;
+for total variation neighborhoods only is implemented for the case
+where there is a <i>1 x k</i> transformation <code>trafo</code>
+matrix. </dd>
+</p>
+<p>
 <dt>L2deriv = "UnivariateDistribution", risk = "asBias", 
-neighbor = "UncondNeighborhood"</dt><dd>computes the bias optimal influence curve for L2 differentiable 
+neighbor = "UncondNeighborhood"</dt><dd> 
+computes the bias optimal influence curve for L2 differentiable 
 parametric families with unknown one-dimensional parameter. </dd>
-
-
+</p>
+<p>
 <dt>L2deriv = "RealRandVariable", risk = "asBias", 
-neighbor = "ContNeighborhood"</dt><dd>computes the bias optimal influence curve for L2 differentiable 
+neighbor = "UncondNeighborhood"</dt><dd>
+computes the bias optimal influence curve for L2 differentiable 
 parametric families with unknown <i>k</i>-dimensional parameter 
 (<i>k &gt; 1</i>) where the underlying distribution is univariate. </dd>
-
-
+</p>
+<p>
 <dt>L2deriv = "UnivariateDistribution", risk = "asHampel", 
-neighbor = "UncondNeighborhood"</dt><dd>computes the optimally robust influence curve for L2 differentiable 
+neighbor = "UncondNeighborhood"</dt><dd>
+computes the optimally robust influence curve for L2 differentiable 
 parametric families with unknown one-dimensional parameter. </dd>
-
-
+</p>
+<p>
 <dt>L2deriv = "RealRandVariable", risk = "asHampel", 
-neighbor = "ContNeighborhood"</dt><dd>computes the optimally robust influence curve for L2 differentiable 
+neighbor = "UncondNeighborhood"</dt><dd>
+computes the optimally robust influence curve for L2 differentiable 
 parametric families with unknown <i>k</i>-dimensional parameter 
-(<i>k &gt; 1</i>) where the underlying distribution is univariate. </dd>
-
-
+(<i>k &gt; 1</i>) where the underlying distribution is univariate;
+for total variation neighborhoods only is implemented for the case
+where there is a <i>1 x k</i> transformation <code>trafo</code>
+matrix. </dd>
+</p>
+<p>
 <dt>L2deriv = "UnivariateDistribution", risk = "asGRisk", 
-neighbor = "UncondNeighborhood"</dt><dd>computes the optimally robust influence curve for L2 differentiable 
+neighbor = "UncondNeighborhood"</dt><dd>
+computes the optimally robust influence curve for L2 differentiable 
 parametric families with unknown one-dimensional parameter. </dd>
-
-
+</p>
+<p>
 <dt>L2deriv = "RealRandVariable", risk = "asGRisk", 
-neighbor = "ContNeighborhood"</dt><dd>computes the optimally robust influence curve for L2 differentiable 
+neighbor = "UncondNeighborhood"</dt><dd>
+computes the optimally robust influence curve for L2 differentiable 
 parametric families with unknown <i>k</i>-dimensional parameter 
-(<i>k &gt; 1</i>) where the underlying distribution is univariate. </dd>
-
-
+(<i>k &gt; 1</i>) where the underlying distribution is univariate;
+for total variation neighborhoods only is implemented for the case
+where there is a <i>1 x k</i> transformation <code>trafo</code>
+matrix. </dd>
+</p>
+<p>
 <dt>L2deriv = "UnivariateDistribution", risk = "asUnOvShoot", 
-neighbor = "UncondNeighborhood"</dt><dd>computes the optimally robust influence curve for one-dimensional
+neighbor = "UncondNeighborhood"</dt><dd>
+computes the optimally robust influence curve for one-dimensional
 L2 differentiable parametric families and 
 asymptotic under-/overshoot risk. </dd>
 </dl>
+</p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,<br>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a></p>
 
 
 <h3>References</h3>
@@ -253,9 +307,7 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a onclick="findlink('RobAStBase', 'InfRobModel-class.html')" style="text-decoration: underline; color: blue; cursor: hand">InfRobModel-class</a></code>
-</p>
+<p><code><a onclick="findlink('RobAStBase', 'InfRobModel-class.html')" style="text-decoration: underline; color: blue; cursor: hand">InfRobModel-class</a></code></p>
 
 <script Language="JScript">
 function findlink(pkg, fn) {
@@ -267,7 +319,5 @@ location.href = link;
 }
 </script>
 
-
 <hr><div align="center">[Package <em>ROptEst</em> version 0.7 <a href="00Index.html">Index</a>]</div>
-
 </body></html>

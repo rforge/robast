@@ -66,7 +66,7 @@ infoPlot(N0.IC3)
 ## radius minimax IC
 ## (may take quite some time!)
 system.time(N0.IC4 <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(), 
-                risk=asMSE(), loRad=0, upRad=Inf))
+                risk=asMSE(), loRad=0, upRad=Inf, verbose = TRUE))
 checkIC(N0.IC4)
 Risks(N0.IC4)
 plot(N0.IC4) 
@@ -92,8 +92,64 @@ infoPlot(N0.IC4.s)
 ## (may take quite some time!)
 N0.r.rho1 <- leastFavorableRadius(L2Fam=N0, neighbor=ContNeighborhood(),
                     risk=asMSE(), rho=0.5)
+###############################################################################
+# a non-trivial trafo:
+###############################################################################
 
+tfct <- function(x){
+    nms0 <- c("mean","sd")
+    nms  <- "comb"
+    fval0 <- x[1]+2*x[2]
+    names(fval0) <- nms
+    mat0 <- matrix(c(1,2), nrow = 1, dimnames = list(nms,nms0))
+    return(list(fval = fval0, mat = mat0))
+}
+
+## corresponding ideal and robust models
+N1.traf <- NormLocationScaleFamily(mean = 0, sd = 1, trafo= tfct)
+N1R.traf <- InfRobModel(center = N1.traf, neighbor = ContNeighborhood(radius = 0.5))
+N2R.traf <- InfRobModel(center = N1.traf, neighbor = TotalVarNeighborhood(radius = 0.5))
+
+### classical solution
+IC.traf.class <- optIC(model=N1.traf,risk=asCov())
+plot(IC.traf.class)
+checkIC(IC.traf.class)
+
+### Hampel solution *=c
+IC.traf.CV.H <- optIC(model = N1R.traf, risk = asHampel(bound = 8),verbose=TRUE)
+plot(IC.traf.CV.H)
+checkIC(IC.traf.CV.H)
+
+### MSE solution *=c
+IC.traf.CV.MSE <- optIC(model = N1R.traf, risk = asMSE(),verbose=TRUE)
+plot(IC.traf.CV.MSE)
+checkIC(IC.traf.CV.MSE)
+
+### lower case solution *=c
+IC.traf.CV.BIAS <- optIC(model = N1R.traf, risk = asBias(),verbose=TRUE)
+plot(IC.traf.CV.BIAS)
+checkIC(IC.traf.CV.BIAS)
+
+### Hampel solution *=v
+IC.traf.TV.H <- optIC(model = N2R.traf, risk = asHampel(bound = 6),
+                      verbose=TRUE, checkBounds=FALSE)
+plot(IC.traf.TV.H)
+checkIC(IC.traf.TV.H)
+
+### MSE solution *=v
+IC.traf.TV.MSE <- optIC(model = N2R.traf, risk = asMSE(),verbose=TRUE)
+plot(IC.traf.TV.MSE)
+checkIC(IC.traf.TV.MSE)
+
+### lower case solution *=v
+IC.traf.TV.BIAS <- optIC(model = N2R.traf, risk = asBias(),verbose=TRUE)
+plot(IC.traf.TV.BIAS)
+checkIC(IC.traf.TV.BIAS)
+
+
+###############################################################################
 ## one-step estimation
+###############################################################################
 ## 1. generate a contaminated sample
 ind <- rbinom(100, size=1, prob=0.05) 
 x <- rnorm(100, mean=0, sd=(1-ind) + ind*9)
@@ -116,6 +172,24 @@ IC2 <- radiusMinimaxIC(L2Fam=N1, neighbor=ContNeighborhood(),risk=asMSE(),
                        loRad=0.1, upRad=1.0) 
 (est2 <- oneStepEstimator(x, IC2, est0))
 
+########### again with trafo
+N1.traf <- N1; trafo(N1.traf) <- tfct
+N1R.traf <- N1.Rob; trafo(N1R.traf) <- tfct
+IC1.traf <- optIC(model = N1R.traf, risk = asMSE())
+(est0.traf <- MDEstimator(x, N1.traf))
+(est1.traf <- kStepEstimator(x, IC1.traf, est0, steps = 3))
+# or simply
+(est2.traf <- oneStepEstimator(x, IC1.traf, est0))
+
+### main: location; nuisance: scale
+N1.NS <- L2LocationUnknownScaleFamily()
+N1R.NS <- InfRobModel(center = N1.NS, neighbor = ContNeighborhood(radius = 0.5))
+IC1.NS <- optIC(model = N1.NS, risk = asCov())
+IC2.NS <- optIC(model = N1R.NS, risk = asMSE())
+(est0.NS <- MDEstimator(x, N1.NS))
+(est1.NS <- kStepEstimator(x, IC2.NS, est0, steps = 3))
+(est2.NS <- oneStepEstimator(x, IC2.NS, est0))
+
 
 ## a simple example
 library(MASS)
@@ -135,3 +209,9 @@ estimate(ROest2)
 ## confidence intervals
 confint(ROest1, symmetricBias())
 confint(ROest2, symmetricBias())
+
+########### again with trafo
+system.time(ROest1.traf <- roptest(chem, N1.traf, eps.upper = 0.1, steps = 3L,
+                              initial.est = initial.est, useLast = TRUE))
+estimate(ROest1.traf)
+confint(ROest1.traf, symmetricBias())

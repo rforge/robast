@@ -1,10 +1,10 @@
 <html><head><title>Generic Function for the Computation of the Optimal Clipping Bound</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>getFixClipRegTS(ROptRegTS)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>getFixClipRegTS(ROptRegTS)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   getFixClipRegTS">
 <param name="keyword" value="R:   getFixClipRegTS-methods">
 <param name="keyword" value="R:   getFixClipRegTS,numeric,Norm,UnivariateDistribution,fiUnOvShoot,ContNeighborhood-method">
@@ -39,49 +39,56 @@ getFixClipRegTS(clip, ErrorDistr, Regressor, risk, neighbor, ...)
 <table summary="R argblock">
 <tr valign="top"><td><code>clip</code></td>
 <td>
-optimal clipping bound. </td></tr>
+ optimal clipping bound. </td></tr>
 <tr valign="top"><td><code>ErrorDistr</code></td>
 <td>
-error distribution. </td></tr>
+ error distribution. </td></tr>
 <tr valign="top"><td><code>Regressor</code></td>
 <td>
-regressor. </td></tr>
+ regressor. </td></tr>
 <tr valign="top"><td><code>risk</code></td>
 <td>
-object of class <code>"RiskType"</code>. </td></tr>
+ object of class <code>"RiskType"</code>. </td></tr>
 <tr valign="top"><td><code>neighbor</code></td>
 <td>
-object of class <code>"Neighborhood"</code>. </td></tr>
+ object of class <code>"Neighborhood"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-additional parameters. </td></tr>
+ additional parameters. </td></tr>
 </table>
+
 
 <h3>Value</h3>
 
-<p>
-The optimal clipping bound/function is computed.</p>
+<p>The optimal clipping bound/function is computed.</p>
+
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
-<dt>clip = "numeric", ErrorDistr = "Norm", Regressor = "UnivariateDistribution", risk = "fiUnOvShoot", neighbor = "ContNeighborhood"</dt><dd>optimal clipping bound for finite-sample under-/overshoot risk. </dd>
-
-
-<dt>clip = "numeric", ErrorDistr = "Norm", Regressor = "UnivariateDistribution", risk = "fiUnOvShoot", neighbor = "TotalVarNeighborhood"</dt><dd>optimal clipping bound for finite-sample under-/overshoot risk. </dd>
-
-
-<dt>clip = "numeric", ErrorDistr = "Norm", Regressor = "numeric", risk = "fiUnOvShoot", neighbor = "CondContNeighborhood"</dt><dd>optimal clipping function for finite-sample under-/overshoot risk. </dd>
-
-
-<dt>clip = "numeric", ErrorDistr = "Norm", Regressor = "numeric", risk = "fiUnOvShoot", neighbor = "CondTotalVarNeighborhood"</dt><dd>optimal clipping function for finite-sample under-/overshoot risk. </dd>
+<dt>clip = "numeric", ErrorDistr = "Norm", Regressor = "UnivariateDistribution", risk = "fiUnOvShoot", neighbor = "ContNeighborhood"</dt><dd> 
+optimal clipping bound for finite-sample under-/overshoot risk. </dd>
+</p>
+<p>
+<dt>clip = "numeric", ErrorDistr = "Norm", Regressor = "UnivariateDistribution", risk = "fiUnOvShoot", neighbor = "TotalVarNeighborhood"</dt><dd> 
+optimal clipping bound for finite-sample under-/overshoot risk. </dd>
+</p>
+<p>
+<dt>clip = "numeric", ErrorDistr = "Norm", Regressor = "numeric", risk = "fiUnOvShoot", neighbor = "CondContNeighborhood"</dt><dd> 
+optimal clipping function for finite-sample under-/overshoot risk. </dd>
+</p>
+<p>
+<dt>clip = "numeric", ErrorDistr = "Norm", Regressor = "numeric", risk = "fiUnOvShoot", neighbor = "CondTotalVarNeighborhood"</dt><dd> 
+optimal clipping function for finite-sample under-/overshoot risk. </dd>
 </dl>
+</p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>References</h3>
@@ -102,12 +109,10 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a onclick="findlink('ROptEst', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, <code><a onclick="findlink('ROptEst', 'TotalVarIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">TotalVarIC-class</a></code>, 
-<code><a href="Av1CondContIC-class.html">Av1CondContIC-class</a></code>, <code><a href="Av2CondContIC-class.html">Av2CondContIC-class</a></code>, 
-<code><a href="Av1CondTotalVarIC-class.html">Av1CondTotalVarIC-class</a></code>, <code><a href="CondContIC-class.html">CondContIC-class</a></code>,
-<code><a href="CondTotalVarIC-class.html">CondTotalVarIC-class</a></code>
-</p>
+<p><code><a onclick="findlink('ROptEst', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, <code><a onclick="findlink('ROptEst', 'TotalVarIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">TotalVarIC-class</a></code>, 
+<code></code>, <code></code>, 
+<code></code>, <code></code>,
+<code></code></p>
 
 <script Language="JScript">
 function findlink(pkg, fn) {
@@ -119,7 +124,5 @@ location.href = link;
 }
 </script>
 
-
 <hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
-
 </body></html>

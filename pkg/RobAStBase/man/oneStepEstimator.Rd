@@ -1,34 +1,40 @@
 \name{oneStepEstimator}
 \alias{oneStepEstimator}
-\alias{oneStepEstimator-methods}
-\alias{oneStepEstimator,numeric,InfluenceCurve,numeric-method}
-\alias{oneStepEstimator,matrix,InfluenceCurve,numeric-method}
-\alias{oneStepEstimator,numeric,InfluenceCurve,Estimate-method}
-\alias{oneStepEstimator,matrix,InfluenceCurve,Estimate-method}
 
-\title{Generic function for the computation of one-step estimates}
+\title{Function for the computation of one-step estimates}
 \description{
-  Generic function for the computation of one-step estimates.
+  Function for the computation of one-step estimates.
 }
 \usage{
-oneStepEstimator(x, IC, start, ...)
-
-\S4method{oneStepEstimator}{numeric,InfluenceCurve,numeric}(x, IC, start, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-\S4method{oneStepEstimator}{matrix,InfluenceCurve,numeric}(x, IC, start, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-\S4method{oneStepEstimator}{numeric,InfluenceCurve,Estimate}(x, IC, start, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-\S4method{oneStepEstimator}{matrix,InfluenceCurve,Estimate}(x, IC, start, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
+oneStepEstimator(x, IC, start = NULL,
+      useLast = getRobAStBaseOption("kStepUseLast"),
+      withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+      IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+      na.rm = TRUE, startArgList = NULL, ...)
 }
 \arguments{
   \item{x}{ sample }
   \item{IC}{ object of class \code{"InfluenceCurve"} }
-  \item{start}{ initial estimate }
+  \item{start}{ initial estimate (for full parameter,i.e. in dimension \eqn{k} respective
+   joint length of main and nuisance part of the parameter):
+   either a numerical value, or an object of class \code{"Estimate"} or
+   a function producing either a numerical value, or an object of class \code{"Estimate"}
+   when evaluated at \code{x,...}; if missing or \code{NULL}, we use slot \code{startPar}
+   of the L2family \code{L2Fam} from within \code{IC}.}
   \item{useLast}{ which parameter estimate (initial estimate or
     one-step estimate) shall be used to fill the slots \code{pIC},
     \code{asvar} and \code{asbias} of the return value. }
+  \item{withUpdateInKer}{if there is a non-trivial trafo in the model with matrix \eqn{D}, shall
+  the parameter be updated on \eqn{{\rm ker}(D)}{ker(D)}?}
+  \item{IC.UpdateInKer}{if there is a non-trivial trafo in the model with matrix \eqn{D},
+  the IC to be used for this; if \code{NULL} the result of \code{getboundedIC(L2Fam,D)} is taken;
+  this IC will then be projected onto \eqn{{\rm ker}(D)}{ker(D)}.}
+  \item{na.rm}{logical: if  \code{TRUE}, the estimator is evaluated at \code{complete.cases(x)}.}
+  \item{startArgList}{a list of arguments to be given to argument \code{start} if the latter
+   is a function; this list by default already starts with two unnamed items,
+   the sample \code{x}, and the model \code{eval(CallL2Fam(IC))}; in case \code{IC}
+   is not of class \code{IC}, the model argument \code{L2Fam} will be set
+   to \code{NULL}.}
   \item{...}{ additional arguments }
 }
 \details{
@@ -59,24 +65,15 @@ oneStepEstimator(x, IC, start, ...)
   based on the one-step estimate.
 }
 \value{Object of class \code{"kStepEstimate"}}
-\section{Methods}{
-\describe{
-  \item{x = "numeric", IC = "InfluenceCurve", start = "numeric"}{ 
-    univariate samples. }
-  \item{x = "matrix", IC = "InfluenceCurve", start = "numeric"}{ 
-    multivariate samples. }
-  \item{x = "matrix", IC = "InfluenceCurve", start = "Estimate"}{ 
-    multivariate samples. }
-  \item{x = "matrix", IC = "InfluenceCurve", start = "Estimate"}{ 
-    multivariate samples. }
-}}
+
 \references{
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 }
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de},\cr
+        Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
 \seealso{\code{\link{InfluenceCurve-class}}, \code{\link{kStepEstimate-class}} }
 %\examples{}

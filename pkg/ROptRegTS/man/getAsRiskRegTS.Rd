@@ -144,7 +144,7 @@ getAsRiskRegTS(risk, ErrorL2deriv, Regressor, neighbor, ...)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link[ROptEst]{asRisk-class}}}
+\seealso{\code{\link[ROptEstOld]{asRisk-class}}}
 %\examples{}
 \concept{asymptotic risk}
 \concept{risk}

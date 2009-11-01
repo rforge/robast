@@ -116,7 +116,7 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}\cr
         Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 \note{This generic function is still under construction.}
-\seealso{\code{\link[ROptEst]{getRiskIC-methods}}, \code{\link{InfRobModel-class}}}
+\seealso{\code{\link[ROptEst]{getRiskIC}}, \code{\link{InfRobModel-class}}}
 %\examples{}
 \concept{influence curve}
 \keyword{robust}

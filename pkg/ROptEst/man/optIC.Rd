@@ -13,17 +13,19 @@
 optIC(model, risk, ...)
 
 \S4method{optIC}{InfRobModel,asRisk}(model, risk, z.start = NULL, A.start = NULL,
-                                     upper = 1e4, maxiter = 50, 
+                                     upper = 1e4, lower = 1e-4,
+                                     OptOrIter = "iterate", maxiter = 50,
                                      tol = .Machine$double.eps^0.4, warn = TRUE, 
-                                     noLow = FALSE, verbose = FALSE)
+                                     noLow = FALSE, verbose = NULL, ...)
 
-\S4method{optIC}{InfRobModel,asUnOvShoot}(model, risk, upper = 1e4, maxiter = 50, 
+\S4method{optIC}{InfRobModel,asUnOvShoot}(model, risk, upper = 1e4,
+                                          lower = 1e-4, maxiter = 50,
                                           tol = .Machine$double.eps^0.4, warn = TRUE)
 
-\S4method{optIC}{FixRobModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, 
+\S4method{optIC}{FixRobModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, lower = 1e-4,
                                           maxiter = 50, tol = .Machine$double.eps^0.4, 
                                           warn = TRUE, Algo = "A", cont = "left",
-                                          verbose = FALSE)
+                                          verbose = NULL)
 }
 \arguments{
   \item{model}{ probability model. }
@@ -32,6 +34,7 @@ optIC(model, risk, ...)
   \item{z.start}{ initial value for the centering constant. }
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{upper}{ upper bound for the optimal clipping bound. }
+  \item{lower}{ lower bound for the optimal clipping bound. }
   \item{maxiter}{ the maximum number of iterations. }
   \item{tol}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }  
@@ -39,6 +42,15 @@ optIC(model, risk, ...)
   \item{Algo}{ "A" or "B". }
   \item{cont}{ "left" or "right". }
   \item{noLow}{ logical: is lower case to be computed? }
+  \item{OptOrIter}{character; which method to be used for determining Lagrange
+  multipliers \code{A} and \code{a}: if (partially) matched to \code{"optimize"},
+  \code{getLagrangeMultByOptim} is used; otherwise: by default, or if matched to
+  \code{"iterate"} or to \code{"doubleiterate"},
+  \code{getLagrangeMultByIter} is used. More specifically,
+  when using \code{getLagrangeMultByIter}, and if argument \code{risk} is of
+  class \code{"asGRisk"}, by default and if matched to \code{"iterate"}
+  we use only one (inner) iteration, if matched to \code{"doubleiterate"}
+  we use up to \code{Maxiter} (inner) iterations.}
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
 }
 \details{ In case of the finite-sample risk \code{"fiUnOvShoot"} one can choose

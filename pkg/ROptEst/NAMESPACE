@@ -25,6 +25,6 @@ exportMethods("optIC",
               "getL1normL2deriv",
               "getModifyIC",
               "cniperCont", "cniperPoint", "cniperPointPlot")
-exportMethods("updateNorm")
+exportMethods("updateNorm", "scaleUpdateIC")
 export("getL2normL2deriv")
-export("roptest")
+export("roptest","getLagrangeMultByOptim","getLagrangeMultByIter")

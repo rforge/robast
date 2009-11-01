@@ -1,11 +1,10 @@
-<html><head><title>Generic Function for the Computation of the Optimal Centering Constant/Function resp. 
-Lower Clipping Bound/Function</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<html><head><title>Generic Function for the Computation of the Optimal Centering Constant/Function resp. Lower Clipping Bound/Function</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>getInfCentRegTS(ROptRegTS)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>getInfCentRegTS(ROptRegTS)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   getInfCentRegTS">
 <param name="keyword" value="R:   getInfCentRegTS-methods">
 <param name="keyword" value="R:   getInfCentRegTS,UnivariateDistribution,UnivariateDistribution,ContNeighborhood-method">
@@ -19,13 +18,11 @@ Lower Clipping Bound/Function</title>
 <param name="keyword" value="R:   getInfCentRegTS,UnivariateDistribution,Distribution,Av2CondContNeighborhood-method">
 <param name="keyword" value="R:   getInfCentRegTS,RealRandVariable,Distribution,ContNeighborhood-method">
 <param name="keyword" value="R:   getInfCentRegTS,RealRandVariable,Distribution,Av1CondContNeighborhood-method">
-<param name="keyword" value=" Generic Function for the Computation of the Optimal Centering Constant/Function resp. 
-Lower Clipping Bound/Function">
+<param name="keyword" value=" Generic Function for the Computation of the Optimal Centering Constant/Function resp. Lower Clipping Bound/Function">
 </object>
 
 
-<h2>Generic Function for the Computation of the Optimal Centering Constant/Function resp. 
-Lower Clipping Bound/Function</h2>
+<h2>Generic Function for the Computation of the Optimal Centering Constant/Function resp. Lower Clipping Bound/Function</h2>
 
 
 <h3>Description</h3>
@@ -44,53 +41,43 @@ compute optimally robust ICs.
 <pre>
 getInfCentRegTS(ErrorL2deriv, Regressor, neighbor, ...)
 
-## S4 method for signature 'UnivariateDistribution,
-##   UnivariateDistribution, ContNeighborhood':
+## S4 method for signature 'UnivariateDistribution,UnivariateDistribution,ContNeighborhood':
 getInfCentRegTS(ErrorL2deriv, 
                 Regressor, neighbor, clip, cent, stand, z.comp)
 
-## S4 method for signature 'UnivariateDistribution,
-##   UnivariateDistribution, TotalVarNeighborhood':
+## S4 method for signature 'UnivariateDistribution,UnivariateDistribution,TotalVarNeighborhood':
 getInfCentRegTS(ErrorL2deriv, 
                 Regressor, neighbor, clip, cent, z.comp)
 
-## S4 method for signature 'UnivariateDistribution,
-##   numeric, CondTotalVarNeighborhood':
+## S4 method for signature 'UnivariateDistribution,numeric,CondTotalVarNeighborhood':
 getInfCentRegTS(ErrorL2deriv, 
                 Regressor, neighbor, clip, cent, z.comp)
 
-## S4 method for signature 'UnivariateDistribution,
-##   UnivariateDistribution, Av1CondContNeighborhood':
+## S4 method for signature 'UnivariateDistribution,UnivariateDistribution,Av1CondContNeighborhood':
 getInfCentRegTS(ErrorL2deriv, 
                 Regressor, neighbor, clip, cent, stand, z.comp, x.vec)
 
-## S4 method for signature 'UnivariateDistribution,
-##   UnivariateDistribution, Av1CondTotalVarNeighborhood':
+## S4 method for signature 'UnivariateDistribution,UnivariateDistribution,Av1CondTotalVarNeighborhood':
 getInfCentRegTS(ErrorL2deriv, 
                 Regressor, neighbor, clip, cent, stand, z.comp, x.vec, tol.z)
 
-## S4 method for signature 'UnivariateDistribution,
-##   MultivariateDistribution, ContNeighborhood':
+## S4 method for signature 'UnivariateDistribution,MultivariateDistribution,ContNeighborhood':
 getInfCentRegTS(ErrorL2deriv, 
                 Regressor, neighbor, clip, cent, stand, z.comp)
 
-## S4 method for signature 'UnivariateDistribution,
-##   MultivariateDistribution, Av1CondContNeighborhood':
+## S4 method for signature 'UnivariateDistribution,MultivariateDistribution,Av1CondContNeighborhood':
 getInfCentRegTS(ErrorL2deriv, 
                 Regressor, neighbor, clip, cent, stand, z.comp, x.vec)
 
-## S4 method for signature 'UnivariateDistribution,
-##   Distribution, Av2CondContNeighborhood':
+## S4 method for signature 'UnivariateDistribution,Distribution,Av2CondContNeighborhood':
 getInfCentRegTS(ErrorL2deriv, 
                 Regressor, neighbor, clip, cent, stand, z.comp, tol.z)
 
-## S4 method for signature 'RealRandVariable, Distribution,
-##   ContNeighborhood':
+## S4 method for signature 'RealRandVariable,Distribution,ContNeighborhood':
 getInfCentRegTS(ErrorL2deriv, 
                 Regressor, neighbor, ErrorDistr, stand, cent, clip, z.comp)
 
-## S4 method for signature 'RealRandVariable, Distribution,
-##   Av1CondContNeighborhood':
+## S4 method for signature 'RealRandVariable,Distribution,Av1CondContNeighborhood':
 getInfCentRegTS(ErrorL2deriv, 
                 Regressor, neighbor, ErrorDistr, stand, cent, clip, z.comp, x.vec)
 </pre>
@@ -101,86 +88,100 @@ getInfCentRegTS(ErrorL2deriv,
 <table summary="R argblock">
 <tr valign="top"><td><code>ErrorL2deriv</code></td>
 <td>
-L2-derivative of <code>ErrorDistr</code>. </td></tr>
+ L2-derivative of <code>ErrorDistr</code>. </td></tr>
 <tr valign="top"><td><code>Regressor</code></td>
 <td>
-regressor. </td></tr>
+ regressor. </td></tr>
 <tr valign="top"><td><code>neighbor</code></td>
 <td>
-object of class <code>"Neighborhood"</code>. </td></tr>
+ object of class <code>"Neighborhood"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-additional parameters. </td></tr>
+ additional parameters. </td></tr>
 <tr valign="top"><td><code>clip</code></td>
 <td>
-optimal clipping bound. </td></tr>
+ optimal clipping bound. </td></tr>
 <tr valign="top"><td><code>cent</code></td>
 <td>
-optimal centering constant/function. </td></tr>
+ optimal centering constant/function. </td></tr>
 <tr valign="top"><td><code>stand</code></td>
 <td>
-standardizing matrix. </td></tr>
+ standardizing matrix. </td></tr>
 <tr valign="top"><td><code>z.comp</code></td>
 <td>
-which components of the centering constant/function 
+ which components of the centering constant/function 
 have to be computed. </td></tr>
 <tr valign="top"><td><code>x.vec</code></td>
 <td>
-(approximated) support of <code>Regressor</code>. </td></tr>
+ (approximated) support of <code>Regressor</code>. </td></tr>
 <tr valign="top"><td><code>tol.z</code></td>
 <td>
-the desired accuracy (convergence tolerance). </td></tr>
+ the desired accuracy (convergence tolerance). </td></tr>
 <tr valign="top"><td><code>ErrorDistr</code></td>
 <td>
-error distribution. </td></tr>
+ error distribution. </td></tr>
 </table>
+
 
 <h3>Value</h3>
 
-<p>
-The optimal centering constant/function is computed.</p>
+<p>The optimal centering constant/function is computed.</p>
+
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "ContNeighborhood"</dt><dd>computation of optimal centering constant. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "TotalVarNeighborhood"</dt><dd>computation of lower clipping bound. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "numeric", neighbor = "CondTotalVarNeighborhood"</dt><dd>computation of lower clipping bound. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "Av1CondContNeighborhood"</dt><dd>computation of optimal centering function. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd>computation of optimal lower clipping function. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "ContNeighborhood"</dt><dd>computation of optimal centering constant. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "Av1CondContNeighborhood"</dt><dd>computation of optimal centering function. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd>computation of optimal lower clipping function. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "Distribution", neighbor = "Av2CondContNeighborhood"</dt><dd>computation of optimal centering constant. </dd>
-
-
-<dt>ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", neighbor = "ContNeighborhood"</dt><dd>computation of optimal centering constant. </dd>
-
-
-<dt>ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", neighbor = "Av1CondContNeighborhood"</dt><dd>computation of optimal centering function. </dd>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "ContNeighborhood"</dt><dd> 
+computation of optimal centering constant. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "TotalVarNeighborhood"</dt><dd> 
+computation of lower clipping bound. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "numeric", neighbor = "CondTotalVarNeighborhood"</dt><dd> 
+computation of lower clipping bound. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "Av1CondContNeighborhood"</dt><dd> 
+computation of optimal centering function. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd> 
+computation of optimal lower clipping function. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "ContNeighborhood"</dt><dd> 
+computation of optimal centering constant. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "Av1CondContNeighborhood"</dt><dd> 
+computation of optimal centering function. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd> 
+computation of optimal lower clipping function. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "Distribution", neighbor = "Av2CondContNeighborhood"</dt><dd> 
+computation of optimal centering constant. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", neighbor = "ContNeighborhood"</dt><dd> 
+computation of optimal centering constant. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", neighbor = "Av1CondContNeighborhood"</dt><dd> 
+computation of optimal centering function. </dd>
 </dl>
+</p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>References</h3>
@@ -199,11 +200,9 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a onclick="findlink('ROptEst', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, <code><a href="Av1CondContIC-class.html">Av1CondContIC-class</a></code>, 
-<code><a href="Av2CondContIC-class.html">Av2CondContIC-class</a></code>, <code><a href="Av1CondTotalVarIC-class.html">Av1CondTotalVarIC-class</a></code>, 
-<code><a href="CondContIC-class.html">CondContIC-class</a></code>, <code><a href="CondTotalVarIC-class.html">CondTotalVarIC-class</a></code>
-</p>
+<p><code><a onclick="findlink('ROptEst', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, <code></code>, 
+<code></code>, <code></code>, 
+<code></code>, <code></code></p>
 
 <script Language="JScript">
 function findlink(pkg, fn) {
@@ -215,7 +214,5 @@ location.href = link;
 }
 </script>
 
-
 <hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
-
 </body></html>

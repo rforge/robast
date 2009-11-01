@@ -36,7 +36,7 @@ Class \code{"Neighborhood"}, directly.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{Neighborhood-class}}
+\seealso{\code{\link[ROptEstOld]{Neighborhood-class}}}
 %\examples{}
 \concept{conditional neighborhood}
 \concept{neighborhood}

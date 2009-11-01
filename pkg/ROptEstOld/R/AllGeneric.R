@@ -1,9 +1,3 @@
-if(!isGeneric("type")){ 
-    setGeneric("type", function(object) standardGeneric("type"))
-}
-if(!isGeneric("SymmCenter")){ 
-    setGeneric("SymmCenter", function(object) standardGeneric("SymmCenter"))
-}
 if(!isGeneric("distrSymm")){ 
     setGeneric("distrSymm", function(object) standardGeneric("distrSymm"))
 }

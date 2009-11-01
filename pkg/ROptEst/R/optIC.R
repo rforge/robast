@@ -2,20 +2,23 @@
 ## Optimally robust IC for infinitesimal robust model and asymptotic risks
 ###############################################################################
 setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
-    function(model, risk, z.start = NULL, A.start = NULL, upper = 1e4, 
-             maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE, 
-             noLow = FALSE, verbose = FALSE){
+    function(model, risk, z.start = NULL, A.start = NULL, upper = 1e4,
+             lower = 1e-4, OptOrIter = "iterate",
+             maxiter = 50, tol = .Machine$double.eps^0.4,
+             warn = TRUE, noLow = FALSE, verbose = NULL, ...){
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
         L2derivDim <- numberOfMaps(model@center@L2deriv)
         ow <- options("warn")
         on.exit(options(ow))
         if(L2derivDim == 1){
             options(warn = -1)
-            res <- getInfRobIC(L2deriv = model@center@L2derivDistr[[1]], 
+            res <- getInfRobIC(L2deriv = model@center@L2derivDistr[[1]],
                         neighbor = model@neighbor, risk = risk, 
                         symm = model@center@L2derivDistrSymm[[1]],
-                        Finfo = model@center@FisherInfo, trafo = model@center@param@trafo, 
-                        upper = upper, maxiter = maxiter, tol = tol, warn = warn,
-                        noLow = noLow, verbose = verbose)
+                        Finfo = model@center@FisherInfo, trafo = trafo(model@center@param), 
+                        upper = upper, lower = lower, maxiter = maxiter, tol = tol, warn = warn,
+                        noLow = noLow, verbose = verbose, ...)
             res$info <- c("optIC", res$info)
             res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                  neighbor = model@neighbor, 
@@ -43,20 +46,22 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                     }
                 }
                 options(warn = -1)
-                res <- getInfRobIC(L2deriv = L2deriv, neighbor = model@neighbor, 
+                res <- getInfRobIC(L2deriv = L2deriv, neighbor = model@neighbor,
                             risk = risk,  Distr = model@center@distribution, 
                             DistrSymm = model@center@distrSymm, L2derivSymm = L2derivSymm,
                             L2derivDistrSymm = L2derivDistrSymm, Finfo = model@center@FisherInfo, 
-                            trafo = model@center@param@trafo, z.start = z.start, A.start = A.start, 
-                            upper = upper, maxiter = maxiter, tol = tol, warn = warn, 
-                            verbose = verbose)
+                            trafo = trafo(model@center@param), z.start = z.start, A.start = A.start, 
+                            upper = upper, lower = lower, OptOrIter = OptOrIter,
+                            maxiter = maxiter, tol = tol, warn = warn,
+                            verbose = verbose, ...)
                 options(ow)
                 res$info <- c("optIC", res$info)
                 res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                      neighbor = model@neighbor, 
-                                                     risk = risk))
-                    return(generateIC(model@neighbor, model@center, res))
-                }else{
+                                                     risk = risk, verbose = verbose,
+                                                     ...))
+                return(generateIC(model@neighbor, model@center, res))
+            }else{
                 stop("not yet implemented")
             }
         }
@@ -67,7 +72,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
 ## and asymptotic under-/overshoot risk
 ###############################################################################
 setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
-    function(model, risk, upper = 1e4, maxiter = 50, 
+    function(model, risk, upper = 1e4, lower = 1e-4, maxiter = 50,
              tol = .Machine$double.eps^0.4, warn = TRUE){
         L2derivDistr <- model@center@L2derivDistr[[1]]
         ow <- options("warn")
@@ -80,7 +85,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
                res <- getInfRobIC(L2deriv = L2derivDistr, 
                         neighbor = model@neighbor, risk = risk, 
                         symm = model@center@L2derivDistrSymm[[1]],
-                        Finfo = model@center@FisherInfo, trafo = model@center@param@trafo, 
+                        Finfo = model@center@FisherInfo, trafo = trafo(model@center@param), 
                         upper = upper, maxiter = maxiter, tol = tol, warn = warn)
                options(ow)
                if(is(model@neighbor, "ContNeighborhood"))
@@ -89,7 +94,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
                   res$info <- c("optIC", res$info)
                res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                     neighbor = model@neighbor, 
-                                                    risk = risk))
+                                                    risk = risk, verbose = verbose))
                return(generateIC(TotalVarNeighborhood(radius = model@neighbor@radius), model@center, res))
            }    
         }else{
@@ -102,9 +107,11 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
 ## and finite-sample under-/overshoot risk
 ###############################################################################
 setMethod("optIC", signature(model = "FixRobModel", risk = "fiUnOvShoot"),
-    function(model, risk, sampleSize, upper = 1e4, maxiter = 50, 
+    function(model, risk, sampleSize, upper = 1e4, lower = 1e-4, maxiter = 50,
              tol = .Machine$double.eps^0.4, warn = TRUE, Algo = "A", 
-             cont = "left", verbose = FALSE){
+             cont = "left", verbose = NULL){
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
         ow <- options("warn")
         on.exit(options(ow))
         if(!identical(all.equal(sampleSize, trunc(sampleSize)), TRUE))
@@ -122,7 +129,7 @@ setMethod("optIC", signature(model = "FixRobModel", risk = "fiUnOvShoot"),
                 res$info <- c("optIC", res$info)
             res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                  neighbor = model@neighbor, 
-                                                 risk = risk))
+                                                 risk = risk, verbose = verbose))
             return(generateIC(TotalVarNeighborhood(radius = model@neighbor@radius), model@center, res))
         }else{
             stop("restricted to 1-dimensional parametric models")

@@ -1,10 +1,10 @@
 <html><head><title>Euclidean random matrix</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>EuclRandMatrix-class(RandVar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>EuclRandMatrix-class(RandVar)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   EuclRandMatrix-class">
 <param name="keyword" value="R:   coerce,EuclRandMatrix,EuclRandVarList-method">
 <param name="keyword" value="R:   Dim">
@@ -21,11 +21,11 @@
 <param name="keyword" value="R:   evalRandVar,EuclRandMatrix,matrix,Distribution-method">
 <param name="keyword" value="R:   t,EuclRandMatrix-method">
 <param name="keyword" value="R:   show,EuclRandMatrix-method">
-<param name="keyword" value="R:   \%*\%,matrix,EuclRandMatrix-method">
-<param name="keyword" value="R:   \%*\%,numeric,EuclRandMatrix-method">
-<param name="keyword" value="R:   \%*\%,EuclRandMatrix,matrix-method">
-<param name="keyword" value="R:   \%*\%,EuclRandMatrix,numeric-method">
-<param name="keyword" value="R:   \%*\%,EuclRandMatrix,EuclRandMatrix-method">
+<param name="keyword" value="R:   %*%,matrix,EuclRandMatrix-method">
+<param name="keyword" value="R:   %*%,numeric,EuclRandMatrix-method">
+<param name="keyword" value="R:   %*%,EuclRandMatrix,matrix-method">
+<param name="keyword" value="R:   %*%,EuclRandMatrix,numeric-method">
+<param name="keyword" value="R:   %*%,EuclRandMatrix,EuclRandMatrix-method">
 <param name="keyword" value="R:   Arith,numeric,EuclRandMatrix-method">
 <param name="keyword" value="R:   Arith,EuclRandMatrix,numeric-method">
 <param name="keyword" value="R:   Arith,EuclRandMatrix,EuclRandMatrix-method">
@@ -47,9 +47,7 @@
 
 <h3>Description</h3>
 
-<p>
-Class of Euclidean random matrices.
-</p>
+<p>Class of Euclidean random matrices.</p>
 
 
 <h3>Objects from the Class</h3>
@@ -63,14 +61,19 @@ More frequently they are created via the generating function
 
 <h3>Slots</h3>
 
+<p>
+
 <dl>
-<dt><code>Dim</code>:</dt><dd>vector of positive integers: Dimensions of the random matrix. </dd>
-<dt><code>Map</code>:</dt><dd>Object of class <code>"list"</code>: list of functions. </dd>
-<dt><code>Domain</code>:</dt><dd>Object of class <code>"OptionalrSpace"</code> 
+<dt><code>Dim</code></dt><dd> vector of positive integers: Dimensions of the random matrix. </dd>
+<dt><code>Map</code></dt><dd> Object of class <code>"list"</code>: list of functions. </dd>
+<dt><code>Domain</code></dt><dd> Object of class <code>"OptionalrSpace"</code> 
 domain of the random matrix. </dd>
-<dt><code>Range</code>:</dt><dd>Object of class <code>"OptionalrSpace"</code> 
+<dt><code>Range</code></dt><dd> Object of class <code>"OptionalrSpace"</code> 
 range of the random matrix. </dd>
 </dl>
+
+</p>
+
 
 <h3>Extends</h3>
 
@@ -82,168 +85,169 @@ Class <code>"RandVariable"</code>, by class <code>"EuclRandVariable"</code>.
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
 <dt>coerce</dt><dd><code>signature(from = "EuclRandMatrix", to = "EuclRandVarList")</code>: 
 create a <code>"EuclRandVarList"</code> object from a Euclidean random matrix. </dd>
-
-
+</p>
+<p>
 <dt>[</dt><dd><code>signature(x = "EuclRandMatrix")</code>: generates
 a new Euclidean random variable/matrix by extracting elements of
 the slot <code>Map</code> of <code>x</code>. </dd>
-
-
+</p>
+<p>
 <dt>Dim</dt><dd><code>signature(object = "EuclRandMatrix")</code>: accessor function
 for slot <code>Dim</code>. </dd>
-
-
+</p>
+<p>
 <dt>Dim&lt;-</dt><dd><code>signature(object = "EuclRandMatrix", )</code>: replacement
 function for slot <code>Dim</code>. </dd>
-
-
+</p>
+<p>
 <dt>ncol</dt><dd><code>signature(x = "EuclRandMatrix")</code>: number of columns of <code>x</code>. </dd>
-
-
+</p>
+<p>
 <dt>nrow</dt><dd><code>signature(x = "EuclRandMatrix")</code>: number of rows of <code>x</code>. </dd>
-
-
+</p>
+<p>
 <dt>dimension</dt><dd><code>signature(object = "EuclRandMatrix")</code>: dimension 
 of the Euclidean random variable. </dd>
-
-
+</p>
+<p>
 <dt>evalRandVar</dt><dd><code>signature(RandVar = "EuclRandMatrix", x = "numeric")</code>: 
 evaluate the slot <code>Map</code> of <code>RandVar</code> at <code>x</code>. </dd>
-
-
+</p>
+<p>
 <dt>evalRandVar</dt><dd><code>signature(RandVar = "EuclRandMatrix", x = "matrix")</code>:
 evaluate the slot <code>Map</code> of <code>RandVar</code> at <code>x</code>. </dd>
-
-
+</p>
+<p>
 <dt>evalRandVar</dt><dd><code>signature(RandVar = "EuclRandMatrix", x = "numeric", distr = "Distribution")</code>:
 evaluate the slot <code>Map</code> of <code>RandVar</code> at <code>x</code> assuming 
 a probability space with distribution <code>distr</code>. In case <code>x</code>
 does not lie in the support of <code>distr</code> <code>NA</code> is returned. </dd>
-
-
+</p>
+<p>
 <dt>evalRandVar</dt><dd><code>signature(RandVar = "EuclRandMatrix", x = "matrix", distr = "Distribution")</code>:
 evaluate the slot <code>Map</code> of <code>RandVar</code> at rows of <code>x</code>
 assuming a probability space with distribution <code>distr</code>. For those
 rows of <code>x</code> which do not lie in the support of <code>distr</code> 
 <code>NA</code> is returned. </dd>
-
-
+</p>
+<p>
 <dt>t</dt><dd><code>signature(x = "EuclRandMatrix")</code>: transposes <code>x</code>. In
 addition, the results of the functions in the slot <code>Map</code> of  
 <code>x</code> are transposed. </dd>
-
-
+</p>
+<p>
 <dt>show</dt><dd><code>signature(object = "EuclRandMatrix")</code> </dd>
-
-
+</p>
+<p>
 <dt>%*%</dt><dd><code>signature(x = "matrix", y = "EuclRandMatrix")</code>: 
 matrix multiplication of <code>x</code> and <code>y</code>. Generates 
 an object of class <code>"EuclRandMatrix"</code>. </dd>
-
-
+</p>
+<p>
 <dt>%*%</dt><dd><code>signature(x = "numeric", y = "EuclRandMatrix")</code>: 
 matrix multiplication of <code>x</code> and <code>y</code>. Generates 
 an object of class <code>"EuclRandMatrix"</code>. </dd>
-
-
+</p>
+<p>
 <dt>%*%</dt><dd><code>signature(x = "EuclRandVariable", y = "EuclRandMatrix")</code>: 
 matrix multiplication of <code>x</code> and <code>y</code>. Generates 
 an object of class <code>"EuclRandMatrix"</code>. </dd>
-
-
+</p>
+<p>
 <dt>%*%</dt><dd><code>signature(x = "EuclRandMatrix", y = "matrix")</code>: 
 matrix multiplication of <code>x</code> and <code>y</code>. Generates 
 an object of class <code>"EuclRandMatrix"</code>. </dd>
-
-
+</p>
+<p>
 <dt>%*%</dt><dd><code>signature(x = "EuclRandMatrix", y = "numeric")</code>: 
 matrix multiplication of <code>x</code> and <code>y</code>. Generates 
 an object of class <code>"EuclRandMatrix"</code>. </dd>
-
-
+</p>
+<p>
 <dt>%*%</dt><dd><code>signature(x = "EuclRandMatrix", y = "EuclRandMatrix")</code>: 
 matrix multiplication of <code>x</code> and <code>y</code>. Generates 
 an object of class <code>"EuclRandMatrix"</code>. </dd>
-
-
+</p>
+<p>
 <dt>%*%</dt><dd><code>signature(x = "EuclRandMatrix", y = "EuclRandVariable")</code>: 
 matrix multiplication of <code>x</code> and <code>y</code>. Generates 
 an object of class <code>"EuclRandMatrix"</code>. </dd>
-
-
+</p>
+<p>
 <dt>Arith</dt><dd><code>signature(e1 = "numeric", e2 = "EuclRandMatrix")</code>: 
 Given a numeric vector <code>e1</code>, a Euclidean random matrix <code>e2</code> 
 and an arithmetic operator <code>op</code>, the Euclidean random matrix 
 <code>e1 op e2</code> is returned. </dd>
-
-
+</p>
+<p>
 <dt>Arith</dt><dd><code>signature(e1 = "EuclRandMatrix", e2 = "numeric")</code>: 
 Given a Euclidean random matrix <code>e1</code>, a numeric vector <code>e2</code>,  
 and an arithmetic operator <code>op</code>, the Euclidean random matrix 
 <code>e1 op e2</code> is returned. </dd>
-
-
+</p>
+<p>
 <dt>Arith</dt><dd><code>signature(e1 = "EuclRandMatrix", e2 = "EuclRandMatrix")</code>: 
 Given two Euclidean random matrices <code>e1</code> and <code>e2</code>,  
 and an arithmetic operator <code>op</code>, the Euclidean random matrix 
 <code>e1 op e2</code> is returned. </dd>
-
-
+</p>
+<p>
 <dt>Math</dt><dd><code>signature(x = "EuclRandMatrix")</code>: 
 Given a <code>"Math"</code> group generic <code>fct</code>, the Euclidean random 
 matrix <code>fct(x)</code> is returned. </dd>
-
-
+</p>
+<p>
 <dt>E</dt><dd><code>signature(object = "UnivariateDistribution", fun = "EuclRandMatrix", cond = "missing")</code>: 
 expectation of <code>fun</code> under univariate distributions. </dd>
-
-
+</p>
+<p>
 <dt>E</dt><dd><code>signature(object = "AbscontDistribution", fun = "EuclRandMatrix", cond = "missing")</code>: 
 expectation of <code>fun</code> under absolutely continuous univariate distributions. </dd>
-
-
+</p>
+<p>
 <dt>E</dt><dd><code>signature(object = "DiscreteDistribution", fun = "EuclRandMatrix", cond = "missing")</code>: 
 expectation of <code>fun</code> under discrete univariate distributions. </dd>
-
-
+</p>
+<p>
 <dt>E</dt><dd><code>signature(object = "MultivariateDistribution", fun = "EuclRandMatrix", cond = "missing")</code>: 
 expectation of <code>fun</code> under multivariate distributions. </dd>
-
-
+</p>
+<p>
 <dt>E</dt><dd><code>signature(object = "DiscreteMVDistribution", fun = "EuclRandMatrix", cond = "missing")</code>: 
 expectation of <code>fun</code> under discrete multivariate distributions. </dd>
-
-
+</p>
+<p>
 <dt>E</dt><dd><code>signature(object = "UnivariateCondDistribution", fun = "EuclRandMatrix", cond = "numeric")</code>: 
 conditional expectation of <code>fun</code> under conditional univariate distributions. </dd>
-
-
+</p>
+<p>
 <dt>E</dt><dd><code>signature(object = "AbscontCondDistribution", fun = "EuclRandMatrix", cond = "numeric")</code>: 
 conditional expectation of <code>fun</code> under absolutely continuous conditional univariate distributions. </dd>
-
-
+</p>
+<p>
 <dt>E</dt><dd><code>signature(object = "DiscreteCondDistribution", fun = "EuclRandMatrix", cond = "numeric")</code>: 
 conditional expectation of <code>fun</code> under discrete conditional univariate distributions. </dd>
 </dl>
 
+</p>
+
+
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>See Also</h3>
 
-<p>
-<code><a href="EuclRandMatrix.html">EuclRandMatrix</a></code>, <code><a href="RandVariable-class.html">RandVariable-class</a></code>, 
-<code><a href="EuclRandVariable-class.html">EuclRandVariable-class</a></code>, <code><a href="EuclRandVarList-class.html">EuclRandVarList-class</a></code>, 
+<p><code></code>, <code></code>, 
+<code></code>, <code></code>, 
 <code><a onclick="findlink('distr', 'Distribution-class.html')" style="text-decoration: underline; color: blue; cursor: hand">Distribution-class</a></code>, <code><a onclick="findlink('base', 'groupGeneric.html')" style="text-decoration: underline; color: blue; cursor: hand">Arith</a></code>, 
-<code><a onclick="findlink('base', 'groupGeneric.html')" style="text-decoration: underline; color: blue; cursor: hand">Math</a></code>, <code><a onclick="findlink('distrEx', 'E.html')" style="text-decoration: underline; color: blue; cursor: hand">E</a></code>
-</p>
+<code><a onclick="findlink('base', 'groupGeneric.html')" style="text-decoration: underline; color: blue; cursor: hand">Math</a></code>, <code><a onclick="findlink('distrEx', 'E.html')" style="text-decoration: underline; color: blue; cursor: hand">E</a></code></p>
 
 
 <h3>Examples</h3>
@@ -284,7 +288,5 @@ location.href = link;
 }
 </script>
 
-
-<hr><div align="center">[Package <em>RandVar</em> version 0.6.3 <a href="00Index.html">Index]</a></div>
-
+<hr><div align="center">[Package <em>RandVar</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 </body></html>

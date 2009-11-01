@@ -4,6 +4,7 @@
 \alias{getInfCent,UnivariateDistribution,ContNeighborhood,BiasType-method}
 \alias{getInfCent,UnivariateDistribution,TotalVarNeighborhood,BiasType-method}
 \alias{getInfCent,RealRandVariable,ContNeighborhood,BiasType-method}
+\alias{getInfCent,RealRandVariable,TotalVarNeighborhood,BiasType-method}
 \alias{getInfCent,UnivariateDistribution,ContNeighborhood,onesidedBias-method}
 \alias{getInfCent,UnivariateDistribution,ContNeighborhood,asymmetricBias-method}
 
@@ -24,10 +25,13 @@ getInfCent(L2deriv, neighbor, biastype, ...)
 \S4method{getInfCent}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(L2deriv, 
      neighbor, biastype, clip, cent, tol.z, symm, trafo)
 
-\S4method{getInfCent}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, 
-     neighbor, biastype, Distr, z.comp, w)
+\S4method{getInfCent}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv,
+     neighbor, biastype, Distr, z.comp, w, tol.z = .Machine$double.eps^.5)
 
-\S4method{getInfCent}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv, 
+\S4method{getInfCent}{RealRandVariable,TotalVarNeighborhood,BiasType}(L2deriv,
+     neighbor, biastype, Distr, z.comp, w, tol.z = .Machine$double.eps^.5)
+
+\S4method{getInfCent}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv,
      neighbor, biastype, clip, cent, tol.z, symm, trafo)
 
 \S4method{getInfCent}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(L2deriv, 
@@ -47,7 +51,7 @@ getInfCent(L2deriv, neighbor, biastype, ...)
   \item{Distr}{object of class \code{Distribution}. }
   \item{z.comp}{ logical vector: indication which components of the 
     centering constant have to be computed. }
-  \item{w}{object of class \code{RobWeight}; current weight}  
+  \item{w}{object of class \code{RobWeight}; current weight}
 }
 %\details{}
 \value{The optimal centering constant is computed.}
@@ -59,10 +63,13 @@ getInfCent(L2deriv, neighbor, biastype, ...)
   \item{L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", biastype = "BiasType"}{ 
     computation of optimal lower clipping bound for symmetric bias. }
 
-  \item{L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", biastype = "BiasType"}{ 
+  \item{L2deriv = "RealRandVariable", neighbor = "TotalVarNeighborhood", biastype = "BiasType"}{
     computation of optimal centering constant for symmetric bias. }
 
-  \item{L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "onesidedBias"}{ 
+  \item{L2deriv = "RealRandVariable", neighbor = "ContNeighborhood", biastype = "BiasType"}{
+    computation of optimal centering constant for symmetric bias. }
+
+  \item{L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "onesidedBias"}{
     computation of optimal centering constant for onesided bias. }
 
   \item{L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", biastype = "asymmetricBias"}{ 

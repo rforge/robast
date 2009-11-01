@@ -39,9 +39,9 @@ robloxbioc(x, ...)
   \item{fsCor}{ logical: perform finite-sample correction. See function \code{\link[RobLox]{finiteSampleCorrection}}. }
   \item{mad0}{ scale estimate used if computed MAD is equal to zero}
   \item{bg.correct}{ if \code{TRUE} MAS 5.0 background correction is performed;
-    confer \code{\link[affy]{bg.correct.mas}}. }
+    confer \code{\link[affy:bgc]{bg.correct.mas}}. }
   \item{pmcorrect}{ method used for PM correction; \code{TRUE} calls an algorithm which is 
-    comparable to the algorithm of MAS 5.0; confer \code{\link[affy]{pmcorrect.mas}}. 
+    comparable to the algorithm of MAS 5.0; confer \code{\link[affy:pmcorrect]{pmcorrect.mas}}. 
     If \code{FALSE} only the PM intensities are used. }
   \item{normalize}{ logical: if \code{TRUE}, Affymetrix scale normalization is performed. }
   \item{add.constant}{ constant added to the MAS 5.0 expression values before the normalization
@@ -126,8 +126,8 @@ robloxbioc(x, ...)
 %\note{}
 \seealso{\code{\link[RobLox]{roblox}}, \code{\link[RobLox]{rowRoblox}},
          \code{\link[affy]{AffyBatch-class}}, 
-         \code{\link[affy]{generateExprVal.method.mas}},
-         \code{\link[Biobase]{ExpressionSet-class}},
+         \code{\link[affy:generateExprVal.method.avgdiff]{generateExprVal.method.mas}},
+         \code{\link[Biobase:class.ExpressionSet]{ExpressionSet-class}},
          \code{\link[beadarray]{createBeadSummaryData}} }
 \examples{
 ## similar to rowRoblox of package RobLox

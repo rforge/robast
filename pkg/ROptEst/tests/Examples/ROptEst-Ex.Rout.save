@@ -1,0 +1,1958 @@
+
+R version 2.10.0 beta (2009-10-15 r50107)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### * <HEADER>
+> ###
+> attach(NULL, name = "CheckExEnv")
+> assign("nameEx",
++        local({
++ 	   s <- "__{must remake R-ex/*.R}__"
++            function(new) {
++                if(!missing(new)) s <<- new else s
++            }
++        }),
++        pos = "CheckExEnv")
+> ## Add some hooks to label plot pages for base and grid graphics
+> assign("base_plot_hook",
++        function() {
++            pp <- par(c("mfg","mfcol","oma","mar"))
++            if(all(pp$mfg[1:2] == c(1, pp$mfcol[2]))) {
++                outer <- (oma4 <- pp$oma[4]) > 0; mar4 <- pp$mar[4]
++                mtext(sprintf("help(\"%s\")", nameEx()), side = 4,
++                      line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
++                outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
++            }
++        },
++        pos = "CheckExEnv")
+> assign("grid_plot_hook",
++        function() {
++            grid::pushViewport(grid::viewport(width=grid::unit(1, "npc") -
++                               grid::unit(1, "lines"), x=0, just="left"))
++            grid::grid.text(sprintf("help(\"%s\")", nameEx()),
++                            x=grid::unit(1, "npc") + grid::unit(0.5, "lines"),
++                            y=grid::unit(0.8, "npc"), rot=90,
++                            gp=grid::gpar(col="orchid"))
++        },
++        pos = "CheckExEnv")
+> setHook("plot.new",     get("base_plot_hook", pos = "CheckExEnv"))
+> setHook("persp",        get("base_plot_hook", pos = "CheckExEnv"))
+> setHook("grid.newpage", get("grid_plot_hook", pos = "CheckExEnv"))
+> assign("cleanEx",
++        function(env = .GlobalEnv) {
++ 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
++            RNGkind("default", "default")
++ 	   set.seed(1)
++    	   options(warn = 1)
++ 	   .CheckExEnv <- as.environment("CheckExEnv")
++ 	   delayedAssign("T", stop("T used instead of TRUE"),
++ 		  assign.env = .CheckExEnv)
++ 	   delayedAssign("F", stop("F used instead of FALSE"),
++ 		  assign.env = .CheckExEnv)
++ 	   sch <- search()
++ 	   newitems <- sch[! sch %in% .oldSearch]
++ 	   for(item in rev(newitems))
++                eval(substitute(detach(item), list(item=item)))
++ 	   missitems <- .oldSearch[! .oldSearch %in% sch]
++ 	   if(length(missitems))
++ 	       warning("items ", paste(missitems, collapse=", "),
++ 		       " have been removed from the search path")
++        },
++        pos = "CheckExEnv")
+> assign("ptime", proc.time(), pos = "CheckExEnv")
+> ## at least one package changes these via ps.options(), so do this
+> ## before loading the package.
+> ## Use postscript as incomplete files may be viewable, unlike PDF.
+> ## Choose a size that is close to on-screen devices, fix paper
+> grDevices::ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
+> grDevices::postscript("ROptEst-Ex.ps")
+> 
+> assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
+> options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
+> options(warn = 1)
+> library('ROptEst')
+Loading required package: distr
+Loading required package: startupmsg
+:startupmsg>  Utilities for start-up messages (version 0.7)
+:startupmsg> 
+:startupmsg>  For more information see ?"startupmsg",
+:startupmsg>  NEWS("startupmsg")
+
+Loading required package: sfsmisc
+Loading required package: SweaveListingUtils
+:SweaveListingUtils>  Utilities for Sweave together with
+:SweaveListingUtils>  TeX listings package (version 0.4)
+:SweaveListingUtils> 
+:SweaveListingUtils>  Some functions from package 'base'
+:SweaveListingUtils>  are intentionally masked ---see
+:SweaveListingUtils>  SweaveListingMASK().
+:SweaveListingUtils> 
+:SweaveListingUtils>  Note that global options are
+:SweaveListingUtils>  controlled by
+:SweaveListingUtils>  SweaveListingoptions() ---c.f.
+:SweaveListingUtils>  ?"SweaveListingoptions".
+:SweaveListingUtils> 
+:SweaveListingUtils>  For more information see
+:SweaveListingUtils>  ?"SweaveListingUtils",
+:SweaveListingUtils>  NEWS("SweaveListingUtils")
+:SweaveListingUtils>  There is a vignette to this
+:SweaveListingUtils>  package; try
+:SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
+
+
+Attaching package: 'SweaveListingUtils'
+
+
+	The following object(s) are masked from package:base :
+
+	 library,
+	 require 
+
+:distr>  Object orientated implementation of distributions (version
+:distr>  2.2)
+:distr> 
+:distr>  Attention: Arithmetics on distribution objects are
+:distr>  understood as operations on corresponding random variables
+:distr>  (r.v.s); see distrARITH().
+:distr> 
+:distr>  Some functions from package 'stats' are intentionally masked
+:distr>  ---see distrMASK().
+:distr> 
+:distr>  Note that global options are controlled by distroptions()
+:distr>  ---c.f. ?"distroptions".
+:distr> 
+:distr>  For more information see ?"distr", NEWS("distr"), as well as
+:distr>    http://distr.r-forge.r-project.org/
+:distr>  Package "distrDoc" provides a vignette to this package as
+:distr>  well as to several extension packages; try
+:distr>  vignette("distr").
+
+
+Attaching package: 'distr'
+
+
+	The following object(s) are masked from package:stats :
+
+	 df,
+	 qqplot,
+	 sd 
+
+Loading required package: distrEx
+Loading required package: evd
+Loading required package: actuar
+
+Attaching package: 'actuar'
+
+
+	The following object(s) are masked from package:grDevices :
+
+	 cm 
+
+:distrEx>  Extensions of package distr (version 2.2)
+:distrEx> 
+:distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
+:distrEx>  attached /before/ package "distrEx". See distrExMASK().
+:distrEx> 
+:distrEx>  For more information see ?"distrEx", NEWS("distrEx"), as
+:distrEx>  well as
+:distrEx>    http://distr.r-forge.r-project.org/
+:distrEx>  Package "distrDoc" provides a vignette to this package
+:distrEx>  as well as to several related packages; try
+:distrEx>  vignette("distr").
+
+
+Attaching package: 'distrEx'
+
+
+	The following object(s) are masked from package:stats :
+
+	 IQR,
+	 mad,
+	 median,
+	 var 
+
+Loading required package: distrMod
+Loading required package: RandVar
+:RandVar>  Implementation of random variables (version 0.7)
+:RandVar> 
+:RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
+:RandVar>  well as
+:RandVar>    http://robast.r-forge.r-project.org/
+:RandVar>  This package also includes a vignette; try
+:RandVar>  vignette("RandVar").
+
+Loading required package: MASS
+Loading required package: stats4
+:distrMod>  Object orientated implementation of probability models
+:distrMod>  (version 2.2)
+:distrMod> 
+:distrMod>  Some functions from pkg's 'base' and 'stats' are
+:distrMod>  intentionally masked ---see distrModMASK().
+:distrMod> 
+:distrMod>  Note that global options are controlled by
+:distrMod>  distrModoptions() ---c.f. ?"distrModoptions".
+:distrMod> 
+:distrMod>  For more information see ?"distrMod",
+:distrMod>  NEWS("distrMod"), as well as
+:distrMod>    http://distr.r-forge.r-project.org/
+:distrMod>  Package "distrDoc" provides a vignette to this package
+:distrMod>  as well as to several related packages; try
+:distrMod>  vignette("distr").
+
+
+Attaching package: 'distrMod'
+
+
+	The following object(s) are masked from package:stats4 :
+
+	 confint 
+
+
+	The following object(s) are masked from package:stats :
+
+	 confint 
+
+Loading required package: RobAStBase
+:RobAStBase>  Robust Asymptotic Statistics (version 0.7)
+:RobAStBase> 
+:RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
+:RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
+:RobAStBase> 
+:RobAStBase>  Note that global options are controlled by
+:RobAStBase>  RobAStBaseoptions() ---c.f. ?"RobAStBaseoptions".
+:RobAStBase> 
+:RobAStBase>  For more information see ?"RobAStBase",
+:RobAStBase>  NEWS("RobAStBase"), as well as
+:RobAStBase>    http://robast.r-forge.r-project.org/
+
+
+Attaching package: 'RobAStBase'
+
+
+	The following object(s) are masked from package:stats :
+
+	 start 
+
+
+	The following object(s) are masked from package:graphics :
+
+	 clip 
+
+> 
+> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> assign(".oldNS", loadedNamespaces(), pos = 'CheckExEnv')
+> cleanEx(); nameEx("0ROptEst-package")
+> ### * 0ROptEst-package
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ROptEst-package
+> ### Title: Optimally robust estimation
+> ### Aliases: ROptEst-package ROptEst
+> ### Keywords: package
+> 
+> ### ** Examples
+> 
+> library(ROptEst)
+> 
+> ## Example: Rutherford-Geiger (1910); cf. Feller~(1968), Section VI.7 (a)
+> x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532), 
++        rep(5, 408), rep(6, 273), rep(7, 139), rep(8, 45), rep(9, 27), 
++        rep(10, 10), rep(11, 4), rep(12, 0), rep(13, 1), rep(14, 1))
+> 
+> ## ML-estimate from package distrMod
+> MLest <- MLEstimator(x, PoisFamily())
+> MLest
+Evaluations of Maximum likelihood estimate:
+-------------------------------------------
+An object of class “Estimate” 
+generated by call
+  MLEstimator(x = x, ParamFamily = PoisFamily())
+samplesize:   2608
+estimate:
+             
+  3.87154908 
+ (0.03852908)
+asymptotic (co)variance (multiplied with samplesize):
+[1] 3.871549
+Criterion:
+negative log-likelihood 
+               5352.105 
+> ## confidence interval based on CLT
+> confint(MLest)
+A[n] asymptotic (CLT-based) confidence interval:
+        2.5 %   97.5 %
+[1,] 3.796033 3.947065
+Type of estimator: Maximum likelihood estimate
+samplesize:   2608
+Call by which estimate was produced:
+MLEstimator(x = x, ParamFamily = PoisFamily())
+> 
+> ## compute optimally (w.r.t to MSE) robust estimator (unknown contamination)
+> robest <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
+> estimate(robest)
+  lambda 
+3.908322 
+> ## check influence curve
+> checkIC(pIC(robest))
+precision of centering:	 2.6415e-16 
+precision of Fisher consistency:
+              lambda
+lambda -1.968972e-06
+maximum deviation 
+     1.968972e-06 
+> ## plot influence curve
+> plot(pIC(robest))
+> ## confidence interval based on LAN - neglecting bias
+> confint(robest)
+A[n] asymptotic (LAN-based) confidence interval:
+          2.5 %   97.5 %
+lambda 3.826171 3.990474
+Type of estimator: 3-step estimate
+samplesize:   2608
+Call by which estimate was produced:
+roptest(x = x, L2Fam = PoisFamily(), eps.upper = 0.1, steps = 3)
+> ## confidence interval based on LAN - including bias
+> confint(robest, method = symmetricBias())
+A[n] asymptotic (LAN-based), uniform (bias-aware)
+ confidence interval:
+for symmetric Bias
+          2.5 %  97.5 %
+lambda 3.759634 4.05701
+Type of estimator: 3-step estimate
+samplesize:   2608
+Call by which estimate was produced:
+roptest(x = x, L2Fam = PoisFamily(), eps.upper = 0.1, steps = 3)
+> 
+> 
+> 
+> cleanEx(); nameEx("cniperCont")
+> ### * cniperCont
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cniperCont
+> ### Title: Generic Functions for Computation and Plot of Cniper
+> ###   Contamination and Cniper Points.
+> ### Aliases: cniperCont cniperCont-methods
+> ###   cniperCont,IC,IC,L2ParamFamily,ContNeighborhood,asMSE-method
+> ###   cniperPoint cniperPoint-methods
+> ###   cniperPoint,L2ParamFamily,ContNeighborhood,asMSE-method
+> ###   cniperPointPlot cniperPointPlot-methods
+> ###   cniperPointPlot,L2ParamFamily,ContNeighborhood,asMSE-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## cniper contamination
+> P <- PoisFamily(lambda = 4)
+> RobP1 <- InfRobModel(center = P, neighbor = ContNeighborhood(radius = 0.1))
+> IC1 <- optIC(model=RobP1, risk=asMSE())
+> RobP2 <- InfRobModel(center = P, neighbor = ContNeighborhood(radius = 1))
+> IC2 <- optIC(model=RobP2, risk=asMSE())
+> cniperCont(IC1 = IC1, IC2 = IC2, L2Fam = P, 
++            neighbor = ContNeighborhood(radius = 0.5), 
++            risk = asMSE(),
++            lower = 0, upper = 8, n = 101)
+> 
+> ## cniper point plot
+> cniperPointPlot(P, neighbor = ContNeighborhood(radius = 0.5), 
++                 risk = asMSE(), lower = 0, upper = 10)
+> 
+> ## cniper point
+> cniperPoint(P, neighbor = ContNeighborhood(radius = 0.5), 
++             risk = asMSE(), lower = 0, upper = 4)
+cniper point 
+   0.7803439 
+> cniperPoint(P, neighbor = ContNeighborhood(radius = 0.5), 
++             risk = asMSE(), lower = 4, upper = 8)
+cniper point 
+    7.219656 
+> 
+> 
+> 
+> cleanEx(); nameEx("getL1normL2deriv")
+> ### * getL1normL2deriv
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getL1normL2deriv
+> ### Title: Calculation of L1 norm of L2derivative
+> ### Aliases: getL1normL2deriv getL1normL2deriv-methods
+> ###   getL1normL2deriv,UnivariateDistribution-method
+> ###   getL1normL2deriv,RealRandVariable-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ##
+> 
+> 
+> 
+> cleanEx(); nameEx("getL2normL2deriv")
+> ### * getL2normL2deriv
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getL2normL2deriv
+> ### Title: Calculation of L2 norm of L2derivative
+> ### Aliases: getL2normL2deriv
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ##
+> 
+> 
+> 
+> cleanEx(); nameEx("leastFavorableRadius")
+> ### * leastFavorableRadius
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: leastFavorableRadius
+> ### Title: Generic Function for the Computation of Least Favorable Radii
+> ### Aliases: leastFavorableRadius leastFavorableRadius-methods
+> ###   leastFavorableRadius,L2ParamFamily,UncondNeighborhood,asGRisk-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> N <- NormLocationFamily(mean=0, sd=1) 
+> leastFavorableRadius(L2Fam=N, neighbor=ContNeighborhood(),
++                      risk=asMSE(), rho=0.5)
+current radius:	 0.3820278 	inefficiency:	 1.039514 
+current radius:	 0.6180722 	inefficiency:	 1.043963 
+current radius:	 0.7639556 	inefficiency:	 1.041503 
+current radius:	 0.6008356 	inefficiency:	 1.044073 
+current radius:	 0.5598913 	inefficiency:	 1.044123 
+current radius:	 0.4919535 	inefficiency:	 1.043417 
+current radius:	 0.5735221 	inefficiency:	 1.044142 
+current radius:	 0.5739285 	inefficiency:	 1.044142 
+current radius:	 0.5736396 	inefficiency:	 1.044142 
+current radius:	 0.5735989 	inefficiency:	 1.044142 
+current radius:	 0.5736803 	inefficiency:	 1.044142 
+current radius:	 0.5736396 	inefficiency:	 1.044142 
+$rho
+[1] 0.5
+
+$leastFavorableRadius
+[1] 0.5736396
+
+$`asMSE-inefficiency`
+[1] 1.044142
+
+> 
+> 
+> 
+> cleanEx(); nameEx("lowerCaseRadius")
+> ### * lowerCaseRadius
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: lowerCaseRadius
+> ### Title: Computation of the lower case radius
+> ### Aliases: lowerCaseRadius lowerCaseRadius-methods
+> ###   lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,ANY-method
+> ###   lowerCaseRadius,L2ParamFamily,TotalVarNeighborhood,asMSE,ANY-method
+> ###   lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,onesidedBias-method
+> ###   lowerCaseRadius,UnivariateDistribution,ContNeighborhood,asMSE,onesidedBias-method
+> ###   lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE,asymmetricBias-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> lowerCaseRadius(BinomFamily(size = 10), ContNeighborhood(), asMSE())
+lower case radius 
+         0.690335 
+> lowerCaseRadius(BinomFamily(size = 10), TotalVarNeighborhood(), asMSE())
+lower case radius 
+        0.3451675 
+> 
+> 
+> 
+> cleanEx(); nameEx("optIC")
+> ### * optIC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: optIC
+> ### Title: Generic function for the computation of optimally robust ICs
+> ### Aliases: optIC optIC-methods optIC,InfRobModel,asRisk-method
+> ###   optIC,InfRobModel,asUnOvShoot-method
+> ###   optIC,FixRobModel,fiUnOvShoot-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> B <- BinomFamily(size = 25, prob = 0.25) 
+> 
+> ## classical optimal IC
+> IC0 <- optIC(model = B, risk = asCov())
+> plot(IC0) # plot IC
+> checkIC(IC0, B)
+precision of centering:	 -4.254490e-18 
+precision of Fisher consistency:
+             prob
+prob 2.220446e-16
+maximum deviation 
+     2.220446e-16 
+> 
+> 
+> 
+> cleanEx(); nameEx("optRisk")
+> ### * optRisk
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: optRisk
+> ### Title: Generic function for the computation of the minimal risk
+> ### Aliases: optRisk optRisk-methods optRisk,L2ParamFamily,asCov-method
+> ###   optRisk,InfRobModel,asRisk-method
+> ###   optRisk,FixRobModel,fiUnOvShoot-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> optRisk(model = NormLocationScaleFamily(), risk = asCov())
+$asCov
+     mean  sd
+mean    1 0.0
+sd      0 0.5
+
+> 
+> 
+> 
+> cleanEx(); nameEx("radiusMinimaxIC")
+> ### * radiusMinimaxIC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: radiusMinimaxIC
+> ### Title: Generic function for the computation of the radius minimax IC
+> ### Aliases: radiusMinimaxIC radiusMinimaxIC-methods
+> ###   radiusMinimaxIC,L2ParamFamily,UncondNeighborhood,asGRisk-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> N <- NormLocationFamily(mean=0, sd=1) 
+> radIC <- radiusMinimaxIC(L2Fam=N, neighbor=ContNeighborhood(), 
++                          risk=asMSE(), loRad=0.1, upRad=0.5)
+> checkIC(radIC)
+precision of centering:	 -8.135927e-16 
+precision of Fisher consistency:
+             mean
+mean 2.326918e-06
+maximum deviation 
+     2.326918e-06 
+> 
+> 
+> 
+> cleanEx(); nameEx("roptest")
+> ### * roptest
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: roptest
+> ### Title: Optimally robust estimation
+> ### Aliases: roptest
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> #############################
+> ## 1. Binomial data
+> #############################
+> ## generate a sample of contaminated data
+> ind <- rbinom(100, size=1, prob=0.05) 
+> x <- rbinom(100, size=25, prob=(1-ind)*0.25 + ind*0.9)
+> 
+> ## ML-estimate
+> MLest <- MLEstimator(x, BinomFamily(size = 25))
+> estimate(MLest)
+[1] 0.2684
+> confint(MLest)
+A[n] asymptotic (CLT-based) confidence interval:
+         2.5 %    97.5 %
+[1,] 0.2510297 0.2857703
+Type of estimator: Maximum likelihood estimate
+samplesize:   100
+Call by which estimate was produced:
+MLEstimator(x = x, ParamFamily = BinomFamily(size = 25))
+Fixed part of the parameter at which estimate was produced:
+size 
+  25 
+> 
+> ## compute optimally robust estimator (known contamination)
+> robest1 <- roptest(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
+> estimate(robest1)
+     prob 
+0.2564328 
+> confint(robest1, method = symmetricBias())
+A[n] asymptotic (LAN-based), uniform (bias-aware)
+ confidence interval:
+for symmetric Bias
+         2.5 %    97.5 %
+prob 0.2376412 0.2752244
+Type of estimator: 3-step estimate
+samplesize:   100
+Call by which estimate was produced:
+roptest(x = x, L2Fam = BinomFamily(size = 25), eps = 0.05, steps = 3)
+Fixed part of the parameter at which estimate was produced:
+size 
+  25 
+> ## neglecting bias
+> confint(robest1)
+A[n] asymptotic (LAN-based) confidence interval:
+         2.5 %    97.5 %
+prob 0.2382146 0.2746511
+Type of estimator: 3-step estimate
+samplesize:   100
+Call by which estimate was produced:
+roptest(x = x, L2Fam = BinomFamily(size = 25), eps = 0.05, steps = 3)
+Fixed part of the parameter at which estimate was produced:
+size 
+  25 
+> plot(pIC(robest1))
+> qqplot(x, robest1, cex.pch=1.5, exp.cex2.pch = -.25,
++        exp.fadcol.pch = .55, jit.fac=.9)
+$x
+  [1]  2.000000  2.859170  2.945003  3.072887  3.127441  3.867602  3.879563
+  [8]  3.969417  3.974350  3.991833  3.999465  4.003945  4.006687  4.022602
+ [15]  4.037292  4.114708  4.136915  4.173363  4.879410  4.885243  4.898712
+ [22]  4.901497  4.909182  4.912744  4.930320  4.954232  5.002498  5.006047
+ [29]  5.028207  5.091694  5.094311  5.094760  5.830003  5.859251  5.866496
+ [36]  5.869906  5.871337  5.875739  5.914491  5.942393  5.957418  5.960428
+ [43]  5.989444  5.994596  6.003645  6.008635  6.019764  6.053849  6.068266
+ [50]  6.103515  6.152629  6.155848  6.159465  6.161268  6.836726  6.837265
+ [57]  6.843205  6.867310  6.867319  6.885221  6.912581  6.916303  6.927515
+ [64]  6.930985  6.935737  6.970428  6.974665  6.982979  6.985635  7.043348
+ [71]  7.047311  7.078457  7.163208  7.856051  7.881048  7.889195  7.895933
+ [78]  7.934172  7.935981  7.937725  7.954303  8.065319  8.147733  8.842397
+ [85]  8.867768  8.880952  8.899670  8.912292  8.920068  8.954815  9.009832
+ [92]  9.097465  9.156489 10.000000 11.068189 11.166108 11.916822 12.163344
+ [99] 20.000000 24.000000
+
+$y
+  [1]  0.8557009  1.8381583  1.8628049  2.8541488  2.9861587  2.9973346
+  [7]  3.0625364  3.1545314  3.8446408  3.8708120  3.8834863  3.8895916
+ [13]  3.9161963  3.9550780  3.9641619  4.0791690  4.1128367  4.1228866
+ [19]  4.1767957  4.8499210  4.9164361  4.9324963  4.9473983  4.9660483
+ [25]  4.9982006  5.0448971  5.0592626  5.0943746  5.1015856  5.1124298
+ [31]  5.1278296  5.1632774  5.1689152  5.1750722  5.1785879  5.8477746
+ [37]  5.8764171  5.8818480  5.8835227  5.9169458  5.9256980  5.9509309
+ [43]  5.9529082  5.9583494  5.9637664  5.9793333  5.9889303  6.0151670
+ [49]  6.0295939  6.0634191  6.1123673  6.1692584  6.1762199  6.8429689
+ [55]  6.8496061  6.8592763  6.9196659  6.9218382  6.9399801  6.9705958
+ [61]  6.9898951  6.9950137  7.0313327  7.0811459  7.1024366  7.1212236
+ [67]  7.1214700  7.1252376  7.1391252  7.1731665  7.8456154  7.8837900
+ [73]  7.8998530  7.9029679  7.9400675  7.9712777  7.9772952  7.9870265
+ [79]  8.0223836  8.0715768  8.0730003  8.1313307  8.1542540  8.9035780
+ [85]  8.9066922  8.9746968  8.9975947  9.0231350  9.0562184  9.1068610
+ [91]  9.1194018  9.1722795  9.8608628  9.8717057  9.8730362 10.1667923
+ [97] 10.8757464 11.0025328 11.1530828 11.9453887
+
+> 
+> ## compute optimally robust estimator (unknown contamination)
+> robest2 <- roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.2, steps = 3)
+> estimate(robest2)
+     prob 
+0.2563208 
+> confint(robest2, method = symmetricBias())
+A[n] asymptotic (LAN-based), uniform (bias-aware)
+ confidence interval:
+for symmetric Bias
+         2.5 %    97.5 %
+prob 0.2373697 0.2752720
+Type of estimator: 3-step estimate
+samplesize:   100
+Call by which estimate was produced:
+roptest(x = x, L2Fam = BinomFamily(size = 25), eps.lower = 0, 
+    eps.upper = 0.2, steps = 3)
+Fixed part of the parameter at which estimate was produced:
+size 
+  25 
+> plot(pIC(robest2))
+> 
+> ## total variation neighborhoods (known deviation)
+> robest3 <- roptest(x, BinomFamily(size = 25), eps = 0.025, 
++                    neighbor = TotalVarNeighborhood(), steps = 3)
+> estimate(robest3)
+     prob 
+0.2563266 
+> confint(robest3, method = symmetricBias())
+A[n] asymptotic (LAN-based), uniform (bias-aware)
+ confidence interval:
+for symmetric Bias
+         2.5 %    97.5 %
+prob 0.2317268 0.2809265
+Type of estimator: 3-step estimate
+samplesize:   100
+Call by which estimate was produced:
+roptest(x = x, L2Fam = BinomFamily(size = 25), eps = 0.025, neighbor = TotalVarNeighborhood(), 
+    steps = 3)
+Fixed part of the parameter at which estimate was produced:
+size 
+  25 
+> plot(pIC(robest3))
+> 
+> ## total variation neighborhoods (unknown deviation)
+> robest4 <- roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.1, 
++                    neighbor = TotalVarNeighborhood(), steps = 3)
+> estimate(robest4)
+     prob 
+0.2561783 
+> confint(robest4, method = symmetricBias())
+A[n] asymptotic (LAN-based), uniform (bias-aware)
+ confidence interval:
+for symmetric Bias
+         2.5 %    97.5 %
+prob 0.2303988 0.2819579
+Type of estimator: 3-step estimate
+samplesize:   100
+Call by which estimate was produced:
+roptest(x = x, L2Fam = BinomFamily(size = 25), eps.lower = 0, 
+    eps.upper = 0.1, neighbor = TotalVarNeighborhood(), steps = 3)
+Fixed part of the parameter at which estimate was produced:
+size 
+  25 
+> plot(pIC(robest4))
+> 
+> 
+> #############################
+> ## 2. Poisson data
+> #############################
+> ## Example: Rutherford-Geiger (1910); cf. Feller~(1968), Section VI.7 (a)
+> x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532), 
++        rep(5, 408), rep(6, 273), rep(7, 139), rep(8, 45), rep(9, 27), 
++        rep(10, 10), rep(11, 4), rep(12, 0), rep(13, 1), rep(14, 1))
+> 
+> ## ML-estimate
+> MLest <- MLEstimator(x, PoisFamily())
+> estimate(MLest)
+[1] 3.871549
+> confint(MLest)
+A[n] asymptotic (CLT-based) confidence interval:
+        2.5 %   97.5 %
+[1,] 3.796033 3.947065
+Type of estimator: Maximum likelihood estimate
+samplesize:   2608
+Call by which estimate was produced:
+MLEstimator(x = x, ParamFamily = PoisFamily())
+> 
+> ## compute optimally robust estimator (unknown contamination)
+> robest <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
+> estimate(robest)
+  lambda 
+3.908322 
+> confint(robest, symmetricBias())
+A[n] asymptotic (LAN-based), uniform (bias-aware)
+ confidence interval:
+for symmetric Bias
+          2.5 %  97.5 %
+lambda 3.759634 4.05701
+Type of estimator: 3-step estimate
+samplesize:   2608
+Call by which estimate was produced:
+roptest(x = x, L2Fam = PoisFamily(), eps.upper = 0.1, steps = 3)
+> plot(pIC(robest))
+> qqplot(x, robest, cex.pch=1.5, exp.cex2.pch = -.25,
++        exp.fadcol.pch = .55, jit.fac=.9)
+$x
+   [1] -0.1793041795 -0.1759861769 -0.1650497656 -0.1612263552 -0.1604914454
+   [6] -0.1566180292 -0.1547882355 -0.1539141720 -0.1492880379 -0.1421819501
+  [11] -0.1354595166 -0.1284600289 -0.1216407305 -0.1187123112 -0.0860652946
+  [16] -0.0848703421 -0.0741629524 -0.0691011184 -0.0559845383 -0.0513339317
+  [21] -0.0480370981 -0.0467019431 -0.0436466014 -0.0339251104 -0.0276845006
+  [26] -0.0235016493 -0.0210747085 -0.0206963610 -0.0088567486 -0.0087029861
+  [31] -0.0064189536 -0.0019243706  0.0003061754  0.0053037550  0.0136313722
+  [36]  0.0281382900  0.0373652645  0.0395096166  0.0568181049  0.0586839484
+  [41]  0.0702044087  0.0741092423  0.0862710285  0.0891486229  0.1054472486
+  [46]  0.1086075740  0.1162055900  0.1218182640  0.1365959866  0.1513864226
+  [51]  0.1557258942  0.1568564884  0.1585111364  0.1593019161  0.1671541337
+  [56]  0.1753566350  0.1777497214  0.8206612690  0.8229262439  0.8239729856
+  [61]  0.8281868407  0.8305757796  0.8310723656  0.8326999961  0.8355585732
+  [66]  0.8378752902  0.8398591431  0.8406541642  0.8409931813  0.8433641932
+  [71]  0.8476829337  0.8538565200  0.8539804964  0.8542547681  0.8552110735
+  [76]  0.8583933951  0.8615232369  0.8621911180  0.8623794204  0.8661980350
+  [81]  0.8678180127  0.8682800816  0.8691355310  0.8730931763  0.8750037309
+  [86]  0.8759444402  0.8770225444  0.8787107722  0.8791575668  0.8825149192
+  [91]  0.8874734936  0.8883207704  0.8897622658  0.8909728169  0.8917991858
+  [96]  0.8927138863  0.8965523245  0.9008669832  0.9064418583  0.9069685200
+ [101]  0.9074643792  0.9107235271  0.9121536095  0.9199569112  0.9210700769
+ [106]  0.9254615402  0.9286095774  0.9331126588  0.9337162284  0.9369514506
+ [111]  0.9383477380  0.9407154735  0.9411203288  0.9412761912  0.9424837941
+ [116]  0.9430515644  0.9446183559  0.9453607844  0.9454781263  0.9462252053
+ [121]  0.9483909064  0.9502819066  0.9533115229  0.9535180736  0.9538464654
+ [126]  0.9565396211  0.9567541329  0.9577016644  0.9597082560  0.9612517187
+ [131]  0.9618216605  0.9629732560  0.9632237059  0.9636769201  0.9647909426
+ [136]  0.9660845800  0.9669799935  0.9695144805  0.9706020370  0.9762511055
+ [141]  0.9769515046  0.9821747574  0.9826629447  0.9854471484  0.9859222646
+ [146]  0.9881614416  0.9900043129  0.9914276866  0.9927408860  0.9948419585
+ [151]  0.9982230780  0.9992324987  1.0008102935  1.0061235375  1.0091099813
+ [156]  1.0100975965  1.0117364390  1.0119018181  1.0139659478  1.0142063300
+ [161]  1.0151125407  1.0192512533  1.0195037420  1.0223157134  1.0243674631
+ [166]  1.0259812935  1.0316540557  1.0317039015  1.0318309085  1.0347214441
+ [171]  1.0383187581  1.0435874658  1.0438383806  1.0444368554  1.0455957451
+ [176]  1.0485552876  1.0496471404  1.0518786023  1.0525842197  1.0528045084
+ [181]  1.0534783411  1.0546987396  1.0552057995  1.0557038353  1.0569007193
+ [186]  1.0588033811  1.0603891459  1.0604982174  1.0633073538  1.0666387019
+ [191]  1.0677790855  1.0682046519  1.0684924203  1.0690939620  1.0706309198
+ [196]  1.0751464184  1.0752310714  1.0765144441  1.0772984619  1.0776999821
+ [201]  1.0779722124  1.0819961217  1.0832937684  1.0837784864  1.0854299685
+ [206]  1.0899357994  1.0905415005  1.0923921667  1.0931308505  1.0937127814
+ [211]  1.0974353074  1.1000953104  1.1052563522  1.1075732378  1.1095806777
+ [216]  1.1131306302  1.1156184345  1.1179783971  1.1182723695  1.1185123830
+ [221]  1.1185567496  1.1188884534  1.1233323652  1.1235232534  1.1246484710
+ [226]  1.1258045535  1.1258387574  1.1266003503  1.1287005533  1.1303322548
+ [231]  1.1309070039  1.1322059634  1.1334899991  1.1346938779  1.1359281024
+ [236]  1.1456367932  1.1462734941  1.1466249098  1.1489624711  1.1541439174
+ [241]  1.1543598013  1.1558111337  1.1565136419  1.1577436900  1.1578289484
+ [246]  1.1580892142  1.1591469674  1.1608544149  1.1616177439  1.1623423633
+ [251]  1.1638528258  1.1640432767  1.1646099600  1.1647491475  1.1664399911
+ [256]  1.1690301398  1.1709252868  1.1712366459  1.1778089963  1.1785475723
+ [261]  1.8204732764  1.8217159203  1.8220619154  1.8234458451  1.8235353754
+ [266]  1.8240824695  1.8242335045  1.8247194981  1.8259803959  1.8264647887
+ [271]  1.8275642634  1.8287305357  1.8298992364  1.8302214558  1.8314167534
+ [276]  1.8323979540  1.8324809808  1.8329114484  1.8330305607  1.8334325633
+ [281]  1.8340760199  1.8341064984  1.8341296256  1.8353565628  1.8354389211
+ [286]  1.8364301152  1.8365745974  1.8382776193  1.8382829313  1.8385743163
+ [291]  1.8389852783  1.8408555444  1.8415640868  1.8423093323  1.8426030066
+ [296]  1.8436887071  1.8439375001  1.8439673770  1.8462756389  1.8463688731
+ [301]  1.8474894006  1.8476356853  1.8485982895  1.8505715813  1.8509426902
+ [306]  1.8511023351  1.8537139469  1.8626083690  1.8629351539  1.8633016121
+ [311]  1.8637297387  1.8644344077  1.8652625197  1.8662832835  1.8677330875
+ [316]  1.8681444229  1.8683011182  1.8684248718  1.8695829022  1.8717634210
+ [321]  1.8727622634  1.8733361133  1.8733950716  1.8749603235  1.8767367499
+ [326]  1.8769591188  1.8775225362  1.8781746053  1.8786758882  1.8793608127
+ [331]  1.8795494441  1.8800163800  1.8803774929  1.8828782044  1.8839582308
+ [336]  1.8840461893  1.8840618859  1.8875681647  1.8876482538  1.8877227997
+ [341]  1.8877387876  1.8888534042  1.8892271707  1.8906684209  1.8930484684
+ [346]  1.8938831355  1.8942124181  1.8948940448  1.8951082311  1.8984160829
+ [351]  1.8992087852  1.9005563803  1.9010480251  1.9012742605  1.9029661751
+ [356]  1.9045696850  1.9054153473  1.9059453211  1.9062694022  1.9064443728
+ [361]  1.9073838774  1.9092419052  1.9130968269  1.9138533916  1.9144755892
+ [366]  1.9145133773  1.9152634260  1.9155932192  1.9157279268  1.9176939555
+ [371]  1.9178774602  1.9181667092  1.9182009139  1.9183718870  1.9196035363
+ [376]  1.9215690668  1.9220517955  1.9240112496  1.9252393022  1.9267345273
+ [381]  1.9271700044  1.9273381506  1.9288752794  1.9300507191  1.9312144634
+ [386]  1.9323331110  1.9370939655  1.9381368730  1.9390405114  1.9395937806
+ [391]  1.9400979854  1.9408684247  1.9410955780  1.9419045590  1.9433876507
+ [396]  1.9435531289  1.9452610885  1.9453753044  1.9455466912  1.9456205729
+ [401]  1.9466000197  1.9472908871  1.9485009776  1.9485849387  1.9491067149
+ [406]  1.9497562556  1.9504273820  1.9521103555  1.9528701046  1.9573875734
+ [411]  1.9579820217  1.9581457537  1.9589958679  1.9593644916  1.9631741931
+ [416]  1.9635124504  1.9643036342  1.9645198832  1.9667773469  1.9680159552
+ [421]  1.9697096891  1.9711903952  1.9717205890  1.9721342569  1.9724810306
+ [426]  1.9726952694  1.9733953163  1.9742049205  1.9742511371  1.9753241527
+ [431]  1.9757983269  1.9761686343  1.9765642240  1.9765978973  1.9777366630
+ [436]  1.9778744244  1.9791235228  1.9791770324  1.9791782087  1.9814338874
+ [441]  1.9836555579  1.9842110242  1.9842828375  1.9865828989  1.9889764535
+ [446]  1.9892463024  1.9900956516  1.9901209215  1.9904611154  1.9906616348
+ [451]  1.9918867559  1.9919821668  1.9931476305  1.9959921136  1.9963072301
+ [456]  1.9963865439  1.9964102330  1.9973777006  1.9988066792  2.0005891198
+ [461]  2.0006317370  2.0007014977  2.0016218118  2.0019911887  2.0021034886
+ [466]  2.0026547317  2.0041967467  2.0046865096  2.0055894142  2.0058046092
+ [471]  2.0064622054  2.0068177115  2.0080093794  2.0080860580  2.0097546301
+ [476]  2.0100014610  2.0110911654  2.0110967711  2.0143241704  2.0152409637
+ [481]  2.0159242482  2.0166815436  2.0173413491  2.0184550281  2.0195420063
+ [486]  2.0213516975  2.0234968318  2.0276496772  2.0281823363  2.0282537199
+ [491]  2.0292599283  2.0296596969  2.0329527084  2.0332328061  2.0336943603
+ [496]  2.0350065748  2.0354223505  2.0372944489  2.0394059109  2.0396057658
+ [501]  2.0404723671  2.0411648693  2.0433540532  2.0434858183  2.0447712372
+ [506]  2.0450883207  2.0471775491  2.0485621409  2.0489419455  2.0511972489
+ [511]  2.0519591655  2.0525030781  2.0532848405  2.0556001911  2.0613272426
+ [516]  2.0617069980  2.0632909250  2.0635647581  2.0637581966  2.0639963445
+ [521]  2.0665499254  2.0690485830  2.0701112053  2.0707791493  2.0719023558
+ [526]  2.0734190597  2.0738271224  2.0743981515  2.0750327782  2.0764008414
+ [531]  2.0764874114  2.0773878365  2.0776041921  2.0781527020  2.0787896417
+ [536]  2.0793496829  2.0804255524  2.0807280894  2.0808166072  2.0817851676
+ [541]  2.0820189647  2.0827291836  2.0831358382  2.0836716311  2.0846013127
+ [546]  2.0867516078  2.0874700687  2.0875183426  2.0882396490  2.0903175876
+ [551]  2.0904399148  2.0905565143  2.0911997722  2.0924854688  2.0950469966
+ [556]  2.0960633916  2.0961693827  2.0965320383  2.0972811280  2.0996602393
+ [561]  2.0997721947  2.1001452688  2.1002760705  2.1019151615  2.1025767720
+ [566]  2.1040740099  2.1041233362  2.1084110794  2.1091228569  2.1103550580
+ [571]  2.1129700820  2.1150566557  2.1150913947  2.1151827509  2.1152617821
+ [576]  2.1153007977  2.1160636945  2.1181070065  2.1187557659  2.1194836358
+ [581]  2.1207864620  2.1221494069  2.1235089987  2.1244169395  2.1263874390
+ [586]  2.1291274831  2.1298488236  2.1305038473  2.1320510897  2.1330766154
+ [591]  2.1342709463  2.1347418778  2.1353308361  2.1356690283  2.1378788266
+ [596]  2.1381508151  2.1386814698  2.1414477485  2.1416856637  2.1424326668
+ [601]  2.1437398999  2.1443381373  2.1448055892  2.1460078138  2.1466097095
+ [606]  2.1476219337  2.1481944732  2.1500694298  2.1509594373  2.1514978882
+ [611]  2.1527718910  2.1531164513  2.1534007427  2.1547075541  2.1550130915
+ [616]  2.1581821252  2.1593737144  2.1599876841  2.1600302024  2.1601249060
+ [621]  2.1607604296  2.1609273878  2.1637956794  2.1642628648  2.1655886982
+ [626]  2.1659946616  2.1662672312  2.1672825227  2.1684214743  2.1693626228
+ [631]  2.1695173640  2.1695589725  2.1705416069  2.1729313211  2.1745352959
+ [636]  2.1759800935  2.1766258154  2.1766376042  2.1774037118  2.1781173834
+ [641]  2.1785999964  2.1798039459  2.1799750137  2.8205912140  2.8207269237
+ [646]  2.8211896371  2.8226268375  2.8226980578  2.8228522237  2.8235488503
+ [651]  2.8244565012  2.8249825226  2.8251295009  2.8262075995  2.8266767068
+ [656]  2.8275330914  2.8275409001  2.8278430423  2.8288489263  2.8289498485
+ [661]  2.8298951814  2.8308042038  2.8315663533  2.8318491579  2.8327941243
+ [666]  2.8331540821  2.8333105502  2.8336186014  2.8337650278  2.8339919706
+ [671]  2.8347398366  2.8357655189  2.8364608979  2.8372727497  2.8381112482
+ [676]  2.8399972738  2.8408350614  2.8429895524  2.8431953981  2.8437479868
+ [681]  2.8437997743  2.8442082534  2.8454673272  2.8461394360  2.8462358486
+ [686]  2.8466270054  2.8467832472  2.8473149880  2.8474933916  2.8475922652
+ [691]  2.8485346345  2.8488609415  2.8491396162  2.8503589708  2.8521064328
+ [696]  2.8522031375  2.8525143981  2.8527158691  2.8527225046  2.8542699736
+ [701]  2.8553618031  2.8554210379  2.8555533618  2.8560197675  2.8574487952
+ [706]  2.8576246297  2.8580023888  2.8595083886  2.8595488632  2.8597612059
+ [711]  2.8603609096  2.8605333453  2.8614968243  2.8615696447  2.8619646933
+ [716]  2.8633444286  2.8639291799  2.8642408007  2.8644570101  2.8644957752
+ [721]  2.8648661780  2.8660169217  2.8670238266  2.8675079601  2.8678659740
+ [726]  2.8680314061  2.8682341230  2.8687817205  2.8693170496  2.8699922300
+ [731]  2.8700482244  2.8715765922  2.8718490602  2.8724413288  2.8736346069
+ [736]  2.8737839713  2.8739534025  2.8772099549  2.8776231495  2.8777435859
+ [741]  2.8778860671  2.8781177938  2.8785366469  2.8786849188  2.8787547457
+ [746]  2.8787668019  2.8787684438  2.8787953634  2.8791284455  2.8792714132
+ [751]  2.8793044704  2.8794189070  2.8797163546  2.8800322861  2.8821752119
+ [756]  2.8826463156  2.8827764558  2.8837200347  2.8857226828  2.8915942103
+ [761]  2.8918269079  2.8919138546  2.8938411247  2.8945934902  2.8950455824
+ [766]  2.8984858593  2.8994775194  2.9001741516  2.9002721635  2.9003939424
+ [771]  2.9005224312  2.9009472544  2.9022906472  2.9034282358  2.9036388104
+ [776]  2.9044972848  2.9058290336  2.9062584157  2.9063565011  2.9067326559
+ [781]  2.9070736358  2.9090898024  2.9096854347  2.9112056058  2.9113561701
+ [786]  2.9113669437  2.9117769173  2.9121075567  2.9131467253  2.9133856131
+ [791]  2.9135692144  2.9138602653  2.9156628720  2.9179256649  2.9183710323
+ [796]  2.9190637516  2.9202384047  2.9205568361  2.9207073223  2.9210880251
+ [801]  2.9217294839  2.9221606232  2.9238996458  2.9272712645  2.9276288057
+ [806]  2.9278706259  2.9283314708  2.9296555592  2.9296974876  2.9297156536
+ [811]  2.9309074496  2.9325442951  2.9331005753  2.9331244717  2.9352126010
+ [816]  2.9356822408  2.9372577578  2.9373174530  2.9382752289  2.9383709260
+ [821]  2.9387705972  2.9392966471  2.9394463675  2.9402217703  2.9402755168
+ [826]  2.9409230570  2.9411486789  2.9416154611  2.9438731754  2.9447124356
+ [831]  2.9458731290  2.9460149987  2.9461595931  2.9472187139  2.9476183496
+ [836]  2.9500956151  2.9501211496  2.9511954665  2.9519495685  2.9520284451
+ [841]  2.9521379667  2.9537495933  2.9543164580  2.9544773510  2.9548434789
+ [846]  2.9556621046  2.9558292650  2.9560795709  2.9562904309  2.9565887567
+ [851]  2.9569332451  2.9577439417  2.9582001231  2.9582382062  2.9584734108
+ [856]  2.9584871729  2.9586732366  2.9586861930  2.9586894720  2.9592280784
+ [861]  2.9592599410  2.9592770733  2.9594827785  2.9610844264  2.9616451921
+ [866]  2.9635766283  2.9636992075  2.9637356653  2.9647430486  2.9648124839
+ [871]  2.9648411436  2.9649021320  2.9649572725  2.9650753928  2.9653010717
+ [876]  2.9661870337  2.9661949666  2.9662307613  2.9679738132  2.9681823661
+ [881]  2.9686911244  2.9688020231  2.9693990376  2.9709494361  2.9716263641
+ [886]  2.9716606882  2.9721923777  2.9767985465  2.9771325317  2.9773286727
+ [891]  2.9792657402  2.9793578816  2.9797333023  2.9801649462  2.9802657545
+ [896]  2.9804320168  2.9804494259  2.9806927292  2.9809750992  2.9812466086
+ [901]  2.9821995040  2.9840071854  2.9844032500  2.9864485375  2.9870918863
+ [906]  2.9872895468  2.9887535971  2.9889771867  2.9891747861  2.9905520836
+ [911]  2.9909979925  2.9912427262  2.9918650560  2.9931646980  2.9947730385
+ [916]  2.9967604202  2.9979869207  2.9983798318  2.9985266680  2.9994858065
+ [921]  3.0003469568  3.0005536051  3.0007049962  3.0021175144  3.0022351238
+ [926]  3.0026722273  3.0026976559  3.0028365829  3.0033524414  3.0043224524
+ [931]  3.0056965954  3.0087173892  3.0087440503  3.0093359893  3.0101396705
+ [936]  3.0102286068  3.0113630045  3.0118687719  3.0124523131  3.0125502227
+ [941]  3.0146312212  3.0184730233  3.0187537660  3.0199454875  3.0201189880
+ [946]  3.0204801387  3.0205029697  3.0207671990  3.0220967362  3.0223221321
+ [951]  3.0235012350  3.0239696852  3.0241687666  3.0251105557  3.0268759046
+ [956]  3.0300672672  3.0308715795  3.0315819998  3.0326433906  3.0346793952
+ [961]  3.0361098700  3.0361468917  3.0381206927  3.0401514456  3.0407517224
+ [966]  3.0429093372  3.0461269228  3.0466807790  3.0469046839  3.0474787315
+ [971]  3.0499521491  3.0504424830  3.0516035365  3.0522075570  3.0527864670
+ [976]  3.0531953547  3.0538964097  3.0548114862  3.0548860286  3.0557029489
+ [981]  3.0568209841  3.0574380049  3.0591506918  3.0610576942  3.0622298977
+ [986]  3.0623555820  3.0632748586  3.0635885971  3.0636345740  3.0639555123
+ [991]  3.0643826916  3.0644800374  3.0649638320  3.0650288366  3.0670071220
+ [996]  3.0670452534  3.0674388562  3.0675719404  3.0683611783  3.0685003269
+[1001]  3.0685410138  3.0691251917  3.0700363715  3.0701485584  3.0704847593
+[1006]  3.0706293318  3.0724885587  3.0727524369  3.0736123757  3.0742163958
+[1011]  3.0761292862  3.0763176353  3.0769371048  3.0773019811  3.0779999779
+[1016]  3.0780915158  3.0783230642  3.0788940499  3.0790011057  3.0805714763
+[1021]  3.0815353492  3.0836153473  3.0836208180  3.0850217527  3.0853964198
+[1026]  3.0862583392  3.0864994115  3.0869014890  3.0871081759  3.0877618282
+[1031]  3.0891741328  3.0907886756  3.0914846583  3.0915362001  3.0915561850
+[1036]  3.0917197894  3.0918551132  3.0930323358  3.0934354477  3.0936253160
+[1041]  3.0943514606  3.0945157899  3.0945376891  3.0946740080  3.0971339276
+[1046]  3.0978029813  3.0988951326  3.1003820549  3.1017037132  3.1019606100
+[1051]  3.1043253846  3.1043690802  3.1050028546  3.1053343311  3.1055055968
+[1056]  3.1071877320  3.1086203930  3.1086832938  3.1087664430  3.1090322746
+[1061]  3.1101295995  3.1102123303  3.1116758778  3.1124266665  3.1129091715
+[1066]  3.1136031029  3.1137799817  3.1141880965  3.1146606604  3.1159937195
+[1071]  3.1161140776  3.1164661344  3.1166265362  3.1171580645  3.1192751746
+[1076]  3.1193148788  3.1197327013  3.1198505429  3.1207976030  3.1211443413
+[1081]  3.1217240160  3.1221116514  3.1222097682  3.1233016053  3.1234029031
+[1086]  3.1245672780  3.1251451468  3.1257673278  3.1257863742  3.1261652889
+[1091]  3.1273472490  3.1289685445  3.1291707935  3.1294018989  3.1301453252
+[1096]  3.1308370522  3.1308962354  3.1312624176  3.1312729195  3.1328912601
+[1101]  3.1329595269  3.1329859909  3.1334694243  3.1347511513  3.1348968904
+[1106]  3.1358394622  3.1362647859  3.1363839266  3.1370558510  3.1371752574
+[1111]  3.1372806917  3.1374259867  3.1375374421  3.1382138553  3.1436493234
+[1116]  3.1440117398  3.1440430368  3.1440772473  3.1447727619  3.1449512473
+[1121]  3.1452476577  3.1462763884  3.1462915690  3.1465915512  3.1476744058
+[1126]  3.1487632399  3.1488609644  3.1505944495  3.1518239585  3.1519435454
+[1131]  3.1530693220  3.1543331120  3.1547251806  3.1553978549  3.1560622500
+[1136]  3.1564978770  3.1566348857  3.1568362057  3.1581871970  3.1583700716
+[1141]  3.1584547947  3.1589767126  3.1596329990  3.1596508858  3.1616063167
+[1146]  3.1618948504  3.1625510072  3.1631936205  3.1637102642  3.1639517727
+[1151]  3.1653775291  3.1656961791  3.1659957039  3.1661553050  3.1662352873
+[1156]  3.1666231134  3.1671140487  3.1678877550  3.1707942566  3.1710816176
+[1161]  3.1712414739  3.1712658943  3.1718433119  3.1722161053  3.1722809549
+[1166]  3.1743584034  3.1748624054  3.1786578425  3.8202178958  3.8203696548
+[1171]  3.8204908527  3.8216971406  3.8221460806  3.8227606944  3.8229331731
+[1176]  3.8231930084  3.8236616403  3.8238351316  3.8245189034  3.8251359812
+[1181]  3.8266180861  3.8269117948  3.8271515289  3.8286800997  3.8290805428
+[1186]  3.8291735078  3.8300497345  3.8322107944  3.8323014324  3.8324409935
+[1191]  3.8325418721  3.8331960811  3.8332238058  3.8351621228  3.8357319647
+[1196]  3.8360817434  3.8371088470  3.8373121579  3.8373488934  3.8382132560
+[1201]  3.8388166322  3.8388670199  3.8403352544  3.8408328087  3.8411040813
+[1206]  3.8421793928  3.8435401458  3.8436081569  3.8445789967  3.8448652727
+[1211]  3.8453283856  3.8453301384  3.8455356566  3.8464221809  3.8465096638
+[1216]  3.8467277628  3.8468903063  3.8477987166  3.8480160171  3.8483239013
+[1221]  3.8484307062  3.8484726756  3.8487728488  3.8487828688  3.8488886934
+[1226]  3.8490050157  3.8496259856  3.8500629367  3.8506393153  3.8515800673
+[1231]  3.8521106059  3.8521699298  3.8527950877  3.8543356180  3.8548700660
+[1236]  3.8565835244  3.8567609483  3.8578792360  3.8582478272  3.8597041405
+[1241]  3.8598847828  3.8603340845  3.8616017172  3.8626112980  3.8632314521
+[1246]  3.8638649384  3.8638719290  3.8642337065  3.8645867963  3.8646622734
+[1251]  3.8661677880  3.8662293118  3.8673855645  3.8680800473  3.8690519650
+[1256]  3.8698738816  3.8705833059  3.8734918351  3.8739145054  3.8742971062
+[1261]  3.8744218432  3.8745932195  3.8751702334  3.8753347317  3.8762090512
+[1266]  3.8762376640  3.8762919600  3.8765028641  3.8770484562  3.8785613080
+[1271]  3.8790620193  3.8797757243  3.8805746554  3.8808091988  3.8812317808
+[1276]  3.8812351682  3.8821030603  3.8824427372  3.8826393199  3.8830066556
+[1281]  3.8830574746  3.8832889313  3.8837454610  3.8838750251  3.8839354216
+[1286]  3.8843937099  3.8845806852  3.8855018979  3.8871846652  3.8881292903
+[1291]  3.8881763369  3.8890976052  3.8894958457  3.8914400119  3.8924399238
+[1296]  3.8933360109  3.8946655641  3.8962520804  3.8967838134  3.8968394773
+[1301]  3.8973602661  3.8974624646  3.8977034427  3.8985056637  3.8998735174
+[1306]  3.9008432614  3.9014958283  3.9016982824  3.9018281613  3.9024031372
+[1311]  3.9027852542  3.9033777563  3.9058255679  3.9064512312  3.9067417356
+[1316]  3.9074086616  3.9077952833  3.9096599649  3.9106161577  3.9106351221
+[1321]  3.9112353417  3.9117914117  3.9122003130  3.9122632820  3.9130490315
+[1326]  3.9136032785  3.9141672596  3.9142457077  3.9159853259  3.9168751557
+[1331]  3.9169057815  3.9187757063  3.9196055839  3.9197070620  3.9197620043
+[1336]  3.9199792176  3.9229074395  3.9231304689  3.9237254786  3.9242810044
+[1341]  3.9255199106  3.9259471530  3.9261122286  3.9268588229  3.9277808098
+[1346]  3.9296616200  3.9304030715  3.9305050697  3.9309458787  3.9313650994
+[1351]  3.9318793002  3.9327473905  3.9332816451  3.9353128700  3.9353623343
+[1356]  3.9358288866  3.9359299459  3.9369182426  3.9375039733  3.9382030681
+[1361]  3.9388509628  3.9400249165  3.9406218586  3.9414542943  3.9415011645
+[1366]  3.9441951941  3.9442635445  3.9443128450  3.9450797671  3.9452461288
+[1371]  3.9479156852  3.9483774833  3.9484934099  3.9500856662  3.9515511454
+[1376]  3.9520621785  3.9539297144  3.9541903186  3.9557304688  3.9560144099
+[1381]  3.9563427987  3.9571158119  3.9576865061  3.9593606761  3.9598155327
+[1386]  3.9607330645  3.9624615875  3.9628646953  3.9628879870  3.9648725828
+[1391]  3.9665076369  3.9669119557  3.9672367771  3.9675706098  3.9683715896
+[1396]  3.9685314111  3.9687901135  3.9691650729  3.9696753934  3.9714921987
+[1401]  3.9715982116  3.9723144329  3.9725075568  3.9729497914  3.9731948849
+[1406]  3.9745774888  3.9750584191  3.9751279328  3.9754396811  3.9760524177
+[1411]  3.9763015382  3.9774267369  3.9775775085  3.9779449840  3.9782907575
+[1416]  3.9807484813  3.9829366359  3.9833210401  3.9859813818  3.9875228268
+[1421]  3.9900237827  3.9910312898  3.9911001881  3.9919514280  3.9929535563
+[1426]  3.9940215334  3.9942351722  3.9948061177  3.9950136322  3.9964753856
+[1431]  3.9971342515  3.9974025210  3.9975552304  3.9975641222  3.9980962818
+[1436]  3.9982964602  3.9984308919  3.9990853061  3.9996185266  4.0036505667
+[1441]  4.0039603682  4.0051900595  4.0053761457  4.0060300558  4.0083802304
+[1446]  4.0092752276  4.0099585561  4.0100956441  4.0107296038  4.0116203587
+[1451]  4.0122757530  4.0123839700  4.0126113611  4.0136739426  4.0143744139
+[1456]  4.0147057832  4.0152224987  4.0156036670  4.0170295061  4.0173439059
+[1461]  4.0185355072  4.0195149662  4.0196175218  4.0211177012  4.0217259137
+[1466]  4.0218438102  4.0225354434  4.0225595052  4.0235747026  4.0237678763
+[1471]  4.0240844167  4.0240870991  4.0252061695  4.0254318447  4.0261134566
+[1476]  4.0262298240  4.0262519491  4.0265649031  4.0272073761  4.0277335914
+[1481]  4.0285584536  4.0292961944  4.0296376972  4.0300425895  4.0305606889
+[1486]  4.0310358613  4.0316439786  4.0316754138  4.0318227689  4.0326689911
+[1491]  4.0330025409  4.0334668794  4.0338375869  4.0340346908  4.0341132654
+[1496]  4.0344131642  4.0349158184  4.0355927261  4.0370780726  4.0375382189
+[1501]  4.0378057629  4.0394479865  4.0411179218  4.0415717780  4.0415997348
+[1506]  4.0417348039  4.0427590008  4.0428362686  4.0428870961  4.0452098134
+[1511]  4.0457596956  4.0459482825  4.0481639115  4.0483694409  4.0484354857
+[1516]  4.0491116747  4.0493819082  4.0497178523  4.0497365001  4.0508019408
+[1521]  4.0521977252  4.0533149780  4.0543263440  4.0557703867  4.0568974896
+[1526]  4.0571136555  4.0587681497  4.0588513942  4.0625672128  4.0629962402
+[1531]  4.0632738491  4.0642793807  4.0643536551  4.0651590349  4.0656219021
+[1536]  4.0670678661  4.0675490185  4.0677971878  4.0688584282  4.0689483794
+[1541]  4.0689561175  4.0695679550  4.0705401869  4.0705437450  4.0708778038
+[1546]  4.0720573270  4.0723926574  4.0724487160  4.0737041572  4.0760578064
+[1551]  4.0763319376  4.0771715222  4.0775964858  4.0829333373  4.0853880071
+[1556]  4.0872861675  4.0882420512  4.0882824255  4.0883956683  4.0892859355
+[1561]  4.0901434161  4.0901854842  4.0902244168  4.0916794171  4.0919036514
+[1566]  4.0923418449  4.0924675541  4.0927692370  4.0933458584  4.0946010610
+[1571]  4.0958787813  4.0959721660  4.0970213699  4.0972235917  4.0975531986
+[1576]  4.0982960281  4.0985203504  4.0985648924  4.0990101646  4.0998430021
+[1581]  4.1009930130  4.1017796885  4.1021590332  4.1031201298  4.1031210103
+[1586]  4.1033044869  4.1033239334  4.1033973355  4.1039548203  4.1048576374
+[1591]  4.1051067707  4.1051860022  4.1058655668  4.1061281044  4.1086043784
+[1596]  4.1102087202  4.1104748143  4.1106859044  4.1108264730  4.1115304759
+[1601]  4.1115816289  4.1116209006  4.1118750323  4.1119298516  4.1138682684
+[1606]  4.1145729744  4.1151476502  4.1151977252  4.1152456280  4.1162432727
+[1611]  4.1168885273  4.1169375630  4.1184990920  4.1190636775  4.1194469037
+[1616]  4.1197578393  4.1216938666  4.1224721418  4.1225925693  4.1227231964
+[1621]  4.1238749545  4.1243958323  4.1250639015  4.1254166336  4.1270404767
+[1626]  4.1284724138  4.1286679058  4.1314452001  4.1320898575  4.1325143858
+[1631]  4.1333633572  4.1338498076  4.1341197673  4.1350784756  4.1361102286
+[1636]  4.1362030016  4.1363762365  4.1368653594  4.1376288595  4.1377475224
+[1641]  4.1381322539  4.1395927597  4.1396930574  4.1406918130  4.1413755720
+[1646]  4.1418580370  4.1418587685  4.1461048042  4.1480399317  4.1483902655
+[1651]  4.1490852380  4.1496764045  4.1497920466  4.1499607858  4.1501353825
+[1656]  4.1506165849  4.1508623880  4.1518036351  4.1532439136  4.1539157123
+[1661]  4.1550464105  4.1558687616  4.1565701148  4.1570470417  4.1619712754
+[1666]  4.1620478370  4.1624102090  4.1633778465  4.1656418160  4.1662636994
+[1671]  4.1663015627  4.1670682767  4.1672452175  4.1674531519  4.1676076151
+[1676]  4.1681909375  4.1682515012  4.1700811222  4.1701203579  4.1706487495
+[1681]  4.1714059448  4.1719204686  4.1723217975  4.1723750621  4.1724868081
+[1686]  4.1745867011  4.1746292923  4.1751329502  4.1754404865  4.1755458783
+[1691]  4.1756206565  4.1763516104  4.1766161826  4.1770587271  4.1771715865
+[1696]  4.1781435732  4.1783011834  4.1786907919  4.1794493747  4.1795958911
+[1701]  4.8202362853  4.8224187319  4.8233973716  4.8236468658  4.8237973328
+[1706]  4.8257017586  4.8263349320  4.8265775346  4.8266621351  4.8274804986
+[1711]  4.8297875785  4.8299845017  4.8306241081  4.8308901953  4.8309623833
+[1716]  4.8309998001  4.8314003726  4.8316908093  4.8319836282  4.8319996265
+[1721]  4.8329417178  4.8342905274  4.8360808630  4.8366889207  4.8367571400
+[1726]  4.8375159242  4.8377321731  4.8378889816  4.8382209549  4.8382556157
+[1731]  4.8389295690  4.8395562223  4.8401077498  4.8415031620  4.8458846818
+[1736]  4.8464007530  4.8482213325  4.8485172183  4.8489160804  4.8492003754
+[1741]  4.8526757074  4.8529202692  4.8544663069  4.8545164499  4.8555549952
+[1746]  4.8562080468  4.8563762614  4.8571436238  4.8574505727  4.8582202643
+[1751]  4.8598942145  4.8608465092  4.8615276840  4.8643534604  4.8644719072
+[1756]  4.8662119898  4.8663167551  4.8675262090  4.8692679044  4.8696812051
+[1761]  4.8699916782  4.8702076649  4.8719224809  4.8749799731  4.8752420872
+[1766]  4.8776292101  4.8779572451  4.8784494605  4.8787799694  4.8796279799
+[1771]  4.8804872959  4.8807318862  4.8808019768  4.8812811892  4.8813259299
+[1776]  4.8825755285  4.8838224357  4.8852215147  4.8854748660  4.8858797974
+[1781]  4.8880020391  4.8889598798  4.8891717760  4.8923696324  4.8942026824
+[1786]  4.8947678384  4.8948126349  4.8953562174  4.8972350926  4.8973359775
+[1791]  4.8984943526  4.8985081406  4.8989738762  4.8993781925  4.8995728436
+[1796]  4.8997957060  4.8998421822  4.9042491729  4.9050395595  4.9060578103
+[1801]  4.9064594544  4.9073564772  4.9088817293  4.9100366613  4.9127303732
+[1806]  4.9138271757  4.9153000189  4.9154882143  4.9159956328  4.9160709058
+[1811]  4.9180030186  4.9190141701  4.9195675468  4.9206338068  4.9209706086
+[1816]  4.9221426849  4.9230652078  4.9242505888  4.9262664559  4.9267975329
+[1821]  4.9272633003  4.9279388156  4.9289030368  4.9306771127  4.9308907635
+[1826]  4.9309091570  4.9323675368  4.9325731522  4.9354401236  4.9354537233
+[1831]  4.9368791660  4.9384866751  4.9387069817  4.9388072396  4.9388769974
+[1836]  4.9400315857  4.9406555604  4.9407073241  4.9412305533  4.9416638479
+[1841]  4.9417913529  4.9418973865  4.9431458769  4.9432835545  4.9447949475
+[1846]  4.9453208909  4.9454912039  4.9460909925  4.9461735284  4.9473011488
+[1851]  4.9478061739  4.9487023700  4.9496358321  4.9507646770  4.9515881001
+[1856]  4.9518145681  4.9520833054  4.9521831821  4.9524072685  4.9534700365
+[1861]  4.9564205882  4.9566936997  4.9568235561  4.9580640419  4.9583505274
+[1866]  4.9587445271  4.9587671901  4.9615415131  4.9618254668  4.9628628090
+[1871]  4.9628998849  4.9636906907  4.9642975989  4.9643466755  4.9647097808
+[1876]  4.9655411857  4.9661503887  4.9662244644  4.9688414257  4.9693041628
+[1881]  4.9705070092  4.9710474627  4.9720314911  4.9723008832  4.9733080486
+[1886]  4.9735854480  4.9747065703  4.9777859180  4.9780666550  4.9781004927
+[1891]  4.9788017427  4.9788357984  4.9791135439  4.9795457791  4.9798394291
+[1896]  4.9800695365  4.9810260405  4.9820501787  4.9822933668  4.9842442369
+[1901]  4.9849687772  4.9857281517  4.9895833844  4.9913709263  4.9921501852
+[1906]  4.9923661486  4.9923946864  4.9930310935  4.9936500246  4.9951631339
+[1911]  4.9970856578  4.9981577025  4.9985578858  4.9986860529  4.9996939303
+[1916]  5.0012534977  5.0022281986  5.0033807694  5.0036893383  5.0066856080
+[1921]  5.0088926800  5.0093659647  5.0093668625  5.0099154226  5.0101848512
+[1926]  5.0105938582  5.0107142514  5.0116660308  5.0126349849  5.0150720695
+[1931]  5.0153183304  5.0155825298  5.0155961781  5.0167375488  5.0170283340
+[1936]  5.0204918154  5.0213064483  5.0224435278  5.0226260701  5.0231262211
+[1941]  5.0233877627  5.0235389584  5.0237021304  5.0256850028  5.0262187919
+[1946]  5.0263869338  5.0279718230  5.0289345654  5.0291507982  5.0319342975
+[1951]  5.0320561092  5.0336595495  5.0344050505  5.0362226463  5.0396491585
+[1956]  5.0413196113  5.0418608670  5.0472247828  5.0475470840  5.0479994584
+[1961]  5.0483464539  5.0506303357  5.0535579653  5.0545573362  5.0545880833
+[1966]  5.0546760212  5.0550349790  5.0560836822  5.0561480833  5.0561956980
+[1971]  5.0562621939  5.0565969795  5.0574751928  5.0575596219  5.0633584385
+[1976]  5.0634922030  5.0666665407  5.0672591835  5.0678953557  5.0684967870
+[1981]  5.0684979839  5.0685734026  5.0689719909  5.0708036011  5.0725714729
+[1986]  5.0726533568  5.0736759847  5.0741071376  5.0746123709  5.0758897034
+[1991]  5.0767546170  5.0783796808  5.0799389021  5.0821612454  5.0850147686
+[1996]  5.0852999780  5.0878687646  5.0891138540  5.0902930840  5.0912562621
+[2001]  5.0917006527  5.0918389630  5.0926285376  5.0931210374  5.0934351972
+[2006]  5.0935600443  5.0941487036  5.0945578265  5.0956834013  5.0962823066
+[2011]  5.0967054624  5.0968188335  5.0989827431  5.0996011633  5.0998065336
+[2016]  5.1007013970  5.1007691685  5.1007886033  5.1012235078  5.1025342131
+[2021]  5.1030737146  5.1032277899  5.1039364872  5.1051904471  5.1060587325
+[2026]  5.1060907582  5.1077684421  5.1078230144  5.1081714799  5.1081724968
+[2031]  5.1082741749  5.1086212551  5.1093925220  5.1109680212  5.1127936242
+[2036]  5.1144490695  5.1159481144  5.1174799395  5.1192093210  5.1214639432
+[2041]  5.1218406165  5.1231511191  5.1234682983  5.1256348163  5.1259070306
+[2046]  5.1282711425  5.1282845156  5.1310383199  5.1318998098  5.1335904142
+[2051]  5.1336431399  5.1337988718  5.1339064924  5.1339127157  5.1352767568
+[2056]  5.1388662241  5.1394690186  5.1397435719  5.1398405704  5.1405435707
+[2061]  5.1413858309  5.1416359473  5.1416686414  5.1417105052  5.1427498263
+[2066]  5.1429524611  5.1437720873  5.1452626328  5.1454284506  5.1459258837
+[2071]  5.1460498420  5.1472013302  5.1489016859  5.1489445925  5.1490684193
+[2076]  5.1499149209  5.1508584885  5.1511171516  5.1520448545  5.1532650018
+[2081]  5.1547709703  5.1554752549  5.1560817162  5.1569078502  5.1578609985
+[2086]  5.1599761657  5.1600160779  5.1618513071  5.1632803524  5.1638680001
+[2091]  5.1643306643  5.1645869993  5.1653130564  5.1658019421  5.1661677931
+[2096]  5.1665311731  5.1673880394  5.1677285136  5.1688146586  5.1701972892
+[2101]  5.1705285156  5.1731421064  5.1736661760  5.1748057847  5.1757145863
+[2106]  5.1758993068  5.1769720533  5.1783532217  5.8254362514  5.8262121470
+[2111]  5.8265132148  5.8275107752  5.8318696337  5.8330822885  5.8332860684
+[2116]  5.8387518903  5.8395561464  5.8403132845  5.8406949577  5.8412735820
+[2121]  5.8442666266  5.8472716154  5.8487767864  5.8521053173  5.8525165516
+[2126]  5.8540954805  5.8542593537  5.8544691509  5.8550587770  5.8553282809
+[2131]  5.8557777409  5.8567779845  5.8581126559  5.8600367812  5.8610366386
+[2136]  5.8612110199  5.8625103412  5.8634697941  5.8635743621  5.8640221056
+[2141]  5.8654515573  5.8657711380  5.8664959606  5.8678014342  5.8678144845
+[2146]  5.8709264458  5.8717880757  5.8720741291  5.8728980612  5.8736207199
+[2151]  5.8741685291  5.8743258032  5.8776887207  5.8790763553  5.8806901892
+[2156]  5.8835612816  5.8837624691  5.8841365944  5.8848695646  5.8857575704
+[2161]  5.8864211558  5.8870802646  5.8876465688  5.8898797932  5.8904592195
+[2166]  5.8907579001  5.8908132555  5.8914740361  5.8918921476  5.8932365549
+[2171]  5.8934079073  5.8934512487  5.8935918168  5.8947137465  5.8966801279
+[2176]  5.8973379072  5.8977533368  5.9006061221  5.9017290612  5.9017350440
+[2181]  5.9034670862  5.9049963878  5.9060975531  5.9061081234  5.9073885669
+[2186]  5.9081144921  5.9083713594  5.9091988473  5.9101930776  5.9107271217
+[2191]  5.9114214844  5.9114417388  5.9121708972  5.9133765744  5.9136903431
+[2196]  5.9141778544  5.9151253218  5.9176252088  5.9188420003  5.9192925435
+[2201]  5.9208935380  5.9221151852  5.9241215045  5.9245265235  5.9276404222
+[2206]  5.9288587258  5.9299125927  5.9347544401  5.9366931879  5.9375969306
+[2211]  5.9400939929  5.9405499231  5.9410512531  5.9416736346  5.9420931389
+[2216]  5.9426270832  5.9427518970  5.9429740620  5.9432767813  5.9432934135
+[2221]  5.9448436696  5.9465958102  5.9506485524  5.9520325248  5.9573831679
+[2226]  5.9578079435  5.9578846404  5.9599323396  5.9633110853  5.9646185773
+[2231]  5.9651967804  5.9661966623  5.9663132317  5.9665089967  5.9677848289
+[2236]  5.9717841252  5.9760304264  5.9767091513  5.9774048159  5.9784462239
+[2241]  5.9786838411  5.9806055636  5.9836115951  5.9841158081  5.9842644895
+[2246]  5.9845366744  5.9871603765  5.9878167137  5.9890162890  5.9895000772
+[2251]  5.9899842477  5.9916153259  5.9922479590  5.9925209013  5.9945110949
+[2256]  5.9961118635  5.9977711587  5.9991859869  5.9996329328  6.0048352426
+[2261]  6.0088042893  6.0094345633  6.0097810133  6.0100386150  6.0105445624
+[2266]  6.0130588394  6.0132367346  6.0133801769  6.0200546393  6.0242690613
+[2271]  6.0251428966  6.0259943335  6.0260130900  6.0279533747  6.0286007956
+[2276]  6.0287108347  6.0298683023  6.0303900289  6.0310485383  6.0320837486
+[2281]  6.0326332585  6.0346290301  6.0346767931  6.0358222516  6.0390487520
+[2286]  6.0390743482  6.0405116173  6.0409979105  6.0434113459  6.0457089824
+[2291]  6.0462747353  6.0462902076  6.0467825845  6.0480750143  6.0487170218
+[2296]  6.0488407536  6.0550964801  6.0570033598  6.0616534420  6.0619675244
+[2301]  6.0620249347  6.0659511690  6.0675857513  6.0686376255  6.0761249638
+[2306]  6.0772483728  6.0783787016  6.0801213566  6.0829883371  6.0841663932
+[2311]  6.0852407060  6.0854561210  6.0870689055  6.0891764369  6.0894388694
+[2316]  6.0906193222  6.0909196214  6.0925381337  6.0951355999  6.0953074462
+[2321]  6.0967485483  6.0976085930  6.0987846973  6.0995132890  6.1028269097
+[2326]  6.1033817358  6.1041004285  6.1041007325  6.1053147575  6.1071321210
+[2331]  6.1085705144  6.1105962633  6.1131036958  6.1168454410  6.1183327863
+[2336]  6.1197199827  6.1223481778  6.1243127508  6.1261916250  6.1263403806
+[2341]  6.1276314437  6.1301149764  6.1306995239  6.1308599500  6.1321810241
+[2346]  6.1322712655  6.1322777461  6.1325055755  6.1330476108  6.1346715225
+[2351]  6.1354526177  6.1361795219  6.1375623898  6.1380960218  6.1403946666
+[2356]  6.1406225979  6.1407184563  6.1423020446  6.1429790416  6.1461387706
+[2361]  6.1476637429  6.1504296260  6.1525666002  6.1544032426  6.1548727983
+[2366]  6.1565352955  6.1575179255  6.1589434572  6.1609095448  6.1639554395
+[2371]  6.1640846490  6.1656372002  6.1717871989  6.1727136096  6.1730365056
+[2376]  6.1734051244  6.1742098546  6.1751500962  6.1770726886  6.1775114107
+[2381]  6.1799508453  6.8202053880  6.8209314209  6.8210156277  6.8261277978
+[2386]  6.8336506491  6.8345659387  6.8411584792  6.8455941964  6.8508510641
+[2391]  6.8508742750  6.8545956764  6.8553958365  6.8586312833  6.8590935651
+[2396]  6.8629196231  6.8647043891  6.8706778466  6.8736972159  6.8737483669
+[2401]  6.8745012700  6.8803619631  6.8848481179  6.8906960773  6.8992227749
+[2406]  6.8997227028  6.9023197122  6.9038728182  6.9051817352  6.9108150917
+[2411]  6.9118338329  6.9195049329  6.9206376002  6.9215815568  6.9224010701
+[2416]  6.9224199002  6.9241719539  6.9247541112  6.9266450251  6.9318034098
+[2421]  6.9360438276  6.9446656707  6.9505412444  6.9509258115  6.9534614484
+[2426]  6.9589368606  6.9599543959  6.9605865288  6.9610134628  6.9618223642
+[2431]  6.9628344139  6.9636056945  6.9658051890  6.9687032591  6.9700929278
+[2436]  6.9714359866  6.9780762978  6.9823014999  6.9834639960  6.9835229190
+[2441]  6.9867479357  6.9885820906  6.9936331758  6.9973138994  7.0031467749
+[2446]  7.0038608282  7.0053638725  7.0078200546  7.0090915926  7.0104730293
+[2451]  7.0143242121  7.0160308108  7.0167648221  7.0175967253  7.0177683168
+[2456]  7.0204788413  7.0210920590  7.0229348582  7.0255600450  7.0275403058
+[2461]  7.0311792875  7.0332412930  7.0351178182  7.0367137944  7.0390018165
+[2466]  7.0390889453  7.0392967885  7.0415605067  7.0421340386  7.0432811686
+[2471]  7.0462080107  7.0464758866  7.0519392074  7.0607336908  7.0611923988
+[2476]  7.0634308325  7.0658530724  7.0658719938  7.0660656311  7.0693517994
+[2481]  7.0698207206  7.0792283960  7.0832452172  7.0891606112  7.0894383355
+[2486]  7.0969935705  7.0975244836  7.1033584604  7.1060443699  7.1143477196
+[2491]  7.1157553454  7.1196912634  7.1210405952  7.1299166018  7.1299645342
+[2496]  7.1302744080  7.1345989632  7.1398891349  7.1440605960  7.1446911522
+[2501]  7.1468822012  7.1476566830  7.1496285442  7.1502593699  7.1552990457
+[2506]  7.1558115292  7.1563019464  7.1580594643  7.1592669963  7.1621173491
+[2511]  7.1629066444  7.1657278096  7.1671120997  7.1691716071  7.1697649931
+[2516]  7.1718920820  7.1726087622  7.1747447713  7.1748585320  7.1767277523
+[2521]  7.8292111601  7.8311199292  7.8377321167  7.8396178067  7.8424957041
+[2526]  7.8426583270  7.8447472781  7.8601118859  7.8609856461  7.8689117983
+[2531]  7.8826846864  7.8878014278  7.8934568566  7.8945197090  7.9200528432
+[2536]  7.9210267622  7.9353167772  7.9382765897  7.9596719858  7.9622191677
+[2541]  7.9642328701  7.9753231946  7.9788057263  8.0086114942  8.0117969350
+[2546]  8.0133379215  8.0133592561  8.0365238536  8.0451197002  8.0514449731
+[2551]  8.0637863927  8.0739026964  8.0775633633  8.0806827464  8.0808875758
+[2556]  8.0993216535  8.1012739972  8.1080689199  8.1091642064  8.1184849553
+[2561]  8.1205367181  8.1297976860  8.1651629173  8.1689399998  8.1791137570
+[2566]  8.8387496643  8.8480158818  8.8584499589  8.8851253925  8.8955539361
+[2571]  8.9028198902  8.9113528513  8.9140964435  8.9435693784  8.9450752872
+[2576]  8.9456311279  8.9801220098  8.9920375211  9.0113000112  9.0163950634
+[2581]  9.0189272663  9.0204910036  9.0245548096  9.0576235240  9.0624277550
+[2586]  9.0940667876  9.1022901345  9.1106837281  9.1278390263  9.1307818083
+[2591]  9.1475839210  9.1622769074  9.8824059762  9.8838645627  9.9477786878
+[2596]  9.9629680040  9.9926182670 10.0738144149 10.1088458349 10.1131217174
+[2601] 10.1588885475 10.1653267312 10.8689295144 10.9740085076 11.1104641858
+[2606] 11.1129468461 13.0000000000 14.0000000000
+
+$y
+   [1] -0.179467885 -0.178763152 -0.177386503 -0.169760088 -0.167058615
+   [6] -0.150615211 -0.150371520 -0.141465801 -0.139351468 -0.139279598
+  [11] -0.133908905 -0.129013781 -0.125177852 -0.103341014 -0.085121647
+  [16] -0.080701672 -0.078774485 -0.076985207 -0.076811912 -0.064060503
+  [21] -0.063350656 -0.058500690 -0.055629435 -0.051644617 -0.050726069
+  [26] -0.050297617 -0.037299986 -0.034047856 -0.033958293 -0.033470485
+  [31] -0.026887165 -0.023216692 -0.022032344 -0.014833253 -0.013139428
+  [36] -0.002009758  0.013154887  0.017485990  0.029163500  0.039795732
+  [41]  0.050513239  0.073296679  0.083067830  0.118537076  0.130534042
+  [46]  0.134027057  0.146919728  0.155765346  0.160705019  0.168533248
+  [51]  0.170268867  0.173795474  0.821554398  0.823956999  0.823984752
+  [56]  0.823993637  0.824621071  0.825634704  0.825848370  0.828170582
+  [61]  0.829891231  0.830133301  0.830173591  0.831885189  0.833164241
+  [66]  0.834964905  0.836665832  0.837324940  0.838888759  0.839634276
+  [71]  0.840154158  0.841539900  0.842006062  0.844587740  0.848014677
+  [76]  0.851658422  0.852022747  0.852053422  0.857046560  0.860569563
+  [81]  0.860577183  0.860914623  0.866995207  0.867070435  0.867182704
+  [86]  0.867502232  0.872838303  0.873913787  0.876214756  0.876734251
+  [91]  0.878005677  0.885622848  0.888835199  0.890562467  0.892829128
+  [96]  0.895419262  0.896089209  0.898842554  0.899132695  0.899189801
+ [101]  0.903092784  0.903194613  0.915617206  0.916999877  0.925258094
+ [106]  0.927173507  0.927381292  0.927590412  0.930697441  0.932175323
+ [111]  0.933287344  0.936135919  0.937707836  0.944945057  0.949128830
+ [116]  0.949416762  0.950730298  0.951410444  0.952004848  0.952710759
+ [121]  0.955875520  0.955891583  0.958639836  0.961197240  0.961772320
+ [126]  0.964033663  0.965724539  0.967976013  0.970322569  0.974656688
+ [131]  0.975764952  0.977359733  0.978929836  0.979977065  0.980115719
+ [136]  0.982709975  0.982950930  0.987625537  0.990451406  0.994104944
+ [141]  0.994514516  0.994934020  0.996348625  0.996768825  0.997492767
+ [146]  0.999317191  1.001826764  1.002460405  1.002507934  1.005918097
+ [151]  1.006926385  1.007120819  1.011542880  1.012151933  1.013053009
+ [156]  1.013425675  1.014489125  1.014685643  1.015287600  1.019457615
+ [161]  1.021286574  1.021714811  1.023553686  1.027913350  1.031963187
+ [166]  1.032575882  1.033814145  1.038279433  1.042577760  1.042641296
+ [171]  1.044451540  1.045931692  1.046723156  1.048129468  1.048285233
+ [176]  1.048473931  1.049974421  1.050337270  1.051032614  1.051830924
+ [181]  1.054734491  1.057017480  1.058572078  1.060586268  1.061447843
+ [186]  1.062681098  1.062789556  1.064821370  1.065023305  1.065682555
+ [191]  1.065875339  1.065918249  1.067153426  1.071177197  1.071330367
+ [196]  1.079781042  1.081425826  1.081491679  1.084223739  1.084930037
+ [201]  1.088895823  1.089619526  1.090251237  1.092147963  1.092877732
+ [206]  1.093124119  1.096356312  1.098660922  1.098669133  1.099477200
+ [211]  1.103895948  1.105362023  1.105618943  1.105882856  1.112883929
+ [216]  1.114619038  1.115771630  1.117625333  1.118431617  1.120936695
+ [221]  1.122502211  1.124650115  1.126146039  1.127144711  1.129714010
+ [226]  1.131886314  1.132348904  1.133359581  1.135146002  1.136579863
+ [231]  1.137080617  1.139018711  1.140910463  1.142719586  1.143013477
+ [236]  1.144858700  1.145421564  1.145886382  1.146053248  1.147764645
+ [241]  1.148054496  1.154238560  1.155963880  1.156198487  1.158386257
+ [246]  1.159330795  1.159683406  1.161166438  1.161739366  1.162834782
+ [251]  1.162884238  1.163310139  1.164803246  1.172178520  1.172728983
+ [256]  1.175073315  1.179156377  1.821378346  1.821943986  1.821991596
+ [261]  1.822325501  1.822620625  1.823599408  1.826222894  1.826549539
+ [266]  1.827409390  1.828328983  1.828672264  1.828765584  1.829132285
+ [271]  1.829321089  1.830170748  1.830215779  1.830293848  1.830839569
+ [276]  1.830842963  1.832448048  1.833254829  1.833753021  1.833869521
+ [281]  1.834384284  1.834818206  1.835575298  1.836750359  1.837100432
+ [286]  1.838584155  1.839820507  1.840107147  1.841032422  1.842309154
+ [291]  1.842460263  1.842474857  1.842992423  1.843192310  1.843560958
+ [296]  1.844484271  1.845347121  1.845646479  1.845708802  1.846176454
+ [301]  1.846711821  1.847294167  1.847659318  1.850431919  1.851064722
+ [306]  1.852658583  1.854640307  1.855341945  1.856683467  1.857881486
+ [311]  1.858516535  1.858636833  1.859651089  1.859793946  1.860131949
+ [316]  1.861045813  1.861723632  1.865341244  1.865613454  1.865945156
+ [321]  1.866133776  1.866868611  1.868667472  1.868744999  1.870227075
+ [326]  1.871834993  1.872640187  1.872714177  1.874291734  1.875988075
+ [331]  1.876402901  1.878021607  1.878039715  1.880817104  1.882069612
+ [336]  1.883405612  1.885472370  1.886944363  1.888480264  1.888648232
+ [341]  1.891036444  1.892708807  1.892753928  1.893541561  1.894441094
+ [346]  1.894965479  1.898458689  1.899910021  1.900776316  1.900914525
+ [351]  1.901376606  1.903201058  1.903434779  1.903493737  1.904909759
+ [356]  1.906162988  1.906333254  1.909388652  1.910763711  1.912300457
+ [361]  1.912760005  1.913437759  1.918144834  1.918607477  1.919064643
+ [366]  1.919465946  1.920448948  1.921276325  1.922272881  1.922954484
+ [371]  1.923194803  1.924102873  1.924517216  1.924681978  1.925416443
+ [376]  1.926297917  1.927536225  1.927982539  1.928049197  1.928068938
+ [381]  1.928227652  1.929386059  1.929471094  1.929584908  1.930268588
+ [386]  1.930897002  1.931985436  1.932287720  1.934320401  1.935906628
+ [391]  1.937004961  1.938957111  1.939580723  1.940038816  1.940099834
+ [396]  1.940576562  1.940782354  1.942794629  1.943448306  1.943979814
+ [401]  1.946550911  1.946983421  1.947508128  1.949219091  1.949302844
+ [406]  1.950572171  1.951436558  1.953574038  1.955741361  1.956040027
+ [411]  1.956321553  1.958322354  1.959367773  1.959541694  1.959799742
+ [416]  1.960370497  1.960521555  1.966498158  1.966674782  1.968001317
+ [421]  1.968403358  1.968577380  1.969874403  1.972045933  1.973767668
+ [426]  1.974345403  1.976378870  1.977515191  1.979002990  1.980113277
+ [431]  1.980455228  1.980934266  1.981906357  1.982157256  1.982783404
+ [436]  1.985806237  1.986214127  1.987366729  1.988237588  1.988652113
+ [441]  1.989714971  1.989719782  1.990804662  1.992322847  1.994116492
+ [446]  1.994857315  1.996066131  1.997339264  1.998130883  1.998831229
+ [451]  2.000734397  2.001175471  2.001651295  2.004514540  2.004803206
+ [456]  2.005612704  2.007206745  2.009109461  2.009215199  2.013754710
+ [461]  2.014454704  2.014481733  2.014519444  2.016265115  2.019748506
+ [466]  2.019913105  2.020403939  2.020467448  2.020607742  2.021228060
+ [471]  2.022275227  2.022772515  2.023187557  2.024400175  2.024633006
+ [476]  2.024907580  2.024992681  2.025400512  2.026078398  2.026303709
+ [481]  2.027181434  2.028455942  2.028683866  2.029646356  2.029841346
+ [486]  2.030193388  2.030373017  2.030477132  2.032367170  2.032377952
+ [491]  2.033778190  2.035953237  2.035970889  2.036696923  2.037565366
+ [496]  2.037898080  2.041382936  2.041552559  2.043740057  2.043967158
+ [501]  2.044206293  2.045789920  2.046320467  2.046854807  2.047062244
+ [506]  2.048496439  2.049273345  2.049832657  2.050209137  2.050698855
+ [511]  2.058274926  2.061115446  2.061569242  2.063385131  2.063513842
+ [516]  2.064819680  2.066493627  2.067247520  2.071359040  2.072702875
+ [521]  2.073746702  2.073828745  2.076116530  2.077098275  2.077504376
+ [526]  2.077619929  2.079023373  2.079282923  2.081151871  2.081667923
+ [531]  2.082481700  2.082739233  2.083043337  2.084388079  2.087636500
+ [536]  2.088098835  2.089961797  2.090499807  2.091933329  2.092128137
+ [541]  2.094468628  2.094532311  2.094779332  2.095081029  2.096204374
+ [546]  2.096392590  2.097539717  2.098209702  2.099802501  2.100852479
+ [551]  2.100975175  2.101384978  2.102570239  2.102759614  2.102792681
+ [556]  2.102985102  2.105169253  2.105275001  2.105606211  2.106003659
+ [561]  2.106613024  2.108707364  2.108755670  2.111418712  2.112217246
+ [566]  2.113948474  2.114646665  2.115428712  2.118279711  2.118604531
+ [571]  2.118901259  2.119225703  2.119625538  2.120754568  2.120864919
+ [576]  2.120915397  2.120920233  2.121439358  2.121818463  2.122265447
+ [581]  2.122535462  2.122582940  2.122793545  2.124097301  2.124966716
+ [586]  2.125168532  2.125730453  2.126179533  2.128630184  2.128915075
+ [591]  2.129262724  2.129460232  2.131853450  2.132169237  2.132632608
+ [596]  2.133870216  2.134136961  2.135436782  2.136785293  2.137026295
+ [601]  2.137158926  2.137214187  2.137504822  2.138877865  2.139064403
+ [606]  2.139699406  2.140109660  2.140689368  2.142844549  2.143902629
+ [611]  2.145060122  2.145586064  2.145905677  2.147821899  2.148649653
+ [616]  2.148827066  2.150446289  2.150689968  2.151886415  2.151895348
+ [621]  2.152220821  2.155094231  2.155115339  2.155459542  2.155512802
+ [626]  2.156268312  2.156273243  2.156664930  2.157579786  2.158314745
+ [631]  2.158633932  2.160533602  2.160706708  2.161104656  2.163768948
+ [636]  2.164217301  2.164478701  2.165034597  2.165069487  2.166125339
+ [641]  2.166175790  2.169613662  2.169659123  2.170492568  2.171104012
+ [646]  2.171505528  2.171904382  2.172334355  2.172799958  2.172893022
+ [651]  2.173907332  2.174904647  2.175360188  2.175399286  2.176294130
+ [656]  2.177894080  2.179710084  2.820418319  2.821332960  2.821349677
+ [661]  2.821536206  2.821839055  2.822166807  2.822933405  2.824378534
+ [666]  2.824425090  2.824759629  2.824781485  2.825228605  2.826074698
+ [671]  2.826290938  2.826550438  2.826707605  2.826787197  2.827331178
+ [676]  2.828326845  2.828507860  2.829057131  2.829342516  2.829437124
+ [681]  2.829823265  2.830165364  2.831038184  2.831094504  2.831122844
+ [686]  2.831462250  2.832168034  2.833183036  2.833644735  2.833851050
+ [691]  2.834016763  2.834805138  2.834901335  2.835056934  2.835939045
+ [696]  2.838072555  2.838120416  2.838534108  2.839853425  2.840123828
+ [701]  2.844226614  2.844399989  2.844585301  2.845447698  2.845914230
+ [706]  2.845988752  2.847522618  2.848158824  2.848223128  2.848747959
+ [711]  2.849604760  2.851642904  2.852687245  2.853183956  2.854217991
+ [716]  2.855047022  2.855282012  2.855468593  2.856982589  2.859250451
+ [721]  2.859770503  2.860233638  2.860281211  2.860907286  2.860938024
+ [726]  2.861322914  2.862585772  2.862920319  2.863752690  2.865138207
+ [731]  2.865529570  2.865635627  2.867397875  2.867759139  2.867802375
+ [736]  2.869851965  2.870512627  2.870534032  2.872190638  2.872377550
+ [741]  2.872801620  2.872846533  2.873576062  2.874234794  2.875574455
+ [746]  2.875698832  2.878090994  2.878538030  2.879172690  2.879419800
+ [751]  2.880196934  2.880578783  2.880819057  2.881228470  2.881445154
+ [756]  2.881612476  2.881718741  2.883872212  2.884162960  2.885451377
+ [761]  2.886608459  2.886778173  2.886944730  2.887596646  2.887615980
+ [766]  2.888668931  2.888850681  2.891034241  2.891348703  2.891834447
+ [771]  2.891956398  2.892425729  2.893982192  2.894568777  2.896359022
+ [776]  2.898435769  2.899077697  2.899309955  2.899706455  2.900505300
+ [781]  2.901209688  2.902025730  2.902094050  2.903220861  2.903761396
+ [786]  2.904971511  2.905345939  2.905454236  2.906218684  2.907358856
+ [791]  2.907612866  2.908344579  2.908912310  2.909111542  2.909153299
+ [796]  2.911828458  2.912267719  2.912269042  2.912688225  2.912970112
+ [801]  2.913616085  2.914143978  2.914152570  2.914216624  2.914382239
+ [806]  2.915495081  2.915611098  2.915727945  2.915742389  2.915867883
+ [811]  2.916850966  2.917536172  2.918405141  2.919019937  2.920287497
+ [816]  2.921716769  2.922240632  2.922321499  2.922604730  2.923250993
+ [821]  2.923452132  2.923770502  2.923929567  2.924314293  2.924327063
+ [826]  2.924576254  2.925053645  2.925201038  2.925860646  2.926874884
+ [831]  2.930694694  2.932793924  2.932871727  2.933685765  2.933796659
+ [836]  2.934219560  2.935371296  2.935687819  2.935842439  2.936897601
+ [841]  2.937848899  2.938632288  2.939331258  2.939622402  2.939954011
+ [846]  2.940132148  2.940203782  2.940553788  2.940801833  2.941253807
+ [851]  2.941288094  2.941905250  2.942051370  2.943612744  2.943775830
+ [856]  2.945369001  2.945666347  2.946104101  2.946209531  2.946799296
+ [861]  2.947125489  2.947417399  2.950199270  2.950330597  2.951170295
+ [866]  2.952836532  2.953389119  2.953457728  2.954707469  2.955322768
+ [871]  2.955435390  2.955732075  2.955799706  2.955910938  2.957025303
+ [876]  2.957225568  2.957504377  2.957747167  2.959610034  2.960127892
+ [881]  2.960399040  2.960484070  2.960530038  2.962855377  2.963564357
+ [886]  2.965056302  2.966043488  2.966235338  2.966311508  2.966608093
+ [891]  2.967443057  2.967509739  2.968008712  2.968195012  2.968295992
+ [896]  2.969455238  2.969774196  2.969861464  2.970196924  2.970330168
+ [901]  2.970424607  2.970643084  2.971946015  2.972759377  2.973804426
+ [906]  2.973973280  2.974611936  2.974757640  2.974800312  2.975043762
+ [911]  2.976497339  2.976707641  2.977337937  2.978535386  2.980141816
+ [916]  2.983893599  2.984009402  2.984048000  2.985000942  2.986035234
+ [921]  2.986452175  2.988641989  2.988799989  2.989484710  2.990320640
+ [926]  2.990861645  2.991058232  2.991639376  2.991983044  2.992286588
+ [931]  2.992833407  2.993320493  2.994072532  2.995180863  2.996437160
+ [936]  2.996491011  2.996906475  2.997222586  2.997778888  2.998667226
+ [941]  2.998843068  3.000316748  3.000451598  3.001713249  3.002352103
+ [946]  3.002599189  3.004414189  3.004608515  3.006571621  3.006873481
+ [951]  3.006914416  3.007582854  3.007653830  3.007682214  3.008263002
+ [956]  3.012754758  3.013903316  3.016933610  3.017442699  3.019293103
+ [961]  3.019651797  3.019978438  3.020400654  3.020518509  3.021643868
+ [966]  3.023297902  3.023673155  3.023706450  3.024819936  3.026021123
+ [971]  3.027290785  3.028027573  3.029459730  3.029676309  3.030232867
+ [976]  3.030885645  3.031573873  3.031757390  3.032202524  3.033318933
+ [981]  3.034352732  3.035411253  3.037514543  3.039988289  3.040446917
+ [986]  3.040596243  3.040623567  3.043001368  3.043890287  3.044923730
+ [991]  3.045642585  3.045796010  3.046615622  3.047234840  3.048199573
+ [996]  3.048753437  3.049644499  3.051078177  3.051965710  3.052597146
+[1001]  3.053072696  3.053382972  3.055548910  3.055977636  3.057464189
+[1006]  3.057584563  3.057704103  3.058227322  3.058564182  3.058862901
+[1011]  3.061462803  3.061777336  3.062776200  3.062830724  3.062907122
+[1016]  3.063874816  3.064741881  3.067955691  3.068367351  3.068595659
+[1021]  3.068707253  3.069270822  3.071356941  3.075919396  3.076309499
+[1026]  3.077941228  3.078778089  3.079334659  3.080371942  3.081349545
+[1031]  3.082248945  3.082367132  3.082557979  3.082819290  3.084833102
+[1036]  3.085215999  3.086434509  3.087149742  3.087344036  3.088853198
+[1041]  3.089371787  3.089957526  3.090947762  3.091328205  3.092489880
+[1046]  3.093182948  3.093365249  3.094561983  3.095775153  3.096492878
+[1051]  3.097159577  3.097397734  3.098322254  3.099084504  3.099794265
+[1056]  3.100430882  3.101070559  3.101169133  3.101658512  3.102540771
+[1061]  3.103038905  3.103067175  3.103355413  3.103677161  3.104297871
+[1066]  3.104886473  3.106369217  3.107888852  3.108387012  3.108439854
+[1071]  3.108718091  3.109856233  3.110175118  3.110291424  3.110560073
+[1076]  3.110710543  3.110786846  3.111813240  3.112266883  3.112504300
+[1081]  3.113140652  3.114170818  3.115451511  3.115849088  3.115968098
+[1086]  3.116551150  3.116681841  3.117547869  3.117796671  3.117990929
+[1091]  3.119446097  3.119743132  3.123090023  3.123252066  3.123506030
+[1096]  3.125007547  3.125320221  3.125777333  3.126377141  3.126557962
+[1101]  3.126803810  3.127006985  3.127989731  3.128215662  3.128783700
+[1106]  3.128924323  3.129148968  3.130369975  3.130477488  3.132599495
+[1111]  3.132752575  3.133625479  3.134751512  3.134797406  3.136059754
+[1116]  3.136086630  3.136335215  3.137051859  3.137423528  3.137840694
+[1121]  3.138019282  3.138655779  3.141587726  3.141716377  3.141830874
+[1126]  3.144610312  3.145395797  3.145614860  3.147293840  3.148266630
+[1131]  3.148303541  3.149691317  3.150802482  3.151763971  3.151832969
+[1136]  3.152261568  3.152298418  3.152674769  3.153831245  3.155051742
+[1141]  3.158390287  3.159426097  3.160227736  3.160375228  3.161043303
+[1146]  3.161046616  3.161194376  3.162123817  3.162722049  3.164376840
+[1151]  3.164708084  3.165029984  3.165482431  3.165611189  3.165681942
+[1156]  3.165819499  3.166719786  3.169597099  3.170850676  3.171417376
+[1161]  3.171793271  3.171965047  3.171975487  3.173228073  3.173702643
+[1166]  3.173737765  3.175269712  3.175619282  3.176049229  3.176911758
+[1171]  3.176918074  3.177129022  3.178030775  3.179025709  3.179188427
+[1176]  3.179368381  3.179550380  3.179572791  3.820451546  3.821287736
+[1181]  3.823199891  3.824692518  3.824864493  3.825372609  3.826015718
+[1186]  3.827526206  3.827687850  3.827733791  3.827806825  3.829997058
+[1191]  3.831082078  3.831417420  3.833084403  3.833129284  3.835542039
+[1196]  3.835926369  3.836330379  3.836663904  3.837380054  3.838299772
+[1201]  3.838955362  3.839417061  3.840104157  3.840246739  3.840247774
+[1206]  3.840351853  3.840787030  3.840847226  3.841215697  3.842970541
+[1211]  3.844356484  3.844735608  3.844813775  3.845102872  3.847561369
+[1216]  3.849293041  3.849401218  3.850942648  3.851433729  3.851790889
+[1221]  3.852013367  3.852382704  3.853892216  3.854597485  3.855072676
+[1226]  3.855780077  3.856654002  3.857220250  3.858114202  3.858967624
+[1231]  3.860243307  3.860791420  3.861416814  3.861589098  3.862081459
+[1236]  3.863928009  3.864161892  3.864784832  3.864919783  3.865020921
+[1241]  3.865362641  3.865780771  3.866745015  3.869064842  3.869739181
+[1246]  3.870715467  3.871637172  3.872940623  3.873986552  3.875125314
+[1251]  3.877797266  3.879204045  3.880417997  3.881324358  3.881614576
+[1256]  3.882626057  3.883131162  3.883640855  3.884603993  3.886163623
+[1261]  3.886192777  3.886834939  3.886852739  3.887086241  3.887840047
+[1266]  3.888621357  3.888892435  3.889263080  3.889702678  3.889923119
+[1271]  3.891235655  3.893003806  3.893648768  3.894836921  3.894912385
+[1276]  3.895419533  3.895459381  3.896124241  3.896852016  3.897092898
+[1281]  3.898503402  3.898659780  3.899636317  3.899937657  3.900060340
+[1286]  3.900560851  3.901263078  3.901814954  3.903730079  3.905011702
+[1291]  3.905805767  3.906065295  3.906070319  3.906108350  3.906178090
+[1296]  3.906306509  3.906595499  3.907306998  3.908662475  3.909022602
+[1301]  3.909114313  3.909140291  3.910444780  3.910707867  3.911452106
+[1306]  3.911535121  3.911641589  3.912361642  3.912429844  3.912483924
+[1311]  3.912909817  3.913644842  3.913777199  3.914085914  3.914219599
+[1316]  3.914795347  3.914889279  3.915209247  3.915453016  3.917275302
+[1321]  3.917919545  3.918207302  3.918529016  3.920506401  3.920656267
+[1326]  3.920861793  3.922722801  3.922739707  3.925084540  3.925728101
+[1331]  3.925789677  3.927070342  3.927530640  3.928936537  3.931327368
+[1336]  3.931572159  3.932661362  3.933226517  3.933639355  3.936768602
+[1341]  3.938601181  3.939803346  3.939914104  3.940213402  3.940795599
+[1346]  3.940832331  3.941604463  3.942211637  3.942537720  3.942641658
+[1351]  3.943206978  3.944097030  3.944160122  3.944467045  3.945554174
+[1356]  3.946046927  3.946130187  3.946926608  3.947022403  3.947064576
+[1361]  3.947728164  3.947968210  3.948445878  3.948735192  3.949066333
+[1366]  3.950105460  3.951171310  3.955330513  3.955667520  3.955949817
+[1371]  3.956571415  3.956997234  3.957665091  3.958312416  3.958589280
+[1376]  3.958594224  3.958989630  3.959199569  3.959357990  3.960350300
+[1381]  3.960719687  3.961435127  3.961475906  3.961726446  3.961824959
+[1386]  3.962595349  3.963090396  3.963184327  3.963289126  3.963862404
+[1391]  3.963875207  3.965241626  3.965309147  3.965970716  3.966628659
+[1396]  3.966655790  3.966779593  3.967339966  3.968409965  3.968925924
+[1401]  3.971812001  3.972265292  3.972378207  3.972834520  3.973145886
+[1406]  3.973692950  3.974135122  3.975180821  3.975798412  3.976462670
+[1411]  3.976601331  3.977843692  3.977960522  3.981680615  3.982308136
+[1416]  3.983748573  3.984025395  3.984556654  3.984853711  3.988667338
+[1421]  3.989941917  3.990054932  3.992833706  3.993258798  3.993437847
+[1426]  3.993847733  3.994595029  3.994792105  3.995245840  3.995553620
+[1431]  3.995820301  3.996887730  3.997525979  3.998114852  3.998476138
+[1436]  3.999445982  4.000643510  4.000702972  4.000893168  4.001687778
+[1441]  4.002227253  4.003842922  4.004477965  4.006717440  4.007101967
+[1446]  4.007476406  4.007718398  4.008414605  4.008532895  4.008594054
+[1451]  4.009268052  4.009516125  4.010715882  4.010861235  4.010893657
+[1456]  4.011386395  4.012466083  4.013083524  4.014250783  4.014453522
+[1461]  4.015530529  4.016567916  4.017426018  4.019744251  4.019848320
+[1466]  4.020776755  4.022436544  4.022659510  4.023412087  4.024737121
+[1471]  4.025003731  4.025942920  4.026171242  4.026669419  4.027442312
+[1476]  4.027477558  4.028877136  4.029342350  4.030131054  4.030307436
+[1481]  4.031711354  4.031834173  4.031912216  4.032028761  4.032801769
+[1486]  4.033097587  4.033964377  4.035642178  4.035894850  4.036737911
+[1491]  4.036979520  4.037075981  4.037388269  4.038856869  4.039451867
+[1496]  4.040248921  4.041676030  4.043546977  4.043864121  4.043925635
+[1501]  4.044463362  4.044968782  4.046748048  4.051607600  4.053807795
+[1506]  4.054293537  4.054388927  4.055233041  4.055878698  4.056103306
+[1511]  4.056992585  4.058675535  4.059235799  4.059834932  4.060613277
+[1516]  4.060833761  4.061336401  4.061540654  4.062740438  4.063704177
+[1521]  4.065759280  4.066086651  4.066379469  4.066821295  4.068881590
+[1526]  4.069578042  4.070755539  4.071715442  4.072386512  4.073325918
+[1531]  4.074179992  4.075307164  4.076110030  4.076538356  4.077029622
+[1536]  4.077501936  4.079215890  4.079852438  4.079905464  4.080357195
+[1541]  4.080357426  4.083203619  4.084024431  4.084253434  4.085739580
+[1546]  4.086346222  4.086446402  4.088090343  4.088797264  4.089192785
+[1551]  4.089605587  4.090706438  4.090955883  4.092308749  4.093261315
+[1556]  4.095003990  4.095030353  4.096211275  4.097062833  4.098325844
+[1561]  4.098443603  4.100976897  4.101507310  4.101672915  4.102401055
+[1566]  4.103796650  4.103972174  4.104458695  4.104695543  4.104906117
+[1571]  4.106340188  4.108075976  4.110763800  4.111742072  4.112187238
+[1576]  4.112445926  4.112650426  4.113932679  4.114325756  4.115332802
+[1581]  4.115348480  4.115707960  4.115842651  4.115876052  4.116298601
+[1586]  4.116502675  4.118615281  4.118630444  4.118695275  4.119261833
+[1591]  4.119570921  4.121525661  4.122154270  4.122718841  4.123018164
+[1596]  4.124872918  4.124914509  4.125472633  4.127458992  4.127912129
+[1601]  4.129992422  4.130033341  4.130504517  4.130514102  4.131160040
+[1606]  4.131247946  4.131627871  4.131646171  4.133963486  4.134196073
+[1611]  4.134618237  4.134933527  4.135928714  4.137680221  4.137869581
+[1616]  4.138081515  4.139270073  4.139340202  4.139754285  4.140111860
+[1621]  4.140786763  4.141310387  4.141836947  4.141886188  4.142783334
+[1626]  4.142863398  4.142884109  4.144324287  4.144352254  4.144456957
+[1631]  4.144883779  4.145102371  4.145913040  4.146271050  4.147540178
+[1636]  4.147792416  4.149264392  4.150598434  4.151164644  4.151429489
+[1641]  4.151676461  4.152100281  4.152533412  4.152969104  4.154007758
+[1646]  4.154025866  4.154479107  4.155563906  4.156166664  4.158218105
+[1651]  4.159021055  4.159597331  4.159928150  4.160541042  4.161495141
+[1656]  4.162506031  4.162525703  4.162846567  4.163059092  4.165355168
+[1661]  4.166715940  4.167020127  4.167036728  4.167848475  4.167908721
+[1666]  4.168087991  4.168997675  4.170624719  4.171386890  4.171598117
+[1671]  4.172054491  4.172099685  4.172142602  4.172602705  4.173016384
+[1676]  4.173417060  4.174253452  4.174345384  4.174648815  4.174839355
+[1681]  4.175876243  4.177008605  4.177760425  4.177863935  4.178283700
+[1686]  4.178327705  4.178690250  4.820072137  4.820430326  4.820493833
+[1691]  4.820759661  4.821968910  4.825550232  4.826802267  4.826910780
+[1696]  4.828775338  4.829320881  4.832382625  4.832640503  4.832779829
+[1701]  4.835171123  4.835392661  4.835751132  4.836132187  4.836517701
+[1706]  4.837706179  4.840487852  4.842003199  4.845429984  4.846414535
+[1711]  4.846666608  4.848217218  4.849860228  4.851987229  4.852799056
+[1716]  4.852842325  4.852886028  4.853107554  4.853887958  4.854313454
+[1721]  4.854330950  4.855009580  4.855053759  4.855381014  4.855647657
+[1726]  4.855982399  4.856773239  4.857312379  4.857468565  4.858516208
+[1731]  4.859274564  4.859349146  4.859580428  4.859697639  4.860658936
+[1736]  4.860937681  4.861797757  4.865099936  4.868327117  4.869998861
+[1741]  4.870868150  4.871151238  4.875074489  4.876753883  4.877446353
+[1746]  4.877708122  4.878280857  4.878734563  4.878810426  4.881361528
+[1751]  4.881431219  4.881836864  4.882907491  4.883232600  4.883823135
+[1756]  4.889769727  4.890915644  4.891316752  4.891493742  4.891923085
+[1761]  4.892416123  4.893394826  4.893578101  4.894152526  4.894190280
+[1766]  4.894642270  4.896036484  4.896670743  4.896725885  4.898135884
+[1771]  4.898814584  4.899320387  4.902179416  4.904759832  4.904833401
+[1776]  4.906139390  4.907396973  4.907962558  4.908447285  4.908484160
+[1781]  4.909594260  4.910428935  4.910883544  4.912030884  4.913242999
+[1786]  4.918094952  4.919044756  4.919219704  4.919936291  4.920087374
+[1791]  4.921657346  4.921919855  4.922588932  4.923395000  4.923478394
+[1796]  4.926181319  4.927026971  4.927698143  4.928917890  4.930263045
+[1801]  4.930874004  4.933322091  4.934282252  4.934472397  4.935363754
+[1806]  4.935603382  4.935696077  4.935959915  4.936056924  4.936622067
+[1811]  4.936711173  4.937534527  4.937663947  4.937827579  4.941499563
+[1816]  4.942456259  4.945905307  4.945930656  4.947468731  4.947624037
+[1821]  4.948053314  4.949022131  4.949889360  4.951522107  4.952316629
+[1826]  4.952920789  4.952964833  4.952971085  4.953431821  4.954524448
+[1831]  4.954704818  4.955355677  4.955800957  4.957257338  4.957372340
+[1836]  4.957514732  4.965159657  4.966927493  4.967758359  4.968257570
+[1841]  4.968328771  4.969751059  4.971760451  4.971902302  4.972178695
+[1846]  4.972658116  4.974279150  4.974952767  4.975442063  4.976403521
+[1851]  4.978134986  4.978511065  4.978685224  4.981431386  4.983202943
+[1856]  4.983465295  4.983533115  4.983977536  4.984535569  4.984903514
+[1861]  4.985349814  4.985816666  4.987643643  4.988668724  4.988765928
+[1866]  4.989033374  4.989743251  4.990437854  4.992329860  4.993075814
+[1871]  4.994200906  4.995296144  4.995800749  4.999157542  4.999573423
+[1876]  4.999654790  5.000473980  5.000886776  5.001424015  5.002667857
+[1881]  5.003369810  5.003923014  5.004022252  5.005047864  5.005117725
+[1886]  5.005488470  5.007183898  5.007348704  5.007392952  5.008139356
+[1891]  5.008615218  5.008626212  5.008852938  5.009379420  5.010480737
+[1896]  5.010952021  5.011084619  5.011863592  5.011866640  5.012232667
+[1901]  5.012766526  5.014313666  5.014621761  5.014644302  5.015354331
+[1906]  5.015698349  5.017165434  5.017460695  5.017962006  5.018184572
+[1911]  5.018743203  5.020263141  5.020389714  5.021713149  5.021718338
+[1916]  5.023902350  5.023922410  5.024035802  5.027069222  5.027157290
+[1921]  5.028959341  5.029484374  5.030582946  5.031654242  5.032315326
+[1926]  5.034807952  5.035055150  5.040520620  5.041194767  5.041287343
+[1931]  5.041540876  5.042044364  5.042757530  5.048724708  5.049728597
+[1936]  5.049729847  5.049905722  5.051191909  5.051581250  5.053719334
+[1941]  5.059413492  5.060043387  5.062196290  5.062240996  5.063368417
+[1946]  5.063666975  5.065322405  5.066683611  5.067110019  5.067659402
+[1951]  5.067810182  5.068867747  5.069951120  5.070452545  5.070707058
+[1956]  5.071247465  5.071665279  5.072344671  5.073479554  5.073726222
+[1961]  5.075351264  5.075835031  5.076299659  5.076419678  5.076820695
+[1966]  5.079511447  5.079519106  5.079991764  5.080934030  5.082087419
+[1971]  5.083169196  5.083488689  5.085418079  5.086938280  5.088211213
+[1976]  5.088273116  5.090174134  5.091559870  5.091573665  5.091977064
+[1981]  5.093917356  5.095148991  5.097738139  5.099278109  5.099520377
+[1986]  5.099666239  5.099755052  5.100137769  5.100667826  5.100823444
+[1991]  5.102176848  5.103782968  5.104038465  5.104309236  5.104315005
+[1996]  5.104743165  5.105243388  5.105263375  5.106395256  5.106580412
+[2001]  5.107382605  5.108738705  5.109553344  5.113729589  5.113809387
+[2006]  5.114212601  5.114596211  5.115117035  5.116594707  5.116926229
+[2011]  5.117013049  5.118170682  5.118740233  5.121776204  5.122478443
+[2016]  5.124178264  5.125239661  5.126069426  5.126694283  5.126876348
+[2021]  5.127115176  5.128844207  5.129270491  5.129875523  5.130268218
+[2026]  5.130459984  5.131619490  5.132071479  5.132945035  5.133260695
+[2031]  5.133679373  5.135700177  5.136504935  5.137046161  5.137082386
+[2036]  5.137748784  5.138062767  5.139366249  5.139723849  5.139756929
+[2041]  5.141447611  5.141643872  5.143570926  5.144226711  5.145068731
+[2046]  5.146039138  5.146110308  5.146426643  5.148003939  5.148573721
+[2051]  5.149030879  5.149478540  5.149578632  5.150459661  5.150469740
+[2056]  5.151690413  5.152759646  5.154302147  5.154946240  5.155143915
+[2061]  5.155791535  5.155908616  5.156678648  5.157800938  5.158410873
+[2066]  5.159491676  5.159742007  5.160135391  5.160470822  5.162003167
+[2071]  5.162758983  5.162910197  5.164635155  5.164639640  5.166604665
+[2076]  5.167831023  5.167886172  5.167911042  5.168234680  5.171679542
+[2081]  5.173508401  5.175605441  5.175988256  5.176569850  5.178845893
+[2086]  5.822912016  5.823779296  5.824482223  5.824699964  5.826491396
+[2091]  5.827024327  5.828836153  5.829296776  5.834550863  5.838052955
+[2096]  5.838411913  5.840915424  5.842792492  5.843196514  5.843899086
+[2101]  5.844792681  5.852601628  5.852683819  5.852703376  5.855914966
+[2106]  5.860071144  5.861973692  5.862381286  5.862459641  5.865279868
+[2111]  5.867167084  5.868012963  5.868337857  5.872063959  5.873302009
+[2116]  5.873862865  5.879442847  5.880318690  5.886115646  5.887220590
+[2121]  5.890253619  5.892653066  5.893937745  5.894889543  5.896227226
+[2126]  5.898121883  5.898366915  5.898633502  5.902711340  5.903485328
+[2131]  5.903868282  5.904028618  5.904035995  5.907800507  5.909614774
+[2136]  5.912891261  5.913107736  5.914894799  5.916088841  5.918606002
+[2141]  5.919538812  5.920304476  5.920357050  5.922652681  5.923241614
+[2146]  5.923422268  5.924458692  5.924462466  5.926929427  5.927035289
+[2151]  5.927246089  5.928392946  5.928455580  5.929660052  5.932933737
+[2156]  5.933276564  5.933945645  5.935016255  5.936420667  5.936758411
+[2161]  5.938304768  5.938942224  5.938982986  5.943633907  5.943770670
+[2166]  5.944948023  5.946199229  5.947823067  5.948686746  5.948943515
+[2171]  5.952123100  5.953961888  5.955164487  5.956047130  5.956166399
+[2176]  5.959695790  5.960779248  5.962758306  5.963409593  5.964846266
+[2181]  5.966821965  5.967947039  5.968503305  5.971108531  5.971969260
+[2186]  5.972062830  5.972408650  5.973723216  5.974911683  5.975176960
+[2191]  5.976998427  5.978313270  5.978901839  5.979778143  5.980006273
+[2196]  5.981062689  5.982090547  5.982675835  5.983647873  5.983828958
+[2201]  5.984018316  5.984544648  5.984924102  5.985608895  5.987072301
+[2206]  5.989180624  5.993301883  5.994816213  5.997337461  5.998368615
+[2211]  6.001345525  6.001916078  6.002222567  6.002243062  6.002515330
+[2216]  6.004710005  6.005506680  6.005681670  6.007212072  6.009332932
+[2221]  6.010212508  6.010214867  6.012470820  6.012834477  6.013304978
+[2226]  6.013667463  6.017525752  6.018054817  6.018196009  6.019303088
+[2231]  6.020608491  6.023648092  6.023920027  6.025211912  6.025555310
+[2236]  6.028002231  6.030754368  6.035723315  6.035724375  6.036598996
+[2241]  6.036693706  6.036935402  6.037752364  6.038962621  6.040492071
+[2246]  6.041968517  6.042735123  6.042958980  6.043507164  6.043939338
+[2251]  6.044269581  6.044464925  6.044675394  6.047525655  6.050057045
+[2256]  6.050887223  6.052369492  6.053849590  6.053853262  6.056755807
+[2261]  6.059675825  6.063109742  6.063175339  6.064669441  6.065438586
+[2266]  6.067486481  6.069311478  6.072641042  6.074078301  6.074141421
+[2271]  6.075781302  6.079794244  6.080324421  6.081001981  6.082486620
+[2276]  6.084504971  6.086102244  6.088035403  6.088451343  6.091311334
+[2281]  6.091450682  6.091948832  6.094445411  6.096075871  6.097944922
+[2286]  6.098747352  6.099602537  6.101648497  6.102357777  6.102459344
+[2291]  6.105187269  6.106271399  6.107893997  6.108460605  6.108949122
+[2296]  6.110781719  6.111159373  6.111572543  6.112445192  6.112734967
+[2301]  6.114697014  6.116196920  6.116385750  6.117531931  6.121478922
+[2306]  6.122111566  6.123764274  6.125113186  6.128241425  6.129577475
+[2311]  6.131629644  6.132574353  6.133092113  6.133218021  6.133363784
+[2316]  6.133446973  6.133638482  6.133903605  6.136793239  6.140873034
+[2321]  6.143387027  6.147719809  6.149574220  6.150562650  6.151004821
+[2326]  6.154525775  6.156601982  6.158317701  6.162131252  6.162221659
+[2331]  6.162339676  6.162457687  6.162951711  6.164088765  6.164555289
+[2336]  6.165770838  6.166382124  6.166663611  6.167560829  6.167718554
+[2341]  6.171338010  6.171546742  6.174713853  6.176029507  6.820960488
+[2346]  6.822441904  6.825118382  6.829196758  6.831160318  6.851875354
+[2351]  6.855382014  6.861169611  6.863587084  6.864386481  6.864461182
+[2356]  6.865316158  6.867921100  6.874937947  6.876046187  6.876746171
+[2361]  6.880398299  6.882738963  6.884306975  6.886813484  6.886966450
+[2366]  6.890203238  6.897952843  6.903674563  6.908938573  6.910946472
+[2371]  6.915654665  6.918644649  6.918652235  6.920339779  6.922158200
+[2376]  6.923600168  6.933282786  6.933361822  6.935378448  6.936873818
+[2381]  6.939136556  6.941735524  6.943341076  6.943358871  6.944437872
+[2386]  6.945849855  6.948069490  6.949825319  6.957313778  6.957430217
+[2391]  6.959940023  6.964987585  6.965685372  6.966708371  6.971171324
+[2396]  6.973685665  6.976551357  6.977402172  6.977533518  6.984143246
+[2401]  6.984561028  6.985921560  6.991519974  6.993601188  6.994502276
+[2406]  6.994908516  6.997217770  6.997830904  6.998130868  6.999263905
+[2411]  7.003252461  7.003645371  7.013148236  7.016681402  7.019836029
+[2416]  7.023229369  7.023657872  7.028222186  7.028852141  7.029561023
+[2421]  7.029793378  7.032918308  7.033098771  7.040178525  7.047927459
+[2426]  7.048269197  7.048490104  7.050775377  7.053715023  7.054961507
+[2431]  7.057237502  7.057886918  7.060373822  7.060814642  7.063838610
+[2436]  7.064263616  7.066527340  7.067013822  7.068306268  7.068979216
+[2441]  7.070367947  7.078069117  7.080165996  7.089717877  7.089822361
+[2446]  7.090448932  7.091630853  7.093531974  7.094540865  7.099471991
+[2451]  7.100612544  7.102343910  7.104749706  7.106989603  7.107919430
+[2456]  7.110090707  7.116684508  7.117138284  7.119396675  7.121977774
+[2461]  7.122163578  7.126207186  7.140140241  7.143101298  7.143118059
+[2466]  7.143643108  7.144450119  7.144844964  7.146598688  7.146637242
+[2471]  7.148243015  7.149786136  7.151538680  7.154010806  7.154661224
+[2476]  7.155749210  7.156574506  7.156860859  7.159148308  7.160040478
+[2481]  7.160406107  7.162662990  7.168325499  7.170586335  7.173067196
+[2486]  7.174846436  7.177010245  7.178654355  7.822045018  7.840823922
+[2491]  7.841375412  7.841741896  7.849580005  7.850570383  7.855810734
+[2496]  7.861685123  7.871378049  7.875456827  7.878881552  7.909717227
+[2501]  7.913702797  7.917884522  7.934737003  7.935959375  7.937152671
+[2506]  7.937367559  7.944961048  7.948971742  7.950878998  7.963506490
+[2511]  7.964001632  7.971513622  7.979094635  7.986291770  7.988595552
+[2516]  7.990160936  7.998871989  8.005724716  8.007316384  8.017699192
+[2521]  8.022874748  8.029013479  8.031102445  8.033429042  8.040074839
+[2526]  8.042781340  8.046908815  8.049854469  8.052526802  8.059708536
+[2531]  8.062010678  8.062093474  8.065386712  8.067634161  8.072669192
+[2536]  8.079445311  8.082535985  8.089904942  8.090828462  8.091209546
+[2541]  8.093034411  8.098405390  8.101157794  8.104405411  8.109669936
+[2546]  8.113791375  8.118743593  8.120177802  8.124424190  8.125511675
+[2551]  8.127370702  8.127653551  8.133476762  8.144269622  8.146526114
+[2556]  8.146764514  8.161719359  8.164551989  8.175281696  8.823273299
+[2561]  8.826367176  8.827110612  8.864536439  8.865537704  8.890717265
+[2566]  8.920011920  8.926050092  8.931488673  8.939753599  8.956991326
+[2571]  8.960788456  8.987887262  8.990430864  9.013240585  9.014167118
+[2576]  9.015351283  9.020302833  9.031586365  9.042908480  9.066190404
+[2581]  9.080423930  9.123490860  9.138546113  9.143574297  9.150701313
+[2586]  9.155239742  9.156944886  9.169641408  9.177754947  9.179369212
+[2591]  9.839835846  9.840509736  9.846452706  9.873202012  9.909633435
+[2596]  9.999758028 10.036805283 10.076319927 10.093705542 10.099098693
+[2601] 10.132132817 10.146802980 10.863159234 10.916910949 10.965948126
+[2606] 11.165411088 12.094934154 12.855844927
+
+>  
+> ## total variation neighborhoods (unknown deviation)
+> robest1 <- roptest(x, PoisFamily(), eps.upper = 0.05, 
++                   neighbor = TotalVarNeighborhood(), steps = 3)
+> estimate(robest1)
+  lambda 
+3.901197 
+> confint(robest1, symmetricBias())
+A[n] asymptotic (LAN-based), uniform (bias-aware)
+ confidence interval:
+for symmetric Bias
+          2.5 %   97.5 %
+lambda 3.677707 4.124687
+Type of estimator: 3-step estimate
+samplesize:   2608
+Call by which estimate was produced:
+roptest(x = x, L2Fam = PoisFamily(), eps.upper = 0.05, neighbor = TotalVarNeighborhood(), 
+    steps = 3)
+> plot(pIC(robest1))
+> 
+> 
+> #############################
+> ## 3. Normal (Gaussian) location and scale
+> #############################
+> ## 24 determinations of copper in wholemeal flour
+> library(MASS)
+> data(chem)
+> plot(chem, main = "copper in wholemeal flour", pch = 20)
+> 
+> ## ML-estimate
+> MLest <- MLEstimator(chem, NormLocationScaleFamily())
+> estimate(MLest)
+    mean       sd 
+4.280417 5.185859 
+> confint(MLest)
+A[n] asymptotic (CLT-based) confidence interval:
+        2.5 %   97.5 %
+mean 2.205679 6.355154
+sd   3.718798 6.652920
+Type of estimator: Maximum likelihood estimate
+samplesize:   24
+Call by which estimate was produced:
+MLEstimator(x = chem, ParamFamily = NormLocationScaleFamily())
+> 
+> ## compute optimally robust estimator (known contamination)
+> ## takes some time -> you can use package RobLox for normal 
+> ## location and scale which is optimized for speed
+> robest <- roptest(chem, NormLocationScaleFamily(), eps = 0.05, steps = 3)
+> estimate(robest)
+     mean        sd 
+3.1431677 0.6671103 
+> confint(robest, symmetricBias())
+A[n] asymptotic (LAN-based), uniform (bias-aware)
+ confidence interval:
+for symmetric Bias
+        2.5 %    97.5 %
+mean 2.811836 3.4744994
+sd   0.422397 0.9118236
+Type of estimator: 3-step estimate
+samplesize:   24
+Call by which estimate was produced:
+roptest(x = chem, L2Fam = NormLocationScaleFamily(), eps = 0.05, 
+    steps = 3)
+> plot(pIC(robest))
+> ## plot of relative and absolute information; cf. Kohl (2005)
+> infoPlot(pIC(robest))
+> 
+> qqplot(chem, robest, cex.pch=1.5, exp.cex2.pch = -.25,
++        exp.fadcol.pch = .55, withLab = TRUE, which.Order=1:4,
++        exp.cex2.lbl = .12,exp.fadcol.lbl = .45,
++        nosym.pCI = TRUE, adj.lbl=c(1.7,.2),
++        exact.pCI = FALSE, log ="xy")
+$x
+ [1]  2.20  2.20  2.40  2.40  2.50  2.70  2.80  2.90  3.03  3.03  3.10  3.37
+[13]  3.40  3.40  3.40  3.50  3.60  3.70  3.70  3.70  3.70  3.77  5.28 28.95
+
+$y
+ [1] 1.784375 2.119740 2.303835 2.439718 2.551343 2.648443 2.736034 2.817100
+ [9] 2.893605 2.966953 3.038224 3.108314 3.178021 3.248111 3.319383 3.392731
+[17] 3.469236 3.550302 3.637893 3.734992 3.846617 3.982500 4.166595 4.501961
+
+> 
+> ## finite-sample correction
+> if(require(RobLox)){
++     n <- length(chem)
++     r <- 0.05*sqrt(n)
++     r.fi <- finiteSampleCorrection(n = n, r = r)
++     fsCor <- r.fi/r
++     robest <- roptest(chem, NormLocationScaleFamily(), eps = 0.05, 
++                       fsCor = fsCor, steps = 3)
++     estimate(robest)
++ }
+Loading required package: RobLox
+     mean        sd 
+3.1520632 0.6657256 
+> 
+> ## compute optimally robust estimator (unknown contamination)
+> ## takes some time -> use package RobLox!
+> robest1 <- roptest(chem, NormLocationScaleFamily(), eps.lower = 0.05, 
++                    eps.upper = 0.1, steps = 3)
+> estimate(robest1)
+     mean        sd 
+3.1405527 0.6662374 
+> confint(robest1, symmetricBias())
+A[n] asymptotic (LAN-based), uniform (bias-aware)
+ confidence interval:
+for symmetric Bias
+         2.5 %    97.5 %
+mean 2.7838144 3.4972910
+sd   0.4006575 0.9318174
+Type of estimator: 3-step estimate
+samplesize:   24
+Call by which estimate was produced:
+roptest(x = chem, L2Fam = NormLocationScaleFamily(), eps.lower = 0.05, 
+    eps.upper = 0.1, steps = 3)
+> plot(pIC(robest1))
+> ## plot of relative and absolute information; cf. Kohl (2005)
+> infoPlot(pIC(robest1))
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  109.35 0.192 111.005 0.008 0.008 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

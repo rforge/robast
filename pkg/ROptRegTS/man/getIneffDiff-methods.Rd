@@ -19,6 +19,6 @@
     computes difference of asymptotic MSE--inefficiency for the boundaries of a given radius interval. }
 }}
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
-\seealso{\code{\link[ROptEst]{getIneffDiff}}}
+\seealso{\code{\link[ROptEstOld]{getIneffDiff}}}
 \keyword{methods}
 \keyword{robust}

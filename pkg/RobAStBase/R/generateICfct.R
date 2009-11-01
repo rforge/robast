@@ -16,11 +16,19 @@ setMethod("generateIC.fct", signature(neighbor = "UncondNeighborhood", L2Fam = "
         if(nrvalues == 1){
             if(!is.null(d)){
                 ICfct[[1]] <- function(x){}
-                body(ICfct[[1]]) <- substitute(
-                                        { ind <- 1-.eq(Y(x))
-                                          Y(x)*w(L(x)) + zi*(1-ind)*d*b },
-                                        list(Y = Y@Map[[1]], L = L.fct, w = w, b = b, d = d,
-                                             zi = sign(L2Fam@param@trafo), .eq = .eq))
+                if(all(dim(trafo(L2Fam@param)) == c(1, 1))){
+                    body(ICfct[[1]]) <- substitute(
+                                            { ind <- 1-.eq(Y(x))
+                                              Y(x)*w(L(x)) + zi*(1-ind)*d*b },
+                                            list(Y = Y@Map[[1]], L = L.fct, w = w, b = b, d = d,
+                                                zi = sign(trafo(L2Fam@param)), .eq = .eq))
+                }else{
+                    body(ICfct[[1]]) <- substitute(
+                                            { ind <- 1-.eq(Y(x))
+                                              ifelse(ind, Y(x)*w(L(x)), NA) },
+                                            list(Y = Y@Map[[1]], L = L.fct, w = w, b = b, d = d, 
+                                                 .eq = .eq))
+                }
             }else{
                 ICfct[[1]] <- function(x){}
                 body(ICfct[[1]]) <- substitute({ Y(x)*w(L(x)) },

@@ -1,47 +1,35 @@
-<html><head><title>Generic function for the computation of k-step estimates</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<html><head><title>Function for the computation of k-step estimates</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>kStepEstimator(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>kStepEstimator(RobAStBase)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   kStepEstimator">
-<param name="keyword" value="R:   kStepEstimator-methods">
-<param name="keyword" value="R:   kStepEstimator,numeric,IC,numeric-method">
-<param name="keyword" value="R:   kStepEstimator,matrix,IC,numeric-method">
-<param name="keyword" value="R:   kStepEstimator,numeric,IC,Estimate-method">
-<param name="keyword" value="R:   kStepEstimator,matrix,IC,Estimate-method">
-<param name="keyword" value=" Generic function for the computation of k-step estimates">
+<param name="keyword" value=" Function for the computation of k-step estimates">
 </object>
 
 
-<h2>Generic function for the computation of k-step estimates</h2>
+<h2>Function for the computation of k-step estimates</h2>
 
 
 <h3>Description</h3>
 
 <p>
-Generic function for the computation of k-step estimates.
+Function for the computation of k-step estimates.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-kStepEstimator(x, IC, start, ...)
-
-## S4 method for signature 'numeric, IC, numeric':
-kStepEstimator(x, IC, start, steps = 1L, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-## S4 method for signature 'matrix, IC, numeric':
-kStepEstimator(x, IC, start, steps = 1L, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-## S4 method for signature 'numeric, IC, Estimate':
-kStepEstimator(x, IC, start, steps = 1L, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
-## S4 method for signature 'matrix, IC, Estimate':
-kStepEstimator(x, IC, start, steps = 1L, 
-    useLast = getRobAStBaseOption("kStepUseLast"))
+kStepEstimator(x, IC, start = NULL, steps = 1L,
+      useLast = getRobAStBaseOption("kStepUseLast"),
+      withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+      IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+      withICList = getRobAStBaseOption("withICList"),
+      withPICList = getRobAStBaseOption("withPICList"),
+      na.rm = TRUE, startArgList = NULL, ...)
 </pre>
 
 
@@ -50,25 +38,56 @@ kStepEstimator(x, IC, start, steps = 1L,
 <table summary="R argblock">
 <tr valign="top"><td><code>x</code></td>
 <td>
-sample </td></tr>
+ sample </td></tr>
 <tr valign="top"><td><code>IC</code></td>
 <td>
-object of class <code>"IC"</code> </td></tr>
+ object of class <code>"IC"</code> </td></tr>
 <tr valign="top"><td><code>start</code></td>
 <td>
-initial estimate </td></tr>
+ initial estimate (for full parameter,i.e. in dimension <i>k</i> respective
+joint length of main and nuisance part of the parameter):
+either a numerical value, or an object of class <code>"Estimate"</code> or
+a function producing either a numerical value, or an object of class <code>"Estimate"</code>
+when evaluated at <code>x,...</code>; if missing or <code>NULL</code>, we use slot <code>startPar</code>
+of the L2family <code>L2Fam</code> from within <code>IC</code></td></tr>
 <tr valign="top"><td><code>steps</code></td>
 <td>
-integer: number of steps </td></tr>
+ integer: number of steps </td></tr>
 <tr valign="top"><td><code>useLast</code></td>
 <td>
-which parameter estimate (initial estimate or
+ which parameter estimate (initial estimate or
 k-step estimate) shall be used to fill the slots <code>pIC</code>,
 <code>asvar</code> and <code>asbias</code> of the return value. </td></tr>
+<tr valign="top"><td><code>withUpdateInKer</code></td>
+<td>
+if there is a non-trivial trafo in the model with matrix <i>D</i>, shall
+the parameter be updated on <i>ker(D)</i>?</td></tr>
+<tr valign="top"><td><code>IC.UpdateInKer</code></td>
+<td>
+if there is a non-trivial trafo in the model with matrix <i>D</i>,
+the IC to be used for this; if <code>NULL</code> the result of <code>getboundedIC(L2Fam,D)</code> is taken;
+this IC will then be projected onto <i>ker(D)</i>.</td></tr>
+<tr valign="top"><td><code>na.rm</code></td>
+<td>
+logical: if  <code>TRUE</code>, the estimator is evaluated at <code>complete.cases(x)</code>.</td></tr>
+<tr valign="top"><td><code>startArgList</code></td>
+<td>
+a list of arguments to be given to argument <code>start</code> if the latter
+is a function; this list by default already starts with two unnamed items,
+the sample <code>x</code>, and the model <code>eval(CallL2Fam(IC))</code>.</td></tr>
+<tr valign="top"><td><code>withPICList</code></td>
+<td>
+logical: shall slot <code>pICList</code> of return value
+be filled?</td></tr>
+<tr valign="top"><td><code>withICList</code></td>
+<td>
+logical: shall slot <code>ICList</code> of return value
+be filled?</td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-additional parameters </td></tr>
+ additional parameters </td></tr>
 </table>
+
 
 <h3>Details</h3>
 
@@ -101,23 +120,13 @@ based on the k-step estimate.
 
 <h3>Value</h3>
 
-<p>
-Object of class <code>"kStepEstimate"</code>.</p>
+<p>Object of class <code>"kStepEstimate"</code>.</p>
 
-<h3>Methods</h3>
-
-<dl>
-<dt>x = "numeric", IC = "IC", start = "numeric"</dt><dd>univariate samples. </dd>
-<dt>x = "matrix", IC = "IC", start = "numeric"</dt><dd>multivariate samples. </dd>
-<dt>x = "matrix", IC = "IC", start = "Estimate"</dt><dd>multivariate samples. </dd>
-<dt>x = "matrix", IC = "IC", start = "Estimate"</dt><dd>multivariate samples. </dd>
-</dl>
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,<br>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a></p>
 
 
 <h3>References</h3>
@@ -133,12 +142,79 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a href="IC-class.html">IC-class</a></code>, <code><a href="kStepEstimate-class.html">kStepEstimate-class</a></code>
-</p>
+<p><code></code>, <code></code> </p>
 
 
+<h3>Examples</h3>
 
-<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.0 <a href="00Index.html">Index]</a></div>
+<pre>
+if(require(ROptEst)){
+## 1. generate a contaminated sample
+ind &lt;- rbinom(100, size=1, prob=0.05)
+x &lt;- rnorm(100, mean=0, sd=(1-ind) + ind*9)
 
+## 2. Kolmogorov(-Smirnov) minimum distance estimator
+(est0 &lt;- MDEstimator(x=x, NormLocationScaleFamily()))
+
+## 3. k-step estimation: radius known
+N1 &lt;- NormLocationScaleFamily(mean=estimate(est0)["mean"], sd=estimate(est0)["sd"])
+N1.Rob &lt;- InfRobModel(center = N1, neighbor = ContNeighborhood(radius = 0.5))
+IC1 &lt;- optIC(model = N1.Rob, risk = asMSE())
+(est1 &lt;- kStepEstimator(x, IC1, est0, steps = 3, withPIC = TRUE))
+estimate(est1)
+ksteps(est1)
+pICList(est1)
+start(est1)
+
+## a transformed model
+tfct &lt;- function(x){
+    nms0 &lt;- c("mean","sd")
+    nms  &lt;- "comb"
+    fval0 &lt;- x[1]+2*x[2]
+    names(fval0) &lt;- nms
+    mat0 &lt;- matrix(c(1,2), nrow = 1, dimnames = list(nms,nms0))
+    return(list(fval = fval0, mat = mat0))
+}
+
+N1.traf &lt;- N1; trafo(N1.traf) &lt;- tfct
+N1R.traf &lt;- N1.Rob; trafo(N1R.traf) &lt;- tfct
+IC1.traf &lt;- optIC(model = N1R.traf, risk = asMSE())
+(est0.traf &lt;- MDEstimator(x, N1.traf))
+(est1.traf &lt;- kStepEstimator(x, IC1.traf, est0, steps = 3,
+                withIC = TRUE, withPIC = TRUE, withUpdateInKer = FALSE))
+(est1a.traf &lt;- kStepEstimator(x, IC1.traf, est0, steps = 3,
+                withIC = TRUE, withPIC = TRUE, withUpdateInKer = TRUE))
+estimate(est1.traf)
+ksteps(est1.traf)
+pICList(est1.traf)
+startval(est1.traf)
+
+untransformed.estimate(est1.traf)
+uksteps(est1.traf)
+ICList(est1.traf)
+ustartval(est1.traf)
+
+estimate(est1a.traf)
+ksteps(est1a.traf)
+pICList(est1a.traf)
+startval(est1a.traf)
+
+untransformed.estimate(est1a.traf)
+uksteps(est1a.traf)
+ICList(est1a.traf)
+ustartval(est1a.traf)
+}
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 </body></html>

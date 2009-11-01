@@ -1,0 +1,9 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+to be done in package ROptEst
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
++ control class for controlling the IC algorithm
++ "robmlox" for multivariate location and scale
++ thorough checking & improvement of duality 
+  algorithms for Hampel and (particularly) MSE
+

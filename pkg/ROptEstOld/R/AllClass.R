@@ -5,48 +5,7 @@
     require("RandVar", character = TRUE, quietly = TRUE) 
 }
 
-# positive definite, symmetric matrices with finite entries
-setClass("PosDefSymmMatrix", contains = "matrix",
-            prototype = prototype(matrix(1)),
-            validity = function(object){
-                if(nrow(object) != ncol(object))
-                    stop("no square matrix")
-                if(any(!is.finite(object)))
-                    stop("inifinite or missing values in matrix")
-                if(!isTRUE(all.equal(object, t(object), .Machine$double.eps^0.5)))
-                    stop("matrix is not symmetric")
-                if(!all(eigen(object)$values > 100*.Machine$double.eps))
-                   stop("matrix is (numerically) not positive definite")
-               return(TRUE)
-            })
-
-# optional numeric
-setClassUnion("OptionalNumeric", c("numeric", "NULL"))
-
-# class of symmetries
-setClass("Symmetry", representation(type = "character",
-                                    SymmCenter = "ANY"), 
-                     contains = "VIRTUAL")
-
-# symmetry of distributions
-setClass("DistributionSymmetry", contains = c("Symmetry", "VIRTUAL"))
-
-# spherical symmetry
-setClass("NoSymmetry", contains = "DistributionSymmetry", 
-            prototype = prototype(type = "non-symmetric distribution",
-                                  SymmCenter = NULL))
-
-# elliptical symmetry
-setClass("EllipticalSymmetry", contains = "DistributionSymmetry", 
-            prototype = prototype(type = "elliptically symmetric distribution",
-                                  SymmCenter = numeric(0)))
-
-# spherical symmetry
-setClass("SphericalSymmetry", contains = "EllipticalSymmetry", 
-            prototype = prototype(type = "spherically symmetric distribution",
-                                  SymmCenter = numeric(0)))
-
-# symmetry of distributions
+# symmetry of functions
 setClass("FunctionSymmetry", contains = c("Symmetry", "VIRTUAL"))
 
 # non-symmetric functions
@@ -63,18 +22,6 @@ setClass("EvenSymmetric", contains = "FunctionSymmetry",
 setClass("OddSymmetric", contains = "FunctionSymmetry", 
             prototype = prototype(type = "odd function",
                                   SymmCenter = numeric(0)))
-
-# list of symmetry types
-setClass(Class = "DistrSymmList", 
-            prototype = prototype(list(new("NoSymmetry"))), 
-            contains = "list",
-            validity = function(object){
-                nrvalues <- length(object)
-                for(i in 1:nrvalues)
-                    if(!is(object[[i]], "DistributionSymmetry")) 
-                        stop("element ", i, " is no 'DistributionSymmetry'")
-                return(TRUE) 
-            })
 
 # list of symmetry types
 setClass(Class = "FunSymmList", 

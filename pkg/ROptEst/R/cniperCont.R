@@ -32,11 +32,12 @@ setMethod("cniperPoint", signature(L2Fam = "L2ParamFamily",
                                    neighbor = "ContNeighborhood",
                                    risk = "asMSE"),
     function(L2Fam, neighbor, risk, lower, upper){
-        tr.invF <- sum(diag(solve(FisherInfo(L2Fam))))
+        D <- trafo(L2Fam@param)
+        tr.invF <- sum(diag(D %*% solve(FisherInfo(L2Fam)) %*% t(D)))
         psi <- optIC(model = L2Fam, risk = asCov())
         robMod <- InfRobModel(center = L2Fam, neighbor = neighbor)
         eta <- optIC(model = robMod, risk = asMSE())
-        maxMSE <- Risks(eta)$asMSE
+        maxMSE <- Risks(eta)$asMSE$value
         Delta <- sqrt(maxMSE - tr.invF)/neighbor@radius
         fun <- function(x){
             y <- evalIC(psi, x) 
@@ -50,11 +51,12 @@ setMethod("cniperPointPlot", signature(L2Fam = "L2ParamFamily",
                                    neighbor = "ContNeighborhood",
                                    risk = "asMSE"),
     function(L2Fam, neighbor, risk, lower, upper, n = 101){
-        tr.invF <- sum(diag(solve(FisherInfo(L2Fam))))
+        D <- trafo(L2Fam@param)
+        tr.invF <- sum(diag(D %*% solve(FisherInfo(L2Fam)) %*% t(D)))
         psi <- optIC(model = L2Fam, risk = asCov())
         robMod <- InfRobModel(center = L2Fam, neighbor = neighbor)
         eta <- optIC(model = robMod, risk = asMSE())
-        maxMSE <- Risks(eta)$asMSE
+        maxMSE <- Risks(eta)$asMSE$value
         fun <- function(x){
             y <- evalIC(psi, x) 
             tr.invF + as.vector(y %*% y)*neighbor@radius^2 - maxMSE

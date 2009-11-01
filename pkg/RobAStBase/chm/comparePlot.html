@@ -1,10 +1,10 @@
 <html><head><title>Compare - Plots</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>comparePlot-methods(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>comparePlot-methods(RobAStBase)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   comparePlot">
 <param name="keyword" value="R:   comparePlot-methods">
 <param name="keyword" value="R:   comparePlot,IC,IC-method">
@@ -26,13 +26,19 @@ Plots 2-4 influence curves to the same model.
 
 <pre>
 comparePlot(obj1, obj2, ... )
-## S4 method for signature 'IC, IC':
+## S4 method for signature 'IC,IC':
 comparePlot(obj1, obj2, obj3 = NULL, obj4 = NULL, 
-             ..., withSweave = getdistrOption("withSweave"), 
+             data = NULL, ..., withSweave = getdistrOption("withSweave"),
              main = FALSE, inner = TRUE, sub = FALSE, 
+             col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
-             mfColRow = TRUE)
+             legend.location = "bottomright", 
+             mfColRow = TRUE, to.draw.arg = NULL,
+             cex.pts = 1, col.pts = par("col"),
+             pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
+             lab.pts = NULL, lab.font = NULL,
+             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE)
 </pre>
 
 
@@ -41,29 +47,45 @@ comparePlot(obj1, obj2, obj3 = NULL, obj4 = NULL,
 <table summary="R argblock">
 <tr valign="top"><td><code>obj1</code></td>
 <td>
-object of class <code>"InfluenceCurve"</code> </td></tr>
+ object of class <code>"InfluenceCurve"</code> </td></tr>
 <tr valign="top"><td><code>obj2</code></td>
 <td>
-object of class <code>"InfluenceCurve"</code> to be compared with <code>obj1</code></td></tr>
+ object of class <code>"InfluenceCurve"</code> to be compared with <code>obj1</code></td></tr>
 <tr valign="top"><td><code>obj3</code></td>
 <td>
-optional: object of class <code>"InfluenceCurve"</code> to be compared with <code>obj1</code></td></tr>
+ optional: object of class <code>"InfluenceCurve"</code> to be compared with <code>obj1</code></td></tr>
 <tr valign="top"><td><code>obj4</code></td>
 <td>
-optional: object of class <code>"InfluenceCurve"</code> to be compared with <code>obj1</code></td></tr>
+ optional: object of class <code>"InfluenceCurve"</code> to be compared with <code>obj1</code></td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+optional data argument &mdash; for plotting observations into the plot;</td></tr>
 <tr valign="top"><td><code>withSweave</code></td>
 <td>
-logical: if <code>TRUE</code> (for working with <CODE>Sweave</CODE>) 
+logical: if <code>TRUE</code> (for working with <CODE>Sweave</CODE>)
 no extra device is opened</td></tr>
 <tr valign="top"><td><code>main</code></td>
 <td>
 logical: is a main title to be used? or <br>
 just as argument <code>main</code> in <code><a onclick="findlink('graphics', 'plotdefault.html')" style="text-decoration: underline; color: blue; cursor: hand">plot.default</a></code>.</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+color[s] of ICs in arguments <code>obj1</code> [,...,<code>obj4</code>].</td></tr>
+<tr valign="top"><td><code>lwd</code></td>
+<td>
+linewidth[s] of ICs in arguments <code>obj1</code> [,...,<code>obj4</code>].</td></tr>
+<tr valign="top"><td><code>lty</code></td>
+<td>
+line-type[s] of ICs in arguments <code>obj1</code> [,...,<code>obj4</code>].</td></tr>
 <tr valign="top"><td><code>inner</code></td>
 <td>
-logical: panels have their own titles? or <br>
-character vector of / cast to length number of comparands: 
-<code>main</code> in <code><a onclick="findlink('graphics', 'plotdefault.html')" style="text-decoration: underline; color: blue; cursor: hand">plot.default</a></code>)</td></tr>
+logical: do panels have their own titles? or <br>
+character vector of / cast to length 'number of plotted 
+dimensions';
+if argument <code>to.draw.arg</code> is used, this refers to 
+a vector of length <code>length(to.draw.arg)</code>, the 
+actually plotted dimensions. For further information, see also 
+description of argument <code>main</code> in <code><a onclick="findlink('graphics', 'plotdefault.html')" style="text-decoration: underline; color: blue; cursor: hand">plot.default</a></code>.</td></tr> 
 <tr valign="top"><td><code>sub</code></td>
 <td>
 logical: is a sub-title to be used? or <br>
@@ -78,17 +100,80 @@ bottom margin &ndash; useful for non-standard sub title sizes</td></tr>
 <td>
 magnification to be used for inner titles relative
 to the current setting of <code>cex</code>; as in 
-<code><a onclick="findlink('stats', 'par.html')" style="text-decoration: underline; color: blue; cursor: hand">par</a></code></td></tr>
+<code><a onclick="findlink('graphics', 'par.html')" style="text-decoration: underline; color: blue; cursor: hand">par</a></code></td></tr>
 <tr valign="top"><td><code>col.inner</code></td>
 <td>
-character or integer code; color for the inner title</td></tr>
+character or integer code; color for the inner title</td></tr>              
+<tr valign="top"><td><code>legend.location</code></td>
+<td>
+a valid argument <code>x</code> for <code><a onclick="findlink('graphics', 'legend.html')" style="text-decoration: underline; color: blue; cursor: hand">legend</a></code> &mdash;
+the place where to put the legend on the last issued
+plot</td></tr>
 <tr valign="top"><td><code>mfColRow</code></td>
 <td>
 shall default partition in panels be used &mdash; defaults to <code>TRUE</code></td></tr>
+<tr valign="top"><td><code>to.draw.arg</code></td>
+<td>
+Either <code>NULL</code> (default; 
+everything is plotted) or a vector of either integers 
+(the indices of the subplots to be drawn) or characters 
+&mdash; the names of the subplots to be drawn: these
+names are to be chosen either among the row names of 
+the trafo matrix 
+<code>rownames(trafo(eval(obj1@CallL2Fam)@param))</code> 
+or if the last expression is <code>NULL</code> a 
+vector <code>"dim&lt;dimnr&gt;"</code>, <code>dimnr</code> running through 
+the number of rows of the trafo matrix.
+</td></tr>
+<tr valign="top"><td><code>cex.pts</code></td>
+<td>
+size of the points of the <code>data</code> argument plotted</td></tr>
+<tr valign="top"><td><code>col.pts</code></td>
+<td>
+color of the points of the <code>data</code> argument plotted</td></tr>
+<tr valign="top"><td><code>pch.pts</code></td>
+<td>
+symbol of the points of the <code>data</code> argument plotted</td></tr>
+<tr valign="top"><td><code>with.lab</code></td>
+<td>
+logical; shall labels be plotted to the observations?</td></tr>
+<tr valign="top"><td><code>lab.pts</code></td>
+<td>
+character or NULL; labels to be plotted to the observations; if <code>NULL</code>
+observation indices;</td></tr>
+<tr valign="top"><td><code>lab.font</code></td>
+<td>
+font to be used for labels</td></tr>
+<tr valign="top"><td><code>jitter.fac</code></td>
+<td>
+jittering factor used in case of a <code>DiscreteDistribution</code>
+for plotting points of the <code>data</code> argument in a jittered fashion.</td></tr>
+<tr valign="top"><td><code>which.lbs</code></td>
+<td>
+either an integer vector with the indices of the observations
+to be plotted into graph or <code>NULL</code> &mdash; then no observation is excluded</td></tr>
+<tr valign="top"><td><code>which.Order</code></td>
+<td>
+for each of the given ICs, we order the observations (descending)
+according to the norm given by the corresponding <code>normtype(object)</code>;
+then <code>which.Order</code> either is an integer vector with the indices of the <EM>ordered</EM>
+observations (remaining after a possible reduction by argument <code>which.lbs</code>)
+to be plotted into graph or <code>NULL</code> &mdash; then no (further) observation
+is excluded.</td></tr>
+<tr valign="top"><td><code>return.Order</code></td>
+<td>
+logical; if <code>TRUE</code>, a list of length maximally four
+with order vectors is returned &mdash; one for the ordering w.r.t. each of
+the given ICs; more specifically, the order of the (remaining) observations
+given by their original index is returned (remaining means: after a possible
+reduction by argument <code>which.lbs</code>, and ordering is according to the norm given by
+<code>normtype(object)</code>);
+othervise we return <code>invisible()</code> as usual.</td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
 further arguments to be passed to <code>plot</code></td></tr>
 </table>
+
 
 <h3>Details</h3>
 
@@ -109,19 +194,28 @@ and a "generated on &lt;data&gt;"-tag in case of <code>sub</code>.
 Of course, if <code>main</code> / <code>inner</code> / <code>sub</code> are <code>character</code>, this
 is used for the title; in case of <code>inner</code> it is then checked whether it
 has correct length. In all title arguments, the following patterns are substituted:
-<ul>
+
+<dl>
 <dt><code>"%C1"</code>,<code>"%C2"</code>,[<code>"%C3"</code>,][<code>"%C4"</code>]</dt><dd>class of argument 
 <code>obj&lt;i&gt;</code>, i=1,..4</dd>
 <dt><code>"%A1"</code>,<code>"%A2"</code>,[<code>"%A3"</code>,][<code>"%A4"</code>]</dt><dd>deparsed argument  
 <code>obj&lt;i&gt;</code>, i=1,..4</dd>
 <dt><code>"%D"</code></dt><dd>time/date-string when the plot was generated</dd>
-</ul>
+</dl>
+
+</p>
+<p>
+If argument <code>...</code> contains argument <code>ylim</code>, this may either be
+as in <code>plot.default</code> (i.e. a vector of length 2) or a vector of 
+length 2*(number of plotted dimensions); in the case of longer length, 
+these are the values for <code>ylim</code> for the plotted dimensions of the IC, 
+one pair for each dimension.
+</p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a>
-</p>
+<p>Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a></p>
 
 
 <h3>References</h3>
@@ -134,9 +228,7 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a onclick="findlink('distrMod', 'L2ParamFamily-class.html')" style="text-decoration: underline; color: blue; cursor: hand">L2ParamFamily-class</a></code>, <code><a href="IC-class.html">IC-class</a></code>, <code><a onclick="findlink('base', 'plot.html')" style="text-decoration: underline; color: blue; cursor: hand">plot</a></code>
-</p>
+<p><code><a onclick="findlink('distrMod', 'L2ParamFamily-class.html')" style="text-decoration: underline; color: blue; cursor: hand">L2ParamFamily-class</a></code>, <code></code>, <code><a onclick="findlink('base', 'plot.html')" style="text-decoration: underline; color: blue; cursor: hand">plot</a></code></p>
 
 
 <h3>Examples</h3>
@@ -151,6 +243,44 @@ IC1 &lt;- optIC(model = N0, risk = asCov())
 IC2 &lt;- optIC(model = N0.Rob1, risk = asMSE())
 
 comparePlot(IC1,IC2)
+
+data &lt;- r(N0)(20)
+comparePlot(IC1, IC2, data=data, with.lab = TRUE,
+            which.lbs = c(1:4,15:20),
+            which.Order = 1:6,
+            return.Order = TRUE)
+
+## selection of subpanels for plotting
+par(mfrow=c(1,1))
+comparePlot(IC1, IC2 ,mfColRow = FALSE, to.draw.arg=c("mean"),
+            panel.first= grid(),ylim=c(-4,4),xlim=c(-6,6))
+## matrix-valued ylim
+comparePlot(IC1, IC2, panel.first= grid(),ylim=c(-4,4,0,4),xlim=c(-6,6))
+
+## with use of trafo-matrix:
+G &lt;- GammaFamily(scale = 1, shape = 2)
+## explicitely transforming to
+## MASS parametrization:
+mtrafo &lt;- function(x){
+     nms0 &lt;- names(c(main(param(G)),nuisance(param(G))))
+     nms &lt;- c("shape","rate")
+     fval0 &lt;- c(x[2], 1/x[1])
+     names(fval0) &lt;- nms
+     mat0 &lt;- matrix( c(0, -1/x[1]^2, 1, 0), nrow = 2, ncol = 2,
+                     dimnames = list(nms,nms0))                          
+     list(fval = fval0, mat = mat0)}
+G2 &lt;- G
+trafo(G2) &lt;- mtrafo
+G2
+G2.Rob1 &lt;- InfRobModel(center = G2, neighbor = ContNeighborhood(radius = 0.5))
+system.time(IC1 &lt;- optIC(model = G2, risk = asCov()))
+system.time(IC2 &lt;- optIC(model = G2.Rob1, risk = asMSE()))
+system.time(IC2.i &lt;- optIC(model = G2.Rob1, risk = asMSE(normtype=InfoNorm())))
+system.time(IC2.s &lt;- optIC(model = G2.Rob1, risk = asMSE(normtype=SelfNorm())))
+
+comparePlot(IC1,IC2, IC2.i, IC2.s)
+
+
 }
 </pre>
 
@@ -164,7 +294,5 @@ location.href = link;
 }
 </script>
 
-
-<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.3 <a href="00Index.html">Index]</a></div>
-
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 </body></html>

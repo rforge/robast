@@ -6,23 +6,37 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                                     neighbor = "UncondNeighborhood",
                                     risk = "asMSE"),
     function(radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
-             z.start = NULL, A.start = NULL, upper.b, MaxIter, eps, warn,
-             loNorm = NULL, upNorm = NULL, verbose = FALSE){
+             z.start = NULL, A.start = NULL, upper.b = NULL, lower.b = NULL,
+             OptOrIter = "iterate", MaxIter, eps, warn,
+             loNorm = NULL, upNorm = NULL,
+             verbose = NULL, ...){
+
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
         L2derivDim <- numberOfMaps(L2Fam@L2deriv)
         if(L2derivDim == 1){
+            ##print(radius)
             neighbor@radius <- radius
             res <- getInfRobIC(L2deriv = L2Fam@L2derivDistr[[1]], neighbor = neighbor, 
                         risk = risk, symm = L2Fam@L2derivDistrSymm[[1]], 
-                        Finfo = L2Fam@FisherInfo, upper = upper.b,
-                        trafo = L2Fam@param@trafo, maxiter = MaxIter, tol = eps, 
+                        Finfo = L2Fam@FisherInfo, upper = upper.b, lower = lower.b,
+                        trafo = trafo(L2Fam@param),
+                        maxiter = MaxIter, tol = eps,
                         warn = warn, verbose = verbose)
-            trafo <- as.vector(L2Fam@param@trafo)
+            trafo <- as.vector(trafo(L2Fam@param))
             ineffLo <- (as.vector(res$A)*trafo - res$b^2*(radius^2-loRad^2))/loRisk
+            ####cat("---------------\n")
+            ##res00=res;res00$w <- NULL; res00$biastype <- NULL; res00$d <- NULL
+            ##res00$normtype <- NULL;res00$info <- NULL;res00$risk <- NULL;
+            ##print(res00)
+            ##print(c(lower.b,upper.b,loRisk,"upR"=upRisk))
+            ####cat("---------------\n")
             if(upRad == Inf)
                 ineffUp <- res$b^2/upRisk
             else
                 ineffUp <- (as.vector(res$A)*trafo - res$b^2*(radius^2-upRad^2))/upRisk
             assign("ineff", ineffUp, envir = sys.frame(which = -4))
+            ##print(c(ineffUp,ineffLo,ineffUp - ineffLo))
             return(ineffUp - ineffLo)
         }else{
             if(is(L2Fam@distribution, "UnivariateDistribution")){
@@ -45,17 +59,20 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                         L2derivDistrSymm <- new("DistrSymmList", L2)
                     }
                 }
-                trafo <- L2Fam@param@trafo
+                trafo <- trafo(L2Fam@param)
                 p <- nrow(trafo)
                 neighbor@radius <- radius
                 res <- getInfRobIC(L2deriv = L2deriv, neighbor = neighbor, risk = risk, 
                             Distr = L2Fam@distribution, DistrSymm = L2Fam@distrSymm, 
                             L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm, 
                             Finfo = L2Fam@FisherInfo, trafo = trafo, z.start = z.start, 
-                            A.start = A.start, upper = upper.b, maxiter = MaxIter, 
-                            tol = eps, warn = warn, verbose = verbose)
+                            A.start = A.start, upper = upper.b, lower = lower.b,
+                            OptOrIter = OptOrIter, maxiter = MaxIter,
+                            tol = eps, warn = warn, verbose = verbose,
+                            withPICcheck = FALSE,...)
                 normtype(risk) <- res$normtype
-                std <- if(is(normtype(risk),"QFNorm")) QuadForm(normtype(risk)) else diag(p)
+                std <- if(is(normtype(risk),"QFNorm"))
+                          QuadForm(normtype(risk)) else diag(p)
 
                 biasLo <- biasUp <- res$b
 
@@ -84,7 +101,13 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                                 biasUp^2*(radius^2-upRad^2))/upRisk}
                 assign("ineff", ineffUp, envir = sys.frame(which = -4))
                 if(verbose)
-                    cat("current radius:\t", radius, "\tMSE-inefficiency difference:\t", ineffUp - ineffLo, "\n")
+                    cat(paste(rep("-",75), sep = "", collapse = ""),"\n",
+                        "current radius:   ", round(radius,4),
+                        "\tMSE-inefficiency difference:   ",
+                        round(ineffUp - ineffLo,4),
+                        paste("\n",paste(rep("-",75), sep = "",
+                                         collapse = ""),"\n",sep="")
+                        )
 
                 return(ineffUp - ineffLo)
             }else{

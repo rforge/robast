@@ -90,7 +90,7 @@ Risks(G0.IC6)
 checkIC(G0.IC7)
 Risks(G0.IC7)
 (G0.IC8 <- radiusMinimaxIC(L2Fam=G0, neighbor=TotalVarNeighborhood(), 
-                risk=asMSE(), loRad=0.5, upRad=1.0))
+                risk=asMSE(), loRad=0.5, upRad=1.5))
 checkIC(G0.IC8)
 Risks(G0.IC8)
 

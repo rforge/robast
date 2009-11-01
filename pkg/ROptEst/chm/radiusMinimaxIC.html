@@ -1,10 +1,10 @@
 <html><head><title>Generic function for the computation of the radius minimax IC</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>radiusMinimaxIC(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>radiusMinimaxIC(ROptEst)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   radiusMinimaxIC">
 <param name="keyword" value="R:   radiusMinimaxIC-methods">
 <param name="keyword" value="R:   radiusMinimaxIC,L2ParamFamily,UncondNeighborhood,asGRisk-method">
@@ -27,12 +27,12 @@ Generic function for the computation of the radius minimax IC.
 <pre>
 radiusMinimaxIC(L2Fam, neighbor, risk, ...)
 
-## S4 method for signature 'L2ParamFamily,
-##   UncondNeighborhood, asGRisk':
+## S4 method for signature 'L2ParamFamily,UncondNeighborhood,asGRisk':
 radiusMinimaxIC(
-        L2Fam, neighbor, risk, loRad, upRad, z.start = NULL, A.start = NULL, 
-        upper = 1e5, maxiter = 50, tol = .Machine$double.eps^0.4, 
-        warn = FALSE, verbose = FALSE)
+        L2Fam, neighbor, risk, loRad = 0, upRad = Inf, z.start = NULL, A.start = NULL, 
+        upper = NULL, lower = NULL, OptOrIter = "iterate",
+        maxiter = 50, tol = .Machine$double.eps^0.4,
+        warn = FALSE, verbose = NULL, loRad0 = 1e-3, ...)
 </pre>
 
 
@@ -41,44 +41,63 @@ radiusMinimaxIC(
 <table summary="R argblock">
 <tr valign="top"><td><code>L2Fam</code></td>
 <td>
-L2-differentiable family of probability measures. </td></tr>
+ L2-differentiable family of probability measures. </td></tr>
 <tr valign="top"><td><code>neighbor</code></td>
 <td>
-object of class <code>"Neighborhood"</code>. </td></tr>
+ object of class <code>"Neighborhood"</code>. </td></tr>
 <tr valign="top"><td><code>risk</code></td>
 <td>
-object of class <code>"RiskType"</code>. </td></tr>
-<tr valign="top"><td><code>...</code></td>
-<td>
-additional parameters. </td></tr>
+ object of class <code>"RiskType"</code>. </td></tr>
 <tr valign="top"><td><code>loRad</code></td>
 <td>
-the lower end point of the interval to be searched. </td></tr>
+ the lower end point of the interval to be searched. </td></tr>
 <tr valign="top"><td><code>upRad</code></td>
 <td>
-the upper end point of the interval to be searched. </td></tr>
+ the upper end point of the interval to be searched. </td></tr>
 <tr valign="top"><td><code>z.start</code></td>
 <td>
-initial value for the centering constant. </td></tr>
+ initial value for the centering constant. </td></tr>
 <tr valign="top"><td><code>A.start</code></td>
 <td>
-initial value for the standardizing matrix. </td></tr>
+ initial value for the standardizing matrix. </td></tr>
 <tr valign="top"><td><code>upper</code></td>
 <td>
-upper bound for the optimal clipping bound. </td></tr>
+ upper bound for the optimal clipping bound. </td></tr>
+<tr valign="top"><td><code>lower</code></td>
+<td>
+ lower bound for the optimal clipping bound. </td></tr>
+<tr valign="top"><td><code>OptOrIter</code></td>
+<td>
+character; which method to be used for determining Lagrange
+multipliers <code>A</code> and <code>a</code>: if (partially) matched to <code>"optimize"</code>,
+<code>getLagrangeMultByOptim</code> is used; otherwise: by default, or if matched to
+<code>"iterate"</code> or to <code>"doubleiterate"</code>,
+<code>getLagrangeMultByIter</code> is used. More specifically,
+when using <code>getLagrangeMultByIter</code>, and if argument <code>risk</code> is of
+class <code>"asGRisk"</code>, by default and if matched to <code>"iterate"</code>
+we use only one (inner) iteration, if matched to <code>"doubleiterate"</code>
+we use up to <code>Maxiter</code> (inner) iterations.</td></tr>
 <tr valign="top"><td><code>maxiter</code></td>
 <td>
-the maximum number of iterations </td></tr>
+ the maximum number of iterations </td></tr>
 <tr valign="top"><td><code>tol</code></td>
 <td>
-the desired accuracy (convergence tolerance).</td></tr>
+ the desired accuracy (convergence tolerance).</td></tr>
 <tr valign="top"><td><code>warn</code></td>
 <td>
-logical: print warnings. </td></tr>
+ logical: print warnings. </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>
-logical: if <code>TRUE</code>, some messages are printed </td></tr>
+ logical: if <code>TRUE</code>, some messages are printed </td></tr>
+<tr valign="top"><td><code>loRad0</code></td>
+<td>
+ for numerical reasons: the effective lower bound for the zero search;
+internally set to <code>max(loRad,loRad0)</code>.</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+further arguments to be passed on to <code>getInfRobIC</code></td></tr>
 </table>
+
 
 <h3>Details</h3>
 
@@ -92,26 +111,29 @@ optimal for some radius interval.
 
 <h3>Value</h3>
 
-<p>
-The radius minimax IC is computed.</p>
+<p>The radius minimax IC is computed.</p>
+
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
-<dt>L2Fam = "L2ParamFamily", neighbor = "UncondNeighborhood", risk = "asGRisk":</dt><dd>computation of the radius minimax IC for an L2 differentiable parametric family. </dd>
+<dt>L2Fam = "L2ParamFamily", neighbor = "UncondNeighborhood", risk = "asGRisk":</dt><dd> 
+computation of the radius minimax IC for an L2 differentiable parametric family. </dd>
 </dl>
+</p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,
-Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a></p>
 
 
 <h3>References</h3>
 
-<p>
+<p> 
 Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
 the Radius. Statistical Methods and Applications, <EM>17</EM>(1) 13-40.
 </p>
@@ -130,9 +152,7 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a href="radiusMinimaxIC.html">radiusMinimaxIC</a></code>
-</p>
+<p><code></code></p>
 
 
 <h3>Examples</h3>
@@ -144,8 +164,15 @@ radIC &lt;- radiusMinimaxIC(L2Fam=N, neighbor=ContNeighborhood(),
 checkIC(radIC)
 </pre>
 
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
-
-<hr><div align="center">[Package <em>ROptEst</em> version 0.6.0 <a href="00Index.html">Index]</a></div>
-
+<hr><div align="center">[Package <em>ROptEst</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 </body></html>

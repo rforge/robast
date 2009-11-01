@@ -1,10 +1,10 @@
 <html><head><title>Real random variable</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>RealRandVariable-class(RandVar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>RealRandVariable-class(RandVar)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   RealRandVariable-class">
 <param name="keyword" value="R:   Range<-,RealRandVariable-method">
 <param name="keyword" value=" Real random variable">
@@ -16,9 +16,7 @@
 
 <h3>Description</h3>
 
-<p>
-Class of real random variables.
-</p>
+<p>Class of real random variables.</p>
 
 
 <h3>Objects from the Class</h3>
@@ -26,19 +24,24 @@ Class of real random variables.
 <p>
 Objects can be created by calls of the form <code>new("RealRandVariable", ...)</code>.
 More frequently they are created via the generating function 
-<code>EuclRandVariable</code>.
+<code>EuclRandVariable</code>. 
 </p>
 
 
 <h3>Slots</h3>
 
+<p>
+
 <dl>
-<dt><code>Map</code>:</dt><dd>Object of class <code>"list"</code>: list of functions. </dd>
-<dt><code>Domain</code>:</dt><dd>Object of class <code>"OptionalrSpace"</code>: 
+<dt><code>Map</code></dt><dd>Object of class <code>"list"</code>: list of functions. </dd>
+<dt><code>Domain</code></dt><dd>Object of class <code>"OptionalrSpace"</code>: 
 domain of the random variable. </dd>
-<dt><code>Range</code>:</dt><dd>Object of class <code>"Reals"</code>:
+<dt><code>Range</code></dt><dd>Object of class <code>"Reals"</code>:
 range of the random variable. </dd>
 </dl>
+
+</p>
+
 
 <h3>Extends</h3>
 
@@ -50,23 +53,24 @@ Class <code>"RandVariable"</code>, by class <code>"EuclRandVariable"</code>.
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
 <dt>Range&lt;-</dt><dd><code>signature(object = "EuclRandVariable")</code>:
 replacement function for the slot <code>Range</code>. </dd>
 </dl>
 
+</p>
+
+
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>See Also</h3>
 
-<p>
-<code><a href="EuclRandVariable-class.html">EuclRandVariable-class</a></code>
-</p>
+<p><code></code></p>
 
 
 <h3>Examples</h3>
@@ -75,8 +79,15 @@ Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de
 new("RealRandVariable", Map=list(function(x){x}), Range = Reals())
 </pre>
 
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
-
-<hr><div align="center">[Package <em>RandVar</em> version 0.6.3 <a href="00Index.html">Index]</a></div>
-
+<hr><div align="center">[Package <em>RandVar</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 </body></html>

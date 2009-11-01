@@ -10,6 +10,8 @@
 \alias{neighbor,RobModel-method}
 \alias{neighbor<-}
 \alias{neighbor<-,RobModel-method}
+\alias{trafo,RobModel,missing-method}
+\alias{trafo<-,RobModel-method}
 
 \title{Robust model}
 \description{Class of robust models. A robust model consists 
@@ -18,8 +20,8 @@
 \section{Objects from the Class}{A virtual Class: No objects may be created from it.}
 \section{Slots}{
   \describe{
-    \item{\code{center}:}{Object of class \code{"ProbFamily"} }
-    \item{\code{neighbor}:}{Object of class \code{"Neighborhood"}}
+    \item{\code{center}}{Object of class \code{"ProbFamily"} }
+    \item{\code{neighbor}}{Object of class \code{"Neighborhood"}}
   }
 }
 \section{Methods}{
@@ -32,6 +34,11 @@
       accessor function for slot \code{neighbor}. }
     \item{neighbor<-}{\code{signature(object = "RobModel")}: 
       replacement function for slot \code{neighbor}. }
+    \item{trafo}{\code{signature(object = "RobModel", param = "missing")}:
+      accessor function for slot \code{trafo} of slot \code{center}. }
+    \item{trafo<-}{\code{signature(object = "RobModel")}:
+      replacement function for slot \code{trafo}
+      of slot \code{center}. }
   }
 }
 \references{

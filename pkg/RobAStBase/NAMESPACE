@@ -18,9 +18,10 @@ exportClasses("RobAStControl", "RobWeight", "BoundedWeight",
               "BdStWeight", "HampelWeight")
 exportClasses("ALEstimate", "kStepEstimate", "MEstimate")
 exportClasses("cutoff")
+exportClasses("StartClass", "pICList", "OptionalpICList")
 exportMethods("show", 
               "plot")
-exportMethods("type", "radius")
+exportMethods("type", "radius", "radius<-")
 exportMethods("name", "name<-", 
               "infoPlot")
 exportMethods("center", "center<-", 
@@ -40,10 +41,8 @@ exportMethods("Curve",
               "neighborRadius", "neighborRadius<-", 
               "clipLo", "clipLo<-", 
               "clipUp", "clipUp<-",
-              "optIC") 
-exportMethods("oneStepEstimator",
-              "kStepEstimator",
-              "locMEstimator")
+              "optIC", "start", "startval", "pICList") 
+exportMethods("locMEstimator")
 exportMethods("weight", "weight<-", 
               "getweight", 
               "minbiasweight", 
@@ -54,13 +53,16 @@ exportMethods("getBiasIC")
 exportMethods("comparePlot")
 exportMethods("pIC", "asbias", 
               "steps", 
-              "Mroot")
-exportMethods("ddPlot")
+              "Mroot","kStepEstimator.start")
+exportMethods("pICList","ICList", "ksteps", "uksteps", 
+              "start", "startval", "ustartval")
+exportMethods("ddPlot", "qqplot")
 exportMethods("cutoff.quantile", "cutoff.quantile<-")
+export("oneStepEstimator", "kStepEstimator")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 
 export("InfluenceCurve", "IC", "ContIC", "TotalVarIC")
-export(".eq", ".getDistr")
+export(".eq", ".getDistr", "getBoundedIC")
 export("RobAStBaseOptions", "getRobAStBaseOption")
 export("cutoff","cutoff.chisq","cutoff.sememp")
-export("outlyingPlotIC")
+export("outlyingPlotIC", "RobAStBaseMASK")

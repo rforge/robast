@@ -1,0 +1,17 @@
+###############################################################################
+##  News: to package ROptEstOld
+###############################################################################
+
+(first two numbers of package versions do not necessarily reflect 
+ package-individual development, but rather are chosen for the 
+ RobAStXXX family as a whole in order to ease updating "depends" 
+ information)
+
+#######################################
+version 0.7
+#######################################
+
+user-visible CHANGES:
+
++ introduced package ROptEstOld for use with ROptRegTS and RobRex
++ removed symmetry and DistributionSymmetry implementation to make ROptEstOld compatible with distr 2.2

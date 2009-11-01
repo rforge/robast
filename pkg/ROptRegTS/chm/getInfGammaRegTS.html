@@ -1,10 +1,10 @@
 <html><head><title>Generic Function for the Computation of the Optimal Clipping Bound</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>getInfGammaRegTS(ROptRegTS)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>getInfGammaRegTS(ROptRegTS)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   getInfGammaRegTS">
 <param name="keyword" value="R:   getInfGammaRegTS-methods">
 <param name="keyword" value="R:   getInfGammaRegTS,UnivariateDistribution,UnivariateDistribution,asMSE,ContNeighborhood-method">
@@ -41,74 +41,55 @@ to compute optimally robust ICs.
 <pre>
 getInfGammaRegTS(ErrorL2deriv, Regressor, risk, neighbor, ...)
 
-## S4 method for signature 'UnivariateDistribution,
-##   UnivariateDistribution, asMSE, ContNeighborhood':
+## S4 method for signature 'UnivariateDistribution,UnivariateDistribution,asMSE,ContNeighborhood':
 getInfGammaRegTS(ErrorL2deriv, 
                 Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-## S4 method for signature 'UnivariateDistribution,
-##   UnivariateDistribution, asMSE,
-##   Av1CondContNeighborhood':
+## S4 method for signature 'UnivariateDistribution,UnivariateDistribution,asMSE,Av1CondContNeighborhood':
 getInfGammaRegTS(ErrorL2deriv, 
                 Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-## S4 method for signature 'UnivariateDistribution,
-##   UnivariateDistribution, asMSE,
-##   Av1CondTotalVarNeighborhood':
+## S4 method for signature 'UnivariateDistribution,UnivariateDistribution,asMSE,Av1CondTotalVarNeighborhood':
 getInfGammaRegTS(ErrorL2deriv, 
                 Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-## S4 method for signature 'UnivariateDistribution,
-##   MultivariateDistribution, asMSE, ContNeighborhood':
+## S4 method for signature 'UnivariateDistribution,MultivariateDistribution,asMSE,ContNeighborhood':
 getInfGammaRegTS(ErrorL2deriv, 
                 Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-## S4 method for signature 'UnivariateDistribution,
-##   MultivariateDistribution, asMSE,
-##   Av1CondContNeighborhood':
+## S4 method for signature 'UnivariateDistribution,MultivariateDistribution,asMSE,Av1CondContNeighborhood':
 getInfGammaRegTS(ErrorL2deriv, 
                 Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-## S4 method for signature 'UnivariateDistribution,
-##   MultivariateDistribution, asMSE,
-##   Av1CondTotalVarNeighborhood':
+## S4 method for signature 'UnivariateDistribution,MultivariateDistribution,asMSE,Av1CondTotalVarNeighborhood':
 getInfGammaRegTS(ErrorL2deriv, 
                 Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-## S4 method for signature 'UnivariateDistribution,
-##   Distribution, asMSE, Av2CondContNeighborhood':
+## S4 method for signature 'UnivariateDistribution,Distribution,asMSE,Av2CondContNeighborhood':
 getInfGammaRegTS(ErrorL2deriv, 
                 Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-## S4 method for signature 'RealRandVariable, Distribution,
-##   asMSE, ContNeighborhood':
+## S4 method for signature 'RealRandVariable,Distribution,asMSE,ContNeighborhood':
 getInfGammaRegTS(ErrorL2deriv, 
                 Regressor, risk, neighbor, ErrorDistr, stand, cent, clip)
 
-## S4 method for signature 'RealRandVariable, Distribution,
-##   asMSE, Av1CondContNeighborhood':
+## S4 method for signature 'RealRandVariable,Distribution,asMSE,Av1CondContNeighborhood':
 getInfGammaRegTS(ErrorL2deriv, 
                 Regressor, risk, neighbor, ErrorDistr, stand, cent, clip)
 
-## S4 method for signature 'UnivariateDistribution,
-##   UnivariateDistribution, asUnOvShoot,
-##   ContNeighborhood':
+## S4 method for signature 'UnivariateDistribution,UnivariateDistribution,asUnOvShoot,ContNeighborhood':
 getInfGammaRegTS(ErrorL2deriv, 
                 Regressor, risk, neighbor, cent, clip)
 
-## S4 method for signature 'UnivariateDistribution,
-##   UnivariateDistribution, asUnOvShoot,
-##   TotalVarNeighborhood':
+## S4 method for signature 'UnivariateDistribution,UnivariateDistribution,asUnOvShoot,TotalVarNeighborhood':
 getInfGammaRegTS(ErrorL2deriv, 
                 Regressor, risk, neighbor, cent, clip)
 
-## S4 method for signature 'UnivariateDistribution,
-##   numeric, asUnOvShoot, CondContNeighborhood':
+## S4 method for signature 'UnivariateDistribution,numeric,asUnOvShoot,CondContNeighborhood':
 getInfGammaRegTS(ErrorL2deriv, 
                 Regressor, risk, neighbor, clip)
 
-## S4 method for signature 'UnivariateDistribution,
-##   numeric, asUnOvShoot, CondTotalVarNeighborhood':
+## S4 method for signature 'UnivariateDistribution,numeric,asUnOvShoot,CondTotalVarNeighborhood':
 getInfGammaRegTS(ErrorL2deriv, 
                 Regressor, risk, neighbor, clip)
 </pre>
@@ -119,36 +100,37 @@ getInfGammaRegTS(ErrorL2deriv,
 <table summary="R argblock">
 <tr valign="top"><td><code>ErrorL2deriv</code></td>
 <td>
-L2-derivative of <code>ErrorDistr</code>. </td></tr>
+ L2-derivative of <code>ErrorDistr</code>. </td></tr>
 <tr valign="top"><td><code>Regressor</code></td>
 <td>
-regressor. </td></tr>
+ regressor. </td></tr>
 <tr valign="top"><td><code>risk</code></td>
 <td>
-object of class <code>"RiskType"</code>. </td></tr>
+ object of class <code>"RiskType"</code>. </td></tr>
 <tr valign="top"><td><code>neighbor</code></td>
 <td>
-object of class <code>"Neighborhood"</code>. </td></tr>
+ object of class <code>"Neighborhood"</code>. </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-additional parameters. </td></tr>
+ additional parameters. </td></tr>
 <tr valign="top"><td><code>clip</code></td>
 <td>
-optimal clipping bound. </td></tr>
+ optimal clipping bound. </td></tr>
 <tr valign="top"><td><code>cent</code></td>
 <td>
-optimal centering constant/function. </td></tr>
+ optimal centering constant/function. </td></tr>
 <tr valign="top"><td><code>stand</code></td>
 <td>
-standardizing matrix. </td></tr>
+ standardizing matrix. </td></tr>
 <tr valign="top"><td><code>z.comp</code></td>
 <td>
-which components of the centering constant/function 
+ which components of the centering constant/function 
 have to be computed. </td></tr>
 <tr valign="top"><td><code>ErrorDistr</code></td>
 <td>
-error distribution. </td></tr>
+ error distribution. </td></tr>
 </table>
+
 
 <h3>Details</h3>
 
@@ -160,51 +142,66 @@ Ruckdeschel and Rieder (2004).
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", risk = "asMSE", neighbor = "ContNeighborhood"</dt><dd>used by <code>getInfClipRegTS</code>. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", risk = "asMSE", neighbor = "Av1CondContNeighborhood"</dt><dd>used by <code>getInfClipRegTS</code>. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", risk = "asMSE", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd>used by <code>getInfClipRegTS</code>. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", risk = "asMSE", neighbor = "ContNeighborhood"</dt><dd>used by <code>getInfClipRegTS</code>. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", risk = "asMSE", neighbor = "Av1CondContNeighborhood"</dt><dd>used by <code>getInfClipRegTS</code>. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", risk = "asMSE", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd>used by <code>getInfClipRegTS</code>. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "Distribution", risk = "asMSE", neighbor = "Av2CondContNeighborhood"</dt><dd>used by <code>getInfClipRegTS</code>. </dd>
-
-
-<dt>ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", risk = "asMSE", neighbor = "ContNeighborhood"</dt><dd>used by <code>getInfClipRegTS</code>. </dd>
-
-
-<dt>ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", risk = "asMSE", neighbor = "Av1CondContNeighborhood"</dt><dd>used by <code>getInfClipRegTS</code>. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", risk = "asUnOvShoot", neighbor = "ContNeighborhood"</dt><dd>used by <code>getInfClipRegTS</code>. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", risk = "asUnOvShoot", neighbor = "TotalVarNeighborhood"</dt><dd>used by <code>getInfClipRegTS</code>. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "numeric", risk = "asUnOvShoot", neighbor = "CondContNeighborhood"</dt><dd>used by <code>getInfClipRegTS</code>. </dd>
-
-
-<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "numeric", risk = "asUnOvShoot", neighbor = "CondTotalVarNeighborhood"</dt><dd>used by <code>getInfClipRegTS</code>. </dd>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", risk = "asMSE", neighbor = "ContNeighborhood"</dt><dd> 
+used by <code>getInfClipRegTS</code>. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", risk = "asMSE", neighbor = "Av1CondContNeighborhood"</dt><dd> 
+used by <code>getInfClipRegTS</code>. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", risk = "asMSE", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd> 
+used by <code>getInfClipRegTS</code>. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", risk = "asMSE", neighbor = "ContNeighborhood"</dt><dd> 
+used by <code>getInfClipRegTS</code>. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", risk = "asMSE", neighbor = "Av1CondContNeighborhood"</dt><dd> 
+used by <code>getInfClipRegTS</code>. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "MultivariateDistribution", risk = "asMSE", neighbor = "Av1CondTotalVarNeighborhood"</dt><dd> 
+used by <code>getInfClipRegTS</code>. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "Distribution", risk = "asMSE", neighbor = "Av2CondContNeighborhood"</dt><dd> 
+used by <code>getInfClipRegTS</code>. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", risk = "asMSE", neighbor = "ContNeighborhood"</dt><dd> 
+used by <code>getInfClipRegTS</code>. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "RealRandVariable", Regressor = "Distribution", risk = "asMSE", neighbor = "Av1CondContNeighborhood"</dt><dd> 
+used by <code>getInfClipRegTS</code>. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", risk = "asUnOvShoot", neighbor = "ContNeighborhood"</dt><dd> 
+used by <code>getInfClipRegTS</code>. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "UnivariateDistribution", risk = "asUnOvShoot", neighbor = "TotalVarNeighborhood"</dt><dd> 
+used by <code>getInfClipRegTS</code>. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "numeric", risk = "asUnOvShoot", neighbor = "CondContNeighborhood"</dt><dd> 
+used by <code>getInfClipRegTS</code>. </dd>
+</p>
+<p>
+<dt>ErrorL2deriv = "UnivariateDistribution", Regressor = "numeric", risk = "asUnOvShoot", neighbor = "CondTotalVarNeighborhood"</dt><dd> 
+used by <code>getInfClipRegTS</code>. </dd>
 </dl>
+</p>
+
 
 <h3>Author(s)</h3>
 
-<p>
-Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
-</p>
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
 
 
 <h3>References</h3>
@@ -227,12 +224,10 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a onclick="findlink('ROptEst', 'asMSE-class.html')" style="text-decoration: underline; color: blue; cursor: hand">asMSE-class</a></code>, <code><a onclick="findlink('ROptEst', 'asUnOvShoot-class.html')" style="text-decoration: underline; color: blue; cursor: hand">asUnOvShoot-class</a></code>, 
-<code><a onclick="findlink('ROptEst', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, <code><a href="Av1CondContIC-class.html">Av1CondContIC-class</a></code>, 
-<code><a href="Av2CondContIC-class.html">Av2CondContIC-class</a></code>, <code><a href="Av1CondTotalVarIC-class.html">Av1CondTotalVarIC-class</a></code>,
-<code><a href="CondContIC-class.html">CondContIC-class</a></code>, <code><a href="CondTotalVarIC-class.html">CondTotalVarIC-class</a></code>
-</p>
+<p><code><a onclick="findlink('ROptEst', 'asMSE-class.html')" style="text-decoration: underline; color: blue; cursor: hand">asMSE-class</a></code>, <code><a onclick="findlink('ROptEst', 'asUnOvShoot-class.html')" style="text-decoration: underline; color: blue; cursor: hand">asUnOvShoot-class</a></code>, 
+<code><a onclick="findlink('ROptEst', 'ContIC-class.html')" style="text-decoration: underline; color: blue; cursor: hand">ContIC-class</a></code>, <code></code>, 
+<code></code>, <code></code>,
+<code></code>, <code></code></p>
 
 <script Language="JScript">
 function findlink(pkg, fn) {
@@ -244,7 +239,5 @@ location.href = link;
 }
 </script>
 
-
 <hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
-
 </body></html>

@@ -58,7 +58,7 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{InfluenceCurve-class}, \code{IC-class}}
+\seealso{\code{\link[ROptEstOld]{InfluenceCurve-class}}, \code{\link[ROptEstOld]{IC-class}}}
 \examples{
 new("CondIC")
 }

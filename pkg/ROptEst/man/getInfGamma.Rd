@@ -4,6 +4,7 @@
 \alias{getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,BiasType-method}
 \alias{getInfGamma,UnivariateDistribution,asGRisk,TotalVarNeighborhood,BiasType-method}
 \alias{getInfGamma,RealRandVariable,asMSE,ContNeighborhood,BiasType-method}
+\alias{getInfGamma,RealRandVariable,asMSE,TotalVarNeighborhood,BiasType-method}
 \alias{getInfGamma,UnivariateDistribution,asUnOvShoot,ContNeighborhood,BiasType-method}
 \alias{getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,onesidedBias-method}
 \alias{getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,asymmetricBias-method}
@@ -24,9 +25,12 @@ getInfGamma(L2deriv, risk, neighbor, biastype, ...)
      risk, neighbor, biastype, cent, clip)
 
 \S4method{getInfGamma}{RealRandVariable,asMSE,ContNeighborhood,BiasType}(L2deriv, 
-     risk, neighbor, biastype, Distr, stand, cent, clip)
+     risk, neighbor, biastype, Distr, stand, cent, clip, power = 1L)
 
-\S4method{getInfGamma}{UnivariateDistribution,asUnOvShoot,ContNeighborhood,BiasType}(L2deriv, 
+\S4method{getInfGamma}{RealRandVariable,asMSE,TotalVarNeighborhood,BiasType}(L2deriv,
+     risk, neighbor, biastype, Distr, stand, cent, clip, power = 1L)
+
+\S4method{getInfGamma}{UnivariateDistribution,asUnOvShoot,ContNeighborhood,BiasType}(L2deriv,
      risk, neighbor, biastype, cent, clip)
 
 \S4method{getInfGamma}{UnivariateDistribution,asMSE,ContNeighborhood,onesidedBias}(L2deriv, 
@@ -46,6 +50,8 @@ getInfGamma(L2deriv, risk, neighbor, biastype, ...)
   \item{clip}{ optimal clipping bound. }
   \item{stand}{ standardizing matrix. }
   \item{Distr}{ object of class \code{"Distribution"}. }
+  \item{power}{ exponent for the integrand; by default \code{1}, but
+   may also be \code{2}, for optimization in \code{getLagrangeMultByOptim}. }
 }
 \details{
   The function is used in case of asymptotic G-risks; confer
@@ -64,6 +70,10 @@ getInfGamma(L2deriv, risk, neighbor, biastype, ...)
 
   \item{L2deriv = "RealRandVariable", risk = "asMSE", 
         neighbor = "ContNeighborhood", 
+        biastype = "BiasType"}{ used by \code{getInfClip} for symmetric bias. }
+
+  \item{L2deriv = "RealRandVariable", risk = "asMSE",
+        neighbor = "TotalVarNeighborhood",
         biastype = "BiasType"}{ used by \code{getInfClip} for symmetric bias. }
 
   \item{L2deriv = "UnivariateDistribution", risk = "asUnOvShoot", 

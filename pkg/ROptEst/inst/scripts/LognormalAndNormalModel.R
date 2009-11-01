@@ -120,25 +120,25 @@ plot(N0.IC6)
 
 ## radius minimax IC
 (LN1.IC7 <- radiusMinimaxIC(L2Fam=LN1, neighbor=ContNeighborhood(), 
-                risk=asMSE(), loRad=0, upRad=0.5))
+                risk=asMSE(), loRad=0, upRad=0.5, loRad0=2e-3))
 checkIC(LN1.IC7)
 Risks(LN1.IC7)
 plot(LN1.IC7)
 
 (N0.IC7 <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(), 
-                risk=asMSE(), loRad=0, upRad=0.5))
+                risk=asMSE(), loRad=0, upRad=0.5, loRad0=2e-3))
 checkIC(N0.IC7)
 Risks(N0.IC7)
 plot(N0.IC7)
 
 (LN1.IC8 <- radiusMinimaxIC(L2Fam=LN1, neighbor=TotalVarNeighborhood(), 
-                risk=asMSE(), loRad=0, upRad=0.25))
+                risk=asMSE(), loRad=0, upRad=0.25, loRad0=0.04))
 checkIC(LN1.IC8)
 Risks(LN1.IC8)
 plot(LN1.IC8)
 
 (N0.IC8 <- radiusMinimaxIC(L2Fam=N0, neighbor=TotalVarNeighborhood(), 
-                risk=asMSE(), loRad=0, upRad=0.25))
+                risk=asMSE(), loRad=0, upRad=0.25, loRad0=0.04))
 checkIC(N0.IC8)
 Risks(N0.IC8)
 plot(N0.IC8)

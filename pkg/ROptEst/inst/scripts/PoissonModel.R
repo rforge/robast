@@ -4,7 +4,7 @@
 require(ROptEst)
 options("newDevice"=TRUE)
 
-distroptions("TruncQuantile", 1e-10) # increases numerical support of Pois; 
+distroptions("TruncQuantile"= 1e-10) # increases numerical support of Pois;
                                      # i.e., increases precision of the 
                                      # computations
 ## generates Poisson Family with theta = 4.5
@@ -240,6 +240,11 @@ checkIC(pIC(est314))
                    neighbor = TotalVarNeighborhood()))
 checkIC(pIC(est315))
 
+(est316 <- kStepEstimator(x, IC=IC14, start=est12, steps = 15L))
+ksteps(e316)
+ksteps(e316, diff = TRUE)
+
+
 ## comparison of estimates
 estimate(est311)
 estimate(est312)
@@ -257,9 +262,11 @@ confint(est315, symmetricBias())
 
 ## 3.2 amount of contamination unknown
 IC15 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=estimate(est11)),
-                neighbor=TotalVarNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
+                neighbor=TotalVarNeighborhood(), risk=asMSE(), loRad=0,
+                upRad=Inf, loRad0 = 0.02, verbose = TRUE)
 IC16 <- radiusMinimaxIC(L2Fam=PoisFamily(lambda=estimate(est12)),
-                neighbor=TotalVarNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
+                neighbor=TotalVarNeighborhood(), risk=asMSE(), loRad=0,
+                upRad=Inf, loRad0 = 0.02, verbose = TRUE)
 (est321 <- oneStepEstimator(x, IC=IC15, start=est11))
 kStepEstimator(x, IC=IC15, start=est11)
 checkIC(pIC(est321))
@@ -292,4 +299,4 @@ confint(est323, symmetricBias())
 confint(est324, symmetricBias())
 confint(est325, symmetricBias())
 
-distroptions("TruncQuantile", 1e-5) # default
+distroptions("TruncQuantile"= 1e-5) # default

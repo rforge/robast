@@ -1,25 +1,23 @@
 <html><head><title>Robust Weight classes for bounded, standardized weights</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
-</head>
-<body>
+</head><body>
 
-<table width="100%"><tr><td>BdStWeight-class(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<table width="100%"><tr><td>BdStWeight-class(RobAStBase)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   BdStWeight-class">
 <param name="keyword" value="R:   stand,BdStWeight-method">
 <param name="keyword" value="R:   stand<-,BdStWeight-method">
-<param name="keyword" value=" Robust Weight classes for bounded standardized weights">
+<param name="keyword" value=" Robust Weight classes for bounded, standardized weights">
 </object>
 
 
-<h2>Robust Weight classes for bounded standardized weights</h2>
+<h2>Robust Weight classes for bounded, standardized weights</h2>
 
 
 <h3>Description</h3>
 
-<p>
-Classes for bounded, robust, standardized weights.
-</p>
+<p>Classes for bounded, robust, standardized weights.</p>
 
 
 <h3>Objects from the Class</h3>
@@ -27,18 +25,23 @@ Classes for bounded, robust, standardized weights.
 <p>
 Objects can be created by calls of the form <code>new("BdStWeight", ...)</code>; 
 to fill slot <code>weight</code>, you will use the generating functions 
-<code><a href="getweight.html">getweight</a></code> and <code><a href="getweight.html">minbiasweight</a></code>.
+<code></code> and <code></code>.
 </p>
 
 
 <h3>Slots</h3>
 
+<p>
+
 <dl>
-<dt><code>name</code>:</dt><dd>Object of class <code>"character"</code>; inherited from class <code>RobWeight</code>. </dd>
-<dt><code>weight</code>:</dt><dd>Object of class <code>"function"</code> &mdash; the weight function; inherited from class <code>RobWeight</code>.</dd>
-<dt><code>clip</code>:</dt><dd>Object of class <code>"numeric"</code> &mdash; clipping bound(s); inherited from class <code>BoundedWeight</code>.</dd>
-<dt><code>stand</code>:</dt><dd>Object of class <code>"matrix"</code> &mdash; standardization.</dd>
+<dt><code>name</code></dt><dd>Object of class <code>"character"</code>; inherited from class <code>RobWeight</code>. </dd>
+<dt><code>weight</code></dt><dd>Object of class <code>"function"</code> &mdash; the weight function; inherited from class <code>RobWeight</code>.</dd>
+<dt><code>clip</code></dt><dd>Object of class <code>"numeric"</code> &mdash; clipping bound(s); inherited from class <code>BoundedWeight</code>.</dd>
+<dt><code>stand</code></dt><dd>Object of class <code>"matrix"</code> &mdash; standardization.</dd>
 </dl>
+
+</p>
+
 
 <h3>Extends</h3>
 
@@ -50,11 +53,13 @@ Class <code>"BoundedWeight"</code>, directly.
 
 <h3>Methods</h3>
 
+<p>
+
 <dl>
 <dt>stand</dt><dd><code>signature(object = "BdStWeight")</code>:
 accessor function for slot <code>stand</code>. </dd>
-
-
+</p>
+<p>
 <dt>stand&lt;-</dt><dd><code>signature(object = "BdStWeight", value = "matrix")</code>:
 replacement function for slot <code>stand</code>. This replacement method 
 should be used with great care, as the slot <code>weight</code> is not
@@ -62,11 +67,12 @@ simultaneously updated and hence, this may lead to inconsistent
 objects.</dd>
 </dl>
 
+</p>
+
+
 <h3>Author(s)</h3>
 
-<p>
-Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a>
-</p>
+<p>Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a></p>
 
 
 <h3>References</h3>
@@ -86,10 +92,8 @@ Bayreuth: Dissertation.
 
 <h3>See Also</h3>
 
-<p>
-<code><a href="BoundedWeight-class.html">BoundedWeight-class</a></code>, <code><a href="RobWeight-class.html">RobWeight-class</a></code>,
-<code><a href="IC.html">IC</a></code>, <code><a href="InfluenceCurve-class.html">InfluenceCurve-class</a></code>
-</p>
+<p><code></code>, <code></code>,
+<code></code>, <code></code></p>
 
 
 <h3>Examples</h3>
@@ -99,8 +103,15 @@ Bayreuth: Dissertation.
 new("BdStWeight")
 </pre>
 
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
 
-
-<hr><div align="center">[Package <em>RobAStBase</em> version 0.1.0 <a href="00Index.html">Index]</a></div>
-
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.7 <a href="00Index.html">Index</a>]</div>
 </body></html>
