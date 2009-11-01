@@ -1,6 +1,6 @@
 Package: ROptEstOld
-Version: 0.7
-Date: 2009-09-04
+Version: 0.8
+Date: 2009-11-01
 Title: Optimally robust estimation - old version
 Description: Optimally robust estimation using S4 classes and methods. Old version still needed for current versions of ROptRegTS and
                RobRex.
