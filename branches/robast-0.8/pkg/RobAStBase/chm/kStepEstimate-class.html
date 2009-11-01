@@ -1,0 +1,188 @@
+<html><head><title>kStepEstimate-class.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head><body>
+
+<table width="100%"><tr><td>kStepEstimate-class(RobAStBase)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   kStepEstimate-class">
+<param name="keyword" value="R:   steps">
+<param name="keyword" value="R:   steps,kStepEstimate-method">
+<param name="keyword" value="R:   ksteps">
+<param name="keyword" value="R:   ksteps,kStepEstimate-method">
+<param name="keyword" value="R:   uksteps">
+<param name="keyword" value="R:   uksteps,kStepEstimate-method">
+<param name="keyword" value="R:   ICList">
+<param name="keyword" value="R:   ICList,kStepEstimate-method">
+<param name="keyword" value="R:   pICList">
+<param name="keyword" value="R:   pICList,kStepEstimate-method">
+<param name="keyword" value="R:   start,kStepEstimate-method">
+<param name="keyword" value="R:   startval">
+<param name="keyword" value="R:   startval,kStepEstimate-method">
+<param name="keyword" value="R:   ustartval">
+<param name="keyword" value="R:   ustartval,kStepEstimate-method">
+<param name="keyword" value="R:   show,kStepEstimate-method">
+<param name="keyword" value=" kStepEstimate-class.">
+</object>
+
+
+<h2>kStepEstimate-class.</h2>
+
+
+<h3>Description</h3>
+
+<p>Class of asymptotically linear estimates.</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>
+Objects can be created by calls of the form <code>new("kStepEstimate", ...)</code>.
+More frequently they are created via the generating function 
+<code>kStepEstimator</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+<p>
+
+<dl>
+<dt><code>name</code></dt><dd>Object of class <code>"character"</code>:
+name of the estimator. </dd>
+<dt><code>estimate</code></dt><dd>Object of class <code>"ANY"</code>:
+estimate. </dd>
+<dt><code>estimate.call</code></dt><dd>Object of class <code>"call"</code>:
+call by which estimate was produced.</dd>
+<dt><code>samplesize</code></dt><dd> object of class <code>"numeric"</code> &mdash;
+the samplesize (only complete cases are counted)
+at which the estimate was evaluated. </dd>
+<dt><code>completecases</code>:</dt><dd> object of class <code>"logical"</code> &mdash;
+complete cases at which the estimate was evaluated. </dd>
+<dt><code>asvar</code></dt><dd> object of class <code>"OptionalNumericOrMatrix"</code>
+which may contain the asymptotic (co)variance of the estimator. </dd>
+<dt><code>asbias</code></dt><dd>Optional object of class <code>"numeric"</code>:
+asymptotic bias. </dd>
+<dt><code>pIC</code></dt><dd>Optional object of class <code>InfluenceCurve</code>:
+influence curve. </dd>
+<dt><code>nuis.idx</code></dt><dd> object of class <code>"OptionalNumeric"</code>: 
+indices of <code>estimate</code> belonging to the nuisance part. </dd>
+<dt><code>fixed</code></dt><dd> object of class <code>"OptionalNumeric"</code>:
+the fixed and known part of the parameter.</dd>
+<dt><code>steps</code></dt><dd>Object of class <code>"integer"</code>: number
+of steps. </dd>
+<dt><code>Infos</code></dt><dd> object of class <code>"matrix"</code>
+with two columns named <code>method</code> and <code>message</code>:
+additional informations. </dd>
+<dt><code>trafo</code></dt><dd> object of class <code>"list"</code>:
+a list with components <code>fct</code> and <code>mat</code> (see below). </dd>
+<dt><code>untransformed.estimate</code>:</dt><dd>Object of class <code>"ANY"</code>:
+untransformed estimate.</dd>
+<dt><code>untransformed.asvar</code>:</dt><dd> object of class <code>"OptionalNumericOrMatrix"</code>
+which may contain the asymptotic (co)variance of the untransformed
+estimator. </dd>
+<dt><code>pICList</code></dt><dd>Optional object of class <code>"OptionalpICList"</code>:
+the list of (intermediate) (partial) influence curves used;
+only filled when called from <code>kStepEstimator</code> with argument
+<code>withPICList==TRUE</code>. </dd>
+<dt><code>ICList</code></dt><dd>Optional object of class <code>"OptionalpICList"</code>:
+the list of (intermediate) (total) influence curves used;
+only filled when called from <code>kStepEstimator</code> with argument
+<code>withICList==TRUE</code>. </dd>
+<dt><code>start</code></dt><dd>The argument <code>start</code> &mdash; of class <code>"StartClass"</code>
+used in call to <code>kStepEstimator</code>. </dd>
+<dt><code>startval</code></dt><dd>Object of class <code>matrix</code>:
+the starting value with which the k-step Estimator was initialized
+(in <i>p</i>-space / transformed). </dd>
+<dt><code>ustartval</code></dt><dd>Object of class <code>matrix</code>:
+the starting value with which the k-step Estimator was initialized
+(in <i>k</i>-space / untransformed). </dd>
+<dt><code>ksteps</code></dt><dd>Object of class <code>"OptionalMatrix"</code>:
+the intermediate estimates (in <i>p</i>-space) for the parameter;
+only filled when called from <code>kStepEstimator</code>. </dd>
+<dt><code>uksteps</code></dt><dd>Object of class <code>"OptionalMatrix"</code>:
+the intermediate estimates (in <i>k</i>-space) for the parameter;
+only filled when called from <code>kStepEstimator</code>. </dd>
+</dl>
+
+</p>
+
+
+<h3>Extends</h3>
+
+<p>
+Class <code>"ALEstimate"</code>, directly.<br>
+Class <code>"Estimate"</code>, by class <code>"ALEstimate"</code>
+</p>
+
+
+<h3>Methods</h3>
+
+<p>
+
+<dl>
+<dt>steps</dt><dd><code>signature(object = "kStepEstimate")</code>: 
+accessor function for slot <code>steps</code>. </dd>
+</p>
+<p>
+<dt>ksteps</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>ksteps</code>; has additional argument
+<code>diff</code>, defaulting to <code>FALSE</code>; if the latter is <code>TRUE</code>,
+the starting value from slot <code>startval</code> is prepended as first column;
+otherwise we return the corresponding increments in each step. </dd>
+</p>
+<p>
+<dt>uksteps</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>uksteps</code>; has additional argument
+<code>diff</code>, defaulting to <code>FALSE</code>; if the latter is <code>TRUE</code>,
+the starting value from slot <code>ustartval</code> is prepended as first column;
+otherwise we return the corresponding increments in each step. </dd>
+</p>
+<p>
+<dt>start</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>start</code>. </dd>
+</p>
+<p>
+<dt>startval</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>startval</code>. </dd>
+</p>
+<p>
+<dt>ustartval</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>startval</code>. </dd>
+</p>
+<p>
+<dt>ICList</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>ICList</code>. </dd>
+</p>
+<p>
+<dt>pICList</dt><dd><code>signature(object = "kStepEstimate")</code>:
+accessor function for slot <code>pICList</code>. </dd>
+</p>
+<p>
+<dt>show</dt><dd><code>signature(object = "kStepEstimate")</code>: a show method; </dd>
+</dl>
+
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code></code></p>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.7 <a href="00Index.html">Index</a>]</div>
+</body></html>

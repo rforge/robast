@@ -1,0 +1,156 @@
+<html><head><title>Generating weights</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>getweight-methods(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   getweight-methods">
+<param name="keyword" value="R:   getweight">
+<param name="keyword" value="R:   getweight,HampelWeight,ContNeighborhood,BiasType-method">
+<param name="keyword" value="R:   getweight,HampelWeight,ContNeighborhood,onesidedBias-method">
+<param name="keyword" value="R:   getweight,HampelWeight,ContNeighborhood,asymmetricBias-method">
+<param name="keyword" value="R:   getweight,BdStWeight,TotalVarNeighborhood,BiasType-method">
+<param name="keyword" value="R:   minbiasweight-methods">
+<param name="keyword" value="R:   minbiasweight">
+<param name="keyword" value="R:   minbiasweight,HampelWeight,ContNeighborhood,BiasType-method">
+<param name="keyword" value="R:   minbiasweight,HampelWeight,ContNeighborhood,onesidedBias-method">
+<param name="keyword" value="R:   minbiasweight,HampelWeight,ContNeighborhood,asymmetricBias-method">
+<param name="keyword" value="R:   minbiasweight,BdStWeight,TotalVarNeighborhood,BiasType-method">
+<param name="keyword" value=" Generating weights">
+</object>
+
+
+<h2>Generating weights</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generates weight functions of Hampel / BdSt type for different bias and norm types.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+getweight(Weight, neighbor, biastype, ...)
+minbiasweight(Weight, neighbor, biastype, ...)
+## S4 method for signature 'HampelWeight, ContNeighborhood,
+##   BiasType':
+getweight(Weight, neighbor, biastype, normW)
+## S4 method for signature 'HampelWeight, ContNeighborhood,
+##   BiasType':
+minbiasweight(Weight, neighbor, biastype, normW)
+## S4 method for signature 'HampelWeight, ContNeighborhood,
+##   onesidedBias':
+getweight(Weight, neighbor, biastype, ...)
+## S4 method for signature 'HampelWeight, ContNeighborhood,
+##   onesidedBias':
+minbiasweight(Weight, neighbor, biastype, ...)
+## S4 method for signature 'HampelWeight, ContNeighborhood,
+##   asymmetricBias':
+getweight(Weight, neighbor, biastype, ...)
+## S4 method for signature 'HampelWeight, ContNeighborhood,
+##   asymmetricBias':
+minbiasweight(Weight, neighbor, biastype, ...)
+## S4 method for signature 'BdStWeight,
+##   TotalVarNeighborhood, BiasType':
+getweight(Weight, neighbor, biastype, ...)
+## S4 method for signature 'BdStWeight,
+##   TotalVarNeighborhood, BiasType':
+minbiasweight(Weight, neighbor, biastype, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>Weight</code></td>
+<td>
+Object of class <code>"RobWeight"</code>. </td></tr>
+<tr valign="top"><td><code>neighbor</code></td>
+<td>
+Object of class <code>"Neighborhood"</code>. </td></tr>
+<tr valign="top"><td><code>biastype</code></td>
+<td>
+Object of class <code>"BiasType"</code>. </td></tr>
+<tr valign="top"><td><code>normW</code></td>
+<td>
+Object of class <code>"NormType"</code> &mdash; only for signature <code>HampelWeight,ContNeighborhood,BiasType</code>. </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+possibly additional (unused) arguments &mdash; like in a call to the less specific methods.</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+These functions generate the weight function in slot <code>weight</code> in a corresp.
+object of class <code>RobWeight</code> and descendants.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+Object of class <code>"HampelWeight"</code> resp. <code>"BdStWeight"</code></p>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>getweight</dt><dd><code>signature(Weight = "HampelWeight", neighbor = "ContNeighborhood", 
+                       biastype = "BiasType")</code> with additional argument <code>biastype</code> of class 
+<code>"BiasType"</code>: produces weight slot...</dd>
+<dt>minbiasweight</dt><dd><code>signature(Weight = "HampelWeight", neighbor = "ContNeighborhood", 
+                       biastype = "BiasType")</code> with additional argument <code>biastype</code> of class 
+<code>"BiasType"</code>: produces weight slot...</dd>
+<dt>getweight</dt><dd><code>signature(Weight = "HampelWeight", neighbor = "ContNeighborhood", 
+                       biastype = "onesidedBias")</code>: produces weight slot...</dd>
+<dt>minbiasweight</dt><dd><code>signature(Weight = "HampelWeight", neighbor = "ContNeighborhood", 
+                       biastype = "onesidedBias")</code>: produces weight slot...</dd>
+<dt>getweight</dt><dd><code>signature(Weight = "HampelWeight", neighbor = "ContNeighborhood", 
+                       biastype = "asymmetricBias")</code>: produces weight slot...</dd>
+<dt>minbiasweight</dt><dd><code>signature(Weight = "HampelWeight", neighbor = "ContNeighborhood", 
+                       biastype = "asymmetricBias")</code>: produces weight slot...</dd>
+<dt>getweight</dt><dd><code>signature(Weight = "BdStWeight", neighbor = "TotalVarNeighborhood", 
+                       biastype = "BiasType")</code>: produces weight slot...</dd>
+<dt>minbiasweight</dt><dd><code>signature(Weight = "BdStWeight", neighbor = "TotalVarNeighborhood", 
+                       biastype = "BiasType")</code>: produces weight slot...</dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Hampel et al. (1986) <EM>Robust Statistics</EM>. 
+The Approach Based on Influence Functions. New York: Wiley.
+</p>
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="BdStWeight-class.html">BdStWeight-class</a></code>,
+<code><a href="HampelWeight-class.html">HampelWeight-class</a></code>,
+<code><a href="IC-class.html">IC-class</a></code>
+</p>
+
+
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.2 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

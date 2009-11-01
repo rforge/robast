@@ -1,0 +1,134 @@
+<html><head><title>Generating function for CondTotalVarIC-class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head><body>
+
+<table width="100%"><tr><td>CondTotalVarIC(ROptRegTS)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   CondTotalVarIC">
+<param name="keyword" value=" Generating function for CondTotalVarIC-class">
+</object>
+
+
+<h2>Generating function for CondTotalVarIC-class</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generates an object of class <code>"CondTotalVarIC"</code>;
+i.e., an influence curves <i>eta</i> of the form
+</p><p align="center"><i>
+  eta = max(c(x), min(A x Lambda_f, b(x)))</i></p><p>
+with lower clipping function <i>c</i>, upper clipping function <i>b</i> and
+standardizing matrix <i>A</i>. <i>Lambda_f</i> stands for
+the L2 derivative of the corresponding error distribution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+CondTotalVarIC(name, CallL2Fam = call("L2RegTypeFamily"), 
+        Curve = EuclRandVarList(RealRandVariable(Map = list(function(x) {x[1] * x[2]}), 
+                                                 Domain = EuclideanSpace(dimension = 1))), 
+        Risks, Infos, 
+        clipUp = RealRandVariable(Map = list(function(x) {Inf}), Domain = Reals()), 
+        stand = as.matrix(1), 
+        clipLo = RealRandVariable(Map = list(function(x) {-Inf}), Domain = Reals()), 
+        lowerCase = NULL, neighborRadius = 0, neighborRadiusCurve = function(x){1})
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+ object of class <code>"character"</code>. </td></tr>
+<tr valign="top"><td><code>CallL2Fam</code></td>
+<td>
+ object of class <code>"call"</code>:
+creates an object of the underlying L2-differentiable 
+regression type family. </td></tr>
+<tr valign="top"><td><code>Curve</code></td>
+<td>
+ object of class <code>"EuclRandVarList"</code> </td></tr>
+<tr valign="top"><td><code>Risks</code></td>
+<td>
+ object of class <code>"list"</code>: 
+list of risks; cf. <code>RiskType-class</code>. </td></tr>
+<tr valign="top"><td><code>Infos</code></td>
+<td>
+ matrix of characters with two columns 
+named <code>method</code> and <code>message</code>: additional informations. </td></tr>
+<tr valign="top"><td><code>clipUp</code></td>
+<td>
+ object of class <code>"RealRandVariable"</code>:
+upper clipping function. </td></tr>
+<tr valign="top"><td><code>clipLo</code></td>
+<td>
+ object of class <code>"RealRandVariable"</code>:
+lower clipping function. </td></tr>
+<tr valign="top"><td><code>stand</code></td>
+<td>
+ matrix: standardizing matrix. </td></tr>
+<tr valign="top"><td><code>lowerCase</code></td>
+<td>
+ optional constant for lower case solution. </td></tr>
+<tr valign="top"><td><code>neighborRadius</code></td>
+<td>
+ radius of the corresponding conditional
+total variation neighborhood. </td></tr>
+<tr valign="top"><td><code>neighborRadiusCurve</code></td>
+<td>
+ radius curve of the corresponding conditional
+total variation neighborhood. </td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Object of class <code>"CondTotalVarIC"</code></p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code></code>, <code></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+IC1 &lt;- CondTotalVarIC()
+IC1
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+<hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

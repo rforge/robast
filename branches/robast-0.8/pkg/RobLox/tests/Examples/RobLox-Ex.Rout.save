@@ -1,0 +1,2214 @@
+
+R version 2.10.0 beta (2009-10-15 r50107)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### * <HEADER>
+> ###
+> attach(NULL, name = "CheckExEnv")
+> assign("nameEx",
++        local({
++ 	   s <- "__{must remake R-ex/*.R}__"
++            function(new) {
++                if(!missing(new)) s <<- new else s
++            }
++        }),
++        pos = "CheckExEnv")
+> ## Add some hooks to label plot pages for base and grid graphics
+> assign("base_plot_hook",
++        function() {
++            pp <- par(c("mfg","mfcol","oma","mar"))
++            if(all(pp$mfg[1:2] == c(1, pp$mfcol[2]))) {
++                outer <- (oma4 <- pp$oma[4]) > 0; mar4 <- pp$mar[4]
++                mtext(sprintf("help(\"%s\")", nameEx()), side = 4,
++                      line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
++                outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
++            }
++        },
++        pos = "CheckExEnv")
+> assign("grid_plot_hook",
++        function() {
++            grid::pushViewport(grid::viewport(width=grid::unit(1, "npc") -
++                               grid::unit(1, "lines"), x=0, just="left"))
++            grid::grid.text(sprintf("help(\"%s\")", nameEx()),
++                            x=grid::unit(1, "npc") + grid::unit(0.5, "lines"),
++                            y=grid::unit(0.8, "npc"), rot=90,
++                            gp=grid::gpar(col="orchid"))
++        },
++        pos = "CheckExEnv")
+> setHook("plot.new",     get("base_plot_hook", pos = "CheckExEnv"))
+> setHook("persp",        get("base_plot_hook", pos = "CheckExEnv"))
+> setHook("grid.newpage", get("grid_plot_hook", pos = "CheckExEnv"))
+> assign("cleanEx",
++        function(env = .GlobalEnv) {
++ 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
++            RNGkind("default", "default")
++ 	   set.seed(1)
++    	   options(warn = 1)
++ 	   .CheckExEnv <- as.environment("CheckExEnv")
++ 	   delayedAssign("T", stop("T used instead of TRUE"),
++ 		  assign.env = .CheckExEnv)
++ 	   delayedAssign("F", stop("F used instead of FALSE"),
++ 		  assign.env = .CheckExEnv)
++ 	   sch <- search()
++ 	   newitems <- sch[! sch %in% .oldSearch]
++ 	   for(item in rev(newitems))
++                eval(substitute(detach(item), list(item=item)))
++ 	   missitems <- .oldSearch[! .oldSearch %in% sch]
++ 	   if(length(missitems))
++ 	       warning("items ", paste(missitems, collapse=", "),
++ 		       " have been removed from the search path")
++        },
++        pos = "CheckExEnv")
+> assign("ptime", proc.time(), pos = "CheckExEnv")
+> ## at least one package changes these via ps.options(), so do this
+> ## before loading the package.
+> ## Use postscript as incomplete files may be viewable, unlike PDF.
+> ## Choose a size that is close to on-screen devices, fix paper
+> grDevices::ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
+> grDevices::postscript("RobLox-Ex.ps")
+> 
+> assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
+> options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
+> options(warn = 1)
+> library('RobLox')
+Loading required package: distrMod
+Loading required package: startupmsg
+:startupmsg>  Utilities for start-up messages (version 0.7)
+:startupmsg> 
+:startupmsg>  For more information see ?"startupmsg",
+:startupmsg>  NEWS("startupmsg")
+
+Loading required package: distr
+Loading required package: sfsmisc
+Loading required package: SweaveListingUtils
+:SweaveListingUtils>  Utilities for Sweave together with
+:SweaveListingUtils>  TeX listings package (version 0.4)
+:SweaveListingUtils> 
+:SweaveListingUtils>  Some functions from package 'base'
+:SweaveListingUtils>  are intentionally masked ---see
+:SweaveListingUtils>  SweaveListingMASK().
+:SweaveListingUtils> 
+:SweaveListingUtils>  Note that global options are
+:SweaveListingUtils>  controlled by
+:SweaveListingUtils>  SweaveListingoptions() ---c.f.
+:SweaveListingUtils>  ?"SweaveListingoptions".
+:SweaveListingUtils> 
+:SweaveListingUtils>  For more information see
+:SweaveListingUtils>  ?"SweaveListingUtils",
+:SweaveListingUtils>  NEWS("SweaveListingUtils")
+:SweaveListingUtils>  There is a vignette to this
+:SweaveListingUtils>  package; try
+:SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
+
+
+Attaching package: 'SweaveListingUtils'
+
+
+	The following object(s) are masked from package:base :
+
+	 library,
+	 require 
+
+:distr>  Object orientated implementation of distributions (version
+:distr>  2.2)
+:distr> 
+:distr>  Attention: Arithmetics on distribution objects are
+:distr>  understood as operations on corresponding random variables
+:distr>  (r.v.s); see distrARITH().
+:distr> 
+:distr>  Some functions from package 'stats' are intentionally masked
+:distr>  ---see distrMASK().
+:distr> 
+:distr>  Note that global options are controlled by distroptions()
+:distr>  ---c.f. ?"distroptions".
+:distr> 
+:distr>  For more information see ?"distr", NEWS("distr"), as well as
+:distr>    http://distr.r-forge.r-project.org/
+:distr>  Package "distrDoc" provides a vignette to this package as
+:distr>  well as to several extension packages; try
+:distr>  vignette("distr").
+
+
+Attaching package: 'distr'
+
+
+	The following object(s) are masked from package:stats :
+
+	 df,
+	 qqplot,
+	 sd 
+
+Loading required package: distrEx
+Loading required package: evd
+Loading required package: actuar
+
+Attaching package: 'actuar'
+
+
+	The following object(s) are masked from package:grDevices :
+
+	 cm 
+
+:distrEx>  Extensions of package distr (version 2.2)
+:distrEx> 
+:distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
+:distrEx>  attached /before/ package "distrEx". See distrExMASK().
+:distrEx> 
+:distrEx>  For more information see ?"distrEx", NEWS("distrEx"), as
+:distrEx>  well as
+:distrEx>    http://distr.r-forge.r-project.org/
+:distrEx>  Package "distrDoc" provides a vignette to this package
+:distrEx>  as well as to several related packages; try
+:distrEx>  vignette("distr").
+
+
+Attaching package: 'distrEx'
+
+
+	The following object(s) are masked from package:stats :
+
+	 IQR,
+	 mad,
+	 median,
+	 var 
+
+Loading required package: RandVar
+:RandVar>  Implementation of random variables (version 0.7)
+:RandVar> 
+:RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
+:RandVar>  well as
+:RandVar>    http://robast.r-forge.r-project.org/
+:RandVar>  This package also includes a vignette; try
+:RandVar>  vignette("RandVar").
+
+Loading required package: MASS
+Loading required package: stats4
+:distrMod>  Object orientated implementation of probability models
+:distrMod>  (version 2.2)
+:distrMod> 
+:distrMod>  Some functions from pkg's 'base' and 'stats' are
+:distrMod>  intentionally masked ---see distrModMASK().
+:distrMod> 
+:distrMod>  Note that global options are controlled by
+:distrMod>  distrModoptions() ---c.f. ?"distrModoptions".
+:distrMod> 
+:distrMod>  For more information see ?"distrMod",
+:distrMod>  NEWS("distrMod"), as well as
+:distrMod>    http://distr.r-forge.r-project.org/
+:distrMod>  Package "distrDoc" provides a vignette to this package
+:distrMod>  as well as to several related packages; try
+:distrMod>  vignette("distr").
+
+
+Attaching package: 'distrMod'
+
+
+	The following object(s) are masked from package:stats4 :
+
+	 confint 
+
+
+	The following object(s) are masked from package:stats :
+
+	 confint 
+
+Loading required package: RobAStBase
+:RobAStBase>  Robust Asymptotic Statistics (version 0.7)
+:RobAStBase> 
+:RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
+:RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
+:RobAStBase> 
+:RobAStBase>  Note that global options are controlled by
+:RobAStBase>  RobAStBaseoptions() ---c.f. ?"RobAStBaseoptions".
+:RobAStBase> 
+:RobAStBase>  For more information see ?"RobAStBase",
+:RobAStBase>  NEWS("RobAStBase"), as well as
+:RobAStBase>    http://robast.r-forge.r-project.org/
+
+
+Attaching package: 'RobAStBase'
+
+
+	The following object(s) are masked from package:stats :
+
+	 start 
+
+
+	The following object(s) are masked from package:graphics :
+
+	 clip 
+
+> 
+> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> assign(".oldNS", loadedNamespaces(), pos = 'CheckExEnv')
+> cleanEx(); nameEx("0RobLox-package")
+> ### * 0RobLox-package
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RobLox-package
+> ### Title: Optimally robust influence curves and estimators for location
+> ###   and scale
+> ### Aliases: RobLox-package RobLox
+> ### Keywords: package
+> 
+> ### ** Examples
+> 
+> library(RobLox)
+> ind <- rbinom(100, size=1, prob=0.05) 
+> x <- rnorm(100, mean=ind*3, sd=(1-ind) + ind*9)
+> roblox(x)
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  roblox(x = x)
+samplesize:   100
+estimate:
+      mean           sd     
+  -0.14805155    0.88449633 
+ ( 0.11247138) ( 0.08320902)
+asymptotic (co)variance (multiplied with samplesize):
+         [,1]     [,2]
+[1,] 1.264981 0.000000
+[2,] 0.000000 0.692374
+Infos:
+     method  
+[1,] "roblox"
+[2,] "roblox"
+[3,] "roblox"
+     message                                                                              
+[1,] "finite-sample corrected radius-minimax estimate for contamination interval [0, 0.5]"
+[2,] "least favorable (uncorrected) contamination: 0.057"                                 
+[3,] "maximum asymptotic MSE-inefficiency: 4.126"                                         
+asymptotic bias:
+[1] 1.885026
+steps:
+[1] 1
+> 
+> res <- roblox(x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
+> estimate(res)
+      mean         sd 
+-0.1111504  0.8928424 
+> confint(res)
+A[n] asymptotic (LAN-based) confidence interval:
+          2.5 %     97.5 %
+mean -0.3066310 0.08433017
+sd    0.7472971 1.03838771
+Type of estimator: Optimally robust estimate
+samplesize:   100
+Call by which estimate was produced:
+roblox(x = x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
+> confint(res, method = symmetricBias())
+A[n] asymptotic (LAN-based), uniform (bias-aware)
+ confidence interval:
+for symmetric Bias
+          2.5 %    97.5 %
+mean -0.3979957 0.1756949
+sd    0.6792714 1.1064134
+Type of estimator: Optimally robust estimate
+samplesize:   100
+Call by which estimate was produced:
+roblox(x = x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
+> pIC(res)
+An object of class “ContIC” 
+### name:	 IC of contamination type 
+
+### L2-differentiable parametric family:	 normal location and scale family 
+### param:	An object of class "ParamFamParameter"
+name:	location and scale
+mean:	-0.111150435088002
+sd:	0.89284240215757
+trafo:
+     mean sd
+mean    1  0
+sd      0  1
+
+### neighborhood radius:	 0.5455335 
+
+### clip:	[1] 1.679196
+### cent:	[1]  0.000000 -0.382342
+### stand:
+         [,1]     [,2]
+[1,] 1.330601 0.000000
+[2,] 0.000000 1.054707
+
+### Infos:
+     method  
+[1,] "roblox"
+[2,] "roblox"
+[3,] "roblox"
+     message                                                                                 
+[1,] "finite-sample corrected radius-minimax estimate for contamination interval [0.01, 0.1]"
+[2,] "least favorable (uncorrected) contamination: 0.043"                                    
+[3,] "maximum asymptotic MSE-inefficiency: 1.441"                                            
+> checkIC(pIC(res))
+precision of centering:	 8.833545e-17 1.265596e-05 
+precision of Fisher consistency:
+             mean            sd
+mean 1.637539e-05 -1.822532e-17
+sd   3.168531e-17 -8.653862e-07
+maximum deviation 
+     1.637539e-05 
+> Risks(pIC(res))
+$asMSE
+[1] 2.385308
+
+$asBias
+[1] 1.679196
+
+$trAsCov
+[1] 1.546146
+
+$asCov
+          [,1]      [,2]
+[1,] 0.9947437 0.0000000
+[2,] 0.0000000 0.5514425
+
+> Infos(pIC(res))
+     method  
+[1,] "roblox"
+[2,] "roblox"
+[3,] "roblox"
+     message                                                                                 
+[1,] "finite-sample corrected radius-minimax estimate for contamination interval [0.01, 0.1]"
+[2,] "least favorable (uncorrected) contamination: 0.043"                                    
+[3,] "maximum asymptotic MSE-inefficiency: 1.441"                                            
+> plot(pIC(res))
+> infoPlot(pIC(res))
+> 
+> ## row-wise application
+> ind <- rbinom(200, size=1, prob=0.05) 
+> X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
+> rowRoblox(X)
+Loading required package: Biobase
+
+Welcome to Bioconductor
+
+  Vignettes contain introductory material. To view, type
+  'openVignette()'. To cite Bioconductor, see
+  'citation("Biobase")' and for packages 'citation(pkgname)'.
+
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  rowRoblox(x = X)
+samplesize:   100
+estimate:
+            mean       sd
+[1,] -0.09216816 1.131706
+[2,]  0.10169428 0.952022
+Infos:
+     method   message                                                       
+[1,] "roblox" "radius-minimax estimates for contamination interval [0, 0.5]"
+[2,] "roblox" "least favorable contamination: 0.13"                         
+[3,] "roblox" "maximum MSE-inefficiency: 1.668"                             
+asymptotic bias:
+NULL
+steps:
+[1] 1
+> 
+> 
+> 
+> cleanEx(); nameEx("finiteSampleCorrection")
+> ### * finiteSampleCorrection
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: finiteSampleCorrection
+> ### Title: Function to compute finite-sample corrected radii
+> ### Aliases: finiteSampleCorrection
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> finiteSampleCorrection(n = 3, r = 0.001, model = "locsc")
+[1] 0.0296
+> finiteSampleCorrection(n = 10, r = 0.02, model = "loc")
+[1] 0.0779657
+> finiteSampleCorrection(n = 250, r = 0.15, model = "sc")
+[1] 0.7348683
+> 
+> 
+> 
+> cleanEx(); nameEx("rlOptIC")
+> ### * rlOptIC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlOptIC
+> ### Title: Computation of the optimally robust IC for AL estimators
+> ### Aliases: rlOptIC
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlOptIC(r = 0.1)
+> distrExOptions("ErelativeTolerance" = 1e-12)
+> checkIC(IC1)
+precision of centering:	 0 
+precision of Fisher consistency:
+              mean
+mean -7.580384e-06
+maximum deviation 
+     7.580384e-06 
+> distrExOptions("ErelativeTolerance" = .Machine$double.eps^0.25) # default
+> Risks(IC1)
+$asMSE
+[1] 1.054162
+
+$asBias
+[1] 2.053826
+
+$asCov
+[1] 1.011980
+
+> cent(IC1)
+[1] 0
+> clip(IC1)
+[1] 2.053826
+> stand(IC1)
+         [,1]
+[1,] 1.054162
+> plot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.AL")
+> ### * rlsOptIC.AL
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.AL
+> ### Title: Computation of the optimally robust IC for AL estimators
+> ### Aliases: rlsOptIC.AL
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.AL(r = 0.1, check = TRUE)
+Fisher consistency of eta.loc:	 -1.743714e-10 
+centering of eta.sc:	 -3.903789e-10 
+Fisher consistency of eta.sc:	 2.926104e-09 
+MSE equation:	 1.207368e-14 
+> distrExOptions("ErelativeTolerance" = 1e-12)
+> checkIC(IC1)
+precision of centering:	 0 -6.039298e-07 
+precision of Fisher consistency:
+              mean            sd
+mean -1.102483e-06  0.000000e+00
+sd    0.000000e+00 -1.685676e-05
+maximum deviation 
+     1.685676e-05 
+> distrExOptions("ErelativeTolerance" = .Machine$double.eps^0.25) # default
+> Risks(IC1)
+$asMSE
+[1] 1.647765
+
+$asBias
+[1] 3.182504
+
+$trAsCov
+[1] 1.546482
+
+$asCov
+         [,1]      [,2]
+[1,] 1.017104 0.0000000
+[2,] 0.000000 0.5293779
+
+> cent(IC1)
+[1]  0.00000000 -0.02574219
+> clip(IC1)
+[1] 3.182504
+> stand(IC1)
+         [,1]      [,2]
+[1,] 1.051890 0.0000000
+[2,] 0.000000 0.5958748
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> ## k-step estimation
+> ## better use function roblox (see ?roblox)
+> ## 1. data: random sample
+> ind <- rbinom(100, size=1, prob=0.05) 
+> x <- rnorm(100, mean=0, sd=(1-ind) + ind*9)
+> mean(x)
+[1] 0.07372327
+> sd(x)
+[1] 1.642883
+> median(x)
+[1] -0.1176227
+> mad(x)
+[1] 0.7942541
+> 
+> ## 2. Kolmogorov(-Smirnov) minimum distance estimator (default)
+> ## -> we use it as initial estimate for one-step construction
+> (est0 <- MDEstimator(x, ParamFamily = NormLocationScaleFamily()))
+Evaluations of Minimum Kolmogorov distance estimate:
+----------------------------------------------------
+An object of class “Estimate” 
+generated by call
+  MDEstimator(x = x, ParamFamily = NormLocationScaleFamily())
+samplesize:   100
+estimate:
+       mean          sd 
+-0.05297991  0.92479741 
+Criterion:
+Kolmogorov distance 
+         0.05524875 
+> 
+> ## 3.1 one-step estimation: radius known
+> IC1 <- rlsOptIC.AL(r = 0.5, mean = estimate(est0)[1], sd = estimate(est0)[2])
+> (est1 <- oneStepEstimator(x, IC1, est0))
+Evaluations of 1-step estimate:
+-------------------------------
+An object of class “Estimate” 
+generated by call
+  oneStepEstimator(x = x, IC = IC1, start = est0)
+samplesize:   100
+estimate:
+      mean           sd     
+  -0.11387679    0.94029614 
+ ( 0.10699408) ( 0.09076235)
+asymptotic (co)variance (multiplied with samplesize):
+         [,1]      [,2]
+[1,] 1.144773 0.0000000
+[2,] 0.000000 0.8237805
+Infos:
+     method            
+[1,] "oneStepEstimator"
+[2,] "oneStepEstimator"
+     message                                                        
+[1,] "1-step estimate for normal location and scale family"         
+[2,] "computation of IC, trafo, asvar and asbias via useLast = TRUE"
+asymptotic bias:
+       sd 
+0.9035723 
+(partial) influence curve:
+An object of class “ContIC” 
+### name:	 IC of contamination type 
+
+### L2-differentiable parametric family:	 normal location and scale family 
+### param:	An object of class "ParamFamParameter"
+name:	location and scale
+mean:	-0.113876786446744
+sd:	0.940296140129343
+trafo:
+     mean sd
+mean    1  0
+sd      0  1
+
+### neighborhood radius:	 0.5 
+
+### clip:	      sd 
+1.807145 
+### cent:	[1]  0.000000 -0.347277
+### stand:
+         [,1]     [,2]
+[1,] 1.401722 0.000000
+[2,] 0.000000 1.091808
+
+### Infos:
+  method     message                                            
+  "rlOptIC"  "optimally robust IC for AL estimators and 'asMSE'"
+  "modifyIC" "The IC has been modified"                         
+  "modifyIC" "The entries in 'Infos' may be wrong"              
+steps:
+[1] 1
+> 
+> ## 3.2 k-step estimation: radius known
+> ## Choose k = 3
+> (est2 <- kStepEstimator(x, IC1, est0, steps = 3L))
+Evaluations of 3-step estimate:
+-------------------------------
+An object of class “Estimate” 
+generated by call
+  kStepEstimator(x = x, IC = IC1, start = est0, steps = 3L)
+samplesize:   100
+estimate:
+      mean           sd     
+  -0.11639746    0.93646837 
+ ( 0.10655853) ( 0.09039288)
+asymptotic (co)variance (multiplied with samplesize):
+         [,1]      [,2]
+[1,] 1.135472 0.0000000
+[2,] 0.000000 0.8170872
+Infos:
+     method          
+[1,] "kStepEstimator"
+[2,] "kStepEstimator"
+     message                                                        
+[1,] "3-step estimate for normal location and scale family"         
+[2,] "computation of IC, trafo, asvar and asbias via useLast = TRUE"
+asymptotic bias:
+      sd 
+0.899894 
+(partial) influence curve:
+An object of class “ContIC” 
+### name:	 IC of contamination type 
+
+### L2-differentiable parametric family:	 normal location and scale family 
+### param:	An object of class "ParamFamParameter"
+name:	location and scale
+mean:	-0.116397459115411
+sd:	0.936468369096108
+trafo:
+     mean sd
+mean    1  0
+sd      0  1
+
+### neighborhood radius:	 0.5 
+
+### clip:	      sd 
+1.799788 
+### cent:	[1]  0.0000000 -0.3458633
+### stand:
+         [,1]     [,2]
+[1,] 1.390333 0.000000
+[2,] 0.000000 1.082937
+
+### Infos:
+  method     message                                            
+  "rlOptIC"  "optimally robust IC for AL estimators and 'asMSE'"
+  "modifyIC" "The IC has been modified"                         
+  "modifyIC" "The entries in 'Infos' may be wrong"              
+  "modifyIC" "The IC has been modified"                         
+  "modifyIC" "The entries in 'Infos' may be wrong"              
+  "modifyIC" "The IC has been modified"                         
+  "modifyIC" "The entries in 'Infos' may be wrong"              
+steps:
+[1] 3
+> 
+> ## 4.1 one-step estimation: radius unknown
+> ## take least favorable radius r = 0.579
+> ## cf. Table 8.1 in Kohl(2005)
+> IC2 <- rlsOptIC.AL(r = 0.579, mean = estimate(est0)[1], sd = estimate(est0)[2])
+> (est3 <- oneStepEstimator(x, IC2, est0))
+Evaluations of 1-step estimate:
+-------------------------------
+An object of class “Estimate” 
+generated by call
+  oneStepEstimator(x = x, IC = IC2, start = est0)
+samplesize:   100
+estimate:
+      mean          sd    
+  -0.1194805    0.9318553 
+ ( 0.1090220) ( 0.0968585)
+asymptotic (co)variance (multiplied with samplesize):
+         [,1]     [,2]
+[1,] 1.188581 0.000000
+[2,] 0.000000 0.938157
+Infos:
+     method            
+[1,] "oneStepEstimator"
+[2,] "oneStepEstimator"
+     message                                                        
+[1,] "1-step estimate for normal location and scale family"         
+[2,] "computation of IC, trafo, asvar and asbias via useLast = TRUE"
+asymptotic bias:
+      sd 
+1.000433 
+(partial) influence curve:
+An object of class “ContIC” 
+### name:	 IC of contamination type 
+
+### L2-differentiable parametric family:	 normal location and scale family 
+### param:	An object of class "ParamFamParameter"
+name:	location and scale
+mean:	-0.119480464646405
+sd:	0.931855339791047
+trafo:
+     mean sd
+mean    1  0
+sd      0  1
+
+### neighborhood radius:	 0.579 
+
+### clip:	      sd 
+1.727864 
+### cent:	[1]  0.0000000 -0.4415191
+### stand:
+         [,1]     [,2]
+[1,] 1.505494 0.000000
+[2,] 0.000000 1.206706
+
+### Infos:
+  method     message                                            
+  "rlOptIC"  "optimally robust IC for AL estimators and 'asMSE'"
+  "modifyIC" "The IC has been modified"                         
+  "modifyIC" "The entries in 'Infos' may be wrong"              
+steps:
+[1] 1
+> 
+> ## 4.2 k-step estimation: radius unknown
+> ## take least favorable radius r = 0.579
+> ## cf. Table 8.1 in Kohl(2005)
+> ## choose k = 3
+> (est4 <- kStepEstimator(x, IC2, est0, steps = 3L))
+Evaluations of 3-step estimate:
+-------------------------------
+An object of class “Estimate” 
+generated by call
+  kStepEstimator(x = x, IC = IC2, start = est0, steps = 3L)
+samplesize:   100
+estimate:
+      mean           sd     
+  -0.12006216    0.92637702 
+ ( 0.10838111) ( 0.09628908)
+asymptotic (co)variance (multiplied with samplesize):
+         [,1]      [,2]
+[1,] 1.174647 0.0000000
+[2,] 0.000000 0.9271588
+Infos:
+     method          
+[1,] "kStepEstimator"
+[2,] "kStepEstimator"
+     message                                                        
+[1,] "3-step estimate for normal location and scale family"         
+[2,] "computation of IC, trafo, asvar and asbias via useLast = TRUE"
+asymptotic bias:
+      sd 
+0.994552 
+(partial) influence curve:
+An object of class “ContIC” 
+### name:	 IC of contamination type 
+
+### L2-differentiable parametric family:	 normal location and scale family 
+### param:	An object of class "ParamFamParameter"
+name:	location and scale
+mean:	-0.120062158553751
+sd:	0.926377018794555
+trafo:
+     mean sd
+mean    1  0
+sd      0  1
+
+### neighborhood radius:	 0.579 
+
+### clip:	      sd 
+1.717706 
+### cent:	[1]  0.0000000 -0.4389234
+### stand:
+         [,1]     [,2]
+[1,] 1.487845 0.000000
+[2,] 0.000000 1.192559
+
+### Infos:
+  method     message                                            
+  "rlOptIC"  "optimally robust IC for AL estimators and 'asMSE'"
+  "modifyIC" "The IC has been modified"                         
+  "modifyIC" "The entries in 'Infos' may be wrong"              
+  "modifyIC" "The IC has been modified"                         
+  "modifyIC" "The entries in 'Infos' may be wrong"              
+  "modifyIC" "The IC has been modified"                         
+  "modifyIC" "The entries in 'Infos' may be wrong"              
+steps:
+[1] 3
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.An1")
+> ### * rlsOptIC.An1
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.An1
+> ### Title: Computation of the optimally robust IC for An1 estimators
+> ### Aliases: rlsOptIC.An1
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.An1(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 1.410025e-07 
+precision of Fisher consistency:
+             mean           sd
+mean 2.530605e-08 0.000000e+00
+sd   0.000000e+00 3.875467e-06
+maximum deviation 
+     3.875467e-06 
+> Risks(IC1)
+$asMSE
+[1] 1.673449
+
+$asBias
+[1] 3.341956
+
+$asCov
+[1] 1.561762
+
+> Infos(IC1)
+     method         message                                             
+[1,] "rlsOptIC.An1" "optimally robust IC for An1 estimators and 'asMSE'"
+[2,] "rlsOptIC.An1" "where a = 1.577"                                   
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.An2")
+> ### * rlsOptIC.An2
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.An2
+> ### Title: Computation of the optimally robust IC for An2 estimators
+> ### Aliases: rlsOptIC.An2
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.An2(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -0.0001066371 
+precision of Fisher consistency:
+              mean            sd
+mean -4.006394e-07  0.000000e+00
+sd    0.000000e+00 -1.496408e-05
+maximum deviation 
+     0.0001066371 
+> Risks(IC1)
+$asMSE
+[1] 1.656837
+
+$asBias
+[1] 3.268231
+
+$asCov
+[1] 1.550024
+
+> Infos(IC1)
+     method         message                                             
+[1,] "rlsOptIC.An2" "optimally robust IC for An2 estimators and 'asMSE'"
+[2,] "rlsOptIC.An2" "where a = 1.813 and k = 2.267"                     
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.AnMad")
+> ### * rlsOptIC.AnMad
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.AnMad
+> ### Title: Computation of the optimally robust IC for AnMad estimators
+> ### Aliases: rlsOptIC.AnMad
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.AnMad(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -6.56959e-07 
+precision of Fisher consistency:
+              mean            sd
+mean -4.044557e-07  0.000000e+00
+sd    0.000000e+00 -6.821323e-05
+maximum deviation 
+     6.821323e-05 
+> Risks(IC1)
+$asMSE
+[1] 2.434119
+
+$asBias
+[1] 2.412581
+
+$asCov
+[1] 2.375914
+
+> Infos(IC1)
+     method           message                                               
+[1,] "rlsOptIC.AnMad" "optimally robust IC for AnMad estimators and 'asMSE'"
+[2,] "rlsOptIC.AnMad" "where a = 1.814"                                     
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.BM")
+> ### * rlsOptIC.BM
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.BM
+> ### Title: Computation of the optimally robust IC for BM estimators
+> ### Aliases: rlsOptIC.BM
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.BM(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -1.246469e-06 
+precision of Fisher consistency:
+              mean            sd
+mean -2.355426e-06  0.000000e+00
+sd    0.000000e+00 -1.732518e-05
+maximum deviation 
+     1.732518e-05 
+> Risks(IC1)
+$asMSE
+[1] 1.659506
+
+$asBias
+[1] 3.339524
+
+$asCov
+[1] 1.547982
+
+> Infos(IC1)
+     method       
+[1,] "rlsOptIC.BM"
+[2,] "rlsOptIC.BM"
+     message                                                                  
+[1,] "optimally robust IC for BM estimators and 'asMSE'"                      
+[2,] " where b.loc = 2.121 , b.sc.0 = 4.461 , alpha = 1.053 and gamma = 0.578"
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.Ha3")
+> ### * rlsOptIC.Ha3
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.Ha3
+> ### Title: Computation of the optimally robust IC for Ha3 estimators
+> ### Aliases: rlsOptIC.Ha3
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.Ha3(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -3.191376e-07 
+precision of Fisher consistency:
+              mean           sd
+mean -8.538336e-07  0.00000e+00
+sd    0.000000e+00 -9.69177e-06
+maximum deviation 
+      9.69177e-06 
+> Risks(IC1)
+$asMSE
+[1] 1.649969
+
+$asBias
+[1] 3.215669
+
+$asCov
+[1] 1.546563
+
+> Infos(IC1)
+     method         message                                             
+[1,] "rlsOptIC.Ha3" "optimally robust IC for Ha3 estimators and 'asMSE'"
+[2,] "rlsOptIC.Ha3" "where a = 2.132 , b = 2.17 and c = 7.059"          
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.Ha4")
+> ### * rlsOptIC.Ha4
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.Ha4
+> ### Title: Computation of the optimally robust IC for Ha4 estimators
+> ### Aliases: rlsOptIC.Ha4
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.Ha4(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -0.0001069318 
+precision of Fisher consistency:
+              mean            sd
+mean -2.265319e-06  0.000000e+00
+sd    0.000000e+00 -1.498731e-05
+maximum deviation 
+     0.0001069318 
+> Risks(IC1)
+$asMSE
+[1] 1.650944
+
+$asBias
+[1] 3.230698
+
+$asCov
+[1] 1.54657
+
+> Infos(IC1)
+     method         message                                               
+[1,] "rlsOptIC.Ha4" "optimally robust IC for Ha4 estimators and 'asMSE'"  
+[2,] "rlsOptIC.Ha4" "where a = 1.947 , b = 5.244 , c = 6.34 and k = 2.267"
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.HaMad")
+> ### * rlsOptIC.HaMad
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.HaMad
+> ### Title: Computation of the optimally robust IC for HuMad estimators
+> ### Aliases: rlsOptIC.HaMad
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.HaMad(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -6.56959e-07 
+precision of Fisher consistency:
+              mean            sd
+mean -2.041724e-06  0.000000e+00
+sd    0.000000e+00 -6.821323e-05
+maximum deviation 
+     6.821323e-05 
+> Risks(IC1)
+$asMSE
+[1] 2.428232
+
+$asBias
+[1] 2.358787
+
+$asCov
+[1] 2.372593
+
+> Infos(IC1)
+     method           message                                               
+[1,] "rlsOptIC.HaMad" "optimally robust IC for HaMad estimators and 'asMSE'"
+[2,] "rlsOptIC.HaMad" "where a = 1.944 , b = 4.368 , c = 10.51"             
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.Hu1")
+> ### * rlsOptIC.Hu1
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.Hu1
+> ### Title: Computation of the optimally robust IC for Hu1 estimators
+> ### Aliases: rlsOptIC.Hu1
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.Hu1(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -2.085425e-06 
+precision of Fisher consistency:
+              mean            sd
+mean -3.746843e-06  0.000000e+00
+sd    0.000000e+00 -1.350353e-05
+maximum deviation 
+     1.350353e-05 
+> Risks(IC1)
+$asMSE
+[1] 1.654518
+
+$asBias
+[1] 3.281352
+
+$asCov
+[1] 1.546845
+
+> Infos(IC1)
+     method         message                                             
+[1,] "rlsOptIC.Hu1" "optimally robust IC for Hu1 estimators and 'asMSE'"
+[2,] "rlsOptIC.Hu1" "where k = 2.197"                                   
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.Hu2")
+> ### * rlsOptIC.Hu2
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.Hu2
+> ### Title: Computation of the optimally robust IC for Hu2 estimators
+> ### Aliases: rlsOptIC.Hu2
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.Hu2(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -6.187336e-07 
+precision of Fisher consistency:
+              mean            sd
+mean -2.563384e-06  0.000000e+00
+sd    0.000000e+00 -1.321969e-05
+maximum deviation 
+     1.321969e-05 
+> Risks(IC1)
+$asMSE
+[1] 1.650944
+
+$asBias
+[1] 3.227897
+
+$asCov
+[1] 1.546751
+
+> Infos(IC1)
+     method         message                                             
+[1,] "rlsOptIC.Hu2" "optimally robust IC for Hu2 estimators and 'asMSE'"
+[2,] "rlsOptIC.Hu2" "where k = 1.945 and c = 2.266"                     
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.Hu2a")
+> ### * rlsOptIC.Hu2a
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.Hu2a
+> ### Title: Computation of the optimally robust IC for Hu2a estimators
+> ### Aliases: rlsOptIC.Hu2a
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.Hu2a(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -1.524970e-06 
+precision of Fisher consistency:
+             mean            sd
+mean -3.15714e-06  0.000000e+00
+sd    0.00000e+00 -1.321476e-05
+maximum deviation 
+     1.321476e-05 
+> Risks(IC1)
+$asMSE
+[1] 1.654518
+
+$asBias
+[1] 3.283358
+
+$asCov
+[1] 1.546714
+
+> Infos(IC1)
+     method          message                                              
+[1,] "rlsOptIC.Hu2a" "optimally robust IC for Hu2a estimators and 'asMSE'"
+[2,] "rlsOptIC.Hu2a" "where k1 = 0 and k2 = 2.198"                        
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.Hu3")
+> ### * rlsOptIC.Hu3
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.Hu3
+> ### Title: Computation of the optimally robust IC for Hu3 estimators
+> ### Aliases: rlsOptIC.Hu3
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.Hu3(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -8.525774e-05 
+precision of Fisher consistency:
+              mean            sd
+mean -2.132286e-06  0.000000e+00
+sd    0.000000e+00 -1.574855e-05
+maximum deviation 
+     8.525774e-05 
+> Risks(IC1)
+$asMSE
+[1] 1.650946
+
+$asBias
+[1] 3.232909
+
+$asCov
+[1] 1.546429
+
+> Infos(IC1)
+     method         message                                             
+[1,] "rlsOptIC.Hu3" "optimally robust IC for Hu3 estimators and 'asMSE'"
+[2,] "rlsOptIC.Hu3" "where k = 1.948 , c1 = 0.112 and c2 = 2.268"       
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.HuMad")
+> ### * rlsOptIC.HuMad
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.HuMad
+> ### Title: Computation of the optimally robust IC for HuMad estimators
+> ### Aliases: rlsOptIC.HuMad
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.HuMad(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -6.56959e-07 
+precision of Fisher consistency:
+              mean            sd
+mean -1.987572e-06  0.000000e+00
+sd    0.000000e+00 -6.821323e-05
+maximum deviation 
+     6.821323e-05 
+> Risks(IC1)
+$asMSE
+[1] 2.428225
+
+$asBias
+[1] 2.361918
+
+$asCov
+[1] 2.372439
+
+> Infos(IC1)
+     method           message                                               
+[1,] "rlsOptIC.HuMad" "optimally robust IC for HuMad estimators and 'asMSE'"
+[2,] "rlsOptIC.HuMad" "where k = 1.948"                                     
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.M")
+> ### * rlsOptIC.M
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.M
+> ### Title: Computation of the optimally robust IC for M estimators
+> ### Aliases: rlsOptIC.M
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.M(r = 0.1, check = TRUE)
+constraint a1:	 4.682285e-09 
+constraint a3:	 -1.033529e-08 
+MSE equation:	 -3.383432e-12 
+> distrExOptions("ErelativeTolerance" = 1e-12)
+> checkIC(IC1, NormLocationScaleFamily())
+precision of centering:	 4.477089e-21 9.579943e-06 
+precision of Fisher consistency:
+             mean            sd
+mean 1.646253e-05 -6.441669e-21
+sd   4.846244e-21  2.094876e-05
+maximum deviation 
+     2.094876e-05 
+> distrExOptions("ErelativeTolerance" = .Machine$double.eps^0.25)
+> Risks(IC1)
+$asMSE
+[1] 1.648004
+
+$asBias
+[1] 3.186872
+
+$asCov
+[1] 1.546442
+
+> Infos(IC1)
+     method       message                                                      
+[1,] "rlsOptIC.M" "optimally robust IC for M estimators and 'asMSE'"           
+[2,] "rlsOptIC.M" "where a1 = 0.724 , a3 = 0.343 , b = 3.187 and gamma = 0.575"
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.MM2")
+> ### * rlsOptIC.MM2
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.MM2
+> ### Title: Computation of the optimally robust IC for MM2 estimators
+> ### Aliases: rlsOptIC.MM2
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.MM2(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -6.066522e-07 
+precision of Fisher consistency:
+              mean            sd
+mean -2.225204e-06  0.000000e+00
+sd    0.000000e+00 -1.566028e-05
+maximum deviation 
+     1.566028e-05 
+> Risks(IC1)
+$asMSE
+[1] 1.666343
+
+$asBias
+[1] 3.256951
+
+$asCov
+[1] 1.560266
+
+> Infos(IC1)
+     method         message                                             
+[1,] "rlsOptIC.MM2" "optimally robust IC for MM2 estimators and 'asMSE'"
+[2,] "rlsOptIC.MM2" "where c = 2.159 and d = 3.337"                     
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.Tu1")
+> ### * rlsOptIC.Tu1
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.Tu1
+> ### Title: Computation of the optimally robust IC for Tu1 estimators
+> ### Aliases: rlsOptIC.Tu1
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.Tu1(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 1.022418e-07 
+precision of Fisher consistency:
+              mean           sd
+mean -3.649066e-08 0.000000e+00
+sd    0.000000e+00 2.888236e-06
+maximum deviation 
+     2.888236e-06 
+> Risks(IC1)
+$asMSE
+[1] 1.672751
+
+$asBias
+[1] 3.335032
+
+$asCov
+[1] 1.561527
+
+> Infos(IC1)
+     method         message                                             
+[1,] "rlsOptIC.Tu1" "optimally robust IC for Tu1 estimators and 'asMSE'"
+[2,] "rlsOptIC.Tu1" "where a = 5.527"                                   
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.Tu2")
+> ### * rlsOptIC.Tu2
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.Tu2
+> ### Title: Computation of the optimally robust IC for Tu2 estimators
+> ### Aliases: rlsOptIC.Tu2
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.Tu2(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -1.429842e-07 
+precision of Fisher consistency:
+              mean            sd
+mean -5.447399e-07  0.000000e+00
+sd    0.000000e+00 -1.437669e-05
+maximum deviation 
+     1.437669e-05 
+> Risks(IC1)
+$asMSE
+[1] 1.656762
+
+$asBias
+[1] 3.265842
+
+$asCov
+[1] 1.550105
+
+> Infos(IC1)
+     method         message                                             
+[1,] "rlsOptIC.Tu2" "optimally robust IC for Tu2 estimators and 'asMSE'"
+[2,] "rlsOptIC.Tu2" "where a = 6.357 and k = 2.264"                     
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("rlsOptIC.TuMad")
+> ### * rlsOptIC.TuMad
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rlsOptIC.TuMad
+> ### Title: Computation of the optimally robust IC for TuMad estimators
+> ### Aliases: rlsOptIC.TuMad
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rlsOptIC.TuMad(r = 0.1)
+> checkIC(IC1)
+precision of centering:	 0 -6.56959e-07 
+precision of Fisher consistency:
+              mean            sd
+mean -5.410012e-07  0.000000e+00
+sd    0.000000e+00 -6.821323e-05
+maximum deviation 
+     6.821323e-05 
+> Risks(IC1)
+$asMSE
+[1] 2.434044
+
+$asBias
+[1] 2.413390
+
+$asCov
+[1] 2.375799
+
+> Infos(IC1)
+     method           message                                               
+[1,] "rlsOptIC.TuMad" "optimally robust IC for TuMad estimators and 'asMSE'"
+[2,] "rlsOptIC.TuMad" "where a = 6.352"                                     
+> plot(IC1)
+> infoPlot(IC1)
+> 
+> 
+> 
+> cleanEx(); nameEx("roblox")
+> ### * roblox
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: roblox
+> ### Title: Optimally robust estimator for location and/or scale
+> ### Aliases: roblox
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ind <- rbinom(100, size=1, prob=0.05) 
+> x <- rnorm(100, mean=ind*3, sd=(1-ind) + ind*9)
+> 
+> ## amount of gross errors known
+> res1 <- roblox(x, eps = 0.05, returnIC = TRUE)
+> estimate(res1)
+      mean         sd 
+-0.1122987  0.8880179 
+> confint(res1)
+A[n] asymptotic (LAN-based) confidence interval:
+          2.5 %     97.5 %
+mean -0.3108177 0.08622035
+sd    0.7406442 1.03539153
+Type of estimator: Optimally robust estimate
+samplesize:   100
+Call by which estimate was produced:
+roblox(x = x, eps = 0.05, returnIC = TRUE)
+> confint(res1, method = symmetricBias())
+A[n] asymptotic (LAN-based), uniform (bias-aware)
+ confidence interval:
+for symmetric Bias
+          2.5 %    97.5 %
+mean -0.4138928 0.1892955
+sd    0.6641248 1.1119109
+Type of estimator: Optimally robust estimate
+samplesize:   100
+Call by which estimate was produced:
+roblox(x = x, eps = 0.05, returnIC = TRUE)
+> pIC(res1)
+An object of class “ContIC” 
+### name:	 IC of contamination type 
+
+### L2-differentiable parametric family:	 normal location and scale family 
+### param:	An object of class "ParamFamParameter"
+name:	location and scale
+mean:	-0.11229868189814
+sd:	0.888017869672977
+trafo:
+     mean sd
+mean    1  0
+sd      0  1
+
+### neighborhood radius:	 0.63 
+
+### clip:	[1] 1.615323
+### cent:	[1]  0.0000000 -0.4857096
+### stand:
+         [,1]     [,2]
+[1,] 1.448827 0.000000
+[2,] 0.000000 1.178083
+
+### Infos:
+     method  
+[1,] "roblox"
+     message                                                                                       
+[1,] "finite-sample corrected optimally robust estimate for contamination 'eps' = 0.05 and 'asMSE'"
+> checkIC(pIC(res1))
+precision of centering:	 6.748239e-17 -5.989196e-07 
+precision of Fisher consistency:
+              mean            sd
+mean -2.427446e-06  3.688845e-17
+sd    1.051323e-16 -8.116850e-06
+maximum deviation 
+      8.11685e-06 
+> Risks(pIC(res1))
+$asMSE
+[1] 2.626910
+
+$asBias
+[1] 1.615323
+
+$trAsCov
+[1] 1.591291
+
+$asCov
+NULL
+
+> Infos(pIC(res1))
+     method  
+[1,] "roblox"
+     message                                                                                       
+[1,] "finite-sample corrected optimally robust estimate for contamination 'eps' = 0.05 and 'asMSE'"
+> plot(pIC(res1))
+> infoPlot(pIC(res1))
+> 
+> ## amount of gross errors unknown
+> res2 <- roblox(x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
+> estimate(res2)
+      mean         sd 
+-0.1111504  0.8928424 
+> confint(res2)
+A[n] asymptotic (LAN-based) confidence interval:
+          2.5 %     97.5 %
+mean -0.3066310 0.08433017
+sd    0.7472971 1.03838771
+Type of estimator: Optimally robust estimate
+samplesize:   100
+Call by which estimate was produced:
+roblox(x = x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
+> confint(res2, method = symmetricBias())
+A[n] asymptotic (LAN-based), uniform (bias-aware)
+ confidence interval:
+for symmetric Bias
+          2.5 %    97.5 %
+mean -0.3979957 0.1756949
+sd    0.6792714 1.1064134
+Type of estimator: Optimally robust estimate
+samplesize:   100
+Call by which estimate was produced:
+roblox(x = x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
+> pIC(res2)
+An object of class “ContIC” 
+### name:	 IC of contamination type 
+
+### L2-differentiable parametric family:	 normal location and scale family 
+### param:	An object of class "ParamFamParameter"
+name:	location and scale
+mean:	-0.111150435088002
+sd:	0.89284240215757
+trafo:
+     mean sd
+mean    1  0
+sd      0  1
+
+### neighborhood radius:	 0.5455335 
+
+### clip:	[1] 1.679196
+### cent:	[1]  0.000000 -0.382342
+### stand:
+         [,1]     [,2]
+[1,] 1.330601 0.000000
+[2,] 0.000000 1.054707
+
+### Infos:
+     method  
+[1,] "roblox"
+[2,] "roblox"
+[3,] "roblox"
+     message                                                                                 
+[1,] "finite-sample corrected radius-minimax estimate for contamination interval [0.01, 0.1]"
+[2,] "least favorable (uncorrected) contamination: 0.043"                                    
+[3,] "maximum asymptotic MSE-inefficiency: 1.441"                                            
+> checkIC(pIC(res2))
+precision of centering:	 8.833545e-17 1.265596e-05 
+precision of Fisher consistency:
+             mean            sd
+mean 1.637539e-05 -1.822532e-17
+sd   3.168531e-17 -8.653862e-07
+maximum deviation 
+     1.637539e-05 
+> Risks(pIC(res2))
+$asMSE
+[1] 2.385308
+
+$asBias
+[1] 1.679196
+
+$trAsCov
+[1] 1.546146
+
+$asCov
+          [,1]      [,2]
+[1,] 0.9947437 0.0000000
+[2,] 0.0000000 0.5514425
+
+> Infos(pIC(res2))
+     method  
+[1,] "roblox"
+[2,] "roblox"
+[3,] "roblox"
+     message                                                                                 
+[1,] "finite-sample corrected radius-minimax estimate for contamination interval [0.01, 0.1]"
+[2,] "least favorable (uncorrected) contamination: 0.043"                                    
+[3,] "maximum asymptotic MSE-inefficiency: 1.441"                                            
+> plot(pIC(res2))
+> infoPlot(pIC(res2))
+> 
+> ## estimator comparison
+> # classical optimal (non-robust)
+> c(mean(x), sd(x))
+[1] 0.1337233 1.8683758
+> 
+> # most robust
+> c(median(x), mad(x))
+[1] -0.08687757  0.83485642
+> 
+> # optimally robust (amount of gross errors known)
+> estimate(res1)
+      mean         sd 
+-0.1122987  0.8880179 
+> 
+> # optimally robust (amount of gross errors unknown)
+> estimate(res2)
+      mean         sd 
+-0.1111504  0.8928424 
+> 
+> # Kolmogorov(-Smirnov) minimum distance estimator (robust)
+> (ks.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily()))
+Evaluations of Minimum Kolmogorov distance estimate:
+----------------------------------------------------
+An object of class “Estimate” 
+generated by call
+  MDEstimator(x = x, ParamFamily = NormLocationScaleFamily())
+samplesize:   100
+estimate:
+       mean          sd 
+-0.03980472  0.90817692 
+Criterion:
+Kolmogorov distance 
+          0.0568421 
+> 
+> # optimally robust (amount of gross errors known)
+> roblox(x, eps = 0.05, initial.est = estimate(ks.est))
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  roblox(x = x, eps = 0.05, initial.est = estimate(ks.est))
+samplesize:   100
+estimate:
+      mean           sd     
+  -0.11586692    0.90365737 
+ ( 0.10307092) ( 0.07651628)
+asymptotic (co)variance (multiplied with samplesize):
+         [,1]      [,2]
+[1,] 1.062361 0.0000000
+[2,] 0.000000 0.5854741
+Infos:
+     method  
+[1,] "roblox"
+     message                                                                                       
+[1,] "finite-sample corrected optimally robust estimate for contamination 'eps' = 0.05 and 'asMSE'"
+asymptotic bias:
+      sd 
+1.035576 
+steps:
+[1] 1
+> 
+> # Cramer von Mises minimum distance estimator (robust)
+> (CvM.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = CvMDist))
+Evaluations of Minimum CvM distance estimate:
+---------------------------------------------
+An object of class “Estimate” 
+generated by call
+  MDEstimator(x = x, ParamFamily = NormLocationScaleFamily(), distance = CvMDist)
+samplesize:   100
+estimate:
+       mean          sd 
+-0.07184595  0.88700536 
+Criterion:
+CvM distance 
+  0.02346989 
+> 
+> # optimally robust (amount of gross errors known)
+> roblox(x, eps = 0.05, initial.est = estimate(CvM.est))
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  roblox(x = x, eps = 0.05, initial.est = estimate(CvM.est))
+samplesize:   100
+estimate:
+      mean           sd     
+  -0.11409017    0.89686374 
+ ( 0.10229604) ( 0.07594104)
+asymptotic (co)variance (multiplied with samplesize):
+         [,1]      [,2]
+[1,] 1.046448 0.0000000
+[2,] 0.000000 0.5767041
+Infos:
+     method  
+[1,] "roblox"
+     message                                                                                       
+[1,] "finite-sample corrected optimally robust estimate for contamination 'eps' = 0.05 and 'asMSE'"
+asymptotic bias:
+      sd 
+1.027791 
+steps:
+[1] 1
+> 
+> 
+> 
+> cleanEx(); nameEx("rowRoblox")
+> ### * rowRoblox
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rowRoblox and colRoblox
+> ### Title: Optimally robust estimation for location and/or scale
+> ### Aliases: rowRoblox colRoblox
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ind <- rbinom(200, size=1, prob=0.05) 
+> X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
+> rowRoblox(X)
+Loading required package: Biobase
+
+Welcome to Bioconductor
+
+  Vignettes contain introductory material. To view, type
+  'openVignette()'. To cite Bioconductor, see
+  'citation("Biobase")' and for packages 'citation(pkgname)'.
+
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  rowRoblox(x = X)
+samplesize:   100
+estimate:
+            mean        sd
+[1,] -0.07374287 0.9125353
+[2,] -0.03062735 1.0281642
+Infos:
+     method   message                                                       
+[1,] "roblox" "radius-minimax estimates for contamination interval [0, 0.5]"
+[2,] "roblox" "least favorable contamination: 0.13"                         
+[3,] "roblox" "maximum MSE-inefficiency: 1.668"                             
+asymptotic bias:
+NULL
+steps:
+[1] 1
+> rowRoblox(X, k = 3)
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  rowRoblox(x = X, k = 3)
+samplesize:   100
+estimate:
+            mean        sd
+[1,] -0.06295037 0.9208882
+[2,] -0.03422397 1.0258818
+Infos:
+     method   message                                                       
+[1,] "roblox" "radius-minimax estimates for contamination interval [0, 0.5]"
+[2,] "roblox" "least favorable contamination: 0.13"                         
+[3,] "roblox" "maximum MSE-inefficiency: 1.668"                             
+asymptotic bias:
+NULL
+steps:
+[1] 3
+> rowRoblox(X, eps = 0.05)
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  rowRoblox(x = X, eps = 0.05)
+samplesize:   100
+estimate:
+              mean        sd
+[1,] -0.0316323762 0.9147275
+[2,]  0.0003312827 1.0508015
+Infos:
+     method  
+[1,] "roblox"
+     message                                                                
+[1,] "optimally robust estimates for contamination 'eps' = 0.05 and 'asMSE'"
+asymptotic bias:
+NULL
+steps:
+[1] 1
+> rowRoblox(X, eps = 0.05, k = 3)
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  rowRoblox(x = X, eps = 0.05, k = 3)
+samplesize:   100
+estimate:
+             mean       sd
+[1,] -0.028278572 0.927434
+[2,] -0.001566506 1.051123
+Infos:
+     method  
+[1,] "roblox"
+     message                                                                
+[1,] "optimally robust estimates for contamination 'eps' = 0.05 and 'asMSE'"
+asymptotic bias:
+NULL
+steps:
+[1] 3
+> 
+> X1 <- t(X)
+> colRoblox(X1)
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  colRoblox(x = X1)
+samplesize:   100
+estimate:
+            mean        sd
+[1,] -0.07374287 0.9125353
+[2,] -0.03062735 1.0281642
+Infos:
+     method   message                                                       
+[1,] "roblox" "radius-minimax estimates for contamination interval [0, 0.5]"
+[2,] "roblox" "least favorable contamination: 0.13"                         
+[3,] "roblox" "maximum MSE-inefficiency: 1.668"                             
+asymptotic bias:
+NULL
+steps:
+[1] 1
+> colRoblox(X1, k = 3)
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  colRoblox(x = X1, k = 3)
+samplesize:   100
+estimate:
+            mean        sd
+[1,] -0.06295037 0.9208882
+[2,] -0.03422397 1.0258818
+Infos:
+     method   message                                                       
+[1,] "roblox" "radius-minimax estimates for contamination interval [0, 0.5]"
+[2,] "roblox" "least favorable contamination: 0.13"                         
+[3,] "roblox" "maximum MSE-inefficiency: 1.668"                             
+asymptotic bias:
+NULL
+steps:
+[1] 3
+> colRoblox(X1, eps = 0.05)
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  colRoblox(x = X1, eps = 0.05)
+samplesize:   100
+estimate:
+              mean        sd
+[1,] -0.0316323762 0.9147275
+[2,]  0.0003312827 1.0508015
+Infos:
+     method  
+[1,] "roblox"
+     message                                                                
+[1,] "optimally robust estimates for contamination 'eps' = 0.05 and 'asMSE'"
+asymptotic bias:
+NULL
+steps:
+[1] 1
+> colRoblox(X1, eps = 0.05, k = 3)
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  colRoblox(x = X1, eps = 0.05, k = 3)
+samplesize:   100
+estimate:
+             mean       sd
+[1,] -0.028278572 0.927434
+[2,] -0.001566506 1.051123
+Infos:
+     method  
+[1,] "roblox"
+     message                                                                
+[1,] "optimally robust estimates for contamination 'eps' = 0.05 and 'asMSE'"
+asymptotic bias:
+NULL
+steps:
+[1] 3
+> 
+> X2 <- rbind(rnorm(100, mean = -2, sd = 3), rnorm(100, mean = -1, sd = 4))
+> rowRoblox(X2, sd = c(3, 4))
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  rowRoblox(x = X2, sd = c(3, 4))
+samplesize:   100
+estimate:
+          mean
+[1,] -1.710155
+[2,] -1.429392
+Infos:
+     method   message                                                       
+[1,] "roblox" "radius-minimax estimates for contamination interval [0, 0.5]"
+[2,] "roblox" "least favorable contamination: 0.067"                        
+[3,] "roblox" "maximum MSE-inefficiency: 1.195"                             
+asymptotic bias:
+NULL
+steps:
+[1] 1
+> rowRoblox(X2, eps = 0.03, sd = c(3, 4))
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  rowRoblox(x = X2, sd = c(3, 4), eps = 0.03)
+samplesize:   100
+estimate:
+          mean
+[1,] -1.728845
+[2,] -1.360515
+Infos:
+     method  
+[1,] "roblox"
+     message                                                                
+[1,] "optimally robust estimates for contamination 'eps' = 0.03 and 'asMSE'"
+asymptotic bias:
+NULL
+steps:
+[1] 1
+> rowRoblox(X2, sd = c(3, 4), k = 4)
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  rowRoblox(x = X2, sd = c(3, 4), k = 4)
+samplesize:   100
+estimate:
+          mean
+[1,] -1.715414
+[2,] -1.426938
+Infos:
+     method   message                                                       
+[1,] "roblox" "radius-minimax estimates for contamination interval [0, 0.5]"
+[2,] "roblox" "least favorable contamination: 0.067"                        
+[3,] "roblox" "maximum MSE-inefficiency: 1.195"                             
+asymptotic bias:
+NULL
+steps:
+[1] 4
+> rowRoblox(X2, eps = 0.03, sd = c(3, 4), k = 4)
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  rowRoblox(x = X2, sd = c(3, 4), eps = 0.03, k = 4)
+samplesize:   100
+estimate:
+          mean
+[1,] -1.729414
+[2,] -1.342921
+Infos:
+     method  
+[1,] "roblox"
+     message                                                                
+[1,] "optimally robust estimates for contamination 'eps' = 0.03 and 'asMSE'"
+asymptotic bias:
+NULL
+steps:
+[1] 4
+> 
+> X3 <- cbind(rnorm(100, mean = -2, sd = 3), rnorm(100, mean = 1, sd = 2))
+> colRoblox(X3, mean = c(-2, 1))
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  colRoblox(x = X3, mean = c(-2, 1))
+samplesize:   100
+estimate:
+           sd
+[1,] 2.989264
+[2,] 2.178403
+Infos:
+     method   message                                                       
+[1,] "roblox" "radius-minimax estimates for contamination interval [0, 0.5]"
+[2,] "roblox" "least favorable contamination: 0.106"                        
+[3,] "roblox" "maximum MSE-inefficiency: 2.095"                             
+asymptotic bias:
+NULL
+steps:
+[1] 1
+> colRoblox(X3, eps = 0.02, mean = c(-2, 1))
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  colRoblox(x = X3, mean = c(-2, 1), eps = 0.02)
+samplesize:   100
+estimate:
+           sd
+[1,] 2.951325
+[2,] 2.181291
+Infos:
+     method  
+[1,] "roblox"
+     message                                                                
+[1,] "optimally robust estimates for contamination 'eps' = 0.02 and 'asMSE'"
+asymptotic bias:
+NULL
+steps:
+[1] 1
+> colRoblox(X3, mean = c(-2, 1), k = 4)
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  colRoblox(x = X3, mean = c(-2, 1), k = 4)
+samplesize:   100
+estimate:
+           sd
+[1,] 3.004454
+[2,] 2.183808
+Infos:
+     method   message                                                       
+[1,] "roblox" "radius-minimax estimates for contamination interval [0, 0.5]"
+[2,] "roblox" "least favorable contamination: 0.106"                        
+[3,] "roblox" "maximum MSE-inefficiency: 2.095"                             
+asymptotic bias:
+NULL
+steps:
+[1] 4
+> colRoblox(X3, eps = 0.02, mean = c(-2, 1), k = 4)
+Evaluations of Optimally robust estimate:
+-----------------------------------------
+An object of class “Estimate” 
+generated by call
+  colRoblox(x = X3, mean = c(-2, 1), eps = 0.02, k = 4)
+samplesize:   100
+estimate:
+           sd
+[1,] 2.983268
+[2,] 2.186129
+Infos:
+     method  
+[1,] "roblox"
+     message                                                                
+[1,] "optimally robust estimates for contamination 'eps' = 0.02 and 'asMSE'"
+asymptotic bias:
+NULL
+steps:
+[1] 4
+> 
+> 
+> 
+> cleanEx(); nameEx("rsOptIC")
+> ### * rsOptIC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rsOptIC
+> ### Title: Computation of the optimally robust IC for AL estimators
+> ### Aliases: rsOptIC
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> IC1 <- rsOptIC(r = 0.1)
+> distrExOptions("ErelativeTolerance" = 1e-12)
+> checkIC(IC1)
+precision of centering:	 -5.00529e-07 
+precision of Fisher consistency:
+              scale
+scale -1.394372e-05
+maximum deviation 
+     1.394372e-05 
+> distrExOptions("ErelativeTolerance" = .Machine$double.eps^0.25) # default
+> Risks(IC1)
+$asMSE
+[1] 0.5967817
+
+$asBias
+[1] 2.492635
+
+$asCov
+[1] 0.5346494
+
+> cent(IC1)
+[1] -0.02492634
+> clip(IC1)
+[1] 2.492635
+> stand(IC1)
+          [,1]
+[1,] 0.5967817
+> plot(IC1)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  73.524 0.192 111.277 0.004 0.004 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

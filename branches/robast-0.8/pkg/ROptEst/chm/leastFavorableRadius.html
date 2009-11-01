@@ -1,0 +1,168 @@
+<html><head><title>Generic Function for the Computation of Least Favorable Radii</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head><body>
+
+<table width="100%"><tr><td>leastFavorableRadius(ROptEst)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   leastFavorableRadius">
+<param name="keyword" value="R:   leastFavorableRadius-methods">
+<param name="keyword" value="R:   leastFavorableRadius,L2ParamFamily,UncondNeighborhood,asGRisk-method">
+<param name="keyword" value=" Generic Function for the Computation of Least Favorable Radii">
+</object>
+
+
+<h2>Generic Function for the Computation of Least Favorable Radii</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for the computation of least favorable radii.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+leastFavorableRadius(L2Fam, neighbor, risk, ...)
+
+## S4 method for signature 'L2ParamFamily,UncondNeighborhood,asGRisk':
+leastFavorableRadius(
+          L2Fam, neighbor, risk, rho, upRad = 1, 
+            z.start = NULL, A.start = NULL, upper = 100,
+            OptOrIter = "iterate", maxiter = 100,
+            tol = .Machine$double.eps^0.4, warn = FALSE, verbose = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>L2Fam</code></td>
+<td>
+ L2-differentiable family of probability measures. </td></tr>
+<tr valign="top"><td><code>neighbor</code></td>
+<td>
+ object of class <code>"Neighborhood"</code>. </td></tr>
+<tr valign="top"><td><code>risk</code></td>
+<td>
+ object of class <code>"RiskType"</code>. </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+ additional parameters </td></tr>
+<tr valign="top"><td><code>upRad</code></td>
+<td>
+ the upper end point of the radius interval to be searched. </td></tr>
+<tr valign="top"><td><code>rho</code></td>
+<td>
+ The considered radius interval is: <i>[r*rho, r/rho]</i>
+with <i>0 &lt; rho &lt; 1</i>. </td></tr>
+<tr valign="top"><td><code>z.start</code></td>
+<td>
+ initial value for the centering constant. </td></tr>
+<tr valign="top"><td><code>A.start</code></td>
+<td>
+ initial value for the standardizing matrix. </td></tr>
+<tr valign="top"><td><code>upper</code></td>
+<td>
+ upper bound for the optimal clipping bound. </td></tr>
+<tr valign="top"><td><code>OptOrIter</code></td>
+<td>
+character; which method to be used for determining Lagrange
+multipliers <code>A</code> and <code>a</code>: if (partially) matched to <code>"optimize"</code>,
+<code>getLagrangeMultByOptim</code> is used; otherwise: by default, or if matched to
+<code>"iterate"</code> or to <code>"doubleiterate"</code>,
+<code>getLagrangeMultByIter</code> is used. More specifically,
+when using <code>getLagrangeMultByIter</code>, and if argument <code>risk</code> is of
+class <code>"asGRisk"</code>, by default and if matched to <code>"iterate"</code>
+we use only one (inner) iteration, if matched to <code>"doubleiterate"</code>
+we use up to <code>Maxiter</code> (inner) iterations.</td></tr>
+<tr valign="top"><td><code>maxiter</code></td>
+<td>
+ the maximum number of iterations </td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+ the desired accuracy (convergence tolerance).</td></tr>
+<tr valign="top"><td><code>warn</code></td>
+<td>
+ logical: print warnings. </td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+ logical: if <code>TRUE</code>, some messages are printed </td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>
+The least favorable radius and the corresponding inefficiency 
+are computed.
+</p>
+
+
+<h3>Methods</h3>
+
+<p>
+
+<dl>
+<dt>L2Fam = "L2ParamFamily", neighbor = "UncondNeighborhood", 
+risk = "asGRisk"</dt><dd> computation of the least favorable radius. </dd>
+</dl>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a></p>
+
+
+<h3>References</h3>
+
+<p> 
+Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
+the Radius. Statistical Methods and Applications <EM>17</EM>(1) 13-40.
+</p>
+<p>
+Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
+the Radius. Submitted. Appeared as discussion paper Nr. 81. 
+SFB 373 (Quantification and Simulation of Economic Processes),
+Humboldt University, Berlin; also available under
+<a href="www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf">www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf</a>
+</p>
+<p>
+Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+Mathematical Methods in Statistics <EM>14</EM>(1), 105-131.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+N &lt;- NormLocationFamily(mean=0, sd=1) 
+leastFavorableRadius(L2Fam=N, neighbor=ContNeighborhood(),
+                     risk=asMSE(), rho=0.5)
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+<hr><div align="center">[Package <em>ROptEst</em> version 0.7 <a href="00Index.html">Index</a>]</div>
+</body></html>

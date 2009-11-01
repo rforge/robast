@@ -1,0 +1,84 @@
+###############################################################################
+##  News: to package RobLoxBioC
+###############################################################################
+
+(first two numbers of package versions do not necessarily reflect 
+ package-individual development, but rather are chosen for the 
+ RobAStXXX family as a whole in order to ease updating "depends" 
+ information)
+
+#######################################
+version 0.7
+#######################################
+
+
+GENERAL ENHANCEMENTS:
+
++ added tests/Examples folder with file RobLoxBioC-Ex.Rout.save to have
+  some automatic testing
++ added TOBEDONE (sic!) files; in English (for possible collaborators) 
++ added keyword robust and made some minor corrections ...
++ added/updated NEWS files, updated CITATION files using code by A. Zeileis
+
++ Rd-parsing:
+  * patch for Brian Ripley's
+    Re: [Rd] Warning: missing text for item ... in \describe?
+  * fixed errors / warnings in .Rd files detected by parser 2 
+    (c.f. [Rd] More intensive checking of R help files, Prof Brian Ripley, 09.01.2009 10:25)
+
++ svn-revision-tags 
+  * added in all DESCRIPTION files
+  * added field "Encoding: latin1" to all DESCRIPTION files because
+    substituting $LastChangedDate by svn would cause problems for
+    packages built under Windows (German) local when checking under Linux.
+
++ removed pdf-file from version control - Rnw-file is sufficient
+
+
+INTERNALLY:
+
++ renamed AllGeneric.R to 0AllGeneric.R to be on first position ...
++ in robloxAffyBatch.R return se not sd ...
++ some modifications for Figure 2 in IlluminaExample.R
++ set default to 3-step estimation ...
++ changed return value of KolmogorovMinDist, now also returns the corresponding sample sizes.
++ Added file for Illumina simulation study and renamed file AffySimStudy.Rd to SimStudies.Rd.
++ reduced the Illumina example code to relevant part ...
+
+
+BUGFIXES:
+
++ code seems to work correctly, affycompTable in AffymetrixExample does
+  not work yet (because of missing dilution data).
+
+
+#######################################
+version 0.5
+#######################################
++ added example code for Illumina data
++ function to perform Monte-Carlo studies for comparison with Illumina's
+  default method
+
+#######################################
+version 0.4
+#######################################
++ added finite-sample correction
++ handle cases with sample size <= 2 and contamination eps = 0
++ moved function AffySimStudy from folder inst/scripts to folder R as 
+  exported and documented function to perform Monte-Carlo studies.
+
+#######################################
+version 0.3
+#######################################
++ added KolmogorovMinDist methods for matrix, AffyBatch and BeadLevelList
+
+#######################################
+version 0.2
+#######################################
++ robloxbioc methods for AffyBatch and BeadLevelList
+
+#######################################
+version 0.1
+#######################################
++ start of development
+

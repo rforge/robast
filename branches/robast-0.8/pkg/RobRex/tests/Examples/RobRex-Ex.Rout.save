@@ -1,0 +1,434 @@
+
+R version 2.10.0 beta (2009-10-15 r50107)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### * <HEADER>
+> ###
+> attach(NULL, name = "CheckExEnv")
+> assign("nameEx",
++        local({
++ 	   s <- "__{must remake R-ex/*.R}__"
++            function(new) {
++                if(!missing(new)) s <<- new else s
++            }
++        }),
++        pos = "CheckExEnv")
+> ## Add some hooks to label plot pages for base and grid graphics
+> assign("base_plot_hook",
++        function() {
++            pp <- par(c("mfg","mfcol","oma","mar"))
++            if(all(pp$mfg[1:2] == c(1, pp$mfcol[2]))) {
++                outer <- (oma4 <- pp$oma[4]) > 0; mar4 <- pp$mar[4]
++                mtext(sprintf("help(\"%s\")", nameEx()), side = 4,
++                      line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
++                outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
++            }
++        },
++        pos = "CheckExEnv")
+> assign("grid_plot_hook",
++        function() {
++            grid::pushViewport(grid::viewport(width=grid::unit(1, "npc") -
++                               grid::unit(1, "lines"), x=0, just="left"))
++            grid::grid.text(sprintf("help(\"%s\")", nameEx()),
++                            x=grid::unit(1, "npc") + grid::unit(0.5, "lines"),
++                            y=grid::unit(0.8, "npc"), rot=90,
++                            gp=grid::gpar(col="orchid"))
++        },
++        pos = "CheckExEnv")
+> setHook("plot.new",     get("base_plot_hook", pos = "CheckExEnv"))
+> setHook("persp",        get("base_plot_hook", pos = "CheckExEnv"))
+> setHook("grid.newpage", get("grid_plot_hook", pos = "CheckExEnv"))
+> assign("cleanEx",
++        function(env = .GlobalEnv) {
++ 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
++            RNGkind("default", "default")
++ 	   set.seed(1)
++    	   options(warn = 1)
++ 	   .CheckExEnv <- as.environment("CheckExEnv")
++ 	   delayedAssign("T", stop("T used instead of TRUE"),
++ 		  assign.env = .CheckExEnv)
++ 	   delayedAssign("F", stop("F used instead of FALSE"),
++ 		  assign.env = .CheckExEnv)
++ 	   sch <- search()
++ 	   newitems <- sch[! sch %in% .oldSearch]
++ 	   for(item in rev(newitems))
++                eval(substitute(detach(item), list(item=item)))
++ 	   missitems <- .oldSearch[! .oldSearch %in% sch]
++ 	   if(length(missitems))
++ 	       warning("items ", paste(missitems, collapse=", "),
++ 		       " have been removed from the search path")
++        },
++        pos = "CheckExEnv")
+> assign("ptime", proc.time(), pos = "CheckExEnv")
+> ## at least one package changes these via ps.options(), so do this
+> ## before loading the package.
+> ## Use postscript as incomplete files may be viewable, unlike PDF.
+> ## Choose a size that is close to on-screen devices, fix paper
+> grDevices::ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
+> grDevices::postscript("RobRex-Ex.ps")
+> 
+> assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
+> options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
+> options(warn = 1)
+> library('RobRex')
+Loading required package: ROptRegTS
+Loading required package: distr
+Loading required package: startupmsg
+:startupmsg>  Utilities for start-up messages (version 0.7)
+:startupmsg> 
+:startupmsg>  For more information see ?"startupmsg",
+:startupmsg>  NEWS("startupmsg")
+
+Loading required package: sfsmisc
+Loading required package: SweaveListingUtils
+:SweaveListingUtils>  Utilities for Sweave together with
+:SweaveListingUtils>  TeX listings package (version 0.4)
+:SweaveListingUtils> 
+:SweaveListingUtils>  Some functions from package 'base'
+:SweaveListingUtils>  are intentionally masked ---see
+:SweaveListingUtils>  SweaveListingMASK().
+:SweaveListingUtils> 
+:SweaveListingUtils>  Note that global options are
+:SweaveListingUtils>  controlled by
+:SweaveListingUtils>  SweaveListingoptions() ---c.f.
+:SweaveListingUtils>  ?"SweaveListingoptions".
+:SweaveListingUtils> 
+:SweaveListingUtils>  For more information see
+:SweaveListingUtils>  ?"SweaveListingUtils",
+:SweaveListingUtils>  NEWS("SweaveListingUtils")
+:SweaveListingUtils>  There is a vignette to this
+:SweaveListingUtils>  package; try
+:SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
+
+
+Attaching package: 'SweaveListingUtils'
+
+
+	The following object(s) are masked from package:base :
+
+	 library,
+	 require 
+
+:distr>  Object orientated implementation of distributions (version
+:distr>  2.2)
+:distr> 
+:distr>  Attention: Arithmetics on distribution objects are
+:distr>  understood as operations on corresponding random variables
+:distr>  (r.v.s); see distrARITH().
+:distr> 
+:distr>  Some functions from package 'stats' are intentionally masked
+:distr>  ---see distrMASK().
+:distr> 
+:distr>  Note that global options are controlled by distroptions()
+:distr>  ---c.f. ?"distroptions".
+:distr> 
+:distr>  For more information see ?"distr", NEWS("distr"), as well as
+:distr>    http://distr.r-forge.r-project.org/
+:distr>  Package "distrDoc" provides a vignette to this package as
+:distr>  well as to several extension packages; try
+:distr>  vignette("distr").
+
+
+Attaching package: 'distr'
+
+
+	The following object(s) are masked from package:stats :
+
+	 df,
+	 qqplot,
+	 sd 
+
+Loading required package: distrEx
+Loading required package: evd
+Loading required package: actuar
+
+Attaching package: 'actuar'
+
+
+	The following object(s) are masked from package:grDevices :
+
+	 cm 
+
+:distrEx>  Extensions of package distr (version 2.2)
+:distrEx> 
+:distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
+:distrEx>  attached /before/ package "distrEx". See distrExMASK().
+:distrEx> 
+:distrEx>  For more information see ?"distrEx", NEWS("distrEx"), as
+:distrEx>  well as
+:distrEx>    http://distr.r-forge.r-project.org/
+:distrEx>  Package "distrDoc" provides a vignette to this package
+:distrEx>  as well as to several related packages; try
+:distrEx>  vignette("distr").
+
+
+Attaching package: 'distrEx'
+
+
+	The following object(s) are masked from package:stats :
+
+	 IQR,
+	 mad,
+	 median,
+	 var 
+
+Loading required package: RandVar
+:RandVar>  Implementation of random variables (version 0.7)
+:RandVar> 
+:RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
+:RandVar>  well as
+:RandVar>    http://robast.r-forge.r-project.org/
+:RandVar>  This package also includes a vignette; try
+:RandVar>  vignette("RandVar").
+
+Loading required package: ROptEstOld
+
+Attaching package: 'ROptEstOld'
+
+
+	The following object(s) are masked from package:graphics :
+
+	 clip 
+
+> 
+> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> assign(".oldNS", loadedNamespaces(), pos = 'CheckExEnv')
+> cleanEx(); nameEx("rgsOptIC.AL")
+> ### * rgsOptIC.AL
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.AL
+> ### Title: Computation of the optimally robust IC for AL estimators
+> ### Aliases: rgsOptIC.AL
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> IC1 <- rgsOptIC.AL(r = 0.1, K = K)
+> checkIC(IC1)
+precision of centering:	 0 -4.83286e-07 
+precision of Fisher consistency:
+              [,1]          [,2]
+[1,] -1.083822e-06  0.000000e+00
+[2,]  0.000000e+00 -1.488624e-05
+maximum deviation 
+     1.488624e-05 
+> Risks(IC1)
+$asMSE
+[1] 0.6923324
+
+$asBias
+[1] 2.562417
+
+$trAsCov
+[1] 0.6266726
+
+> cent(IC1)
+[1]  0.00000000 -0.02502798
+> clip(IC1)
+[1] 2.562417
+> stand(IC1)
+           [,1]      [,2]
+[1,] 0.09566834 0.0000000
+[2,] 0.00000000 0.5966641
+> 
+> 
+> 
+> cleanEx(); nameEx("rgsOptIC.ALc")
+> ### * rgsOptIC.ALc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.ALc
+> ### Title: Computation of the optimally robust IC for AL estimators
+> ### Aliases: rgsOptIC.ALc
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> IC1 <- rgsOptIC.ALc(r = 0.1, K = K)
+> checkIC(IC1)
+precision of conditional centering:	 9.851877e-07 
+precision of Fisher consistency:
+              [,1]          [,2]
+[1,] -1.061903e-06  0.000000e+00
+[2,]  0.000000e+00 -5.374509e-05
+maximum deviation 
+     5.374509e-05 
+> Risks(IC1)
+$asMSE
+[1] 0.6923343
+
+$asBias
+[1] 2.562466
+
+$trAsCov
+[1] 0.626672
+
+> 
+> 
+> 
+> cleanEx(); nameEx("rgsOptIC.ALs")
+> ### * rgsOptIC.ALs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.ALs
+> ### Title: Computation of the optimally robust IC for ALs estimators
+> ### Aliases: rgsOptIC.ALs
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## code takes some time
+> ## Not run: 
+> ##D K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> ##D IC1 <- rgsOptIC.ALs(r = 0.1, K = K)
+> ##D checkIC(IC1)
+> ##D Risks(IC1)
+> ##D Infos(IC1)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx(); nameEx("rgsOptIC.BM")
+> ### * rgsOptIC.BM
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.BM
+> ### Title: Computation of the optimally robust IC for BM estimators
+> ### Aliases: rgsOptIC.BM
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## code takes some time
+> ## Not run: 
+> ##D K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> ##D IC1 <- rgsOptIC.BM(r = 0.1, K = K)
+> ##D checkIC(IC1)
+> ##D Risks(IC1)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx(); nameEx("rgsOptIC.M")
+> ### * rgsOptIC.M
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.M
+> ### Title: Computation of the optimally robust IC for M estimators
+> ### Aliases: rgsOptIC.M
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## code takes some time
+> ## Not run: 
+> ##D K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> ##D IC1 <- rgsOptIC.M(r = 0.1, K = K)
+> ##D checkIC(IC1)
+> ##D Risks(IC1)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx(); nameEx("rgsOptIC.MK")
+> ### * rgsOptIC.MK
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.MK
+> ### Title: Computation of the optimally robust IC for MK estimators
+> ### Aliases: rgsOptIC.MK
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## code takes some time
+> ## Not run: 
+> ##D K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> ##D IC1 <- rgsOptIC.MK(r = 0.1, K = K)
+> ##D checkIC(IC1)
+> ##D Risks(IC1)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx(); nameEx("rgsOptIC.Mc")
+> ### * rgsOptIC.Mc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.Mc
+> ### Title: Computation of the optimally robust IC for Mc estimators
+> ### Aliases: rgsOptIC.Mc
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## code takes some time
+> ## Not run: 
+> ##D K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> ##D IC1 <- rgsOptIC.Mc(r = 0.1, K = K)
+> ##D checkIC(IC1)
+> ##D Risks(IC1)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx(); nameEx("rgsOptIC.Ms")
+> ### * rgsOptIC.Ms
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.Ms
+> ### Title: Computation of the optimally robust IC for Ms estimators
+> ### Aliases: rgsOptIC.Ms
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## code takes some time
+> ## Not run: 
+> ##D K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> ##D IC1 <- rgsOptIC.Ms(r = 0.1, K = K)
+> ##D checkIC(IC1)
+> ##D Risks(IC1)
+> ## End(Not run)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  15.664 0.132 18.409 0.004 0.004 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

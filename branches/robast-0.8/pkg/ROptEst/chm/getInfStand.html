@@ -1,0 +1,169 @@
+<html><head><title>Generic Function for the Computation of the Standardizing Matrix</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head><body>
+
+<table width="100%"><tr><td>getInfStand(ROptEst)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   getInfStand">
+<param name="keyword" value="R:   getInfStand-methods">
+<param name="keyword" value="R:   getInfStand,UnivariateDistribution,ContNeighborhood,BiasType-method">
+<param name="keyword" value="R:   getInfStand,UnivariateDistribution,TotalVarNeighborhood,BiasType-method">
+<param name="keyword" value="R:   getInfStand,RealRandVariable,UncondNeighborhood,BiasType-method">
+<param name="keyword" value="R:   getInfStand,UnivariateDistribution,ContNeighborhood,onesidedBias-method">
+<param name="keyword" value="R:   getInfStand,UnivariateDistribution,ContNeighborhood,asymmetricBias-method">
+<param name="keyword" value=" Generic Function for the Computation of the Standardizing Matrix">
+</object>
+
+
+<h2>Generic Function for the Computation of the Standardizing Matrix</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for the computation of the standardizing matrix which
+takes care of the Fisher consistency of the corresponding IC. This function 
+is rarely called directly. It is used to compute optimally robust ICs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+getInfStand(L2deriv, neighbor, biastype, ...)
+
+## S4 method for signature 'UnivariateDistribution,ContNeighborhood,BiasType':
+getInfStand(L2deriv, 
+     neighbor, biastype, clip, cent, trafo)
+
+## S4 method for signature 'UnivariateDistribution,TotalVarNeighborhood,BiasType':
+getInfStand(L2deriv, 
+     neighbor, biastype, clip, cent, trafo)
+
+## S4 method for signature 'RealRandVariable,UncondNeighborhood,BiasType':
+getInfStand(L2deriv,
+     neighbor, biastype, Distr, A.comp, cent, trafo, w)
+
+## S4 method for signature 'UnivariateDistribution,ContNeighborhood,BiasType':
+getInfStand(L2deriv, 
+     neighbor, biastype, clip, cent, trafo)
+
+## S4 method for signature 'UnivariateDistribution,ContNeighborhood,BiasType':
+getInfStand(L2deriv, 
+     neighbor, biastype, clip, cent, trafo)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>L2deriv</code></td>
+<td>
+ L2-derivative of some L2-differentiable family 
+of probability measures. </td></tr>
+<tr valign="top"><td><code>neighbor</code></td>
+<td>
+ object of class <code>"Neighborhood"</code> </td></tr>
+<tr valign="top"><td><code>biastype</code></td>
+<td>
+ object of class <code>"BiasType"</code> </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+ additional parameters </td></tr>
+<tr valign="top"><td><code>clip</code></td>
+<td>
+ optimal clipping bound. </td></tr>
+<tr valign="top"><td><code>cent</code></td>
+<td>
+ optimal centering constant. </td></tr>
+<tr valign="top"><td><code>Distr</code></td>
+<td>
+ object of class <code>"Distribution"</code>. </td></tr>
+<tr valign="top"><td><code>trafo</code></td>
+<td>
+ matrix: transformation of the parameter. </td></tr>  
+<tr valign="top"><td><code>A.comp</code></td>
+<td>
+ matrix: indication which components of the standardizing
+matrix have to be computed. </td></tr>
+<tr valign="top"><td><code>w</code></td>
+<td>
+object of class <code>RobWeight</code>; current weight</td></tr>  
+</table>
+
+
+<h3>Value</h3>
+
+<p>The standardizing matrix is computed.</p>
+
+
+<h3>Methods</h3>
+
+<p>
+
+<dl>
+<dt>L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", 
+biastype = "BiasType"</dt><dd> 
+computes standardizing matrix for symmetric bias. </dd>
+</p>
+<p>
+<dt>L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood", 
+biastype = "BiasType"</dt><dd> 
+computes standardizing matrix for symmetric bias. </dd>
+</p>
+<p>
+<dt>L2deriv = "RealRandVariable", neighbor = "UncondNeighborhood",
+biastype = "BiasType"</dt><dd> 
+computes standardizing matrix for symmetric bias. </dd>
+</p>
+<p>
+<dt>L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", 
+biastype = "onesidedBias"</dt><dd> 
+computes standardizing matrix for onesided bias. </dd>
+</p>
+<p>
+<dt>L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood", 
+biastype = "asymmetricBias"</dt><dd> 
+computes standardizing matrix for asymmetric bias. </dd>
+</dl>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a></p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
+Mathematical Methods in Statistics <EM>14</EM>(1), 105-131.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../RobAStBase/html/ContIC-class.html">ContIC-class</a></code>, <code><a href="../../RobAStBase/html/TotalVarIC-class.html">TotalVarIC-class</a></code></p>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+<hr><div align="center">[Package <em>ROptEst</em> version 0.7 <a href="00Index.html">Index</a>]</div>
+</body></html>

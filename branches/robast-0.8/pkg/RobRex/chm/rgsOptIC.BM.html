@@ -1,0 +1,116 @@
+<html><head><title>Computation of the optimally robust IC for BM estimators</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head><body>
+
+<table width="100%"><tr><td>rgsOptIC.BM(RobRex)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   rgsOptIC.BM">
+<param name="keyword" value=" Computation of the optimally robust IC for BM estimators">
+</object>
+
+
+<h2>Computation of the optimally robust IC for BM estimators</h2>
+
+
+<h3>Description</h3>
+
+<p>
+The function <code>rgsOptIC.BM</code> computes the optimally robust IC
+for BM estimators in case of linear regression with unknown
+scale and (convex) contamination neighborhoods where the
+regressor is random. These estimators were proposed 
+by Bednarski and Mueller (2001); confer also 
+Subsection 7.3.3 of Kohl (2005).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+rgsOptIC.BM(r, K, b.rg.start = 2.5, b.sc.0.x.start, delta = 1e-06, 
+            MAX = 100, itmax = 1000)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>r</code></td>
+<td>
+ non-negative real: neighborhood radius. </td></tr>
+<tr valign="top"><td><code>K</code></td>
+<td>
+ object of class <code>"DiscreteDistribution"</code> </td></tr>
+<tr valign="top"><td><code>b.rg.start</code></td>
+<td>
+ positive real: starting value for <i>b_rg</i>. </td></tr>
+<tr valign="top"><td><code>b.sc.0.x.start</code></td>
+<td>
+ positive real: starting value for <i>b_sc,0,x</i>. </td></tr>
+<tr valign="top"><td><code>delta</code></td>
+<td>
+ the desired accuracy (convergence tolerance). </td></tr>
+<tr valign="top"><td><code>itmax</code></td>
+<td>
+ the maximum number of iterations. </td></tr>
+<tr valign="top"><td><code>MAX</code></td>
+<td>
+ if <i>b_loc</i> or <i>b_sc,0</i> 
+are beyond the admitted values, <code>MAX</code> is returned. </td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>
+The computation of the optimally robust IC for BM estimators
+is based on <code>optim</code> where <code>MAX</code> is used to 
+control the constraints on <i>b_rg</i> 
+and <i>b_sc,0,x</i>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Object of class <code>"CondIC"</code></p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
+
+
+<h3>References</h3>
+
+<p> 
+Bednarski, T and Mueller, C.H. (2001) Optimal bounded influence
+regression and scale M-estimators in the context of experimental
+design. Statistics, <B>35</B>(4): 349&ndash;369.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>CondIC-class</code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## code takes some time
+## Not run: 
+K &lt;- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+IC1 &lt;- rgsOptIC.BM(r = 0.1, K = K)
+checkIC(IC1)
+Risks(IC1)
+
+## End(Not run)
+</pre>
+
+<hr><div align="center">[Package <em>RobRex</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

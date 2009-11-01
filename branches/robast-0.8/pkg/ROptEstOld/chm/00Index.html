@@ -1,0 +1,812 @@
+<html><head><title>Optimally robust estimation - old version</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head><body>
+<h1>Optimally robust estimation - old version
+<img class="toplogo" src="logo.jpg" alt="[R logo]"></h1>
+
+<hr>
+
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value=".. contents">
+</object>
+
+<h2>Help pages for package &lsquo;ROptEstOld&rsquo; version 0.7</h2>
+
+<p align="center">
+<a href="#A">A</a>
+<a href="#B">B</a>
+<a href="#C">C</a>
+<a href="#D">D</a>
+<a href="#E">E</a>
+<a href="#F">F</a>
+<a href="#G">G</a>
+<a href="#I">I</a>
+<a href="#K">K</a>
+<a href="#L">L</a>
+<a href="#M">M</a>
+<a href="#N">N</a>
+<a href="#O">O</a>
+<a href="#P">P</a>
+<a href="#R">R</a>
+<a href="#S">S</a>
+<a href="#T">T</a>
+<a href="#U">U</a>
+<a href="#W">W</a>
+</p>
+
+
+<h2><a name="A">-- A --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="InfluenceCurve-class.html">addInfo&lt;-</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">addInfo&lt;-,InfluenceCurve-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="ProbFamily-class.html">addProp&lt;-</a></td>
+<td>Family of probability measures</td></tr>
+<tr><td width="25%"><a href="ProbFamily-class.html">addProp&lt;-,ProbFamily-method</a></td>
+<td>Family of probability measures</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">addRisk&lt;-</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">addRisk&lt;-,InfluenceCurve-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="asBias.html">asBias</a></td>
+<td>Generating function for asBias-class</td></tr>
+<tr><td width="25%"><a href="asBias-class.html">asBias-class</a></td>
+<td>Standardized Asymptotic Bias</td></tr>
+<tr><td width="25%"><a href="asCov.html">asCov</a></td>
+<td>Generating function for asCov-class</td></tr>
+<tr><td width="25%"><a href="asCov-class.html">asCov-class</a></td>
+<td>Asymptotic covariance</td></tr>
+<tr><td width="25%"><a href="asGRisk-class.html">asGRisk-class</a></td>
+<td>Convex asymptotic risk</td></tr>
+<tr><td width="25%"><a href="asHampel.html">asHampel</a></td>
+<td>Generating function for asHampel-class</td></tr>
+<tr><td width="25%"><a href="asHampel-class.html">asHampel-class</a></td>
+<td>Asymptotic Hampel risk</td></tr>
+<tr><td width="25%"><a href="asMSE.html">asMSE</a></td>
+<td>Generating function for asMSE-class</td></tr>
+<tr><td width="25%"><a href="asMSE-class.html">asMSE-class</a></td>
+<td>Asymptotic mean square error</td></tr>
+<tr><td width="25%"><a href="asRisk-class.html">asRisk-class</a></td>
+<td>Aymptotic risk</td></tr>
+<tr><td width="25%"><a href="asUnOvShoot.html">asUnOvShoot</a></td>
+<td>Generating function for asUnOvShoot-class</td></tr>
+<tr><td width="25%"><a href="asUnOvShoot-class.html">asUnOvShoot-class</a></td>
+<td>Asymptotic under-/overshoot probability</td></tr>
+</table>
+
+<h2><a name="B">-- B --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="BinomFamily.html">BinomFamily</a></td>
+<td>Generating function for Binomial families</td></tr>
+<tr><td width="25%"><a href="asHampel-class.html">bound</a></td>
+<td>Asymptotic Hampel risk</td></tr>
+<tr><td width="25%"><a href="asHampel-class.html">bound,asHampel-method</a></td>
+<td>Asymptotic Hampel risk</td></tr>
+<tr><td width="25%"><a href="fiHampel-class.html">bound,fiHampel-method</a></td>
+<td>Finite-sample Hampel risk</td></tr>
+</table>
+
+<h2><a name="C">-- C --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="IC-class.html">CallL2Fam</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="IC-class.html">CallL2Fam,IC-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="IC-class.html">CallL2Fam&lt;-</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">CallL2Fam&lt;-,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="IC-class.html">CallL2Fam&lt;-,IC-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">CallL2Fam&lt;-,TotalVarIC-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">cent</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">cent,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">cent&lt;-</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">cent&lt;-,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="RobModel-class.html">center</a></td>
+<td>Robust model</td></tr>
+<tr><td width="25%"><a href="RobModel-class.html">center,RobModel-method</a></td>
+<td>Robust model</td></tr>
+<tr><td width="25%"><a href="RobModel-class.html">center&lt;-</a></td>
+<td>Robust model</td></tr>
+<tr><td width="25%"><a href="RobModel-class.html">center&lt;-,RobModel-method</a></td>
+<td>Robust model</td></tr>
+<tr><td width="25%"><a href="checkIC.html">checkIC</a></td>
+<td>Generic Function for Checking ICs</td></tr>
+<tr><td width="25%"><a href="IC-class.html">checkIC,IC,L2ParamFamily-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="IC-class.html">checkIC,IC,missing-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="checkL2deriv.html">checkL2deriv</a></td>
+<td>Generic function for checking L2-derivatives</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">checkL2deriv,L2ParamFamily-method</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">clip</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">clip,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">clip&lt;-</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">clip&lt;-,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">clipLo</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">clipLo,TotalVarIC-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">clipLo&lt;-</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">clipLo&lt;-,TotalVarIC-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">clipUp</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">clipUp,TotalVarIC-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">clipUp&lt;-</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">clipUp&lt;-,TotalVarIC-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="ContIC.html">ContIC</a></td>
+<td>Generating function for ContIC-class</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">ContIC-class</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="ContNeighborhood.html">ContNeighborhood</a></td>
+<td>Generating function for ContNeighborhood-class</td></tr>
+<tr><td width="25%"><a href="ContNeighborhood-class.html">ContNeighborhood-class</a></td>
+<td>Contamination Neighborhood</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">Curve</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">Curve,InfluenceCurve-method</a></td>
+<td>Influence curve</td></tr>
+</table>
+
+<h2><a name="D">-- D --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="ProbFamily-class.html">distribution</a></td>
+<td>Family of probability measures</td></tr>
+<tr><td width="25%"><a href="ProbFamily-class.html">distribution,ProbFamily-method</a></td>
+<td>Family of probability measures</td></tr>
+<tr><td width="25%"><a href="ProbFamily-class.html">distrSymm</a></td>
+<td>Family of probability measures</td></tr>
+<tr><td width="25%"><a href="ProbFamily-class.html">distrSymm,ProbFamily-method</a></td>
+<td>Family of probability measures</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">Domain,InfluenceCurve-method</a></td>
+<td>Influence curve</td></tr>
+</table>
+
+<h2><a name="E">-- E --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="L2ParamFamily-class.html">E,L2ParamFamily,EuclRandMatrix,missing-method</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">E,L2ParamFamily,EuclRandVariable,missing-method</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">E,L2ParamFamily,EuclRandVarList,missing-method</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="evalIC.html">evalIC</a></td>
+<td>Generic function for evaluating ICs</td></tr>
+<tr><td width="25%"><a href="IC-class.html">evalIC,IC,matrix-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="IC-class.html">evalIC,IC,numeric-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="EvenSymmetric.html">EvenSymmetric</a></td>
+<td>Generating function for EvenSymmetric-class</td></tr>
+<tr><td width="25%"><a href="EvenSymmetric-class.html">EvenSymmetric-class</a></td>
+<td>Class for Even Functions</td></tr>
+<tr><td width="25%"><a href="ExpScaleFamily.html">ExpScaleFamily</a></td>
+<td>Generating function for exponential scale families</td></tr>
+</table>
+
+<h2><a name="F">-- F --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="fiBias.html">fiBias</a></td>
+<td>Generating function for fiBias-class</td></tr>
+<tr><td width="25%"><a href="fiBias-class.html">fiBias-class</a></td>
+<td>Finite-sample Bias</td></tr>
+<tr><td width="25%"><a href="fiCov.html">fiCov</a></td>
+<td>Generating function for fiCov-class</td></tr>
+<tr><td width="25%"><a href="fiCov-class.html">fiCov-class</a></td>
+<td>Finite-sample covariance</td></tr>
+<tr><td width="25%"><a href="fiHampel.html">fiHampel</a></td>
+<td>Generating function for fiHampel-class</td></tr>
+<tr><td width="25%"><a href="fiHampel-class.html">fiHampel-class</a></td>
+<td>Finite-sample Hampel risk</td></tr>
+<tr><td width="25%"><a href="fiMSE.html">fiMSE</a></td>
+<td>Generating function for fiMSE-class</td></tr>
+<tr><td width="25%"><a href="fiMSE-class.html">fiMSE-class</a></td>
+<td>Finite-sample mean square error</td></tr>
+<tr><td width="25%"><a href="fiRisk-class.html">fiRisk-class</a></td>
+<td>Finite-sample risk</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">FisherInfo</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">FisherInfo,L2ParamFamily-method</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="fiUnOvShoot.html">fiUnOvShoot</a></td>
+<td>Generating function for fiUnOvShoot-class</td></tr>
+<tr><td width="25%"><a href="fiUnOvShoot-class.html">fiUnOvShoot-class</a></td>
+<td>Finite-sample under-/overshoot probability</td></tr>
+<tr><td width="25%"><a href="FixRobModel.html">FixRobModel</a></td>
+<td>Generating function for FixRobModel-class</td></tr>
+<tr><td width="25%"><a href="FixRobModel-class.html">FixRobModel-class</a></td>
+<td>Robust model with fixed (unconditional) neighborhood</td></tr>
+<tr><td width="25%"><a href="FunctionSymmetry-class.html">FunctionSymmetry-class</a></td>
+<td>Class of Symmetries for Functions</td></tr>
+<tr><td width="25%"><a href="FunSymmList.html">FunSymmList</a></td>
+<td>Generating function for FunSymmList-class</td></tr>
+<tr><td width="25%"><a href="FunSymmList-class.html">FunSymmList-class</a></td>
+<td>List of Symmetries for a List of Functions</td></tr>
+</table>
+
+<h2><a name="G">-- G --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="GammaFamily.html">GammaFamily</a></td>
+<td>Generating function for Gamma families</td></tr>
+<tr><td width="25%"><a href="generateIC.html">generateIC</a></td>
+<td>Generic function for the generation of influence curves</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">generateIC,ContNeighborhood,L2ParamFamily-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">generateIC,TotalVarNeighborhood,L2ParamFamily-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="getAsRisk.html">getAsRisk</a></td>
+<td>Generic Function for Computation of Asymptotic Risks</td></tr>
+<tr><td width="25%"><a href="getAsRisk.html">getAsRisk,asBias,RealRandVariable,ContNeighborhood-method</a></td>
+<td>Generic Function for Computation of Asymptotic Risks</td></tr>
+<tr><td width="25%"><a href="getAsRisk.html">getAsRisk,asBias,UnivariateDistribution,ContNeighborhood-method</a></td>
+<td>Generic Function for Computation of Asymptotic Risks</td></tr>
+<tr><td width="25%"><a href="getAsRisk.html">getAsRisk,asBias,UnivariateDistribution,TotalVarNeighborhood-method</a></td>
+<td>Generic Function for Computation of Asymptotic Risks</td></tr>
+<tr><td width="25%"><a href="getAsRisk.html">getAsRisk,asCov,RealRandVariable,ContNeighborhood-method</a></td>
+<td>Generic Function for Computation of Asymptotic Risks</td></tr>
+<tr><td width="25%"><a href="getAsRisk.html">getAsRisk,asCov,UnivariateDistribution,ContNeighborhood-method</a></td>
+<td>Generic Function for Computation of Asymptotic Risks</td></tr>
+<tr><td width="25%"><a href="getAsRisk.html">getAsRisk,asCov,UnivariateDistribution,TotalVarNeighborhood-method</a></td>
+<td>Generic Function for Computation of Asymptotic Risks</td></tr>
+<tr><td width="25%"><a href="getAsRisk.html">getAsRisk,asMSE,EuclRandVariable,Neighborhood-method</a></td>
+<td>Generic Function for Computation of Asymptotic Risks</td></tr>
+<tr><td width="25%"><a href="getAsRisk.html">getAsRisk,asMSE,UnivariateDistribution,Neighborhood-method</a></td>
+<td>Generic Function for Computation of Asymptotic Risks</td></tr>
+<tr><td width="25%"><a href="getAsRisk.html">getAsRisk,asUnOvShoot,UnivariateDistribution,UncondNeighborhood-method</a></td>
+<td>Generic Function for Computation of Asymptotic Risks</td></tr>
+<tr><td width="25%"><a href="getAsRisk.html">getAsRisk,trAsCov,RealRandVariable,ContNeighborhood-method</a></td>
+<td>Generic Function for Computation of Asymptotic Risks</td></tr>
+<tr><td width="25%"><a href="getAsRisk.html">getAsRisk,trAsCov,UnivariateDistribution,UncondNeighborhood-method</a></td>
+<td>Generic Function for Computation of Asymptotic Risks</td></tr>
+<tr><td width="25%"><a href="getAsRisk.html">getAsRisk-methods</a></td>
+<td>Generic Function for Computation of Asymptotic Risks</td></tr>
+<tr><td width="25%"><a href="getFiRisk.html">getFiRisk</a></td>
+<td>Generic Function for Computation of Finite-Sample Risks</td></tr>
+<tr><td width="25%"><a href="getFiRisk.html">getFiRisk,fiUnOvShoot,Norm,ContNeighborhood-method</a></td>
+<td>Generic Function for Computation of Finite-Sample Risks</td></tr>
+<tr><td width="25%"><a href="getFiRisk.html">getFiRisk,fiUnOvShoot,Norm,TotalVarNeighborhood-method</a></td>
+<td>Generic Function for Computation of Finite-Sample Risks</td></tr>
+<tr><td width="25%"><a href="getFiRisk.html">getFiRisk-methods</a></td>
+<td>Generic Function for Computation of Finite-Sample Risks</td></tr>
+<tr><td width="25%"><a href="getFixClip.html">getFixClip</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getFixClip.html">getFixClip,numeric,Norm,fiUnOvShoot,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getFixClip.html">getFixClip,numeric,Norm,fiUnOvShoot,TotalVarNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getFixClip.html">getFixClip-methods</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getFixRobIC.html">getFixRobIC</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getFixRobIC.html">getFixRobIC,Norm,fiUnOvShoot,UncondNeighborhood-method</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getFixRobIC.html">getFixRobIC-methods</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getIneffDiff.html">getIneffDiff</a></td>
+<td>Generic Function for the Computation of Inefficiency Differences</td></tr>
+<tr><td width="25%"><a href="getIneffDiff.html">getIneffDiff,numeric,L2ParamFamily,UncondNeighborhood,asMSE-method</a></td>
+<td>Generic Function for the Computation of Inefficiency Differences</td></tr>
+<tr><td width="25%"><a href="getIneffDiff.html">getIneffDiff-methods</a></td>
+<td>Generic Function for the Computation of Inefficiency Differences</td></tr>
+<tr><td width="25%"><a href="getInfCent.html">getInfCent</a></td>
+<td>Generic Function for the Computation of the Optimal Centering Constant/Lower Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfCent.html">getInfCent,RealRandVariable,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Optimal Centering Constant/Lower Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfCent.html">getInfCent,UnivariateDistribution,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Optimal Centering Constant/Lower Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfCent.html">getInfCent,UnivariateDistribution,TotalVarNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Optimal Centering Constant/Lower Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfCent.html">getInfCent-methods</a></td>
+<td>Generic Function for the Computation of the Optimal Centering Constant/Lower Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfClip.html">getInfClip</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfClip.html">getInfClip,numeric,EuclRandVariable,asMSE,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfClip.html">getInfClip,numeric,UnivariateDistribution,asMSE,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfClip.html">getInfClip,numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfClip.html">getInfClip,numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfClip.html">getInfClip-methods</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfGamma.html">getInfGamma</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfGamma.html">getInfGamma,RealRandVariable,asMSE,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfGamma.html">getInfGamma,UnivariateDistribution,asGRisk,TotalVarNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfGamma.html">getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfGamma.html">getInfGamma,UnivariateDistribution,asUnOvShoot,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfGamma.html">getInfGamma-methods</a></td>
+<td>Generic Function for the Computation of the Optimal Clipping Bound</td></tr>
+<tr><td width="25%"><a href="getInfRobIC.html">getInfRobIC</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getInfRobIC.html">getInfRobIC,RealRandVariable,asBias,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getInfRobIC.html">getInfRobIC,RealRandVariable,asCov,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getInfRobIC.html">getInfRobIC,RealRandVariable,asGRisk,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getInfRobIC.html">getInfRobIC,RealRandVariable,asHampel,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getInfRobIC.html">getInfRobIC,UnivariateDistribution,asBias,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getInfRobIC.html">getInfRobIC,UnivariateDistribution,asBias,TotalVarNeighborhood-method</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getInfRobIC.html">getInfRobIC,UnivariateDistribution,asCov,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getInfRobIC.html">getInfRobIC,UnivariateDistribution,asCov,TotalVarNeighborhood-method</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getInfRobIC.html">getInfRobIC,UnivariateDistribution,asGRisk,UncondNeighborhood-method</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getInfRobIC.html">getInfRobIC,UnivariateDistribution,asHampel,UncondNeighborhood-method</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getInfRobIC.html">getInfRobIC,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getInfRobIC.html">getInfRobIC-methods</a></td>
+<td>Generic Function for the Computation of Optimally Robust ICs</td></tr>
+<tr><td width="25%"><a href="getInfStand.html">getInfStand</a></td>
+<td>Generic Function for the Computation of the Standardizing Matrix</td></tr>
+<tr><td width="25%"><a href="getInfStand.html">getInfStand,RealRandVariable,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Standardizing Matrix</td></tr>
+<tr><td width="25%"><a href="getInfStand.html">getInfStand,UnivariateDistribution,ContNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Standardizing Matrix</td></tr>
+<tr><td width="25%"><a href="getInfStand.html">getInfStand,UnivariateDistribution,TotalVarNeighborhood-method</a></td>
+<td>Generic Function for the Computation of the Standardizing Matrix</td></tr>
+<tr><td width="25%"><a href="getInfStand.html">getInfStand-methods</a></td>
+<td>Generic Function for the Computation of the Standardizing Matrix</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asBias,ContNeighborhood,L2ParamFamily-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asBias,ContNeighborhood,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asBias,TotalVarNeighborhood,L2ParamFamily-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asBias,TotalVarNeighborhood,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asCov,missing,L2ParamFamily-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asCov,missing,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asMSE,UncondNeighborhood,L2ParamFamily-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,asMSE,UncondNeighborhood,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,fiUnOvShoot,ContNeighborhood,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,fiUnOvShoot,TotalVarNeighborhood,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,trAsCov,missing,L2ParamFamily-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,IC,trAsCov,missing,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC,TotalVarIC,asUnOvShoot,UncondNeighborhood,missing-method</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="getRiskIC.html">getRiskIC-methods</a></td>
+<td>Generic function for the computation of a risk for an IC</td></tr>
+<tr><td width="25%"><a href="GumbelLocationFamily.html">GumbelLocationFamily</a></td>
+<td>Generating function for Gumbel location families</td></tr>
+</table>
+
+<h2><a name="I">-- I --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="IC.html">IC</a></td>
+<td>Generating function for IC-class</td></tr>
+<tr><td width="25%"><a href="IC-class.html">IC-class</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve.html">InfluenceCurve</a></td>
+<td>Generating function for InfluenceCurve-class</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">InfluenceCurve-class</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="infoPlot.html">infoPlot</a></td>
+<td>Plot absolute and relative information</td></tr>
+<tr><td width="25%"><a href="IC-class.html">infoPlot,IC-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">Infos</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">Infos,InfluenceCurve-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">Infos&lt;-</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">Infos&lt;-,InfluenceCurve-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfRobModel.html">InfRobModel</a></td>
+<td>Generating function for InfRobModel-class</td></tr>
+<tr><td width="25%"><a href="InfRobModel-class.html">InfRobModel-class</a></td>
+<td>Robust model with infinitesimal (unconditional) neighborhood</td></tr>
+</table>
+
+<h2><a name="K">-- K --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="ksEstimator.html">ksEstimator</a></td>
+<td>Generic Function for the Computation of the Kolmogorov Minimum Distance Estimator</td></tr>
+<tr><td width="25%"><a href="ksEstimator.html">ksEstimator,numeric,Binom-method</a></td>
+<td>Generic Function for the Computation of the Kolmogorov Minimum Distance Estimator</td></tr>
+<tr><td width="25%"><a href="ksEstimator.html">ksEstimator,numeric,Exp-method</a></td>
+<td>Generic Function for the Computation of the Kolmogorov Minimum Distance Estimator</td></tr>
+<tr><td width="25%"><a href="ksEstimator.html">ksEstimator,numeric,Gammad-method</a></td>
+<td>Generic Function for the Computation of the Kolmogorov Minimum Distance Estimator</td></tr>
+<tr><td width="25%"><a href="ksEstimator.html">ksEstimator,numeric,Gumbel-method</a></td>
+<td>Generic Function for the Computation of the Kolmogorov Minimum Distance Estimator</td></tr>
+<tr><td width="25%"><a href="ksEstimator.html">ksEstimator,numeric,Lnorm-method</a></td>
+<td>Generic Function for the Computation of the Kolmogorov Minimum Distance Estimator</td></tr>
+<tr><td width="25%"><a href="ksEstimator.html">ksEstimator,numeric,Norm-method</a></td>
+<td>Generic Function for the Computation of the Kolmogorov Minimum Distance Estimator</td></tr>
+<tr><td width="25%"><a href="ksEstimator.html">ksEstimator,numeric,Pois-method</a></td>
+<td>Generic Function for the Computation of the Kolmogorov Minimum Distance Estimator</td></tr>
+<tr><td width="25%"><a href="ksEstimator.html">ksEstimator-methods</a></td>
+<td>Generic Function for the Computation of the Kolmogorov Minimum Distance Estimator</td></tr>
+</table>
+
+<h2><a name="L">-- L --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="L2ParamFamily-class.html">L2deriv</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">L2deriv,L2ParamFamily-method</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">L2derivDistr</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">L2derivDistr,L2ParamFamily-method</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">L2derivDistrSymm</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">L2derivDistrSymm,L2ParamFamily-method</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">L2derivSymm</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">L2derivSymm,L2ParamFamily-method</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily.html">L2ParamFamily</a></td>
+<td>Generating function for L2ParamFamily-class</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">L2ParamFamily-class</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="leastFavorableRadius.html">leastFavorableRadius</a></td>
+<td>Generic Function for the Computation of Least Favorable Radii</td></tr>
+<tr><td width="25%"><a href="leastFavorableRadius.html">leastFavorableRadius,L2ParamFamily,UncondNeighborhood,asGRisk-method</a></td>
+<td>Generic Function for the Computation of Least Favorable Radii</td></tr>
+<tr><td width="25%"><a href="leastFavorableRadius.html">leastFavorableRadius-methods</a></td>
+<td>Generic Function for the Computation of Least Favorable Radii</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">length,ParamFamParameter-method</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="LnormScaleFamily.html">LnormScaleFamily</a></td>
+<td>Generating function for lognormal scale families</td></tr>
+<tr><td width="25%"><a href="locMEstimator.html">locMEstimator</a></td>
+<td>Generic function for the computation of location M estimators</td></tr>
+<tr><td width="25%"><a href="locMEstimator.html">locMEstimator,numeric,InfluenceCurve-method</a></td>
+<td>Generic function for the computation of location M estimators</td></tr>
+<tr><td width="25%"><a href="locMEstimator.html">locMEstimator-methods</a></td>
+<td>Generic function for the computation of location M estimators</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">lowerCase</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">lowerCase,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">lowerCase,TotalVarIC-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">lowerCase&lt;-</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">lowerCase&lt;-,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">lowerCase&lt;-,TotalVarIC-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="lowerCaseRadius.html">lowerCaseRadius</a></td>
+<td>Computation of the lower case radius</td></tr>
+<tr><td width="25%"><a href="lowerCaseRadius.html">lowerCaseRadius,L2ParamFamily,ContNeighborhood,asMSE-method</a></td>
+<td>Computation of the lower case radius</td></tr>
+<tr><td width="25%"><a href="lowerCaseRadius.html">lowerCaseRadius,L2ParamFamily,TotalVarNeighborhood,asMSE-method</a></td>
+<td>Computation of the lower case radius</td></tr>
+<tr><td width="25%"><a href="lowerCaseRadius.html">lowerCaseRadius-methods</a></td>
+<td>Computation of the lower case radius</td></tr>
+</table>
+
+<h2><a name="M">-- M --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="ParamFamParameter-class.html">main</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="ParamFamily-class.html">main,ParamFamily-method</a></td>
+<td>Parametric family of probability measures.</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">main,ParamFamParameter-method</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">main&lt;-</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">main&lt;-,ParamFamParameter-method</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">Map,InfluenceCurve-method</a></td>
+<td>Influence curve</td></tr>
+</table>
+
+<h2><a name="N">-- N --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="InfluenceCurve-class.html">name,InfluenceCurve-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="ProbFamily-class.html">name,ProbFamily-method</a></td>
+<td>Family of probability measures</td></tr>
+<tr><td width="25%"><a href="RobModel-class.html">name,RobModel-method</a></td>
+<td>Robust model</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">name&lt;-,InfluenceCurve-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="ProbFamily-class.html">name&lt;-,ProbFamily-method</a></td>
+<td>Family of probability measures</td></tr>
+<tr><td width="25%"><a href="RobModel-class.html">neighbor</a></td>
+<td>Robust model</td></tr>
+<tr><td width="25%"><a href="RobModel-class.html">neighbor,RobModel-method</a></td>
+<td>Robust model</td></tr>
+<tr><td width="25%"><a href="RobModel-class.html">neighbor&lt;-</a></td>
+<td>Robust model</td></tr>
+<tr><td width="25%"><a href="FixRobModel-class.html">neighbor&lt;-,FixRobModel-method</a></td>
+<td>Robust model with fixed (unconditional) neighborhood</td></tr>
+<tr><td width="25%"><a href="InfRobModel-class.html">neighbor&lt;-,InfRobModel-method</a></td>
+<td>Robust model with infinitesimal (unconditional) neighborhood</td></tr>
+<tr><td width="25%"><a href="RobModel-class.html">neighbor&lt;-,RobModel-method</a></td>
+<td>Robust model</td></tr>
+<tr><td width="25%"><a href="Neighborhood-class.html">Neighborhood-class</a></td>
+<td>Neighborhood</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">neighborRadius</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">neighborRadius,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">neighborRadius,TotalVarIC-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">neighborRadius&lt;-</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">neighborRadius&lt;-,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">neighborRadius&lt;-,TotalVarIC-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="NonSymmetric.html">NonSymmetric</a></td>
+<td>Generating function for NonSymmetric-class</td></tr>
+<tr><td width="25%"><a href="NonSymmetric-class.html">NonSymmetric-class</a></td>
+<td>Class for Non-symmetric Functions</td></tr>
+<tr><td width="25%"><a href="NormLocationFamily.html">NormLocationFamily</a></td>
+<td>Generating function for normal location families</td></tr>
+<tr><td width="25%"><a href="NormLocationScaleFamily.html">NormLocationScaleFamily</a></td>
+<td>Generating function for normal location and scale families</td></tr>
+<tr><td width="25%"><a href="NormScaleFamily.html">NormScaleFamily</a></td>
+<td>Generating function for normal scale families</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">nuisance</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="ParamFamily-class.html">nuisance,ParamFamily-method</a></td>
+<td>Parametric family of probability measures.</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">nuisance,ParamFamParameter-method</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">nuisance&lt;-</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">nuisance&lt;-,ParamFamParameter-method</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+</table>
+
+<h2><a name="O">-- O --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="OddSymmetric.html">OddSymmetric</a></td>
+<td>Generating function for OddSymmetric-class</td></tr>
+<tr><td width="25%"><a href="OddSymmetric-class.html">OddSymmetric-class</a></td>
+<td>Class for Odd Functions</td></tr>
+<tr><td width="25%"><a href="oneStepEstimator.html">oneStepEstimator</a></td>
+<td>Generic function for the computation of one-step estimators</td></tr>
+<tr><td width="25%"><a href="oneStepEstimator.html">oneStepEstimator,matrix,InfluenceCurve,list-method</a></td>
+<td>Generic function for the computation of one-step estimators</td></tr>
+<tr><td width="25%"><a href="oneStepEstimator.html">oneStepEstimator,matrix,InfluenceCurve,numeric-method</a></td>
+<td>Generic function for the computation of one-step estimators</td></tr>
+<tr><td width="25%"><a href="oneStepEstimator.html">oneStepEstimator,numeric,InfluenceCurve,list-method</a></td>
+<td>Generic function for the computation of one-step estimators</td></tr>
+<tr><td width="25%"><a href="oneStepEstimator.html">oneStepEstimator,numeric,InfluenceCurve,numeric-method</a></td>
+<td>Generic function for the computation of one-step estimators</td></tr>
+<tr><td width="25%"><a href="oneStepEstimator.html">oneStepEstimator-methods</a></td>
+<td>Generic function for the computation of one-step estimators</td></tr>
+<tr><td width="25%"><a href="optIC.html">optIC</a></td>
+<td>Generic function for the computation of optimally robust ICs</td></tr>
+<tr><td width="25%"><a href="optIC.html">optIC,FixRobModel,fiUnOvShoot-method</a></td>
+<td>Generic function for the computation of optimally robust ICs</td></tr>
+<tr><td width="25%"><a href="optIC.html">optIC,InfRobModel,asRisk-method</a></td>
+<td>Generic function for the computation of optimally robust ICs</td></tr>
+<tr><td width="25%"><a href="optIC.html">optIC,InfRobModel,asUnOvShoot-method</a></td>
+<td>Generic function for the computation of optimally robust ICs</td></tr>
+<tr><td width="25%"><a href="optIC.html">optIC,L2ParamFamily,asCov-method</a></td>
+<td>Generic function for the computation of optimally robust ICs</td></tr>
+<tr><td width="25%"><a href="optIC.html">optIC-methods</a></td>
+<td>Generic function for the computation of optimally robust ICs</td></tr>
+<tr><td width="25%"><a href="optRisk.html">optRisk</a></td>
+<td>Generic function for the computation of the minimal risk</td></tr>
+<tr><td width="25%"><a href="optRisk.html">optRisk,FixRobModel,fiUnOvShoot-method</a></td>
+<td>Generic function for the computation of the minimal risk</td></tr>
+<tr><td width="25%"><a href="optRisk.html">optRisk,InfRobModel,asRisk-method</a></td>
+<td>Generic function for the computation of the minimal risk</td></tr>
+<tr><td width="25%"><a href="optRisk.html">optRisk,L2ParamFamily,asCov-method</a></td>
+<td>Generic function for the computation of the minimal risk</td></tr>
+<tr><td width="25%"><a href="optRisk.html">optRisk-methods</a></td>
+<td>Generic function for the computation of the minimal risk</td></tr>
+</table>
+
+<h2><a name="P">-- P --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="ParamFamily-class.html">param,ParamFamily-method</a></td>
+<td>Parametric family of probability measures.</td></tr>
+<tr><td width="25%"><a href="ParamFamily.html">ParamFamily</a></td>
+<td>Generating function for ParamFamily-class</td></tr>
+<tr><td width="25%"><a href="ParamFamily-class.html">ParamFamily-class</a></td>
+<td>Parametric family of probability measures.</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter.html">ParamFamParameter</a></td>
+<td>Generating function for ParamFamParameter-class</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">ParamFamParameter-class</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="IC-class.html">plot,IC,ANY-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="L2ParamFamily-class.html">plot,L2ParamFamily,ANY-method</a></td>
+<td>L2 differentiable parametric family</td></tr>
+<tr><td width="25%"><a href="ParamFamily-class.html">plot,ParamFamily,ANY-method</a></td>
+<td>Parametric family of probability measures.</td></tr>
+<tr><td width="25%"><a href="PoisFamily.html">PoisFamily</a></td>
+<td>Generating function for Poisson families</td></tr>
+<tr><td width="25%"><a href="ProbFamily-class.html">ProbFamily-class</a></td>
+<td>Family of probability measures</td></tr>
+<tr><td width="25%"><a href="ProbFamily-class.html">props</a></td>
+<td>Family of probability measures</td></tr>
+<tr><td width="25%"><a href="ProbFamily-class.html">props,ProbFamily-method</a></td>
+<td>Family of probability measures</td></tr>
+<tr><td width="25%"><a href="ProbFamily-class.html">props&lt;-</a></td>
+<td>Family of probability measures</td></tr>
+<tr><td width="25%"><a href="ProbFamily-class.html">props&lt;-,ProbFamily-method</a></td>
+<td>Family of probability measures</td></tr>
+</table>
+
+<h2><a name="R">-- R --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="Neighborhood-class.html">radius</a></td>
+<td>Neighborhood</td></tr>
+<tr><td width="25%"><a href="Neighborhood-class.html">radius,Neighborhood-method</a></td>
+<td>Neighborhood</td></tr>
+<tr><td width="25%"><a href="radiusMinimaxIC.html">radiusMinimaxIC</a></td>
+<td>Generic function for the computation of the radius minimax IC</td></tr>
+<tr><td width="25%"><a href="radiusMinimaxIC.html">radiusMinimaxIC,L2ParamFamily,UncondNeighborhood,asGRisk-method</a></td>
+<td>Generic function for the computation of the radius minimax IC</td></tr>
+<tr><td width="25%"><a href="radiusMinimaxIC.html">radiusMinimaxIC-methods</a></td>
+<td>Generic function for the computation of the radius minimax IC</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">Range,InfluenceCurve-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">Risks</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">Risks,InfluenceCurve-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">Risks&lt;-</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">Risks&lt;-,InfluenceCurve-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="RiskType-class.html">RiskType-class</a></td>
+<td>Risk</td></tr>
+<tr><td width="25%"><a href="RobModel-class.html">RobModel-class</a></td>
+<td>Robust model</td></tr>
+</table>
+
+<h2><a name="S">-- S --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="asHampel-class.html">show,asHampel-method</a></td>
+<td>Asymptotic Hampel risk</td></tr>
+<tr><td width="25%"><a href="asUnOvShoot-class.html">show,asUnOvShoot-method</a></td>
+<td>Asymptotic under-/overshoot probability</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">show,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="fiHampel-class.html">show,fiHampel-method</a></td>
+<td>Finite-sample Hampel risk</td></tr>
+<tr><td width="25%"><a href="fiUnOvShoot-class.html">show,fiUnOvShoot-method</a></td>
+<td>Finite-sample under-/overshoot probability</td></tr>
+<tr><td width="25%"><a href="FixRobModel-class.html">show,FixRobModel-method</a></td>
+<td>Robust model with fixed (unconditional) neighborhood</td></tr>
+<tr><td width="25%"><a href="IC-class.html">show,IC-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfluenceCurve-class.html">show,InfluenceCurve-method</a></td>
+<td>Influence curve</td></tr>
+<tr><td width="25%"><a href="InfRobModel-class.html">show,InfRobModel-method</a></td>
+<td>Robust model with infinitesimal (unconditional) neighborhood</td></tr>
+<tr><td width="25%"><a href="Neighborhood-class.html">show,Neighborhood-method</a></td>
+<td>Neighborhood</td></tr>
+<tr><td width="25%"><a href="ParamFamily-class.html">show,ParamFamily-method</a></td>
+<td>Parametric family of probability measures.</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">show,ParamFamParameter-method</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="RiskType-class.html">show,RiskType-method</a></td>
+<td>Risk</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">show,TotalVarIC-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">stand</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">stand,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">stand,TotalVarIC-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">stand&lt;-</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="ContIC-class.html">stand&lt;-,ContIC-method</a></td>
+<td>Influence curve of contamination type</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">stand&lt;-,TotalVarIC-method</a></td>
+<td>Influence curve of total variation type</td></tr>
+</table>
+
+<h2><a name="T">-- T --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="TotalVarIC.html">TotalVarIC</a></td>
+<td>Generating function for TotalVarIC-class</td></tr>
+<tr><td width="25%"><a href="TotalVarIC-class.html">TotalVarIC-class</a></td>
+<td>Influence curve of total variation type</td></tr>
+<tr><td width="25%"><a href="TotalVarNeighborhood.html">TotalVarNeighborhood</a></td>
+<td>Generating function for TotalVarNeighborhood-class</td></tr>
+<tr><td width="25%"><a href="TotalVarNeighborhood-class.html">TotalVarNeighborhood-class</a></td>
+<td>Total variation neighborhood</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">trafo</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="ParamFamily-class.html">trafo,ParamFamily-method</a></td>
+<td>Parametric family of probability measures.</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">trafo,ParamFamParameter-method</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">trafo&lt;-</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="ParamFamParameter-class.html">trafo&lt;-,ParamFamParameter-method</a></td>
+<td>Parameter of a parametric family of probability measures</td></tr>
+<tr><td width="25%"><a href="trAsCov.html">trAsCov</a></td>
+<td>Generating function for trAsCov-class</td></tr>
+<tr><td width="25%"><a href="trAsCov-class.html">trAsCov-class</a></td>
+<td>Trace of asymptotic covariance</td></tr>
+<tr><td width="25%"><a href="trFiCov.html">trFiCov</a></td>
+<td>Generating function for trFiCov-class</td></tr>
+<tr><td width="25%"><a href="trFiCov-class.html">trFiCov-class</a></td>
+<td>Trace of finite-sample covariance</td></tr>
+<tr><td width="25%"><a href="Neighborhood-class.html">type,Neighborhood-method</a></td>
+<td>Neighborhood</td></tr>
+<tr><td width="25%"><a href="RiskType-class.html">type,RiskType-method</a></td>
+<td>Risk</td></tr>
+</table>
+
+<h2><a name="U">-- U --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="UncondNeighborhood-class.html">UncondNeighborhood-class</a></td>
+<td>Unconditional neighborhood</td></tr>
+</table>
+
+<h2><a name="W">-- W --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="asUnOvShoot-class.html">width</a></td>
+<td>Asymptotic under-/overshoot probability</td></tr>
+<tr><td width="25%"><a href="asUnOvShoot-class.html">width,asUnOvShoot-method</a></td>
+<td>Asymptotic under-/overshoot probability</td></tr>
+<tr><td width="25%"><a href="fiUnOvShoot-class.html">width,fiUnOvShoot-method</a></td>
+<td>Finite-sample under-/overshoot probability</td></tr>
+</table>
+</body></html>

@@ -1,0 +1,107 @@
+<html><head><title>Asymptotic under-/overshoot probability</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head><body>
+
+<table width="100%"><tr><td>asUnOvShoot-class(ROptEstOld)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   asUnOvShoot-class">
+<param name="keyword" value="R:   width">
+<param name="keyword" value="R:   width,asUnOvShoot-method">
+<param name="keyword" value="R:   show,asUnOvShoot-method">
+<param name="keyword" value=" Asymptotic under-/overshoot probability">
+</object>
+
+
+<h2>Asymptotic under-/overshoot probability</h2>
+
+
+<h3>Description</h3>
+
+<p>Class of asymptotic under-/overshoot probability.</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>
+Objects can be created by calls of the form <code>new("asUnOvShoot", ...)</code>.
+More frequently they are created via the generating function 
+<code>asUnOvShoot</code>.   
+</p>
+
+
+<h3>Slots</h3>
+
+<p>
+
+<dl>
+<dt><code>type</code>:</dt><dd>Object of class <code>"character"</code>:
+&ldquo;asymptotic under-/overshoot probability&rdquo;. </dd>
+<dt><code>width</code>:</dt><dd>Object of class <code>"numeric"</code>: 
+half the width of given confidence interval. </dd>
+</dl>
+
+</p>
+
+
+<h3>Extends</h3>
+
+<p>
+Class <code>"asGRisk"</code>, directly.<br>
+Class <code>"asRisk"</code>, by class <code>"asGRisk"</code>.<br>
+Class <code>"RiskType"</code>, by class <code>"asGRisk"</code>.
+</p>
+
+
+<h3>Methods</h3>
+
+<p>
+
+<dl>
+<dt>width</dt><dd><code>signature(object = "asUnOvShoot")</code>: 
+accessor function for slot <code>width</code>. </dd>
+<dt>show</dt><dd><code>signature(object = "asUnOvShoot")</code></dd>
+</dl>
+
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. <B>8</B>: 106&ndash;115.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+new("asUnOvShoot")
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+<hr><div align="center">[Package <em>ROptEstOld</em> version 0.5.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

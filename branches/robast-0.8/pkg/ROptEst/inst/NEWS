@@ -1,0 +1,202 @@
+###############################################################################
+##  News: to package ROptEst
+###############################################################################
+
+(first two numbers of package versions do not necessarily reflect 
+ package-individual development, but rather are chosen for the 
+ RobAStXXX family as a whole in order to ease updating "depends" 
+ information)
+
+#######################################
+version 0.7
+#######################################
+
+USER-VISIBLE CHANGES:
+
+
+*** DUALITY BASED optIC-ALGORITHM
+
+-> optional use of alternative algorithm to obtain Lagrange multipliers
+   using duality based optimization 
+-> rewritten algorithm:
++  getInfRob_asGRisk.R     now have both an iterative and an optimization
++  getInfRob_asHampel.R    algorithm to obtain Lagrange Multipliers;
+       --- i.e. depending on argument OptOrIter (default: iteration as before...)
+       they call  getLagrangeMultByOptim resp. getLagrangeMultByIter
+       (unfortunately: optimization is slow; only L-BFGS-B works satisfactory)
++ getInfLM now gains (unfortunately not a good idea as to speed!) the new 
+  MSE - optimization routines for obtaining LagrangeMultipliers
+
+*** optIC Solution for general trafo / with nuisance
+
++ we now can digest case p=1, k>1 for asymmetric biastypes as well as for total variation
++ implemented lower Case solution for *=v p=1 k>1
++ roptest gains arguments withUpdateInKer, IC.UpdateInKer, na.rm
+
+*** others
+
++ added argument fsCor to function roptest enabling a finite-sample correction of the radius ...
++ added QQ plots in examples to roptest
+
+SCRIPTS
+
++ all scripts do run now without (obvious) error ---
+    at the exception of NormalLocationScaleModel.R --- 
+    and there the radiusminimax solution for self-standardization ...
++ in script GammaModel.R,  added comment due to new E method in distrEx 
+  which increases precision of certain computations.
++ scripts in part now with R output in comment
++ new example with k=15 steps in script PoissonModel.R
++ example for lower Case solution for *=v p=1 k>1 added in script NormalLocationScaleModel.R
++ new example for trafo-based model in script NormalLocationScaleModel.R
++ inserted some new lines in script NormalLocationScaleModel.R
+  --- now has an example with nuisance parameters
+
+GENERAL ENHANCEMENTS:
+
++ added tests/Examples folder with file ROptEst-Ex.Rout.save to have
+  some automatic testing
++ added TOBEDONE (sic!) files; in English (for possible collaborators) 
++ added keyword robust and made some minor corrections ...
++ added/updated NEWS files, updated CITATION files using code by A. Zeileis
+
++ Rd-parsing:
+  * patch for Brian Ripley's
+    Re: [Rd] Warning: missing text for item ... in \describe?
+  * fixed errors / warnings in .Rd files detected by parser 2 
+    (c.f. [Rd] More intensive checking of R help files, Prof Brian Ripley, 09.01.2009 10:25)
+
++ svn-revision-tags 
+  * added in all DESCRIPTION files
+  * added field "Encoding: latin1" to all DESCRIPTION files because
+    substituting $LastChangedDate by svn would cause problems for
+    packages built under Windows (German) local when checking under Linux.
+
++ removed pdf-file from version control - Rnw-file is sufficient
+
+
+INTERNALLY:
+
++ k dimension / p dimension  -- trafo & nuisance
+  * lower case and Hampel now seem to work with trafo
+  * in getInfRob_asHampel: added argument checkBounds, setting this to FALSE 
+    clearly speeds up computations for asHampel Risk
+  * cniper contamination now also available for partial ICs
+  * slightly modified b search range in MSE problem -- in the hope it will do 
+    for Totalvariation neighborhood, p=1, k>1 
+  * new: getAsRisk for "asBias", "RealRandVariable", "TotalVarNeighborhood" and "ANY"
+  * getModifyIC has been changed so that also nuisance parameter models
+    can be covered.
+
++ new IC algorithm 
+  * upper by default is now set to NULL in getInfRobIC_asGRisk, getInfRobIC_asHampel, getIneffDiff
+  * slightly modified b search range in MSE problem -- in the hope it will do 
+    for Totalvariation neighborhood, p=1, k>1 
+  * outsourced several steps in getInfRob_asGRisk.R and getInfRob_asHampel.R  
+    into internal, non-exported functions
+    .getLowUpB() .getLowerSol() .getUpperSol() .checkUpLow()
+  * radiusMinimaxIC gains argument loRad0 to be able to adjust 
+    the lower search bound (for getIneffDiff) case by case.
+  * getInfCent, getInfGamma 
+    - uses getLow/getUp now
+    - changed search interval for getInfCent Totalvariation one-dim
+    - use of lower.tail = FALSE instead of 1-p in 
+  * verbosity:
+    - for rob.-opt. ICs: in verbose mode now an automatic check for [p]IC is done
+    - optIC, getIneffDiff, getInfLM, getInfRob, 
+      leastFavorableRadius, .LowerCaseMultivariate.R[TV],
+      radiusMinimaxIC gain default NULL for argument verbose
+      in these function we check for is.null and if so set it
+      to getRobAStBaseOption("all.verbose")
+    - new helper function .checkPIC for checking within getInfRobIC
+    - work on pretty printing if verbose == TRUE, ...
+    - getIneffDiff now inhibits permanent checks for IC even if verbose==TRUE
+    - in addition to precision information, current Lagrange multipliers are issued if verbose==TRUE
+      (but only every 5 iterations in asGRisk- and every 15 in asBias-method for getInfRobIC)
+  * lowerCase solutions now count the number of iterations
+  * changed detault search interval for r in radiusMinimaxIC.R
+  * changed default search interval for b in getInfRobIC_asGRisk (one-dim)
+  * getLagrangeMultBy[...]() gain arg a.start to transmit the actual 
+    centering / clipping modification in transformed models
+
++ Risk slot
+  * made Risk slot slightly more consistent (no longer double asMSE),
+    in particular in case there is no convergence.
+
++ roptest 
+  * now has an argument initial.est.ArgList to transmit arguments
+     for a call to initial.est (for those familiar with it: 
+     similarly to startEstArgList in roptest.gpareto...)
+  * roptest gains arguments withUpdateInKer, IC.UpdateInKer, na.rm
+
++ getmodifyIC
+  * new generic scaleUpdateIC  for scale-Update in 
+    location/scale/locscale models
+    -> to avoid similar code for the many variants
+    ScaleModel, LocationScaleModel, LocationUnknownScaleModel,
+    ScaleUnknownLocationModel; in the latter two also
+    totalvariation nbds are allowed
+  * getModifyIC gains ... argument
+    and for signature((L2FamIC = "L2ParamFamily", 
+                       neighbor = "Neighborhood", risk ="asRisk")
+    inserts a verbose= getRobAStBaseOption("all.verbose")
+    into modifyIC-slot
+
+
+BUGFIXES:
+
+
++ scripts
+  * two minor buglets in scripts NormalLocationScaleModel.R & UnderOverShootRisk.R
+  * small shape parameters in GammaModel.R 
+    lead to functions which are hard to integrate numerically; 
+    added some code to demonstrate this ...
+ 
++ k dimension / p dimension issues
+  * fixed issues with polymorph nature of slot param of ParamFamParameter:
+    now we can determine opt-rob ICs for trafos; annotation gets right;
+    see example(comparePlot)
+  * Symmetry slots did not work correctly for non-trivial trafos 
+    (at least would have to be reworked); now: all entries are computed
+  * in ..asHampel: bmax had to be converted to matrix in case p=1, k>1
+
++ new IC algorithm issues
+  * in MSE-method (as iter <= 1 always), clipping bounds in weights 
+    in Total Variation case (p=1, k>1) were never updated 
+    -> new helper functino .isVirginW
+  * small bugs removed in getInfRobIC_asGRisk, getInfRobIC_asHampel, getInfClip
+  * std (standardization in non-standard norms) was not updated correctly in getLagrangeMultBy[...]
+
++ roptest
+  * modifies slot start of return value to become initial.est argument
+
++ others:
+  * definition of weight was missing in getInfRobIC_asCov.R
+  * small bug in getAsRisk. Now radiusMinimaxIC works for models with trafo.
+  * corrected a simple bug in scaleUpdateIC for UncondNeighborhoods 
+  * fixed an error in getModifyIC in the computation of the transferred risks
+  * fixed a buglet in getModifyIC.R:
+    had to cast out a second appearance of argument verbose (within ...) ...
+  * getAsRisk for "asBias", "RealRandVariable", "ContNeighborhood" and "ANY" 
+    was lacking argument Finfo and did not check for verbose
+  * minor documentation bug in radiusMinimaxIC.Rd
+
+
+TO BE CHECKED 
+
++ remains to be done: self standardization does not yet work...
++ total variation nbd: case 1=p<k works but still some checking needed.
++ to be checked: symm for total variation
+
+
+
+#######################################
+version 0.6.2
+#######################################
++ added functions to compute and plot cniper contamination and cniper points, 
+  respectively.
++ introduced option("newDevice") to control new opening of graphic devices
++ use of on.exit() to restore old settings for options() and par() at the end 
+  of functions
++ introduction of NEWS-file
++ update of CITATION-file (based on code provided by A. Zeileis on R help)

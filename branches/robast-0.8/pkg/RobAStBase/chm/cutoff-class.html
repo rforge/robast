@@ -1,0 +1,110 @@
+<html><head><title>Cutoff class for distance-distance plots</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>cutoff-class(RobAStBase)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   cutoff-class">
+<param name="keyword" value="R:   cutoff.quantile<-,cutoff-method">
+<param name="keyword" value="R:   cutoff.quantile<-">
+<param name="keyword" value="R:   cutoff.quantile,cutoff-method">
+<param name="keyword" value="R:   cutoff.quantile">
+<param name="keyword" value="R:   name,cutoff-method">
+<param name="keyword" value="R:   fct,cutoff-method">
+<param name="keyword" value=" Cutoff class for distance-distance plots">
+</object>
+
+
+<h2>Cutoff class for distance-distance plots</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Class of methods to determine cutoff point for distance-distance plots;
+used to derive other cutoff methods later by method dispatch.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>
+Objects could in principle be created by calls of the form <code>new("cutoff", ...)</code>.
+More frequently they are created via the generating function 
+<code><a href="cutoff.html">cutoff</a></code>, respectively via the helper functions 
+<code>cutoff.sememp</code> and <code>cutoff.chisq</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+<dl>
+<dt><code>name</code>:</dt><dd>object of class <code>"character"</code>; defaults to <code>"empirical"</code>
+in prototype; </dd>
+
+
+<dt><code>fct</code>:</dt><dd>an object of of class <code>"function"</code>; 
+for this class layer, this function 
+must only have one argument <code>data</code> (which may
+but need not be used to determine the cutoff point empirically);
+in derived classes this restriction could be dropped, if corresponding
+special methods for <code>ddPlot</code> are derived. Defaults to 
+<code>function(data) quantile(data)</code>.</dd>
+
+
+<dt><code>cutoff.quantile</code>:</dt><dd>Object of class <code>"numeric"</code>:
+a quantile (empirical or theoretical) to plot the cutoff line; defaults
+to <code>0.95</code> in prototype;</dd>
+
+<p>
+</dl>
+
+<h3>Methods</h3>
+
+<dl>
+</p>
+
+<dt>cutoff.quantile</dt><dd><code>signature(object = "cutoff")</code>: 
+accessor function for slot <code>cutoff.quantile</code>. </dd>
+
+
+<dt>cutoff.quantile&lt;-</dt><dd><code>signature(object = "cutoff")</code>: 
+replacement function for slot <code>cutoff.quantile</code>. </dd>
+
+
+<dt>fct</dt><dd><code>signature(object = "cutoff")</code>: 
+accessor function for slot <code>fct</code>. </dd>
+
+
+<dt>name</dt><dd><code>signature(object = "cutoff")</code>: 
+accessor function for slot <code>name</code>. </dd>
+
+<p>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="ddPlot-methods.html">ddPlot</a></code>, <code><a href="outlyingPlotIC.html">outlyingPlotIC</a></code> <code><a href="cutoff.html">cutoff</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+cutoff()
+</pre>
+
+
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.2 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

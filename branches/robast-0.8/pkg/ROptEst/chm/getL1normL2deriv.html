@@ -1,0 +1,84 @@
+<html><head><title>Calculation of L1 norm of L2derivative</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>getL1normL2deriv(ROptEst)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   getL1normL2deriv">
+<param name="keyword" value="R:   getL1normL2deriv-methods">
+<param name="keyword" value="R:   getL1normL2deriv,UnivariateDistribution-method">
+<param name="keyword" value="R:   getL1normL2deriv,RealRandVariable-method">
+<param name="keyword" value=" Calculation of L1 norm of L2derivative">
+</object>
+
+
+<h2>Calculation of L1 norm of L2derivative</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Methods to calculate the L1 norm of the L2derivative in a smooth parametric model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>getL1normL2deriv(L2deriv, ...)
+## S4 method for signature 'UnivariateDistribution':
+getL1normL2deriv(L2deriv, 
+     cent, ...)
+
+## S4 method for signature 'RealRandVariable':
+getL1normL2deriv(L2deriv, 
+     cent, stand, Distr, normtype, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>L2deriv</code></td>
+<td>
+L2derivative of the model</td></tr>
+<tr valign="top"><td><code>cent</code></td>
+<td>
+centering Lagrange Multiplier</td></tr>
+<tr valign="top"><td><code>stand</code></td>
+<td>
+standardizing Lagrange Multiplier</td></tr>
+<tr valign="top"><td><code>Distr</code></td>
+<td>
+distribution of the L2derivative</td></tr>
+<tr valign="top"><td><code>normtype</code></td>
+<td>
+object of class <code>NormType</code>; the norm under which we work</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+further arguments (not used at the moment)</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+L1 norm of the L2derivative</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+##
+</pre>
+
+
+
+<hr><div align="center">[Package <em>ROptEst</em> version 0.7 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

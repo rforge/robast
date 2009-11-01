@@ -1,0 +1,2512 @@
+
+R version 2.10.0 beta (2009-10-15 r50107)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### * <HEADER>
+> ###
+> attach(NULL, name = "CheckExEnv")
+> assign("nameEx",
++        local({
++ 	   s <- "__{must remake R-ex/*.R}__"
++            function(new) {
++                if(!missing(new)) s <<- new else s
++            }
++        }),
++        pos = "CheckExEnv")
+> ## Add some hooks to label plot pages for base and grid graphics
+> assign("base_plot_hook",
++        function() {
++            pp <- par(c("mfg","mfcol","oma","mar"))
++            if(all(pp$mfg[1:2] == c(1, pp$mfcol[2]))) {
++                outer <- (oma4 <- pp$oma[4]) > 0; mar4 <- pp$mar[4]
++                mtext(sprintf("help(\"%s\")", nameEx()), side = 4,
++                      line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
++                outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
++            }
++        },
++        pos = "CheckExEnv")
+> assign("grid_plot_hook",
++        function() {
++            grid::pushViewport(grid::viewport(width=grid::unit(1, "npc") -
++                               grid::unit(1, "lines"), x=0, just="left"))
++            grid::grid.text(sprintf("help(\"%s\")", nameEx()),
++                            x=grid::unit(1, "npc") + grid::unit(0.5, "lines"),
++                            y=grid::unit(0.8, "npc"), rot=90,
++                            gp=grid::gpar(col="orchid"))
++        },
++        pos = "CheckExEnv")
+> setHook("plot.new",     get("base_plot_hook", pos = "CheckExEnv"))
+> setHook("persp",        get("base_plot_hook", pos = "CheckExEnv"))
+> setHook("grid.newpage", get("grid_plot_hook", pos = "CheckExEnv"))
+> assign("cleanEx",
++        function(env = .GlobalEnv) {
++ 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
++            RNGkind("default", "default")
++ 	   set.seed(1)
++    	   options(warn = 1)
++ 	   .CheckExEnv <- as.environment("CheckExEnv")
++ 	   delayedAssign("T", stop("T used instead of TRUE"),
++ 		  assign.env = .CheckExEnv)
++ 	   delayedAssign("F", stop("F used instead of FALSE"),
++ 		  assign.env = .CheckExEnv)
++ 	   sch <- search()
++ 	   newitems <- sch[! sch %in% .oldSearch]
++ 	   for(item in rev(newitems))
++                eval(substitute(detach(item), list(item=item)))
++ 	   missitems <- .oldSearch[! .oldSearch %in% sch]
++ 	   if(length(missitems))
++ 	       warning("items ", paste(missitems, collapse=", "),
++ 		       " have been removed from the search path")
++        },
++        pos = "CheckExEnv")
+> assign("ptime", proc.time(), pos = "CheckExEnv")
+> ## at least one package changes these via ps.options(), so do this
+> ## before loading the package.
+> ## Use postscript as incomplete files may be viewable, unlike PDF.
+> ## Choose a size that is close to on-screen devices, fix paper
+> grDevices::ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
+> grDevices::postscript("RandVar-Ex.ps")
+> 
+> assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
+> options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
+> options(warn = 1)
+> library('RandVar')
+Loading required package: startupmsg
+:startupmsg>  Utilities for start-up messages (version 0.7)
+:startupmsg> 
+:startupmsg>  For more information see ?"startupmsg",
+:startupmsg>  NEWS("startupmsg")
+
+Loading required package: distr
+Loading required package: sfsmisc
+Loading required package: SweaveListingUtils
+:SweaveListingUtils>  Utilities for Sweave together with
+:SweaveListingUtils>  TeX listings package (version 0.4)
+:SweaveListingUtils> 
+:SweaveListingUtils>  Some functions from package 'base'
+:SweaveListingUtils>  are intentionally masked ---see
+:SweaveListingUtils>  SweaveListingMASK().
+:SweaveListingUtils> 
+:SweaveListingUtils>  Note that global options are
+:SweaveListingUtils>  controlled by
+:SweaveListingUtils>  SweaveListingoptions() ---c.f.
+:SweaveListingUtils>  ?"SweaveListingoptions".
+:SweaveListingUtils> 
+:SweaveListingUtils>  For more information see
+:SweaveListingUtils>  ?"SweaveListingUtils",
+:SweaveListingUtils>  NEWS("SweaveListingUtils")
+:SweaveListingUtils>  There is a vignette to this
+:SweaveListingUtils>  package; try
+:SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
+
+
+Attaching package: 'SweaveListingUtils'
+
+
+	The following object(s) are masked from package:base :
+
+	 library,
+	 require 
+
+:distr>  Object orientated implementation of distributions (version
+:distr>  2.2)
+:distr> 
+:distr>  Attention: Arithmetics on distribution objects are
+:distr>  understood as operations on corresponding random variables
+:distr>  (r.v.s); see distrARITH().
+:distr> 
+:distr>  Some functions from package 'stats' are intentionally masked
+:distr>  ---see distrMASK().
+:distr> 
+:distr>  Note that global options are controlled by distroptions()
+:distr>  ---c.f. ?"distroptions".
+:distr> 
+:distr>  For more information see ?"distr", NEWS("distr"), as well as
+:distr>    http://distr.r-forge.r-project.org/
+:distr>  Package "distrDoc" provides a vignette to this package as
+:distr>  well as to several extension packages; try
+:distr>  vignette("distr").
+
+
+Attaching package: 'distr'
+
+
+	The following object(s) are masked from package:stats :
+
+	 df,
+	 qqplot,
+	 sd 
+
+Loading required package: distrEx
+Loading required package: evd
+Loading required package: actuar
+
+Attaching package: 'actuar'
+
+
+	The following object(s) are masked from package:grDevices :
+
+	 cm 
+
+:distrEx>  Extensions of package distr (version 2.2)
+:distrEx> 
+:distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
+:distrEx>  attached /before/ package "distrEx". See distrExMASK().
+:distrEx> 
+:distrEx>  For more information see ?"distrEx", NEWS("distrEx"), as
+:distrEx>  well as
+:distrEx>    http://distr.r-forge.r-project.org/
+:distrEx>  Package "distrDoc" provides a vignette to this package
+:distrEx>  as well as to several related packages; try
+:distrEx>  vignette("distr").
+
+
+Attaching package: 'distrEx'
+
+
+	The following object(s) are masked from package:stats :
+
+	 IQR,
+	 mad,
+	 median,
+	 var 
+
+:RandVar>  Implementation of random variables (version 0.7)
+:RandVar> 
+:RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
+:RandVar>  well as
+:RandVar>    http://robast.r-forge.r-project.org/
+:RandVar>  This package also includes a vignette; try
+:RandVar>  vignette("RandVar").
+
+> 
+> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> assign(".oldNS", loadedNamespaces(), pos = 'CheckExEnv')
+> cleanEx(); nameEx("0RandVar-package")
+> ### * 0RandVar-package
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RandVar-package
+> ### Title: Implementation of random variables
+> ### Aliases: RandVar-package RandVar
+> ### Keywords: package
+> 
+> ### ** Examples
+> 
+> library(RandVar)
+> #vignette("RandVar")
+> 
+> 
+> 
+> cleanEx(); nameEx("EuclRandMatrix-class")
+> ### * EuclRandMatrix-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: EuclRandMatrix-class
+> ### Title: Euclidean random matrix
+> ### Aliases: EuclRandMatrix-class
+> ###   coerce,EuclRandMatrix,EuclRandVarList-method Dim
+> ###   Dim,EuclRandMatrix-method Dim<- Dim<-,EuclRandMatrix-method
+> ###   [,EuclRandMatrix-method ncol,EuclRandMatrix-method
+> ###   nrow,EuclRandMatrix-method dimension,EuclRandMatrix-method
+> ###   evalRandVar,EuclRandMatrix,numeric,missing-method
+> ###   evalRandVar,EuclRandMatrix,matrix,missing-method
+> ###   evalRandVar,EuclRandMatrix,numeric,Distribution-method
+> ###   evalRandVar,EuclRandMatrix,matrix,Distribution-method
+> ###   t,EuclRandMatrix-method show,EuclRandMatrix-method
+> ###   %*%,matrix,EuclRandMatrix-method %*%,numeric,EuclRandMatrix-method
+> ###   %*%,EuclRandMatrix,matrix-method %*%,EuclRandMatrix,numeric-method
+> ###   %*%,EuclRandMatrix,EuclRandMatrix-method
+> ###   Arith,numeric,EuclRandMatrix-method
+> ###   Arith,EuclRandMatrix,numeric-method
+> ###   Arith,EuclRandMatrix,EuclRandMatrix-method Math,EuclRandMatrix-method
+> ###   E,UnivariateDistribution,EuclRandMatrix,missing-method
+> ###   E,AbscontDistribution,EuclRandMatrix,missing-method
+> ###   E,DiscreteDistribution,EuclRandMatrix,missing-method
+> ###   E,MultivariateDistribution,EuclRandMatrix,missing-method
+> ###   E,DiscreteMVDistribution,EuclRandMatrix,missing-method
+> ###   E,UnivariateCondDistribution,EuclRandMatrix,numeric-method
+> ###   E,AbscontCondDistribution,EuclRandMatrix,numeric-method
+> ###   E,DiscreteCondDistribution,EuclRandMatrix,numeric-method
+> ### Keywords: classes arith math
+> 
+> ### ** Examples
+> 
+> L1 <- list(function(x){x}, function(x){x^2}, function(x){x^3}, function(x){x^4}, 
++            function(x){x^5}, function(x){x^6})
+> L2 <- list(function(x){exp(x)}, function(x){abs(x)}, 
++            function(x){sin(x)}, function(x){floor(x)})
+> 
+> R1 <- new("EuclRandMatrix", Map = L1, Dim = as.integer(c(3,2)), 
++                             Domain = Reals(), Range = Reals())
+> dimension(R1)
+[1] 6
+> R1[1:2, 2]
+An object of class “EuclRandVariable” 
+length of Map:	 2 
+Domain:	Real Space with dimension 1 
+Range:	Real Space with dimension 1 
+> R1[1:2, 1:2]
+An object of class “EuclRandMatrix” 
+Dim of Map:	 2 2 
+Domain:	Real Space with dimension 1 
+Range:	Real Space with dimension 1 
+> Map(R1[1,2])
+[[1]]
+function (x) 
+{
+    x^4
+}
+
+> Map(t(R1)[2,1])
+[[1]]
+function (x) 
+{
+    f <- function (x) 
+    {
+        x^4
+    }
+    t(f(x))
+}
+<environment: 0x644d848>
+
+> 
+> R2 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
+> dimension(R2)
+[1] 4
+> (DL <- imageDistr(R2, Norm()))
+An object of class "DistrList"
+ [[1]] Distribution Object of Class: AbscontDistribution
+ [[2]] Distribution Object of Class: AbscontDistribution
+ [[3]] Distribution Object of Class: AbscontDistribution
+ [[4]] Distribution Object of Class: AbscontDistribution
+Warning in function (object)  :
+  arithmetics on distributions are understood as operations on r.v.'s
+see 'distrARITH()'; for switching off this warning see '?distroptions'
+Warning in function (object)  :
+  slots d,p,q have been filled using simulations; for switching off this warning see '?distroptions'
+> plot(DL)
+> 
+> Map(gamma(R2)) # "Math" group
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        exp(x)
+    }
+    gamma(f1(x))
+}
+<environment: 0x5921648>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        abs(x)
+    }
+    gamma(f1(x))
+}
+<environment: 0x5921648>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        sin(x)
+    }
+    gamma(f1(x))
+}
+<environment: 0x5921648>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        floor(x)
+    }
+    gamma(f1(x))
+}
+<environment: 0x5921648>
+
+> 
+> ## "Arith" group
+> Map(2/R1)
+[[1]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x
+    }
+    2/f2(x)
+}
+<environment: 0x686cc60>
+
+[[2]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^2
+    }
+    2/f2(x)
+}
+<environment: 0x686cc60>
+
+[[3]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^3
+    }
+    2/f2(x)
+}
+<environment: 0x686cc60>
+
+[[4]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^4
+    }
+    2/f2(x)
+}
+<environment: 0x686cc60>
+
+[[5]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^5
+    }
+    2/f2(x)
+}
+<environment: 0x686cc60>
+
+[[6]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^6
+    }
+    2/f2(x)
+}
+<environment: 0x686cc60>
+
+> Map(R2 * R2)
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        exp(x)
+    }
+    f2 <- function (x) 
+    {
+        exp(x)
+    }
+    f1(x) * f2(x)
+}
+<environment: 0x6756b00>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        abs(x)
+    }
+    f2 <- function (x) 
+    {
+        abs(x)
+    }
+    f1(x) * f2(x)
+}
+<environment: 0x6756b00>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        sin(x)
+    }
+    f2 <- function (x) 
+    {
+        sin(x)
+    }
+    f1(x) * f2(x)
+}
+<environment: 0x6756b00>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        floor(x)
+    }
+    f2 <- function (x) 
+    {
+        floor(x)
+    }
+    f1(x) * f2(x)
+}
+<environment: 0x6756b00>
+
+> 
+> 
+> 
+> cleanEx(); nameEx("EuclRandMatrix")
+> ### * EuclRandMatrix
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: EuclRandMatrix
+> ### Title: Generating function for EuclRandMatrix-class
+> ### Aliases: EuclRandMatrix
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> L1 <- list(function(x){x}, function(x){x^2}, function(x){x^3}, function(x){x^4}, 
++            function(x){x^5}, function(x){x^6})
+> L2 <- list(function(x){exp(x)}, function(x){abs(x)}, 
++            function(x){sin(x)}, function(x){floor(x)})
+> 
+> R1 <- EuclRandMatrix(Map = L1, nrow = 3, Domain = Reals(), dimension = 1)
+> R1[1:2, 2]
+An object of class “EuclRandVariable” 
+length of Map:	 2 
+Domain:	Real Space with dimension 1 
+Range:	Euclidean Space with dimension 1 
+> R1[1:2, 1:2]
+An object of class “EuclRandMatrix” 
+Dim of Map:	 2 2 
+Domain:	Real Space with dimension 1 
+Range:	Euclidean Space with dimension 1 
+> Map(R1[1,2])
+[[1]]
+function (x) 
+{
+    x^4
+}
+
+> Map(t(R1)[2,1])
+[[1]]
+function (x) 
+{
+    f <- function (x) 
+    {
+        x^4
+    }
+    t(f(x))
+}
+<environment: 0x62cc628>
+
+> 
+> R2 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
+> (DL <- imageDistr(R2, Norm()))
+An object of class "DistrList"
+ [[1]] Distribution Object of Class: AbscontDistribution
+ [[2]] Distribution Object of Class: AbscontDistribution
+ [[3]] Distribution Object of Class: AbscontDistribution
+ [[4]] Distribution Object of Class: AbscontDistribution
+Warning in function (object)  :
+  arithmetics on distributions are understood as operations on r.v.'s
+see 'distrARITH()'; for switching off this warning see '?distroptions'
+Warning in function (object)  :
+  slots d,p,q have been filled using simulations; for switching off this warning see '?distroptions'
+> plot(DL)
+> 
+> Map(gamma(R2)) # "Math" group
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        exp(x)
+    }
+    gamma(f1(x))
+}
+<environment: 0x59d6db0>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        abs(x)
+    }
+    gamma(f1(x))
+}
+<environment: 0x59d6db0>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        sin(x)
+    }
+    gamma(f1(x))
+}
+<environment: 0x59d6db0>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        floor(x)
+    }
+    gamma(f1(x))
+}
+<environment: 0x59d6db0>
+
+> 
+> ## "Arith" group
+> Map(2/R1)
+[[1]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x
+    }
+    2/f2(x)
+}
+<environment: 0x59314f0>
+
+[[2]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^2
+    }
+    2/f2(x)
+}
+<environment: 0x59314f0>
+
+[[3]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^3
+    }
+    2/f2(x)
+}
+<environment: 0x59314f0>
+
+[[4]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^4
+    }
+    2/f2(x)
+}
+<environment: 0x59314f0>
+
+[[5]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^5
+    }
+    2/f2(x)
+}
+<environment: 0x59314f0>
+
+[[6]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^6
+    }
+    2/f2(x)
+}
+<environment: 0x59314f0>
+
+> Map(R2 * R2)
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        exp(x)
+    }
+    f2 <- function (x) 
+    {
+        exp(x)
+    }
+    f1(x) * f2(x)
+}
+<environment: 0x57d5bb8>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        abs(x)
+    }
+    f2 <- function (x) 
+    {
+        abs(x)
+    }
+    f1(x) * f2(x)
+}
+<environment: 0x57d5bb8>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        sin(x)
+    }
+    f2 <- function (x) 
+    {
+        sin(x)
+    }
+    f1(x) * f2(x)
+}
+<environment: 0x57d5bb8>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        floor(x)
+    }
+    f2 <- function (x) 
+    {
+        floor(x)
+    }
+    f1(x) * f2(x)
+}
+<environment: 0x57d5bb8>
+
+> 
+> 
+> ## The function is currently defined as
+> function(Map = list(function(x){1}), nrow = 1, ncol = 1,
++                               Domain = NULL, dimension = 1) {
++     if (missing(nrow)) 
++         nrow <- ceiling(length(Map)/ncol)
++     else if (missing(ncol)) 
++         ncol <- ceiling(length(Map)/nrow)
++     
++     if(missing(Range))
++         return(new("EuclRandMatrix", Map = Map, Domain = Domain, 
++                    Range = EuclideanSpace(dimension = dimension),
++                    Dim = as.integer(c(nrow, ncol))))
++     else
++         return(new("EuclRandMatrix", Map = Map, Domain = Domain, 
++                    Range = Range, Dim = as.integer(c(nrow, ncol))))
++ }
+function (Map = list(function(x) {
+    1
+}), nrow = 1, ncol = 1, Domain = NULL, dimension = 1) 
+{
+    if (missing(nrow)) 
+        nrow <- ceiling(length(Map)/ncol)
+    else if (missing(ncol)) 
+        ncol <- ceiling(length(Map)/nrow)
+    if (missing(Range)) 
+        return(new("EuclRandMatrix", Map = Map, Domain = Domain, 
+            Range = EuclideanSpace(dimension = dimension), Dim = as.integer(c(nrow, 
+                ncol))))
+    else return(new("EuclRandMatrix", Map = Map, Domain = Domain, 
+        Range = Range, Dim = as.integer(c(nrow, ncol))))
+}
+> 
+> 
+> 
+> cleanEx(); nameEx("EuclRandVarList-class")
+> ### * EuclRandVarList-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: EuclRandVarList-class
+> ### Title: List of Euclidean random variables
+> ### Aliases: EuclRandVarList-class numberOfMaps
+> ###   numberOfMaps,EuclRandVarList-method dimension,EuclRandVarList-method
+> ###   evalRandVar,EuclRandVarList,numeric,missing-method
+> ###   evalRandVar,EuclRandVarList,matrix,missing-method
+> ###   evalRandVar,EuclRandVarList,numeric,Distribution-method
+> ###   evalRandVar,EuclRandVarList,matrix,Distribution-method
+> ###   imageDistr,EuclRandVarList,Distribution-method
+> ###   t,EuclRandVarList-method show,EuclRandVarList-method
+> ###   Arith,numeric,EuclRandVarList-method
+> ###   Arith,EuclRandVarList,numeric-method
+> ###   Arith,EuclRandVarList,EuclRandVarList-method
+> ###   Math,EuclRandVarList-method %m%
+> ###   %m%,EuclRandVarList,EuclRandVarList-method
+> ###   %*%,matrix,EuclRandVarList-method %*%,EuclRandVarList,matrix-method
+> ###   E,UnivariateDistribution,EuclRandVarList,missing-method
+> ###   E,AbscontDistribution,EuclRandVarList,missing-method
+> ###   E,DiscreteDistribution,EuclRandVarList,missing-method
+> ###   E,MultivariateDistribution,EuclRandVarList,missing-method
+> ###   E,DiscreteMVDistribution,EuclRandVarList,missing-method
+> ###   E,UnivariateCondDistribution,EuclRandVarList,numeric-method
+> ###   E,AbscontCondDistribution,EuclRandVarList,numeric-method
+> ###   E,DiscreteCondDistribution,EuclRandVarList,numeric-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> L1 <- list(function(x){x}, function(x){x^2}, function(x){x^3}, function(x){x^4}, 
++            function(x){x^5}, function(x){x^6})
+> L2 <- list(function(x){exp(x)}, function(x){abs(x)}, 
++            function(x){sin(x)}, function(x){floor(x)})
+> 
+> R1 <- new("EuclRandVariable", Map = L2, Domain = Reals(), Range = Reals())
+> R2 <- EuclRandMatrix(Map = L1, ncol = 2, Domain = Reals(), dimension = 1)
+> R3 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
+> 
+> (RL1 <- new("EuclRandVarList", list(R1, R2, R3)))
+An object of class “EuclRandVarList” 
+Domain:	Real Space with dimension 1 
+[[1]]
+length of Map:	 4 
+Range:	Real Space with dimension 1 
+[[2]]
+Dim of Map:	 3 2 
+Range:	Euclidean Space with dimension 1 
+[[3]]
+Dim of Map:	 2 2 
+Range:	Euclidean Space with dimension 1 
+> dimension(RL1)
+[1] 14
+> as(R1, "EuclRandVarList")
+An object of class “EuclRandVarList” 
+Domain:	Real Space with dimension 1 
+[[1]]
+length of Map:	 4 
+Range:	Real Space with dimension 1 
+> as(R2, "EuclRandVarList")
+An object of class “EuclRandVarList” 
+Domain:	Real Space with dimension 1 
+[[1]]
+Dim of Map:	 3 2 
+Range:	Euclidean Space with dimension 1 
+> 
+> Map(exp(RL1)[[1]]) # "Math" group
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        exp(x)
+    }
+    exp(f1(x))
+}
+<environment: 0x48a6100>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        abs(x)
+    }
+    exp(f1(x))
+}
+<environment: 0x48a6100>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        sin(x)
+    }
+    exp(f1(x))
+}
+<environment: 0x48a6100>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        floor(x)
+    }
+    exp(f1(x))
+}
+<environment: 0x48a6100>
+
+> 
+> ## "Arith" group
+> Map((1 + RL1)[[1]])
+[[1]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        exp(x)
+    }
+    1 + f2(x)
+}
+<environment: 0x4363ff8>
+
+[[2]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        abs(x)
+    }
+    1 + f2(x)
+}
+<environment: 0x4363ff8>
+
+[[3]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        sin(x)
+    }
+    1 + f2(x)
+}
+<environment: 0x4363ff8>
+
+[[4]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        floor(x)
+    }
+    1 + f2(x)
+}
+<environment: 0x4363ff8>
+
+> Map((RL1 * 2)[[2]])
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x
+    }
+    f1(x) * 2
+}
+<environment: 0x5bbaa18>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^2
+    }
+    f1(x) * 2
+}
+<environment: 0x5bbaa18>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^3
+    }
+    f1(x) * 2
+}
+<environment: 0x5bbaa18>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^4
+    }
+    f1(x) * 2
+}
+<environment: 0x5bbaa18>
+
+[[5]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^5
+    }
+    f1(x) * 2
+}
+<environment: 0x5bbaa18>
+
+[[6]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^6
+    }
+    f1(x) * 2
+}
+<environment: 0x5bbaa18>
+
+> Map((RL1 / RL1)[[3]])
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        exp(x)
+    }
+    f2 <- function (x) 
+    {
+        exp(x)
+    }
+    f1(x)/f2(x)
+}
+<environment: 0x711acc8>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        abs(x)
+    }
+    f2 <- function (x) 
+    {
+        abs(x)
+    }
+    f1(x)/f2(x)
+}
+<environment: 0x711acc8>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        sin(x)
+    }
+    f2 <- function (x) 
+    {
+        sin(x)
+    }
+    f1(x)/f2(x)
+}
+<environment: 0x711acc8>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        floor(x)
+    }
+    f2 <- function (x) 
+    {
+        floor(x)
+    }
+    f1(x)/f2(x)
+}
+<environment: 0x711acc8>
+
+> 
+> 
+> 
+> cleanEx(); nameEx("EuclRandVarList")
+> ### * EuclRandVarList
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: EuclRandVarList
+> ### Title: Generating function for EuclRandVarList-class
+> ### Aliases: EuclRandVarList
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> L1 <- list(function(x){x}, function(x){x^2}, function(x){x^3}, function(x){x^4}, 
++            function(x){x^5}, function(x){x^6})
+> L2 <- list(function(x){exp(x)}, function(x){abs(x)}, 
++            function(x){sin(x)}, function(x){floor(x)})
+> 
+> R1 <- new("EuclRandVariable", Map = L2, Domain = Reals(), Range = Reals())
+> R2 <- EuclRandMatrix(Map = L1, ncol = 2, Domain = Reals(), dimension = 1)
+> R3 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
+> 
+> (RL1 <- EuclRandVarList(R1, R2, R3))
+An object of class “EuclRandVarList” 
+Domain:	Real Space with dimension 1 
+[[1]]
+length of Map:	 4 
+Range:	Real Space with dimension 1 
+[[2]]
+Dim of Map:	 3 2 
+Range:	Euclidean Space with dimension 1 
+[[3]]
+Dim of Map:	 2 2 
+Range:	Euclidean Space with dimension 1 
+> is(R1, "EuclRandVarList")
+[1] FALSE
+> as(R1, "EuclRandVarList")
+An object of class “EuclRandVarList” 
+Domain:	Real Space with dimension 1 
+[[1]]
+length of Map:	 4 
+Range:	Real Space with dimension 1 
+> is(R2, "EuclRandVarList")
+[1] FALSE
+> as(R2, "EuclRandVarList")
+An object of class “EuclRandVarList” 
+Domain:	Real Space with dimension 1 
+[[1]]
+Dim of Map:	 3 2 
+Range:	Euclidean Space with dimension 1 
+> 
+> Map(exp(RL1)[[1]]) # "Math" group
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        exp(x)
+    }
+    exp(f1(x))
+}
+<environment: 0x6e2a820>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        abs(x)
+    }
+    exp(f1(x))
+}
+<environment: 0x6e2a820>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        sin(x)
+    }
+    exp(f1(x))
+}
+<environment: 0x6e2a820>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        floor(x)
+    }
+    exp(f1(x))
+}
+<environment: 0x6e2a820>
+
+> 
+> ## "Arith" group
+> Map((1 + RL1)[[1]])
+[[1]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        exp(x)
+    }
+    1 + f2(x)
+}
+<environment: 0x68ff6a8>
+
+[[2]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        abs(x)
+    }
+    1 + f2(x)
+}
+<environment: 0x68ff6a8>
+
+[[3]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        sin(x)
+    }
+    1 + f2(x)
+}
+<environment: 0x68ff6a8>
+
+[[4]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        floor(x)
+    }
+    1 + f2(x)
+}
+<environment: 0x68ff6a8>
+
+> Map((RL1 * 2)[[2]])
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x
+    }
+    f1(x) * 2
+}
+<environment: 0x6542588>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^2
+    }
+    f1(x) * 2
+}
+<environment: 0x6542588>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^3
+    }
+    f1(x) * 2
+}
+<environment: 0x6542588>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^4
+    }
+    f1(x) * 2
+}
+<environment: 0x6542588>
+
+[[5]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^5
+    }
+    f1(x) * 2
+}
+<environment: 0x6542588>
+
+[[6]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^6
+    }
+    f1(x) * 2
+}
+<environment: 0x6542588>
+
+> Map((RL1 / RL1)[[3]])
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        exp(x)
+    }
+    f2 <- function (x) 
+    {
+        exp(x)
+    }
+    f1(x)/f2(x)
+}
+<environment: 0x6213da0>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        abs(x)
+    }
+    f2 <- function (x) 
+    {
+        abs(x)
+    }
+    f1(x)/f2(x)
+}
+<environment: 0x6213da0>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        sin(x)
+    }
+    f2 <- function (x) 
+    {
+        sin(x)
+    }
+    f1(x)/f2(x)
+}
+<environment: 0x6213da0>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        floor(x)
+    }
+    f2 <- function (x) 
+    {
+        floor(x)
+    }
+    f1(x)/f2(x)
+}
+<environment: 0x6213da0>
+
+> 
+> ## The function is currently defined as
+> function(...){ 
++     new("EuclRandVarList", list(...)) 
++ }
+function (...) 
+{
+    new("EuclRandVarList", list(...))
+}
+> 
+> 
+> 
+> cleanEx(); nameEx("EuclRandVariable-class")
+> ### * EuclRandVariable-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: EuclRandVariable-class
+> ### Title: Euclidean random variable
+> ### Aliases: EuclRandVariable-class
+> ###   coerce,EuclRandVariable,EuclRandMatrix-method
+> ###   coerce,EuclRandVariable,EuclRandVarList-method
+> ###   Range<-,EuclRandVariable-method [,EuclRandVariable-method evalRandVar
+> ###   evalRandVar,EuclRandVariable,numeric,missing-method
+> ###   evalRandVar,EuclRandVariable,matrix,missing-method
+> ###   evalRandVar,EuclRandVariable,numeric,Distribution-method
+> ###   evalRandVar,EuclRandVariable,matrix,Distribution-method imageDistr
+> ###   imageDistr,EuclRandVariable,Distribution-method
+> ###   dimension,EuclRandVariable-method t,EuclRandVariable-method
+> ###   %*%,matrix,EuclRandVariable-method
+> ###   %*%,numeric,EuclRandVariable-method
+> ###   %*%,EuclRandVariable,matrix-method
+> ###   %*%,EuclRandVariable,numeric-method
+> ###   %*%,EuclRandVariable,EuclRandVariable-method
+> ###   %*%,EuclRandVariable,EuclRandMatrix-method
+> ###   %*%,EuclRandMatrix,EuclRandVariable-method
+> ###   Arith,numeric,EuclRandVariable-method
+> ###   Arith,EuclRandVariable,numeric-method
+> ###   Arith,EuclRandVariable,EuclRandVariable-method
+> ###   Math,EuclRandVariable-method
+> ###   E,UnivariateDistribution,EuclRandVariable,missing-method
+> ###   E,AbscontDistribution,EuclRandVariable,missing-method
+> ###   E,DiscreteDistribution,EuclRandVariable,missing-method
+> ###   E,MultivariateDistribution,EuclRandVariable,missing-method
+> ###   E,DiscreteMVDistribution,EuclRandVariable,missing-method
+> ###   E,UnivariateCondDistribution,EuclRandVariable,numeric-method
+> ###   E,AbscontCondDistribution,EuclRandVariable,numeric-method
+> ###   E,DiscreteCondDistribution,EuclRandVariable,numeric-method
+> ### Keywords: classes arith math
+> 
+> ### ** Examples
+> 
+> L1 <- list(function(x){x}, function(x){x^2}, function(x){x^3}, function(x){x^4})
+> L2 <- list(function(x){exp(x)}, function(x){abs(x)}, 
++            function(x){sin(x)}, function(x){floor(x)})
+> 
+> R1 <- new("EuclRandVariable", Map = L1, Domain = Reals(), Range = Reals())
+> dimension(R1)
+[1] 4
+> Map(R1)
+[[1]]
+function (x) 
+{
+    x
+}
+
+[[2]]
+function (x) 
+{
+    x^2
+}
+
+[[3]]
+function (x) 
+{
+    x^3
+}
+
+[[4]]
+function (x) 
+{
+    x^4
+}
+
+> Range(R1)
+An object of class “Reals”
+Slot "dimension":
+[1] 1
+
+Slot "name":
+[1] "Real Space"
+
+> R1[2]
+An object of class “EuclRandVariable” 
+length of Map:	 1 
+Domain:	Real Space with dimension 1 
+Range:	Real Space with dimension 1 
+> Map(R1[3])
+[[1]]
+function (x) 
+{
+    x^3
+}
+
+> Map(R1[c(1,2,4)])
+[[1]]
+function (x) 
+{
+    x
+}
+
+[[2]]
+function (x) 
+{
+    x^2
+}
+
+[[3]]
+function (x) 
+{
+    x^4
+}
+
+> Map(R1[2:4])
+[[1]]
+function (x) 
+{
+    x^2
+}
+
+[[2]]
+function (x) 
+{
+    x^3
+}
+
+[[3]]
+function (x) 
+{
+    x^4
+}
+
+> evalRandVar(R1, rnorm(1))
+           [,1]
+[1,] -0.6264538
+[2,]  0.3924444
+[3,] -0.2458483
+[4,]  0.1540126
+> x <- as.matrix(rnorm(10))
+> res.R1 <- evalRandVar(R1, x)
+> res.R1[2,,] # results for Map(R1)[[2]](x)
+ [1] 0.03372487 0.69827518 2.54492084 0.10857537 0.67316837 0.23758708
+ [7] 0.54512337 0.33152416 0.09326207 2.28548230
+> res.R1[2,1,] # results for Map(R1)[[2]](x[1,])
+[1] 0.03372487
+> 
+> R2 <- EuclRandVariable(L2, Domain = Reals(), dimension = 1)
+> dimension(R2)
+[1] 4
+> DL1 <- imageDistr(R2, Norm())
+> plot(DL1)
+> 
+> Domain(R2) <- EuclideanSpace(dimension = 2)
+> Range(R2) <- EuclideanSpace(dimension = 2)
+> dimension(R2)
+[1] 8
+> (X <- matrix(c(x, rnorm(10)), ncol = 2))
+            [,1]         [,2]
+ [1,]  0.1836433 -0.943362702
+ [2,] -0.8356286  0.002961913
+ [3,]  1.5952808  0.614183669
+ [4,]  0.3295078  1.507011427
+ [5,] -0.8204684  1.108554991
+ [6,]  0.4874291  0.020064917
+ [7,]  0.7383247  1.279486901
+ [8,]  0.5757814  0.130896651
+ [9,] -0.3053884  0.967460652
+[10,]  1.5117812 -0.435764415
+> res.R2 <- evalRandVar(R2, X)
+> res.R2[3,,1] # results for Map(R2)[[3]](X[,1])
+ [1]  0.1826128 -0.7417183  0.9997003  0.3235773 -0.7314653  0.4683559
+ [7]  0.6730498  0.5444903 -0.3006636  0.9982591
+> 
+> Map(log(abs(R2))) # "Math" group generic
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        f1 <- function (x) 
+        {
+            exp(x)
+        }
+        abs(f1(x))
+    }
+    log(f1(x))
+}
+<environment: 0x5b07ff8>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        f1 <- function (x) 
+        {
+            abs(x)
+        }
+        abs(f1(x))
+    }
+    log(f1(x))
+}
+<environment: 0x5b07ff8>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        f1 <- function (x) 
+        {
+            sin(x)
+        }
+        abs(f1(x))
+    }
+    log(f1(x))
+}
+<environment: 0x5b07ff8>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        f1 <- function (x) 
+        {
+            floor(x)
+        }
+        abs(f1(x))
+    }
+    log(f1(x))
+}
+<environment: 0x5b07ff8>
+
+> 
+> # "Arith" group generic
+> Map(3 + R1)
+[[1]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x
+    }
+    3 + f2(x)
+}
+<environment: 0x5adaf00>
+
+[[2]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^2
+    }
+    3 + f2(x)
+}
+<environment: 0x5adaf00>
+
+[[3]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^3
+    }
+    3 + f2(x)
+}
+<environment: 0x5adaf00>
+
+[[4]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^4
+    }
+    3 + f2(x)
+}
+<environment: 0x5adaf00>
+
+> Map(c(1,3,5) * R1)
+Warning in c(1, 3, 5) * R1 :
+  longer object length is not a multiple of shorter object length
+[[1]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x
+    }
+    1 * f2(x)
+}
+<environment: 0x5a782e0>
+
+[[2]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^2
+    }
+    3 * f2(x)
+}
+<environment: 0x5a782e0>
+
+[[3]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^3
+    }
+    5 * f2(x)
+}
+<environment: 0x5a782e0>
+
+[[4]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^4
+    }
+    1 * f2(x)
+}
+<environment: 0x5a782e0>
+
+> try(1:5 * R1) # error
+Error in 1:5 * R1 : 
+  length of 'numeric' has to be less or equal dimension of 'EuclRandVariable'
+> Map(1:2 * R2)
+[[1]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        exp(x)
+    }
+    1:2 * f2(x)
+}
+<environment: 0x58eea48>
+
+[[2]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        abs(x)
+    }
+    1:2 * f2(x)
+}
+<environment: 0x58eea48>
+
+[[3]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        sin(x)
+    }
+    1:2 * f2(x)
+}
+<environment: 0x58eea48>
+
+[[4]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        floor(x)
+    }
+    1:2 * f2(x)
+}
+<environment: 0x58eea48>
+
+> Map(R2 - 5)
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        exp(x)
+    }
+    f1(x) - c(5, 5)
+}
+<environment: 0x5835b18>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        abs(x)
+    }
+    f1(x) - c(5, 5)
+}
+<environment: 0x5835b18>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        sin(x)
+    }
+    f1(x) - c(5, 5)
+}
+<environment: 0x5835b18>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        floor(x)
+    }
+    f1(x) - c(5, 5)
+}
+<environment: 0x5835b18>
+
+> Map(R1 ^ R1)
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x
+    }
+    f2 <- function (x) 
+    {
+        x
+    }
+    f1(x)^f2(x)
+}
+<environment: 0x57a3ff8>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^2
+    }
+    f2 <- function (x) 
+    {
+        x^2
+    }
+    f1(x)^f2(x)
+}
+<environment: 0x57a3ff8>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^3
+    }
+    f2 <- function (x) 
+    {
+        x^3
+    }
+    f1(x)^f2(x)
+}
+<environment: 0x57a3ff8>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^4
+    }
+    f2 <- function (x) 
+    {
+        x^4
+    }
+    f1(x)^f2(x)
+}
+<environment: 0x57a3ff8>
+
+> 
+> 
+> 
+> 
+> cleanEx(); nameEx("EuclRandVariable")
+> ### * EuclRandVariable
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: EuclRandVariable
+> ### Title: Generating function for EuclRandVariable-class
+> ### Aliases: EuclRandVariable
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> L1 <- list(function(x){x}, function(x){x^2}, function(x){x^3}, function(x){x^4})
+> L2 <- list(function(x){exp(x)}, function(x){abs(x)}, 
++            function(x){sin(x)}, function(x){floor(x)})
+> 
+> R1 <- EuclRandVariable(Map = L1, Domain = Reals(), dimension = 1)
+> Map(R1)
+[[1]]
+function (x) 
+{
+    x
+}
+
+[[2]]
+function (x) 
+{
+    x^2
+}
+
+[[3]]
+function (x) 
+{
+    x^3
+}
+
+[[4]]
+function (x) 
+{
+    x^4
+}
+
+> Range(R1)
+An object of class “EuclideanSpace”
+Slot "dimension":
+[1] 1
+
+Slot "name":
+[1] "Euclidean Space"
+
+> Range(R1) <- Reals()
+> R1[2]
+An object of class “EuclRandVariable” 
+length of Map:	 1 
+Domain:	Real Space with dimension 1 
+Range:	Real Space with dimension 1 
+> Map(R1[3])
+[[1]]
+function (x) 
+{
+    x^3
+}
+
+> Map(R1[c(1,2,4)])
+[[1]]
+function (x) 
+{
+    x
+}
+
+[[2]]
+function (x) 
+{
+    x^2
+}
+
+[[3]]
+function (x) 
+{
+    x^4
+}
+
+> Map(R1[2:4])
+[[1]]
+function (x) 
+{
+    x^2
+}
+
+[[2]]
+function (x) 
+{
+    x^3
+}
+
+[[3]]
+function (x) 
+{
+    x^4
+}
+
+> evalRandVar(R1, rnorm(1))
+           [,1]
+[1,] -0.6264538
+[2,]  0.3924444
+[3,] -0.2458483
+[4,]  0.1540126
+> x <- as.matrix(rnorm(10))
+> res.R1 <- evalRandVar(R1, x)
+> res.R1[2,,] # results for Map(R1)[[2]](x)
+ [1] 0.03372487 0.69827518 2.54492084 0.10857537 0.67316837 0.23758708
+ [7] 0.54512337 0.33152416 0.09326207 2.28548230
+> res.R1[2,1,] # results for Map(R1)[[2]](x[1,])
+[1] 0.03372487
+> 
+> R2 <- EuclRandVariable(L2, Domain = Reals(), dimension = 1)
+> DL1 <- imageDistr(R2, Norm())
+> plot(DL1)
+> 
+> Domain(R2) <- EuclideanSpace(dimension = 2)
+> Range(R2) <- EuclideanSpace(dimension = 2)
+> (X <- matrix(c(x, rnorm(10)), ncol = 2))
+            [,1]         [,2]
+ [1,]  0.1836433 -0.943362702
+ [2,] -0.8356286  0.002961913
+ [3,]  1.5952808  0.614183669
+ [4,]  0.3295078  1.507011427
+ [5,] -0.8204684  1.108554991
+ [6,]  0.4874291  0.020064917
+ [7,]  0.7383247  1.279486901
+ [8,]  0.5757814  0.130896651
+ [9,] -0.3053884  0.967460652
+[10,]  1.5117812 -0.435764415
+> res.R2 <- evalRandVar(R2, X)
+> res.R2[3,,1] # results for Map(R2)[[3]](X[,1])
+ [1]  0.1826128 -0.7417183  0.9997003  0.3235773 -0.7314653  0.4683559
+ [7]  0.6730498  0.5444903 -0.3006636  0.9982591
+> 
+> Map(log(abs(R2))) # "Math" group generic
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        f1 <- function (x) 
+        {
+            exp(x)
+        }
+        abs(f1(x))
+    }
+    log(f1(x))
+}
+<environment: 0x6192378>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        f1 <- function (x) 
+        {
+            abs(x)
+        }
+        abs(f1(x))
+    }
+    log(f1(x))
+}
+<environment: 0x6192378>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        f1 <- function (x) 
+        {
+            sin(x)
+        }
+        abs(f1(x))
+    }
+    log(f1(x))
+}
+<environment: 0x6192378>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        f1 <- function (x) 
+        {
+            floor(x)
+        }
+        abs(f1(x))
+    }
+    log(f1(x))
+}
+<environment: 0x6192378>
+
+> 
+> # "Arith" group generic
+> Map(3 + R1)
+[[1]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x
+    }
+    3 + f2(x)
+}
+<environment: 0x6174cb0>
+
+[[2]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^2
+    }
+    3 + f2(x)
+}
+<environment: 0x6174cb0>
+
+[[3]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^3
+    }
+    3 + f2(x)
+}
+<environment: 0x6174cb0>
+
+[[4]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^4
+    }
+    3 + f2(x)
+}
+<environment: 0x6174cb0>
+
+> Map(c(1,3,5) * R1)
+Warning in c(1, 3, 5) * R1 :
+  longer object length is not a multiple of shorter object length
+[[1]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x
+    }
+    1 * f2(x)
+}
+<environment: 0x614be68>
+
+[[2]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^2
+    }
+    3 * f2(x)
+}
+<environment: 0x614be68>
+
+[[3]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^3
+    }
+    5 * f2(x)
+}
+<environment: 0x614be68>
+
+[[4]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        x^4
+    }
+    1 * f2(x)
+}
+<environment: 0x614be68>
+
+> try(1:5 * R1) # error
+Error in 1:5 * R1 : 
+  length of 'numeric' has to be less or equal dimension of 'EuclRandVariable'
+> Map(1:2 * R2)
+[[1]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        exp(x)
+    }
+    1:2 * f2(x)
+}
+<environment: 0x60fb660>
+
+[[2]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        abs(x)
+    }
+    1:2 * f2(x)
+}
+<environment: 0x60fb660>
+
+[[3]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        sin(x)
+    }
+    1:2 * f2(x)
+}
+<environment: 0x60fb660>
+
+[[4]]
+function (x) 
+{
+    f2 <- function (x) 
+    {
+        floor(x)
+    }
+    1:2 * f2(x)
+}
+<environment: 0x60fb660>
+
+> Map(R2 - 5)
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        exp(x)
+    }
+    f1(x) - c(5, 5)
+}
+<environment: 0x5f72990>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        abs(x)
+    }
+    f1(x) - c(5, 5)
+}
+<environment: 0x5f72990>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        sin(x)
+    }
+    f1(x) - c(5, 5)
+}
+<environment: 0x5f72990>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        floor(x)
+    }
+    f1(x) - c(5, 5)
+}
+<environment: 0x5f72990>
+
+> Map(R1 ^ R1)
+[[1]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x
+    }
+    f2 <- function (x) 
+    {
+        x
+    }
+    f1(x)^f2(x)
+}
+<environment: 0x5f328b8>
+
+[[2]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^2
+    }
+    f2 <- function (x) 
+    {
+        x^2
+    }
+    f1(x)^f2(x)
+}
+<environment: 0x5f328b8>
+
+[[3]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^3
+    }
+    f2 <- function (x) 
+    {
+        x^3
+    }
+    f1(x)^f2(x)
+}
+<environment: 0x5f328b8>
+
+[[4]]
+function (x) 
+{
+    f1 <- function (x) 
+    {
+        x^4
+    }
+    f2 <- function (x) 
+    {
+        x^4
+    }
+    f1(x)^f2(x)
+}
+<environment: 0x5f328b8>
+
+> 
+> 
+> ## The function is currently defined as
+> function(Map = list(function(x){1}), Domain = NULL, dimension = 1, Range) {
++     if(missing(Range))
++         return(new("EuclRandVariable", Map = Map, Domain = Domain, 
++                    Range = EuclideanSpace(dimension = dimension)))
++     else
++         return(new("EuclRandVariable", Map = Map, Domain = Domain, 
++                    Range = Range))
++ }
+function (Map = list(function(x) {
+    1
+}), Domain = NULL, dimension = 1, Range) 
+{
+    if (missing(Range)) 
+        return(new("EuclRandVariable", Map = Map, Domain = Domain, 
+            Range = EuclideanSpace(dimension = dimension)))
+    else return(new("EuclRandVariable", Map = Map, Domain = Domain, 
+        Range = Range))
+}
+> 
+> 
+> 
+> cleanEx(); nameEx("RandVariable-class")
+> ### * RandVariable-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RandVariable-class
+> ### Title: Random variable
+> ### Aliases: RandVariable-class Map Domain Range compatibleDomains
+> ###   Map,RandVariable-method Domain,RandVariable-method
+> ###   Range,RandVariable-method Map<- Domain<- Range<-
+> ###   Map<-,RandVariable-method Domain<-,RandVariable-method
+> ###   Range<-,RandVariable-method
+> ###   compatibleDomains,RandVariable,RandVariable-method
+> ###   length,RandVariable-method show,RandVariable-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> (R1 <- new("RandVariable"))
+An object of class “RandVariable” 
+length of Map:	 1 
+Domain:	NULL
+Range:	NULL
+> Map(R1)
+[[1]]
+function (x) 
+{
+}
+<environment: namespace:RandVar>
+
+> Domain(R1)
+NULL
+> Range(R1)
+NULL
+> Map(R1) <- list(function(x){ceiling(x)}, function(x){floor(x)})
+> Domain(R1) <- Reals()
+> Range(R1) <- Naturals()
+> R1
+An object of class “RandVariable” 
+length of Map:	 2 
+Domain:	Real Space with dimension 1 
+Range:	Grid of Naturals with dimension 1 
+> Map(R1)
+[[1]]
+function (x) 
+{
+    ceiling(x)
+}
+
+[[2]]
+function (x) 
+{
+    floor(x)
+}
+
+> length(R1)
+[1] 2
+> 
+> R2 <- R1
+> Domain(R2) <- Naturals()
+> compatibleDomains(R1, R2)
+[1] TRUE
+> Domain(R2) <- NULL
+> compatibleDomains(R1, R2)
+[1] FALSE
+> Domain(R2) <- EuclideanSpace(dimension = 1)
+> compatibleDomains(R1, R2)
+[1] TRUE
+> Domain(R2) <- EuclideanSpace(dimension = 2)
+> compatibleDomains(R1, R2)
+[1] FALSE
+> 
+> 
+> 
+> cleanEx(); nameEx("RandVariable")
+> ### * RandVariable
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RandVariable
+> ### Title: Generating function for RandVariable-class
+> ### Aliases: RandVariable
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> (R1 <- RandVariable())
+An object of class “RandVariable” 
+length of Map:	 1 
+Domain:	NULL
+Range:	NULL
+> Map(R1)
+[[1]]
+function (x) 
+{
+}
+<environment: 0x5adfa00>
+
+> Domain(R1)
+NULL
+> Range(R1)
+NULL
+> Map(R1) <- list(function(x){ceiling(x)}, function(x){floor(x)})
+> Domain(R1) <- Reals()
+> Range(R1) <- Naturals()
+> R1
+An object of class “RandVariable” 
+length of Map:	 2 
+Domain:	Real Space with dimension 1 
+Range:	Grid of Naturals with dimension 1 
+> Map(R1)
+[[1]]
+function (x) 
+{
+    ceiling(x)
+}
+
+[[2]]
+function (x) 
+{
+    floor(x)
+}
+
+> length(R1)
+[1] 2
+> 
+> R2 <- R1
+> Domain(R2) <- Naturals()
+> compatibleDomains(R1, R2)
+[1] TRUE
+> Domain(R2) <- NULL
+> compatibleDomains(R1, R2)
+[1] FALSE
+> Domain(R2) <- EuclideanSpace(dimension = 1)
+> compatibleDomains(R1, R2)
+[1] TRUE
+> Domain(R2) <- EuclideanSpace(dimension = 2)
+> compatibleDomains(R1, R2)
+[1] FALSE
+> 
+> ## The function is currently defined as
+> function(Map = list(function(x){ }), Domain = NULL, Range = NULL) {
++     return(new("RandVariable", Map = Map, Domain = Domain, Range = Range))
++ }
+function (Map = list(function(x) {
+}), Domain = NULL, Range = NULL) 
+{
+    return(new("RandVariable", Map = Map, Domain = Domain, Range = Range))
+}
+> 
+> 
+> 
+> cleanEx(); nameEx("RealRandVariable-class")
+> ### * RealRandVariable-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RealRandVariable-class
+> ### Title: Real random variable
+> ### Aliases: RealRandVariable-class Range<-,RealRandVariable-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> new("RealRandVariable", Map=list(function(x){x}), Range = Reals())
+An object of class “RealRandVariable” 
+length of Map:	 1 
+Domain:	NULL
+Range:	Real Space with dimension 1 
+> 
+> 
+> 
+> cleanEx(); nameEx("RealRandVariable")
+> ### * RealRandVariable
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RealRandVariable
+> ### Title: Generating function for RealRandVariable-class
+> ### Aliases: RealRandVariable
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> RealRandVariable(Map = list(function(x){x}), Domain = Reals())
+An object of class “RealRandVariable” 
+length of Map:	 1 
+Domain:	Real Space with dimension 1 
+Range:	Real Space with dimension 1 
+> 
+> ## The function is currently defined as
+> function(Map = list(function(x){1}), Domain = NULL, Range) {
++     if(missing(Range)) Range <- Reals()
++     if(!is(Range, "Reals"))
++         stop("'Range' has to be of class 'Reals'")
++ 
++     return(new("RealRandVariable", Map = Map, 
++                Domain = Domain, Range = Reals()))
++ }
+function (Map = list(function(x) {
+    1
+}), Domain = NULL, Range) 
+{
+    if (missing(Range)) 
+        Range <- Reals()
+    if (!is(Range, "Reals")) 
+        stop("'Range' has to be of class 'Reals'")
+    return(new("RealRandVariable", Map = Map, Domain = Domain, 
+        Range = Reals()))
+}
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  9.892 0.112 10.888 0.008 0.008 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

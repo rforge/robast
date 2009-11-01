@@ -1,0 +1,610 @@
+
+R version 2.10.0 beta (2009-10-15 r50107)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### * <HEADER>
+> ###
+> attach(NULL, name = "CheckExEnv")
+> assign("nameEx",
++        local({
++ 	   s <- "__{must remake R-ex/*.R}__"
++            function(new) {
++                if(!missing(new)) s <<- new else s
++            }
++        }),
++        pos = "CheckExEnv")
+> ## Add some hooks to label plot pages for base and grid graphics
+> assign("base_plot_hook",
++        function() {
++            pp <- par(c("mfg","mfcol","oma","mar"))
++            if(all(pp$mfg[1:2] == c(1, pp$mfcol[2]))) {
++                outer <- (oma4 <- pp$oma[4]) > 0; mar4 <- pp$mar[4]
++                mtext(sprintf("help(\"%s\")", nameEx()), side = 4,
++                      line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
++                outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
++            }
++        },
++        pos = "CheckExEnv")
+> assign("grid_plot_hook",
++        function() {
++            grid::pushViewport(grid::viewport(width=grid::unit(1, "npc") -
++                               grid::unit(1, "lines"), x=0, just="left"))
++            grid::grid.text(sprintf("help(\"%s\")", nameEx()),
++                            x=grid::unit(1, "npc") + grid::unit(0.5, "lines"),
++                            y=grid::unit(0.8, "npc"), rot=90,
++                            gp=grid::gpar(col="orchid"))
++        },
++        pos = "CheckExEnv")
+> setHook("plot.new",     get("base_plot_hook", pos = "CheckExEnv"))
+> setHook("persp",        get("base_plot_hook", pos = "CheckExEnv"))
+> setHook("grid.newpage", get("grid_plot_hook", pos = "CheckExEnv"))
+> assign("cleanEx",
++        function(env = .GlobalEnv) {
++ 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
++            RNGkind("default", "default")
++ 	   set.seed(1)
++    	   options(warn = 1)
++ 	   .CheckExEnv <- as.environment("CheckExEnv")
++ 	   delayedAssign("T", stop("T used instead of TRUE"),
++ 		  assign.env = .CheckExEnv)
++ 	   delayedAssign("F", stop("F used instead of FALSE"),
++ 		  assign.env = .CheckExEnv)
++ 	   sch <- search()
++ 	   newitems <- sch[! sch %in% .oldSearch]
++ 	   for(item in rev(newitems))
++                eval(substitute(detach(item), list(item=item)))
++ 	   missitems <- .oldSearch[! .oldSearch %in% sch]
++ 	   if(length(missitems))
++ 	       warning("items ", paste(missitems, collapse=", "),
++ 		       " have been removed from the search path")
++        },
++        pos = "CheckExEnv")
+> assign("ptime", proc.time(), pos = "CheckExEnv")
+> ## at least one package changes these via ps.options(), so do this
+> ## before loading the package.
+> ## Use postscript as incomplete files may be viewable, unlike PDF.
+> ## Choose a size that is close to on-screen devices, fix paper
+> grDevices::ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
+> grDevices::postscript("RobLoxBioC-Ex.ps")
+> 
+> assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
+> options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
+> options(warn = 1)
+> library('RobLoxBioC')
+Loading required package: Biobase
+
+Welcome to Bioconductor
+
+  Vignettes contain introductory material. To view, type
+  'openVignette()'. To cite Bioconductor, see
+  'citation("Biobase")' and for packages 'citation(pkgname)'.
+
+Loading required package: affy
+Loading required package: beadarray
+Loading required package: distr
+Loading required package: startupmsg
+:startupmsg>  Utilities for start-up messages (version 0.7)
+:startupmsg> 
+:startupmsg>  For more information see ?"startupmsg",
+:startupmsg>  NEWS("startupmsg")
+
+Loading required package: sfsmisc
+Loading required package: SweaveListingUtils
+:SweaveListingUtils>  Utilities for Sweave together with
+:SweaveListingUtils>  TeX listings package (version 0.4)
+:SweaveListingUtils> 
+:SweaveListingUtils>  Some functions from package 'base'
+:SweaveListingUtils>  are intentionally masked ---see
+:SweaveListingUtils>  SweaveListingMASK().
+:SweaveListingUtils> 
+:SweaveListingUtils>  Note that global options are
+:SweaveListingUtils>  controlled by
+:SweaveListingUtils>  SweaveListingoptions() ---c.f.
+:SweaveListingUtils>  ?"SweaveListingoptions".
+:SweaveListingUtils> 
+:SweaveListingUtils>  For more information see
+:SweaveListingUtils>  ?"SweaveListingUtils",
+:SweaveListingUtils>  NEWS("SweaveListingUtils")
+:SweaveListingUtils>  There is a vignette to this
+:SweaveListingUtils>  package; try
+:SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
+
+
+Attaching package: 'SweaveListingUtils'
+
+
+	The following object(s) are masked from package:base :
+
+	 library,
+	 require 
+
+:distr>  Object orientated implementation of distributions (version
+:distr>  2.2)
+:distr> 
+:distr>  Attention: Arithmetics on distribution objects are
+:distr>  understood as operations on corresponding random variables
+:distr>  (r.v.s); see distrARITH().
+:distr> 
+:distr>  Some functions from package 'stats' are intentionally masked
+:distr>  ---see distrMASK().
+:distr> 
+:distr>  Note that global options are controlled by distroptions()
+:distr>  ---c.f. ?"distroptions".
+:distr> 
+:distr>  For more information see ?"distr", NEWS("distr"), as well as
+:distr>    http://distr.r-forge.r-project.org/
+:distr>  Package "distrDoc" provides a vignette to this package as
+:distr>  well as to several extension packages; try
+:distr>  vignette("distr").
+
+
+Attaching package: 'distr'
+
+
+	The following object(s) are masked from package:stats :
+
+	 df,
+	 qqplot,
+	 sd 
+
+Loading required package: RobLox
+Loading required package: distrMod
+Loading required package: distrEx
+Loading required package: evd
+Loading required package: actuar
+
+Attaching package: 'actuar'
+
+
+	The following object(s) are masked from package:grDevices :
+
+	 cm 
+
+:distrEx>  Extensions of package distr (version 2.2)
+:distrEx> 
+:distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
+:distrEx>  attached /before/ package "distrEx". See distrExMASK().
+:distrEx> 
+:distrEx>  For more information see ?"distrEx", NEWS("distrEx"), as
+:distrEx>  well as
+:distrEx>    http://distr.r-forge.r-project.org/
+:distrEx>  Package "distrDoc" provides a vignette to this package
+:distrEx>  as well as to several related packages; try
+:distrEx>  vignette("distr").
+
+
+Attaching package: 'distrEx'
+
+
+	The following object(s) are masked from package:stats :
+
+	 IQR,
+	 mad,
+	 median,
+	 var 
+
+Loading required package: RandVar
+:RandVar>  Implementation of random variables (version 0.7)
+:RandVar> 
+:RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
+:RandVar>  well as
+:RandVar>    http://robast.r-forge.r-project.org/
+:RandVar>  This package also includes a vignette; try
+:RandVar>  vignette("RandVar").
+
+Loading required package: MASS
+Loading required package: stats4
+:distrMod>  Object orientated implementation of probability models
+:distrMod>  (version 2.2)
+:distrMod> 
+:distrMod>  Some functions from pkg's 'base' and 'stats' are
+:distrMod>  intentionally masked ---see distrModMASK().
+:distrMod> 
+:distrMod>  Note that global options are controlled by
+:distrMod>  distrModoptions() ---c.f. ?"distrModoptions".
+:distrMod> 
+:distrMod>  For more information see ?"distrMod",
+:distrMod>  NEWS("distrMod"), as well as
+:distrMod>    http://distr.r-forge.r-project.org/
+:distrMod>  Package "distrDoc" provides a vignette to this package
+:distrMod>  as well as to several related packages; try
+:distrMod>  vignette("distr").
+
+
+Attaching package: 'distrMod'
+
+
+	The following object(s) are masked from package:stats4 :
+
+	 confint 
+
+
+	The following object(s) are masked from package:stats :
+
+	 confint 
+
+Loading required package: RobAStBase
+:RobAStBase>  Robust Asymptotic Statistics (version 0.7)
+:RobAStBase> 
+:RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
+:RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
+:RobAStBase> 
+:RobAStBase>  Note that global options are controlled by
+:RobAStBase>  RobAStBaseoptions() ---c.f. ?"RobAStBaseoptions".
+:RobAStBase> 
+:RobAStBase>  For more information see ?"RobAStBase",
+:RobAStBase>  NEWS("RobAStBase"), as well as
+:RobAStBase>    http://robast.r-forge.r-project.org/
+
+
+Attaching package: 'RobAStBase'
+
+
+	The following object(s) are masked from package:stats :
+
+	 start 
+
+
+	The following object(s) are masked from package:graphics :
+
+	 clip 
+
+Loading required package: lattice
+
+Attaching package: 'lattice'
+
+
+	The following object(s) are masked from package:evd :
+
+	 qq 
+
+Loading required package: RColorBrewer
+> 
+> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> assign(".oldNS", loadedNamespaces(), pos = 'CheckExEnv')
+> cleanEx(); nameEx("0RobLoxBioC-package")
+> ### * 0RobLoxBioC-package
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RobLoxBioC-package
+> ### Title: Infinitesimally robust estimators for preprocessing omics data
+> ### Aliases: RobLoxBioC-package RobLoxBioC
+> ### Keywords: package
+> 
+> ### ** Examples
+> 
+> library(RobLoxBioC)
+> 
+> 
+> 
+> cleanEx(); nameEx("KolmogorovMinDist")
+> ### * KolmogorovMinDist
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: KolmogorovMinDist
+> ### Title: Generic Function for Computing Minimum Kolmogorov Distance for
+> ###   Biological Data
+> ### Aliases: KolmogorovMinDist KolmogorovMinDist-methods
+> ###   KolmogorovMinDist,matrix,Norm-method
+> ###   KolmogorovMinDist,AffyBatch,AbscontDistribution-method
+> ###   KolmogorovMinDist,BeadLevelList,AbscontDistribution-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## matrix method for KolmogorovMinDist
+> ind <- rbinom(200, size=1, prob=0.05) 
+> X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
+> KolmogorovMinDist(X, D = Norm())
+$dist
+[1] 0.05032454 0.04616206
+
+$n
+[1] 100 100
+
+> 
+> ## using Affymetrix-Data
+> data(SpikeIn)
+> probes <- log2(pm(SpikeIn))
+> (res <- KolmogorovMinDist(probes, Norm()))
+$dist
+ [1] 0.1755693 0.1567648 0.1571410 0.1609188 0.1617499 0.1607157 0.1382646
+ [8] 0.1471997 0.1693088 0.1836652 0.1787724 0.1601283 0.1729001 0.1519412
+[15] 0.1682097 0.1662173 0.1547481 0.1716497 0.1751219 0.1671566
+
+$n
+ [1] 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12
+
+> boxplot(res$dist)
+> 
+> ## Not run: 
+> ##D ## "Not run" just because of computation time
+> ##D require(affydata)
+> ##D data(Dilution)
+> ##D res <- KolmogorovMinDist(Dilution[,1], Norm())
+> ##D summary(res$dist)
+> ##D boxplot(res$dist)
+> ##D plot(res$n, res$dist, pch = 20, main = "Kolmogorov distance vs. sample size",
+> ##D      xlab = "sample size", ylab = "Kolmogorov distance",
+> ##D      ylim = c(0, max(res$dist)))
+> ##D uni.n <- min(res$n):max(res$n)
+> ##D lines(uni.n, 1/(2*uni.n), col = "orange", lwd = 2)
+> ##D legend("topright", legend = "minimal possible distance", fill = "orange")
+> ## End(Not run)
+> 
+> ## using Illumina-Data
+> ## Not run: 
+> ##D ## "Not run" just because of computation time
+> ##D data(BLData)
+> ##D res <- KolmogorovMinDist(BLData, Norm(), arrays = 1)
+> ##D res1 <- KolmogorovMinDist(BLData, log = TRUE, Norm(), arrays = 1)
+> ##D summary(cbind(res$dist, res1$dist))
+> ##D boxplot(list(res$dist, res1$dist), names = c("raw", "log-raw"))
+> ##D sort(unique(res1$n))
+> ##D plot(res1$n, res1$dist, pch = 20, main = "Kolmogorov distance vs. sample size",
+> ##D      xlab = "sample size", ylab = "Kolmogorov distance",
+> ##D      ylim = c(0, max(res1$dist)), xlim = c(min(res1$n), 56))
+> ##D uni.n <- min(res1$n):56
+> ##D lines(uni.n, 1/(2*uni.n), col = "orange", lwd = 2)
+> ##D legend("topright", legend = "minimal possible distance", fill = "orange")
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx(); nameEx("SimStudies")
+> ### * SimStudies
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: SimStudies
+> ### Title: Perform Monte-Carlo Study.
+> ### Aliases: AffySimStudy IlluminaSimStudy
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> AffySimStudy(n = 11, M = 100, eps = 0.02, contD = Norm(mean = 0, sd = 3), 
++              plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+dev.new(): using pdf(file="Rplots1.pdf")
+                                ML      Med    Tukey      rmx
+n x empMSE (loc)         1.2837045 1.826711 1.698428 1.399230
+relMSE (loc)             0.9174362 1.305512 1.213830 1.000000
+n x empMSE (scale)       0.6072430 1.573206 1.573206 0.723606
+relMSE (scale)           0.8391900 2.174119 2.174119 1.000000
+n x empMSE (loc + scale) 1.8909475 3.399917 3.271634 2.122836
+relMSE (loc + scale)     0.8907646 1.601592 1.541162 1.000000
+> IlluminaSimStudy(n = 30, M = 100, eps = 0.02, contD = Norm(mean = 0, sd = 3), 
++                  plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
+dev.new(): using pdf(file="Rplots2.pdf")
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) :
+  longer object length is not a multiple of shorter object length
+Warning in id & (y >= levels(y)[[k]][1]) & (y <= levels(y)[[k]][2]) :
+  longer object length is not a multiple of shorter object length
+dev.new(): using pdf(file="Rplots3.pdf")
+                               ML      Med Illumina       rmx
+n x empMSE (loc)         1.172077 1.591148 1.205941 1.1132052
+relMSE (loc)             1.052885 1.429339 1.083305 1.0000000
+n x empMSE (scale)       1.084569 1.331247 0.816445 0.5927791
+relMSE (scale)           1.829635 2.245773 1.377318 1.0000000
+n x empMSE (loc + scale) 2.256646 2.922395 2.022386 1.7059843
+relMSE (loc + scale)     1.322783 1.713026 1.185466 1.0000000
+> 
+> 
+> 
+> cleanEx(); nameEx("robloxbioc")
+> ### * robloxbioc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: robloxbioc
+> ### Title: Generic Function for Preprocessing Biological Data
+> ### Aliases: robloxbioc robloxbioc-methods robloxbioc,matrix-method
+> ###   robloxbioc,AffyBatch-method robloxbioc,BeadLevelList-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## similar to rowRoblox of package RobLox
+> ind <- rbinom(200, size=1, prob=0.05) 
+> X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
+> robloxbioc(X)
+             mean        sd
+[1,] -0.014713379 0.9643588
+[2,]  0.003050954 1.0587182
+> robloxbioc(X, steps = 3)
+             mean        sd
+[1,] -0.014713379 0.9643588
+[2,]  0.003050954 1.0587182
+> robloxbioc(X, eps = 0.05)
+             mean       sd
+[1,] -0.028278572 0.927434
+[2,] -0.001566506 1.051123
+> robloxbioc(X, eps = 0.05, steps = 3)
+             mean       sd
+[1,] -0.028278572 0.927434
+[2,] -0.001566506 1.051123
+> 
+> ## the function is designed for large scale problems
+> X <- matrix(rnorm(50000*20, mean = 1), nrow = 50000)
+> system.time(robloxbioc(X))
+   user  system elapsed 
+  6.196   0.112   6.311 
+> 
+> ## using Affymetrix-Data
+> ## confer example to generateExprVal.method.mas
+> ## A more worked out example can be found in the scripts folder
+> ## of the package.
+> data(SpikeIn)
+> probes <- pm(SpikeIn) 
+> mas <- generateExprVal.method.mas(probes)
+> rl <- 2^robloxbioc(log2(t(probes)))
+> concentrations <- as.numeric(sampleNames(SpikeIn))
+> plot(concentrations, mas$exprs, log="xy", ylim=c(50,10000), type="b",
++      ylab = "expression measures")
+> points(concentrations, rl[,1], pch = 20, col="orange", type="b")
+> legend("topleft", c("MAS", "roblox"), pch = c(1, 20))
+> 
+> ## Not run: 
+> ##D ## "Not run" just because of computation time
+> ##D require(affydata)
+> ##D data(Dilution)
+> ##D eset <- robloxbioc(Dilution)
+> ##D ## Affymetrix scale normalization
+> ##D eset1 <- robloxbioc(Dilution, normalize = TRUE)
+> ## End(Not run)
+> 
+> ## using Illumina-Data
+> ## Not run: 
+> ##D ## "Not run" just because of computation time
+> ##D data(BLData)
+> ##D BSData <- robloxbioc(BLData, eps.upper = 0.5)
+> ## End(Not run)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  15.1 0.24 15.41 0.004 0.004 
+> grDevices::dev.off()
+postscript 
+         2 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')
