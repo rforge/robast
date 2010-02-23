@@ -108,9 +108,6 @@ robloxbioc(x, ...)
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 
-  Kohl M. and Deigner H.P. (2009). Using infinitesimally robust estimators for 
-  preprocessing gene expression data. In preparation.
-
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing

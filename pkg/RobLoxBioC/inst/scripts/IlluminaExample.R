@@ -83,62 +83,63 @@ load(file = con)
 close(con)
 
 #######################################
-## Figure in Kohl and Deigner (2009)
+## Figure 4 in Kohl and Deigner (2010)
 #######################################
-res1 <- split(as.vector(minKD.Illumina$dist), as.vector(minKD.Illumina$n))[20:60]
-res2 <- split(as.vector(minKD.Illumina.log$dist), as.vector(minKD.Illumina.log$n))[20:60]
-res3 <- lapply(as.data.frame(minKD.Illumina.norm[,11:51]), function(x) x)
-uni.n <- rep(20:60, 3)
+res1 <- split(as.vector(minKD.Illumina$dist), as.vector(minKD.Illumina$n))[30:50]
+res2 <- split(as.vector(minKD.Illumina.log$dist), as.vector(minKD.Illumina.log$n))[30:50]
+res3 <- lapply(as.data.frame(minKD.Illumina.norm[,21:41]), function(x) x)
+uni.n <- rep(30:50, 3)
 
-postscript(file = "minKDIllumina.eps", height = 6, width = 9, paper = "special", 
-           horizontal = TRUE)
+#setEPS(height = 6, width = 9)
+#postscript(file = "Figure4.eps")
 par(mar = c(4, 4, 3, 1))
-plot(0, 0, type = "n", ylim = c(-0.01, 0.4), xlim = c(0.5, 125.5), 
+plot(0, 0, type = "n", ylim = c(-0.01, 0.4), xlim = c(0.5, 65.5), 
      panel.first = abline(h = seq(0, 0.35, by = 0.05), lty = 2, col = "grey"), 
      main = "Minimum Kolmogorov distance", 
      ylab = "minimum Kolmogorov distance", 
      xlab = "sample size", axes = FALSE)
-axis(1, c(1:41, 43:83, 85:125), labels = uni.n, cex.axis = 0.6)
+axis(1, c(1:21, 23:43, 45:65), labels = uni.n, cex.axis = 0.6)
 axis(2, seq(0, 0.35, by = 0.05), labels = seq(0, 0.35, by = 0.05), las = 2,
      cex.axis = 0.8)
 box()
-boxplot(c(res1, res2, res3), at = c(1:41, 43:83, 85:125), add = TRUE, pch = 20, 
+boxplot(c(res1, res2, res3), at = c(1:21, 23:43, 45:65), add = TRUE, pch = 20, 
         names = FALSE, axes = FALSE)
-abline(v = c(42, 84), lwd = 1.5)
-text(c(20, 63, 105), rep(0.38, 3), labels = c("Bead Level Data", "log Bead Level Data", "Normal Samples"),
+abline(h = c(0.055, 0.093), lty = 2, lwd = 1.5)
+abline(v = c(22, 44), lwd = 1.5)
+text(c(10, 33, 55), rep(0.38, 3), labels = c("Bead Level Data", "log Bead Level Data", "Normal Samples"),
      font = 2)
-lines(1:41, 1/(2*(20:60)), lwd = 2)
-lines(43:83, 1/(2*(20:60)), lwd = 2)
-lines(85:125, 1/(2*(20:60)), lwd = 2)
+lines(1:21, 1/(2*(30:50)), lwd = 2)
+lines(23:43, 1/(2*(30:50)), lwd = 2)
+lines(45:65, 1/(2*(30:50)), lwd = 2)
 legend("bottomleft", legend = "minimal possible distance", lty = 1, 
        bg = "white", cex = 0.8)
-dev.off()
+#dev.off()
 
-## Comparison of median distances
-## Figure in Kohl and Deigner (2009)
-res1 <- split(as.vector(minKD.Illumina$dist), as.vector(minKD.Illumina$n))[10:70]
-res2 <- split(as.vector(minKD.Illumina.log$dist), as.vector(minKD.Illumina.log$n))[10:70]
-res3 <- lapply(as.data.frame(minKD.Illumina.norm), function(x) x)
+## Comparison of quantiles
+## Figure 5 in Kohl and Deigner (2010)
+res1 <- split(as.vector(minKD.Illumina$dist), as.vector(minKD.Illumina$n))[15:65]
+res2 <- split(as.vector(minKD.Illumina.log$dist), as.vector(minKD.Illumina.log$n))[15:65]
+res3 <- lapply(as.data.frame(minKD.Illumina.norm), function(x) x)[6:56]
 
-postscript(file = "minKDIlluminaQuant.eps", height = 6, width = 9, paper = "special", 
-           horizontal = TRUE)
+#setEPS(height = 6, width = 9)
+#postscript(file = "Figure5.eps")
 par(mar = c(4, 4, 3, 1))
-plot(10:70, sapply(res3, quantile, prob = 0.99), type = "l", lwd = 2, xlab = "sample size", 
+plot(15:65, sapply(res3, quantile, prob = 0.99), type = "l", lwd = 2, xlab = "sample size", 
      ylab = "quantile of mimimum Kolmogorov distances",
      main = "50% and 99% quantiles of minimum Kolmogorov distances", 
      ylim = c(0.05, 0.23),
-     panel.first = abline(h = c(0.05, 0.1, 0.15, 0.2), v = seq(10, 70, by = 10), 
+     panel.first = abline(h = c(0.05, 0.1, 0.15, 0.2), v = seq(15, 65, by = 5), 
                           lty = 2, col = "grey"))
-lines(10:70, sapply(res1, quantile, prob = 0.99), lwd = 2, lty = 2)
-lines(10:70, sapply(res2, quantile, prob = 0.99), lwd = 2, lty = 3)
-lines(10:70, sapply(res3, quantile, prob = 0.5), lwd = 2, lty = 1)
-lines(10:70, sapply(res1, quantile, prob = 0.5), lwd = 2, lty = 2)
-lines(10:70, sapply(res2, quantile, prob = 0.5), lwd = 2, lty = 3)
+lines(15:65, sapply(res1, quantile, prob = 0.99), lwd = 2, lty = 2)
+lines(15:65, sapply(res2, quantile, prob = 0.99), lwd = 2, lty = 3)
+lines(15:65, sapply(res3, quantile, prob = 0.5), lwd = 2, lty = 1)
+lines(15:65, sapply(res1, quantile, prob = 0.5), lwd = 2, lty = 2)
+lines(15:65, sapply(res2, quantile, prob = 0.5), lwd = 2, lty = 3)
 text(22, 0.18, "99% quantiles", font = 2)
 text(22, 0.115, "50% quantiles", font = 2)
 legend("topright", legend = c("normal samples", "bead level data", "log bead level data"),
        lty = 1:3, lwd = 2, bg = "white")
-dev.off()
+#dev.off()
 
 
 #load(file = "spikeInData.RData")
@@ -165,9 +166,9 @@ genenames <- spikecsv[,"ProbeID"]
 ill.SD <- assessSpikeInSD(res.ill, genenames = genenames, method.name = "Illumina")
 rmx.SD <- assessSpikeInSD(res.rmx, genenames = genenames, method.name = "rmx estimator")
 
-## Figure in Kohl and Deigner (2009)
-postscript(file = "IllMeanSD.eps", height = 6, width = 9, paper = "special", 
-           horizontal = TRUE)
+## Figure 6 in Kohl and Deigner (2010)
+setEPS(height = 6, width = 9)
+postscript(file = "Figure6.eps")
 plot(ill.SD$xsmooth, ill.SD$ysmooth, type = "l", xlab = "mean log expression",
      ylab = "mean SD", main = "Spike-in data of Dunning et al. (2008)", lwd = 2,
      panel.first = abline(h = c(0.1, 0.12, 0.14, 0.16), v = seq(6, 16, 2), lty = 2, col = "grey"))
@@ -176,7 +177,7 @@ legend("topright", c("Illumina", "rmx"), lty = 1:2, lwd = 2, bg = "white")
 dev.off()
 
 
-## Table in Kohl and Deigner (2009)
+## Table 6 in Kohl and Deigner (2009)
 quantile(ill.SD$y, prob = c(0.25, 0.5, 0.75, 0.99))
 quantile(rmx.SD$y, prob = c(0.25, 0.5, 0.75, 0.99))
 

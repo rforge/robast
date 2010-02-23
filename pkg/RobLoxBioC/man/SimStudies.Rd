@@ -54,9 +54,6 @@ relMSE with respect to the rmx estimator.
 
   Hampel F.R. (1985). The breakdown points of the mean combined with some rejection
   rules. Technometrics, 27(2):95-107.  
-
-  Kohl M. and Deigner H.P. (2009). Using infinitesimally robust estimators for 
-  preprocessing gene expression data. In preparation.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}

@@ -85,8 +85,10 @@ close(con)
 
 boxplot(as.data.frame(minKD.hgu95a$dist), main = "HGU95a")
 boxplot(as.data.frame(minKD.hgu133a$dist), main = "HGU133a")
-table(minKD.hgu95a$n)
-table(minKD.hgu133a$n)
+
+## Table 1 in Kohl and Deigner (2010)
+table(minKD.hgu95a$n)/59
+table(minKD.hgu133a$n)/42
 
 ###########################################################
 ## Comparison with normal (pseudo) random samples
@@ -130,39 +132,41 @@ lines(1:length(ns), 1/(2*ns), col = "orange", lwd = 2)
 legend("topright", legend = "minimal possible distance", fill = "orange")
 
 #######################################
-## Figure in Kohl and Deigner (2009)
+## Figure 2 in Kohl and Deigner (2010)
 #######################################
 res1 <- split(as.vector(minKD.hgu95a$dist), as.vector(minKD.hgu95a$n))
 res2 <- split(as.vector(minKD.hgu133a$dist), as.vector(minKD.hgu133a$n))
 res3 <- lapply(as.data.frame(minKD.norm[,c(2:12,16,17)]), function(x) x)
 uni.n <- c(as.integer(names(res1)), as.integer(names(res2)), as.integer(names(res3)))
 
-postscript(file = "minKDAffy.eps", height = 6, width = 9, paper = "special", 
-           horizontal = TRUE)
+#setEPS(height = 6, width = 9)
+#postscript(file = "Figure2.eps")
 par(mar = c(4, 4, 3, 1))
-plot(0, 0, type = "n", ylim = c(0, 0.49), xlim = c(0.5, 37.5), 
+plot(0, 0, type = "n", ylim = c(0, 0.49), xlim = c(0.5, 16.5), 
      panel.first = abline(h = seq(0, 0.45, by = 0.05), lty = 2, col = "grey"), 
      main = "Minimum Kolmogorov distance", 
      ylab = "minimum Kolmogorov distance", 
      xlab = "sample size", axes = FALSE)
-axis(1, c(1:13, 15:23, 25:37), labels = uni.n, cex.axis = 0.6)
+axis(1, c(1:5, 7:9, 11:16), labels = uni.n[c(8:12, 6,11,12,6,8:12)], cex.axis = 0.6)
 axis(2, seq(0, 0.45, by = 0.05), labels = seq(0, 0.45, by = 0.05), las = 2,
      cex.axis = 0.8)
 box()
-boxplot(c(res1, res2, res3), at = c(1:13, 15:23, 25:37), add = TRUE, pch = 20, 
-        names = FALSE, axes = FALSE)
-abline(v = c(14, 24), lwd = 1.5)
-text(c(7, 19, 31), rep(0.48, 3), labels = c("HGU95A", "HGU133A", "Normal Samples"),
+boxplot(c(res1[8:12], res2[c(3,7,8)], res3[c(6,8:12)]), at = c(1:5, 7:9, 11:16), add = TRUE, pch = 20, 
+        names = FALSE, axes = FALSE, 
+        col = c(rep(NA, 3), grey(0.6), NA, grey(0.4), NA, NA, grey(0.4), rep(NA, 3),
+                grey(0.6), NA))
+abline(v = c(6, 10), lwd = 1.5)
+text(c(3, 8, 14), rep(0.48, 3), labels = c("HGU95A", "HGU133A", "Normal Samples"),
      font = 2)
-lines(1:13, 1/(2*uni.n[1:13]), lwd = 2)
-lines(15:23, 1/(2*uni.n[14:22]), lwd = 2)
-lines(25:37, 1/(2*uni.n[23:35]), lwd = 2)
-legend("bottomleft", legend = "minimal possible distance", lty = 1, 
-       bg = "white", cex = 0.8)
-dev.off()
+lines(1:5, 1/(2*uni.n[8:12]), lwd = 2)
+lines(7:9, 1/(2*uni.n[c(6,8,12)]), lwd = 2)
+lines(11:16, 1/(2*uni.n[c(6,8:12)]), lwd = 2)
+legend("bottomleft", legend = "minimal possible distance", lty = 1, lwd = 2, cex = 0.8)
+abline(h = c(0.1, 0.15), lty = 2, lwd = 1.5)
+#dev.off()
 
 ## Comparison of median distances
-## Table in Kohl and Deigner (2009)
+## Table 2 in Kohl and Deigner (2010)
 round(sapply(res1, quantile, prob = 0.95) - sapply(res3, quantile, prob = 0.95), 4)
 round(sapply(res2, quantile, prob = 0.95) - sapply(res3, quantile, prob = 0.95)[-c(1,2,4,7)], 4)
 
@@ -585,13 +589,13 @@ tab.hgu133a.small <- cbind(tab.hgu133a.small, "whatsgood" = c(1, 1, 1, 0, NA, 1,
 round(tab.hgu133a.small, 4)
 
 
-## Figure in Kohl and Deigner (2009)
+## Figure 3 in Kohl and Deigner (2010)
 res.sd <- assessSpikeInSD(eset.hgu133a.log2)
 res.sd.133 <- assessSpikeInSD(eset.hgu133a.log2)
 res.sd.mas <- assessSpikeInSD(mas5.res)
 res.sd.mas.133 <- assessSpikeInSD(mas5.res.133)
-postscript(file = "AffyMeanSD.eps", height = 6, width = 9, paper = "special", 
-           horizontal = TRUE)
+#setEPS(width = 9, height = 6)
+#postscript(file = "Figure3.eps")
 par(mfrow = c(1, 2))
 plot(res.sd.mas$xsmooth, res.sd.mas$ysmooth, type = "l", xlab = "mean log expression",
      ylab = "mean SD", main = "HGU95A", lwd = 2, ylim = c(0, max(res.sd.mas$ysmooth)),
@@ -606,10 +610,10 @@ plot(res.sd.133$xsmooth, res.sd.133$ysmooth, type = "l", lty = 2, lwd = 2,
      panel.first = abline(h = seq(0, 1.2, by = 0.2), v = c(0, 5, 10, 15), lty = 2, col = "grey"))
 lines(res.sd.mas.133$xsmooth, res.sd.mas.133$ysmooth, type = "l", lwd = 2)
 legend("topright", c("biweight", "rmx"), lty = 1:2, lwd = 2, bg = "white")
-dev.off()
+#dev.off()
 
 
-## Table in Kohl and Deigner (2009)
+## Table 4 in Kohl and Deigner (2010)
 round(tableAll(roblox.hgu95a.2, mas5.ass)[c(1:3, 8:11),], 3)
 round(tableAll(roblox.hgu133a.2, mas5.ass.133)[c(1:3, 8:11),], 3)
 

@@ -55,9 +55,6 @@ or matrix with the corresponding sample sizes. }
 \references{
   Huber, P.J. (1981) \emph{Robust Statistics}. New York: Wiley.
 
-  Kohl M. and Deigner H.P. (2009). Using infinitesimally robust estimators for 
-  preprocessing gene expression data. In preparation.
-
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
