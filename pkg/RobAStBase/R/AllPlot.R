@@ -174,7 +174,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         options(warn = -1)
         on.exit(options(warn = w0))
         opar <- par()
-        on.exit(par=opar)
+        on.exit(par(opar))
         if (!withSweave)
              devNew()
         
