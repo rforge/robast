@@ -42,7 +42,7 @@ IlluminaSimStudy <- function(n, M, eps, seed = 123,
         ind <- sample(1:M, min(M, 20))
         if(plot1) dev.new()
         print(
-          stripplot(rep(1:20, each = 20) ~ as.vector(Mre[ind,]), 
+          stripplot(rep(1:min(M, 20), each = n) ~ as.vector(Mre[ind,]), 
                     ylab = "samples", xlab = "x", pch = 20,
                     main = "Randomly chosen samples")
         )

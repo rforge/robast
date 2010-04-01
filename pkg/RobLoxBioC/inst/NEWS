@@ -8,9 +8,15 @@
  information)
 
 #######################################
-version 0.7
+## version 0.7.1
 #######################################
++ corrected bug in AffySimStudy and IlluminaSimStudy
++ minor modifications of scripts in scripts folder
 
+
+#######################################
+## version 0.7
+#######################################
 
 GENERAL ENHANCEMENTS:
 
@@ -53,14 +59,14 @@ BUGFIXES:
 
 
 #######################################
-version 0.5
+## version 0.5
 #######################################
 + added example code for Illumina data
 + function to perform Monte-Carlo studies for comparison with Illumina's
   default method
 
 #######################################
-version 0.4
+## version 0.4
 #######################################
 + added finite-sample correction
 + handle cases with sample size <= 2 and contamination eps = 0
@@ -68,17 +74,17 @@ version 0.4
   exported and documented function to perform Monte-Carlo studies.
 
 #######################################
-version 0.3
+## version 0.3
 #######################################
 + added KolmogorovMinDist methods for matrix, AffyBatch and BeadLevelList
 
 #######################################
-version 0.2
+## version 0.2
 #######################################
 + robloxbioc methods for AffyBatch and BeadLevelList
 
 #######################################
-version 0.1
+## version 0.1
 #######################################
 + start of development
 

@@ -131,9 +131,9 @@ robloxbioc(x, ...)
 ind <- rbinom(200, size=1, prob=0.05) 
 X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
 robloxbioc(X)
-robloxbioc(X, steps = 3)
+robloxbioc(X, steps = 5)
 robloxbioc(X, eps = 0.05)
-robloxbioc(X, eps = 0.05, steps = 3)
+robloxbioc(X, eps = 0.05, steps = 5)
 
 ## the function is designed for large scale problems
 X <- matrix(rnorm(50000*20, mean = 1), nrow = 50000)
