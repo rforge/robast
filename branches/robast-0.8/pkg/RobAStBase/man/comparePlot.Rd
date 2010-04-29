@@ -16,7 +16,8 @@ comparePlot(obj1, obj2, ... )
              col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
-             legend.location = "bottomright", 
+             with.legend = TRUE, legend.bg = "white",
+             legend.location = "bottomright", legend.cex = 0.8,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
@@ -51,9 +52,12 @@ comparePlot(obj1, obj2, ... )
           to the current setting of \code{cex}; as in 
           \code{\link[graphics]{par}}}
   \item{col.inner}{character or integer code; color for the inner title}              
+  \item{with.legend}{logical; shall a legend be plotted?}
   \item{legend.location}{a valid argument \code{x} for \code{\link{legend}} ---
                          the place where to put the legend on the last issued
                          plot}
+  \item{legend.bg}{background color for the legend}
+  \item{legend.cex}{magnification factor for the legend}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
   \item{to.draw.arg}{Either \code{NULL} (default; 
                           everything is plotted) or a vector of either integers 

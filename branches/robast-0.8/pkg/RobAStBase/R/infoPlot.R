@@ -6,7 +6,8 @@ setMethod("infoPlot", "IC",
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
-             legend.location = "bottomright", 
+             with.legend = TRUE, legend.bg = "white",
+             legend.location = "bottomright", legend.cex = 0.8,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
@@ -234,7 +235,7 @@ setMethod("infoPlot", "IC",
             on.exit(options(warn = w0))
             opar <- par()
             opar$cin <- opar$cra <- opar$csi <- opar$cxy <-  opar$din <- NULL
-            on.exit(par(opar))
+            if(mfColRow) on.exit(par(opar))
 #            if (!withSweave)
 #               devNew()
 
@@ -368,10 +369,12 @@ setMethod("infoPlot", "IC",
                    dotsP))
                do.call(lines, args=c(list(x.vec, absInfo, type = plty, 
                        lty = lty, lwd = lwd, col = col), dotsL))
-               legend(legend.location[[1]],
+               if(with.legend)
+                  legend(legend.location[[1]],
                      legend = c("class. opt. IC", objectc), 
+                     bg = legend.bg,
                      lty = c(ltyI, lty), col = c(colI, col), 
-                     lwd = c(lwdI, lwd), cex = 0.75)
+                     lwd = c(lwdI, lwd), cex = legend.cex*.75/.8)
 
                dotsT["main"] <- NULL
                dotsT["cex.main"] <- NULL
@@ -411,10 +414,12 @@ setMethod("infoPlot", "IC",
                     yc.vec <- sapply(x.vec, classIC.i.5@Map[[indi]])^2/absInfoClass
                     do.call(lines, args = c(list(x.vec, yc.vec, type = plty, 
                             lty = ltyI, col = colI, lwd = lwdI), dotsL))
-                    legend(legend.location[[i+in1to.draw]],
+                    if(with.legend)
+                       legend(legend.location[[i+in1to.draw]],
+                           bg = legend.bg,
                            legend = c("class. opt. IC", objectc),  
                            col = c(colI, col), lwd = c(lwdI, lwd),
-                           lty = c(ltyI, lty), cex = 0.6)
+                           lty = c(ltyI, lty), cex = legend.cex*6/8)
                     if(innerL)
                        do.call(title, args = c(list(main = innerT[[1+indi]]),  
                                dotsT, line = lineT, cex.main = cex.inner, 
