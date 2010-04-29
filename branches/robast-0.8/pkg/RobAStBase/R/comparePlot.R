@@ -5,7 +5,8 @@ setMethod("comparePlot", signature("IC","IC"),
              col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
-             legend.location = "bottomright", 
+             with.legend = TRUE, legend.bg = "white",
+             legend.location = "bottomright", legend.cex = 0.8,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
@@ -227,7 +228,7 @@ setMethod("comparePlot", signature("IC","IC"),
         on.exit(options(warn = w0))
         opar <- par()
         opar$cin <- opar$cra <- opar$csi <- opar$cxy <-  opar$din <- NULL
-        on.exit(par(opar))
+        if(mfColRow) on.exit(on.exit(par(opar)))
         
         if(mfColRow)
              par(mfrow = c(nrows, ncols))
@@ -436,8 +437,9 @@ setMethod("comparePlot", signature("IC","IC"),
                       line = lineT, cex.main = cex.inner, col.main = col.inner))
         }
         
-        legend(legend.location, legend = xc, col = col, 
-               cex = 0.75, lwd = lwd*1.5, lty = lty)
+        if(with.legend)
+           legend(legend.location, legend = xc, col = col, bg = legend.bg,
+               lwd = lwd*1.5, lty = lty, cex = legend.cex)
 
         if(!hasArg(cex.main)) cex.main <- par("cex.main") else cex.main <- dots$"cex.main"
         if(!hasArg(col.main)) col.main <- par("col.main") else col.main <- dots$"col.main"
