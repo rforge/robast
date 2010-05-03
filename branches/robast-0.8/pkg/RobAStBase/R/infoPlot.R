@@ -362,6 +362,9 @@ setMethod("infoPlot", "IC",
 
             if(!is.null(ylim)) 
                 dotsP$ylim <- ylim[,1]       
+            
+            fac.leg <- if(dims0>1) 3/4 else .75/.8 
+            
             if(1 %in% to.draw){
                do.call(plot, args=c(list(x.vec, absInfoClass, type = plty, 
                    lty = ltyI, col = colI, lwd = lwdI,
@@ -374,7 +377,7 @@ setMethod("infoPlot", "IC",
                      legend = c("class. opt. IC", objectc), 
                      bg = legend.bg,
                      lty = c(ltyI, lty), col = c(colI, col), 
-                     lwd = c(lwdI, lwd), cex = legend.cex*.75/.8)
+                     lwd = c(lwdI, lwd), cex = legend.cex*fac.leg)
 
                dotsT["main"] <- NULL
                dotsT["cex.main"] <- NULL
@@ -391,7 +394,7 @@ setMethod("infoPlot", "IC",
                 dotsT["ylim"] <- NULL
                 nrows <- trunc(sqrt(dims))
                 ncols <- ceiling(dims/nrows)
-                if (!withSweave||!mfColRow)
+                if (!withSweave)
                      devNew()
                 if(mfColRow)
                    parArgs <- c(parArgs,list(mfrow = c(nrows, ncols)))
@@ -419,7 +422,7 @@ setMethod("infoPlot", "IC",
                            bg = legend.bg,
                            legend = c("class. opt. IC", objectc),  
                            col = c(colI, col), lwd = c(lwdI, lwd),
-                           lty = c(ltyI, lty), cex = legend.cex*6/8)
+                           lty = c(ltyI, lty), cex = legend.cex*fac.leg)
                     if(innerL)
                        do.call(title, args = c(list(main = innerT[[1+indi]]),  
                                dotsT, line = lineT, cex.main = cex.inner, 

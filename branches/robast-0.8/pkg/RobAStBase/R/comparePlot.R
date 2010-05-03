@@ -228,7 +228,7 @@ setMethod("comparePlot", signature("IC","IC"),
         on.exit(options(warn = w0))
         opar <- par()
         opar$cin <- opar$cra <- opar$csi <- opar$cxy <-  opar$din <- NULL
-        if(mfColRow) on.exit(on.exit(par(opar)))
+        if(mfColRow) on.exit(par(opar))
         
         if(mfColRow)
              par(mfrow = c(nrows, ncols))
