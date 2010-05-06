@@ -388,13 +388,13 @@ setMethod("infoPlot", "IC",
                           line = lineT, cex.main = cex.inner, col.main = col.inner))
             }
             
-            if(dims0 > 1){
+            if(dims > 1){
                 dotsP["ylim"] <- NULL
                 dotsL["ylim"] <- NULL
                 dotsT["ylim"] <- NULL
                 nrows <- trunc(sqrt(dims))
                 ncols <- ceiling(dims/nrows)
-                if (!withSweave)
+                if (!withSweave||!mfColRow)
                      devNew()
                 if(mfColRow)
                    parArgs <- c(parArgs,list(mfrow = c(nrows, ncols)))
