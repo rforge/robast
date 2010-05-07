@@ -388,7 +388,7 @@ setMethod("infoPlot", "IC",
                           line = lineT, cex.main = cex.inner, col.main = col.inner))
             }
             
-            if(dims > 1){
+            if(dims > 1 && length(to.draw[to.draw!=1])>0){
                 dotsP["ylim"] <- NULL
                 dotsL["ylim"] <- NULL
                 dotsT["ylim"] <- NULL
