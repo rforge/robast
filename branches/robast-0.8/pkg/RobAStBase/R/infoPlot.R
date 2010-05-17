@@ -12,7 +12,9 @@ setMethod("infoPlot", "IC",
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
              lab.pts = NULL, lab.font = NULL,
-             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE){
+             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
+             ylab.abs = "absolute information", 
+             ylab.rel= "relative information"){
 
         objectc <- match.call(call = sys.call(sys.parent(1)))$object
         dots <- match.call(call = sys.call(sys.parent(1)), 
@@ -368,7 +370,7 @@ setMethod("infoPlot", "IC",
             if(1 %in% to.draw){
                do.call(plot, args=c(list(x.vec, absInfoClass, type = plty, 
                    lty = ltyI, col = colI, lwd = lwdI,
-                   xlab = "x", ylab = "absolute information", panel.last = pL.abs),
+                   xlab = "x", ylab = ylab.abs, panel.last = pL.abs),
                    dotsP))
                do.call(lines, args=c(list(x.vec, absInfo, type = plty, 
                        lty = lty, lwd = lwd, col = col), dotsL))
@@ -411,7 +413,7 @@ setMethod("infoPlot", "IC",
                     y.vec <- sapply(x.vec, IC1.i.5@Map[[indi]])^2/absInfo
                     do.call(plot, args=c(list(x.vec, y.vec, type = plty, 
                                   lty = lty, xlab = "x", 
-                                  ylab = "relative information", 
+                                  ylab = ylab.rel, 
                                   col = col, lwd = lwd, panel.last = pL.rel), dotsP))
 
                     yc.vec <- sapply(x.vec, classIC.i.5@Map[[indi]])^2/absInfoClass
