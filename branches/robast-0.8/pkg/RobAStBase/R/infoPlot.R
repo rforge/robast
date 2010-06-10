@@ -30,7 +30,7 @@ setMethod("infoPlot", "IC",
         
         trafO <- trafo(L2Fam@param)
         dims <- nrow(trafO)
-        dimm <- length(L2Fam@param)
+        dimm <- ncol(trafO)
         
         to.draw <- 1:(dims+1)
         dimnms <- rownames(trafO)
