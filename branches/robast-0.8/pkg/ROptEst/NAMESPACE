@@ -4,6 +4,7 @@ import("RandVar")
 import("distrMod")
 import("RobAStBase")
 
+exportClasses("asAnscombe") 
 exportMethods("optIC", 
               "getInfRobIC", 
               "getFixRobIC",
@@ -25,6 +26,6 @@ exportMethods("optIC",
               "getL1normL2deriv",
               "getModifyIC",
               "cniperCont", "cniperPoint", "cniperPointPlot")
-exportMethods("updateNorm", "scaleUpdateIC")
-export("getL2normL2deriv")
+exportMethods("updateNorm", "scaleUpdateIC", "eff")
+export("getL2normL2deriv","asAnscombe")
 export("roptest","getLagrangeMultByOptim","getLagrangeMultByIter")

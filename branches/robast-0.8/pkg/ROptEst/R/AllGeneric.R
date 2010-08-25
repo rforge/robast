@@ -86,3 +86,6 @@ if(!isGeneric("cniperPoint")){
 if(!isGeneric("cniperPointPlot")){
     setGeneric("cniperPointPlot", function(L2Fam, neighbor, risk, ...) standardGeneric("cniperPointPlot"))
 }
+if(!isGeneric("eff")){
+    setGeneric("eff", function(object) standardGeneric("eff"))
+}

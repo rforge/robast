@@ -21,6 +21,15 @@ plot(N0.IC0) # plot IC
 N0.Rob1 <- InfRobModel(center = N0, neighbor = ContNeighborhood(radius = 0.5))
 N0.Rob1     # show N0.Rob1
 
+## OBRE solution (ARE = .95)
+system.time(N0.ICA <- optIC(model = N0.Rob1, risk = asAnscombe(), upper=NULL,lower=NULL, verbose=TRUE))
+checkIC(N0.ICA)
+Risks(N0.ICA)
+plot(N0.ICA)
+infoPlot(N0.ICA)
+
+system.time(N0.ICA.i <- optIC(model = N0.Rob1, risk = asAnscombe(eff=0.95, normtype=InfoNorm()), upper=NULL,lower=NULL, verbose=TRUE))
+
 ## MSE solution
 system.time(N0.IC1 <- optIC(model = N0.Rob1, risk = asMSE()))
 checkIC(N0.IC1)

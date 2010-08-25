@@ -8,3 +8,14 @@
 }
 
 
+## asymptotic Anscombe risk
+setClass("asAnscombe", representation(eff = "numeric"),
+            prototype = prototype(eff = .95,
+                             type = "optimal bias robust IC for given ARE in the ideal model"),
+            contains = "asRiskwithBias",
+            validity = function(object){
+                if(any(object@eff <= 0|object@eff > 1))
+                    stop("'eff' has to be in (0,1]")
+                else TRUE
+            })
+

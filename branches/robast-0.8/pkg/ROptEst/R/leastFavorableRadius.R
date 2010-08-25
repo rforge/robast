@@ -49,6 +49,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                 warn = warn, verbose = verbose)
                     loRisk <- getAsRisk(risk = risk, L2deriv = L2Fam@L2derivDistr[[1]], 
                                         neighbor = neighbor, biastype = biastype, 
+                                        normtype = normtype,
                                         clip = resLo$b, cent = resLo$a, 
                                         stand = resLo$A, trafo = trafo)[[1]]
                 }
@@ -57,6 +58,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                     bmin <- getAsRisk(risk = asBias(biastype = biastype), 
                                 L2deriv = L2Fam@L2derivDistr[[1]], 
                                 neighbor = neighbor, biastype = biastype, 
+                                normtype = normtype,
                                 trafo = trafo, symm = L2Fam@L2derivSymm[[1]])
                     upRisk <- bmin^2
                 }else{
@@ -68,6 +70,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                 warn = warn, verbose = verbose)
                     upRisk <- getAsRisk(risk = risk, L2deriv = L2Fam@L2derivDistr[[1]], 
                                         neighbor = neighbor, biastype = biastype, 
+                                        normtype = normtype,
                                         clip = resUp$b, cent = resUp$a, 
                                         stand = resUp$A, trafo = trafo)[[1]]
                 }
@@ -142,7 +145,8 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                         riskLo <- risk
                         normtype(riskLo) <- resLo$normtype
                         loRisk <- getAsRisk(risk = riskLo, L2deriv = L2deriv, neighbor = neighbor, 
-                                            biastype = biastype, clip = resLo$b, cent = resLo$a, 
+                                            biastype = biastype, normtype = normtype,
+                                            clip = resLo$b, cent = resLo$a, 
                                             stand = resLo$A, trafo = trafo)[[1]]
                         loNorm <- resLo$normtype                    
                     }
@@ -151,6 +155,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                         biasR <- getAsRisk(risk = asBias(biastype = biastype(risk), 
                                       normtype = normtype), L2deriv = L2deriv, 
                                       neighbor = neighbor, biastype = biastype, 
+                                      normtype = normtype,
                                       Distr = L2Fam@distribution, 
                                       DistrSymm = L2Fam@distrSymm, 
                                       L2derivSymm = L2derivSymm, 
@@ -174,7 +179,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                          riskUp <- risk
                          normtype(riskUp) <- resUp$normtype
                          upRisk <- getAsRisk(risk = riskUp, L2deriv = L2deriv, neighbor = neighbor, 
-                                        biastype = biastype, 
+                                        biastype = biastype, normtype = normtype,
                                         clip = resUp$b, cent = resUp$a, stand = resUp$A, trafo = trafo)[[1]]
                          upNorm <- resUp$normtype                    
                     }

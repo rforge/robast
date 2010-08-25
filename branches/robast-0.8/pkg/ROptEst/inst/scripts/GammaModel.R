@@ -73,6 +73,15 @@ plot(IC0) # plot IC
 RobG1 <- InfRobModel(center = G, neighbor = ContNeighborhood(radius = 0.5))
 RobG1     # show RobB1
 
+## OBRE solution ARE 0.95 in ideal model
+system.time(ICA <- optIC(model = RobG1, risk = asAnscombe(),
+                         upper=NULL,lower=NULL, verbose=TRUE))
+checkIC(ICA)
+Risks(ICA)
+plot(ICA)
+infoPlot(ICA)
+
+
 ## MSE solution
 system.time(IC1 <- optIC(model=RobG1, risk=asMSE()))
 IC1

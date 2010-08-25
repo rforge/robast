@@ -31,7 +31,7 @@ These functions are used internally by package \pkg{ROptEst}.}
 .getLowerSol(L2deriv, risk, neighbor, Distr, DistrSymm,
                          L2derivSymm, L2derivDistrSymm,
                          z.start, A.start, trafo,
-                         maxiter, tol, warn, Finfo, verbose)
+                         maxiter, tol, warn, Finfo, QuadForm, verbose)
 
 
 ### helper function to return upper & lower bounds for b for b-search

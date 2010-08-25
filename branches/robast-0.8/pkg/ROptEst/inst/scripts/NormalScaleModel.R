@@ -22,6 +22,19 @@ N0.Rob1 <- InfRobModel(center = N0, neighbor = ContNeighborhood(radius = 0.5))
 N0.Rob1     # show N0.Rob1
 N0.Rob2 <- InfRobModel(center = N0, neighbor = TotalVarNeighborhood(radius = 0.5))
 
+## OBRE solution (ARE 95%)
+
+system.time(N0.ICA <- optIC(model = N0.Rob1, risk = asAnscombe(.95),upper=NULL,lower=NULL, verbose=TRUE))
+checkIC(N0.ICA)
+Risks(N0.ICA)
+plot(N0.ICA)
+
+system.time(N0.ICA2 <- optIC(model = N0.Rob2, risk = asAnscombe(.95),upper=NULL,lower=NULL, verbose=TRUE))
+checkIC(N0.ICA2)
+Risks(N0.ICA2)
+plot(N0.ICA2)
+
+
 ## MSE solution
 (N0.IC1 <- optIC(model=N0.Rob1, risk=asMSE()))
 checkIC(N0.IC1)
@@ -32,6 +45,8 @@ plot(N0.IC1)
 checkIC(N0.IC2)
 Risks(N0.IC2)
 plot(N0.IC2)
+
+
 
 ## lower case solutions
 (N0.IC3 <- optIC(model=N0.Rob1, risk=asBias()))
