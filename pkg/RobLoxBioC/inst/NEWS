@@ -8,6 +8,15 @@
  information)
 
 #######################################
+## version 0.7.2
+#######################################
++ renamed AffySimStudy.R to AffymetrixSimStudy.R
++ update of Figure numbers in IlluminaExample.R
++ added scripts AffymetrixTechnicalReplicates.R and 
+  IlluminaTechnicalReplicates.R
+
+
+#######################################
 ## version 0.7.1
 #######################################
 + corrected bug in AffySimStudy and IlluminaSimStudy

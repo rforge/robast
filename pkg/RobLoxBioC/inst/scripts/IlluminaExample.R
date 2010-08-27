@@ -83,7 +83,7 @@ load(file = con)
 close(con)
 
 #######################################
-## Figure 4 in Kohl and Deigner (2010)
+## Figure 5 in Kohl and Deigner (2010)
 #######################################
 res1 <- split(as.vector(minKD.Illumina$dist), as.vector(minKD.Illumina$n))[30:50]
 res2 <- split(as.vector(minKD.Illumina.log$dist), as.vector(minKD.Illumina.log$n))[30:50]
@@ -91,7 +91,7 @@ res3 <- lapply(as.data.frame(minKD.Illumina.norm[,21:41]), function(x) x)
 uni.n <- rep(30:50, 3)
 
 #setEPS(height = 6, width = 9)
-#postscript(file = "Figure4.eps")
+#postscript(file = "Figure5.eps")
 par(mar = c(4, 4, 3, 1))
 plot(0, 0, type = "n", ylim = c(-0.01, 0.4), xlim = c(0.5, 65.5), 
      panel.first = abline(h = seq(0, 0.35, by = 0.05), lty = 2, col = "grey"), 
@@ -116,13 +116,13 @@ legend("bottomleft", legend = "minimal possible distance", lty = 1,
 #dev.off()
 
 ## Comparison of quantiles
-## Figure 5 in Kohl and Deigner (2010)
+## Figure 6 in Kohl and Deigner (2010)
 res1 <- split(as.vector(minKD.Illumina$dist), as.vector(minKD.Illumina$n))[15:65]
 res2 <- split(as.vector(minKD.Illumina.log$dist), as.vector(minKD.Illumina.log$n))[15:65]
 res3 <- lapply(as.data.frame(minKD.Illumina.norm), function(x) x)[6:56]
 
 #setEPS(height = 6, width = 9)
-#postscript(file = "Figure5.eps")
+#postscript(file = "Figure6.eps")
 par(mar = c(4, 4, 3, 1))
 plot(15:65, sapply(res3, quantile, prob = 0.99), type = "l", lwd = 2, xlab = "sample size", 
      ylab = "quantile of mimimum Kolmogorov distances",
@@ -166,9 +166,9 @@ genenames <- spikecsv[,"ProbeID"]
 ill.SD <- assessSpikeInSD(res.ill, genenames = genenames, method.name = "Illumina")
 rmx.SD <- assessSpikeInSD(res.rmx, genenames = genenames, method.name = "rmx estimator")
 
-## Figure 6 in Kohl and Deigner (2010)
+## Figure 7 in Kohl and Deigner (2010)
 setEPS(height = 6, width = 9)
-postscript(file = "Figure6.eps")
+postscript(file = "Figure7.eps")
 plot(ill.SD$xsmooth, ill.SD$ysmooth, type = "l", xlab = "mean log expression",
      ylab = "mean SD", main = "Spike-in data of Dunning et al. (2008)", lwd = 2,
      panel.first = abline(h = c(0.1, 0.12, 0.14, 0.16), v = seq(6, 16, 2), lty = 2, col = "grey"))

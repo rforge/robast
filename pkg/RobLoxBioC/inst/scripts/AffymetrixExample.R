@@ -156,7 +156,7 @@ boxplot(c(res1[8:12], res2[c(3,7,8)], res3[c(6,8:12)]), at = c(1:5, 7:9, 11:16),
         col = c(rep(NA, 3), grey(0.6), NA, grey(0.4), NA, NA, grey(0.4), rep(NA, 3),
                 grey(0.6), NA))
 abline(v = c(6, 10), lwd = 1.5)
-text(c(3, 8, 14), rep(0.48, 3), labels = c("HGU95A", "HGU133A", "Normal Samples"),
+text(c(3, 8, 13.5), rep(0.48, 3), labels = c("HGU95A", "HGU133A", "Normal Samples"),
      font = 2)
 lines(1:5, 1/(2*uni.n[8:12]), lwd = 2)
 lines(7:9, 1/(2*uni.n[c(6,8,12)]), lwd = 2)
