@@ -12,8 +12,7 @@
 #######################################
 + renamed AffySimStudy.R to AffymetrixSimStudy.R
 + update of Figure numbers in IlluminaExample.R
-+ added scripts AffymetrixTechnicalReplicates.R and 
-  IlluminaTechnicalReplicates.R
++ added scripts AffymetrixReproducibility.R and IlluminaReproducibility.R
 
 
 #######################################
