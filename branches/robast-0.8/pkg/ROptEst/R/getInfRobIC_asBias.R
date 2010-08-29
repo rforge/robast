@@ -40,16 +40,18 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
            stop("Not yet implemented.")
 
         normtype <- normtype(risk)
+
+#        if(FALSE){
         if(is(normtype,"SelfNorm")){
                 warntxt <- paste(gettext(
                 "Using self-standardization, there are problems with the existence\n"
                                ),gettext(
                 "of a minmax Bias IC. Instead we compute the optimal MSE-solution\n"
                                ),gettext(
-                "to a large radius (r = 10)\n"
+                "to a large radius (r = 15)\n"
                                ))
                 if(warn) cat(warntxt)
-                neighbor@radius <- 10
+                neighbor@radius <- 15
                 res <- getInfRobIC(L2deriv = L2deriv, 
                         risk = asMSE(normtype = normtype), 
                         neighbor = neighbor, Distr = Distr, 
@@ -58,6 +60,19 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                         trafo = trafo, onesetLM = FALSE, z.start = z.start, 
                         A.start = A.start, upper = 1e4, maxiter = maxiter, 
                         tol = tol, warn = warn, verbose = verbose)
+                
+                A.max <- max(abs(res$A))
+                res$A <- res$A/A.max
+                res$a <- res$a/A.max
+                w <- res$w
+                A.max.w <- max(abs(stand(w)))
+                stand(w) <- stand(w)/A.max.w
+                normtype  <- res$normtype
+                weight(w) <- minbiasweight(w, neighbor = neighbor,
+                                           biastype = biastype(risk),
+                                           normW = normtype)
+                res$w <- w
+                
                 res$risk$asBias <- list(value = sqrt(nrow(trafo)), 
                                        biastype = symmetricBias(), 
                                        normtype = normtype, 
@@ -65,9 +80,10 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                        remark = gettext("value is only a bound"))
                 return(res)
         }
+#        }
 
         FI <- solve(trafo%*%solve(Finfo)%*%t(trafo))
-        if(is(normtype,"InfoNorm")) 
+        if(is(normtype,"QFNorm")) 
            {QuadForm(normtype) <- PosSemDefSymmMatrix(FI); 
             normtype(risk) <- normtype}
 
@@ -191,6 +207,8 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
         k <- ncol(trafo)
         A <- matrix(0, ncol=k, nrow=p)
         A[DA.comp] <- matrix(param[1:lA.comp], ncol=k, nrow=p)
+        A.max <- max(abs(A))
+        A <- A/A.max
         z <- numeric(k)
         z[z.comp] <- param[(lA.comp+1):length(param)]
         a <- as.vector(A %*% z)

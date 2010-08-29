@@ -134,7 +134,6 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         }
         std <- if(is(normtype,"QFNorm"))
                   QuadForm(normtype) else diag(p)
-        print(std)
         trV.ML <- sum(diag(std%*%FI0))
 
         if(is.null(upper))
@@ -147,14 +146,14 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                    L2derivSymm = L2derivSymm,
                                    L2derivDistrSymm = L2derivDistrSymm,
                                    z.start = z.start, A.start = A.start,
-                                   trafo = trafo, maxiter = maxi, 
-                                   tol = toli,
+                                   trafo = trafo, maxiter = maxiter, 
+                                   tol = tol,
                                    warn = FALSE, Finfo = Finfo, 
                                    QuadForm = std, verbose = verbose)
 
         if(is.null(lower)||(lower< lowBerg$b))
            {lower <- lowBerg$b
-            print(lowBerg$risk$asAnscombe)
+#            print(lowBerg$risk$asAnscombe)
             f.low <- lowBerg$risk$asAnscombe - eff 
         } else {
              risk.b <- asHampel(bound = lower, biastype = biastype, 
