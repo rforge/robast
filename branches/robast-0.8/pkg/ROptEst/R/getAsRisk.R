@@ -369,7 +369,7 @@ setMethod("getAsRisk", signature(risk = "asL1",
              w <- b/s^.5
              pp <- 2*pnorm(w)-1
              dp <- 2*dnorm(w)
-             L1 <- b*pp+s*dp
+             L1 <- b*pp+s^.5*dp
         }
         return(list(asL1 = L1))
     })
