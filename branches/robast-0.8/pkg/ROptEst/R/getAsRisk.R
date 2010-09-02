@@ -206,6 +206,7 @@ setMethod("getAsRisk", signature(risk = "trAsCov",
 
         return(list(trAsCov = sum(diag(std%*%as.matrix(Cov)))))
     })
+
 setMethod("getAsRisk", signature(risk = "trAsCov",
                                  L2deriv = "RealRandVariable",
                                  neighbor = "ContNeighborhood", 
@@ -221,7 +222,6 @@ setMethod("getAsRisk", signature(risk = "trAsCov",
 
         p <- nrow(stand)
         std <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(p)
-        print(std)
         
         return(list(trAsCov = sum(diag(std%*%Cov))))
     })
@@ -350,4 +350,45 @@ setMethod("getAsRisk", signature(risk = "asSemivar",
         else
             semvar <- (v+r^2*b^2)*pnorm(sv)+ r*b*sqrt(v)*dnorm(sv)
         return(list(asSemivar = semvar))
+    })
+
+###############################################################################
+## asymptotic L1 risk
+###############################################################################           
+setMethod("getAsRisk", signature(risk = "asL1",
+                                 L2deriv = "UnivariateDistribution",
+                                 neighbor = "Neighborhood", 
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype, normtype = NULL, clip = NULL, cent = NULL, stand, trafo, ...){
+        if(!is.finite(neighbor@radius))
+            L1 <- Inf
+        else{
+             s <- getInfV(L2deriv, neighbor, biastype, clip, cent, stand)
+             r <- neighbor@radius
+             b <- clip
+             w <- r*b/s^.5
+             pp <- 2*pnorm(w)-1
+             dp <- 2*dnorm(w)
+             L1 <- b*pp+s*dp
+        }
+        return(list(asL1 = L1))
+    })
+
+###############################################################################
+## asymptotic L4 risk
+###############################################################################           
+setMethod("getAsRisk", signature(risk = "asL4",
+                                 L2deriv = "UnivariateDistribution",
+                                 neighbor = "Neighborhood", 
+                                 biastype = "ANY"),
+    function(risk, L2deriv, neighbor, biastype, normtype = NULL, clip = NULL, cent = NULL, stand, trafo, ...){
+        if(!is.finite(neighbor@radius))
+            L4 <- Inf
+        else{
+              s <- getInfV(L2deriv, neighbor, biastype, clip, cent, stand)
+              r <- neighbor@radius
+              b <- clip
+              L4 <- 3*s^2+6*s*b^2+b^4
+        }
+        return(list(asL4 = L4))
     })

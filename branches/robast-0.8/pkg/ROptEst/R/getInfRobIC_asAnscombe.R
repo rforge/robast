@@ -25,21 +25,6 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
         FI <- sum(diag(std%*%FI0))
                 
         
-        if(is.null(upper))
-           upper <- q(L2deriv)(eff^.5)*3
-        e.up <- 0
-        while(e.up < eff){
-             risk.b <- asHampel(bound = upper, biastype = biastype(risk), 
-                             normtype = normtype(risk))
-             upBerg <- getInfRobIC(L2deriv, risk.b, neighbor, symm, Finfo, trafo, 
-                                   upper = upper, lower = lower, maxiter = maxi, 
-                                   tol = toli, warn, noLow = noLow,
-                                   verbose = FALSE, checkBounds = FALSE) 
-             trV <- upBerg$risk$trAsCov$value
-             e.up <- FI/trV
-             upper <- upper * 3
-           } 
-        upper <- upper / 3
         
         lowBerg <- minmaxBias(L2deriv = L2deriv, neighbor = neighbor,
                    biastype = biastype(risk), symm = symm, 
@@ -49,7 +34,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
         trV <- sum(diag(std%*%V))
         
         
-        if(1/(Vbmin*Finfo)>eff){
+        if(FI/trV >eff){
            lowBerg$eff <- FI/trV
            return(lowBerg)
         }
@@ -58,27 +43,46 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
         erg <- 0
         if(is.null(lower) || lower < lowBerg$risk$asBias$value) 
            { lower <- lowBerg$risk$asBias$value
-             f.low <- 1/(Vbmin*Finfo)-eff
+             f.low <- FI/trV-eff
            } else f.low <- NULL        
         
+        if(is.null(upper))
+           upper <- max(4*lower,q(L2deriv)(eff^.5)*3)
+  
+        e.up <- 0
+        while(e.up < eff){
+             risk.b <- asHampel(bound = upper, biastype = biastype(risk), 
+                             normtype = normtype(risk))
+             upBerg <- getInfRobIC(L2deriv, risk.b, neighbor, symm, Finfo, trafo, 
+                                   upper = 3*upper, lower = lower, maxiter = maxi, 
+                                   tol = toli, warn, noLow = noLow,
+                                   verbose = FALSE, checkBounds = FALSE) 
+             trV <- upBerg$risk$trAsCov$value
+             e.up <- FI/trV
+             upper <- upper * 3
+           } 
+        upper <- upper / 3
+  
+
         funb <- function(b0){
           risk.b <- asHampel(bound = b0, biastype = biastype(risk), 
                            normtype = normtype(risk))
           it.erg <<- it.erg + 1
           maxi <- min(5,maxiter%/%4^(1/it.erg))
           toli <- min(tol*100^(1/it.erg),1e-3)
+          checkBounds <- checkBounds & it.erg>10
           erg <<- getInfRobIC(L2deriv, risk.b, neighbor, symm, Finfo, trafo, 
              upper = upper, lower = lower, maxiter = maxi, tol = toli, warn, noLow = noLow,
              verbose = verbose, checkBounds = checkBounds)
           trV <- erg$risk$trAsCov$value
           if(verbose) cat("Outer iteration:", it.erg,"  b_0=", round(b0,3), 
-                          " eff=", round(1/(v0*Finfo),3), "\n")  
-          return(1/(v0*Finfo)-eff)
+                          " eff=", round(FI/trV,3), "\n")  
+          return(FI/trV-eff)
           }
 
         if(is.null(f.low)) f.low  <- fun(lower)  
 
-        print(c(lower,upper, f.lower=f.low, f.upper=e.up-eff))
+        if(verbose) print(c(lower,upper, f.lower=f.low, f.upper=e.up-eff))
         
         b <- uniroot(funb, interval=c(lower,upper), f.lower=f.low, 
                      f.upper=e.up-eff,tol=tol,maxiter=maxiter)

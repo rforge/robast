@@ -19,3 +19,10 @@ setClass("asAnscombe", representation(eff = "numeric"),
                 else TRUE
             })
 
+
+## asymptotic L4 error
+setClass("asL4", contains = "asGRisk",
+            prototype = prototype(type = "asymptotic mean power4 error"))
+## asymptotic L1 error
+setClass("asL1", contains = "asGRisk",
+            prototype = prototype(type = "asymptotic mean absolute error"))

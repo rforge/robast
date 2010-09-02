@@ -144,7 +144,6 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
         clip(w) <- b
         weight(w) <- minbiasweight(w, neighbor = neighbor, biastype = biastype,
                        normW = NormType())
-
         return(list(A = A, a = zi*z, b = b, d = d, risk = Risk, info = info, 
                     w = w, biastype = biastype, normtype = NormType()))
     })

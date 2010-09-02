@@ -2,6 +2,8 @@
 \alias{getAsRisk}
 \alias{getAsRisk-methods}
 \alias{getAsRisk,asMSE,UnivariateDistribution,Neighborhood,ANY-method}
+\alias{getAsRisk,asL1,UnivariateDistribution,Neighborhood,ANY-method}
+\alias{getAsRisk,asL4,UnivariateDistribution,Neighborhood,ANY-method}
 \alias{getAsRisk,asMSE,EuclRandVariable,Neighborhood,ANY-method}
 \alias{getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,ANY-method}
 \alias{getAsRisk,asBias,UnivariateDistribution,ContNeighborhood,onesidedBias-method}
@@ -29,6 +31,12 @@
 getAsRisk(risk, L2deriv, neighbor, biastype, ...)
 
 \S4method{getAsRisk}{asMSE,UnivariateDistribution,Neighborhood,ANY}(risk,
+    L2deriv, neighbor, biastype, normtype = NULL, clip = NULL, cent = NULL, stand, trafo, ...)
+
+\S4method{getAsRisk}{asL1,UnivariateDistribution,Neighborhood,ANY}(risk,
+    L2deriv, neighbor, biastype, normtype = NULL, clip = NULL, cent = NULL, stand, trafo, ...)
+
+\S4method{getAsRisk}{asL4,UnivariateDistribution,Neighborhood,ANY}(risk,
     L2deriv, neighbor, biastype, normtype = NULL, clip = NULL, cent = NULL, stand, trafo, ...)
 
 \S4method{getAsRisk}{asMSE,EuclRandVariable,Neighborhood,ANY}(risk,
@@ -126,6 +134,16 @@ getAsRisk(risk, L2deriv, neighbor, biastype, ...)
   \item{risk = "asMSE", L2deriv = "UnivariateDistribution",
         neighbor = "Neighborhood", biastype = "ANY":}{
     computes asymptotic mean square error in methods for
+    function \code{getInfRobIC}. }
+
+  \item{risk = "asL1", L2deriv = "UnivariateDistribution",
+        neighbor = "Neighborhood", biastype = "ANY":}{
+    computes asymptotic mean absolute error in methods for
+    function \code{getInfRobIC}. }
+
+  \item{risk = "asL4", L2deriv = "UnivariateDistribution",
+        neighbor = "Neighborhood", biastype = "ANY":}{
+    computes asymptotic mean power 4 error in methods for
     function \code{getInfRobIC}. }
 
   \item{risk = "asMSE", L2deriv = "EuclRandVariable",
