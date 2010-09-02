@@ -365,11 +365,7 @@ setMethod("getAsRisk", signature(risk = "asL1",
         else{
              s <- getInfV(L2deriv, neighbor, biastype, clip, cent, stand)
              r <- neighbor@radius
-             b <- r*clip
-             w <- b/s^.5
-             pp <- 2*pnorm(w)-1
-             dp <- 2*dnorm(w)
-             L1 <- b*pp+s^.5*dp
+             L1 <- get.asGRisk.fct(risk)(r,s=s^.5,b=clip)
         }
         return(list(asL1 = L1))
     })
@@ -385,10 +381,9 @@ setMethod("getAsRisk", signature(risk = "asL4",
         if(!is.finite(neighbor@radius))
             L4 <- Inf
         else{
-              s <- getInfV(L2deriv, neighbor, biastype, clip, cent, stand)
-              r <- neighbor@radius
-              b <- r*clip
-              L4 <- 3*s^2+6*s*b^2+b^4
+             s <- getInfV(L2deriv, neighbor, biastype, clip, cent, stand)
+             r <- neighbor@radius
+             L4 <- get.asGRisk.fct(risk)(r,s=s^.5,b=clip)
         }
         return(list(asL4 = L4))
     })
