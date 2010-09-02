@@ -22,7 +22,7 @@ setClass("asAnscombe", representation(eff = "numeric"),
 
 ## asymptotic L4 error
 setClass("asL4", contains = "asGRisk",
-            prototype = prototype(type = "asymptotic mean power4 error"))
+            prototype = prototype(type = "asymptotic mean power 4 error"))
 ## asymptotic L1 error
 setClass("asL1", contains = "asGRisk",
             prototype = prototype(type = "asymptotic mean absolute error"))
