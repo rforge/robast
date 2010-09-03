@@ -114,7 +114,7 @@ setMethod("getInfClip", signature(clip = "numeric",
         s <- getInfV(L2deriv, neighbor, biastype, clip, cent, stand=1)
         r <- neighbor@radius
         mse <- r^2 *clip^2 + s
-        mse4 <- r^2 *clip^2/3 + s
+        mse4 <- (r^2 *clip^2/3 + s)/mse
         if(symm){
             return(r^2*clip*mse4 + 
                    getInfGamma(L2deriv = sign(as.vector(trafo))*L2deriv, risk = risk, 
