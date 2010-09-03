@@ -106,6 +106,9 @@ IC6 <- makeIC(list(sin,cos),N0)
 plot(IC6)
 checkIC(IC6)
 
+getRiskIC(IC6,risk=trAsCov())$trAsCov$value
+getRiskIC(IC6,risk=asBias(),neighbor=ContNeighborhood())$asBias$value
+
 }
 \concept{influence curve}
 \keyword{robust}

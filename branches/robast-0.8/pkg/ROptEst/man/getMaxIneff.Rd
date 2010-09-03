@@ -59,6 +59,10 @@ getMaxIneff(N0.ICA,neighbor)
 getMaxIneff(N0.ICM,neighbor)
 getMaxIneff(N0.ICR,neighbor)
 
+N0ls <- NormLocationScaleFamily()
+ICsc <- makeIC(list(sin,cos),N0ls)
+getMaxIneff(ICsc,neighbor)
+
 }
 \concept{Inefficiency}
 \concept{risk}

@@ -36,7 +36,7 @@ getMaxIneff <- function(IC, neighbor, biastype = symmetricBias(),
             }else{ 
               if(is(L2Fam@distribution, "UnivariateDistribution")){
                  if((length(L2Fam@L2deriv) == 1) & is(L2Fam@L2deriv[[1]], "RealRandVariable")){
-                    L2deriv <- L2deriv[[1]]
+                    L2deriv <- L2Fam@L2deriv[[1]]
                     L2derivSymm <- L2Fam@L2derivSymm
                     L2derivDistrSymm <- L2Fam@L2derivDistrSymm
                 }else{
