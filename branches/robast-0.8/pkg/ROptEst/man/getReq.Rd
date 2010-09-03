@@ -37,11 +37,17 @@ N0.Rob1 <- InfRobModel(center = N0, neighbor = neighbor)
 N0.ICA <- optIC(model = N0.Rob1, risk = asAnscombe(.95))
 ## MSE solution
 N0.ICM <- optIC(model=N0.Rob1, risk=asMSE())
+## RMX solution
+N0.ICR <- radiusMinimaxIC(L2Fam=N0, neighbor=neighbor,risk=asMSE())
 
 getReq(asMSE(),neighbor,N0.ICA,N0.ICM,n=1)
 getReq(asMSE(),neighbor,N0.ICA,N0.ICM,n=30)
 getReq(asL1(),neighbor,N0.ICA,N0.ICM,n=30)
 getReq(asL4(),neighbor,N0.ICA,N0.ICM,n=30)
+getReq(asMSE(),neighbor,N0.ICA,N0.ICR,n=30)
+getReq(asL1(),neighbor,N0.ICA,N0.ICR,n=30)
+getReq(asL4(),neighbor,N0.ICA,N0.ICR,n=30)
+getReq(asMSE(),neighbor,N0.ICM,N0.ICR,n=30)
 }
 \concept{Hampel risk}
 \concept{risk}

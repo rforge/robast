@@ -114,6 +114,22 @@ checkIC(N0.IC8)
 Risks(N0.IC8)
 plot(N0.IC8)
 
+getReq(asMSE(),neighbor,N0.ICA,N0.IC1,n=1)
+getReq(asMSE(),neighbor,N0.ICA,N0.IC1,n=30)
+getReq(asL1(),neighbor,N0.ICA,N0.IC1,n=30)
+getReq(asL4(),neighbor,N0.ICA,N0.IC1,n=30)
+getReq(asMSE(),neighbor,N0.ICA,N0.IC7,n=30)
+getReq(asL1(),neighbor,N0.ICA,N0.IC7,n=30)
+getReq(asL4(),neighbor,N0.ICA,N0.IC7,n=30)
+getReq(asMSE(),neighbor,N0.IC1,N0.IC7,n=30)
+
+
+getMaxIneff(N0.ICA,neighbor=ContNeighborhood())
+getMaxIneff(N0.IC1,neighbor=ContNeighborhood())
+getMaxIneff(N0.IC7,neighbor=ContNeighborhood())
+
+
+
 ## least favorable radius
 ## (may take quite some time!)
 (N0.r.rho1 <- leastFavorableRadius(L2Fam=N0, neighbor=ContNeighborhood(),
