@@ -2,7 +2,7 @@
 ## gamma in case of a convex asymptotic risk
 ###############################################################################
 setMethod("getInfGamma", signature(L2deriv = "UnivariateDistribution",
-                                   risk = "asMSE", 
+                                   risk = "asGRisk", 
                                    neighbor = "ContNeighborhood",
                                    biastype = "BiasType"),
     function(L2deriv, risk, neighbor, biastype, cent, clip){

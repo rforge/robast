@@ -1,7 +1,7 @@
 \name{getInfGamma}
 \alias{getInfGamma}
 \alias{getInfGamma-methods}
-\alias{getInfGamma,UnivariateDistribution,asMSE,ContNeighborhood,BiasType-method}
+\alias{getInfGamma,UnivariateDistribution,asGRisk,ContNeighborhood,BiasType-method}
 \alias{getInfGamma,UnivariateDistribution,asGRisk,TotalVarNeighborhood,BiasType-method}
 \alias{getInfGamma,RealRandVariable,asMSE,ContNeighborhood,BiasType-method}
 \alias{getInfGamma,RealRandVariable,asMSE,TotalVarNeighborhood,BiasType-method}
@@ -18,7 +18,7 @@
 \usage{
 getInfGamma(L2deriv, risk, neighbor, biastype, ...)
 
-\S4method{getInfGamma}{UnivariateDistribution,asMSE,ContNeighborhood,BiasType}(L2deriv, 
+\S4method{getInfGamma}{UnivariateDistribution,asGRisk,ContNeighborhood,BiasType}(L2deriv, 
      risk, neighbor, biastype, cent, clip)
 
 \S4method{getInfGamma}{UnivariateDistribution,asGRisk,TotalVarNeighborhood,BiasType}(L2deriv, 
@@ -60,7 +60,7 @@ getInfGamma(L2deriv, risk, neighbor, biastype, ...)
 %\value{}
 \section{Methods}{
 \describe{
-  \item{L2deriv = "UnivariateDistribution", risk = "asMSE", 
+  \item{L2deriv = "UnivariateDistribution", risk = "asGRisk", 
         neighbor = "ContNeighborhood", 
         biastype = "BiasType"}{ used by \code{getInfClip} for symmetric bias. }
 

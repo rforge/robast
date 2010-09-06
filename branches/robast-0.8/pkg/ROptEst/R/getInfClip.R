@@ -56,7 +56,7 @@ setMethod("getInfClip", signature(clip = "numeric",
         r <- neighbor@radius
         w <- r * clip / s^.5
         dp <- 2*dnorm(w)
-        pp <- 2*pnorm(w)-1
+        pp <- 2*pnorm(w)-1          
         return(s^.5*r*pp/dp + 
                getInfGamma(L2deriv = L2deriv, risk = risk, 
                            neighbor = neighbor, biastype = biastype, cent = cent, clip = clip))
