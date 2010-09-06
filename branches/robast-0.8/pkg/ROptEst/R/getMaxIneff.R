@@ -62,7 +62,8 @@ getMaxIneff <- function(IC, neighbor, biastype = symmetricBias(),
                             DistrSymm = L2Fam@distrSymm, L2derivSymm = L2derivSymm,
                             L2derivDistrSymm = L2derivDistrSymm, 
                             trafo = trafo, z.start = z.start, A.start = A.start, 
-                            maxiter = maxiter, tol = tol, warn = warn,
+                            maxiter = maxiter, tol = tol, warn = warn, 
+                            Finfo = Finfo,
                             verbose = verbose)$risk$asBias$value^2
               }else{
                 stop("not yet implemented")

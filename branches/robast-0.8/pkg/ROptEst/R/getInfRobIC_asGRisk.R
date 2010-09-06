@@ -66,21 +66,26 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             z.old <- z
             c0.old <- c0
             ## new
-            L1n <- getL1normL2deriv(L2deriv = L2deriv, cent = z)
-            lower0 <-  L1n/(1 + radius^2)
+            if(is(risk,"asMSE")){
+               L1n <- getL1normL2deriv(L2deriv = L2deriv, cent = z)
+               lower0 <-  L1n/(1 + radius^2)
 #            if(is(neighbor,"TotalVarNeighborhood")) {
 #                   lower0 <- (L1n-z)/(1 + radius^2)/2}
-            upper0 <- max(L1n/radius,
-                 sqrt( as.numeric( Finfo + z^2 )/(( 1 + radius^2)^2 - 1) ))
-            if (is.null(lower))
+               upper0 <- max(L1n/radius,
+                   sqrt( as.numeric( Finfo + z^2 )/(( 1 + radius^2)^2 - 1) ))
+               if (is.null(lower))
                   lower <- .Machine$double.eps^0.75
-            else {if(iter>1) lower <- min(lower0,2*lower)}
-            if (is.null(upper))#|(iter == 1))
-                  upper <- getUp(L2deriv)
-            else {if(iter>1) upper <- max(0.5*upper,3*upper0)}
+               else {if(iter>1) lower <- min(lower0,2*lower)}
+               if (is.null(upper))#|(iter == 1))
+                   upper <- getUp(L2deriv)
+               else {if(iter>1) upper <- max(0.5*upper,3*upper0)}
 ##            print(c(lower,upper))
             #lower <- 0; upper <- 100
             ##
+            }else{
+              if(is.null(lower)) lower <- 10^-9
+              if(is.null(upper)) upper <- 40
+            }
             c0 <- try(uniroot(getInfClip, 
                   ## new
                         lower = lower, upper = upper,
