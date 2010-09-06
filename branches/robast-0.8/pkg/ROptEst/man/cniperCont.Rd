@@ -27,7 +27,7 @@ cniperPoint(L2Fam, neighbor, risk, ...)
 
 cniperPointPlot(L2Fam, neighbor, risk, ...)
 \S4method{cniperPointPlot}{L2ParamFamily,ContNeighborhood,asMSE}(L2Fam, 
-      neighbor, risk, lower, upper, n = 101)
+      neighbor, risk, lower, upper, n = 101, ...)
 }
 \arguments{
   \item{IC1}{ object of class \code{IC} }
@@ -35,7 +35,7 @@ cniperPointPlot(L2Fam, neighbor, risk, ...)
   \item{L2Fam}{ object of class \code{L2ParamFamily} }
   \item{neighbor}{ object of class \code{Neighborhood} }
   \item{risk}{ object of class \code{RiskType} }
-  \item{\dots}{ additional parameters. }
+  \item{\dots}{ additional parameters (in particular to be passed on to \code{plot}). }
   \item{lower, upper}{ the lower and upper end points of the 
           contamination interval. }
   \item{n}{ number of points between \code{lower} and \code{upper}}
@@ -51,7 +51,12 @@ cniperPointPlot(L2Fam, neighbor, risk, ...)
 
   As such points might be difficult to find, we provide the
   function \code{cniperPointPlot} which can be used to obtain a plot
-  of the risk difference.
+  of the risk difference; in this function the usual arguments for
+  \code{plot} can be used. For arguments \code{col}, \code{lwd},
+  vectors can be used; then the first coordinate is taken for the
+  curve, the second one for the balancing line. For argument \code{lty},
+  a list can be used; its first component is then taken for the
+  curve, the second one for the balancing line.
 
   For more details about cniper contamination and cniper points we refer 
   to Section~3.5 of Kohl et al. (2008) as well as Ruckdeschel (2004) and 
