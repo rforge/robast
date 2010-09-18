@@ -168,7 +168,7 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
             a <- -b*(p0-ws0)/(1-ws0)
 
         info <- c("minimum asymptotic bias (lower case) solution")
-        asCov <- a^2*(p0-ws0) + (zi*a+b)^2*(1-p0)
+        asCov <- b^2/(1-ws0)*(1-p0)*(p0-ws0) #a^2*(p0-ws0) + (zi*a+b)^2*(1-p0)
         Risk <- list(asBias = list(value = b, biastype = biastype, 
                                        normtype = NormType(), 
                                        neighbortype = class(neighbor)), 

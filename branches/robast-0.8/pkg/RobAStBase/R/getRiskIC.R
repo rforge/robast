@@ -52,7 +52,7 @@ setMethod("getRiskIC", signature(IC = "IC",
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
         trCov <- getRiskIC(IC, risk = asCov(), L2Fam = L2Fam)$asCov
-        trCov$value <- sum(diag(trCov$value))
+        trCov$value <- sum(diag(as.matrix(trCov$value)))
 
         prec <- checkIC(IC, L2Fam, out = FALSE)
         if(prec > tol)

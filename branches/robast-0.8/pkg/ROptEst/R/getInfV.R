@@ -20,7 +20,7 @@ setMethod("getInfV", signature(L2deriv = "UnivariateDistribution",
                                   biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, clip, cent, stand){
         c1 <- cent
-        c2 <- clip+clip
+        c2 <- cent+clip
         return(stand^2*(m2df(L2deriv, c2) - m2df(L2deriv, c1)
                 + c2^2 * (p(L2deriv)(c2, lower.tail = FALSE))
                 + c1^2* p(L2deriv)(c1)
