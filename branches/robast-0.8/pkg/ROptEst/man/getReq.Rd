@@ -48,6 +48,16 @@ getReq(asMSE(),neighbor,N0.ICA,N0.ICR,n=30)
 getReq(asL1(),neighbor,N0.ICA,N0.ICR,n=30)
 getReq(asL4(),neighbor,N0.ICA,N0.ICR,n=30)
 getReq(asMSE(),neighbor,N0.ICM,N0.ICR,n=30)
+
+### when to use MAD and when Qn 
+##  for Qn, see C. Croux, P. Rousseeuw (1993). Alternatives to the Median 
+##      Absolute Deviation, JASA 88(424):1273-1283
+L2M <- NormScaleFamily()
+IC.mad <- makeIC(function(x)sign(abs(x)-qnorm(.75)),L2M)
+d.qn <- (2^.5*qnorm(5/8))^-1
+IC.qn <- makeIC(function(x) d.qn*(1/4 - pnorm(x+1/d.qn) + pnorm(x-1/d.qn)), L2M)
+getReq(asMSE(), neighbor, IC.mad, IC.qn)
+# => MAD is better once r > 0.5144 (i.e. for more than 2 outliers for n = 30)
 }
 \concept{Hampel risk}
 \concept{risk}
