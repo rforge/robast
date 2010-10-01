@@ -123,7 +123,15 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 
-  Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
+  Kohl, M. and Ruckdeschel, P. (2010): R package distrMod: 
+  Object-Oriented Implementation of Probability Models. 
+  J. Statist. Softw.  \emph{35}(10), 1--27
+  
+  Kohl, M. and Ruckdeschel, P., and Rieder, H. (2010):
+  Infinitesimally Robust Estimation in General Smoothly Parametrized Models.
+  \textit{Stat. Methods Appl.}, \emph{19}, 333--354. 
+
+ Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
   the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
