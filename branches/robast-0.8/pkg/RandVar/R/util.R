@@ -9,7 +9,8 @@
 
         n <- 10^getdistrOption("RtoDPQ.e")+1
         u <- seq(0,1,length=n+1); u <- (u[1:n]+u[2:(n+1)])/2
-        y <- f(q(distr)(u))
+        qd <- q(distr)
+        y <- f(qd(u))
     
         if(length(unique(c(rl(10000),y)))==10000+length(y)){
            DPQnew <- RtoDPQ(r=rl, y=y)

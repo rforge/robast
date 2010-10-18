@@ -85,18 +85,18 @@ optIC(model, risk, ...)
 
   Kohl, M. and Ruckdeschel, P. (2010): R package distrMod: 
   Object-Oriented Implementation of Probability Models. 
-  J. Statist. Softw.  \emph{35}(10), 1--27
+  J. Statist. Softw.  \bold{35}(10), 1--27
   
   Kohl, M. and Ruckdeschel, P., and Rieder, H. (2010):
   Infinitesimally Robust Estimation in General Smoothly Parametrized Models.
-  \textit{Stat. Methods Appl.}, \emph{19}, 333--354. 
+  \emph{Stat. Methods Appl.}, \bold{19}, 333--354. 
   
   Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. \bold{8}: 106--115.
 
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
-  the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
+  the Radius. Statistical Methods and Applications \bold{17}(1) 13-40.
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
   the Radius. Appeared as discussion paper Nr. 81. 
