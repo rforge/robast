@@ -18,6 +18,7 @@ Depends: \tab R(>= 2.8.1), methods, Biobase, affy, beadarray, distr, RobLox, lat
 LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
+SVNRevision: \tab 429  \cr
 }
 }
 \author{

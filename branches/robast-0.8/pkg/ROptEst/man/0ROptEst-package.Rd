@@ -18,6 +18,7 @@ Depends: \tab R(>= 2.7.0), methods, distr(>= 2.0), distrEx(>= 2.0), distrMod(>= 
 LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
+SVNRevision: \tab 429  \cr
 }
 }
 \author{

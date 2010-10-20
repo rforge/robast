@@ -18,6 +18,7 @@ Depends: \tab R(>= 2.7.0), stats, distrMod(>= 2.0.1), RobAStBase(>= 0.1.1) \cr
 LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
+SVNRevision: \tab 429  \cr
 }
 }
 \author{Matthias Kohl  \email{matthias.kohl@stamats.de}}
