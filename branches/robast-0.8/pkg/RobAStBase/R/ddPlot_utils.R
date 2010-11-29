@@ -5,8 +5,8 @@
        cutoff.y = cutoff(norm = dist.y, cutoff.quantile  = cutoff.quantile.y),
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, lab.pts, adj =0, cex.idn = 1,
-       col.idn = par("col"), lty.cutoff,
+       id.n, lab.pts, adj =0, cex.idn,
+       col.idn, lty.cutoff,
        lwd.cutoff, col.cutoff = "red", text.abline = TRUE,
        text.abline.x = NULL, text.abline.y = NULL,
        cex.abline = par("cex"), col.abline = col.cutoff,
@@ -17,7 +17,7 @@
        text.abline.y.fmt.cy = "%7.2f", text.abline.y.fmt.qy = "%4.2f%%"){
 
        dots <- match.call(expand.dots = FALSE)$"..."
-
+       print(dots)
        id.n1 <- 1:ncol(data)
 
        if(missing(id.n) || is.null(id.n))
@@ -78,9 +78,11 @@
 
 
       if(is.null(adj)) adj <- 0
-      if(is.null(cex.idn)) cex.idn <- if(is.null(dots$cex)) 1 else dots$cex
-      if(is.null(col.idn)) col.idn <- if(is.null(dots$col)) par("col") else dots$col
+      if(missing(cex.idn)||is.null(cex.idn)) cex.idn <- if(is.null(dots$cex)) 1 else dots$cex
+      if(missing(col.idn)||is.null(col.idn)) col.idn <- if(is.null(dots$col)) par("col") else dots$col
       if(is.null(col.cutoff)) col.cutoff <- "red"
+      print(cex.idn)
+      print(col.idn)
 
       if(is.null(dots$lwd)) dots$lwd <- par("lwd")
       if(is.null(dots$lty)) dots$lty <- par("lty")
