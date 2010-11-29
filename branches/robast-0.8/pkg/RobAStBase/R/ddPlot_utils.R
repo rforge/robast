@@ -78,8 +78,8 @@
 
 
       if(is.null(adj)) adj <- 0
-      if(is.null(cex.idn)) cex.idn <- 1
-      if(is.null(col.idn)) col.idn <- par("col")
+      if(is.null(cex.idn)) cex.idn <- if(is.null(dots$cex)) 1 else dots$cex
+      if(is.null(col.idn)) col.idn <- if(is.null(dots$col)) par("col") else dots$col
       if(is.null(col.cutoff)) col.cutoff <- "red"
 
       if(is.null(dots$lwd)) dots$lwd <- par("lwd")
