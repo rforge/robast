@@ -1,0 +1,215 @@
+<html><head><title>Generic Function for Computation of Asymptotic Risks</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>getAsRisk(ROptEstOld)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   getAsRisk">
+<param name="keyword" value="R:   getAsRisk-methods">
+<param name="keyword" value="R:   getAsRisk,asMSE,UnivariateDistribution,Neighborhood-method">
+<param name="keyword" value="R:   getAsRisk,asMSE,EuclRandVariable,Neighborhood-method">
+<param name="keyword" value="R:   getAsRisk,asBias,UnivariateDistribution,ContNeighborhood-method">
+<param name="keyword" value="R:   getAsRisk,asBias,UnivariateDistribution,TotalVarNeighborhood-method">
+<param name="keyword" value="R:   getAsRisk,asBias,RealRandVariable,ContNeighborhood-method">
+<param name="keyword" value="R:   getAsRisk,asCov,UnivariateDistribution,ContNeighborhood-method">
+<param name="keyword" value="R:   getAsRisk,asCov,UnivariateDistribution,TotalVarNeighborhood-method">
+<param name="keyword" value="R:   getAsRisk,asCov,RealRandVariable,ContNeighborhood-method">
+<param name="keyword" value="R:   getAsRisk,trAsCov,UnivariateDistribution,UncondNeighborhood-method">
+<param name="keyword" value="R:   getAsRisk,trAsCov,RealRandVariable,ContNeighborhood-method">
+<param name="keyword" value="R:   getAsRisk,asUnOvShoot,UnivariateDistribution,UncondNeighborhood-method">
+<param name="keyword" value=" Generic Function for Computation of Asymptotic Risks">
+</object>
+
+
+<h2>Generic Function for Computation of Asymptotic Risks</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for the computation of asymptotic risks.
+This function is rarely called directly. It is used by 
+other functions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+getAsRisk(risk, L2deriv, neighbor, ...)
+
+## S4 method for signature 'asMSE, UnivariateDistribution,
+##   Neighborhood':
+getAsRisk(risk, L2deriv, neighbor, clip, cent, stand, trafo)
+
+## S4 method for signature 'asMSE, EuclRandVariable,
+##   Neighborhood':
+getAsRisk(risk, L2deriv, neighbor, clip, cent, stand, trafo)
+
+## S4 method for signature 'asBias, UnivariateDistribution,
+##   ContNeighborhood':
+getAsRisk(risk, L2deriv, neighbor, trafo)
+
+## S4 method for signature 'asBias, UnivariateDistribution,
+##   TotalVarNeighborhood':
+getAsRisk(risk, L2deriv, neighbor, trafo)
+
+## S4 method for signature 'asBias, RealRandVariable,
+##   ContNeighborhood':
+getAsRisk(risk, L2deriv, neighbor, Distr, L2derivDistrSymm, trafo, 
+             z.start, A.start, maxiter, tol)
+
+## S4 method for signature 'asCov, UnivariateDistribution,
+##   ContNeighborhood':
+getAsRisk(risk, L2deriv, neighbor, clip, cent, stand)
+
+## S4 method for signature 'asCov, UnivariateDistribution,
+##   TotalVarNeighborhood':
+getAsRisk(risk, L2deriv, neighbor, clip, cent, stand)
+
+## S4 method for signature 'asCov, RealRandVariable,
+##   ContNeighborhood':
+getAsRisk(risk, L2deriv, neighbor, Distr, clip, cent, stand)
+
+## S4 method for signature 'trAsCov,
+##   UnivariateDistribution, UncondNeighborhood':
+getAsRisk(risk, L2deriv, neighbor, clip, cent, stand)
+
+## S4 method for signature 'trAsCov, RealRandVariable,
+##   ContNeighborhood':
+getAsRisk(risk, L2deriv, neighbor, Distr, clip, cent, stand)
+
+## S4 method for signature 'asUnOvShoot,
+##   UnivariateDistribution, UncondNeighborhood':
+getAsRisk(risk, L2deriv, neighbor, clip, cent, stand, trafo)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>risk</code></td>
+<td>
+object of class <code>"asRisk"</code>. </td></tr>
+<tr valign="top"><td><code>L2deriv</code></td>
+<td>
+L2-derivative of some L2-differentiable family
+of probability distributions. </td></tr>
+<tr valign="top"><td><code>neighbor</code></td>
+<td>
+object of class <code>"Neighborhood"</code>. </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional parameters. </td></tr>
+<tr valign="top"><td><code>clip</code></td>
+<td>
+optimal clipping bound. </td></tr>
+<tr valign="top"><td><code>cent</code></td>
+<td>
+optimal centering constant. </td></tr>
+<tr valign="top"><td><code>stand</code></td>
+<td>
+standardizing matrix. </td></tr>
+<tr valign="top"><td><code>trafo</code></td>
+<td>
+matrix: transformation of the parameter. </td></tr>
+<tr valign="top"><td><code>Distr</code></td>
+<td>
+object of class <code>"Distribution"</code>. </td></tr>
+<tr valign="top"><td><code>L2derivDistrSymm</code></td>
+<td>
+object of class <code>"DistrSymmList"</code>. </td></tr>
+<tr valign="top"><td><code>z.start</code></td>
+<td>
+initial value for the centering constant. </td></tr>
+<tr valign="top"><td><code>A.start</code></td>
+<td>
+initial value for the standardizing matrix. </td></tr>
+<tr valign="top"><td><code>maxiter</code></td>
+<td>
+the maximum number of iterations </td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+the desired accuracy (convergence tolerance).</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+The asymptotic risk is computed.</p>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>risk = "asMSE", L2deriv = "UnivariateDistribution", neighbor = "Neighborhood":</dt><dd>computes asymptotic mean square error in methods for
+function <code>getInfRobIC</code>. </dd>
+
+
+<dt>risk = "asMSE", L2deriv = "EuclRandVariable", neighbor = "Neighborhood":</dt><dd>computes asymptotic mean square error in methods for
+function <code>getInfRobIC</code>. </dd>
+
+
+<dt>risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood":</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobIC</code>. </dd>
+
+
+<dt>risk = "asBias", L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood":</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobIC</code>. </dd>
+
+
+<dt>risk = "asBias", L2deriv = "RealRandVariable", neighbor = "ContNeighborhood":</dt><dd>computes standardized asymptotic bias in methods for function <code>getInfRobIC</code>. </dd>
+
+
+<dt>risk = "asCov", L2deriv = "UnivariateDistribution", neighbor = "ContNeighborhood":</dt><dd>computes asymptotic covariance in methods for function <code>getInfRobIC</code>. </dd>
+
+
+<dt>risk = "asCov", L2deriv = "UnivariateDistribution", neighbor = "TotalVarNeighborhood":</dt><dd>computes asymptotic covariance in methods for function <code>getInfRobIC</code>. </dd>
+
+
+<dt>risk = "asCov", L2deriv = "RealRandVariable", neighbor = "ContNeighborhood":</dt><dd>computes asymptotic covariance in methods for function <code>getInfRobIC</code>. </dd>
+
+
+<dt>risk = "trAsCov", L2deriv = "UnivariateDistribution", neighbor = "UncondNeighborhood":</dt><dd>computes trace of asymptotic covariance in methods 
+for function <code>getInfRobIC</code>. </dd>
+
+
+<dt>risk = "trAsCov", L2deriv = "RealRandVariable", neighbor = "ContNeighborhood":</dt><dd>computes trace of asymptotic covariance in methods for 
+function <code>getInfRobIC</code>. </dd>
+
+
+<dt>risk = "asUnOvShoot", L2deriv = "UnivariateDistribution", neighbor = "UncondNeighborhood":</dt><dd>computes asymptotic under-/overshoot risk in methods for 
+function <code>getInfRobIC</code>. </dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Ruckdeschel, P. and Rieder, H. (2004) Optimal Influence Curves for
+General Loss Functions. Statistics &amp; Decisions (submitted).
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="asRisk-class.html">asRisk-class</a></code>
+</p>
+
+
+
+<hr><div align="center">[Package <em>ROptEstOld</em> version 0.5.2 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

@@ -1,0 +1,4 @@
+import("methods", "distr")
+
+exportMethods("robloxbioc", "KolmogorovMinDist")
+export("AffySimStudy", "IlluminaSimStudy")

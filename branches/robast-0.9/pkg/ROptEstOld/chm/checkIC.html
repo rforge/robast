@@ -1,0 +1,94 @@
+<html><head><title>Generic Function for Checking ICs</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>checkIC(ROptEstOld)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   checkIC">
+<param name="keyword" value=" Generic Function for Checking ICs">
+</object>
+
+
+<h2>Generic Function for Checking ICs</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Generic function for checking centering and Fisher
+consistency of ICs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+checkIC(IC, L2Fam, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>IC</code></td>
+<td>
+object of class <code>"IC"</code> </td></tr>
+<tr valign="top"><td><code>L2Fam</code></td>
+<td>
+L2-differentiable family of probability measures. </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional parameters </td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+The precisions of the centering and the Fisher consistency
+are computed.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+The maximum deviation from the IC properties is returned.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="L2ParamFamily-class.html">L2ParamFamily-class</a></code>, <code><a href="IC-class.html">IC-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+IC1 &lt;- new("IC")
+checkIC(IC1)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>ROptEstOld</em> version 0.5.2 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

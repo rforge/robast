@@ -1,0 +1,152 @@
+<html><head><title>Function for the computation of one-step estimates</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head><body>
+
+<table width="100%"><tr><td>oneStepEstimator(RobAStBase)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   oneStepEstimator">
+<param name="keyword" value=" Function for the computation of one-step estimates">
+</object>
+
+
+<h2>Function for the computation of one-step estimates</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Function for the computation of one-step estimates.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+oneStepEstimator(x, IC, start = NULL,
+      useLast = getRobAStBaseOption("kStepUseLast"),
+      withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+      IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+      na.rm = TRUE, startArgList = NULL, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+ sample </td></tr>
+<tr valign="top"><td><code>IC</code></td>
+<td>
+ object of class <code>"InfluenceCurve"</code> </td></tr>
+<tr valign="top"><td><code>start</code></td>
+<td>
+ initial estimate (for full parameter,i.e. in dimension <i>k</i> respective
+joint length of main and nuisance part of the parameter):
+either a numerical value, or an object of class <code>"Estimate"</code> or
+a function producing either a numerical value, or an object of class <code>"Estimate"</code>
+when evaluated at <code>x,...</code>; if missing or <code>NULL</code>, we use slot <code>startPar</code>
+of the L2family <code>L2Fam</code> from within <code>IC</code>.</td></tr>
+<tr valign="top"><td><code>useLast</code></td>
+<td>
+ which parameter estimate (initial estimate or
+one-step estimate) shall be used to fill the slots <code>pIC</code>,
+<code>asvar</code> and <code>asbias</code> of the return value. </td></tr>
+<tr valign="top"><td><code>withUpdateInKer</code></td>
+<td>
+if there is a non-trivial trafo in the model with matrix <i>D</i>, shall
+the parameter be updated on <i>ker(D)</i>?</td></tr>
+<tr valign="top"><td><code>IC.UpdateInKer</code></td>
+<td>
+if there is a non-trivial trafo in the model with matrix <i>D</i>,
+the IC to be used for this; if <code>NULL</code> the result of <code>getboundedIC(L2Fam,D)</code> is taken;
+this IC will then be projected onto <i>ker(D)</i>.</td></tr>
+<tr valign="top"><td><code>na.rm</code></td>
+<td>
+logical: if  <code>TRUE</code>, the estimator is evaluated at <code>complete.cases(x)</code>.</td></tr>
+<tr valign="top"><td><code>startArgList</code></td>
+<td>
+a list of arguments to be given to argument <code>start</code> if the latter
+is a function; this list by default already starts with two unnamed items,
+the sample <code>x</code>, and the model <code>eval(CallL2Fam(IC))</code>; in case <code>IC</code>
+is not of class <code>IC</code>, the model argument <code>L2Fam</code> will be set
+to <code>NULL</code>.</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+ additional arguments </td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>
+Given an initial estimation <code>start</code>, a sample <code>x</code> 
+and an influence curve <code>IC</code> the corresponding one-step
+estimator is computed.
+</p>
+<p>
+In case <code>IC</code> is an object of class <code>"IC"</code>
+the slots <code>asvar</code> and <code>asbias</code> of the return 
+value are filled (based on the initial estimate).
+</p>
+<p>
+The default value of argument <code>useLast</code> is set by the
+global option <code>kStepUseLast</code> which by default is set to 
+<code>FALSE</code>. In case of general models <code>useLast</code> 
+remains unchanged during the computations. However, if 
+slot <code>CallL2Fam</code> of <code>IC</code> generates an object of 
+class <code>"L2GroupParamFamily"</code> the value of <code>useLast</code> 
+is changed to <code>TRUE</code>.
+Explicitly setting <code>useLast</code> to <code>TRUE</code> should
+be done with care as in this situation the influence curve
+is re-computed using the value of the one-step estimate
+which may take quite a long time depending on the model.
+</p>
+<p>
+If <code>useLast</code> is set to <code>TRUE</code> and slot <code>modifyIC</code> 
+of <code>IC</code> is filled with some function (which can be 
+used to re-compute the IC for a different parameter), the 
+computation of <code>asvar</code>, <code>asbias</code> and <code>IC</code> is 
+based on the one-step estimate.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Object of class <code>"kStepEstimate"</code></p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a>,<br>
+Peter Ruckdeschel <a href="mailto:Peter.Ruckdeschel@itwm.fraunhofer.de">Peter.Ruckdeschel@itwm.fraunhofer.de</a></p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code></code>, <code></code> </p>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+<hr><div align="center">[Package <em>RobAStBase</em> version 0.7 <a href="00Index.html">Index</a>]</div>
+</body></html>

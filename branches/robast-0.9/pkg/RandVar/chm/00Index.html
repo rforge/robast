@@ -1,0 +1,348 @@
+<html><head><title>Implementation of random variables</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head><body>
+<h1>Implementation of random variables
+<img class="toplogo" src="logo.jpg" alt="[R logo]"></h1>
+
+<hr>
+
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value=".. contents">
+</object>
+
+<h2>Help pages for package &lsquo;RandVar&rsquo; version 0.7</h2>
+
+<p align="center">
+<a href="# "> </a>
+<a href="#"></a>
+<a href="#A">A</a>
+<a href="#C">C</a>
+<a href="#D">D</a>
+<a href="#E">E</a>
+<a href="#I">I</a>
+<a href="#L">L</a>
+<a href="#M">M</a>
+<a href="#N">N</a>
+<a href="#O">O</a>
+<a href="#R">R</a>
+<a href="#S">S</a>
+<a href="#T">T</a>
+<a href="#misc">misc</a>
+</p>
+
+
+<h2><a name=" ">--   --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="0RandVar-package.html">RandVar-package</a></td>
+<td>Implementation of random variables</td></tr>
+</table>
+
+<h2><a name="">--  --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">%*%,EuclRandMatrix,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">%*%,EuclRandMatrix,EuclRandVariable-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">%*%,EuclRandMatrix,matrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">%*%,EuclRandMatrix,numeric-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">%*%,EuclRandVariable,EuclRandMatrix-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">%*%,EuclRandVariable,EuclRandVariable-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">%*%,EuclRandVariable,matrix-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">%*%,EuclRandVariable,numeric-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">%*%,EuclRandVarList,matrix-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">%*%,matrix,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">%*%,matrix,EuclRandVariable-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">%*%,matrix,EuclRandVarList-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">%*%,numeric,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">%*%,numeric,EuclRandVariable-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">%m%</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">%m%,EuclRandVarList,EuclRandVarList-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+</table>
+
+<h2><a name="A">-- A --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">Arith,EuclRandMatrix,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">Arith,EuclRandMatrix,numeric-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">Arith,EuclRandVariable,EuclRandVariable-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">Arith,EuclRandVariable,numeric-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">Arith,EuclRandVarList,EuclRandVarList-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">Arith,EuclRandVarList,numeric-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">Arith,numeric,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">Arith,numeric,EuclRandVariable-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">Arith,numeric,EuclRandVarList-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+</table>
+
+<h2><a name="C">-- C --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">coerce,EuclRandMatrix,EuclRandVarList-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">coerce,EuclRandVariable,EuclRandMatrix-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">coerce,EuclRandVariable,EuclRandVarList-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">compatibleDomains</a></td>
+<td>Random variable</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">compatibleDomains,RandVariable,RandVariable-method</a></td>
+<td>Random variable</td></tr>
+</table>
+
+<h2><a name="D">-- D --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">Dim</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">Dim,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">Dim&lt;-</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">Dim&lt;-,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">dimension,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">dimension,EuclRandVariable-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">dimension,EuclRandVarList-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">Domain</a></td>
+<td>Random variable</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">Domain,RandVariable-method</a></td>
+<td>Random variable</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">Domain&lt;-</a></td>
+<td>Random variable</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">Domain&lt;-,RandVariable-method</a></td>
+<td>Random variable</td></tr>
+</table>
+
+<h2><a name="E">-- E --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">E,AbscontCondDistribution,EuclRandMatrix,numeric-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">E,AbscontCondDistribution,EuclRandVariable,numeric-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">E,AbscontCondDistribution,EuclRandVarList,numeric-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">E,AbscontDistribution,EuclRandMatrix,missing-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">E,AbscontDistribution,EuclRandVariable,missing-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">E,AbscontDistribution,EuclRandVarList,missing-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">E,DiscreteCondDistribution,EuclRandMatrix,numeric-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">E,DiscreteCondDistribution,EuclRandVariable,numeric-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">E,DiscreteCondDistribution,EuclRandVarList,numeric-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">E,DiscreteDistribution,EuclRandMatrix,missing-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">E,DiscreteDistribution,EuclRandVariable,missing-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">E,DiscreteDistribution,EuclRandVarList,missing-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">E,DiscreteMVDistribution,EuclRandMatrix,missing-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">E,DiscreteMVDistribution,EuclRandVariable,missing-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">E,DiscreteMVDistribution,EuclRandVarList,missing-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">E,MultivariateDistribution,EuclRandMatrix,missing-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">E,MultivariateDistribution,EuclRandVariable,missing-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">E,MultivariateDistribution,EuclRandVarList,missing-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">E,UnivariateCondDistribution,EuclRandMatrix,numeric-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">E,UnivariateCondDistribution,EuclRandVariable,numeric-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">E,UnivariateCondDistribution,EuclRandVarList,numeric-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">E,UnivariateDistribution,EuclRandMatrix,missing-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">E,UnivariateDistribution,EuclRandVariable,missing-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">E,UnivariateDistribution,EuclRandVarList,missing-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix.html">EuclRandMatrix</a></td>
+<td>Generating function for EuclRandMatrix-class</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">EuclRandMatrix-class</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable.html">EuclRandVariable</a></td>
+<td>Generating function for EuclRandVariable-class</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">EuclRandVariable-class</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList.html">EuclRandVarList</a></td>
+<td>Generating function for EuclRandVarList-class</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">EuclRandVarList-class</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">evalRandVar</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">evalRandVar,EuclRandMatrix,matrix,Distribution-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">evalRandVar,EuclRandMatrix,matrix,missing-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">evalRandVar,EuclRandMatrix,numeric,Distribution-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">evalRandVar,EuclRandMatrix,numeric,missing-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">evalRandVar,EuclRandVariable,matrix,Distribution-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">evalRandVar,EuclRandVariable,matrix,missing-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">evalRandVar,EuclRandVariable,numeric,Distribution-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">evalRandVar,EuclRandVariable,numeric,missing-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">evalRandVar,EuclRandVarList,matrix,Distribution-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">evalRandVar,EuclRandVarList,matrix,missing-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">evalRandVar,EuclRandVarList,numeric,Distribution-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">evalRandVar,EuclRandVarList,numeric,missing-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+</table>
+
+<h2><a name="I">-- I --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="EuclRandVariable-class.html">imageDistr</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">imageDistr,EuclRandVariable,Distribution-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">imageDistr,EuclRandVarList,Distribution-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+</table>
+
+<h2><a name="L">-- L --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="RandVariable-class.html">length,RandVariable-method</a></td>
+<td>Random variable</td></tr>
+</table>
+
+<h2><a name="M">-- M --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="RandVariable-class.html">Map</a></td>
+<td>Random variable</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">Map,RandVariable-method</a></td>
+<td>Random variable</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">Map&lt;-</a></td>
+<td>Random variable</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">Map&lt;-,RandVariable-method</a></td>
+<td>Random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">Math,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">Math,EuclRandVariable-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">Math,EuclRandVarList-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+</table>
+
+<h2><a name="N">-- N --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">ncol,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">nrow,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">numberOfMaps</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">numberOfMaps,EuclRandVarList-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+</table>
+
+<h2><a name="O">-- O --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="OptionalrSpace-class.html">OptionalrSpace-class</a></td>
+<td>Optional rSpace</td></tr>
+</table>
+
+<h2><a name="R">-- R --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="0RandVar-package.html">RandVar</a></td>
+<td>Implementation of random variables</td></tr>
+<tr><td width="25%"><a href="RandVariable.html">RandVariable</a></td>
+<td>Generating function for RandVariable-class</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">RandVariable-class</a></td>
+<td>Random variable</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">Range</a></td>
+<td>Random variable</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">Range,RandVariable-method</a></td>
+<td>Random variable</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">Range&lt;-</a></td>
+<td>Random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">Range&lt;-,EuclRandVariable-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">Range&lt;-,RandVariable-method</a></td>
+<td>Random variable</td></tr>
+<tr><td width="25%"><a href="RealRandVariable-class.html">Range&lt;-,RealRandVariable-method</a></td>
+<td>Real random variable</td></tr>
+<tr><td width="25%"><a href="RealRandVariable.html">RealRandVariable</a></td>
+<td>Generating function for RealRandVariable-class</td></tr>
+<tr><td width="25%"><a href="RealRandVariable-class.html">RealRandVariable-class</a></td>
+<td>Real random variable</td></tr>
+</table>
+
+<h2><a name="S">-- S --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">show,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">show,EuclRandVarList-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+<tr><td width="25%"><a href="RandVariable-class.html">show,RandVariable-method</a></td>
+<td>Random variable</td></tr>
+</table>
+
+<h2><a name="T">-- T --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">t,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">t,EuclRandVariable-method</a></td>
+<td>Euclidean random variable</td></tr>
+<tr><td width="25%"><a href="EuclRandVarList-class.html">t,EuclRandVarList-method</a></td>
+<td>List of Euclidean random variables</td></tr>
+</table>
+
+<h2><a name="misc">-- misc --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="EuclRandMatrix-class.html">[,EuclRandMatrix-method</a></td>
+<td>Euclidean random matrix</td></tr>
+<tr><td width="25%"><a href="EuclRandVariable-class.html">[,EuclRandVariable-method</a></td>
+<td>Euclidean random variable</td></tr>
+</table>
+</body></html>

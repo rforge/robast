@@ -1,0 +1,105 @@
+<html><head><title>Robust regression-type model with infinitesimal neighborhood</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head><body>
+
+<table width="100%"><tr><td>InfRobRegTypeModel-class(ROptRegTS)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   InfRobRegTypeModel-class">
+<param name="keyword" value="R:   neighbor<-,InfRobRegTypeModel-method">
+<param name="keyword" value="R:   show,InfRobRegTypeModel-method">
+<param name="keyword" value=" Robust regression-type model with infinitesimal neighborhood">
+</object>
+
+
+<h2>Robust regression-type model with infinitesimal neighborhood</h2>
+
+
+<h3>Description</h3>
+
+<p>Class of robust regression-type models with infinitesimal 
+(conditional or unconditional) neighborhoods; i.e., the neighborhood 
+is shrinking at a rate of <i>sqrt(n)</i>.</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>
+Objects can be created by calls of the form <code>new("InfRobRegTypeModel", ...)</code>.
+More frequently they are created via the generating function 
+<code>InfRobRegTypeModel</code>. 
+</p>
+
+
+<h3>Slots</h3>
+
+<p>
+
+<dl>
+<dt><code>center</code>:</dt><dd>Object of class <code>"L2RegTypeFamily"</code>. </dd>
+<dt><code>neighbor</code>:</dt><dd>Object of class <code>"Neighborhood"</code>. </dd>
+</dl>
+
+</p>
+
+
+<h3>Extends</h3>
+
+<p>
+Class <code>"RobModel"</code>, directly.
+</p>
+
+
+<h3>Methods</h3>
+
+<p>
+
+<dl>
+<dt>neighbor&lt;-</dt><dd><code>signature(object = "InfRobRegTypeModel")</code>: 
+replacement function for slot <code>neighbor</code>.</dd>
+<dt>show</dt><dd><code>signature(object = "InfRobRegTypeModel")</code></dd>
+</dl>
+
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code></code>, <code>Neighborhood-class</code>,
+<code></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+new("InfRobRegTypeModel")
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+<hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

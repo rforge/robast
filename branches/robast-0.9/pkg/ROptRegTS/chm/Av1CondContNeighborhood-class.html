@@ -1,0 +1,98 @@
+<html><head><title>Average conditional contamination neighborhood</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head><body>
+
+<table width="100%"><tr><td>Av1CondContNeighborhood-class(ROptRegTS)</td><td align="right">R Documentation</td></tr></table>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   Av1CondContNeighborhood-class">
+<param name="keyword" value=" Average conditional contamination neighborhood">
+</object>
+
+
+<h2>Average conditional contamination neighborhood</h2>
+
+
+<h3>Description</h3>
+
+<p>Class of average conditional contamination 
+neighborhoods (exponent <code>== 1</code>); i.e. only radius 
+curves <i>varepsilon</i> with 
+<i>||varepsilon||_1 &lt;= 1</i>.</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>
+Objects can be created by calls of the form <code>new("Av1CondContNeighborhood", ...)</code>.
+More frequently they are created via the generating function 
+<code>Av1CondContNeighborhood</code>. 
+</p>
+
+
+<h3>Slots</h3>
+
+<p>
+
+<dl>
+<dt><code>type</code>:</dt><dd>Object of class <code>"character"</code>:
+&ldquo;average conditional convex contamination neighborhood&rdquo;. </dd>
+<dt><code>radius</code>:</dt><dd>Object of class <code>"numeric"</code>:
+neighborhood radius. </dd>
+<dt><code>radiusCurve</code>:</dt><dd>Object of class <code>"function"</code>:
+radius curve with L1 norm <code>&lt;= 1</code>.</dd>
+<dt><code>exponent</code>:</dt><dd> equal to <code>1</code>. </dd>
+</dl>
+
+</p>
+
+
+<h3>Extends</h3>
+
+<p>
+Class <code>"Av1CondNeighborhood"</code>, directly.<br>
+Class <code>"AvCondNeighborhood"</code>, by class <code>"Av1CondNeighborhood"</code>.<br>
+Class <code>"CondNeighborhood"</code>, by class <code>"Av1CondNeighborhood"</code>.<br>
+Class <code>"Neighborhood"</code>, by class <code>"Av1CondNeighborhood"</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matthias Kohl <a href="mailto:Matthias.Kohl@stamats.de">Matthias.Kohl@stamats.de</a></p>
+
+
+<h3>References</h3>
+
+<p>
+Rieder, H. (1994) <EM>Robust Asymptotic Statistics</EM>. New York: Springer.
+</p>
+<p>
+Kohl, M. (2005) <EM>Numerical Contributions to the Asymptotic Theory of Robustness</EM>. 
+Bayreuth: Dissertation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+new("Av1CondContNeighborhood")
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+<hr><div align="center">[Package <em>ROptRegTS</em> version 0.6.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

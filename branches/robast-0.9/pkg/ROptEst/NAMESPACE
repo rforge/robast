@@ -1,0 +1,34 @@
+import("distr")
+import("distrEx")
+import("RandVar")
+import("distrMod")
+import("RobAStBase")
+
+exportClasses("asAnscombe", "asL1", "asL4") 
+exportMethods("optIC", 
+              "getInfRobIC", 
+              "getFixRobIC",
+              "getAsRisk", 
+              "getFiRisk",
+              "getInfClip", 
+              "getFixClip",
+              "getInfGamma", 
+              "getInfCent", 
+              "getInfStand", 
+              "getInfV", 
+              "getRiskIC", 
+              "optRisk", 
+              "radiusMinimaxIC", 
+              "getIneffDiff", 
+              "leastFavorableRadius",
+              "lowerCaseRadius",
+              "minmaxBias", "getBiasIC", 
+              "getL1normL2deriv",
+              "getModifyIC",
+              "cniperCont", "cniperPoint", "cniperPointPlot")
+exportMethods("updateNorm", "scaleUpdateIC", "eff", 
+              "get.asGRisk.fct")
+export("getL2normL2deriv",
+       "asAnscombe", "asL1", "asL4", 
+	   "getReq", "getMaxIneff")
+export("roptest","getLagrangeMultByOptim","getLagrangeMultByIter")
