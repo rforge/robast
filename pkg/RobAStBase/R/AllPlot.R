@@ -174,7 +174,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         options(warn = -1)
         on.exit(options(warn = w0))
         opar <- par(no.readonly = TRUE)
-        opar$cin <- opar$cra <- opar$csi <- opar$cxy <-  opar$din <- NULL
+#        opar$cin <- opar$cra <- opar$csi <- opar$cxy <-  opar$din <- NULL
         on.exit(par(opar))
         if (!withSweave)
              devNew()

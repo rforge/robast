@@ -76,7 +76,7 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.05,
         plot(c(0,1), c(1, 0), type = "n", axes = FALSE)
         legend("center", c("ML", "Med/MAD", "biweight", "rmx"),
                fill = myCol, ncol = 4, cex = 1.5)
-        op$cin <- op$cra <- op$csi <- op$cxy <-  op$din <- NULL
+#        op$cin <- op$cra <- op$csi <- op$cxy <-  op$din <- NULL
         on.exit(par(op))
     }
 
