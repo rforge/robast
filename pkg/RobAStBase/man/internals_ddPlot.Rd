@@ -13,10 +13,17 @@ This function is an internally used helper function for \code{\link{ddPlot}} in 
        cutoff.y = cutoff(norm = dist.y, cutoff.quantile  = cutoff.quantile.y),
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, lab.pts, adj =0, cex.idn = 1,
-       col.idn = par("col"), lty.cutoff,
-       lwd.cutoff, col.cutoff = "red")}
-
+       id.n, lab.pts, adj =0, cex.idn,
+       col.idn, lty.cutoff,
+       lwd.cutoff, col.cutoff = "red", text.abline = TRUE,
+       text.abline.x = NULL, text.abline.y = NULL,
+       cex.abline = par("cex"), col.abline = col.cutoff,
+       font.abline = par("font"), adj.abline = c(0,0),
+       text.abline.x.x = NULL, text.abline.x.y = NULL, 
+       text.abline.y.x = NULL, text.abline.y.y = NULL,
+       text.abline.x.fmt.cx = "\%7.2f", text.abline.x.fmt.qx = "\%4.2f\%\%",
+       text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%")
+}
 \arguments{
   \item{data}{data in \code{matrix} form (columns are observations; rows are variable
   dimensions) at which to produce the \code{ddPlot}.}
@@ -43,11 +50,37 @@ This function is an internally used helper function for \code{\link{ddPlot}} in 
   \item{col.idn}{the corresponding \code{col} argument for
                  \code{\link[graphics]{text}} for labelling the outliers.}
   \item{lty.cutoff}{the corresponding \code{lty} argument for
+                 \code{\link[graphics]{abline}} for drawing the cutoff lines;
+                 either one lty-value (one value or vector) or a list of length 2
+                 of lty-values.}
+  \item{lwd.cutoff}{(vector cast to length 2): the corresponding \code{lwd} argument for
                  \code{\link[graphics]{abline}} for drawing the cutoff lines.}
-  \item{lwd.cutoff}{the corresponding \code{lwd} argument for
+  \item{col.cutoff}{(vector cast to length 2): the corresponding \code{col} argument for
                  \code{\link[graphics]{abline}} for drawing the cutoff lines.}
-  \item{col.cutoff}{the corresponding \code{col} argument for
-                 \code{\link[graphics]{abline}} for drawing the cutoff lines.}
+  \item{text.abline}{vector of logicals (cast to length 2): shall text be added
+                 to cutoff lines.}
+  \item{text.abline.x}{text to be added to cutoff lines in x direction; if \code{NULL}
+   (default) we use ``[pp] \%-cutoff = [ff]'' where [pp] is the percentag up to 2 digits
+          and [ff] is the cutoff value up to 2 digits.}
+  \item{text.abline.y}{text to be added to cutoff lines in y direction; if \code{NULL}
+   (default) we use ``[pp] \%-cutoff = [ff]'' where [pp] is the percentag up to 2 digits
+          and [ff] is the cutoff value up to 2 digits.}
+  \item{cex.abline}{vector of numerics (cast to length 2): cex-value for added cutoff text.}
+  \item{col.abline}{vector of length 2: color for added cutoff text.}
+  \item{font.abline}{vector of length 2: font for added cutoff text.}
+  \item{adj.abline}{cast to 2 x 2 matrix (by recycling rules): adjustment values for added cutoff text.}
+  \item{text.abline.x.y}{y-coordinate of text to be added to cutoff lines in x direction;
+                         if \code{NULL} (default) set to mid of \code{mean(par("usr")[c(3,4)])}.}
+  \item{text.abline.y.x}{x-coordinate of text to be added to cutoff lines in y direction;
+                         if \code{NULL} (default) set to mid of \code{mean(par("usr")[c(1,2)])}.}
+  \item{text.abline.x.x}{x-coordinate of text to be added to cutoff lines in x direction;
+                         if \code{NULL} (default) set to 1.05 times the cutoff value.}
+  \item{text.abline.y.y}{y-coordinate of text to be added to cutoff lines in y direction;
+                         if \code{NULL} (default) set to 1.05 times the cutoff value.}
+  \item{text.abline.x.fmt.cx}{format string (see \code{\link[base]{gettextf}}) to format the cutoff value in label in x direction.}
+  \item{text.abline.x.fmt.qx}{format string to format cutoff probability in label in x direction.}
+  \item{text.abline.y.fmt.cy}{format string to format the cutoff value in label in y direction.}
+  \item{text.abline.y.fmt.qy}{format string to format cutoff probability in label in y direction.}
 }
 
 \details{

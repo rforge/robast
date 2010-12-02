@@ -619,17 +619,17 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                     Infos(IC1) <- Info.matrix
                     return(new("kStepEstimate", name = "Optimally robust estimate",
                                completecases = completecases,
-                               estimate.call = es.call, estimate = robEst$est,
+                               estimate.call = es.call, estimate = robEst,
                                samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
                                asbias = r*b, steps = k, pIC = IC1, Infos = Info.matrix,
-                           start = mean.sd[,1,drop=F], startval = mean.sd[,1,drop=F], ustartval = mean.sd))
+                           start = median, startval = matrix(mean,1,1), ustartval = matrix(mean,1,1)))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
                                completecases = completecases,
-                               estimate.call = es.call, estimate = robEst$est,
+                               estimate.call = es.call, estimate = robEst,
                                samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
                                asbias = r*b, steps = k, pIC = NULL, Infos = Info.matrix,
-                           start = mean.sd[,1,drop=F], startval = mean.sd[,1,drop=F], ustartval = mean.sd))
+                           start = median, startval = matrix(mean,1,1), ustartval = matrix(mean,1,1)))
             }else{
                 sqrtn <- sqrt(length(x))
                 rlo <- sqrtn*eps.lower
@@ -708,17 +708,17 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                     Infos(IC1) <- Info.matrix
                     return(new("kStepEstimate", name = "Optimally robust estimate",
                                completecases = completecases,
-                               estimate.call = es.call, estimate = robEst$est,
+                               estimate.call = es.call, estimate = robEst,
                                samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
                                asbias = r*b, steps = k, pIC = IC1, Infos = Info.matrix,
-                           start = mean.sd[,1,drop=F], startval = mean.sd[,1,drop=F], ustartval = mean.sd))
+                           start = median, startval = matrix(mean,1,1), ustartval = matrix(mean,1,1)))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
                                completecases = completecases,
-                               estimate.call = es.call, estimate = robEst$est,
+                               estimate.call = es.call, estimate = robEst,
                                samplesize = length(x), asvar = as.matrix(A-r^2*b^2),
                                asbias = r*b, steps = k, pIC = NULL, Infos = Info.matrix,
-                           start = mean.sd[,1,drop=F], startval = mean.sd[,1,drop=F], ustartval = mean.sd))
+                           start = median, startval = matrix(mean,1,1), ustartval = matrix(mean,1,1)))
             }
         }
         if(missing(sd)){
@@ -818,14 +818,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                estimate.call = es.call, estimate = robEst$est,
                                samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
                                asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix,
-                           start = mean.sd[,2,drop=F], startval = mean.sd[,2,drop=F], ustartval = mean.sd))
+                           start = mad, startval = matrix(sd,1,1), ustartval = matrix(sd,1,1)))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
                                completecases = completecases,
                                estimate.call = es.call, estimate = robEst$est,
                                samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
                                asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix,
-                           start = mean.sd[,2,drop=F], startval = mean.sd[,2,drop=F], ustartval = mean.sd))
+                           start = mad, startval = matrix(sd,1,1), ustartval = matrix(sd,1,1)))
             }else{
                 sqrtn <- sqrt(length(x))
                 rlo <- sqrtn*eps.lower
@@ -929,14 +929,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                estimate.call = es.call, estimate = robEst$est,
                                samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
                                asbias = r*robEst$b, steps = k, pIC = IC1, Infos = Info.matrix,
-                           start = mean.sd[,2,drop=F], startval = mean.sd[,2,drop=F], ustartval = mean.sd))
+                           start = mad, startval = matrix(sd,1,1), ustartval = matrix(sd,1,1)))
                 }else
                     return(new("kStepEstimate", name = "Optimally robust estimate",
                                completecases = completecases,
                                estimate.call = es.call, estimate = robEst$est,
                                samplesize = length(x), asvar = as.matrix(robEst$A-r^2*robEst$b^2),
                                asbias = r*robEst$b, steps = k, pIC = NULL, Infos = Info.matrix,
-                           start = mean.sd[,2,drop=F], startval = mean.sd[,2,drop=F], ustartval = mean.sd))
+                           start = mad, startval = matrix(sd,1,1), ustartval = matrix(sd,1,1)))
             }
         }
     }

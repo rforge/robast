@@ -29,6 +29,20 @@ RobP1     # show RobP1
 lowerCaseRadius(L2Fam = P, ContNeighborhood(radius = 0.5), risk = asMSE())
 lowerCaseRadius(L2Fam = P, TotalVarNeighborhood(radius = 0.5), risk = asMSE())
 
+## OBRE solution (ARE = .95)
+system.time(ICA <- optIC(model = RobP1, risk = asAnscombe(.95),
+                         upper=NULL,lower=NULL, verbose=TRUE))
+checkIC(ICA)
+Risks(ICA)
+plot(ICA)
+
+system.time(ICA.p <- optIC(model = RobP1, 
+                         risk = asAnscombe(.95,biastype=positiveBias()),
+                         upper=NULL,lower=NULL, verbose=TRUE))
+checkIC(ICA.p)
+Risks(ICA.p)
+plot(ICA.p)
+
 ## MSE solution
 (IC1 <- optIC(model=RobP1, risk=asMSE()))
 checkIC(IC1)

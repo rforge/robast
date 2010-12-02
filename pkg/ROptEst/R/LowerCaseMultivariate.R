@@ -15,12 +15,13 @@
         if(is.null(z.comp)) 
            z.comp <- rep(TRUE, nrow(trafo))
 
+        force(normtype)
         lA.comp <- sum(A.comp)
         
-        abs.fct <- function(x, L2, stand, cent, normtype){
+        abs.fct <- function(x, L2, stand, cent, normtype.0){
             X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
             Y <- stand %*% X
-            return(fct(normtype)(Y))
+            return(fct(normtype.0)(Y))
         }
 
         itermin <- 0
@@ -29,7 +30,10 @@
             p <- nrow(trafo)
             k <- ncol(trafo)
             A <- matrix(0, ncol = k, nrow = p)
+            
             A[A.comp] <- param[1:lA.comp]
+            A.max <- max(abs(A.comp))
+            A <- A/A.max
             z <- numeric(k)
             z[z.comp] <- param[(lA.comp+1):length(param)]
 
@@ -48,31 +52,45 @@
                                         neighbor = neighbor, biastype = biastype,
                                         Distr = Distr, V.comp = A.comp,
                                         cent = z, stand = A,  w = w0)
+               weight(w0) <- minbiasweight(w0, neighbor = neighbor,
+                                           biastype = biastype,
+                                           normW = normtype)
+
+               w <<- w0
                }
 
             E1 <- E(object = Distr, fun = abs.fct, L2 = L2deriv, stand = A,
-                     cent = z, normtype = normtype, useApply = FALSE)
-            stA <- if (is(normtype,"QFnorm"))
+                     cent = z, normtype.0 = normtype, useApply = FALSE)
+            stA <- if (is(normtype,"QFNorm"))
                        QuadForm(normtype)%*%A else A
+#            erg <- E1/sum(diag(stA %*% t(trafo)))
+#            print(list(A,stA,E1))
             erg <- E1/sum(diag(stA %*% t(trafo)))
             clip(w0) <- 1/erg
             w <<- w0
             if(verbose && itermin %% 15 == 1){
+#            if(verbose && itermin %% 2 == 1){
                cat("trying to find lower case solution;\n")
                cat("current Lagrange Multiplier value:\n")
                print(list(A=A, z=z,erg=erg))
                }
-
+  
             return(erg)
         }
 
         A.vec <- as.vector(A.start[A.comp])
-        p.vec <- c(A.vec, z.start[z.comp])
-        force(normtype)
+        A.max <- max(abs(A.vec))
+        A.vec <- A.vec/A.max
+        p.vec <- c(A.vec, z.start[z.comp]/A.max)
+        
         erg <- optim(p.vec, bmin.fct, method = "Nelder-Mead",
                     control = list(reltol = tol, maxit = 100*maxiter),
                     L2deriv = L2deriv, Distr = Distr, trafo = trafo)
-
+        A.max <- max(abs(stand(w)))
+        stand(w) <- stand(w)/A.max
+        weight(w) <- minbiasweight(w, neighbor = neighbor,
+                                           biastype = biastype,
+                                           normW = normtype)
 
         return(list(erg=erg, w=w, normtype = normtype, z.comp = z.comp, itermin = itermin))
     }

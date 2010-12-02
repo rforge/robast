@@ -11,7 +11,7 @@ IC(name, Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}),
    Risks, Infos, CallL2Fam = call("L2ParamFamily"), modifyIC = NULL)
 }
 \arguments{
-  \item{name}{ Object of class \code{"character"}. }
+  \item{name}{ Object of class \code{"character"}; the name of the IC. }
   \item{CallL2Fam}{ object of class \code{"call"}:
       creates an object of the underlying L2-differentiable 
       parametric family. }
@@ -23,7 +23,8 @@ IC(name, Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}),
   \item{modifyIC}{ Object of class \code{"OptionalFunction"}:
     function of two arguments, which are an L2 parametric family 
     and an optional influence curve. Returns an object of 
-    class \code{"IC"}. This function is mainly used for internal
+    class \code{"IC"} at the parameter value of the L2 parametric
+    family. This function is mainly used for internal
     computations! }
 }
 %\details{}

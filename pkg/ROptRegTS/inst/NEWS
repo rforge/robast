@@ -8,6 +8,14 @@
  information)
 
 #######################################
+version 0.8
+#######################################
+
+no changes this time
++ DESCRIPTION files and package-help files gain a tag SVNRevision 
+  to be filled by get[All]RevNr.R from utils in distr
+
+#######################################
 version 0.7
 #######################################
 

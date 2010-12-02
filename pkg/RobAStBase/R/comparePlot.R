@@ -5,7 +5,8 @@ setMethod("comparePlot", signature("IC","IC"),
              col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
-             legend.location = "bottomright", 
+             with.legend = TRUE, legend.bg = "white",
+             legend.location = "bottomright", legend.cex = 0.8,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
@@ -48,7 +49,7 @@ setMethod("comparePlot", signature("IC","IC"),
 
         trafO <- trafo(L2Fam@param)
         dims  <- nrow(trafO)
-        dimm <- length(L2Fam@param)
+        dimm <- ncol(trafO)
         
         to.draw <- 1:dims
         dimnms  <- c(rownames(trafO))
@@ -109,8 +110,8 @@ setMethod("comparePlot", signature("IC","IC"),
         dots$xlim <- NULL
 
         dims <- nrow(trafo(L2Fam@param))
-        IC1 <- as(diag(dimm) %*% obj1@Curve, "EuclRandVariable")
-        IC2 <- as(diag(dimm) %*% obj2@Curve, "EuclRandVariable")
+        IC1 <- as(diag(dims) %*% obj1@Curve, "EuclRandVariable")
+        IC2 <- as(diag(dims) %*% obj2@Curve, "EuclRandVariable")
 
 
         obj <- obj3
@@ -118,7 +119,7 @@ setMethod("comparePlot", signature("IC","IC"),
            {
            if(!identical(L2Fam1c,obj@CallL2Fam))
                stop("ICs need to be defined for the same model")
-           IC3 <- as(diag(dimm) %*% obj3@Curve, "EuclRandVariable")
+           IC3 <- as(diag(dims) %*% obj3@Curve, "EuclRandVariable")
            }
 
         obj <- obj4
@@ -126,7 +127,7 @@ setMethod("comparePlot", signature("IC","IC"),
            {
            if(!identical(L2Fam1c,obj@CallL2Fam))
                stop("ICs need to be defined for the same model")
-           IC4 <- as(diag(dimm) %*% obj4@Curve, "EuclRandVariable")
+           IC4 <- as(diag(dims) %*% obj4@Curve, "EuclRandVariable")
            }
 
       lineT <- NA
@@ -226,7 +227,8 @@ setMethod("comparePlot", signature("IC","IC"),
         options(warn = -1)
         on.exit(options(warn = w0))
         opar <- par()
-        on.exit(par(opar))
+        opar$cin <- opar$cra <- opar$csi <- opar$cxy <-  opar$din <- NULL
+        if(mfColRow) on.exit(par(opar))
         
         if(mfColRow)
              par(mfrow = c(nrows, ncols))
@@ -435,8 +437,9 @@ setMethod("comparePlot", signature("IC","IC"),
                       line = lineT, cex.main = cex.inner, col.main = col.inner))
         }
         
-        legend(legend.location, legend = xc, col = col, 
-               cex = 0.75, lwd = lwd*1.5, lty = lty)
+        if(with.legend)
+           legend(legend.location, legend = xc, col = col, bg = legend.bg,
+               lwd = lwd*1.5, lty = lty, cex = legend.cex)
 
         if(!hasArg(cex.main)) cex.main <- par("cex.main") else cex.main <- dots$"cex.main"
         if(!hasArg(col.main)) col.main <- par("col.main") else col.main <- dots$"col.main"

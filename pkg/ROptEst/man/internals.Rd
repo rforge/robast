@@ -7,6 +7,7 @@
 \alias{.checkPIC}
 \alias{.LowerCaseMultivariate}
 \alias{.LowerCaseMultivariateTV}
+\alias{.getSB}
 
 \title{Internal / Helper functions of package ROptEst}
 
@@ -31,7 +32,7 @@ These functions are used internally by package \pkg{ROptEst}.}
 .getLowerSol(L2deriv, risk, neighbor, Distr, DistrSymm,
                          L2derivSymm, L2derivDistrSymm,
                          z.start, A.start, trafo,
-                         maxiter, tol, warn, Finfo, verbose)
+                         maxiter, tol, warn, Finfo, QuadForm, verbose)
 
 
 ### helper function to return upper & lower bounds for b for b-search
@@ -52,6 +53,8 @@ These functions are used internally by package \pkg{ROptEst}.}
              normtype, Distr, Finfo, trafo,
              A.start,  maxiter, tol,
              verbose = NULL)
+
+.getSB(IC,neighbor)
 }
 
 \arguments{
@@ -89,6 +92,7 @@ These functions are used internally by package \pkg{ROptEst}.}
   \item{iter}{the number of iterations computed so far; used for specifying
               a different value of the clipping component of the weight in
               total variation case in the very first iteration.}
+  \item{IC}{some IC of class \code{"IC"}}
   \item{\dots}{further arguments to be passed on \code{E()}.}
 }
 
@@ -111,6 +115,8 @@ by solving a corresponding dual problem (Rieder[94],p.199 eq.(18)).
 \code{.LowerCaseMultivariatefunctionTV} determines the Lagrange multipliers for
 the multivariate lower case solution for total variation in dimension \eqn{p=1}
 and \eqn{k>1} by solving a corresponding dual problem (Rieder[94],p.205 eq.(58)).
+\code{.getSB} computes the bias and (the square root of the trace of) the variance
+ of the IC.
 }
 
 
@@ -137,6 +143,8 @@ and \eqn{k>1} by solving a corresponding dual problem (Rieder[94],p.205 eq.(58))
 \code{b} the minimax bias,
 \code{w} the corresponding weight (of class \code{BdStWeight}),
 \code{a} the corresponding infimum of the [p]IC.}
+\item{.getSB}{a list with elements \code{s}, (the square root of the trace of) 
+the variance and \code{b}, the bias.}
 }
 
 \references{

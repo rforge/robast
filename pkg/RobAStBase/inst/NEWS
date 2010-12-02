@@ -8,6 +8,60 @@
  information)
 
 #######################################
+version 0.8
+#######################################
+
+USER-VISIBLE CHANGES
++ new helper methods makeIC to apply to functions or list of functions 
+         for easily producing (suboptimal) ICs
++ included risk computation for sin,cos-IC in makeIC-methods.Rd
+
++ qqplot for RobModel now produces outlier adjusted CIs
+
++ ddPlot: additional annotation parameters
+        (all with reasonable defaults)
+
+        -text.abline:          controls whether cutoff lines get labeled
+        -text.abline.x, 
+        -text.abline.y:        text to be added as labels, 
+                               defaults to something like "95%-cutoff = 4.32"  
+							   4.32 the cutoff value)
+        
+		-cex.abline, 
+        -col.abline, 
+        -font.abline, 
+        -adj.abline:           respective parameters for labels
+        
+		-text.abline.x.x, 
+        -text.abline.x.y, 
+        -text.abline.y.x, 
+        -text.abline.y.y:      coordinates of labels,
+
+		-text.abline.x.fmt.cx, 
+        -text.abline.x.fmt.qx, 
+        -text.abline.y.fmt.cy, 
+        -text.abline.y.fmt.qy: format strings for cutoff quantiles 
+		                       and values in labels
+
+  -arguments cex.idn and col.idn now if missing first check against arguments 
+   cex and col respectively before using defaults par("cex") and par("col") respectively
+
++ for restoring old par() values, not all attributes may be set; 
+  hence deleted them from stored value in plot functions by something like
+        opar$cin <- opar$cra <- opar$csi <- opar$cxy <-  opar$din <- NULL
+
++ infoPlot gains arguments ylab.rel and ylab.abs to set the label 
+  for y axis (as requested by N. Horbenko)
+
++ DESCRIPTION files and package-help files gain a tag SVNRevision 
+  to be filled by get[All]RevNr.R from utils in distr
+
+BUGFIXES  
+
++   you could not place single plots where you wanted...
++   Nataliya found yet another bug in infoPlot.R
+  
+#######################################
 version 0.7
 #######################################
 

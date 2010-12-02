@@ -32,7 +32,8 @@
     \code{function(data) quantile(data)}.}
 
     \item{\code{cutoff.quantile}:}{ Object of class \code{"numeric"}:
-      a quantile (empirical or theoretical) to plot the cutoff line; defaults
+      a probability (in [0,1]) to determine the respective quantile 
+      (empirical or theoretical) to plot the cutoff line; defaults
       to \code{0.95} in prototype;}
 
   }

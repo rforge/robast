@@ -12,12 +12,13 @@ estimators in case of normal location and/or scale.
 \details{
 \tabular{ll}{
 Package: \tab RobLox \cr
-Version: \tab 0.7 \cr
-Date: \tab 2009-09-04 \cr
+Version: \tab 0.8 \cr
+Date: \tab 2010-12-02 \cr
 Depends: \tab R(>= 2.7.0), stats, distrMod(>= 2.0.1), RobAStBase(>= 0.1.1) \cr
 LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
+SVNRevision: \tab 436 \cr
 }
 }
 \author{Matthias Kohl  \email{matthias.kohl@stamats.de}}

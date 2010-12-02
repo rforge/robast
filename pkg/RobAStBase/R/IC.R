@@ -156,3 +156,49 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
                   CallL2Fam = CallL2Fam,
                   modifyIC = modifyIC))
     })
+
+
+# alias to IC needed here:
+.IC <- IC
+
+setMethod("makeIC", signature(IC = "list", L2Fam = "L2ParamFamily"),
+    function(IC, L2Fam, forceIC = TRUE, name, Risks, Infos, modifyIC = NULL){
+        mc <- match.call(call = sys.call(sys.parent(1)), expand.dots = FALSE)[-1]
+        mc0 <- as.list(mc)
+        mc0$IC <- NULL
+        mc0$L2Fam <- NULL
+        mc0$forceIC <- NULL
+        if(!all(as.logical(c(lapply(IC,is.function)))))
+           stop("First argument must be a list of functions")
+
+        IC.1 <- lapply(IC, function(IC.2) 
+                  if(length(formals(IC.2))==0) function(x) IC.2(x) else IC.2)
+
+        mc0$Curve <- EuclRandVarList(RealRandVariable(Map = IC.1, Domain = Reals()))
+        mc0$CallL2Fam <- substitute(L2Fam@fam.call)
+
+        IC.0 <- do.call(.IC,mc0)
+        if(forceIC) IC.0 <- makeIC(IC.0, L2Fam)
+        return(IC.0)
+    })
+
+
+
+setMethod("makeIC", signature(IC = "function", L2Fam = "L2ParamFamily"),
+    function(IC, L2Fam, forceIC = TRUE, name, Risks, Infos, modifyIC = NULL){
+        mc <- match.call(call = sys.call(sys.parent(1)), expand.dots = FALSE)[-1]
+        mc0 <- as.list(mc)
+        mc0$IC <- NULL
+        mc0$L2Fam <- NULL
+        mc0$forceIC <- NULL
+        IC.1 <- if(length(formals(IC))==0) function(x) IC(x) else IC
+        mc0$Curve <- EuclRandVarList(RealRandVariable(Map = list(IC.1),
+                         Domain = Reals()))
+        mc0$CallL2Fam <- substitute(L2Fam@fam.call)
+        print(mc0)
+        
+        IC.0 <- do.call(.IC,mc0)
+        print(IC.0)
+        if(forceIC) IC.0 <- makeIC(IC.0, L2Fam)
+        return(IC.0)
+    })

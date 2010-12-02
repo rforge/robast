@@ -3,6 +3,10 @@
 \alias{getInfClip-methods}
 \alias{getInfClip,numeric,UnivariateDistribution,asMSE,ContNeighborhood-method}
 \alias{getInfClip,numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood-method}
+\alias{getInfClip,numeric,UnivariateDistribution,asL1,ContNeighborhood-method}
+\alias{getInfClip,numeric,UnivariateDistribution,asL1,TotalVarNeighborhood-method}
+\alias{getInfClip,numeric,UnivariateDistribution,asL4,ContNeighborhood-method}
+\alias{getInfClip,numeric,UnivariateDistribution,asL4,TotalVarNeighborhood-method}
 \alias{getInfClip,numeric,EuclRandVariable,asMSE,UncondNeighborhood-method}
 \alias{getInfClip,numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method}
 \alias{getInfClip,numeric,UnivariateDistribution,asSemivar,ContNeighborhood-method}
@@ -20,6 +24,18 @@ getInfClip(clip, L2deriv, risk, neighbor, ...)
                                                 risk, neighbor, biastype, cent, symm, trafo)
 
 \S4method{getInfClip}{numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood}(clip, L2deriv, 
+                                                    risk, neighbor, biastype, cent, symm, trafo)
+
+\S4method{getInfClip}{numeric,UnivariateDistribution,asL1,ContNeighborhood}(clip, L2deriv, 
+                                                risk, neighbor, biastype, cent, symm, trafo)
+
+\S4method{getInfClip}{numeric,UnivariateDistribution,asL1,TotalVarNeighborhood}(clip, L2deriv, 
+                                                    risk, neighbor, biastype, cent, symm, trafo)
+
+\S4method{getInfClip}{numeric,UnivariateDistribution,asL4,ContNeighborhood}(clip, L2deriv, 
+                                                risk, neighbor, biastype, cent, symm, trafo)
+
+\S4method{getInfClip}{numeric,UnivariateDistribution,asL4,TotalVarNeighborhood}(clip, L2deriv, 
                                                     risk, neighbor, biastype, cent, symm, trafo)
 
 \S4method{getInfClip}{numeric,EuclRandVariable,asMSE,UncondNeighborhood}(clip, L2deriv, risk,
@@ -63,6 +79,22 @@ getInfClip(clip, L2deriv, risk, neighbor, ...)
     optimal clipping bound for asymtotic mean square error. }
 
   \item{clip = "numeric", L2deriv = "UnivariateDistribution", 
+        risk = "asL1", neighbor = "ContNeighborhood"}{ 
+    optimal clipping bound for asymtotic mean absolute error. }
+
+  \item{clip = "numeric", L2deriv = "UnivariateDistribution", 
+        risk = "asL1", neighbor = "TotalVarNeighborhood"}{ 
+    optimal clipping bound for asymtotic mean absolute error. }
+
+  \item{clip = "numeric", L2deriv = "UnivariateDistribution", 
+        risk = "asL4", neighbor = "ContNeighborhood"}{ 
+    optimal clipping bound for asymtotic mean power 4 error. }
+
+  \item{clip = "numeric", L2deriv = "UnivariateDistribution", 
+        risk = "asL4", neighbor = "TotalVarNeighborhood"}{ 
+    optimal clipping bound for asymtotic mean power 4 error. }
+
+  \item{clip = "numeric", L2deriv = "UnivariateDistribution", 
         risk = "asUnOvShoot", neighbor = "UncondNeighborhood"}{ 
     optimal clipping bound for asymtotic under-/overshoot risk. }
 
@@ -74,6 +106,9 @@ getInfClip(clip, L2deriv, risk, neighbor, ...)
   Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. \bold{8}: 106--115.
 
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
+
+  Ruckdeschel, P. and Rieder, H. (2004) Optimal Influence Curves for
+  General Loss Functions. Statistics & Decisions \emph{22}, 201-223.
 
   Ruckdeschel, P. (2005) Optimally One-Sided Bounded Influence Curves.
   Mathematical Methods in Statistics \emph{14}(1), 105-131.

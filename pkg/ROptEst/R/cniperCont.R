@@ -50,7 +50,9 @@ setMethod("cniperPoint", signature(L2Fam = "L2ParamFamily",
 setMethod("cniperPointPlot", signature(L2Fam = "L2ParamFamily", 
                                    neighbor = "ContNeighborhood",
                                    risk = "asMSE"),
-    function(L2Fam, neighbor, risk, lower, upper, n = 101){
+    function(L2Fam, neighbor, risk, lower, upper, n = 101, ...){
+        dots <- as.list(match.call(call = sys.call(sys.parent(1)), 
+                       expand.dots = FALSE)$"...")
         D <- trafo(L2Fam@param)
         tr.invF <- sum(diag(D %*% solve(FisherInfo(L2Fam)) %*% t(D)))
         psi <- optIC(model = L2Fam, risk = asCov())
@@ -61,12 +63,44 @@ setMethod("cniperPointPlot", signature(L2Fam = "L2ParamFamily",
             y <- evalIC(psi, x) 
             tr.invF + as.vector(y %*% y)*neighbor@radius^2 - maxMSE
         }
-        x <- seq(from = lower, to = upper, length = n)
-        y <- sapply(x, fun)
-        plot(x, y, type = "l", main = "Cniper point plot", 
-             xlab = "Dirac point", ylab = "Asymptotic MSE difference (classic - robust)")
+        dots$x <- x <- seq(from = lower, to = upper, length = n)
+        dots$y <- sapply(x, fun)
+        colSet <- ltySet <- lwdSet <- FALSE
+        if(!is.null(dots$col)) {colSet <- TRUE; colo <- eval(dots$col)}
+        if(colSet) {
+           colo <- rep(colo,length.out=2)          
+           dots$col <- colo[1]
+        }
+        if(!is.null(dots$lwd)) {lwdSet <- TRUE; lwdo <- eval(dots$lwd)}
+        if(lwdSet) {
+           lwdo <- rep(lwdo,length.out=2)
+           dots$lwd <- lwdo[1]
+        }
+        if(!is.null(dots$lty)) {ltySet <- TRUE; ltyo <- eval(dots$lty)}
+        if(ltySet && ((!is.numeric(ltyo) && length(ltyo)==1)||
+                        is.numeric(ltyo))){          
+           ltyo <- list(ltyo,ltyo)
+           dots$lty <- ltyo[[1]]
+        }else{ if (ltySet && !is.numeric(ltyo) && length(ltyo)==2){
+                   dots$lty <- ltyo[[1]]
+            }
+        }
+        if(is.null(dots$main)) dots$main <- gettext("Cniper point plot")
+        if(is.null(dots$xlab)) dots$xlab <- gettext("Dirac point")
+        if(is.null(dots$ylab)) 
+            dots$ylab <- gettext("Asymptotic MSE difference (classic - robust)")
+        dots$type <- "l"
+        do.call(plot, dots)
 #        text(min(x), max(y)/2, "Robust", pos = 4)
 #        text(min(x), min(y)/2, "Classic", pos = 4)
-        abline(h = 0)
+        dots$x <- dots$y <- dots$xlab <- dots$ylab <- dots$main <- dots$type <- NULL
+        dots$h <- 0
+        if(colSet) dots$col <- colo[2]
+        if(lwdSet) dots$lwd <- lwdo[2]
+        if(ltySet) dots$lty <- ltyo[[2]]
+        do.call(abline, dots)
         invisible()
     })
+#
+#cniperPointPlot(L2Fam=N0, neighbor=ContNeighborhood(radius = 0.5), risk=asMSE(),lower=-12, n =30, upper=8, lwd=c(2,4),lty=list(c(5,1),3),col=c(2,4))
+ 

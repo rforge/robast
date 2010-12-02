@@ -8,12 +8,15 @@
  information)
 
 #######################################
-## version 0.7.2
+version 0.8
 #######################################
+
 + renamed AffySimStudy.R to AffymetrixSimStudy.R
 + update of Figure numbers in IlluminaExample.R
 + added scripts AffymetrixReproducibility.R and IlluminaReproducibility.R
 
++ DESCRIPTION files and package-help files gain a tag SVNRevision 
+  to be filled by get[All]RevNr.R from utils in distr
 
 #######################################
 ## version 0.7.1
@@ -21,10 +24,10 @@
 + corrected bug in AffySimStudy and IlluminaSimStudy
 + minor modifications of scripts in scripts folder
 
+#######################################
+version 0.7
+#######################################
 
-#######################################
-## version 0.7
-#######################################
 
 GENERAL ENHANCEMENTS:
 
@@ -67,14 +70,14 @@ BUGFIXES:
 
 
 #######################################
-## version 0.5
+version 0.5
 #######################################
 + added example code for Illumina data
 + function to perform Monte-Carlo studies for comparison with Illumina's
   default method
 
 #######################################
-## version 0.4
+version 0.4
 #######################################
 + added finite-sample correction
 + handle cases with sample size <= 2 and contamination eps = 0
@@ -82,17 +85,17 @@ BUGFIXES:
   exported and documented function to perform Monte-Carlo studies.
 
 #######################################
-## version 0.3
+version 0.3
 #######################################
 + added KolmogorovMinDist methods for matrix, AffyBatch and BeadLevelList
 
 #######################################
-## version 0.2
+version 0.2
 #######################################
 + robloxbioc methods for AffyBatch and BeadLevelList
 
 #######################################
-## version 0.1
+version 0.1
 #######################################
 + start of development
 

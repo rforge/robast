@@ -76,15 +76,33 @@ optIC(model, risk, ...)
     finite-sample under-/overshoot risk. }
 }}
 \references{
+ 
   Huber, P.J. (1968) Robust Confidence Limits. Z. Wahrscheinlichkeitstheor.
   Verw. Geb. \bold{10}:269--278.
 
+  Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
+  Bayreuth: Dissertation.
+
+  Kohl, M. and Ruckdeschel, P. (2010): R package distrMod: 
+  Object-Oriented Implementation of Probability Models. 
+  J. Statist. Softw.  \bold{35}(10), 1--27
+  
+  Kohl, M. and Ruckdeschel, P., and Rieder, H. (2010):
+  Infinitesimally Robust Estimation in General Smoothly Parametrized Models.
+  \emph{Stat. Methods Appl.}, \bold{19}, 333--354. 
+  
   Rieder, H. (1980) Estimates derived from robust tests. Ann. Stats. \bold{8}: 106--115.
 
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 
-  Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
-  Bayreuth: Dissertation.
+  Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
+  the Radius. Statistical Methods and Applications \bold{17}(1) 13-40.
+
+  Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
+  the Radius. Appeared as discussion paper Nr. 81. 
+  SFB 373 (Quantification and Simulation of Economic Processes),
+  Humboldt University, Berlin; also available under
+  \url{www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf}
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}

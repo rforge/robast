@@ -16,12 +16,15 @@ infoPlot(object,  ...)
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
-             legend.location = "bottomright",
+             with.legend = TRUE, legend.bg = "white",
+             legend.location = "bottomright", legend.cex = 0.8,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
              lab.pts = NULL, lab.font = NULL,
-             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE)
+             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
+             ylab.abs = "absolute information", 
+             ylab.rel= "relative information")
 }
 \arguments{
   \item{object}{object of class \code{"InfluenceCurve"} }
@@ -52,10 +55,13 @@ infoPlot(object,  ...)
           to the current setting of \code{cex}; as in 
           \code{\link[graphics]{par}}}
   \item{col.inner}{character or integer code; color for the inner title}              
+  \item{with.legend}{logical; shall a legend be plotted?}
   \item{legend.location}{a valid argument \code{x} for \code{\link{legend}} ---
                          the place where to put the legend on the last issued
                          plot --- or a list of length (number of plotted panels) 
                          of such arguments, one for each plotted panel.}
+  \item{legend.bg}{background color for the legend}
+  \item{legend.cex}{magnification factor for the legend}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
   \item{to.draw.arg}{Either \code{NULL} (default; 
                           everything is plotted) or a vector making a selection
@@ -95,6 +101,8 @@ infoPlot(object,  ...)
     reduction by argument \code{which.lbs}, and ordering is according to the norm given by
            \code{normtype(object)});
    othervise we return \code{invisible()} as usual.}
+  \item{ylab.abs}{character; label to be used for y-axis in absolute information panel} 
+  \item{ylab.rel}{character; label to be used for y-axis in relative information panel} 
   \item{\dots}{further parameters for \code{plot}}
 }
 \details{

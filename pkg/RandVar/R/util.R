@@ -1,4 +1,3 @@
-## small util if imageDistr fails
 .getImageDistr <- function(f, distr){ 
     if (is(distr, "DiscreteDistribution"))
         return(DiscreteDistribution(prob=d(distr)(support(distr)), supp=f(support(distr))))
@@ -7,9 +6,19 @@
             xr <- r(distr)(n) 
             f(xr) 
         }
-        if(length(unique(rl(10000)))!=10000)
-           return(AbscontDistribution(r = rl, .withArith = TRUE, .withSim = TRUE))
-        else
-           return(UnivarLebDecDistribution(r = rl))
+
+        n <- 10^getdistrOption("RtoDPQ.e")+1
+        u <- seq(0,1,length=n+1); u <- (u[1:n]+u[2:(n+1)])/2
+        qd <- q(distr)
+        y <- f(qd(u))
+    
+        if(length(unique(c(rl(10000),y)))==10000+length(y)){
+           DPQnew <- RtoDPQ(r=rl, y=y)
+           return(AbscontDistribution(r = rl, d = DPQnew$d, p = DPQnew$p, 
+                                      q = DPQnew$q, .withArith = TRUE, 
+                                      .withSim = TRUE))
+        
+        }else
+           return(UnivarLebDecDistribution(r = rl, y = y))
     }
 }

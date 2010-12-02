@@ -8,6 +8,8 @@
 \alias{getInfRobIC,RealRandVariable,asBias,UncondNeighborhood-method}
 \alias{getInfRobIC,UnivariateDistribution,asHampel,UncondNeighborhood-method}
 \alias{getInfRobIC,RealRandVariable,asHampel,UncondNeighborhood-method}
+\alias{getInfRobIC,UnivariateDistribution,asAnscombe,UncondNeighborhood-method}
+\alias{getInfRobIC,RealRandVariable,asAnscombe,UncondNeighborhood-method}
 \alias{getInfRobIC,UnivariateDistribution,asGRisk,UncondNeighborhood-method}
 \alias{getInfRobIC,RealRandVariable,asGRisk,UncondNeighborhood-method}
 \alias{getInfRobIC,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method}
@@ -47,6 +49,18 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 
 \S4method{getInfRobIC}{RealRandVariable,asHampel,UncondNeighborhood}(L2deriv, risk,
                        neighbor, Distr, DistrSymm, L2derivSymm,
+                       L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE,
+                       z.start, A.start, upper = NULL, lower=NULL,
+                       OptOrIter = "iterate", maxiter, tol, warn,
+                       verbose = NULL, checkBounds = TRUE, ...)
+
+\S4method{getInfRobIC}{UnivariateDistribution,asAnscombe,UncondNeighborhood}(
+                       L2deriv, risk, neighbor, symm, Finfo, trafo, upper = NULL,
+                       lower=NULL, maxiter, tol, warn, noLow = FALSE,
+                       verbose = NULL, checkBounds = TRUE)
+
+\S4method{getInfRobIC}{RealRandVariable,asAnscombe,UncondNeighborhood}(L2deriv, 
+                       risk, neighbor, Distr, DistrSymm, L2derivSymm,
                        L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE,
                        z.start, A.start, upper = NULL, lower=NULL,
                        OptOrIter = "iterate", maxiter, tol, warn,
@@ -150,6 +164,22 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
   \item{L2deriv = "RealRandVariable", risk = "asHampel", 
         neighbor = "UncondNeighborhood"}{
     computes the optimally robust influence curve for L2 differentiable 
+    parametric families with unknown \eqn{k}-dimensional parameter 
+    (\eqn{k > 1}) where the underlying distribution is univariate;
+    for total variation neighborhoods only is implemented for the case
+    where there is a \eqn{1\times k}{1 x k} transformation \code{trafo}
+    matrix. }
+
+  \item{L2deriv = "UnivariateDistribution", risk = "asAnscombe", 
+        neighbor = "UncondNeighborhood"}{
+    computes the optimally bias-robust influence curve to given ARE in the
+    ideal model for L2 differentiable 
+    parametric families with unknown one-dimensional parameter. }
+
+  \item{L2deriv = "RealRandVariable", risk = "asAnscombe", 
+        neighbor = "UncondNeighborhood"}{
+    computes the optimally bias-robust influence curve to given ARE in the
+    ideal modelfor L2 differentiable 
     parametric families with unknown \eqn{k}-dimensional parameter 
     (\eqn{k > 1}) where the underlying distribution is univariate;
     for total variation neighborhoods only is implemented for the case

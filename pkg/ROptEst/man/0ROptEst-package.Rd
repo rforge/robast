@@ -12,12 +12,14 @@ using S4 classes and methods.
 \details{
 \tabular{ll}{
 Package: \tab ROptEst \cr
-Version: \tab 0.7 \cr
-Date: \tab 2009-09-04 \cr
-Depends: \tab R(>= 2.7.0), methods, distr(>= 2.0), distrEx(>= 2.0), distrMod(>= 2.0), RandVar(>= 0.6.4), RobAStBase \cr
+Version: \tab 0.8 \cr
+Date: \tab 2010-12-02 \cr
+Depends: \tab R(>= 2.7.0), methods, distr(>= 2.0), distrEx(>= 2.0),
+distrMod(>= 2.0), RandVar(>= 0.6.4), RobAStBase \cr
 LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
+SVNRevision: \tab 436 \cr
 }
 }
 \author{
