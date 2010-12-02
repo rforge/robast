@@ -8,6 +8,18 @@
  information)
 
 #######################################
+version 0.8
+#######################################
+
+BUG FIX:
++ roblox(): if only sd or mean is to be estimated, starting 
+  value mean.sd was not; similarly, in case only mean is of 
+  interest, robEst had no component est...
+
+  + DESCRIPTION files and package-help files gain a tag SVNRevision 
+  to be filled by get[All]RevNr.R from utils in distr
+
+#######################################
 version 0.7
 #######################################
 

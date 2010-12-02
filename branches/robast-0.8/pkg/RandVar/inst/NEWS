@@ -8,6 +8,20 @@
  information)
 
 #######################################
+version 0.8
+#######################################
+
+UNDER THE HOOD:
++ implemented Nataliyas quantile trick for RandVar (util).
++ changed some formatting errors in .Rd files and a 
+  little error in util.R
+
+
++ DESCRIPTION files and package-help files gain a tag SVNRevision 
+  to be filled by get[All]RevNr.R from utils in distr
+
+
+#######################################
 version 0.7
 #######################################
 

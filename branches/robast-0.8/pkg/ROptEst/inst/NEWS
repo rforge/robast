@@ -8,6 +8,93 @@
  information)
 
 #######################################
+version 0.8
+#######################################
+
+USER-VISIBLE CHANGES:
+
+  functions/classes:
+  + added new Risk class asAnscombe for determining OBRE to given ARE in 
+    the ideal model 
+  + now Anscombe-Risk also works with information standardization 
+   ( but is not suited for self-standardization!)
+
+  + new risk asL1 asL4 (for asy. mean absolute error and asy mean power 4 error) 
+    with generators etc
+
+  + new method get.asGRisk.fct to obtain a function in r,s,b (s=var^.5) 
+    to compute respective as. G-Risk
+  
+  + getAsRisk now has (almost) the same signature for different methods 
+    (so that in can easily be called when the actual risk is not clear)
+
+  + new helper methods makeIC to apply to functions or list of functions 
+         for easily producing (suboptimal) ICs
+
+  + new function getReq for two ICs IC1 and IC2 to compute a radius 
+    interval where IC1 is better than IC2 acc. to G-Risk
+
+  + new function getMaxIneff() to compute for any IC of class 
+    'IC' the maximal inefficiency on r in [0,Inf)
+
+  scripts/examples:
+  + uploaded Script for NbinomFamily
+  + added demo script for Normal Location case
+  + added calls to getMaxIneff() and getReq() in script to Normal Location
+  + examples for asAnscombe (see examples in inst folder (Binomial, Gamma, Nbinom, 
+    NormalLocationScale, NormalScale, Poisson);
+  + Integrated new example to getReq.Rd and new script AnscombeOrNot.R 
+
+  + some modifications/additions needed for the revised version 
+    of the corresponding manuscript.
+    names of added scripts were wrong ...
+
+  documentation:
+  + new references included in help files
+  + DESCRIPTION files and package-help files gain a tag SVNRevision 
+    to be filled by get[All]RevNr.R from utils in distr
+  
+  enhancements:
+  + filled Feature Request #919 / 
+         cniperPointPlot now digests arbitrary plot arguments.
+
+
+BUG FIXES
+
+  + fixed an issue with lower case solution in 
+    information/self-standardization;
+
+  + committed some missing Rd files for Anscombe class
+  + fixed some bug in Anscombe-risk for univariate L2deriv
+
+  + fixed a bug in multivariate version of getMaxIneff()
+    included respective examples to Rd file (with sin,cos-IC)
+  + a buglet in getInfClip.R
+
+  + fixed the asL1, asL4 issue --- getInfGamma beforehand was 
+         defined for asMSE not for asGRisk
+
+  + fixed two bugs in calculation of risks: 
+         trAsCov and asCov (for total variation)
+
+  + fixed a little bug in comparePlot if we want to plot pIC's
+ 
+  + fixed a buglet in asL1 asL4 risks
+
+  + fixed yet another buglet in asL1 risks
+
+  + fixed a little bug in getMaxIneff.R
+  + lower and upper interval bounds for search in clipping height 
+    in getInfRobIC_asGRisk.R are now selected differently for 
+    univariate L2-deriv according to whether risk is asMSE() or not
+   
+  + for restoring old par() values, not all attributes may 
+    be set; hence deleted them from stored value in plot 
+	functions by something like
+        opar$cin <- opar$cra <- opar$csi <- opar$cxy <-  opar$din <- NULL
+
+		 
+#######################################
 version 0.7
 #######################################
 
