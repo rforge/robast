@@ -235,7 +235,7 @@ setMethod("infoPlot", "IC",
             w0 <- getOption("warn")
             options(warn = -1)
             on.exit(options(warn = w0))
-            opar <- par()
+            opar <- par(no.readonly = TRUE)
             opar$cin <- opar$cra <- opar$csi <- opar$cxy <-  opar$din <- NULL
             if(mfColRow) on.exit(par(opar))
 #            if (!withSweave)
@@ -375,7 +375,7 @@ setMethod("infoPlot", "IC",
                do.call(lines, args=c(list(x.vec, absInfo, type = plty, 
                        lty = lty, lwd = lwd, col = col), dotsL))
                if(with.legend)
-                  legend(legend.location[[1]],
+               legend(legend.location[[1]],
                      legend = c("class. opt. IC", objectc), 
                      bg = legend.bg,
                      lty = c(ltyI, lty), col = c(colI, col), 
@@ -420,7 +420,7 @@ setMethod("infoPlot", "IC",
                     do.call(lines, args = c(list(x.vec, yc.vec, type = plty, 
                             lty = ltyI, col = colI, lwd = lwdI), dotsL))
                     if(with.legend)
-                       legend(legend.location[[i+in1to.draw]],
+                    legend(legend.location[[i+in1to.draw]],
                            bg = legend.bg,
                            legend = c("class. opt. IC", objectc),  
                            col = c(colI, col), lwd = c(lwdI, lwd),

@@ -226,7 +226,7 @@ setMethod("comparePlot", signature("IC","IC"),
         w0 <- getOption("warn")
         options(warn = -1)
         on.exit(options(warn = w0))
-        opar <- par()
+        opar <- par(no.readonly = TRUE)
         opar$cin <- opar$cra <- opar$csi <- opar$cxy <-  opar$din <- NULL
         if(mfColRow) on.exit(par(opar))
         

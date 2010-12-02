@@ -42,7 +42,7 @@ IlluminaSimStudy <- function(n, M, eps, seed = 123,
         ind <- sample(1:M, min(M, 20))
         if(plot1) dev.new()
         print(
-          stripplot(rep(1:min(M, 20), each = n) ~ as.vector(Mre[ind,]), 
+          stripplot(rep(1:20, each = 20) ~ as.vector(Mre[ind,]), 
                     ylab = "samples", xlab = "x", pch = 20,
                     main = "Randomly chosen samples")
         )
@@ -79,7 +79,7 @@ IlluminaSimStudy <- function(n, M, eps, seed = 123,
         abline(h = 0)
         boxplot(Ergebnis2, col = myCol, pch = 20, main = "Scale")
         abline(h = 1)
-        op <- par(mar = rep(2, 4))
+        op <- par(mar = rep(2, 4), no.readonly = TRUE)
         plot(c(0,1), c(1, 0), type = "n", axes = FALSE)
         legend("center", c("ML", "Med/MAD", "Illumina", "rmx"),
                fill = myCol, ncol = 4, cex = 1.5)

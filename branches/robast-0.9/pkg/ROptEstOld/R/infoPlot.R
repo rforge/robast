@@ -49,7 +49,7 @@ setMethod("infoPlot", "IC",
                 ncols <- ceiling(dims/nrows)
                 w0 <- options("warn")
                 options(warn = -1)
-                opar <- par()
+                opar <- par(no.readonly = TRUE)
                 devNew()
                 par(mfrow = c(nrows, ncols))
                 for(i in 1:dims){

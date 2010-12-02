@@ -72,7 +72,7 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.05,
         abline(h = 0)
         boxplot(Ergebnis2, col = myCol[c(1,2,4)], pch = 20, main = "Scale")
         abline(h = 1)
-        op <- par(mar = rep(2, 4))
+        op <- par(mar = rep(2, 4), no.readonly = TRUE)
         plot(c(0,1), c(1, 0), type = "n", axes = FALSE)
         legend("center", c("ML", "Med/MAD", "biweight", "rmx"),
                fill = myCol, ncol = 4, cex = 1.5)

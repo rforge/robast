@@ -37,7 +37,7 @@ setMethod("plot", "L2ParamFamily",
 
         w0 <- options("warn")
         options(warn = -1)            
-        opar <- par()
+        opar <- par(no.readonly = TRUE)
         devNew()
         nrows <- trunc(sqrt(dims))
         ncols <- ceiling(dims/nrows)

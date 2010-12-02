@@ -79,7 +79,7 @@ IlluminaSimStudy <- function(n, M, eps, seed = 123,
         abline(h = 0)
         boxplot(Ergebnis2, col = myCol, pch = 20, main = "Scale")
         abline(h = 1)
-        op <- par(mar = rep(2, 4))
+        op <- par(mar = rep(2, 4), no.readonly = TRUE)
         plot(c(0,1), c(1, 0), type = "n", axes = FALSE)
         legend("center", c("ML", "Med/MAD", "Illumina", "rmx"),
                fill = myCol, ncol = 4, cex = 1.5)
