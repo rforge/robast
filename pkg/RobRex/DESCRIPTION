@@ -1,10 +1,9 @@
 Package: RobRex
 Version: 0.8
-Date: 2010-12-02
+Date: 2010-12-03
 Title: Optimally robust influence curves for regression and scale
-Description: functions for the determination of optimally robust
-        influence curves in case of linear regression with unknown
-        scale and standard normal distributed errors where the
+Description: functions for the determination of optimally robust influence curves in case of
+        linear regression with unknown scale and standard normal distributed errors where the
         regressor is random.
 Depends: R (>= 2.4.0), ROptRegTS(>= 0.6.1)
 Author: Matthias Kohl <Matthias.Kohl@stamats.de>
@@ -13,7 +12,6 @@ LazyLoad: yes
 License: LGPL-3
 Encoding: latin1
 URL: http://robast.r-forge.r-project.org/
-LastChangedDate: {$LastChangedDate: 2009-11-01 11:47:36 +0100 (So, 01
-        Nov 2009) $}
+LastChangedDate: {$LastChangedDate$}
 LastChangedRevision: {$LastChangedRevision$}
-SVNRevision: 436
+SVNRevision: 439

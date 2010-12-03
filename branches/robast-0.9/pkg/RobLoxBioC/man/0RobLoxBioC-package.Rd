@@ -13,13 +13,13 @@ and estimators for preprocessing omics data, in particular gene expression data.
 \tabular{ll}{
 Package: \tab RobLoxBioC \cr
 Version: \tab 0.9 \cr
-Date: \tab 2010-12-02 \cr
+Date: \tab 2010-12-03 \cr
 Depends: \tab R(>= 2.8.1), methods, Biobase, affy, beadarray, distr, RobLox,
 lattice, RColorBrewer \cr
 LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 429 \cr
+SVNRevision: \tab 439 \cr
 }
 }
 \author{
