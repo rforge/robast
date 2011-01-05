@@ -1,7 +1,8 @@
 
-R version 2.10.0 Under development (unstable) (2009-08-31 r49488)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.12.1 Patched (2011-01-04 r53913)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -17,7 +18,7 @@ Type 'q()' to quit R.
 
 > library(RandVar)
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.7)
+:startupmsg>  Utilities for start-up messages (version 0.7.1)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
@@ -26,7 +27,7 @@ Loading required package: distr
 Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version 0.4)
+:SweaveListingUtils>  TeX listings package (version 0.5)
 :SweaveListingUtils> 
 :SweaveListingUtils>  Some functions from package 'base'
 :SweaveListingUtils>  are intentionally masked ---see
@@ -47,14 +48,12 @@ Loading required package: SweaveListingUtils
 
 Attaching package: 'SweaveListingUtils'
 
+The following object(s) are masked from 'package:base':
 
-	The following object(s) are masked from package:base :
+    library, require
 
-	 library,
-	 require 
-
-:distr>  Object orientated implementation of distributions (version
-:distr>  2.2)
+:distr>  Object oriented implementation of distributions (version
+:distr>  2.3)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -75,11 +74,9 @@ Attaching package: 'SweaveListingUtils'
 
 Attaching package: 'distr'
 
+The following object(s) are masked from 'package:stats':
 
-	The following object(s) are masked from package:stats :
-
-	 df,
-	 sd 
+    df, qqplot, sd
 
 Loading required package: distrEx
 Loading required package: evd
@@ -87,12 +84,11 @@ Loading required package: actuar
 
 Attaching package: 'actuar'
 
+The following object(s) are masked from 'package:grDevices':
 
-	The following object(s) are masked from package:grDevices :
+    cm
 
-	 cm 
-
-:distrEx>  Extensions of package distr (version 2.2)
+:distrEx>  Extensions of package distr (version 2.3)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
 :distrEx>  attached /before/ package "distrEx". See distrExMASK().
@@ -107,15 +103,11 @@ Attaching package: 'actuar'
 
 Attaching package: 'distrEx'
 
+The following object(s) are masked from 'package:stats':
 
-	The following object(s) are masked from package:stats :
+    IQR, mad, median, var
 
-	 IQR,
-	 mad,
-	 median,
-	 var 
-
-:RandVar>  Implementation of random variables (version 0.7)
+:RandVar>  Implementation of random variables (version 0.8)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -145,7 +137,7 @@ Range:	NULL
 function (x) 
 {
 }
-<environment: 0x4449680>
+<environment: 0x4a3a5a8>
 
 > Domain(R1)
 NULL
@@ -318,16 +310,16 @@ function (x)
 > Range(R4) <- EuclideanSpace(dimension = 2)
 > (X <- matrix(c(x, rnorm(10)), ncol = 2))
              [,1]       [,2]
- [1,] -0.23017749  0.3698373
- [2,]  1.55870831  1.2409212
- [3,]  0.07050839 -0.9586259
- [4,]  0.12928774 -0.7157439
- [5,]  1.71506499 -0.3035521
- [6,]  0.46091621 -1.0161404
- [7,] -1.26506123  0.2723583
- [8,] -0.68685285  1.5429931
- [9,] -0.44566197 -1.0066128
-[10,]  1.22408180  1.1973871
+ [1,] -0.23017749  0.3598138
+ [2,]  1.55870831  0.4007715
+ [3,]  0.07050839  0.1106827
+ [4,]  0.12928774 -0.5558411
+ [5,]  1.71506499  1.7869131
+ [6,]  0.46091621  0.4978505
+ [7,] -1.26506123 -1.9666172
+ [8,] -0.68685285  0.7013559
+ [9,] -0.44566197 -0.4727914
+[10,]  1.22408180 -1.0678237
 > res2.R4 <- evalRandVar(R4, X)
 > res2.R4[3,,1] # results for Map(R4)[[3]](X[,1])
  [1] -0.22815034  0.99992694  0.07044998  0.12892786  0.98961131  0.44476889
@@ -367,15 +359,15 @@ see 'distrARITH()'; for switching off this warning see '?distroptions'
 > 
 > res2.R5 <- evalRandVar(R5, X)
 > res2.R5[,,1,2] 
-[1] 1.4474990 0.3698373 0.3614637 0.0000000
+[1] 1.4330626 0.3598138 0.3521000 0.0000000
 > res2.R5[,1,2,1:2] 
          [,1]      [,2]
-[1,] 4.752678 3.4587982
-[2,] 1.558708 1.2409212
-[3,] 0.999927 0.9460828
-[4,] 1.000000 1.0000000
+[1,] 4.752678 1.4929760
+[2,] 1.558708 0.4007715
+[3,] 0.999927 0.3901288
+[4,] 1.000000 0.0000000
 > res2.R5[1,1,1:2,2]
-[1] 1.447499 3.458798
+[1] 1.433063 1.492976
 > 
 > new("EuclRandMatrix", Map = L2, Dim = as.integer(c(3,2)), Domain = Reals(), Range = Reals())
 An object of class "EuclRandMatrix" 
@@ -414,7 +406,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x4cfa6c0>
+<environment: 0x4aa9ec8>
 
 > dimension(R6)
 [1] 6
@@ -503,19 +495,19 @@ see 'distrARITH()'; for switching off this warning see '?distroptions'
 > ## "Math" group
 > system.time(Map(log(abs(R4))), gcFirst = TRUE)
    user  system elapsed 
-  0.004   0.000   0.002 
+  0.000   0.000   0.001 
 > system.time(Map(gamma(R7)), gcFirst = TRUE)
    user  system elapsed 
   0.000   0.000   0.003 
 > system.time(Map(exp(RL1)[[1]]), gcFirst = TRUE)
    user  system elapsed 
-  0.004   0.000   0.004 
+  0.000   0.000   0.004 
 > 
 > 
 > ## "Arith" group
 > system.time(Map(3 + R3), gcFirst = TRUE)
    user  system elapsed 
-  0.004   0.000   0.001 
+  0.000   0.000   0.001 
 > Map(c(1,3,5) * R3)
 [[1]]
 function (x) 
@@ -526,7 +518,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x635e9d8>
+<environment: 0x75ac100>
 
 [[2]]
 function (x) 
@@ -537,7 +529,7 @@ function (x)
     }
     3 * f2(x)
 }
-<environment: 0x635e9d8>
+<environment: 0x75ac100>
 
 [[3]]
 function (x) 
@@ -548,7 +540,7 @@ function (x)
     }
     5 * f2(x)
 }
-<environment: 0x635e9d8>
+<environment: 0x75ac100>
 
 [[4]]
 function (x) 
@@ -559,7 +551,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x635e9d8>
+<environment: 0x75ac100>
 
 Warning message:
 In c(1, 3, 5) * R3 :
@@ -577,7 +569,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x623ff28>
+<environment: 0x7b07730>
 
 [[2]]
 function (x) 
@@ -588,7 +580,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x623ff28>
+<environment: 0x7b07730>
 
 [[3]]
 function (x) 
@@ -599,7 +591,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x623ff28>
+<environment: 0x7b07730>
 
 [[4]]
 function (x) 
@@ -610,7 +602,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x623ff28>
+<environment: 0x7b07730>
 
 > Map(2/R6)
 [[1]]
@@ -622,7 +614,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x5d9d6c0>
+<environment: 0x82964a8>
 
 [[2]]
 function (x) 
@@ -633,7 +625,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x5d9d6c0>
+<environment: 0x82964a8>
 
 [[3]]
 function (x) 
@@ -644,7 +636,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x5d9d6c0>
+<environment: 0x82964a8>
 
 [[4]]
 function (x) 
@@ -655,7 +647,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x5d9d6c0>
+<environment: 0x82964a8>
 
 [[5]]
 function (x) 
@@ -666,7 +658,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x5d9d6c0>
+<environment: 0x82964a8>
 
 [[6]]
 function (x) 
@@ -677,7 +669,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x5d9d6c0>
+<environment: 0x82964a8>
 
 > Map(c(1,3,5) %% R6)
 [[1]]
@@ -689,7 +681,7 @@ function (x)
     }
     1%%f2(x)
 }
-<environment: 0x5c4be50>
+<environment: 0x7c55a08>
 
 [[2]]
 function (x) 
@@ -700,7 +692,7 @@ function (x)
     }
     3%%f2(x)
 }
-<environment: 0x5c4be50>
+<environment: 0x7c55a08>
 
 [[3]]
 function (x) 
@@ -711,7 +703,7 @@ function (x)
     }
     5%%f2(x)
 }
-<environment: 0x5c4be50>
+<environment: 0x7c55a08>
 
 [[4]]
 function (x) 
@@ -722,7 +714,7 @@ function (x)
     }
     1%%f2(x)
 }
-<environment: 0x5c4be50>
+<environment: 0x7c55a08>
 
 [[5]]
 function (x) 
@@ -733,7 +725,7 @@ function (x)
     }
     3%%f2(x)
 }
-<environment: 0x5c4be50>
+<environment: 0x7c55a08>
 
 [[6]]
 function (x) 
@@ -744,7 +736,7 @@ function (x)
     }
     5%%f2(x)
 }
-<environment: 0x5c4be50>
+<environment: 0x7c55a08>
 
 > Map(R4 - 5)
 [[1]]
@@ -756,7 +748,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x5bb6e98>
+<environment: 0x66c5ea0>
 
 [[2]]
 function (x) 
@@ -767,7 +759,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x5bb6e98>
+<environment: 0x66c5ea0>
 
 [[3]]
 function (x) 
@@ -778,7 +770,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x5bb6e98>
+<environment: 0x66c5ea0>
 
 [[4]]
 function (x) 
@@ -789,7 +781,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x5bb6e98>
+<environment: 0x66c5ea0>
 
 > Map(R6 %/% 2)
 [[1]]
@@ -801,7 +793,7 @@ function (x)
     }
     f1(x)%/%2
 }
-<environment: 0x59a8da8>
+<environment: 0x57888b8>
 
 [[2]]
 function (x) 
@@ -812,7 +804,7 @@ function (x)
     }
     f1(x)%/%2
 }
-<environment: 0x59a8da8>
+<environment: 0x57888b8>
 
 [[3]]
 function (x) 
@@ -823,7 +815,7 @@ function (x)
     }
     f1(x)%/%2
 }
-<environment: 0x59a8da8>
+<environment: 0x57888b8>
 
 [[4]]
 function (x) 
@@ -834,7 +826,7 @@ function (x)
     }
     f1(x)%/%2
 }
-<environment: 0x59a8da8>
+<environment: 0x57888b8>
 
 [[5]]
 function (x) 
@@ -845,7 +837,7 @@ function (x)
     }
     f1(x)%/%2
 }
-<environment: 0x59a8da8>
+<environment: 0x57888b8>
 
 [[6]]
 function (x) 
@@ -856,7 +848,7 @@ function (x)
     }
     f1(x)%/%2
 }
-<environment: 0x59a8da8>
+<environment: 0x57888b8>
 
 > Map(R3 ^ R3)
 [[1]]
@@ -872,7 +864,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x58c4140>
+<environment: 0x7094fe0>
 
 [[2]]
 function (x) 
@@ -887,7 +879,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x58c4140>
+<environment: 0x7094fe0>
 
 [[3]]
 function (x) 
@@ -902,7 +894,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x58c4140>
+<environment: 0x7094fe0>
 
 [[4]]
 function (x) 
@@ -917,7 +909,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x58c4140>
+<environment: 0x7094fe0>
 
 > Map(R7 * R7)
 [[1]]
@@ -933,7 +925,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x57689a8>
+<environment: 0x6f49c48>
 
 [[2]]
 function (x) 
@@ -948,7 +940,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x57689a8>
+<environment: 0x6f49c48>
 
 [[3]]
 function (x) 
@@ -963,7 +955,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x57689a8>
+<environment: 0x6f49c48>
 
 [[4]]
 function (x) 
@@ -978,7 +970,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x57689a8>
+<environment: 0x6f49c48>
 
 > Map((1 + RL1)[[1]])
 [[1]]
@@ -990,7 +982,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x567a828>
+<environment: 0x68575e8>
 
 [[2]]
 function (x) 
@@ -1001,7 +993,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x567a828>
+<environment: 0x68575e8>
 
 [[3]]
 function (x) 
@@ -1012,7 +1004,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x567a828>
+<environment: 0x68575e8>
 
 [[4]]
 function (x) 
@@ -1023,7 +1015,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x567a828>
+<environment: 0x68575e8>
 
 > Map((RL1 * 2)[[2]])
 [[1]]
@@ -1035,7 +1027,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x52d6a08>
+<environment: 0x602c390>
 
 [[2]]
 function (x) 
@@ -1046,7 +1038,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x52d6a08>
+<environment: 0x602c390>
 
 [[3]]
 function (x) 
@@ -1057,7 +1049,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x52d6a08>
+<environment: 0x602c390>
 
 [[4]]
 function (x) 
@@ -1068,7 +1060,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x52d6a08>
+<environment: 0x602c390>
 
 [[5]]
 function (x) 
@@ -1079,7 +1071,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x52d6a08>
+<environment: 0x602c390>
 
 [[6]]
 function (x) 
@@ -1090,11 +1082,11 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x52d6a08>
+<environment: 0x602c390>
 
 > system.time(Map((RL1 %% RL1)[[3]]), gcFirst = TRUE)
    user  system elapsed 
-  0.012   0.000   0.009 
+  0.010   0.000   0.007 
 > 
 > 
 > ## "%*%"
@@ -1164,7 +1156,7 @@ function (x)
     }
     f1(x) + c(13L, 15L) %*% f2(x)
 }
-<environment: 0x5c39bf8>
+<environment: 0x7c4a790>
 > M1[2,]
 [1]  2  4  6  8 10 12 14 16
 > Map(R8)[[2]]
@@ -1200,7 +1192,7 @@ function (x)
     }
     f1(x) + c(14L, 16L) %*% f2(x)
 }
-<environment: 0x5c39bf8>
+<environment: 0x7c4a790>
 > M2 <- matrix(1:2, ncol = 2)
 > (R9 <- M2 %*% R7)
 An object of class "EuclRandMatrix" 
@@ -1250,7 +1242,7 @@ function (x)
     }
     f1(x) + 2L %*% f2(x)
 }
-<environment: 0x5304a10>
+<environment: 0x70027a8>
 
 [[2]]
 function (x) 
@@ -1269,7 +1261,7 @@ function (x)
     }
     f1(x) + 2L %*% f2(x)
 }
-<environment: 0x577b3a8>
+<environment: 0x6f2f2b0>
 
 > Map(1:4 %*% R3) # inner product
 [[1]]
@@ -1305,7 +1297,7 @@ function (x)
     }
     f1(x) + 4L %*% f2(x)
 }
-<environment: 0x5571f58>
+<environment: 0x6c06b50>
 
 > Map(1:2 %*% R7) # corresponds to Map(t(1:2) %*% R7)
 [[1]]
@@ -1325,7 +1317,7 @@ function (x)
     }
     f1(x) + 2L %*% f2(x)
 }
-<environment: 0x52d4498>
+<environment: 0x5e96f00>
 
 [[2]]
 function (x) 
@@ -1344,7 +1336,7 @@ function (x)
     }
     f1(x) + 2L %*% f2(x)
 }
-<environment: 0x517ad88>
+<environment: 0x5711a20>
 
 > Map(R4 %*% 1:8) # inner product
 [[1]]
@@ -1416,7 +1408,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x4cf2450>
+<environment: 0x4ee27d8>
 
 > Map(R9 %*% 3:4)
 [[1]]
@@ -1472,7 +1464,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x4984f30>
+<environment: 0x4d8d180>
 
 > Map(R9 %*% matrix(1:4, nrow = 2))
 [[1]]
@@ -1528,7 +1520,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x464d5b0>
+<environment: 0x4b741d0>
 
 [[2]]
 function (x) 
@@ -1583,7 +1575,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x464d5b0>
+<environment: 0x4b741d0>
 
 > (R10 <- R3 %*% matrix(1:16, ncol = 4))
 An object of class "EuclRandMatrix" 
@@ -1628,7 +1620,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x43c0c90>
+<environment: 0x468a410>
 
 [[2]]
 function (x) 
@@ -1667,7 +1659,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x43c0c90>
+<environment: 0x468a410>
 
 [[3]]
 function (x) 
@@ -1706,7 +1698,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x43c0c90>
+<environment: 0x468a410>
 
 [[4]]
 function (x) 
@@ -1745,7 +1737,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x43c0c90>
+<environment: 0x468a410>
 
 > R3 %*% R3 # inner product
 An object of class "EuclRandMatrix" 
@@ -1759,7 +1751,7 @@ Domain:	Real Space with dimension 1
 Range:	Euclidean Space with dimension 1 
 > system.time(R9 %*% R7, gcFirst = TRUE)
    user  system elapsed 
-  0.008   0.000   0.007 
+  0.010   0.000   0.005 
 > (RL3 <- diag(dimension(RL1)) %*% RL1)
 An object of class "EuclRandMatrix" 
 Dim of Map:	 14 1 
@@ -1770,46 +1762,48 @@ Range:	Real Space with dimension 1
 > ## %m% "matrix multiplication" for 'EuclRandVarList'
 > system.time(RL4 <- EuclRandVarList(t(R3[1:2]), R7) %m% EuclRandVarList(R6, R9), gcFirst = TRUE)
    user  system elapsed 
-  0.044   0.000   0.042 
+  0.040   0.000   0.032 
 > 
 > ## integration
 > MVD <- DiscreteMVDistribution(supp = matrix(c(r(Pois(5))(10), r(Pois(5))(10)), ncol = 2))
+Warning message:
+In DiscreteMVDistribution(supp = matrix(c(r(Pois(5))(10), r(Pois(5))(10)),  :
+  collapsing to unique support values
 > support(MVD)
       [,1] [,2]
- [1,]   11    6
- [2,]    8    4
- [3,]    9    5
+ [1,]    4    7
+ [2,]    4    2
+ [3,]    3    5
  [4,]    3    3
- [5,]    6    3
- [6,]    7    6
- [7,]    4    8
- [8,]    3    7
- [9,]    3   13
-[10,]    3    2
+ [5,]    5    6
+ [6,]    4    8
+ [7,]    7    4
+ [8,]    2    6
+ [9,]    5    2
 > E(MVD)
-[1] 5.7 5.7
+[1] 4.0 4.6
 > E(as(MVD, "MultivariateDistribution"))
-[1] 5.70241 5.69731
+[1] 3.99729 4.59816
 > E(MVD, function(x){x})
-[1] 5.7 5.7
+[1] 4.0 4.6
 > E(MVD, function(x){x}, useApply = FALSE)
-[1] 5.7 5.7
+[1] 4.0 4.6
 > E(as(MVD, "MultivariateDistribution"), function(x){x})
-[1] 5.69529 5.69398
+[1] 3.99545 4.59789
 > E(as(MVD, "MultivariateDistribution"), function(x){x}, useApply = FALSE)
-[1] 5.67882 5.70771
+[1] 3.99748 4.60623
 > E(MVD, function(x){x^2})
-[1] 40.3 41.7
+[1] 17.8 25.2
 > E(as(MVD, "MultivariateDistribution"), function(x){x^2}, useApply = FALSE)
-[1] 40.50256 41.48984
+[1] 17.79446 25.17427
 > E(MVD, function(x){x %*% t(x)})
      [,1] [,2]
-[1,] 40.3 31.0
-[2,] 31.0 41.7
+[1,] 17.8 18.1
+[2,] 18.1 25.2
 > E(as(MVD, "MultivariateDistribution"), function(x){x %*% t(x)})
          [,1]     [,2]
-[1,] 40.22360 30.94938
-[2,] 30.94938 41.66326
+[1,] 17.82483 18.11391
+[2,] 18.11391 25.21390
 > 
 > R1 <- RealRandVariable(list(function(x){x}, function(x){x^2}), Domain = Reals())
 > R2 <- EuclRandMatrix(list(function(x){x}, function(x){x^2}), ncol = 1, Domain = Reals(), dimension = 1)
@@ -1849,48 +1843,48 @@ Range:	Real Space with dimension 1
 > R2 <- EuclRandMatrix(list(function(x){x}, function(x){x^2}), ncol = 1, Domain = EuclideanSpace(2), dimension = 2)
 > E(MVD, R1)
      [,1] [,2]
-[1,]  5.7  5.7
-[2,] 40.3 41.7
+[1,]  4.0  4.6
+[2,] 17.8 25.2
 > E(MVD, R1, useApply = FALSE)
      [,1] [,2]
-[1,]  5.7  5.7
-[2,] 40.3 41.7
+[1,]  4.0  4.6
+[2,] 17.8 25.2
 > E(MVD, R2)[1:2,,]
      [,1] [,2]
-[1,]  5.7  5.7
-[2,] 40.3 41.7
+[1,]  4.0  4.6
+[2,] 17.8 25.2
 > E(MVD, R2, useApply = FALSE)[1:2,,]
      [,1] [,2]
-[1,]  5.7  5.7
-[2,] 40.3 41.7
+[1,]  4.0  4.6
+[2,] 17.8 25.2
 > R3 <- EuclRandVarList(R1, R2)
 > E1 <- E(MVD, R3)
 > E1[[1]]
      [,1] [,2]
-[1,]  5.7  5.7
-[2,] 40.3 41.7
+[1,]  4.0  4.6
+[2,] 17.8 25.2
 > E1[[2]][1:2,,]
      [,1] [,2]
-[1,]  5.7  5.7
-[2,] 40.3 41.7
+[1,]  4.0  4.6
+[2,] 17.8 25.2
 > E(MVD, R3, useApply = FALSE)
 [[1]]
      [,1] [,2]
-[1,]  5.7  5.7
-[2,] 40.3 41.7
+[1,]  4.0  4.6
+[2,] 17.8 25.2
 
 [[2]]
 , , 1
 
      [,1]
-[1,]  5.7
-[2,] 40.3
+[1,]  4.0
+[2,] 17.8
 
 , , 2
 
      [,1]
-[1,]  5.7
-[2,] 41.7
+[1,]  4.6
+[2,] 25.2
 
 
 > 
