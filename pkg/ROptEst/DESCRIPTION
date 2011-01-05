@@ -6,6 +6,7 @@ Description: Optimally robust estimation in general smoothly parameterized model
         classes and methods.
 Depends: R(>= 2.7.0), methods, distr(>= 2.0), distrEx(>= 2.0), distrMod(>= 2.0), RandVar(>=
         0.6.4), RobAStBase
+Suggests: MASS, RobLox
 Author: Matthias Kohl, Peter Ruckdeschel
 Maintainer: Matthias Kohl <Matthias.Kohl@stamats.de>
 LazyLoad: yes
