@@ -1,7 +1,8 @@
 
-R version 2.10.0 beta (2009-10-15 r50107)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.12.1 Patched (2011-01-04 r53913)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -17,78 +18,13 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> ### * <HEADER>
-> ###
-> attach(NULL, name = "CheckExEnv")
-> assign("nameEx",
-+        local({
-+ 	   s <- "__{must remake R-ex/*.R}__"
-+            function(new) {
-+                if(!missing(new)) s <<- new else s
-+            }
-+        }),
-+        pos = "CheckExEnv")
-> ## Add some hooks to label plot pages for base and grid graphics
-> assign("base_plot_hook",
-+        function() {
-+            pp <- par(c("mfg","mfcol","oma","mar"))
-+            if(all(pp$mfg[1:2] == c(1, pp$mfcol[2]))) {
-+                outer <- (oma4 <- pp$oma[4]) > 0; mar4 <- pp$mar[4]
-+                mtext(sprintf("help(\"%s\")", nameEx()), side = 4,
-+                      line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
-+                outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
-+            }
-+        },
-+        pos = "CheckExEnv")
-> assign("grid_plot_hook",
-+        function() {
-+            grid::pushViewport(grid::viewport(width=grid::unit(1, "npc") -
-+                               grid::unit(1, "lines"), x=0, just="left"))
-+            grid::grid.text(sprintf("help(\"%s\")", nameEx()),
-+                            x=grid::unit(1, "npc") + grid::unit(0.5, "lines"),
-+                            y=grid::unit(0.8, "npc"), rot=90,
-+                            gp=grid::gpar(col="orchid"))
-+        },
-+        pos = "CheckExEnv")
-> setHook("plot.new",     get("base_plot_hook", pos = "CheckExEnv"))
-> setHook("persp",        get("base_plot_hook", pos = "CheckExEnv"))
-> setHook("grid.newpage", get("grid_plot_hook", pos = "CheckExEnv"))
-> assign("cleanEx",
-+        function(env = .GlobalEnv) {
-+ 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
-+            RNGkind("default", "default")
-+ 	   set.seed(1)
-+    	   options(warn = 1)
-+ 	   .CheckExEnv <- as.environment("CheckExEnv")
-+ 	   delayedAssign("T", stop("T used instead of TRUE"),
-+ 		  assign.env = .CheckExEnv)
-+ 	   delayedAssign("F", stop("F used instead of FALSE"),
-+ 		  assign.env = .CheckExEnv)
-+ 	   sch <- search()
-+ 	   newitems <- sch[! sch %in% .oldSearch]
-+ 	   for(item in rev(newitems))
-+                eval(substitute(detach(item), list(item=item)))
-+ 	   missitems <- .oldSearch[! .oldSearch %in% sch]
-+ 	   if(length(missitems))
-+ 	       warning("items ", paste(missitems, collapse=", "),
-+ 		       " have been removed from the search path")
-+        },
-+        pos = "CheckExEnv")
-> assign("ptime", proc.time(), pos = "CheckExEnv")
-> ## at least one package changes these via ps.options(), so do this
-> ## before loading the package.
-> ## Use postscript as incomplete files may be viewable, unlike PDF.
-> ## Choose a size that is close to on-screen devices, fix paper
-> grDevices::ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
-> grDevices::postscript("RobLox-Ex.ps")
-> 
-> assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
-> options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
+> pkgname <- "RobLox"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
 > library('RobLox')
 Loading required package: distrMod
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.7)
+:startupmsg>  Utilities for start-up messages (version 0.7.1)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
@@ -97,7 +33,7 @@ Loading required package: distr
 Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version 0.4)
+:SweaveListingUtils>  TeX listings package (version 0.5)
 :SweaveListingUtils> 
 :SweaveListingUtils>  Some functions from package 'base'
 :SweaveListingUtils>  are intentionally masked ---see
@@ -118,14 +54,12 @@ Loading required package: SweaveListingUtils
 
 Attaching package: 'SweaveListingUtils'
 
+The following object(s) are masked from 'package:base':
 
-	The following object(s) are masked from package:base :
+    library, require
 
-	 library,
-	 require 
-
-:distr>  Object orientated implementation of distributions (version
-:distr>  2.2)
+:distr>  Object oriented implementation of distributions (version
+:distr>  2.3)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -146,12 +80,9 @@ Attaching package: 'SweaveListingUtils'
 
 Attaching package: 'distr'
 
+The following object(s) are masked from 'package:stats':
 
-	The following object(s) are masked from package:stats :
-
-	 df,
-	 qqplot,
-	 sd 
+    df, qqplot, sd
 
 Loading required package: distrEx
 Loading required package: evd
@@ -159,12 +90,11 @@ Loading required package: actuar
 
 Attaching package: 'actuar'
 
+The following object(s) are masked from 'package:grDevices':
 
-	The following object(s) are masked from package:grDevices :
+    cm
 
-	 cm 
-
-:distrEx>  Extensions of package distr (version 2.2)
+:distrEx>  Extensions of package distr (version 2.3)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
 :distrEx>  attached /before/ package "distrEx". See distrExMASK().
@@ -179,16 +109,12 @@ Attaching package: 'actuar'
 
 Attaching package: 'distrEx'
 
+The following object(s) are masked from 'package:stats':
 
-	The following object(s) are masked from package:stats :
-
-	 IQR,
-	 mad,
-	 median,
-	 var 
+    IQR, mad, median, var
 
 Loading required package: RandVar
-:RandVar>  Implementation of random variables (version 0.7)
+:RandVar>  Implementation of random variables (version 0.8)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -198,8 +124,8 @@ Loading required package: RandVar
 
 Loading required package: MASS
 Loading required package: stats4
-:distrMod>  Object orientated implementation of probability models
-:distrMod>  (version 2.2)
+:distrMod>  Object oriented implementation of probability models
+:distrMod>  (version 2.3)
 :distrMod> 
 :distrMod>  Some functions from pkg's 'base' and 'stats' are
 :distrMod>  intentionally masked ---see distrModMASK().
@@ -210,25 +136,30 @@ Loading required package: stats4
 :distrMod>  For more information see ?"distrMod",
 :distrMod>  NEWS("distrMod"), as well as
 :distrMod>    http://distr.r-forge.r-project.org/
-:distrMod>  Package "distrDoc" provides a vignette to this package
+:distrMod>  There is a vignette to this package; try
+:distrMod>  vignette("distrMod").
+:distrMod>  Package "distrDoc" provides a vignette to the other
+:distrMod>  distrXXX packages,
 :distrMod>  as well as to several related packages; try
 :distrMod>  vignette("distr").
 
 
 Attaching package: 'distrMod'
 
+The following object(s) are masked from 'package:stats4':
 
-	The following object(s) are masked from package:stats4 :
+    confint
 
-	 confint 
+The following object(s) are masked from 'package:stats':
 
+    confint
 
-	The following object(s) are masked from package:stats :
+The following object(s) are masked from 'package:base':
 
-	 confint 
+    norm
 
 Loading required package: RobAStBase
-:RobAStBase>  Robust Asymptotic Statistics (version 0.7)
+:RobAStBase>  Robust Asymptotic Statistics (version 0.8)
 :RobAStBase> 
 :RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
 :RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
@@ -243,20 +174,18 @@ Loading required package: RobAStBase
 
 Attaching package: 'RobAStBase'
 
+The following object(s) are masked from 'package:stats':
 
-	The following object(s) are masked from package:stats :
+    start
 
-	 start 
+The following object(s) are masked from 'package:graphics':
 
-
-	The following object(s) are masked from package:graphics :
-
-	 clip 
+    clip
 
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
-> assign(".oldNS", loadedNamespaces(), pos = 'CheckExEnv')
-> cleanEx(); nameEx("0RobLox-package")
+> cleanEx()
+> nameEx("0RobLox-package")
 > ### * 0RobLox-package
 > 
 > flush(stderr()); flush(stdout())
@@ -361,10 +290,10 @@ sd      0  1
 precision of centering:	 8.833545e-17 1.265596e-05 
 precision of Fisher consistency:
              mean            sd
-mean 1.637539e-05 -1.822532e-17
+mean 1.652391e-05 -1.822532e-17
 sd   3.168531e-17 -8.653862e-07
 maximum deviation 
-     1.637539e-05 
+     1.652391e-05 
 > Risks(pIC(res))
 $asMSE
 [1] 2.385308
@@ -426,7 +355,11 @@ steps:
 > 
 > 
 > 
-> cleanEx(); nameEx("finiteSampleCorrection")
+> cleanEx()
+
+detaching ‘package:Biobase’
+
+> nameEx("finiteSampleCorrection")
 > ### * finiteSampleCorrection
 > 
 > flush(stderr()); flush(stdout())
@@ -447,7 +380,8 @@ steps:
 > 
 > 
 > 
-> cleanEx(); nameEx("rlOptIC")
+> cleanEx()
+> nameEx("rlOptIC")
 > ### * rlOptIC
 > 
 > flush(stderr()); flush(stdout())
@@ -490,7 +424,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.AL")
+> cleanEx()
+> nameEx("rlsOptIC.AL")
 > ### * rlsOptIC.AL
 > 
 > flush(stderr()); flush(stdout())
@@ -503,16 +438,16 @@ $asCov
 > ### ** Examples
 > 
 > IC1 <- rlsOptIC.AL(r = 0.1, check = TRUE)
-Fisher consistency of eta.loc:	 -1.743714e-10 
-centering of eta.sc:	 -3.903789e-10 
-Fisher consistency of eta.sc:	 2.926104e-09 
+Fisher consistency of eta.loc:	 -1.743783e-10 
+centering of eta.sc:	 -3.904033e-10 
+Fisher consistency of eta.sc:	 2.926179e-09 
 MSE equation:	 1.207368e-14 
 > distrExOptions("ErelativeTolerance" = 1e-12)
 > checkIC(IC1)
-precision of centering:	 0 -6.039298e-07 
+precision of centering:	 0 -6.039278e-07 
 precision of Fisher consistency:
               mean            sd
-mean -1.102483e-06  0.000000e+00
+mean -1.102480e-06  0.000000e+00
 sd    0.000000e+00 -1.685676e-05
 maximum deviation 
      1.685676e-05 
@@ -667,7 +602,7 @@ An object of class “ContIC”
 ### param:	An object of class "ParamFamParameter"
 name:	location and scale
 mean:	-0.116397459115411
-sd:	0.936468369096108
+sd:	0.936468369096109
 trafo:
      mean sd
 mean    1  0
@@ -731,8 +666,8 @@ An object of class “ContIC”
 ### L2-differentiable parametric family:	 normal location and scale family 
 ### param:	An object of class "ParamFamParameter"
 name:	location and scale
-mean:	-0.119480464646405
-sd:	0.931855339791047
+mean:	-0.119480464646407
+sd:	0.931855339791096
 trafo:
      mean sd
 mean    1  0
@@ -792,8 +727,8 @@ An object of class “ContIC”
 ### L2-differentiable parametric family:	 normal location and scale family 
 ### param:	An object of class "ParamFamParameter"
 name:	location and scale
-mean:	-0.120062158553751
-sd:	0.926377018794555
+mean:	-0.120062158553744
+sd:	0.926377018794616
 trafo:
      mean sd
 mean    1  0
@@ -823,7 +758,8 @@ steps:
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.An1")
+> cleanEx()
+> nameEx("rlsOptIC.An1")
 > ### * rlsOptIC.An1
 > 
 > flush(stderr()); flush(stdout())
@@ -863,7 +799,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.An2")
+> cleanEx()
+> nameEx("rlsOptIC.An2")
 > ### * rlsOptIC.An2
 > 
 > flush(stderr()); flush(stdout())
@@ -903,7 +840,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.AnMad")
+> cleanEx()
+> nameEx("rlsOptIC.AnMad")
 > ### * rlsOptIC.AnMad
 > 
 > flush(stderr()); flush(stdout())
@@ -943,7 +881,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.BM")
+> cleanEx()
+> nameEx("rlsOptIC.BM")
 > ### * rlsOptIC.BM
 > 
 > flush(stderr()); flush(stdout())
@@ -961,9 +900,9 @@ precision of centering:	 0 -1.246469e-06
 precision of Fisher consistency:
               mean            sd
 mean -2.355426e-06  0.000000e+00
-sd    0.000000e+00 -1.732518e-05
+sd    0.000000e+00 -1.737383e-05
 maximum deviation 
-     1.732518e-05 
+     1.737383e-05 
 > Risks(IC1)
 $asMSE
 [1] 1.659506
@@ -986,7 +925,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.Ha3")
+> cleanEx()
+> nameEx("rlsOptIC.Ha3")
 > ### * rlsOptIC.Ha3
 > 
 > flush(stderr()); flush(stdout())
@@ -1000,7 +940,7 @@ $asCov
 > 
 > IC1 <- rlsOptIC.Ha3(r = 0.1)
 > checkIC(IC1)
-precision of centering:	 0 -3.191376e-07 
+precision of centering:	 0 -2.659214e-07 
 precision of Fisher consistency:
               mean           sd
 mean -8.538336e-07  0.00000e+00
@@ -1026,7 +966,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.Ha4")
+> cleanEx()
+> nameEx("rlsOptIC.Ha4")
 > ### * rlsOptIC.Ha4
 > 
 > flush(stderr()); flush(stdout())
@@ -1066,7 +1007,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.HaMad")
+> cleanEx()
+> nameEx("rlsOptIC.HaMad")
 > ### * rlsOptIC.HaMad
 > 
 > flush(stderr()); flush(stdout())
@@ -1106,7 +1048,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.Hu1")
+> cleanEx()
+> nameEx("rlsOptIC.Hu1")
 > ### * rlsOptIC.Hu1
 > 
 > flush(stderr()); flush(stdout())
@@ -1146,7 +1089,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.Hu2")
+> cleanEx()
+> nameEx("rlsOptIC.Hu2")
 > ### * rlsOptIC.Hu2
 > 
 > flush(stderr()); flush(stdout())
@@ -1186,7 +1130,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.Hu2a")
+> cleanEx()
+> nameEx("rlsOptIC.Hu2a")
 > ### * rlsOptIC.Hu2a
 > 
 > flush(stderr()); flush(stdout())
@@ -1226,7 +1171,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.Hu3")
+> cleanEx()
+> nameEx("rlsOptIC.Hu3")
 > ### * rlsOptIC.Hu3
 > 
 > flush(stderr()); flush(stdout())
@@ -1266,7 +1212,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.HuMad")
+> cleanEx()
+> nameEx("rlsOptIC.HuMad")
 > ### * rlsOptIC.HuMad
 > 
 > flush(stderr()); flush(stdout())
@@ -1306,7 +1253,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.M")
+> cleanEx()
+> nameEx("rlsOptIC.M")
 > ### * rlsOptIC.M
 > 
 > flush(stderr()); flush(stdout())
@@ -1321,14 +1269,14 @@ $asCov
 > IC1 <- rlsOptIC.M(r = 0.1, check = TRUE)
 constraint a1:	 4.682285e-09 
 constraint a3:	 -1.033529e-08 
-MSE equation:	 -3.383432e-12 
+MSE equation:	 -3.383516e-12 
 > distrExOptions("ErelativeTolerance" = 1e-12)
 > checkIC(IC1, NormLocationScaleFamily())
-precision of centering:	 4.477089e-21 9.579943e-06 
+precision of centering:	 -1.418367e-20 9.579943e-06 
 precision of Fisher consistency:
              mean            sd
-mean 1.646253e-05 -6.441669e-21
-sd   4.846244e-21  2.094876e-05
+mean 1.646253e-05 -8.358660e-22
+sd   1.313976e-21  2.094876e-05
 maximum deviation 
      2.094876e-05 
 > distrExOptions("ErelativeTolerance" = .Machine$double.eps^0.25)
@@ -1351,7 +1299,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.MM2")
+> cleanEx()
+> nameEx("rlsOptIC.MM2")
 > ### * rlsOptIC.MM2
 > 
 > flush(stderr()); flush(stdout())
@@ -1391,7 +1340,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.Tu1")
+> cleanEx()
+> nameEx("rlsOptIC.Tu1")
 > ### * rlsOptIC.Tu1
 > 
 > flush(stderr()); flush(stdout())
@@ -1431,7 +1381,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.Tu2")
+> cleanEx()
+> nameEx("rlsOptIC.Tu2")
 > ### * rlsOptIC.Tu2
 > 
 > flush(stderr()); flush(stdout())
@@ -1445,7 +1396,7 @@ $asCov
 > 
 > IC1 <- rlsOptIC.Tu2(r = 0.1)
 > checkIC(IC1)
-precision of centering:	 0 -1.429842e-07 
+precision of centering:	 0 -3.919236e-07 
 precision of Fisher consistency:
               mean            sd
 mean -5.447399e-07  0.000000e+00
@@ -1471,7 +1422,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("rlsOptIC.TuMad")
+> cleanEx()
+> nameEx("rlsOptIC.TuMad")
 > ### * rlsOptIC.TuMad
 > 
 > flush(stderr()); flush(stdout())
@@ -1511,7 +1463,8 @@ $asCov
 > 
 > 
 > 
-> cleanEx(); nameEx("roblox")
+> cleanEx()
+> nameEx("roblox")
 > ### * roblox
 > 
 > flush(stderr()); flush(stdout())
@@ -1669,10 +1622,10 @@ sd      0  1
 precision of centering:	 8.833545e-17 1.265596e-05 
 precision of Fisher consistency:
              mean            sd
-mean 1.637539e-05 -1.822532e-17
+mean 1.652391e-05 -1.822532e-17
 sd   3.168531e-17 -8.653862e-07
 maximum deviation 
-     1.637539e-05 
+     1.652391e-05 
 > Risks(pIC(res2))
 $asMSE
 [1] 2.385308
@@ -1771,10 +1724,10 @@ generated by call
 samplesize:   100
 estimate:
        mean          sd 
--0.07184595  0.88700536 
+-0.06995363  0.89265661 
 Criterion:
 CvM distance 
-  0.02346989 
+  0.02436665 
 > 
 > # optimally robust (amount of gross errors known)
 > roblox(x, eps = 0.05, initial.est = estimate(CvM.est))
@@ -1786,12 +1739,12 @@ generated by call
 samplesize:   100
 estimate:
       mean           sd     
-  -0.11409017    0.89686374 
- ( 0.10229604) ( 0.07594104)
+  -0.11421421    0.89779415 
+ ( 0.10240216) ( 0.07601982)
 asymptotic (co)variance (multiplied with samplesize):
          [,1]      [,2]
-[1,] 1.046448 0.0000000
-[2,] 0.000000 0.5767041
+[1,] 1.048620 0.0000000
+[2,] 0.000000 0.5779013
 Infos:
      method  
 [1,] "roblox"
@@ -1799,13 +1752,14 @@ Infos:
 [1,] "finite-sample corrected optimally robust estimate for contamination 'eps' = 0.05 and 'asMSE'"
 asymptotic bias:
       sd 
-1.027791 
+1.028857 
 steps:
 [1] 1
 > 
 > 
 > 
-> cleanEx(); nameEx("rowRoblox")
+> cleanEx()
+> nameEx("rowRoblox")
 > ### * rowRoblox
 > 
 > flush(stderr()); flush(stdout())
@@ -2156,7 +2110,11 @@ steps:
 > 
 > 
 > 
-> cleanEx(); nameEx("rsOptIC")
+> cleanEx()
+
+detaching ‘package:Biobase’
+
+> nameEx("rsOptIC")
 > ### * rsOptIC
 > 
 > flush(stderr()); flush(stdout())
@@ -2202,7 +2160,7 @@ $asCov
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  73.524 0.192 111.277 0.004 0.004 
+Time elapsed:  63.3 0.31 63.862 0 0 
 > grDevices::dev.off()
 null device 
           1 
