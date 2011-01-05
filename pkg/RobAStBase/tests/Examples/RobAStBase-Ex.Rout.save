@@ -1,7 +1,8 @@
 
-R version 2.10.0 beta (2009-10-15 r50107)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.12.1 Patched (2011-01-04 r53913)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -17,78 +18,13 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> ### * <HEADER>
-> ###
-> attach(NULL, name = "CheckExEnv")
-> assign("nameEx",
-+        local({
-+ 	   s <- "__{must remake R-ex/*.R}__"
-+            function(new) {
-+                if(!missing(new)) s <<- new else s
-+            }
-+        }),
-+        pos = "CheckExEnv")
-> ## Add some hooks to label plot pages for base and grid graphics
-> assign("base_plot_hook",
-+        function() {
-+            pp <- par(c("mfg","mfcol","oma","mar"))
-+            if(all(pp$mfg[1:2] == c(1, pp$mfcol[2]))) {
-+                outer <- (oma4 <- pp$oma[4]) > 0; mar4 <- pp$mar[4]
-+                mtext(sprintf("help(\"%s\")", nameEx()), side = 4,
-+                      line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
-+                outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
-+            }
-+        },
-+        pos = "CheckExEnv")
-> assign("grid_plot_hook",
-+        function() {
-+            grid::pushViewport(grid::viewport(width=grid::unit(1, "npc") -
-+                               grid::unit(1, "lines"), x=0, just="left"))
-+            grid::grid.text(sprintf("help(\"%s\")", nameEx()),
-+                            x=grid::unit(1, "npc") + grid::unit(0.5, "lines"),
-+                            y=grid::unit(0.8, "npc"), rot=90,
-+                            gp=grid::gpar(col="orchid"))
-+        },
-+        pos = "CheckExEnv")
-> setHook("plot.new",     get("base_plot_hook", pos = "CheckExEnv"))
-> setHook("persp",        get("base_plot_hook", pos = "CheckExEnv"))
-> setHook("grid.newpage", get("grid_plot_hook", pos = "CheckExEnv"))
-> assign("cleanEx",
-+        function(env = .GlobalEnv) {
-+ 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
-+            RNGkind("default", "default")
-+ 	   set.seed(1)
-+    	   options(warn = 1)
-+ 	   .CheckExEnv <- as.environment("CheckExEnv")
-+ 	   delayedAssign("T", stop("T used instead of TRUE"),
-+ 		  assign.env = .CheckExEnv)
-+ 	   delayedAssign("F", stop("F used instead of FALSE"),
-+ 		  assign.env = .CheckExEnv)
-+ 	   sch <- search()
-+ 	   newitems <- sch[! sch %in% .oldSearch]
-+ 	   for(item in rev(newitems))
-+                eval(substitute(detach(item), list(item=item)))
-+ 	   missitems <- .oldSearch[! .oldSearch %in% sch]
-+ 	   if(length(missitems))
-+ 	       warning("items ", paste(missitems, collapse=", "),
-+ 		       " have been removed from the search path")
-+        },
-+        pos = "CheckExEnv")
-> assign("ptime", proc.time(), pos = "CheckExEnv")
-> ## at least one package changes these via ps.options(), so do this
-> ## before loading the package.
-> ## Use postscript as incomplete files may be viewable, unlike PDF.
-> ## Choose a size that is close to on-screen devices, fix paper
-> grDevices::ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
-> grDevices::postscript("RobAStBase-Ex.ps")
-> 
-> assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
-> options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
+> pkgname <- "RobAStBase"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
 > library('RobAStBase')
 Loading required package: distr
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.7)
+:startupmsg>  Utilities for start-up messages (version 0.7.1)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
@@ -96,7 +32,7 @@ Loading required package: startupmsg
 Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version 0.4)
+:SweaveListingUtils>  TeX listings package (version 0.5)
 :SweaveListingUtils> 
 :SweaveListingUtils>  Some functions from package 'base'
 :SweaveListingUtils>  are intentionally masked ---see
@@ -117,14 +53,12 @@ Loading required package: SweaveListingUtils
 
 Attaching package: 'SweaveListingUtils'
 
+The following object(s) are masked from 'package:base':
 
-	The following object(s) are masked from package:base :
+    library, require
 
-	 library,
-	 require 
-
-:distr>  Object orientated implementation of distributions (version
-:distr>  2.2)
+:distr>  Object oriented implementation of distributions (version
+:distr>  2.3)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -145,12 +79,9 @@ Attaching package: 'SweaveListingUtils'
 
 Attaching package: 'distr'
 
+The following object(s) are masked from 'package:stats':
 
-	The following object(s) are masked from package:stats :
-
-	 df,
-	 qqplot,
-	 sd 
+    df, qqplot, sd
 
 Loading required package: distrEx
 Loading required package: evd
@@ -158,12 +89,11 @@ Loading required package: actuar
 
 Attaching package: 'actuar'
 
+The following object(s) are masked from 'package:grDevices':
 
-	The following object(s) are masked from package:grDevices :
+    cm
 
-	 cm 
-
-:distrEx>  Extensions of package distr (version 2.2)
+:distrEx>  Extensions of package distr (version 2.3)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
 :distrEx>  attached /before/ package "distrEx". See distrExMASK().
@@ -178,17 +108,13 @@ Attaching package: 'actuar'
 
 Attaching package: 'distrEx'
 
+The following object(s) are masked from 'package:stats':
 
-	The following object(s) are masked from package:stats :
-
-	 IQR,
-	 mad,
-	 median,
-	 var 
+    IQR, mad, median, var
 
 Loading required package: distrMod
 Loading required package: RandVar
-:RandVar>  Implementation of random variables (version 0.7)
+:RandVar>  Implementation of random variables (version 0.8)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -198,8 +124,8 @@ Loading required package: RandVar
 
 Loading required package: MASS
 Loading required package: stats4
-:distrMod>  Object orientated implementation of probability models
-:distrMod>  (version 2.2)
+:distrMod>  Object oriented implementation of probability models
+:distrMod>  (version 2.3)
 :distrMod> 
 :distrMod>  Some functions from pkg's 'base' and 'stats' are
 :distrMod>  intentionally masked ---see distrModMASK().
@@ -210,24 +136,29 @@ Loading required package: stats4
 :distrMod>  For more information see ?"distrMod",
 :distrMod>  NEWS("distrMod"), as well as
 :distrMod>    http://distr.r-forge.r-project.org/
-:distrMod>  Package "distrDoc" provides a vignette to this package
+:distrMod>  There is a vignette to this package; try
+:distrMod>  vignette("distrMod").
+:distrMod>  Package "distrDoc" provides a vignette to the other
+:distrMod>  distrXXX packages,
 :distrMod>  as well as to several related packages; try
 :distrMod>  vignette("distr").
 
 
 Attaching package: 'distrMod'
 
+The following object(s) are masked from 'package:stats4':
 
-	The following object(s) are masked from package:stats4 :
+    confint
 
-	 confint 
+The following object(s) are masked from 'package:stats':
 
+    confint
 
-	The following object(s) are masked from package:stats :
+The following object(s) are masked from 'package:base':
 
-	 confint 
+    norm
 
-:RobAStBase>  Robust Asymptotic Statistics (version 0.7)
+:RobAStBase>  Robust Asymptotic Statistics (version 0.8)
 :RobAStBase> 
 :RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
 :RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
@@ -242,20 +173,18 @@ Attaching package: 'distrMod'
 
 Attaching package: 'RobAStBase'
 
+The following object(s) are masked from 'package:stats':
 
-	The following object(s) are masked from package:stats :
+    start
 
-	 start 
+The following object(s) are masked from 'package:graphics':
 
-
-	The following object(s) are masked from package:graphics :
-
-	 clip 
+    clip
 
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
-> assign(".oldNS", loadedNamespaces(), pos = 'CheckExEnv')
-> cleanEx(); nameEx("0RobAStBase-package")
+> cleanEx()
+> nameEx("0RobAStBase-package")
 > ### * 0RobAStBase-package
 > 
 > flush(stderr()); flush(stdout())
@@ -285,7 +214,8 @@ maximum deviation
 > 
 > 
 > 
-> cleanEx(); nameEx("ALEstimate-class")
+> cleanEx()
+> nameEx("ALEstimate-class")
 > ### * ALEstimate-class
 > 
 > flush(stderr()); flush(stdout())
@@ -316,7 +246,8 @@ NULL
 > 
 > 
 > 
-> cleanEx(); nameEx("BdStWeight-class")
+> cleanEx()
+> nameEx("BdStWeight-class")
 > ### * BdStWeight-class
 > 
 > flush(stderr()); flush(stdout())
@@ -331,7 +262,7 @@ NULL
 > 
 > ## prototype
 > new("BdStWeight")
-An object of class “BdStWeight”
+An object of class "BdStWeight"
 Slot "stand":
      [,1]
 [1,]    1
@@ -350,7 +281,8 @@ function (x)
 > 
 > 
 > 
-> cleanEx(); nameEx("BoundedWeight-class")
+> cleanEx()
+> nameEx("BoundedWeight-class")
 > ### * BoundedWeight-class
 > 
 > flush(stderr()); flush(stdout())
@@ -365,7 +297,7 @@ function (x)
 > 
 > ## prototype
 > new("BoundedWeight")
-An object of class “BoundedWeight”
+An object of class "BoundedWeight"
 Slot "clip":
 [1] 1
 
@@ -380,7 +312,8 @@ function (x)
 > 
 > 
 > 
-> cleanEx(); nameEx("ContIC-class")
+> cleanEx()
+> nameEx("ContIC-class")
 > ### * ContIC-class
 > 
 > flush(stderr()); flush(stdout())
@@ -401,7 +334,8 @@ function (x)
 > 
 > 
 > 
-> cleanEx(); nameEx("ContIC")
+> cleanEx()
+> nameEx("ContIC")
 > ### * ContIC
 > 
 > flush(stderr()); flush(stdout())
@@ -418,7 +352,8 @@ function (x)
 > 
 > 
 > 
-> cleanEx(); nameEx("ContNeighborhood-class")
+> cleanEx()
+> nameEx("ContNeighborhood-class")
 > ### * ContNeighborhood-class
 > 
 > flush(stderr()); flush(stdout())
@@ -437,7 +372,8 @@ radius:	 0
 > 
 > 
 > 
-> cleanEx(); nameEx("ContNeighborhood")
+> cleanEx()
+> nameEx("ContNeighborhood")
 > ### * ContNeighborhood
 > 
 > flush(stderr()); flush(stdout())
@@ -465,7 +401,8 @@ function (radius = 0)
 > 
 > 
 > 
-> cleanEx(); nameEx("FixRobModel-class")
+> cleanEx()
+> nameEx("FixRobModel-class")
 > ### * FixRobModel-class
 > 
 > flush(stderr()); flush(stdout())
@@ -497,7 +434,8 @@ radius:	 0
 > 
 > 
 > 
-> cleanEx(); nameEx("FixRobModel")
+> cleanEx()
+> nameEx("FixRobModel")
 > ### * FixRobModel
 > 
 > flush(stderr()); flush(stdout())
@@ -537,7 +475,8 @@ function (center = ParamFamily(), neighbor = ContNeighborhood())
 > 
 > 
 > 
-> cleanEx(); nameEx("HampIC-class")
+> cleanEx()
+> nameEx("HampIC-class")
 > ### * HampIC-class
 > 
 > flush(stderr()); flush(stdout())
@@ -557,7 +496,8 @@ function (center = ParamFamily(), neighbor = ContNeighborhood())
 > 
 > 
 > 
-> cleanEx(); nameEx("HampelWeight-class")
+> cleanEx()
+> nameEx("HampelWeight-class")
 > ### * HampelWeight-class
 > 
 > flush(stderr()); flush(stdout())
@@ -572,7 +512,7 @@ function (center = ParamFamily(), neighbor = ContNeighborhood())
 > 
 > ## prototype
 > new("HampelWeight")
-An object of class “HampelWeight”
+An object of class "HampelWeight"
 Slot "cent":
 [1] 0
 
@@ -594,7 +534,8 @@ function (x)
 > 
 > 
 > 
-> cleanEx(); nameEx("IC-class")
+> cleanEx()
+> nameEx("IC-class")
 > ### * IC-class
 > 
 > flush(stderr()); flush(stdout())
@@ -614,7 +555,8 @@ function (x)
 > 
 > 
 > 
-> cleanEx(); nameEx("IC")
+> cleanEx()
+> nameEx("IC")
 > ### * IC
 > 
 > flush(stderr()); flush(stdout())
@@ -631,7 +573,8 @@ function (x)
 > 
 > 
 > 
-> cleanEx(); nameEx("InfRobModel-class")
+> cleanEx()
+> nameEx("InfRobModel-class")
 > ### * InfRobModel-class
 > 
 > flush(stderr()); flush(stdout())
@@ -663,7 +606,8 @@ radius:	 0
 > 
 > 
 > 
-> cleanEx(); nameEx("InfRobModel")
+> cleanEx()
+> nameEx("InfRobModel")
 > ### * InfRobModel
 > 
 > flush(stderr()); flush(stdout())
@@ -703,7 +647,8 @@ function (center = L2ParamFamily(), neighbor = ContNeighborhood())
 > 
 > 
 > 
-> cleanEx(); nameEx("InfluenceCurve-class")
+> cleanEx()
+> nameEx("InfluenceCurve-class")
 > ### * InfluenceCurve-class
 > 
 > flush(stderr()); flush(stdout())
@@ -737,7 +682,8 @@ Range:	Euclidean Space with dimension 1
 > 
 > 
 > 
-> cleanEx(); nameEx("InfluenceCurve")
+> cleanEx()
+> nameEx("InfluenceCurve")
 > ### * InfluenceCurve
 > 
 > flush(stderr()); flush(stdout())
@@ -779,7 +725,8 @@ Range:	Euclidean Space with dimension 1
 > 
 > 
 > 
-> cleanEx(); nameEx("MEstimate-class")
+> cleanEx()
+> nameEx("MEstimate-class")
 > ### * MEstimate-class
 > 
 > flush(stderr()); flush(stdout())
@@ -808,7 +755,8 @@ numeric(0)
 > 
 > 
 > 
-> cleanEx(); nameEx("RobAStBaseMASK")
+> cleanEx()
+> nameEx("RobAStBaseMASK")
 > ### * RobAStBaseMASK
 > 
 > flush(stderr()); flush(stdout())
@@ -843,14 +791,15 @@ masking:
 > 
 > 
 > 
-> cleanEx(); nameEx("RobAStBaseOptions")
+> cleanEx()
+> nameEx("RobAStBaseOptions")
 > ### * RobAStBaseOptions
 > 
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: RobAStBaseOptions
 > ### Title: Function to change the global variables of the package
-> ###   `RobAStBase'
+> ###   'RobAStBase'
 > ### Aliases: RobAStBaseOptions getRobAStBaseOption kStepUseLast
 > ### Keywords: misc robust
 > 
@@ -887,7 +836,8 @@ $kStepUseLast
 > 
 > 
 > 
-> cleanEx(); nameEx("RobWeight-class")
+> cleanEx()
+> nameEx("RobWeight-class")
 > ### * RobWeight-class
 > 
 > flush(stderr()); flush(stdout())
@@ -903,7 +853,7 @@ $kStepUseLast
 > 
 > ## prototype
 > new("RobWeight")
-An object of class “RobWeight”
+An object of class "RobWeight"
 Slot "name":
 [1] "some weight"
 
@@ -915,7 +865,8 @@ function (x)
 > 
 > 
 > 
-> cleanEx(); nameEx("TotalVarIC-class")
+> cleanEx()
+> nameEx("TotalVarIC-class")
 > ### * TotalVarIC-class
 > 
 > flush(stderr()); flush(stdout())
@@ -938,7 +889,8 @@ function (x)
 > 
 > 
 > 
-> cleanEx(); nameEx("TotalVarIC")
+> cleanEx()
+> nameEx("TotalVarIC")
 > ### * TotalVarIC
 > 
 > flush(stderr()); flush(stdout())
@@ -955,7 +907,8 @@ function (x)
 > 
 > 
 > 
-> cleanEx(); nameEx("TotalVarNeighborhood-class")
+> cleanEx()
+> nameEx("TotalVarNeighborhood-class")
 > ### * TotalVarNeighborhood-class
 > 
 > flush(stderr()); flush(stdout())
@@ -974,7 +927,8 @@ radius:	 0
 > 
 > 
 > 
-> cleanEx(); nameEx("TotalVarNeighborhood")
+> cleanEx()
+> nameEx("TotalVarNeighborhood")
 > ### * TotalVarNeighborhood
 > 
 > flush(stderr()); flush(stdout())
@@ -1002,7 +956,8 @@ function (radius = 0)
 > 
 > 
 > 
-> cleanEx(); nameEx("checkIC")
+> cleanEx()
+> nameEx("checkIC")
 > ### * checkIC
 > 
 > flush(stderr()); flush(stdout())
@@ -1025,7 +980,8 @@ maximum deviation
 > 
 > 
 > 
-> cleanEx(); nameEx("comparePlot")
+> cleanEx()
+> nameEx("comparePlot")
 > ### * comparePlot
 > 
 > flush(stderr()); flush(stdout())
@@ -1090,7 +1046,11 @@ Loading required package: ROptEst
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
-> cleanEx(); nameEx("cutoff-class")
+> cleanEx()
+
+detaching ‘package:ROptEst’
+
+> nameEx("cutoff-class")
 > ### * cutoff-class
 > 
 > flush(stderr()); flush(stdout())
@@ -1105,7 +1065,7 @@ Loading required package: ROptEst
 > ### ** Examples
 > 
 > cutoff()
-An object of class “cutoff”
+An object of class "cutoff"
 Slot "name":
 [1] "empirical"
 
@@ -1119,7 +1079,7 @@ function (data)
     }
     quantile(slot(norm, "fct")(data), cutoff.quantile)
 }
-<environment: 0x97faf80>
+<environment: 0x7266808>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -1127,7 +1087,8 @@ Slot "cutoff.quantile":
 > 
 > 
 > 
-> cleanEx(); nameEx("cutoff")
+> cleanEx()
+> nameEx("cutoff")
 > ### * cutoff
 > 
 > flush(stderr()); flush(stdout())
@@ -1140,7 +1101,7 @@ Slot "cutoff.quantile":
 > ### ** Examples
 > 
 > cutoff()
-An object of class “cutoff”
+An object of class "cutoff"
 Slot "name":
 [1] "empirical"
 
@@ -1154,13 +1115,13 @@ function (data)
     }
     quantile(slot(norm, "fct")(data), cutoff.quantile)
 }
-<environment: 0x8571d20>
+<environment: 0x71cf950>
 
 Slot "cutoff.quantile":
 [1] 0.95
 
 > cutoff.sememp()
-An object of class “cutoff”
+An object of class "cutoff"
 Slot "name":
 [1] "semi-empirical"
 
@@ -1179,13 +1140,13 @@ function (data)
         quantile((rowSums(N0^2))^0.5, cutoff.quantile)
     }
 }
-<environment: 0x971e850>
+<environment: 0x7170648>
 
 Slot "cutoff.quantile":
 [1] 0.95
 
 > cutoff.chisq()
-An object of class “cutoff”
+An object of class "cutoff"
 Slot "name":
 [1] "chisq"
 
@@ -1202,7 +1163,7 @@ function (data)
         qchisq(df = dim, cutoff.quantile)^0.5
     }
 }
-<environment: 0x863dc88>
+<environment: 0x707c890>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -1210,13 +1171,14 @@ Slot "cutoff.quantile":
 > 
 > 
 > 
-> cleanEx(); nameEx("ddPlot-methods")
+> cleanEx()
+> nameEx("ddPlot-methods")
 > ### * ddPlot-methods
 > 
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: ddPlot-methods
-> ### Title: Methods for Function ddPlot in Package `RobAStBase'
+> ### Title: Methods for Function ddPlot in Package 'RobAStBase'
 > ### Aliases: ddPlot ddPlot-methods ddPlot,matrix-method
 > ###   ddPlot,numeric-method ddPlot,data.frame-method
 > ### Keywords: methods hplot
@@ -1226,6 +1188,9 @@ Slot "cutoff.quantile":
 > MX <- matrix(rnorm(1500),nrow=6)
 > QM <- matrix(rnorm(36),nrow=6); QM <- QM %*% t(QM)
 > ddPlot(data=MX, dist.y=QFNorm(QuadF=PosSemDefSymmMatrix(QM)))
+NULL
+[1] 1
+[1] "black"
 $id.x
  [1]  35  75  81  83 103 134 141 156 161 195 201 216 241
 
@@ -1254,7 +1219,8 @@ $cutoff.y.v
 > 
 > 
 > 
-> cleanEx(); nameEx("infoPlot")
+> cleanEx()
+> nameEx("infoPlot")
 > ### * infoPlot
 > 
 > flush(stderr()); flush(stdout())
@@ -1299,7 +1265,8 @@ $IC.class
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
-> cleanEx(); nameEx("internals_ddPlot")
+> cleanEx()
+> nameEx("internals_ddPlot")
 > ### * internals_ddPlot
 > 
 > flush(stderr()); flush(stdout())
@@ -1319,6 +1286,41 @@ $IC.class
 +         lwd=2, lwd.cutoff=4, lty=2, col.cutoff =2, col.idn="green",
 +         col = "blue", adj=0.4, pos=4,id.n = sample(1:200,size=100),
 +         lab.pts=letters,log="x", main="GA", sub="NO",cex.sub=0.2)
+$xlab
+[1] "Norm.x"
+
+$ylab
+[1] "Norm.y"
+
+$offset
+[1] 0
+
+$lwd
+[1] 2
+
+$lty
+[1] 2
+
+$col
+[1] "blue"
+
+$pos
+[1] 4
+
+$log
+[1] "x"
+
+$main
+[1] "GA"
+
+$sub
+[1] "NO"
+
+$cex.sub
+[1] 0.2
+
+[1] 1.3
+[1] "green"
 $id.x
 [1]  83 161 156 134  81 177
 
@@ -1347,7 +1349,8 @@ $cutoff.y.v
 > 
 > 
 > 
-> cleanEx(); nameEx("kStepEstimator")
+> cleanEx()
+> nameEx("kStepEstimator")
 > ### * kStepEstimator
 > 
 > flush(stderr()); flush(stdout())
@@ -1422,7 +1425,11 @@ sd    0.92479741
 > 
 > 
 > 
-> cleanEx(); nameEx("makeIC-methods")
+> cleanEx()
+
+detaching ‘package:ROptEst’
+
+> nameEx("makeIC-methods")
 > ### * makeIC-methods
 > 
 > flush(stderr()); flush(stdout())
@@ -1431,7 +1438,8 @@ sd    0.92479741
 > ### Title: Generic Function for making ICs consistent at a possibly
 > ###   different model
 > ### Aliases: makeIC makeIC-methods makeIC,IC,missing-method
-> ###   makeIC,IC,L2ParamFamily-method
+> ###   makeIC,IC,L2ParamFamily-method makeIC,list,L2ParamFamily-method
+> ###   makeIC,function,L2ParamFamily-method
 > ### Keywords: robust
 > 
 > ### ** Examples
@@ -1481,9 +1489,82 @@ prob    0
 maximum deviation 
      3.091672e-18 
 > 
+> IC4 <- makeIC(sin, B)
+$Curve
+An object of class “EuclRandVarList” 
+Domain:	Real Space with dimension 1 
+[[1]]
+length of Map:	 1 
+Range:	Real Space with dimension 1 
+
+$CallL2Fam
+L2Fam@fam.call
+
+An object of class “IC” 
+### name:	 square integrable (partial) influence curve 
+### L2-differentiable parametric family:	 Binomial family 
+
+### 'Curve':	An object of class “EuclRandVarList” 
+Domain:	Real Space with dimension 1 
+[[1]]
+length of Map:	 1 
+Range:	Real Space with dimension 1 
+
+### Infos:
+     method message
+> checkIC(IC4)
+precision of centering:	 2.715274e-17 
+precision of Fisher consistency:
+              prob
+prob -1.110223e-16
+maximum deviation 
+     1.110223e-16 
+> 
+> (IC5 <- makeIC(list(function(x)x^3), B, name="a try"))
+An object of class “IC” 
+### name:	 a try 
+### L2-differentiable parametric family:	 Binomial family 
+
+### 'Curve':	An object of class “EuclRandVarList” 
+Domain:	Real Space with dimension 1 
+[[1]]
+length of Map:	 1 
+Range:	Real Space with dimension 1 
+
+### Infos:
+     method message                                                  
+[1,] "IC<-" "generated by affine linear trafo to enforce consistency"
+> plot(IC5)
+> checkIC(IC5)
+precision of centering:	 2.565774e-17 
+precision of Fisher consistency:
+     prob
+prob    0
+maximum deviation 
+     2.565774e-17 
+> 
+> N0 <- NormLocationScaleFamily()
+> IC6 <- makeIC(list(sin,cos),N0)
+> plot(IC6)
+> checkIC(IC6)
+precision of centering:	 0 -1.999999e-07 
+precision of Fisher consistency:
+              mean           sd
+mean -2.220446e-16 0.000000e+00
+sd    0.000000e+00 2.220446e-16
+maximum deviation 
+     1.999999e-07 
+> 
+> getRiskIC(IC6,risk=trAsCov())$trAsCov$value
+[1] 1.718278
+> getRiskIC(IC6,risk=asBias(),neighbor=ContNeighborhood())$asBias$value
+[1] 2.648721
 > 
 > 
-> cleanEx(); nameEx("optIC")
+> 
+> 
+> cleanEx()
+> nameEx("optIC")
 > ### * optIC
 > 
 > flush(stderr()); flush(stdout())
@@ -1510,13 +1591,14 @@ maximum deviation
 > 
 > 
 > 
-> cleanEx(); nameEx("outlyingPlotIC")
+> cleanEx()
+> nameEx("outlyingPlotIC")
 > ### * outlyingPlotIC
 > 
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: outlyingPlotIC
-> ### Title: Function outlyingPlotIC in Package `RobAStBase'
+> ### Title: Function outlyingPlotIC in Package 'RobAStBase'
 > ### Aliases: outlyingPlotIC
 > ### Keywords: hplot
 > 
@@ -1533,6 +1615,28 @@ maximum deviation
 + outlyingPlotIC(xn, IC.x=N0.IC1)
 + }
 Loading required package: ROptEst
+$xlim
+[1] TRUE
+
+$ylim
+[1] TRUE
+
+$main
+[1] "Outlyingness by means of a distance-distance plot"
+
+[1] 1
+[1] "black"
+$xlim
+[1] TRUE
+
+$ylim
+[1] TRUE
+
+$main
+[1] "Outlyingness by means of a distance-distance plot"
+
+[1] 1
+[1] "black"
 $id.x
 integer(0)
 
@@ -1544,7 +1648,7 @@ integer(0)
 
 $qtx
        0%       25%       50%       75%      100% 
-0.8655423 0.9150693 1.1443918 1.9218962 1.9218963 
+0.8655423 0.9150694 1.1443920 1.9218964 1.9218966 
 
 $qty
       0%      25%      50%      75%     100% 
@@ -1560,13 +1664,17 @@ $cutoff.y.v
 > 
 > 
 > 
-> cleanEx(); nameEx("plot-methods")
+> cleanEx()
+
+detaching ‘package:ROptEst’
+
+> nameEx("plot-methods")
 > ### * plot-methods
 > 
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: plot-methods
-> ### Title: Methods for Function plot in Package `RobAStBase'
+> ### Title: Methods for Function plot in Package 'RobAStBase'
 > ### Aliases: plot plot-methods plot,IC,missing-method
 > ###   plot,IC,numeric-method
 > ### Keywords: methods distribution
@@ -1603,13 +1711,14 @@ $cutoff.y.v
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
-> cleanEx(); nameEx("qqplot")
+> cleanEx()
+> nameEx("qqplot")
 > ### * qqplot
 > 
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: qqplot
-> ### Title: Methods for Function qqplot in Package `RobAStBase'
+> ### Title: Methods for Function qqplot in Package 'RobAStBase'
 > ### Aliases: qqplot qqplot-methods qqplot,ANY,RobModel-method
 > ###   qqplot,ANY,InfRobModel-method qqplot,ANY,kStepEstimate-method
 > ### Keywords: hplot distribution
@@ -1647,6 +1756,17 @@ $y
  [8] 11.886518 12.631262 13.368738 14.113482 14.881078 15.690666 16.569064
 [15] 17.559339 18.743000 20.318117 23.130613
 
+> qqplot(x, RobM, alpha.CI=0.9)
+$x
+ [1]  8.814224  9.497963 11.149040 11.375858 12.278782 13.355490 13.955754
+ [8] 14.231792 14.377338 16.875949 17.029301 17.435943 18.078416 18.489453
+[15] 19.071074 19.680944 22.493351 25.847097
+
+$y
+ [1]  2.869387  5.681883  7.257000  8.440661  9.430936 10.309334 11.118922
+ [8] 11.886518 12.631262 13.368738 14.113482 14.881078 15.690666 16.569064
+[15] 17.559339 18.743000 20.318117 23.130613
+
 > ## further examples for ANY,kStepEstimator-method
 > ## in example to roptest() in package ROptEst
 > 
@@ -1655,7 +1775,7 @@ $y
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  88.217 0.196 90.784 0.008 0.008 
+Time elapsed:  83.43 0.1 83.867 0 0 
 > grDevices::dev.off()
 null device 
           1 
