@@ -117,6 +117,4 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.05,
     empMSE
 }
 
-AffySimStudy(n = 11, M = 10, eps = 0.02, contD = Norm(mean = 0, sd = 3), 
-             plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
 
