@@ -38,12 +38,13 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.05,
 
 
     if(plot2){
-        ind <- sample(1:M, min(M, 20))
+        ind <- if(M <= 20) 1:M else sample(1:M, 20)
         if(plot1) dev.new()
+        M1 <- min(M, 20)
         print(
-          stripplot(rep(1:20, each = 20) ~ as.vector(Mre[ind,]), 
+          stripplot(rep(1:M1, each = n) ~ as.vector(Mre[ind,]), 
                     ylab = "samples", xlab = "x", pch = 20,
-                    main = "Randomly chosen samples")
+                    main = ifelse(M <= 20, "Samples", "20 randomly chosen samples"))
         )
     }
 
@@ -72,11 +73,10 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.05,
         abline(h = 0)
         boxplot(Ergebnis2, col = myCol[c(1,2,4)], pch = 20, main = "Scale")
         abline(h = 1)
-        op <- par(mar = rep(2, 4), no.readonly = TRUE)
+        op <- par(mar = rep(2, 4))
         plot(c(0,1), c(1, 0), type = "n", axes = FALSE)
         legend("center", c("ML", "Med/MAD", "biweight", "rmx"),
                fill = myCol, ncol = 4, cex = 1.5)
-#        op$cin <- op$cra <- op$csi <- op$cxy <-  op$din <- NULL
         on.exit(par(op))
     }
 
@@ -117,4 +117,6 @@ AffySimStudy <- function(n, M, eps, seed = 123, eps.lower = 0, eps.upper = 0.05,
     empMSE
 }
 
+AffySimStudy(n = 11, M = 10, eps = 0.02, contD = Norm(mean = 0, sd = 3), 
+             plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
 

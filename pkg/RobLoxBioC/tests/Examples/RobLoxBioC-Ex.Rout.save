@@ -1,7 +1,8 @@
 
-R version 2.10.1 Patched (2010-03-27 r51528)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.12.1 Patched (2011-01-04 r53913)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -31,16 +32,45 @@ Welcome to Bioconductor
 
 Loading required package: affy
 Loading required package: beadarray
+Welcome to beadarray version 2.0.2
+There have been major changes to beadarray since Bioconductor 2.6 (April 2010). Please see package vignette for details
 Loading required package: distr
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.7)
+:startupmsg>  Utilities for start-up messages (version 0.7.1)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
 
 Loading required package: sfsmisc
-:distr>  Object orientated implementation of distributions (version
-:distr>  2.2.2)
+Loading required package: SweaveListingUtils
+:SweaveListingUtils>  Utilities for Sweave together with
+:SweaveListingUtils>  TeX listings package (version 0.5)
+:SweaveListingUtils> 
+:SweaveListingUtils>  Some functions from package 'base'
+:SweaveListingUtils>  are intentionally masked ---see
+:SweaveListingUtils>  SweaveListingMASK().
+:SweaveListingUtils> 
+:SweaveListingUtils>  Note that global options are
+:SweaveListingUtils>  controlled by
+:SweaveListingUtils>  SweaveListingoptions() ---c.f.
+:SweaveListingUtils>  ?"SweaveListingoptions".
+:SweaveListingUtils> 
+:SweaveListingUtils>  For more information see
+:SweaveListingUtils>  ?"SweaveListingUtils",
+:SweaveListingUtils>  NEWS("SweaveListingUtils")
+:SweaveListingUtils>  There is a vignette to this
+:SweaveListingUtils>  package; try
+:SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
+
+
+Attaching package: 'SweaveListingUtils'
+
+The following object(s) are masked from 'package:base':
+
+    library, require
+
+:distr>  Object oriented implementation of distributions (version
+:distr>  2.3)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -61,12 +91,9 @@ Loading required package: sfsmisc
 
 Attaching package: 'distr'
 
+The following object(s) are masked from 'package:stats':
 
-	The following object(s) are masked from package:stats :
-
-	 df,
-	 qqplot,
-	 sd 
+    df, qqplot, sd
 
 Loading required package: RobLox
 Loading required package: distrMod
@@ -76,12 +103,11 @@ Loading required package: actuar
 
 Attaching package: 'actuar'
 
+The following object(s) are masked from 'package:grDevices':
 
-	The following object(s) are masked from package:grDevices :
+    cm
 
-	 cm 
-
-:distrEx>  Extensions of package distr (version 2.2)
+:distrEx>  Extensions of package distr (version 2.3)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
 :distrEx>  attached /before/ package "distrEx". See distrExMASK().
@@ -96,16 +122,12 @@ Attaching package: 'actuar'
 
 Attaching package: 'distrEx'
 
+The following object(s) are masked from 'package:stats':
 
-	The following object(s) are masked from package:stats :
-
-	 IQR,
-	 mad,
-	 median,
-	 var 
+    IQR, mad, median, var
 
 Loading required package: RandVar
-:RandVar>  Implementation of random variables (version 0.7)
+:RandVar>  Implementation of random variables (version 0.8)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -115,8 +137,8 @@ Loading required package: RandVar
 
 Loading required package: MASS
 Loading required package: stats4
-:distrMod>  Object orientated implementation of probability models
-:distrMod>  (version 2.2)
+:distrMod>  Object oriented implementation of probability models
+:distrMod>  (version 2.3)
 :distrMod> 
 :distrMod>  Some functions from pkg's 'base' and 'stats' are
 :distrMod>  intentionally masked ---see distrModMASK().
@@ -127,25 +149,30 @@ Loading required package: stats4
 :distrMod>  For more information see ?"distrMod",
 :distrMod>  NEWS("distrMod"), as well as
 :distrMod>    http://distr.r-forge.r-project.org/
-:distrMod>  Package "distrDoc" provides a vignette to this package
+:distrMod>  There is a vignette to this package; try
+:distrMod>  vignette("distrMod").
+:distrMod>  Package "distrDoc" provides a vignette to the other
+:distrMod>  distrXXX packages,
 :distrMod>  as well as to several related packages; try
 :distrMod>  vignette("distr").
 
 
 Attaching package: 'distrMod'
 
+The following object(s) are masked from 'package:stats4':
 
-	The following object(s) are masked from package:stats4 :
+    confint
 
-	 confint 
+The following object(s) are masked from 'package:stats':
 
+    confint
 
-	The following object(s) are masked from package:stats :
+The following object(s) are masked from 'package:base':
 
-	 confint 
+    norm
 
 Loading required package: RobAStBase
-:RobAStBase>  Robust Asymptotic Statistics (version 0.7.1)
+:RobAStBase>  Robust Asymptotic Statistics (version 0.8)
 :RobAStBase> 
 :RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
 :RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
@@ -160,24 +187,21 @@ Loading required package: RobAStBase
 
 Attaching package: 'RobAStBase'
 
+The following object(s) are masked from 'package:stats':
 
-	The following object(s) are masked from package:stats :
+    start
 
-	 start 
+The following object(s) are masked from 'package:graphics':
 
-
-	The following object(s) are masked from package:graphics :
-
-	 clip 
+    clip
 
 Loading required package: lattice
 
 Attaching package: 'lattice'
 
+The following object(s) are masked from 'package:evd':
 
-	The following object(s) are masked from package:evd :
-
-	 qq 
+    qq
 
 Loading required package: RColorBrewer
 > 
@@ -232,8 +256,8 @@ $n
 > probes <- log2(pm(SpikeIn))
 > (res <- KolmogorovMinDist(probes, Norm()))
 $dist
- [1] 0.1642185 0.1567706 0.1571387 0.1609188 0.1617499 0.1607157 0.1382646
- [8] 0.1471997 0.1693088 0.1836652 0.1787724 0.1601283 0.1728984 0.1519412
+ [1] 0.1755693 0.1567648 0.1571410 0.1609188 0.1617499 0.1607157 0.1382646
+ [8] 0.1471997 0.1693088 0.1836652 0.1787724 0.1601283 0.1729001 0.1519412
 [15] 0.1682097 0.1662173 0.1547481 0.1716497 0.1751219 0.1671566
 
 $n
@@ -350,7 +374,7 @@ relMSE (loc + scale)     1.322783 1.713026 1.185466 1.0000000
 > X <- matrix(rnorm(50000*20, mean = 1), nrow = 50000)
 > system.time(robloxbioc(X))
    user  system elapsed 
- 11.692   0.888  14.859 
+  4.380   0.110   4.498 
 > 
 > ## using Affymetrix-Data
 > ## confer example to generateExprVal.method.mas
@@ -387,7 +411,7 @@ relMSE (loc + scale)     1.322783 1.713026 1.185466 1.0000000
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  29.937 1.044 35.693 0.016 0.008 
+Time elapsed:  10.24 0.16 10.423 0 0 
 > grDevices::dev.off()
 postscript 
          2 
