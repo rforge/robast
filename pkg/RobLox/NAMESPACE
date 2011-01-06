@@ -1,3 +1,5 @@
+importFrom(distr, q)
+
 export(finiteSampleCorrection,
        rlsOptIC.AL, 
        rlsOptIC.M, 
@@ -21,4 +23,5 @@ export(finiteSampleCorrection,
        rsOptIC,
        roblox,
        rowRoblox,
-       colRoblox)
+       colRoblox,
+       showdown)
