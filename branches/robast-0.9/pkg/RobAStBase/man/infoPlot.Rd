@@ -158,6 +158,7 @@ infoPlot(IC1)
 ## selection of subpanels for plotting
 par(mfrow=c(1,2))
 infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"))
+infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"), log="y")
 infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
               panel.first= grid(), ylim = c(0,4), xlim = c(-6,6))
 infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 

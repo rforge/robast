@@ -1,3 +1,4 @@
+DEBUG.INFO <- FALSE
 setMethod("infoPlot", "IC",
     function(object, data = NULL,
              ..., withSweave = getdistrOption("withSweave"),
@@ -20,7 +21,8 @@ setMethod("infoPlot", "IC",
         dots <- match.call(call = sys.call(sys.parent(1)), 
                        expand.dots = FALSE)$"..."
                    
-
+        if(DEBUG.INFO) print("DATA")
+        if(DEBUG.INFO) print(str(data))
         L2Fam <- eval(object@CallL2Fam)
         
 
@@ -273,9 +275,17 @@ setMethod("infoPlot", "IC",
 
                absInfoClass.data <- absInfoEval(data,absInfoClass.f)
                absInfo.data <- absInfoEval(data,absInfo.f)
+               
+               if(DEBUG.INFO) print("DATA1")
+               if(DEBUG.INFO) print(absInfo.data)
+               if(DEBUG.INFO) print(absInfoClass.data)
 
                absInfo0.data <- absInfo.data[which.lbs]
                absInfo0Class.data <- absInfoClass.data[which.lbs]
+               
+               if(DEBUG.INFO) print("DATA2")
+               if(DEBUG.INFO) print(absInfo0.data)
+               if(DEBUG.INFO) print(absInfo0Class.data)
                aIC.data.m <- max(absInfo0Class.data)
                aI.data.m <- max(absInfo0.data)
 
@@ -291,14 +301,19 @@ setMethod("infoPlot", "IC",
                    data0 <-  data0[oN0]
                    data0C <- data0[oN0Class]
 
-                   if(!is.null(which.Order)){
-                       oN <-  oN0[(n+1)-which.Order]
-                       oNC <- oN0Class[(n+1)-which.Order]
-                       data0 <- data[oN]
-                       data0C <- data[oNC]
-                       absInfo0.data <- absInfo.data[oN]
-                       absInfo0Class.data <- absInfoClass.data[oNC]
-                   }
+                   if(is.null(which.Order))
+                      which.Order <- 1:n
+                   oN <-  oN0[(n+1)-which.Order]
+                   oNC <- oN0Class[(n+1)-which.Order]
+                   data0 <- data[oN]
+                   data0C <- data[oNC]
+                   absInfo0.data <- absInfo.data[oN]
+                   absInfo0Class.data <- absInfoClass.data[oNC]
+                   if(DEBUG.INFO) print("DATA3")
+                   if(DEBUG.INFO) print(absInfo0.data)
+                   if(DEBUG.INFO) print(absInfo0Class.data)
+
+                   
                    n <- length(oN)
                }
                lab.pts <- if(is.null(lab.pts))
@@ -324,6 +339,12 @@ setMethod("infoPlot", "IC",
                       text(x = y0c, y = ICy0c, labels = lab.pts0[,2],
                            cex = log(ICy0+1)*1.5*cex0[2], col = col0[2])
                    }
+                   if(DEBUG.INFO) print("DATA4")
+                   if(DEBUG.INFO) print(ICy0)
+                   if(DEBUG.INFO) print(ICy0c)
+                   if(DEBUG.INFO) print(y0)
+                   if(DEBUG.INFO) print(y0c)
+
                    pL0
                    }, list(ICy0 = absInfo0.data, ICy0c = absInfo0Class.data,
                            pL0 = pL, y0 = data0, y0c = data0C,
@@ -351,6 +372,11 @@ setMethod("infoPlot", "IC",
                       text(x = y0, y = y0c.vec, labels = lab.pts0[,2],
                            cex = log(ICy0c+1)*1.5*cex0[2], col = col0[2])
                    }
+                   if(DEBUG.INFO) print("DATA5")
+                   if(DEBUG.INFO) print(ICy0)
+                   if(DEBUG.INFO) print(ICy0c)
+                   if(DEBUG.INFO) print(y0)
+                   if(DEBUG.INFO) print(y0c)
                    pL0
                    }, list(ICy0c = absInfo0Class.data, ICy0 = absInfo0.data,
                            pL0 = pL, y0 = data0, y0c = data0C,
@@ -391,6 +417,7 @@ setMethod("infoPlot", "IC",
             }
             
             if(dims > 1 && length(to.draw[to.draw!=1])>0){
+                dotsP["log"] <- NULL
                 dotsP["ylim"] <- NULL
                 dotsL["ylim"] <- NULL
                 dotsT["ylim"] <- NULL
