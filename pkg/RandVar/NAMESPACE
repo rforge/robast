@@ -1,6 +1,6 @@
+import("methods")
 import("distr")
 import("distrEx")
-importMethodsFrom("methods", "Arith", "Math")
 
 exportClasses("OptionalrSpace") 
 exportClasses("RandVariable", 
