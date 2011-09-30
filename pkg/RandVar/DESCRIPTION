@@ -1,6 +1,6 @@
 Package: RandVar
 Version: 0.8.1
-Date: 2011-09-02
+Date: 2011-09-30
 Title: Implementation of random variables
 Description: Implementation of random variables by means of S4 classes and methods
 Depends: R (>= 2.7.0), methods, startupmsg, distr(>= 2.0), distrEx(>= 2.0)
@@ -8,6 +8,7 @@ Author: Matthias Kohl, Peter Ruckdeschel
 Maintainer: Matthias Kohl <Matthias.Kohl@stamats.de>
 LazyLoad: yes
 License: LGPL-3
+ByteCompile: yes
 Encoding: latin1
 URL: http://robast.r-forge.r-project.org/
 LastChangedDate: {$LastChangedDate$}

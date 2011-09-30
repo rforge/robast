@@ -1,6 +1,6 @@
 Package: ROptRegTS
-Version: 0.8
-Date: 2010-12-03
+Version: 0.8.1
+Date: 2011-09-30
 Title: Optimally robust estimation for regression-type models
 Description: Optimally robust estimation for regression-type models using S4 classes and
         methods
@@ -8,6 +8,7 @@ Depends: R (>= 2.4.0), methods, distr(>= 1.9), distrEx(>= 1.9), RandVar(>= 0.6),
         0.5.2)
 Author: Matthias Kohl <Matthias.Kohl@stamats.de>, Peter Ruckdeschel
 Maintainer: Matthias Kohl <Matthias.Kohl@stamats.de>
+ByteCompile: yes
 LazyLoad: yes
 License: LGPL-3
 Encoding: latin1

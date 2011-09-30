@@ -8,6 +8,7 @@ Depends: R(>= 2.8.1), methods, Biobase, affy, beadarray, distr, RobLox, lattice,
 Author: Matthias Kohl <Matthias.Kohl@stamats.de>
 Maintainer: Matthias Kohl <Matthias.Kohl@stamats.de>
 LazyLoad: yes
+ByteCompile: yes
 License: LGPL-3
 URL: http://robast.r-forge.r-project.org/
 Encoding: latin1

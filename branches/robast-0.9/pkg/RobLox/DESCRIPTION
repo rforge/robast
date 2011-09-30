@@ -8,6 +8,7 @@ Depends: R(>= 2.7.0), stats, distrMod(>= 2.0.1), RobAStBase(>= 0.1.1)
 Suggests: Biobase
 Author: Matthias Kohl <Matthias.Kohl@stamats.de>
 Maintainer: Matthias Kohl <Matthias.Kohl@stamats.de>
+ByteCompile: yes
 LazyLoad: yes
 License: LGPL-3
 Encoding: latin1

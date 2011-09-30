@@ -1,6 +1,6 @@
 Package: RobLox
-Version: 0.8
-Date: 2011-01-06
+Version: 0.8.1
+Date: 2011-09-30
 Title: Optimally robust influence curves and estimators for location and scale
 Description: Functions for the determination of optimally robust influence curves and
         estimators in case of normal location and/or scale
@@ -9,6 +9,7 @@ Suggests: MASS
 Author: Matthias Kohl <Matthias.Kohl@stamats.de>
 Maintainer: Matthias Kohl <Matthias.Kohl@stamats.de>
 LazyLoad: yes
+ByteCompile: yes
 License: LGPL-3
 Encoding: latin1
 URL: http://robast.r-forge.r-project.org/
