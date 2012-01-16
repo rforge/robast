@@ -1,6 +1,6 @@
 
-R version 2.12.1 Patched (2011-01-04 r53913)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R version 2.14.1 Patched (2012-01-12 r58096)
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -27,16 +27,35 @@ Loading required package: Biobase
 Welcome to Bioconductor
 
   Vignettes contain introductory material. To view, type
-  'openVignette()'. To cite Bioconductor, see
-  'citation("Biobase")' and for packages 'citation(pkgname)'.
+  'browseVignettes()'. To cite Bioconductor, see
+  'citation("Biobase")' and for packages 'citation("pkgname")'.
 
 Loading required package: affy
 Loading required package: beadarray
-Welcome to beadarray version 2.0.2
-There have been major changes to beadarray since Bioconductor 2.6 (April 2010). Please see package vignette for details
+Loading required package: ggplot2
+Loading required package: reshape
+Loading required package: plyr
+
+Attaching package: ‘reshape’
+
+The following object(s) are masked from ‘package:plyr’:
+
+    rename, round_any
+
+Loading required package: grid
+Loading required package: proto
+Welcome to beadarray version 2.4.1
+beadarray versions >= 2.0.0 are substantial updates from beadarray 1.16.0 and earlier. Please see package vignette for details
+
+Attaching package: ‘beadarray’
+
+The following object(s) are masked from ‘package:plyr’:
+
+    summarize
+
 Loading required package: distr
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.7.1)
+:startupmsg>  Utilities for start-up messages (version 0.7.3)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
@@ -44,7 +63,8 @@ Loading required package: startupmsg
 Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version 0.5)
+:SweaveListingUtils>  TeX listings package (version
+:SweaveListingUtils>  0.5.4)
 :SweaveListingUtils> 
 :SweaveListingUtils>  Some functions from package 'base'
 :SweaveListingUtils>  are intentionally masked ---see
@@ -63,14 +83,14 @@ Loading required package: SweaveListingUtils
 :SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
 
 
-Attaching package: 'SweaveListingUtils'
+Attaching package: ‘SweaveListingUtils’
 
-The following object(s) are masked from 'package:base':
+The following object(s) are masked from ‘package:base’:
 
     library, require
 
 :distr>  Object oriented implementation of distributions (version
-:distr>  2.3)
+:distr>  2.3.4)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -89,25 +109,34 @@ The following object(s) are masked from 'package:base':
 :distr>  vignette("distr").
 
 
-Attaching package: 'distr'
+Attaching package: ‘distr’
 
-The following object(s) are masked from 'package:stats':
+The following object(s) are masked from ‘package:stats’:
 
     df, qqplot, sd
 
 Loading required package: RobLox
+Loading required package: lattice
+Loading required package: RColorBrewer
 Loading required package: distrMod
 Loading required package: distrEx
 Loading required package: evd
+
+Attaching package: ‘evd’
+
+The following object(s) are masked from ‘package:lattice’:
+
+    qq
+
 Loading required package: actuar
 
-Attaching package: 'actuar'
+Attaching package: ‘actuar’
 
-The following object(s) are masked from 'package:grDevices':
+The following object(s) are masked from ‘package:grDevices’:
 
     cm
 
-:distrEx>  Extensions of package distr (version 2.3)
+:distrEx>  Extensions of package distr (version 2.3.2)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
 :distrEx>  attached /before/ package "distrEx". See distrExMASK().
@@ -120,14 +149,14 @@ The following object(s) are masked from 'package:grDevices':
 :distrEx>  vignette("distr").
 
 
-Attaching package: 'distrEx'
+Attaching package: ‘distrEx’
 
-The following object(s) are masked from 'package:stats':
+The following object(s) are masked from ‘package:stats’:
 
     IQR, mad, median, var
 
 Loading required package: RandVar
-:RandVar>  Implementation of random variables (version 0.8)
+:RandVar>  Implementation of random variables (version 0.8.1)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -138,7 +167,7 @@ Loading required package: RandVar
 Loading required package: MASS
 Loading required package: stats4
 :distrMod>  Object oriented implementation of probability models
-:distrMod>  (version 2.3)
+:distrMod>  (version 2.3.3)
 :distrMod> 
 :distrMod>  Some functions from pkg's 'base' and 'stats' are
 :distrMod>  intentionally masked ---see distrModMASK().
@@ -157,22 +186,22 @@ Loading required package: stats4
 :distrMod>  vignette("distr").
 
 
-Attaching package: 'distrMod'
+Attaching package: ‘distrMod’
 
-The following object(s) are masked from 'package:stats4':
-
-    confint
-
-The following object(s) are masked from 'package:stats':
+The following object(s) are masked from ‘package:stats4’:
 
     confint
 
-The following object(s) are masked from 'package:base':
+The following object(s) are masked from ‘package:stats’:
+
+    confint
+
+The following object(s) are masked from ‘package:base’:
 
     norm
 
 Loading required package: RobAStBase
-:RobAStBase>  Robust Asymptotic Statistics (version 0.8)
+:RobAStBase>  Robust Asymptotic Statistics (version 0.8.1)
 :RobAStBase> 
 :RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
 :RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
@@ -185,25 +214,12 @@ Loading required package: RobAStBase
 :RobAStBase>    http://robast.r-forge.r-project.org/
 
 
-Attaching package: 'RobAStBase'
+Attaching package: ‘RobAStBase’
 
-The following object(s) are masked from 'package:stats':
-
-    start
-
-The following object(s) are masked from 'package:graphics':
+The following object(s) are masked from ‘package:graphics’:
 
     clip
 
-Loading required package: lattice
-
-Attaching package: 'lattice'
-
-The following object(s) are masked from 'package:evd':
-
-    qq
-
-Loading required package: RColorBrewer
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
 > cleanEx()
@@ -240,12 +256,14 @@ Loading required package: RColorBrewer
 > 
 > ### ** Examples
 > 
+> set.seed(123) # to have reproducible results for package checking
+> 
 > ## matrix method for KolmogorovMinDist
 > ind <- rbinom(200, size=1, prob=0.05) 
 > X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
 > KolmogorovMinDist(X, D = Norm())
 $dist
-[1] 0.05032454 0.04616206
+[1] 0.06544843 0.04356402
 
 $n
 [1] 100 100
@@ -256,7 +274,7 @@ $n
 > probes <- log2(pm(SpikeIn))
 > (res <- KolmogorovMinDist(probes, Norm()))
 $dist
- [1] 0.1755693 0.1567648 0.1571410 0.1609188 0.1617499 0.1607157 0.1382646
+ [1] 0.1755693 0.1567648 0.1571403 0.1609188 0.1617499 0.1607157 0.1382646
  [8] 0.1471997 0.1693088 0.1836652 0.1787724 0.1601283 0.1729001 0.1519412
 [15] 0.1682097 0.1662173 0.1547481 0.1716497 0.1751219 0.1671566
 
@@ -312,27 +330,29 @@ $n
 > 
 > ### ** Examples
 > 
+> set.seed(123) # to have reproducible results for package checking
+> 
 > AffySimStudy(n = 11, M = 100, eps = 0.02, contD = Norm(mean = 0, sd = 3), 
 +              plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
 dev.new(): using pdf(file="Rplots1.pdf")
-                                ML      Med    Tukey      rmx
-n x empMSE (loc)         1.2837045 1.826711 1.698428 1.399230
-relMSE (loc)             0.9174362 1.305512 1.213830 1.000000
-n x empMSE (scale)       0.6072430 1.573206 1.573206 0.723606
-relMSE (scale)           0.8391900 2.174119 2.174119 1.000000
-n x empMSE (loc + scale) 1.8909475 3.399917 3.271634 2.122836
-relMSE (loc + scale)     0.8907646 1.601592 1.541162 1.000000
+                                ML      Med    Tukey       rmx
+n x empMSE (loc)         1.2837045 1.826711 1.698428 1.3992302
+relMSE (loc)             0.9174362 1.305512 1.213830 1.0000000
+n x empMSE (scale)       0.6072430 1.573206 1.573206 0.7236061
+relMSE (scale)           0.8391900 2.174119 2.174119 1.0000000
+n x empMSE (loc + scale) 1.8909475 3.399917 3.271634 2.1228363
+relMSE (loc + scale)     0.8907646 1.601592 1.541162 1.0000000
 > IlluminaSimStudy(n = 30, M = 100, eps = 0.02, contD = Norm(mean = 0, sd = 3), 
 +                  plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
 dev.new(): using pdf(file="Rplots2.pdf")
 dev.new(): using pdf(file="Rplots3.pdf")
-                               ML      Med Illumina       rmx
-n x empMSE (loc)         1.172077 1.591148 1.205941 1.1132052
-relMSE (loc)             1.052885 1.429339 1.083305 1.0000000
-n x empMSE (scale)       1.084569 1.331247 0.816445 0.5927791
-relMSE (scale)           1.829635 2.245773 1.377318 1.0000000
-n x empMSE (loc + scale) 2.256646 2.922395 2.022386 1.7059843
-relMSE (loc + scale)     1.322783 1.713026 1.185466 1.0000000
+                               ML      Med  Illumina       rmx
+n x empMSE (loc)         1.172077 1.591148 1.2059413 1.1132052
+relMSE (loc)             1.052885 1.429339 1.0833055 1.0000000
+n x empMSE (scale)       1.084569 1.331247 0.8164451 0.5927791
+relMSE (scale)           1.829635 2.245773 1.3773176 1.0000000
+n x empMSE (loc + scale) 2.256646 2.922395 2.0223864 1.7059843
+relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 > 
 > 
 > 
@@ -350,31 +370,33 @@ relMSE (loc + scale)     1.322783 1.713026 1.185466 1.0000000
 > 
 > ### ** Examples
 > 
+> set.seed(123) # to have reproducible results for package checking
+> 
 > ## similar to rowRoblox of package RobLox
-> ind <- rbinom(200, size=1, prob=0.05) 
+> ind <- rbinom(200, size=1, prob=0.05)
 > X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
 > robloxbioc(X)
-             mean        sd
-[1,] -0.014713379 0.9643588
-[2,]  0.003050954 1.0587182
+            mean       sd
+[1,]  0.01361094 1.103944
+[2,] -0.13024109 1.023868
 > robloxbioc(X, steps = 5)
-             mean        sd
-[1,] -0.014294296 0.9649008
-[2,]  0.003004433 1.0587286
+            mean       sd
+[1,]  0.01454172 1.105150
+[2,] -0.13018096 1.023832
 > robloxbioc(X, eps = 0.05)
-             mean       sd
-[1,] -0.028278572 0.927434
-[2,] -0.001566506 1.051123
+            mean       sd
+[1,] -0.02555103 1.042593
+[2,] -0.16758006 1.004678
 > robloxbioc(X, eps = 0.05, steps = 5)
-             mean        sd
-[1,] -0.028227242 0.9276155
-[2,] -0.001567355 1.0511232
+            mean       sd
+[1,] -0.02545634 1.042738
+[2,] -0.16757528 1.004658
 > 
 > ## the function is designed for large scale problems
 > X <- matrix(rnorm(50000*20, mean = 1), nrow = 50000)
 > system.time(robloxbioc(X))
    user  system elapsed 
-  4.380   0.110   4.498 
+  5.597   0.044   5.660 
 > 
 > ## using Affymetrix-Data
 > ## confer example to generateExprVal.method.mas
@@ -411,10 +433,10 @@ relMSE (loc + scale)     1.322783 1.713026 1.185466 1.0000000
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.24 0.16 10.423 0 0 
+Time elapsed:  16.901 0.156 17.124 0 0 
 > grDevices::dev.off()
-postscript 
-         2 
+pdf 
+  2 
 > ###
 > ### Local variables: ***
 > ### mode: outline-minor ***

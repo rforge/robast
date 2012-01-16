@@ -59,6 +59,8 @@ relMSE with respect to the rmx estimator.
 %\note{}
 \seealso{\code{\link[RobLox]{rowRoblox}}}
 \examples{
+set.seed(123) # to have reproducible results for package checking
+
 AffySimStudy(n = 11, M = 100, eps = 0.02, contD = Norm(mean = 0, sd = 3), 
              plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
 IlluminaSimStudy(n = 30, M = 100, eps = 0.02, contD = Norm(mean = 0, sd = 3), 

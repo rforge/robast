@@ -127,8 +127,10 @@ robloxbioc(x, ...)
          \code{\link[Biobase:class.ExpressionSet]{ExpressionSet-class}},
          \code{\link[beadarray]{createBeadSummaryData}} }
 \examples{
+set.seed(123) # to have reproducible results for package checking
+
 ## similar to rowRoblox of package RobLox
-ind <- rbinom(200, size=1, prob=0.05) 
+ind <- rbinom(200, size=1, prob=0.05)
 X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
 robloxbioc(X)
 robloxbioc(X, steps = 5)
