@@ -149,7 +149,7 @@ data(SpikeIn)
 probes <- pm(SpikeIn) 
 mas <- generateExprVal.method.mas(probes)
 rl <- 2^robloxbioc(log2(t(probes)))
-concentrations <- as.numeric(sampleNames(SpikeIn))
+concentrations <- as.numeric(colnames(SpikeIn))
 plot(concentrations, mas$exprs, log="xy", ylim=c(50,10000), type="b",
      ylab = "expression measures")
 points(concentrations, rl[,1], pch = 20, col="orange", type="b")
