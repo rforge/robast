@@ -1,0 +1,17 @@
+Package: ROptReg
+Version: 0.9
+Date: 2012-02-01
+Title: Optimally robust estimation for regression-type models
+Description: Optimally robust estimation for regression-type models using S4 classes and
+        methods (based on distrMod, RobAStBase, and ROptEst)
+Depends: R (>= 2.14.0), methods, distr(>= 2.3), distrEx(>= 2.3), RandVar(>= 0.8), 
+         distrMod(>=2.4), RobAStBase(>=0.8), ROptEst(>=0.8)
+Author: Matthias Kohl, Peter Ruckdeschel, Daria Pupashenko
+Maintainer: Peter Ruckdeschel <peter.ruckdeschel@itwm.fraunhofer.de>
+LazyLoad: yes
+ByteCompile: yes
+License: LGPL-3
+URL: http://robast.r-forge.r-project.org/
+LastChangedDate: {$LastChangedDate: 2011-09-30 11:10:33 +0200 (Fr, 30 Sep 2011) $}
+LastChangedRevision: {$LastChangedRevision: 453 $}
+SVNRevision: 439
