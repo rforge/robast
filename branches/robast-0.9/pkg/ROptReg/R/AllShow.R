@@ -30,15 +30,7 @@ setMethod("show", "AvCondNeighborhood",
 #        print(object@radiusCurve)
 #        cat("exponent:\t", object@exponent, "\n")
     })
-setMethod("show", "FixRobRegTypeModel", 
-    function(object){
-        cat(paste("An object of class", dQuote(class(object)), "\n"))
-        cat("###### center:\t")
-        show(object@center)
-        cat("\n###### neighborhood:\t")
-        show(object@neighbor)
-    })
-setMethod("show", "InfRobRegTypeModel", 
+setMethod("show", "InfRobRegTypeModel",
     function(object){
         cat(paste("An object of class", dQuote(class(object)), "\n"))
         cat("###### center:\t")

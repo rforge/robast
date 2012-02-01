@@ -7,7 +7,10 @@ CondContIC <- function(name, CallL2Fam = call("L2RegTypeFamily"),
                    stand = as.matrix(1), 
                    cent = EuclRandVarList(RealRandVariable(Map = list(function(x){numeric(length(x))}),
                                                     Domain = EuclideanSpace(dimension = 2))), 
-                   lowerCase = NULL, neighborRadius = 0, neighborRadiusCurve = function(x){1}){
+                   lowerCase = NULL, neighborRadius = 0, neighborRadiusCurve = function(x){1},
+                   w = new("CondHampelWeight"),
+                   normtype = NormType(), biastype = symmetricBias(),
+                   modifyIC = NULL){
     if(missing(name))
         name <- "conditionally centered IC for average conditional contamination neighborhoods"
     if(missing(Risks))
@@ -15,11 +18,25 @@ CondContIC <- function(name, CallL2Fam = call("L2RegTypeFamily"),
     if(missing(Infos))
         Infos <- matrix(c(character(0),character(0)), ncol=2,
                     dimnames=list(character(0), c("method", "message")))
-    
-    return(new("CondContIC", name = name, Curve = Curve, Risks = Risks, Infos = Infos,
-               CallL2Fam = CallL2Fam, clip = clip, cent = cent, stand = stand, 
-               lowerCase = lowerCase, neighborRadius = neighborRadius, 
-               neighborRadiusCurve = neighborRadiusCurve))
+
+    contIC <- new("CondContIC")
+    contIC@name <- name
+    contIC@Curve <- Curve
+    contIC@Risks <- Risks
+    contIC@Infos <- Infos
+    contIC@CallL2Fam <- CallL2Fam
+    contIC@clip <- clip
+    contIC@cent <- cent
+    contIC@stand <- stand
+    contIC@lowerCase <- lowerCase
+    contIC@neighborRadius <- neighborRadius
+    contIC@neighborRadiusCurve <- neighborRadiusCurve
+    contIC@weight <- w
+    contIC@biastype <- biastype
+    contIC@normtype <- normtype
+    contIC@modifyIC <- modifyIC
+
+    return(contIC)
 }
 
 ## generate IC
@@ -31,69 +48,24 @@ setMethod("generateIC", signature(neighbor = "CondContNeighborhood",
         a <- res$a
         b <- res$b
         d <- res$d
-        nrvalues <- nrow(A)
-        ICfct <- vector(mode = "list", length = nrvalues)
-        a1 <- as(diag(nrvalues) %*% a, "EuclRandVariable")
-        Y <- as(A %*% L2Fam@L2deriv, "EuclRandVariable") - a1
-        k <- dimension(img(L2Fam@RegDistr))
-        if(nrvalues == 1){
-            if(!is.null(d)){
-                ICfct[[1]] <- function(x){ 
-                                    ind <- (Y(x) != 0) 
-                                    b(x[1:k])*(ind*Y(x)/(ind*absY(x) + (1-ind)) + zi*(1-ind)*d)
-                              }
-                body(ICfct[[1]]) <- substitute(
-                                        { ind <- (Y(x) != 0) 
-                                          b(x[1:k])*(ind*Y(x)/(ind*absY(x) + (1-ind)) + zi*(1-ind)*d) },
-                                        list(Y = Y@Map[[1]], absY = abs(Y)@Map[[1]], b = b@Map[[1]], d = d, 
-                                             zi = sign(L2Fam@param@trafo), k = k))
-            }else{
-                ICfct[[1]] <- function(x){ Y(x)*pmin(1, b(x[1:k])/absY(x)) }
-                body(ICfct[[1]]) <- substitute({ Y(x)*pmin(1, b(x[1:k])/absY(x)) },
-                                                 list(Y = Y@Map[[1]], absY = abs(Y)@Map[[1]], 
-                                                      b = b@Map[[1]], k = k))
-            }
-        }else{
-            absY <- sqrt(Y %*% Y)
-            if(!is.null(d))
-                for(i in 1:nrvalues){
-                    ICfct[[i]] <- function(x){ ind <- (Yi(x) != 0) ; ind*b(x[1:k])*Yi(x)/absY(x) + (1-ind)*d }
-                    body(ICfct[[i]]) <- substitute({ ind <- (Yi(x) != 0) ; ind*b(x[1:k])*Yi(x)/absY(x) + (1-ind)*d },
-                                                 list(Yi = Y@Map[[i]], absY = absY@Map[[1]], b = b@Map[[1]], 
-                                                      d = d[i], k = k))
-                }
-            else
-                for(i in 1:nrvalues){
-                    ICfct[[i]] <- function(x){ Yi(x)*pmin(1, b(x[1:k])/absY(x)) }
-                    body(ICfct[[i]]) <- substitute({ Yi(x)*pmin(1, b(x[1:k])/absY(x)) },
-                                                 list(Yi = Y@Map[[i]], absY = absY@Map[[1]], b = b@Map[[1]], k = k))
-                }
-        }
+        normtype <- res$normtype
+        biastype <- res$biastype
+        w <- res$w
+        L2call <- L2Fam@fam.call
+        L2call$trafo <- trafo(L2Fam)
         return(CondContIC(
                 name = "conditionally centered IC of contamination type", 
-                CallL2Fam = call("L2RegTypeFamily", 
-                                name = L2Fam@name,
-                                distribution = L2Fam@distribution,  
-                                param = L2Fam@param,
-                                props = L2Fam@props,
-                                L2deriv = L2Fam@L2deriv,
-                                ErrorDistr = L2Fam@ErrorDistr,
-                                ErrorSymm = L2Fam@ErrorSymm,
-                                RegDistr = L2Fam@RegDistr,
-                                RegSymm = L2Fam@RegSymm,
-                                Regressor = L2Fam@Regressor,
-                                ErrorL2deriv = L2Fam@ErrorL2deriv,
-                                ErrorL2derivDistr = L2Fam@ErrorL2derivDistr,
-                                ErrorL2derivSymm = L2Fam@ErrorL2derivSymm,
-                                FisherInfo = L2Fam@FisherInfo),
-                Curve = EuclRandVarList(EuclRandVariable(Map = ICfct, Domain = Y@Domain, 
-                                         Range = Y@Range)),
+                CallL2Fam = L2call,
+                Curve = generateIC.fct(neighbor, L2Fam, res),
                 clip = b,
                 cent = a,
                 stand = A,
                 lowerCase = d,
                 neighborRadius = neighbor@radius,
                 neighborRadiusCurve = neighbor@radiusCurve,
+                modifyIC = res$modifyIC,
+                normtype = normtype,
+                biastype = biastype,
                 Risks = res$risk,
                 Infos = matrix(res$info, ncol = 2, 
                             dimnames = list(character(0), c("method", "message")))))
@@ -102,9 +74,6 @@ setMethod("generateIC", signature(neighbor = "CondContNeighborhood",
 ## Access methods
 setMethod("clip", "CondContIC", function(object) object@clip)
 setMethod("cent", "CondContIC", function(object) object@cent)
-setMethod("stand", "CondContIC", function(object) object@stand)
-setMethod("lowerCase", "CondContIC", function(object) object@lowerCase)
-setMethod("neighborRadius", "CondContIC", function(object) object@neighborRadius)
 setMethod("neighborRadiusCurve", "CondContIC", function(object) object@neighborRadiusCurve)
 
 ## replace methods
@@ -112,10 +81,18 @@ setReplaceMethod("clip", "CondContIC",
     function(object, value){ 
         stopifnot(is(value, "RealRandVariable"))
         L2Fam <- eval(object@CallL2Fam)
+        w <- object@weight
+        clip(w) <- value
+        CNB <- CondContNeighborhood(radius = object@neighborRadius,
+                                    radiusCurve = object@neighborRadiusCurve)
+        weight(w) <- getweight(w, neighbor = CNB,
+                               biastype = object@biastype,
+                               normW = object@normtype)
         res <- list(A = object@stand, a = object@cent, b = value, d = object@lowerCase,
-                    risk = object@Risks, info = object@Infos)
-        object <- generateIC(neighbor = CondContNeighborhood(radius = object@neighborRadius, 
-                                                        radiusCurve = object@neighborRadiusCurve), 
+                    risk = object@Risks, info = object@Infos, w = w,
+                    normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
+        object <- generateIC(neighbor = CNB,
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("clip<-", "The clipping bound has been changed")
         addInfo(object) <- c("clip<-", "The entries in 'Risks' and 'Infos' may be wrong")
@@ -125,70 +102,70 @@ setReplaceMethod("cent", "CondContIC",
     function(object, value){ 
         stopifnot(is(value, "EuclRandVarList"))
         L2Fam <- eval(object@CallL2Fam)
+        w <- object@weight
+        cent(w) <- as.vector(solve(object@stand) %*% value)
+        CNB <- CondContNeighborhood(radius = object@neighborRadius,
+                                    radiusCurve = object@neighborRadiusCurve)
+        weight(w) <- getweight(w, neighbor = CNB,
+                               biastype = object@biastype,
+                               normW = object@normtype)
         res <- list(A = object@stand, a = value, b = object@clip, d = object@lowerCase,
-                    risk = object@Risks, info = object@Infos)
-        object <- generateIC(neighbor = CondContNeighborhood(radius = object@neighborRadius, 
-                                                        radiusCurve = object@neighborRadiusCurve), 
+                    risk = object@Risks, info = object@Infos, w = w,
+                    normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
+        object <- generateIC(neighbor = CNB,
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("cent<-", "The centering constant has been changed")
         addInfo(object) <- c("cent<-", "The entries in 'Risks' and 'Infos' may be wrong")
-        object
-    })
-setReplaceMethod("stand", "CondContIC", 
-    function(object, value){ 
-        stopifnot(is.matrix(value))
-        L2Fam <- eval(object@CallL2Fam)
-        res <- list(A = value, a = object@cent, b = object@clip, d = object@lowerCase,
-                    risk = object@Risks, info = object@Infos)
-        object <- generateIC(neighbor = CondContNeighborhood(radius = object@neighborRadius, 
-                                                        radiusCurve = object@neighborRadiusCurve), 
-                             L2Fam = L2Fam, res = res)
-        addInfo(object) <- c("stand<-", "The standardizing matrix has been changed")
-        addInfo(object) <- c("stand<-", "The entries in 'Risks' and 'Infos' may be wrong")
-        object
-    })
-setReplaceMethod("lowerCase", "CondContIC", 
-    function(object, value){ 
-        stopifnot(is.null(value)||is.numeric(value))
-        L2Fam <- eval(object@CallL2Fam)
-        res <- list(A = object@stand, a = object@cent, b = object@clip, d = value,
-                    risk = object@Risks, info = object@Infos)
-        object <- generateIC(neighbor = CondContNeighborhood(radius = object@neighborRadius, 
-                                                        radiusCurve = object@neighborRadiusCurve), 
-                             L2Fam = L2Fam, res = res)
-        addInfo(object) <- c("lowerCase<-", "The slot 'lowerCase' has been changed")
-        addInfo(object) <- c("lowerCase<-", "The entries in 'Risks' and 'Infos' may be wrong")
-        object
-    })
-setReplaceMethod("neighborRadius", "CondContIC", 
-    function(object, value){ 
-        object@neighborRadius <- value
-        if(any(value < 0)) # radius vector?!
-            stop("'value' has to be in [0, Inf]")
-        addInfo(object) <- c("neighborRadius<-", "The slot 'neighborRadius' has been changed")
-        addInfo(object) <- c("neighborRadius<-", "The entries in 'Risks' and 'Infos' may be wrong")
-        object
-    })
-setReplaceMethod("neighborRadiusCurve", "CondContIC", 
-    function(object, value){ 
-        object@neighborRadiusCurve <- value
-        if(length(formals(value)) != 1)
-            stop("'value' has to be a function of one argument")
-        if(names(formals(value)) != "x")
-            stop("'value' has to be a function with argument name = 'x'")
-        addInfo(object) <- c("neighborRadiusCurve<-", "The slot 'neighborRadiusCurve' has been changed")
-        addInfo(object) <- c("neighborRadiusCurve<-", "The entries in 'Risks' and 'Infos' may be wrong")
         object
     })
 setReplaceMethod("CallL2Fam", "CondContIC",
     function(object, value){ 
         L2Fam <- eval(value)
         res <- list(A = object@stand, a = object@cent, b = object@clip, d = object@lowerCase,
-                    risk = object@Risks, info = object@Infos)
+                    risk = object@Risks, info = object@Infos, w = object@weight,
+                    normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
         object <- generateIC(neighbor = CondContNeighborhood(radius = object@neighborRadius, 
                                                         radiusCurve = object@neighborRadiusCurve), 
                              L2Fam = L2Fam, res = res)
         addInfo(object) <- c("CallL2Fam<-", "The slot 'CallL2Fam' has been changed")
         addInfo(object) <- c("CallL2Fam<-", "The entries in 'Risks' and 'Infos' may be wrong")
+        object
+    })
+setReplaceMethod("stand", "CondContIC",
+    function(object, value){
+        stopifnot(is.matrix(value))
+        L2Fam <- eval(object@CallL2Fam)
+        w <- object@weight
+        stand(w) <- value
+        CNB <- CondContNeighborhood(radius = object@neighborRadius,
+                                    radiusCurve = object@neighborRadiusCurve)
+        weight(w) <- getweight(w, neighbor = CNB,
+                               biastype = object@biastype,
+                               normW = object@normtype)
+        res <- list(A = value, a = object@cent, b = object@clip, d = object@lowerCase,
+                    risk = object@Risks, info = object@Infos, w = w,
+                    normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
+        object <- generateIC(neighbor = CNB,
+                             L2Fam = L2Fam, res = res)
+        addInfo(object) <- c("stand<-", "The standardizing matrix has been changed")
+        addInfo(object) <- c("stand<-", "The entries in 'Risks' and 'Infos' may be wrong")
+        object
+    })
+setReplaceMethod("lowerCase", "CondHampIC",
+    function(object, value){
+        stopifnot(is.null(value)||is.numeric(value))
+        L2Fam <- eval(object@CallL2Fam)
+        res <- list(A = object@stand, a = object@cent, b = object@clip, d = value,
+                    risk = object@Risks, info = object@Infos, w = object@weight,
+                    normtype = object@normtype, biastype = object@biastype,
+                    modifyIC = object@modifyIC)
+        object <- generateIC(neighbor = CondContNeighborhood(radius = object@neighborRadius,
+                                                        radiusCurve = object@neighborRadiusCurve),
+                             L2Fam = L2Fam, res = res)
+        addInfo(object) <- c("lowerCase<-", "The slot 'lowerCase' has been changed")
+        addInfo(object) <- c("lowerCase<-", "The entries in 'Risks' and 'Infos' may be wrong")
         object
     })

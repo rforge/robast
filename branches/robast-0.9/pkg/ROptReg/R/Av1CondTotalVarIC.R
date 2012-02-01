@@ -1,11 +1,15 @@
 ## Generating function
+
 Av1CondTotalVarIC <- function(name, CallL2Fam = call("L2RegTypeFamily"),
                    Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x[1]*x[2]}), 
                                                     Domain = EuclideanSpace(dimension = 2))), 
                    Risks, Infos, clipUp = Inf, stand = as.matrix(1), 
                    clipLo = RealRandVariable(Map = list(function(x){ -Inf }),
                                              Domain = EuclideanSpace(dimension = 1)), 
-                   lowerCase = NULL, neighborRadius = 0){
+                   lowerCase = NULL, neighborRadius = 0,
+                   w = new("CondHampelWeight"),
+                   normtype = NormType(), biastype = symmetricBias(),
+                   modifyIC = NULL){
     if(missing(name))
         name <- "conditionally centered IC for average conditional total variation neighborhoods"
     if(missing(Risks))
@@ -14,9 +18,22 @@ Av1CondTotalVarIC <- function(name, CallL2Fam = call("L2RegTypeFamily"),
         Infos <- matrix(c(character(0),character(0)), ncol=2,
                     dimnames=list(character(0), c("method", "message")))
     
-    return(new("Av1CondTotalVarIC", name = name, Curve = Curve, Risks = Risks, Infos = Infos,
-               CallL2Fam = CallL2Fam, clipUp = clipUp, clipLo = clipLo, stand = stand, 
-               lowerCase = lowerCase, neighborRadius = neighborRadius))
+    TVIC <- new("Av1CondTotalVarIC")
+    TVIC@name <- name
+    TVIC@Curve <- Curve
+    TVIC@Risks <- Risks
+    TVIC@Infos <- Infos
+    TVIC@CallL2Fam <- CallL2Fam
+    TVIC@clipUp <- clipUp
+    TVIC@clipLo <- clipLo
+    TVIC@stand <- stand
+    TVIC@lowerCase <- lowerCase
+    TVIC@neighborRadius <- neighborRadius
+    TVIC@weight <- w
+    TVIC@biastype <- biastype
+    TVIC@normtype <- normtype
+    TVIC@modifyIC <- modifyIC
+    return(TVIC)
 }
 
 ## generate IC
@@ -28,75 +45,15 @@ setMethod("generateIC", signature(neighbor = "Av1CondTotalVarNeighborhood",
         a <- res$a
         b <- res$b
         d <- res$d
-        ICfct <- vector(mode = "list", length = 1)
-        L2 <- L2Fam@ErrorL2deriv[[1]]
-        k <- dimension(img(L2Fam@RegDistr))
-        if(!is.null(d)){
-            ICfct[[1]] <- function(x){ ind1 <- (L2(x[k+1]) > 0); ind2 <- (L2(x[k+1]) < 0)
-                                       A <- matrix(A.vec, ncol = k)
-                                       Y <- as.vector(A %*% x[1:k])
-                                       v <- sqrt(sum(Y^2))
-                                       ax <- a(x[1:k])
-                                       Y/v*((ax+b)*ind1 + ax*ind2)
-                          }
-            body(ICfct[[1]]) <- substitute({ ind1 <- (L2(x[k+1]) > 0); ind2 <- (L2(x[k+1]) < 0)
-                                             A <- matrix(A.vec, ncol = k)
-                                             Y <- as.vector(A %*% x[1:k])
-                                             v <- sqrt(sum(Y^2))
-                                             ax <- a(x[1:k])
-                                             Y/v*((ax+b)*ind1 + ax*ind2) },
-                                           list(A.vec = as.vector(A), L2 = L2@Map[[1]], a = a@Map[[1]], 
-                                                b = b, k = k))
-        }else{
-            if(b == Inf){
-                ICfct[[1]]<- function(x){ A <- matrix(A.vec, ncol = k)
-                                          v <- as.vector(sqrt(sum((A %*% x[1:k])^2)))
-                                          ax <- a(x[1:k])
-                                          if(ax == -Inf) 
-                                              as.vector(A %*% x[1:k])*L2(x[k+1])
-                                          else 
-                                              as.vector(A %*% x[1:k])*max(a(x[1:k])/v, L2(x[k+1])) }
-                body(ICfct[[1]]) <- substitute({ A <- matrix(A.vec, ncol = k)
-                                                 v <- as.vector(sqrt(sum((A %*% x[1:k])^2)))
-                                                 ax <- a(x[1:k])
-                                                 if(ax == -Inf) 
-                                                     as.vector(A %*% x[1:k])*L2(x[k+1])
-                                                 else 
-                                                     as.vector(A %*% x[1:k])*max(a(x[1:k])/v, L2(x[k+1])) }, 
-                                               list(A.vec = as.vector(A), L2 = L2@Map[[1]], a = a@Map[[1]], 
-                                                    b = b, k = k))
-            }else{
-                ICfct[[1]] <- function(x){ A <- matrix(A.vec, ncol = k)
-                                           v <- as.vector(sqrt(sum((A %*% x[1:k])^2)))
-                                           ax <- a(x[1:k])
-                                           as.vector(A %*% x[1:k])*min(max(a(x[1:k])/v, L2(x[k+1])), (ax+b)/v) }
-                body(ICfct[[1]]) <- substitute({ A <- matrix(A.vec, ncol = k)
-                                                 v <- as.vector(sqrt(sum((A %*% x[1:k])^2)))
-                                                 ax <- a(x[1:k])
-                                                 as.vector(A %*% x[1:k])*min(max(ax/v, L2(x[k+1])), (ax+b)/v) },
-                                               list(A.vec = as.vector(A), L2 = L2@Map[[1]], a = a@Map[[1]], 
-                                                    b = b, k = k))
-            }
-        }
+        normtype <- res$normtype
+        biastype <- res$biastype
+        w <- res$w
+        L2call <- L2Fam@fam.call
+        L2call$trafo <- trafo(L2Fam)
         return(Av1CondTotalVarIC(
                 name = "conditionally centered IC of contamination type", 
-                CallL2Fam = call("L2RegTypeFamily", 
-                                name = L2Fam@name,
-                                distribution = L2Fam@distribution,  
-                                param = L2Fam@param,
-                                props = L2Fam@props,
-                                L2deriv = L2Fam@L2deriv,
-                                ErrorDistr = L2Fam@ErrorDistr,
-                                ErrorSymm = L2Fam@ErrorSymm,
-                                RegDistr = L2Fam@RegDistr,
-                                RegSymm = L2Fam@RegSymm,
-                                Regressor = L2Fam@Regressor,
-                                ErrorL2deriv = L2Fam@ErrorL2deriv,
-                                ErrorL2derivDistr = L2Fam@ErrorL2derivDistr,
-                                ErrorL2derivSymm = L2Fam@ErrorL2derivSymm,
-                                FisherInfo = L2Fam@FisherInfo),
-                Curve = EuclRandVarList(EuclRandVariable(Map = ICfct, Domain = L2Fam@L2deriv[[1]]@Domain, 
-                                        dimension = trunc(nrow(L2Fam@param@trafo)))),
+                CallL2Fam = L2call,
+                Curve = generateIC.fct(neighbor, L2Fam, res),
                 clipUp = b,
                 clipLo = a,
                 stand = A,
@@ -110,9 +67,6 @@ setMethod("generateIC", signature(neighbor = "Av1CondTotalVarNeighborhood",
 ## Access methods
 setMethod("clipUp", "Av1CondTotalVarIC", function(object) object@clipUp)
 setMethod("clipLo", "Av1CondTotalVarIC", function(object) object@clipLo)
-setMethod("stand", "Av1CondTotalVarIC", function(object) object@stand)
-setMethod("lowerCase", "Av1CondTotalVarIC", function(object) object@lowerCase)
-setMethod("neighborRadius", "Av1CondTotalVarIC", function(object) object@neighborRadius)
 
 ## replace methods
 setReplaceMethod("clipUp", "Av1CondTotalVarIC", 

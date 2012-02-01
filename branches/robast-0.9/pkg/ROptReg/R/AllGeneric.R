@@ -38,17 +38,9 @@ if(!isGeneric("getInfRobRegTypeIC")){
     setGeneric("getInfRobRegTypeIC", 
         function(ErrorL2deriv, Regressor, risk, neighbor, ...) standardGeneric("getInfRobRegTypeIC"))
 }
-if(!isGeneric("getFixRobRegTypeIC")){
-    setGeneric("getFixRobRegTypeIC", 
-        function(ErrorDistr, Regressor, risk, neighbor, ...) standardGeneric("getFixRobRegTypeIC"))
-}
 if(!isGeneric("getAsRiskRegTS")){
     setGeneric("getAsRiskRegTS", 
         function(risk, ErrorL2deriv, Regressor, neighbor, ...) standardGeneric("getAsRiskRegTS"))
-}
-if(!isGeneric("getFiRiskRegTS")){
-    setGeneric("getFiRiskRegTS", 
-        function(risk, ErrorDistr, Regressor, neighbor, ...) standardGeneric("getFiRiskRegTS"))
 }
 if(!isGeneric("getInfClipRegTS")){
     setGeneric("getInfClipRegTS", 
