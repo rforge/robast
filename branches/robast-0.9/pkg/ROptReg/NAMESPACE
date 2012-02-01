@@ -17,15 +17,17 @@ exportClasses("CondNeighborhood",
               "Av1CondContNeighborhood", 
               "Av1CondTotalVarNeighborhood",
               "Av2CondContNeighborhood")
-exportClasses("FixRobRegTypeModel", 
-              "InfRobRegTypeModel") 
+exportClasses("InfRobRegTypeModel") 
 exportClasses("CondIC",
-              "CondContIC",
+              "CondHampIC",
+			  "CondContIC",
               "Av1CondContIC",
               "Av2CondContIC",
               "CondTotalVarIC",
               "Av1CondTotalVarIC")
-
+exportClasses("CondBoundedWeight",
+              "CondBdStWeight",
+              "CondHampelWeight")
 exportMethods("show", 
               "plot",
               "E") 
@@ -55,14 +57,15 @@ exportMethods("radiusCurve",
               "neighborRadius", "neighborRadius<-",
               "neighborRadiusCurve", "neighborRadiusCurve<-", 
               "clipLo", "clipLo<-", 
-              "clipUp", "clipUp<-")
+              "clipUp", "clipUp<-",
+			  "getweight", "minbiasweight",
+			  "cent", "cent<-",
+			  "clip", "clip<-",
+			  "stand", "stand<-")
 exportMethods("optIC", 
               "getInfRobRegTypeIC",
-              "getFixRobRegTypeIC", 
               "getAsRiskRegTS",
-              "getFiRiskRegTS",
               "getInfClipRegTS", 
-              "getFixClipRegTS",
               "getInfGammaRegTS", 
               "getInfCentRegTS", 
               "getInfStandRegTS",
@@ -82,8 +85,7 @@ export("CondContNeighborhood",
        "Av1CondContNeighborhood", 
        "Av1CondTotalVarNeighborhood", 
        "Av2CondContNeighborhood")
-export("FixRobRegTypeModel", 
-       "InfRobRegTypeModel") 
+export("InfRobRegTypeModel") 
 export("CondIC",
        "CondContIC", 
        "Av1CondContIC",
