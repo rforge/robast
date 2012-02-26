@@ -8,9 +8,14 @@
  information)
 
 #######################################
+version 0.8.3
+#######################################
++ update for beadarray versions >= 2.0.0 with support by Mark Dunnings and 
+  Andy Lynch
+
+#######################################
 version 0.8
 #######################################
-
 + renamed AffySimStudy.R to AffymetrixSimStudy.R
 + update of Figure numbers in IlluminaExample.R
 + added scripts AffymetrixReproducibility.R and IlluminaReproducibility.R
@@ -27,8 +32,6 @@ version 0.8
 #######################################
 version 0.7
 #######################################
-
-
 GENERAL ENHANCEMENTS:
 
 + added tests/Examples folder with file RobLoxBioC-Ex.Rout.save to have

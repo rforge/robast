@@ -119,13 +119,14 @@ robloxbioc(x, ...)
   Humboldt University, Berlin; also available under
   \url{www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf}
 }
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de},
+update for beadarray versions >= 2.0.0 with support by Mark Dunnings and Andy Lynch}
 %\note{}
 \seealso{\code{\link[RobLox]{roblox}}, \code{\link[RobLox]{rowRoblox}},
          \code{\link[affy]{AffyBatch-class}}, 
          \code{\link[affy:generateExprVal.method.avgdiff]{generateExprVal.method.mas}},
          \code{\link[Biobase:class.ExpressionSet]{ExpressionSet-class}},
-         \code{\link[beadarray]{createBeadSummaryData}} }
+         \code{\link[beadarray]{summarize}} }
 \examples{
 set.seed(123) # to have reproducible results for package checking
 
@@ -167,8 +168,11 @@ eset1 <- robloxbioc(Dilution, normalize = TRUE)
 ## using Illumina-Data
 \dontrun{
 ## "Not run" just because of computation time
-data(BLData)
-BSData <- robloxbioc(BLData, eps.upper = 0.5)
+if(require(beadarrayExampleData)){
+  data(exampleBLData)
+	res <- robloxbioc(exampleBLData, eps.upper = 0.5)
+	res
+}
 }
 }
 \concept{normal location and scale}

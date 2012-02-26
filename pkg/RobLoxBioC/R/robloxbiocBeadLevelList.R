@@ -3,7 +3,7 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
              eps = NULL, eps.lower = 0, eps.upper = 0.05, steps = 3L, 
              fsCor = TRUE, mad0 = 1e-4){
         BLData <- x
-        arraynms <- arrayNames(BLData)
+        arraynms <- sectionNames(BLData)
         if(!is.null(arrays) && !is.character(arrays)) arraynms <- arraynms[arrays]
         if(is.character(arrays)) arraynms <- which(arraynms %in% arrays)
         len <- length(arraynms)
@@ -18,10 +18,11 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
             }
         }
         if(imagesPerArray == 1){
-            pr <- getArrayData(BLData, what = "ProbeID", array = arraynms[1])
+            pr <- getBeadData(BLData, what = "ProbeID", array = arraynms[1])
             sel <- pr != 0
             pr <- pr[sel]
-            finten <- getArrayData(BLData, what = what, log = log, array = arraynms[1])[sel]
+            finten <- getBeadData(BLData, what = what, array = arraynms[1])[sel]
+            if(log) finten <- log2(finten)
             nasinf <- !is.finite(finten) | is.na(finten)
             finten <- finten[!nasinf]
         }
@@ -39,12 +40,13 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
                       & (stripnum[seq(1, len, by = 2)] == stripnum[seq(2, len, by = 2)] - 1))
             if (sum(check) != length(check)) 
                 stop("Missing arrays")
-            sel1 <- getArrayData(BLData, what = "ProbeID", array = arraynms[1]) != 0
-            sel2 <- getArrayData(BLData, what = "ProbeID", array = arraynms[2]) != 0
-            pr <- append(getArrayData(BLData, what = "ProbeID", array = arraynms[1])[sel1], 
-                         getArrayData(BLData, what = "ProbeID", array = arraynms[2])[sel2])
-            finten <- append(getArrayData(BLData, what = what, log = log, array = arraynms[1])[sel1], 
-                             getArrayData(BLData, what = what, log = log, array = arraynms[2])[sel2])
+            sel1 <- getBeadData(BLData, what = "ProbeID", array = arraynms[1]) != 0
+            sel2 <- getBeadData(BLData, what = "ProbeID", array = arraynms[2]) != 0
+            pr <- append(getBeadData(BLData, what = "ProbeID", array = arraynms[1])[sel1], 
+                         getBeadData(BLData, what = "ProbeID", array = arraynms[2])[sel2])
+            finten <- append(getBeadData(BLData, what = what, array = arraynms[1])[sel1], 
+                             getBeadData(BLData, what = what, array = arraynms[2])[sel2])
+            if(log) finten <- log2(finten)
             nasinf <- !is.finite(finten) | is.na(finten)
             finten <- finten[!nasinf]
         }else{
@@ -80,13 +82,15 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
             GNoBeads[, i] <- blah$noBeads
             if (BLData@arrayInfo$channels == "two" && !is.null(BLData[[arraynms[i]]]$R) && whatelse == "R") {
                 if (imagesPerArray == 1) {
-                    finten <- getArrayData(BLData, what = whatelse, log = log, array = arraynms[i])[sel]
+                    finten <- getBeadData(BLData, what = whatelse, array = arraynms[i])[sel]
+                    if(log) finten <- log2(finten)
                     nasinf <- !is.finite(finten) | is.na(finten)
                     finten <- finten[!nasinf]
                 }
                 else if (imagesPerArray == 2) {
-                    finten <- append(getArrayData(BLData, what = whatelse, log = log, array = arraynms[j])[sel1], 
-                                    getArrayData(BLData, what = whatelse, log = log, array = arraynms[j + 1])[sel2])
+                    finten <- append(getBeadData(BLData, what = whatelse, array = arraynms[j])[sel1], 
+                                     getBeadData(BLData, what = whatelse, array = arraynms[j + 1])[sel2])
+                    if(log) finten <- log2(finten)
                     nasinf <- !is.finite(finten) | is.na(finten)
                     finten <- finten[!nasinf]
                 }
@@ -102,20 +106,22 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
             rm(probeIDs, blah)
             gc()
             if ((imagesPerArray == 1) && (i <= len)) {
-                sel <- getArrayData(BLData, what = "ProbeID", array = arraynms[i]) != 0
-                pr <- getArrayData(BLData, what = "ProbeID", array = arraynms[i])[sel]
-                finten <- getArrayData(BLData, what = what, log = log, array = arraynms[i])[sel]
+                sel <- getBeadData(BLData, what = "ProbeID", array = arraynms[i]) != 0
+                pr <- getBeadData(BLData, what = "ProbeID", array = arraynms[i])[sel]
+                finten <- getBeadData(BLData, what = what, array = arraynms[i])[sel]
+                if(log) finten <- log2(finten)
                 nasinf <- !is.finite(finten) | is.na(finten)
                 pr <- pr[!nasinf]
                 finten <- finten[!nasinf]
             }
             else if ((imagesPerArray == 2) && (j < len)) {
-                sel1 <- getArrayData(BLData, what = "ProbeID", array = arraynms[j]) != 0
-                sel2 <- getArrayData(BLData, what = "ProbeID", array = arraynms[j + 1]) != 0
-                pr <- append(getArrayData(BLData, what = "ProbeID", array = arraynms[j])[sel1], 
-                             getArrayData(BLData, what = "ProbeID", array = arraynms[j + 1])[sel2])
-                finten <- append(getArrayData(BLData, what = what, log = log, array = arraynms[j])[sel1], 
-                                 getArrayData(BLData, what = what, log = log, array = arraynms[j + 1])[sel2])
+                sel1 <- getBeadData(BLData, what = "ProbeID", array = arraynms[j]) != 0
+                sel2 <- getBeadData(BLData, what = "ProbeID", array = arraynms[j + 1]) != 0
+                pr <- append(getBeadData(BLData, what = "ProbeID", array = arraynms[j])[sel1], 
+                             getBeadData(BLData, what = "ProbeID", array = arraynms[j + 1])[sel2])
+                finten <- append(getBeadData(BLData, what = what, array = arraynms[j])[sel1], 
+                                 getBeadData(BLData, what = what, array = arraynms[j + 1])[sel2])
+                if(log) finten <- log2(finten)
                 nasinf <- !is.finite(finten) | is.na(finten)
                 pr <- pr[!nasinf]
                 finten <- finten[!nasinf]
@@ -131,8 +137,8 @@ setMethod("robloxbioc", signature(x = "BeadLevelList"),
         else {
             BSData <- new("ExpressionSetIllumina")
             assayData(BSData) <- assayDataNew(exprs = G, se.exprs = GBeadStDev, 
-                                              NoBeads = GNoBeads, storage.mode = "list")
-            rownames(exprs(BSData)) <- rownames(se.exprs(BSData)) <- rownames(NoBeads(BSData)) <- probes
+                                              nObservations = GNoBeads, storage.mode = "list")
+            rownames(exprs(BSData)) <- rownames(se.exprs(BSData)) <- rownames(nObservations(BSData)) <- probes
             featureData(BSData) <- new("AnnotatedDataFrame", data = data.frame(ProbeID = probes, row.names = probes))
         }
         if (nrow(pData(BLData)) == len) {
