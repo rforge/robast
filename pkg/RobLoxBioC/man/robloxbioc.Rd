@@ -3,7 +3,7 @@
 \alias{robloxbioc-methods}
 \alias{robloxbioc,matrix-method}
 \alias{robloxbioc,AffyBatch-method}
-\alias{robloxbioc,BeadLevelList-method}
+\alias{robloxbioc,BeadLevelData-method}
 
 \title{Generic Function for Preprocessing Biological Data}
 \description{
@@ -22,7 +22,7 @@ robloxbioc(x, ...)
            mad0 = 1e-4, contrast.tau = 0.03, scale.tau = 10, 
            delta = 2^(-20), sc = 500)
 
-\S4method{robloxbioc}{BeadLevelList}(x, log = TRUE, imagesPerArray = 1, what = "G", probes = NULL, 
+\S4method{robloxbioc}{BeadLevelData}(x, log = TRUE, imagesPerArray = 1, what = "G", probes = NULL, 
            arrays = NULL, eps = NULL, eps.lower = 0, eps.upper = 0.05, 
            steps = 3L, fsCor = TRUE, mad0 = 1e-4)
 }
@@ -60,7 +60,7 @@ robloxbioc(x, ...)
     Normally 1 for a SAM and 1 or 2 for a BeadChip. The images (strips) from the same array 
     will be combined so that each column in the output represents a sample. }
   \item{what}{ character string specifying which intensities/values to summarize. 
-    See \code{\link[beadarray]{getArrayData}} for a list of possibilities. }
+    See \code{\link[beadarray]{getBeadData}} for a list of possibilities. }
   \item{probes}{ Specify particular probes to summarize. If left \code{NULL} then all
     the probes on the first array are used. }
   \item{arrays}{ integer (scalar or vector) specifying the strips/arrays to summarize. 
@@ -100,6 +100,7 @@ robloxbioc(x, ...)
 \value{ Return value depends on the class of \code{x}. 
   In case of \code{"matrix"} a matrix with columns "mean" and "sd" is returned.
   In case of \code{"AffyBatch"} an object of class \code{"ExpressionSet"} is returned. 
+  In case of \code{"BeadLevelData"} an object of class \code{"ExpressionSetIllumina"} is returned. 
 }
 \references{
   Affymetrix, Inc. (2002). \emph{Statistical Algorithms Description Document}.
@@ -168,11 +169,10 @@ eset1 <- robloxbioc(Dilution, normalize = TRUE)
 ## using Illumina-Data
 \dontrun{
 ## "Not run" just because of computation time
-if(require(beadarrayExampleData)){
-  data(exampleBLData)
-  res <- robloxbioc(exampleBLData, eps.upper = 0.5)
-  res
-}
+require(beadarrayExampleData)
+data(exampleBLData)
+res <- robloxbioc(exampleBLData, eps.upper = 0.5)
+res
 }
 }
 \concept{normal location and scale}

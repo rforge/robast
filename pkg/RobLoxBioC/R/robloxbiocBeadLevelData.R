@@ -1,4 +1,4 @@
-setMethod("robloxbioc", signature(x = "BeadLevelList"),
+setMethod("robloxbioc", signature(x = "BeadLevelData"),
     function(x, log = TRUE, imagesPerArray = 1, what = "G", probes = NULL, arrays = NULL,
              eps = NULL, eps.lower = 0, eps.upper = 0.05, steps = 3L, 
              fsCor = TRUE, mad0 = 1e-4){
