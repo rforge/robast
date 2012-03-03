@@ -170,8 +170,8 @@ eset1 <- robloxbioc(Dilution, normalize = TRUE)
 ## "Not run" just because of computation time
 if(require(beadarrayExampleData)){
   data(exampleBLData)
-	res <- robloxbioc(exampleBLData, eps.upper = 0.5)
-	res
+  res <- robloxbioc(exampleBLData, eps.upper = 0.5)
+  res
 }
 }
 }

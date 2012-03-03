@@ -1,5 +1,5 @@
 
-R version 2.14.1 Patched (2012-01-12 r58096)
+R version 2.14.2 RC (2012-02-25 r58490)
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -33,26 +33,8 @@ Welcome to Bioconductor
 Loading required package: affy
 Loading required package: beadarray
 Loading required package: ggplot2
-Loading required package: reshape
-Loading required package: plyr
-
-Attaching package: ‘reshape’
-
-The following object(s) are masked from ‘package:plyr’:
-
-    rename, round_any
-
-Loading required package: grid
-Loading required package: proto
 Welcome to beadarray version 2.4.1
 beadarray versions >= 2.0.0 are substantial updates from beadarray 1.16.0 and earlier. Please see package vignette for details
-
-Attaching package: ‘beadarray’
-
-The following object(s) are masked from ‘package:plyr’:
-
-    summarize
-
 Loading required package: distr
 Loading required package: startupmsg
 :startupmsg>  Utilities for start-up messages (version 0.7.3)
@@ -64,7 +46,7 @@ Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave together with
 :SweaveListingUtils>  TeX listings package (version
-:SweaveListingUtils>  0.5.4)
+:SweaveListingUtils>  0.5.5)
 :SweaveListingUtils> 
 :SweaveListingUtils>  Some functions from package 'base'
 :SweaveListingUtils>  are intentionally masked ---see
@@ -396,7 +378,7 @@ relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 > X <- matrix(rnorm(50000*20, mean = 1), nrow = 50000)
 > system.time(robloxbioc(X))
    user  system elapsed 
-  5.597   0.044   5.660 
+  5.185   0.068   5.274 
 > 
 > ## using Affymetrix-Data
 > ## confer example to generateExprVal.method.mas
@@ -406,7 +388,7 @@ relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 > probes <- pm(SpikeIn) 
 > mas <- generateExprVal.method.mas(probes)
 > rl <- 2^robloxbioc(log2(t(probes)))
-> concentrations <- as.numeric(sampleNames(SpikeIn))
+> concentrations <- as.numeric(colnames(SpikeIn))
 > plot(concentrations, mas$exprs, log="xy", ylim=c(50,10000), type="b",
 +      ylab = "expression measures")
 > points(concentrations, rl[,1], pch = 20, col="orange", type="b")
@@ -424,8 +406,11 @@ relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 > ## using Illumina-Data
 > ## Not run: 
 > ##D ## "Not run" just because of computation time
-> ##D data(BLData)
-> ##D BSData <- robloxbioc(BLData, eps.upper = 0.5)
+> ##D if(require(beadarrayExampleData)){
+> ##D   data(exampleBLData)
+> ##D   res <- robloxbioc(exampleBLData, eps.upper = 0.5)
+> ##D   res
+> ##D }
 > ## End(Not run)
 > 
 > 
@@ -433,7 +418,7 @@ relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  16.901 0.156 17.124 0 0 
+Time elapsed:  16.705 0.24 17.152 0 0 
 > grDevices::dev.off()
 pdf 
   2 
