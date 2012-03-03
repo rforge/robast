@@ -347,7 +347,7 @@ relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 > ### Name: robloxbioc
 > ### Title: Generic Function for Preprocessing Biological Data
 > ### Aliases: robloxbioc robloxbioc-methods robloxbioc,matrix-method
-> ###   robloxbioc,AffyBatch-method robloxbioc,BeadLevelList-method
+> ###   robloxbioc,AffyBatch-method robloxbioc,beadLevelData-method
 > ### Keywords: robust
 > 
 > ### ** Examples
@@ -378,7 +378,7 @@ relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 > X <- matrix(rnorm(50000*20, mean = 1), nrow = 50000)
 > system.time(robloxbioc(X))
    user  system elapsed 
-  5.185   0.068   5.274 
+  5.425   0.084   5.528 
 > 
 > ## using Affymetrix-Data
 > ## confer example to generateExprVal.method.mas
@@ -406,11 +406,10 @@ relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 > ## using Illumina-Data
 > ## Not run: 
 > ##D ## "Not run" just because of computation time
-> ##D if(require(beadarrayExampleData)){
-> ##D   data(exampleBLData)
-> ##D   res <- robloxbioc(exampleBLData, eps.upper = 0.5)
-> ##D   res
-> ##D }
+> ##D require(beadarrayExampleData)
+> ##D data(exampleBLData)
+> ##D res <- robloxbioc(exampleBLData, eps.upper = 0.5)
+> ##D res
 > ## End(Not run)
 > 
 > 
@@ -418,7 +417,7 @@ relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  16.705 0.24 17.152 0 0 
+Time elapsed:  17.865 0.2 18.129 0 0 
 > grDevices::dev.off()
 pdf 
   2 

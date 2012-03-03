@@ -3,7 +3,7 @@
 \alias{robloxbioc-methods}
 \alias{robloxbioc,matrix-method}
 \alias{robloxbioc,AffyBatch-method}
-\alias{robloxbioc,BeadLevelData-method}
+\alias{robloxbioc,beadLevelData-method}
 
 \title{Generic Function for Preprocessing Biological Data}
 \description{
@@ -22,7 +22,7 @@ robloxbioc(x, ...)
            mad0 = 1e-4, contrast.tau = 0.03, scale.tau = 10, 
            delta = 2^(-20), sc = 500)
 
-\S4method{robloxbioc}{BeadLevelData}(x, log = TRUE, imagesPerArray = 1, what = "G", probes = NULL, 
+\S4method{robloxbioc}{beadLevelData}(x, log = TRUE, imagesPerArray = 1, what = "G", probes = NULL, 
            arrays = NULL, eps = NULL, eps.lower = 0, eps.upper = 0.05, 
            steps = 3L, fsCor = TRUE, mad0 = 1e-4)
 }
