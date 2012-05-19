@@ -95,8 +95,6 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                 IC.c <- as(diag(p) %*% IC@Curve, "EuclRandVariable")
 
 
-                theta <- theta + rowMeans(evalRandVar(IC.c, x0),
-                                          na.rm = na.rm )
 
 #                print(theta)
                 tf <- trafo(L2Fam, Param)
@@ -127,7 +125,10 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                      IC.tot <- IC.tot1 + IC.tot2
                      u.theta <- u.theta + rowMeans(evalRandVar(IC.tot, x0),
                                                    na.rm = na.rm)
+                     theta <- (tf$fct(u.theta))$fval
                 }else{
+                     theta <- theta + rowMeans(evalRandVar(IC.c, x0),
+                                               na.rm = na.rm )
                      IC.tot <- IC.c
                      u.theta <- theta
                 }
