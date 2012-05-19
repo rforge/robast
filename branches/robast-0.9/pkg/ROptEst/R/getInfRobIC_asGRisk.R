@@ -12,6 +12,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
            verbose <- getRobAStBaseOption("all.verbose")
 
         biastype <- biastype(risk)
+        normtype <- normtype(risk)
         radius <- neighbor@radius
 
         p <- nrow(trafo)
