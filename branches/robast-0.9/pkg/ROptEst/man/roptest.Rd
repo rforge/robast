@@ -15,7 +15,8 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
         withICList = getRobAStBaseOption("withICList"),
         withPICList = getRobAStBaseOption("withPICList"),
-        na.rm = TRUE, initial.est.ArgList, ...)
+        na.rm = TRUE, initial.est.ArgList, ...,
+        scalename = "scale", withLogScale = TRUE)
 }
 \arguments{
   \item{x}{ sample }
@@ -67,6 +68,10 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
    is a function; this list by default already starts with two unnamed items,
    the sample \code{x}, and the model \code{L2Fam}.}
   \item{\dots}{ further arguments }
+  \item{scalename}{character; the name of the scale coordinate. }
+  \item{withLogScale}{logical; shall a scale component (if existing and found
+   with name \code{scalename}) be computed on log-scale and backtransformed
+   afterwards? This avoids crossing 0.}
 }
 \details{
   Computes the optimally robust estimator for a given L2 differentiable
