@@ -234,8 +234,26 @@ setClass("GumbelLocationFamily",
           contains = "L2LocationFamily")
 
 ## class
-setClass("GParetoFamily",
-   prototype= prototype(withPos = TRUE),
-   contains="L2ScaleShapeUnion")
+setClass("GParetoFamily", contains="L2ScaleShapeUnion")
 
 
+setClass("LDEstimate",
+         representation(location = "numeric",
+                        dispersion = "numeric"
+                        ),
+         prototype(name = "LD estimate",
+                   estimate = numeric(0),
+                   samplesize = numeric(0),
+                   completecases = logical(0),
+                   asvar = NULL,
+                   estimate.call = call("{}"),
+                   location = 0,
+                   dispersion = 1,
+                   Infos = matrix(c(character(0),character(0)), ncol=2,
+                                  dimnames=list(character(0), c("method", "message"))),
+                   nuis.idx = NULL,
+                   trafo = list(fct = function(x){
+                                      list(fval = x, mat = matrix(1))},
+                                mat = matrix(1))
+                   ),
+         contains = "Estimate")

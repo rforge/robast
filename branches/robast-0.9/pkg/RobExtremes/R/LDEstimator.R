@@ -39,7 +39,7 @@
     xi.0 <- uniroot(q.f,lower=q.lo.0,upper=q.up.0)$root
     distr.new.0 <- ParamFamily.0@modifyParam(theta=c("scale"=1,"shape"=xi.0))
     m1xi <- do.call(loc.fctal.0, args = .prepend(distr.new.0,loc.fctal.ctrl.0, dots))
-    val <-   c("shape"=xi.0,"scale"=loc.emp/m1xi)
+    val <-   c("shape"=xi.0,"scale"=loc.emp/m1xi, "loc"=loc.emp,"disp"=disp.emp)
     return(val)
 }
 
@@ -62,8 +62,10 @@ LDEstimator <- function(x, loc.est, disp.est,
                            paste(deparse(substitute(loc.fctal))),
                            " ","Dispersion:",
                            paste(deparse(substitute(disp.fctal))))
+
+    LDMval <- NULL
     estimator <- function(x,...){
-         .LDMatch(x.0= x,
+         LDMval <<- .LDMatch(x.0= x,
                          loc.est.0 = loc.est, disp.est.0 =  disp.est,
                          loc.fctal.0 = loc.fctal, disp.fctal.0 =  disp.fctal,
                          ParamFamily.0 = ParamFamily,
@@ -72,6 +74,7 @@ LDEstimator <- function(x, loc.est, disp.est,
                          disp.est.ctrl.0 = disp.est.ctrl,
                          disp.fctal.ctrl.0 = disp.fctal.ctrl,
                          q.lo.0 = q.lo, q.up.0 = q.up, log.q.0 = log.q)
+         return(LDMval[1:2])
     }
 
 
@@ -92,6 +95,7 @@ LDEstimator <- function(x, loc.est, disp.est,
              asvar <- asvar.fct(ParamFamily, estimate, ...)
 
     estimate@untransformed.asvar <- asvar
+
 
     l.e <- length(estimate@untransformed.estimate)
     idx <- NULL
@@ -118,7 +122,18 @@ LDEstimator <- function(x, loc.est, disp.est,
         colnames(Infos) <- c("method", "message")
     }
     estimate@Infos <- Infos
-    return(estimate)
+
+    estim <- new("LDEstimate")
+
+    sln <- names(getSlots(class(estimate)))
+    for( i in 1:length(sln))
+        slot(estim, sln[i]) <- slot(estimate, sln[i])
+    rm(estimate)
+    
+    estim@dispersion <- LDMval["disp"]
+    estim@location <- LDMval["loc"]
+
+    return(estim)
 }
 
 
@@ -204,3 +219,6 @@ medkMADhybr <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15,
       }
  return(c("scale"=NA,"shape"=NA))
 }
+
+setMethod("location", "LDEstimate", function(object) object@location)
+setMethod("dispersion", "LDEstimate", function(object) object@dispersion)

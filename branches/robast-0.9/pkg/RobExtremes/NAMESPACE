@@ -12,10 +12,11 @@ import("ROptEst")
 exportClasses("GumbelParameter",
               "ParetoParameter",
 			  "GParetoParameter",
-			  "GEVParameter")
+			  "GEVParameter",
+			  "LDEstimate")
 exportClasses("Gumbel", "Pareto", "GPareto", "GEV")
 exportClasses("GParetoFamily", "GumbelLocationFamily")
-exportMethods("initialize") 
+exportMethods("initialize", "show") 
 exportMethods("loc", "loc<-", 
               "E", "var", "IQR", "median", "kMAD", "Sn", "Qn")
 exportMethods("validParameter",
@@ -26,7 +27,7 @@ exportMethods("validParameter",
               "Min", "Min<-",
               "Range",
               "E", "var", "IQR", "skewness", "kurtosis", 
-              "sd", "median", "mad")
+              "sd", "median", "mad", "dispersion", "location")
 exportMethods("modifyModel")
 export("EULERMASCHERONICONSTANT","APERYCONSTANT")
 export("Gumbel", "Pareto", "GPareto", "GEV")

@@ -68,7 +68,7 @@ respective \file{sysdata.rda} file. }
 ### code to produce grid for GPareto:
 RobExtremes:::.saveInterpGrid(sysRdaFolder =
         "C:/rtest/RobASt/branches/robast-0.9/pkg/RobExtremes/R",
-              accuracy = 5000)
+              accuracy = 5000,upp=10)
 }
 }
 \keyword{internal}

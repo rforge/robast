@@ -176,6 +176,7 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
 setMethod("Sn", signature(x = "GPareto"),
     function(x, ...){
            if(abs(scale(x)-1)< 1e-12){
+#              sng <- .SnGrids
               sng <- getFromNamespace(".SnGrids", ns = "RobExtremes")
               snf <- sng[["Generalized Pareto Family"]][["fct"]]
               ret <- snf(shape(x))

@@ -22,9 +22,8 @@
 \section{Described classes}{
 In this file we describe classes 
 \code{BinomFamily}, \code{PoisFamily}, \code{GammaFamily},
-\code{BetaFamily} ``extending'' (no new slots!) class \code{L2ParamFamily},
-class \code{GParetoFamily} extending class \code{L2ParamFamily} with
-extra slot \code{withPos},
+\code{BetaFamily}, class \code{GParetoFamily} ``extending'' (no new slots!)
+class \code{L2ParamFamily},
 classes \code{NormLocationFamily} and \code{GumbelLocationFamily}, 
 ``extending'' (no new slots!) class \code{"L2LocationFamily"}, classes
 \code{NormScaleFamily}, \code{ExpScaleFamily}, and \code{LnormScaleFamily} 
@@ -106,8 +105,6 @@ classes \code{NormLocationFamily} and \code{GumbelLocationFamily},
       the "standard" parameter value. }
     \item{\code{locscalename}:}{(only loc/scale classes)[inherited from class \code{"L2LocationScaleUnion"}]
       object of class \code{"character"}: names of location and scale parameter. }
-    \item{\code{withPos}:}{(only shape/scale classes)       object of class \code{"logical"}:
-      Is shape restricted to positive values?}
 }}
 
 

@@ -20,3 +20,7 @@ if(!isGeneric("Qn")){
 if(!isGeneric("Sn")){
    setGeneric("Sn", function(x, ...) standardGeneric("Sn"))
 }
+
+if(!isGeneric("dispersion")){
+   setGeneric("dispersion", function(object, ...) standardGeneric("dispersion"))
+}

@@ -14,7 +14,7 @@ setMethod("validParameter",signature(object="GParetoFamily"),
                  return(FALSE)
              #if (any(param[1] <= tol))
              #    return(FALSE)
-             if(object@withPos)
+             if(object@param@withPosRestr)
                  if (any(param[2] <= tol))
                      return(FALSE)
              return(TRUE)
@@ -246,7 +246,8 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
     }
     param <- ParamFamParameter(name = "theta", main = c(theta[2],theta[3]),
                                fixed = theta[1],
-                               trafo = trafo)
+                               trafo = trafo, withPosRestr = withPos,
+                               .returnClsName ="ParamWithScaleAndShapeFamParameter")
 
     ## distribution
     distribution <- GPareto(loc = loc, scale = scale, shape = shape)
@@ -270,7 +271,6 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
            if(!is.null(names(e0)))
                e0 <- e0[c("scale", "shape")]
         }
-        e0["scale"] <- log(e0["scale"])
         names(e0) <- NULL
         return(e0)
     }
@@ -365,8 +365,6 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
                          list(loc0 = loc, scale0 = scale, shape0 = shape,
                               of.interest0 = of.interest, p0 = p, N0 = N,
                               trafo0 = trafo, withPos0 = withPos))
-
-    L2Fam@withPos <- withPos
 
     L2Fam@LogDeriv <- function(x) (shape+1)/(shape*(scale+(x-loc)))
     L2Fam@L2deriv <- L2deriv
