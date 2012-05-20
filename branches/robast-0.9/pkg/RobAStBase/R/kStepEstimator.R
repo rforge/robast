@@ -13,7 +13,8 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                            IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
                            withICList = getRobAStBaseOption("withICList"),
                            withPICList = getRobAStBaseOption("withPICList"),
-                           na.rm = TRUE, startArgList = NULL, ...){
+                           na.rm = TRUE, startArgList = NULL, ...,
+                           scalename = "scale", withLogScale = TRUE){
 ## save call
         es.call <- match.call()
         es.call[[1]] <- as.name("kStepEstimator")
@@ -74,6 +75,9 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                          na.rm = na.rm, L2Fam = L2Fam,
                          startList = startArgList)
 
+### use Logtransform here in scale models
+        logtrf <- is(L2Fam, "L2ScaleUnion") &
+                     withLogScale & scalename %in% names(start.val)
 
 ### a starting value in k-space
         u.theta <- start.val
@@ -123,12 +127,25 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                                     "EuclRandVariable") else NULL
                      }
                      IC.tot <- IC.tot1 + IC.tot2
-                     u.theta <- u.theta + rowMeans(evalRandVar(IC.tot, x0),
-                                                   na.rm = na.rm)
+                     correct <- rowMeans(evalRandVar(IC.tot, x0), na.rm = na.rm)
+                     names(correct) <- rownames(u.theta)
+                     if(logtrf){
+                        scl <- u.theta[scalename,1]
+                        u.theta <- u.theta + correct
+                        u.theta[scalename,1] <- scl * exp(correct[scalename]/scl)
+                     }else u.theta <- u.theta + correct
+
                      theta <- (tf$fct(u.theta))$fval
                 }else{
-                     theta <- theta + rowMeans(evalRandVar(IC.c, x0),
-                                               na.rm = na.rm )
+                     correct <- rowMeans(evalRandVar(IC.c, x0), na.rm = na.rm )
+                     names(correct) <- rownames(theta)
+                     if(logtrf){
+                        scl <- theta[scalename,1]
+                        theta <- theta + correct
+                        theta[scalename,1] <- scl * exp(correct[scalename]/scl)
+                     }else{
+                        theta <- theta + correct
+                     }
                      IC.tot <- IC.c
                      u.theta <- theta
                 }

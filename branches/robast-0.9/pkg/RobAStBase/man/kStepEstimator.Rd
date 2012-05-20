@@ -12,7 +12,8 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
       IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
       withICList = getRobAStBaseOption("withICList"),
       withPICList = getRobAStBaseOption("withPICList"),
-      na.rm = TRUE, startArgList = NULL, ...)
+      na.rm = TRUE, startArgList = NULL, ...,
+      scalename = "scale", withLogScale = TRUE)
 }
 \arguments{
   \item{x}{ sample }
@@ -41,6 +42,10 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
   \item{withICList}{logical: shall slot \code{ICList} of return value
   be filled?}
   \item{...}{ additional parameters }
+  \item{scalename}{character; the name of the scale coordinate. }
+  \item{withLogScale}{logical; shall a scale component (if existing and found
+   with name \code{scalename}) be computed on log-scale and backtransformed
+   afterwards? This avoids crossing 0.}
 }
 \details{
   Given an initial estimation \code{start}, a sample \code{x} 
