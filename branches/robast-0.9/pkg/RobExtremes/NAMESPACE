@@ -1,0 +1,36 @@
+useDynLib("RobExtremes")
+
+import("methods")
+import("distr")
+import("distrEx")
+import("RandVar")
+import("distrMod")
+import("robustbase")
+import("RobAStBase")
+import("ROptEst")
+
+exportClasses("GumbelParameter",
+              "ParetoParameter",
+			  "GParetoParameter",
+			  "GEVParameter")
+exportClasses("Gumbel", "Pareto", "GPareto", "GEV")
+exportClasses("GParetoFamily", "GumbelLocationFamily")
+exportMethods("initialize") 
+exportMethods("loc", "loc<-", 
+              "E", "var", "IQR", "median", "kMAD", "Sn", "Qn")
+exportMethods("validParameter",
+              "location", "location<-", 
+              "scale", "scale<-",
+              "shape", "shape<-",
+              "+", "*",
+              "Min", "Min<-",
+              "Range",
+              "E", "var", "IQR", "skewness", "kurtosis", 
+              "sd", "median", "mad")
+exportMethods("modifyModel")
+export("EULERMASCHERONICONSTANT","APERYCONSTANT")
+export("Gumbel", "Pareto", "GPareto", "GEV")
+export("GParetoFamily", "GumbelLocationFamily")
+export("LDEstimator", "medkMAD", "medSn", "medQn", "medkMADhybr")
+export("getShapeGrid", "getSnGrid")
+export("loc", "loc<-")
