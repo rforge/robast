@@ -14,7 +14,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                            withICList = getRobAStBaseOption("withICList"),
                            withPICList = getRobAStBaseOption("withPICList"),
                            na.rm = TRUE, startArgList = NULL, ...,
-                           scalename = "scale", withLogScale = TRUE){
+                           withLogScale = TRUE){
 ## save call
         es.call <- match.call()
         es.call[[1]] <- as.name("kStepEstimator")
@@ -76,9 +76,10 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                          startList = startArgList)
 
 ### use Logtransform here in scale models
+        sclname <- ""
+        if(is(L2Fam, "L2ScaleUnion")) sclname <- scalename(L2Fam)
         logtrf <- is(L2Fam, "L2ScaleUnion") &
-                     withLogScale & scalename %in% names(start.val)
-
+                     withLogScale & sclname %in% names(start.val)
 ### a starting value in k-space
         u.theta <- start.val
         theta <- if(is(start.val,"Estimate")) estimate(start.val)
@@ -128,21 +129,25 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                      }
                      IC.tot <- IC.tot1 + IC.tot2
                      correct <- rowMeans(evalRandVar(IC.tot, x0), na.rm = na.rm)
-                     names(correct) <- rownames(u.theta)
+                     iM <- is.matrix(u.theta)
+                     names(correct) <- if(iM) rownames(u.theta) else names(u.theta)
                      if(logtrf){
-                        scl <- u.theta[scalename,1]
+                        scl <- if(iM) u.theta[sclname,1] else u.theta[sclname]
                         u.theta <- u.theta + correct
-                        u.theta[scalename,1] <- scl * exp(correct[scalename]/scl)
+                        if(iM) u.theta[sclname,1] <- scl * exp(correct[sclname]/scl) else
+                               u.theta[sclname] <- scl * exp(correct[sclname]/scl)
                      }else u.theta <- u.theta + correct
 
                      theta <- (tf$fct(u.theta))$fval
                 }else{
                      correct <- rowMeans(evalRandVar(IC.c, x0), na.rm = na.rm )
-                     names(correct) <- rownames(theta)
+                     iM <- is.matrix(theta)
+                     names(correct) <- if(iM) rownames(theta) else names(theta)
                      if(logtrf){
-                        scl <- theta[scalename,1]
+                        scl <- if(iM) theta[sclname,1] else theta[sclname]
                         theta <- theta + correct
-                        theta[scalename,1] <- scl * exp(correct[scalename]/scl)
+                        if(iM) theta[sclname,1] <- scl * exp(correct[sclname]/scl) else
+                               theta[sclname] <- scl * exp(correct[sclname]/scl)
                      }else{
                         theta <- theta + correct
                      }
