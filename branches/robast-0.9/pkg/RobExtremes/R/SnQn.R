@@ -103,3 +103,16 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
     function(x, ...){
            return(abs(x@a) * Qn(x@X0,...))
     })
+
+ setMethod("Sn", signature(x = "GPareto"),
+    function(x, ...){
+           if(abs(scale(x)-1)< 1e-12){
+#              sng <- .SnGrids
+              sng <- getFromNamespace(".SnGrids", ns = "RobExtremes")
+              snf <- sng[["Generalized Pareto Family"]][["fct"]]
+              ret <- snf(shape(x))
+           }else ret <- scale(x)*Sn(x=x/scale(x))
+           return(ret)
+    })
+
+
