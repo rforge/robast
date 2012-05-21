@@ -354,6 +354,8 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
     L2Fam@startPar <- startPar
     L2Fam@makeOKPar <- makeOKPar
     L2Fam@modifyParam <- modifyPar
+    L2Fam@L2derivSymm <- FunSymmList(NonSymmetric(), NonSymmetric())
+    L2Fam@L2derivDistrSymm <- DistrSymmList(NoSymmetry(), NoSymmetry())
 
     L2deriv <- EuclRandVarList(RealRandVariable(L2deriv.fct(param),
                                Domain = Reals()))

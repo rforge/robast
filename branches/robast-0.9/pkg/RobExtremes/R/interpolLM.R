@@ -1,21 +1,22 @@
 .modify.xi.PFam.call <- function(xi, PFam){
-      Pfc <- PFam@fam.call
-      Pfl <- as.list(Pfc)
-      Pfl[["shape"]] <- xi
-      as.call(Pfl)
+      Param <- param(PFam)
+      param <- main(Param)
+      param["shape"] <- xi
+      main(Param) <- param
+      nModel <- modifyModel(PFam, Param)
+#GParetoFamily(shape=xi,scale=1)
 }
 
 .RMXE.xi <- function(xi, PFam){
-      PFam <- eval(.modify.xi.PFam.call(xi,PFam))
+      PFam <- .modify.xi.PFam.call(xi,PFam)
       IC <- radiusMinimaxIC(L2Fam=PFam, neighbor= ContNeighborhood(),
                             risk = asMSE(), verbose = FALSE)
       return(c(b=clip(IC), a=cent(IC), a.w = cent(weight(IC)),
-                           A=stand(IC),  A.w = stand(weight(IC)),
-               r = IC@neighborRadius))
+                           A=stand(IC),  A.w = stand(weight(IC))))
 }
 
 .MBRE.xi <- function(xi, PFam){
-      PFam <- eval(.modify.xi.PFam.call(xi,PFam))
+      PFam <- .modify.xi.PFam.call(xi,PFam)
       RobM <- InfRobModel(center = PFam, neighbor = ContNeighborhood(radius = 15))
       IC <- optIC(model = RobM, risk = asBias(), verbose = FALSE)
       mA <- max(stand(IC))
@@ -25,40 +26,50 @@
 }
 
 .OMSE.xi <- function(xi, PFam){
-      PFam <- eval(.modify.xi.PFam.call(xi,PFam))
+      PFam <- .modify.xi.PFam.call(xi,PFam)
       RobM <- InfRobModel(center = PFam, neighbor = ContNeighborhood(radius = .5))
       IC <- optIC(model = RobM, risk = asMSE(), verbose = FALSE)
-      return(c(b=clip(IC), a=cent(IC), a.w = cent(weight(IC)),
-                A=stand(IC)), A.w = stand(weight(IC)))
+      res=c(b=clip(IC), a=cent(IC), a.w = cent(weight(IC)),
+                A=stand(IC), A.w = stand(weight(IC)))
+      return(res)
 }
 
 
 .getLMGrid <- function(xiGrid = getShapeGrid(),
-                      PFam = GParetoFamily(scale=1),
+                      PFam = GParetoFamily(scale=1,shape=2),
                       optFct = .RMXE.xi,
                       withSmooth = TRUE,
                       withPrint = FALSE){
+   print(match.call())
    call <- match.call()
    itLM <- 0
    getLM <- function(xi){
                itLM <<- itLM + 1
                if(withPrint) cat("Evaluation Nr.", itLM," at xi = ",xi,"\n")
-               return(optFct(xi,PFam))
+               a <- try(optFct(xi,PFam), silent=TRUE)
+               if(is(a,"try-error")) a <- rep(NA,14)
+               return(a)
                }
 
+   distroptions.old <- distroptions()
    distrExOptions.old <- distrExOptions()
+   distroptions("withgaps"=FALSE)
    distrExOptions( MCIterations=1e6,
                    GLIntegrateTruncQuantile=.Machine$double.eps,
                    GLIntegrateOrder=1000,
-                   ElowerTruncQuantile=1e-8,
-                   EupperTruncQuantile=1e-8,
+                   ElowerTruncQuantile=1e-7,
+                   EupperTruncQuantile=1e-7,
                    ErelativeTolerance = .Machine$double.eps^0.4,
                    m1dfRelativeTolerance = .Machine$double.eps^0.4,
                    m2dfRelativeTolerance = .Machine$double.eps^0.4,
                    nDiscretize = 300, IQR.fac = 20)
-   on.exit(do.call(distrExOptions,args=distrExOptions.old))
+   on.exit({do.call(distrExOptions,args=distrExOptions.old)
+            do.call(distroptions,args=distroptions.old)
+
+            })
    LMGrid <- sapply(xiGrid,getLM)
-   res <- .MakeGridList(xiGrid, Y=LMGrid, withSmooth = withSmooth)
+   res <- .MakeGridList(xiGrid, Y=t(LMGrid), withSmooth = withSmooth)
+   print(res)
    return(list(grid = res$grid,
                fct = res$fct, call = call))
 }
@@ -72,9 +83,11 @@
    LMGrid <- LMGrid[!iNA,]
    xiGrid <- xiGrid[!iNA]
    if(withSmooth)
-      LMGrid <- apply(LMGrid,2,function(u) smooth.spline(xiGrid,u)$y)
+      LMGrid2 <- apply(LMGrid,2,function(u) smooth.spline(xiGrid,u)$y)
 
+   print(LMGrid2)
    fct0 <- function(x,i) (splinefun(x=xiGrid,y=LMGrid[,i]))(x)
+
    xm <- xiGrid[1]
    ym <- LMGrid[1,]
    dym <- (LMGrid[2,]-LMGrid[1,])/(xiGrid[2]-xiGrid[1])
@@ -100,15 +113,21 @@
                fct = fct))
 }
 
+.svInt <- function(optF = .RMXE.xi, nam = ".RMXE")
+                  .saveInterpGrid(xiGrid = getShapeGrid(400,
+                  cutoff.at.0=0.005),
+                  PFam = GParetoFamily(shape=1,scale=2),
+                  sysRdaFolder = .myFolder, optFct = optF,
+                  nameInSysdata = nam, getFun = .getLMGrid,
+                  withSmooth = TRUE, withPrint = TRUE)
 
 if(FALSE){
 .myFolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/ROptEst/R"
-.svInt <- function(optF = .RMXE.xi, nam = ".RMXE")
-          distrMod:::.saveInterpGrid(PFam = GParetoFamily(),
-                  sysRdaFolder = .myFolder, optFct = optF,
-                  nameInSysdata = nam, getFun = getLMGrid,
-                withSmooth = TRUE, withPrint = TRUE)
-.svInt(.RMXE.xi, ".RMXE")
+svInt <- RobExtremes:::.svInt;
+.OMSE.xi <- RobExtremes:::.OMSE.xi
+.MBRE.xi <- RobExtremes:::.MBRE.xi
+.RMXE.xi <- RobExtremes:::.RMXE.xi
 .svInt(.OMSE.xi, ".OMSE")
 .svInt(.MBRE.xi, ".MBRE")
+.svInt(.RMXE.xi, ".RMXE")
 }
