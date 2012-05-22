@@ -17,7 +17,6 @@
        text.abline.y.fmt.cy = "%7.2f", text.abline.y.fmt.qy = "%4.2f%%"){
 
        dots <- match.call(expand.dots = FALSE)$"..."
-       print(dots)
        id.n1 <- 1:ncol(data)
 
        if(missing(id.n) || is.null(id.n))
@@ -25,7 +24,7 @@
 
 
        if(missing(lab.pts)|| is.null(lab.pts)){
-          lab.pts <-  if(!is.null(colnames(data))) colnames(data) else 1:ncol(data)
+          lab.pts <-  if(!is.null(colnames(data))) colnames(data) else id.n1
        }
 
        data <- data[,id.n, drop = FALSE]
@@ -48,6 +47,13 @@
       if(is.null(dist.y)) dist.y <- NormType()
       if(is.null(dots$xlab)) dots$xlab <- name(dist.x)
       if(is.null(dots$ylab)) dots$ylab <- name(dist.y)
+
+      if(!is.null(dots$log)){
+         if(grepl("x",dots$log)) dots$xlab <- paste(dots$xlab, "(log-scale)",
+                                              sep="  ")
+         if(grepl("y",dots$log)) dots$ylab <- paste(dots$ylab, "(log-scale)",
+                                              sep="  ")
+      }
 
       if(is.null(cutoff.quantile.x))
          cutoff.quantile.x <- 0.95
@@ -89,6 +95,7 @@
 
 
       pdots <- dots
+      pdots$nsim <- NULL
       pdots$type <- NULL
       pdots$x <- NULL
       pdots$y <- NULL
