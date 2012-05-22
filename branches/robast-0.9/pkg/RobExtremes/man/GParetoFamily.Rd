@@ -49,7 +49,7 @@ DOI: 10.1007/s00184-011-0366-4
         Peter Ruckdeschel \email{peter.ruckdeschel@itwm.fraunhofer.de}\cr
         Nataliya Horbenko \email{nataliya.horbenko@itwm.fraunhofer.de}}
 %\note{}
-\seealso{\code{\link{[distrMod:L2ParamFamily-class]L2ParamFamily-class}}, \code{\link{GPareto-class}}}
+\seealso{\code{\link{[distrMod:"L2ParamFamily-class"]L2ParamFamily-class}}, \code{\link{GPareto-class}}}
 \examples{
 (G1 <- GParetoFamily())
 FisherInfo(G1)

@@ -22,10 +22,10 @@ LDEstimator(x, loc.est, disp.est, loc.fctal, disp.fctal, ParamFamily,
             trafo = NULL, fixed = NULL, asvar.fct  = NULL, na.rm = TRUE,
             ...)
 medkMAD(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
-        trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
+        trafo = NULL, fixed = NULL, na.rm = TRUE,
         ...)
 medkMADhybr(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, KK = 20, nuis.idx = NULL,
-        trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
+        trafo = NULL, fixed = NULL, na.rm = TRUE,
         ...)
 medSn(x, ParamFamily, q.lo =1e-3, q.up=10, nuis.idx = NULL,
       trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
@@ -58,7 +58,8 @@ medQn(x, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
                         for the location functional. }
   \item{disp.fctal.ctrl}{a list (or \code{NULL}); optional additional arguments
                         for the dispersion functional.  }
-  \item{k}{numeric; additional parameter for \code{\link{kMAD}}. }
+  \item{k}{numeric; additional parameter for \code{\link{kMAD}}; must be positive
+           and of length 1.}
   \item{KK}{numeric; Maximal number of trials with different \code{k} in
    \code{medkMADhybr} . }
   \item{q.lo}{numeric; lower bound for search intervall in shape parameter. }

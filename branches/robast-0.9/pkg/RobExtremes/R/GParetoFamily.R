@@ -74,6 +74,7 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
     ## parameters
     names(theta) <- c("loc", "scale", "shape")
+    scaleshapename <- c("scale", "shape")
 
     if(is.null(trafo)){
         tau <- NULL
@@ -337,7 +338,9 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
         E11 <- sc^-2
         E12 <- (sc*(1+k))^-1
         E22 <- 2/(1+k)
-        return(PosSemDefSymmMatrix(matrix(c(E11,E12,E12,E22)/(1+2*k),2,2)))
+        mat <- PosSemDefSymmMatrix(matrix(c(E11,E12,E12,E22)/(1+2*k),2,2))
+        dimnames(mat) <- list(scaleshapename,scaleshapename)
+        return(mat)
     }
 
     FisherInfo <- FisherInfo.fct(param)
@@ -345,6 +348,7 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
     ## initializing the GPareto family with components of L2-family
     L2Fam <- new("GParetoFamily")
+    L2Fam@scaleshapename <- scaleshapename
     L2Fam@name <- name
     L2Fam@param <- param
     L2Fam@distribution <- distribution

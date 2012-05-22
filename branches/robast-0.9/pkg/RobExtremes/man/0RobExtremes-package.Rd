@@ -92,9 +92,13 @@ slots: [<name>(<class>)]
 \section{Functions}{
 
 \preformatted{
-
-
-
+LDEstimator   Estimators for scale-shape models based on location and dispersion
+medSn                    loc=median disp=Sn
+medQn                    loc=median disp=Qn
+medkMAD                  loc=median disp=kMAD
+asvarMedkMAD               [asy. variance to MedkMADE]
+PickandsEstimator        PickandsEstimator
+asvarPickands              [asy. variance to PickandsE]
 }}
 
 \section{Generating Functions}{
@@ -128,9 +132,15 @@ Sn                       Generic function for the computation of
 Qn                     Generic functions for the computation of
                         functionals
 
+}
+}
+\section{Constants}{
+\preformatted{
 
-}
-}
+EULERMASCHERONICONSTANT
+APERYCONSTANT
+
+}}
 
 \section{Start-up-Banner}{
 You may suppress the start-up banner/message completely by setting 

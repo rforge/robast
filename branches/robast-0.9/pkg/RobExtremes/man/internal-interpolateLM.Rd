@@ -23,7 +23,7 @@ respective \file{sysdata.rda} file. }
 .OMSE.xi(xi, PFam)
 
 .getLMGrid(xiGrid = getShapeGrid(),
-                      PFam = GParetoFamily(scale=1),
+                      PFam = GParetoFamily(scale=1, shape=2),
                       optFct = .RMXE.xi,
                       withSmooth = TRUE,
                       withPrint = FALSE)

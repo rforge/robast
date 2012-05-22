@@ -10,7 +10,7 @@
 .RMXE.xi <- function(xi, PFam){
       PFam <- .modify.xi.PFam.call(xi,PFam)
       IC <- radiusMinimaxIC(L2Fam=PFam, neighbor= ContNeighborhood(),
-                            risk = asMSE(), verbose = FALSE)
+                            risk = asMSE(), verbose = TRUE)
       return(c(b=clip(IC), a=cent(IC), a.w = cent(weight(IC)),
                            A=stand(IC),  A.w = stand(weight(IC))))
 }
@@ -47,7 +47,7 @@
                itLM <<- itLM + 1
                if(withPrint) cat("Evaluation Nr.", itLM," at xi = ",xi,"\n")
                a <- try(optFct(xi,PFam), silent=TRUE)
-               if(is(a,"try-error")) a <- rep(NA,14)
+               if(is(a,"try-error")) a <- rep(NA,13)
                return(a)
                }
 
@@ -68,6 +68,7 @@
 
             })
    LMGrid <- sapply(xiGrid,getLM)
+   save("LMGrid.Rdata")
    res <- .MakeGridList(xiGrid, Y=t(LMGrid), withSmooth = withSmooth)
    print(res)
    return(list(grid = res$grid,
@@ -113,16 +114,17 @@
                fct = fct))
 }
 
+.myFolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/RobExtremes/R"
 .svInt <- function(optF = .RMXE.xi, nam = ".RMXE")
-                  .saveInterpGrid(xiGrid = getShapeGrid(400,
-                  cutoff.at.0=0.005),
+             .saveInterpGrid(xiGrid = getShapeGrid(250,
+                  cutoff.at.0=0.01),
                   PFam = GParetoFamily(shape=1,scale=2),
-                  sysRdaFolder = .myFolder, optFct = optF,
+                  sysRdaFolder=.myFolder, optFct = optF,
                   nameInSysdata = nam, getFun = .getLMGrid,
                   withSmooth = TRUE, withPrint = TRUE)
 
 if(FALSE){
-.myFolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/ROptEst/R"
+.myFolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/RobExtremes/R"
 svInt <- RobExtremes:::.svInt;
 .OMSE.xi <- RobExtremes:::.OMSE.xi
 .MBRE.xi <- RobExtremes:::.MBRE.xi
@@ -130,4 +132,34 @@ svInt <- RobExtremes:::.svInt;
 .svInt(.OMSE.xi, ".OMSE")
 .svInt(.MBRE.xi, ".MBRE")
 .svInt(.RMXE.xi, ".RMXE")
+
+###  to move it from ROptEst to RobExtremes:
+  oldEnv <- new.env()
+  newEnv <- new.env()
+  oldfolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/ROptEst/R"
+  newfolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/RobExtremes/R"
+  sysdataFile.old <- file.path(oldfolder,"sysdata.rda")
+  sysdataFile.new <- file.path(newfolder,"sysdata.rda")
+  cat("sysdataFiles = ", sysdataFile.old,",\n",sysdataFile.new, "\n")
+
+  load(file=sysdataFile.old,envir=oldEnv)
+  load(file=sysdataFile.new,envir=newEnv)
+  whatIsThereAlready.old <- ls(envir=oldEnv, all.names=TRUE)
+  cat("whatIsThereAlready (old) = ", head(whatIsThereAlready.old), "\n")
+
+  whatIsThereAlready.new <- ls(envir=newEnv, all.names=TRUE)
+  cat("whatIsThereAlready (new) = ", head(whatIsThereAlready.new), "\n")
+
+  for(what in whatIsThereAlread.old){
+      assign(get(what, envir=oldEnv), envir=newEnv)
+  }
+  whatIsThereAlready <- ls(envir=newEnv, all.names=TRUE)
+  cat("whatIsThereAlready (now) = ", head(whatIsThereAlready.new), "\n")
+
+  save(list=whatIsThereAlready, file=sysdataFile, envir=newEnv)
+  tools::resaveRdaFiles(newfolder)
+
+  cat(gettextf("%s successfully written to sysdata.rda file.\n",
+            whatIsThereAlready))
+
 }

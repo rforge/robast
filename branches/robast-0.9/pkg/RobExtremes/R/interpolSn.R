@@ -28,7 +28,7 @@ getShapeGrid <- function(gridsize=1000,centralvalue=0.7,
  n.u <- 7*n.d + (gridsize-l.xi.g)%%8
 
  if(n.u>0){
-    p.u <- pnorm((xi.g[l.xi.g]-centralvalue)/fac, lower=FALSE)
+    p.u <- pnorm((xi.g[l.xi.g]-centralvalue)/fac, lower.tail=FALSE)
     p.u2 <- 1-p.u + p.u*(1:n.u)/(n.u+1)
     xi.u <- centralvalue + fac * qnorm(p.u2)
     xi.g <- c(xi.g,xi.u)
@@ -68,6 +68,7 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
                return(Sn(x=distr, accuracy = accuracy, low=low, upp = upp))
                }
    SnGrid <- sapply(xiGrid,getSn)
+   rm(PFam)
    iNA <- is.na(SnGrid)
    SnGrid <- SnGrid[!iNA]
    xiGrid <- xiGrid[!iNA]

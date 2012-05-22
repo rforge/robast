@@ -138,10 +138,12 @@ LDEstimator <- function(x, loc.est, disp.est,
 
 
 medkMAD <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
-                        trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
+                        trafo = NULL, fixed = NULL, na.rm = TRUE,
                         ...){
       es.call <- match.call()
       if(missing(k)) k <- 1
+      asvar.fct <- function(L2Fam=ParamFamily, param){
+                       asvarMedkMAD(model=L2Fam, k = k)}
       es <- LDEstimator(x, loc.est = median, disp.est = kMAD,
                      loc.fctal = median, disp.fctal = kMAD,
                      ParamFamily = ParamFamily,
@@ -194,13 +196,13 @@ medSn <- function(x, ParamFamily, q.lo =1e-3, q.up=10, nuis.idx  = NULL,
 
 medkMADhybr <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15,
                         KK=20, nuis.idx = NULL,
-                        trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
+                        trafo = NULL, fixed = NULL,  na.rm = TRUE,
                         ...){
  i <- 1
  es <- try(medkMAD(x, k = k, ParamFamily = ParamFamily,
                             q.lo = q.lo, q.up = q.up,
                             nuis.idx = nuis.idx, trafo = trafo,
-                            fixed = fixed, asvar.fct = asvar.fct, na.rm = na.rm,
+                            fixed = fixed, na.rm = na.rm,
                              ...), silent=TRUE)
  if(! any(is.na(es)) && !is(es,"try-error"))
    {return(es)}
@@ -211,9 +213,11 @@ medkMADhybr <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15,
       es <- try(medkMAD(x, k = k1, ParamFamily = ParamFamily,
                             q.lo = q.lo, q.up = q.up,
                             nuis.idx = nuis.idx, trafo = trafo,
-                            fixed = fixed, asvar.fct = asvar.fct, na.rm = na.rm,
+                            fixed = fixed, na.rm = na.rm,
                              ...), silent=TRUE)
       k1 <- k1 * 3
+      es@asvar.fct <- function(L2Fam=ParamFamily, param){
+                       asvarMedkMAD(model=L2Fam, k = k)}
       if(! any(is.na(es)) && !is(es,"try-error"))
          {return(es)}
       }

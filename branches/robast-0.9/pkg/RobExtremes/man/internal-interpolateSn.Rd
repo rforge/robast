@@ -66,7 +66,8 @@ respective \file{sysdata.rda} file. }
 \examples{
 \dontrun{
 ### code to produce grid for GPareto:
-RobExtremes:::.saveInterpGrid(sysRdaFolder =
+RobExtremes:::.saveInterpGrid(getShapeGrid(gridsize=500,
+                  cutoff.at.0=0.005),sysRdaFolder =
         "C:/rtest/RobASt/branches/robast-0.9/pkg/RobExtremes/R",
               accuracy = 5000,upp=10)
 }
