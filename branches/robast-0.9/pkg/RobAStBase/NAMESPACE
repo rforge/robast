@@ -19,6 +19,7 @@ exportClasses("RobAStControl", "RobWeight", "BoundedWeight",
               "BdStWeight", "HampelWeight")
 exportClasses("ALEstimate", "kStepEstimate", "MEstimate")
 exportClasses("cutoff")
+exportClasses("interpolRisk", "OMSRRisk","MBRRisk","RMXRRisk")
 exportClasses("StartClass", "pICList", "OptionalpICList")
 exportMethods("show", 
               "plot")
@@ -67,3 +68,4 @@ export(".eq", ".getDistr", "getBoundedIC")
 export("RobAStBaseOptions", "getRobAStBaseOption")
 export("cutoff","cutoff.chisq","cutoff.sememp")
 export("outlyingPlotIC", "RobAStBaseMASK")
+export("OMSRRisk","MBRRisk","RMXRRisk")

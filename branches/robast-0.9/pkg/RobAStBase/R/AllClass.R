@@ -312,3 +312,12 @@ setClass("cutoff", representation = representation(name = "character",
                    prototype = prototype(name = "empirical",
                                          fct = function(data) quantile(data),
                                          cutoff.quantile = 0.95))
+
+
+#################################################
+# new risk classes
+#################################################
+setClass("interpolRisk", contains = c("RiskType", "VIRTUAL"))
+setClass("OMSRRisk", contains = "interpolRisk")
+setClass("RMXRRisk", contains = "interpolRisk")
+setClass("MBRRisk", contains = "interpolRisk")
