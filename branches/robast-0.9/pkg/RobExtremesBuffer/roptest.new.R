@@ -55,7 +55,10 @@ roptest <- function(x, L2Fam,  fsCor = 1,
     main(newParam)[] <- as.numeric(initial.est)
     L2FamStart <- modifyModel(L2Fam, newParam)
 
-    ICstart <- do.call(.getROptICstart, args=es.list)
+    es.list0 <- es.list
+    es.list$risk <- NULL
+    es.list$L2Fam <- NULL
+    ICstart <- do.call(getstartIC, args=c(list(model=L2Fam,risk=risk),es.list))
 
     res <- kStepEstimator(x, IC = ICstart, start = initial.est, steps = steps,
                           useLast = kStepCtrl$useLast,
