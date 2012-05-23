@@ -144,6 +144,7 @@ medkMAD <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
       if(missing(k)) k <- 1
       asvar.fct <- function(L2Fam=ParamFamily, param){
                        asvarMedkMAD(model=L2Fam, k = k)}
+      asvar <- asvarMedkMAD(model=ParamFamily, k = k)
       es <- LDEstimator(x, loc.est = median, disp.est = kMAD,
                      loc.fctal = median, disp.fctal = kMAD,
                      ParamFamily = ParamFamily,
@@ -152,7 +153,7 @@ medkMAD <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
                      disp.fctal.ctrl=list(k=k),
                      q.lo =q.lo, q.up=q.up, log.q=TRUE,
                      name = "medkMAD", Infos="medkMAD",
-                     asvar = NULL, nuis.idx = nuis.idx, trafo = trafo, fixed = fixed,
+                     asvar = asvar, nuis.idx = nuis.idx, trafo = trafo, fixed = fixed,
                      asvar.fct = asvar.fct, na.rm = na.rm, ...)
       es@estimate.call <- es.call
       return(es)

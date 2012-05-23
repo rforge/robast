@@ -22,6 +22,7 @@ PickandsEstimator <- function(x, alpha = 2, ParamFamily=GParetoFamily(),
     name.est <- "PickandsEstimator"
     es.call <- match.call()
     error <- FALSE
+    if(missing(alpha)) alpha <- 2
     if(length(alpha)>1 || any(!is.finite(alpha)) || any(alpha<=1))
        stop("'alpha' has to be a numeric > 1 of length 1.")
 
@@ -31,23 +32,18 @@ PickandsEstimator <- function(x, alpha = 2, ParamFamily=GParetoFamily(),
 
     asvar.fct.0 <- function(L2Fam=ParamFamily, param){
                        asvarPickands(model=L2Fam, alpha = alpha)}
-    asvar.0 <- asvarPickands(model=ParamFamily, alpha = alpha)
+    asvar <- asvarPickands(model=ParamFamily, alpha = alpha)
     nuis.idx.0 <- nuis.idx
     trafo.0 <- trafo
     fixed.0 <- fixed
     na.rm.0 <- na.rm
 
     estimate <- Estimator(x, .PickandsEstimator, name, Infos,
-                      asvar = asvar.0, nuis.idx = nuis.idx.0,
+                      asvar = asvar, nuis.idx = nuis.idx.0,
                       trafo = trafo.0, fixed = fixed.0,
                       na.rm = na.rm.0, alpha = alpha, ...)
-    if(missing(asvar)) asvar <- NULL
-    if(is.null(asvar))
-       if(!missing(asvar.fct))
-          if(!is.null(asvar.fct))
-             asvar <- asvar.fct(ParamFamily, estimate, alpha = alpha, ...)
 
-    estimate@untransformed.asvar <- asvar
+    estimate@untransformed.asvar <- asvar(estimate)
 
 
     l.e <- length(estimate@untransformed.estimate)
