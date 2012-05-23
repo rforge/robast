@@ -44,6 +44,7 @@ PickandsEstimator <- function(x, alpha = 2, ParamFamily=GParetoFamily(),
                       na.rm = na.rm.0, alpha = alpha, ...)
 
     estimate@untransformed.asvar <- asvar(estimate)
+    estimate@asvar <- asvar
 
 
     l.e <- length(estimate@untransformed.estimate)

@@ -90,12 +90,11 @@ LDEstimator <- function(x, loc.est, disp.est,
                       na.rm = na.rm.0, ...)
     if(missing(asvar)) asvar <- NULL
     if(is.null(asvar))
-       if(!missing(asvar.fct))
-          if(!is.null(asvar.fct))
+       if(!missing(asvar.fct)&&!is.null(asvar.fct))
              asvar <- asvar.fct(ParamFamily, estimate, ...)
 
     estimate@untransformed.asvar <- asvar
-
+    estimate@asvar <- asvar
 
     l.e <- length(estimate@untransformed.estimate)
     idx <- NULL
