@@ -1,10 +1,11 @@
 Package: RobAStBase
 Version: 0.9
-Date: 2010-12-03
+Date: 2012-06-05
 Title: Robust Asymptotic Statistics
 Description: Base S4-classes and functions for robust asymptotic statistics.
-Depends: R(>= 2.7.0), methods, distr(>= 2.0), distrEx(>= 2.0), distrMod(>= 2.0), RandVar(>=
+Depends: R(>= 2.12.0), methods, distr(>= 2.0), distrEx(>= 2.0), distrMod(>= 2.0), RandVar(>=
         0.6.3)
+Suggests: ROptEst
 Author: Matthias Kohl, Peter Ruckdeschel
 Maintainer: Matthias Kohl <Matthias.Kohl@stamats.de>
 ByteCompile: yes
