@@ -47,6 +47,7 @@ R3[2]
 Map(R3[3])
 Map(R3[c(1,2,4)])
 Map(R3[2:4])
+set.seed(123)
 evalRandVar(R3, rnorm(1))
 x <- as.matrix(rnorm(10))
 res.R3 <- evalRandVar(R3, x)

@@ -8,7 +8,7 @@
 %use svn-multi to fill in revision information
 %
 \usepackage{svn-multi}
-\usepackage[latin1]{inputenx}
+\usepackage[utf8]{inputenc}
 % Version control information:
 \svnidlong
 {$HeadURL: svn+ssh://stamats@svn.r-forge.r-project.org/svnroot/robast/branches/robast-0.9/pkg/RandVar/inst/doc/RandVar.Rnw $}
