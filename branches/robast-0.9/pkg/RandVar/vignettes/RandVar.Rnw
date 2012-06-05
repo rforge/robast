@@ -8,12 +8,13 @@
 %use svn-multi to fill in revision information
 %
 \usepackage{svn-multi}
+\usepackage[latin1]{inputenx}
 % Version control information:
 \svnidlong
-{$HeadURL$}
-{$LastChangedDate$}
-{$LastChangedRevision$}
-{$LastChangedBy$}
+{$HeadURL: svn+ssh://stamats@svn.r-forge.r-project.org/svnroot/robast/branches/robast-0.9/pkg/RandVar/inst/doc/RandVar.Rnw $}
+{$LastChangedDate: 2009-03-24 14:44:09 +0100 (Di, 24. Mär 2009) $}
+{$LastChangedRevision: 270 $}
+{$LastChangedBy: ruckdeschel $}
 %\svnid{$Id: example_main.tex 146 2008-12-03 13:29:19Z martin $}
 % Don't forget to set the svn property 'svn:keywords' to
 % 'HeadURL LastChangedDate LastChangedRevision LastChangedBy' or
