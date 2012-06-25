@@ -79,9 +79,8 @@ respective \file{sysdata.rda} file. }
                   radius.
                   }
   \item{.getLMGrid}{A list with items \code{grid}, a matrix with the interpolation
-                    grid, \code{fct} a function in \code{x} (the shape)
-                    and \code{i} deciding on the Lagrange multiplier, and
-                    \code{call}, the respective call to \code{.getLMGrid}. }
+                    grid and \code{fct} a function in \code{x} (the shape)
+                    and \code{i} deciding on the Lagrange multiplier. }
   \item{.MakeGridList}{A list with items \code{grid} and \code{fct} as
                        in the return value of \code{.getLMGrid}. }
 }

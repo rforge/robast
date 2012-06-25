@@ -1,12 +1,12 @@
 #################################
-##                             ##
-##      Class: GEVFamily       ##
-##                             ##
-#################################
+##
+## Class: GParetoFamily
+##
+################################
 
 
 ## methods
-setMethod("validParameter",signature(object="GEVFamily"),
+setMethod("validParameter",signature(object="GParetoFamily"),
            function(object, param, tol =.Machine$double.eps){
              if (is(param, "ParamFamParameter")) 
                  param <- main(param)
@@ -22,7 +22,7 @@ setMethod("validParameter",signature(object="GEVFamily"),
 
 
 ## generating function 
-## loc: known/fixed location parameter
+## loc: known/fixed threshold/location parameter
 ## scale: scale parameter
 ## shape: shape parameter
 ## of.interest: which parameters, transformations are of interest
@@ -34,7 +34,7 @@ setMethod("validParameter",signature(object="GEVFamily"),
 ## start0Est: startEstimator for MLE and MDE --- if NULL HybridEstimator is used;
 ### now uses exp-Trafo for scale!
 
-GEVFamily <- function(loc = 0, scale = 1, shape = 0.5, 
+GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5, 
                           of.interest = c("scale", "shape"), 
                           p = NULL, N = NULL, trafo = NULL,
                           start0Est = NULL, withPos = TRUE){
@@ -74,6 +74,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
     ## parameters
     names(theta) <- c("loc", "scale", "shape")
+    scaleshapename <- c("scale", "shape")
 
     if(is.null(trafo)){
         tau <- NULL
@@ -118,15 +119,15 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
             if(is.null(p)) stop("Probability 'p' has to be specified.")
             if(is.null(tau)){
                 tau <- function(theta){ }
-                body(tau) <- substitute({ q <- loc0 + theta[1]*((-log(p0))^(-theta[2])-1)/theta[2]
+                body(tau) <- substitute({ q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
                                           names(q) <- "quantile"
                                           q },
                                         list(loc0 = loc, p0 = p))
                 Dtau <- function(theta){ }
                 body(Dtau) <- substitute({ scale <- theta[1]
                                            shape <- theta[2]
-                                           D1 <- -scale/shape*(D1 + (-log(p0))^(-shape)*log(-log(p0)))
-                                           D2 <- ((1-p0)^(-shape)-1)/shape
+                                           D1 <- ((1-p0)^(-shape)-1)/shape
+                                           D2 <- -scale/shape*(D1 + log(1-p0)*(1-p0)^(-shape))
                                            D <- t(c(D1, D2))
                                            rownames(D) <- "quantile"
                                            colnames(D) <- NULL
@@ -135,16 +136,16 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
             }else{
                 tau1 <- tau
                 tau <- function(theta){ }
-                body(tau) <- substitute({ q <- loc0 + theta[1]*((-log(p0))^(-theta[2])-1)/theta[2]
+                body(tau) <- substitute({ q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
                                           names(q) <- "quantile"
                                           c(tau0(theta), q) },
                                         list(tau0 = tau1, loc0 = loc, p0 = p))
                 Dtau1 <- Dtau
-                Dtau <- function(theta){ }
+                Dtau <- function(theta){}
                 body(Dtau) <- substitute({ scale <- theta[1]
                                            shape <- theta[2]
-                                           D1 <- -scale/shape*(D1 + (-log(p0))^(-shape)*log(-log(p0)))
-                                           D2 <- ((-log(p0))^(-shape)-1)/shape
+                                           D1 <- ((1-p0)^(-shape)-1)/shape
+                                           D2 <- -scale/shape*(D1 + log(1-p0)*(1-p0)^(-shape))
                                            D <- t(c(D1, D2))
                                            rownames(D) <- "quantile"
                                            colnames(D) <- NULL
@@ -156,19 +157,19 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
             if(is.null(p)) stop("Probability 'p' has to be specified.")
             if(is.null(tau)){
                 tau <- function(theta){ }
-                body(tau) <- substitute({ q <- loc0 + theta[1]*((-log(p0))^(-theta[2])-1)/theta[2]
-                                          es <- E(q,upp=Inf,low=p0)/(1-p0) 
+                body(tau) <- substitute({ q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
+                                          es <- (q + theta[1] - theta[2]*loc0)/(1-theta[2]) 
                                           names(es) <- "expected shortfall"
                                           es }, 
                                         list(loc0 = loc, p0 = p))
                 Dtau <- function(theta){ }
                 body(Dtau) <- substitute({ scale <- theta[1]
                                            shape <- theta[2]
-                                           q <- loc0 + theta[1]*((-log(p0))^(-theta[2])-1)/theta[2]
-                                           dq1 <- -scale/shape*(D1 + (-log(p0))^(-shape)*log(-log(p0)))
-                                           dq2 <- ((-log(p0))^(-shape)-1)/shape
-                                           D1 <- E(dq2,upp=Inf,low=p0)/(1-p0)
-                                           D2 <- E(dq1,upp=Inf,low=p0)/(1-p0)
+                                           q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
+                                           dq1 <- ((1-p0)^(-shape)-1)/shape
+                                           dq2 <- -scale/shape*(dq1 + log(1-p0)*(1-p0)^(-shape))
+                                           D1 <- (dq1 + 1)/(1-shape)
+                                           D2 <- (dq2 - loc0)/(1-shape) + (q + scale - loc0*shape)/(1-shape)^2
                                            D <- t(c(D1, D2))
                                            rownames(D) <- "expected shortfall"
                                            colnames(D) <- NULL
@@ -177,16 +178,16 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
             }else{
                 tau1 <- tau
                 tau <- function(theta){ }
-                body(tau) <- substitute({  q <- loc0 + theta[1]*((-log(p0))^(-theta[2])-1)/theta[2]
+                body(tau) <- substitute({ q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
                                           es <- (q + theta[1] - theta[2]*loc0)/(1-theta[2]) 
                                           names(es) <- "expected shortfall"
                                           c(tau0(theta), es) }, 
                                         list(tau0 = tau1, loc0 = loc, p0 = p))
                 Dtau1 <- Dtau
-                Dtau <- function(theta){ }
+                Dtau <- function(theta){}
                 body(Dtau) <- substitute({ scale <- theta[1]
                                            shape <- theta[2]
-                                           q <- loc0 + theta[1]*((-log(p0))^(-theta[2])-1)/theta[2]
+                                           q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
                                            dq1 <- ((1-p0)^(-shape)-1)/shape
                                            dq2 <- -scale/shape*(dq1 + log(1-p0)*(1-p0)^(-shape))
                                            D1 <- (dq1 + 1)/(1-shape)
@@ -202,25 +203,17 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
             if(is.null(N)) stop("Expected frequency 'N' has to be specified.")
             if(is.null(tau)){
                 tau <- function(theta){ }
-                body(tau) <- substitute({ el <- N0*(ifelse(theta[2] == 1,
-                                                           loc0 + theta[1]*EULERMASCHERONICONSTANT,
-                                                     ifelse(theta[2]>1, Inf,
-                                                           loc0 + theta[1]*(gamma(1-theta[2])-1)/theta[2])))
+                body(tau) <- substitute({ el <- N0*(loc0 + theta[1]*gamma(1/theta[2]-1)/(theta[2]^2*gamma(1/theta[2]+1)))
                                           names(el) <- "expected loss"
                                           el },
                                         list(loc0 = loc,N0 = N))
                 Dtau <- function(theta){ }
                 body(Dtau) <- substitute({ scale <- theta[1]
                                            shape <- theta[2]
-                                           Gpos <- gamma(shape)
-                                           ifelse(theta[2] == 1,
-                                           {D1 <- theta[1]*EULERMASCHERONICONSTANT
-                                            D2 <- 0},
-                                           ifelse(theta[2]>1, 
-                                           D1 <- D2 <- Inf,
-                                           {D1 <- N0*(Gpos-1)/shape
-                                           D2 <- N0*scale*(digamma(shape)/shape - N0*(Gpos-1)/shape^2)}
-                                           ))
+                                           Gneg <- gamma(1/shape-1)
+                                           Gpos <- gamma(1/shape+1)
+                                           D1 <- N0*Gneg/(shape^2*Gpos)
+                                           D2 <- N0*scale*Gneg*(digamma(1/shape+1) - 2*shape - digamma(1/shape-1))/(shape^4*Gpos)
                                            D <- t(c(D1, D2))
                                            rownames(D) <- "expected loss"
                                            colnames(D) <- NULL
@@ -229,22 +222,18 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
             }else{
                 tau1 <- tau
                 tau <- function(theta){ }
-                body(tau) <- substitute({ el <- N0*(ifelse(theta[2] == 1,
-                                                           loc0 + theta[1]*EULERMASCHERONICONSTANT,
-                                                     ifelse(theta[2]>1, Inf,
-                                                           loc0 + theta[1]*(gamma(1-theta[2])-1)/theta[2])))
+                body(tau) <- substitute({ el <- N0*(loc0 + theta[1]*gamma(1/theta[2]-1)/(theta[2]^2*gamma(1/theta[2]+1)))
                                           names(el) <- "expected loss"
                                           c(tau0(theta), el) },
                                         list(tau0 = tau1, loc0 = loc,N0 = N))
                 Dtau1 <- Dtau
-                Dtau <- function(theta){ }
+                Dtau <- function(theta){}
                 body(Dtau) <- substitute({ scale <- theta[1]
                                            shape <- theta[2]
-                                           
-                                           Gpos <- gamma(shape)
-                                           D1 <- N0*(Gpos-1)/shape
-                                           D2 <- N0*scale*(digamma(shape)/shape - N0*(Gpos-1)/shape^2)
-
+                                           Gneg <- gamma(1/shape-1)
+                                           Gpos <- gamma(1/shape+1)
+                                           D1 <- N0*Gneg/(shape^2*Gpos)
+                                           D2 <- N0*scale*Gneg*(digamma(1/shape+1) - 2*shape - digamma(1/shape-1))/(shape^4*Gpos)
                                            D <- t(c(D1, D2))
                                            rownames(D) <- "expected loss"
                                            colnames(D) <- NULL
@@ -256,27 +245,26 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     }else{
         if(is.matrix(trafo) & nrow(trafo) > 2) stop("number of rows of 'trafo' > 2")
     }
-
     param <- ParamFamParameter(name = "theta", main = c(theta[2],theta[3]),
                                fixed = theta[1],
                                trafo = trafo, withPosRestr = withPos,
                                .returnClsName ="ParamWithScaleAndShapeFamParameter")
 
     ## distribution
-    distribution <- GEV(loc = loc, scale = scale, shape = shape)
+    distribution <- GPareto(loc = loc, scale = scale, shape = shape)
 
     ## starting parameters
     startPar <- function(x,...){
-        loc <- theta[1]
+        tr <- theta[1]
         
-        if(any(x < loc)) stop("some data smaller than 'loc' parameter")
+        if(any(x < tr)) stop("some data smaller than 'loc' parameter")
 
         ## Pickand estimator
         if(is.null(start0Est)){
-           e0 <- estimate(medkMADhybr(x, k=10, ParamFamily=GEVFamily(loc = theta[1],
+           e0 <- estimate(medkMADhybr(x, k=10, ParamFamily=GParetoFamily(loc = theta[1],
                             scale = theta[2], shape = theta[3]),
                             q.lo = 1e-3, q.up = 15))
-          }else{
+        }else{
            if(is(start0Est,"function")){
               e1 <- start0Est(x, ...)
               e0 <-  if(is(e1,"Estimate")) estimate(e1) else e1
@@ -290,7 +278,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
 
     ## what to do in case of leaving the parameter domain
-    makeOKPar <- function(theta){
+    makeOKPar <- function(theta) {
         if(withPos){
            if(!is.null(names(theta)))
                  theta["shape"] <- abs(theta["shape"])
@@ -310,28 +298,28 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
             sc <- theta[1]
             sh <- theta[2]
         }
-        GEV(loc = loc, scale = sc, shape = sh)
+        GPareto(loc = loc, scale = sc, shape = sh)
     }
 
 
     ## L2-derivative of the distribution
     L2deriv.fct <- function(param) {
         sc <- force(main(param)[1])
-        sh <- force(main(param)[2])
-        loc <- fixed(param)[1] 
+        k <- force(main(param)[2])
+        tr <- fixed(param)[1] 
 
         Lambda1 <- function(x) {
             y <- x*0
-            x0 <- (x-loc)/sc
+            x0 <- (x-tr)/sc
             x1 <- x0[x0>0]
-            y[x0>0] <- (1/sh+1)*sh*x1/(1+sh*x1)/sc - x1/sc - 1/sc##
+            y[x0>0] <- -1/sc + (1+k)/(1+k*x1)*x1/sc
             return(y)
         }
         Lambda2 <- function(x) {
             y <- x*0
-            x0 <- (x-loc)/sc
+            x0 <- (x-tr)/sc
             x1 <- x0[x0>0]
-            y[x0>0] <- log(1+sh*x1)/sh^2 - (1/sh+1)*x1/(1+sh*x1) + x1/sh - (1-sh*x1)/sh^2##
+            y[x0>0] <- log(1+k*x1)/k^2 - (1/k+1)*x1/(1+k*x1)
             return(y)
         }
         ## additional centering of scores to increase numerical precision!
@@ -341,21 +329,26 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     }
 
     ## Fisher Information matrix as a function of parameters
-    FisherInfo.fct <- function(param){
+    FisherInfo.fct <- function(param) {
         sc <- force(main(param)[1])
-        sh <- force(main(param)[2])
-        Lambda <- L2deriv.fct(param)
-        E11 <- E(distribution,fun=function(x)Lambda[[1]](x)^2)
-        E12 <- E(distribution,fun=function(x)Lambda[[1]](x)*Lambda[[2]](x))
-        E22 <- E(distribution,fun=function(x)Lambda[[2]](x)^2)
-        return(PosSemDefSymmMatrix(matrix(c(E11,E12,E12,E22),2,2)))
+        k <- force(main(param)[2])
+#        tr <- force(fixed(param)[1])
+#        fct <- L2deriv.fct(param)
+#        P2 <-  GPareto(loc = tr, scale = sc, shape = k)
+        E11 <- sc^-2
+        E12 <- (sc*(1+k))^-1
+        E22 <- 2/(1+k)
+        mat <- PosSemDefSymmMatrix(matrix(c(E11,E12,E12,E22)/(1+2*k),2,2))
+        dimnames(mat) <- list(scaleshapename,scaleshapename)
+        return(mat)
     }
 
     FisherInfo <- FisherInfo.fct(param)
-    name <- "Generalized Extreme Value Distribution Parameter Family"
+    name <- "Generalized Pareto Family"
 
-    ## initializing the GEV family with components of L2-family
-    L2Fam <- new("GEVFamily")
+    ## initializing the GPareto family with components of L2-family
+    L2Fam <- new("GParetoFamily")
+    L2Fam@scaleshapename <- scaleshapename
     L2Fam@name <- name
     L2Fam@param <- param
     L2Fam@distribution <- distribution
@@ -371,15 +364,15 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     L2deriv <- EuclRandVarList(RealRandVariable(L2deriv.fct(param),
                                Domain = Reals()))
 
-    L2Fam@fam.call <- substitute(GEVFamily(loc = loc0, scale = scale0,
+    L2Fam@fam.call <- substitute(GParetoFamily(loc = loc0, scale = scale0,
                                  shape = shape0, of.interest = of.interest0,
                                  p = p0, N = N0, trafo = trafo0,
                                  withPos = withPos0),
-                                 list(loc0 = loc, scale0 = scale, shape0 = shape,
-                                 of.interest0 = of.interest, p0 = p, N0 = N,
-                                 trafo0 = trafo, withPos0 = withPos))
+                         list(loc0 = loc, scale0 = scale, shape0 = shape,
+                              of.interest0 = of.interest, p0 = p, N0 = N,
+                              trafo0 = trafo, withPos0 = withPos))
 
-    L2Fam@LogDeriv <- function(x) -log(scale)-(1/shape+1)*log(1+shape*(x-loc)/scale)+log(1+shape*(x-loc)/scale)/shape
+    L2Fam@LogDeriv <- function(x) (shape+1)/(shape*(scale+(x-loc)))
     L2Fam@L2deriv <- L2deriv
 
     L2Fam@L2derivDistr <- imageDistr(RandVar = L2deriv, distr = distribution)
@@ -388,12 +381,3 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     return(L2Fam)
 }
 
-##http://stackoverflow.com/questions/9458536/r-programming-how-do-i-get-eulers-constant
-euler.const <- function(){
-  options("warn"= -1)
-  e <- 0
-  for (n in 0:2000){
-    e <- e + 1/(factorial(n))
-  }
-  return(e)
-}

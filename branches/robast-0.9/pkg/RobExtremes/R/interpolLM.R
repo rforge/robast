@@ -10,7 +10,7 @@
 .RMXE.xi <- function(xi, PFam){
       PFam <- .modify.xi.PFam.call(xi,PFam)
       IC <- radiusMinimaxIC(L2Fam=PFam, neighbor= ContNeighborhood(),
-                            risk = asMSE(), verbose = TRUE)
+                            risk = asMSE(), verbose = FALSE)
       return(c(b=clip(IC), a=cent(IC), a.w = cent(weight(IC)),
                            A=stand(IC),  A.w = stand(weight(IC))))
 }
@@ -68,7 +68,7 @@
 
             })
    LMGrid <- sapply(xiGrid,getLM)
-   save("LMGrid.Rdata")
+   save(LMGrid, file="LMGrid.Rdata")
    res <- .MakeGridList(xiGrid, Y=t(LMGrid), withSmooth = withSmooth)
    print(res)
    return(list(grid = res$grid,
@@ -78,88 +78,50 @@
 .MakeGridList <- function(xiGrid, Y, withSmooth = TRUE){
   if(length(dim(Y))==3)
      LMGrid <- Y[,1,,drop=TRUE]
-  else LMGrid <- Y
+  else LMGrid <- Y[,drop=FALSE]
 
    iNA <- apply(LMGrid,1, function(u) any(is.na(u)))
-   LMGrid <- LMGrid[!iNA,]
+   LMGrid <- LMGrid[!iNA,,drop=FALSE]
    xiGrid <- xiGrid[!iNA]
    if(withSmooth)
       LMGrid2 <- apply(LMGrid,2,function(u) smooth.spline(xiGrid,u)$y)
 
-   print(LMGrid2)
-   fct0 <- function(x,i) (splinefun(x=xiGrid,y=LMGrid[,i]))(x)
-
-   xm <- xiGrid[1]
-   ym <- LMGrid[1,]
-   dym <- (LMGrid[2,]-LMGrid[1,])/(xiGrid[2]-xiGrid[1])
-   xM <- (rev(xiGrid))[1]
-   yM <- ym
-   dyM <- dym
+   fctL <- vector("list",ncol(LMGrid))
    for(i in 1:ncol(LMGrid)){
-       yM[i] <- (rev(LMGrid[,i]))[1]
-       dyM[i] <- ((rev(LMGrid[,i]))[2]-(rev(LMGrid[,i]))[1])/
-                 ((rev(xiGrid))[2]-(rev(xiGrid))[1])
+       LMG <- LMGrid[,i]
+       fct <- splinefun(x=xiGrid,y=LMG)
+       xm <- xiGrid[1]
+       ym <- LMG[1]
+       dym <- (LMG[2]-LMG[1])/(xiGrid[2]-xiGrid[1])
+       xM <- (rev(xiGrid))[1]
+       yM <- ym
+       dyM <- dym
+       yM <- (rev(LMG))[1]
+       dyM <- ((rev(LMG))[2]-(rev(LMG))[1])/((rev(xiGrid))[2]-(rev(xiGrid))[1])
+       fctL[[i]] <- function(x){
+            y0 <- fct(x)
+            y1 <- y0
+            y1[x<xm] <- ym+dym*(x[x<xm]-xm)
+            y1[x>xM] <- yM+dyM*(x[x>xM]-xM)
+            if(any(is.na(y0)))
+               warning("There have been xi-values out of range of the interpolation grid.")
+            return(y1)
+       }
+       environment(fctL) <- new.env()
+       assign("fct", fct, envir=environment(fctL))
    }
-   fct <- function(x,i){
-       y0 <- fct0(x,i)
-       y1 <- y0
-       y1[x<xm] <- ym[i]+dym[i]*(x[x<xm]-xm)
-       y1[x>xM] <- yM[i]+dyM[i]*(x[x>xM]-xM)
-       if(any(is.na(y0)))
-          warning("There have been xi-values out of range of the interpolation grid.")
-       return(y1)
-   }
+   if(ncol(LMGrid)==1) fctL <- fctL[[1]]
 
    return(list(grid = cbind(xi=xiGrid,LM=LMGrid),
-               fct = fct))
+               fct = fctL))
 }
 
-.myFolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/RobExtremes/R"
+.myFolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/ROptEst/R"
 .svInt <- function(optF = .RMXE.xi, nam = ".RMXE")
-             .saveInterpGrid(xiGrid = getShapeGrid(250,
+             .saveInterpGrid(xiGrid = getShapeGrid(200,
                   cutoff.at.0=0.01),
                   PFam = GParetoFamily(shape=1,scale=2),
                   sysRdaFolder=.myFolder, optFct = optF,
                   nameInSysdata = nam, getFun = .getLMGrid,
                   withSmooth = TRUE, withPrint = TRUE)
 
-if(FALSE){
-.myFolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/RobExtremes/R"
-svInt <- RobExtremes:::.svInt;
-.OMSE.xi <- RobExtremes:::.OMSE.xi
-.MBRE.xi <- RobExtremes:::.MBRE.xi
-.RMXE.xi <- RobExtremes:::.RMXE.xi
-.svInt(.OMSE.xi, ".OMSE")
-.svInt(.MBRE.xi, ".MBRE")
-.svInt(.RMXE.xi, ".RMXE")
-
-###  to move it from ROptEst to RobExtremes:
-  oldEnv <- new.env()
-  newEnv <- new.env()
-  oldfolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/ROptEst/R"
-  newfolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/RobExtremes/R"
-  sysdataFile.old <- file.path(oldfolder,"sysdata.rda")
-  sysdataFile.new <- file.path(newfolder,"sysdata.rda")
-  cat("sysdataFiles = ", sysdataFile.old,",\n",sysdataFile.new, "\n")
-
-  load(file=sysdataFile.old,envir=oldEnv)
-  load(file=sysdataFile.new,envir=newEnv)
-  whatIsThereAlready.old <- ls(envir=oldEnv, all.names=TRUE)
-  cat("whatIsThereAlready (old) = ", head(whatIsThereAlready.old), "\n")
-
-  whatIsThereAlready.new <- ls(envir=newEnv, all.names=TRUE)
-  cat("whatIsThereAlready (new) = ", head(whatIsThereAlready.new), "\n")
-
-  for(what in whatIsThereAlread.old){
-      assign(get(what, envir=oldEnv), envir=newEnv)
-  }
-  whatIsThereAlready <- ls(envir=newEnv, all.names=TRUE)
-  cat("whatIsThereAlready (now) = ", head(whatIsThereAlready.new), "\n")
-
-  save(list=whatIsThereAlready, file=sysdataFile, envir=newEnv)
-  tools::resaveRdaFiles(newfolder)
-
-  cat(gettextf("%s successfully written to sysdata.rda file.\n",
-            whatIsThereAlready))
-
-}
