@@ -15,6 +15,8 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                            withPICList = getRobAStBaseOption("withPICList"),
                            na.rm = TRUE, startArgList = NULL, ...,
                            withLogScale = TRUE){
+
+        if(missing(IC.UpdateInKer)) IC.UpdateInKer <- NULL
 ## save call
         es.call <- match.call()
         es.call[[1]] <- as.name("kStepEstimator")
