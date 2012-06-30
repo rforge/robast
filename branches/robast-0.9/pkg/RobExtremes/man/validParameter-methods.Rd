@@ -3,6 +3,7 @@
 \alias{validParameter-methods}
 \alias{validParameter}
 \alias{validParameter,GParetoFamily-method}
+\alias{validParameter,WeibullFamily-method}
 
 
 \title{ Methods for function validParameter in Package `RobExtremes' }
@@ -15,6 +16,7 @@
 \usage{
 validParameter(object, \dots)
 \S4method{validParameter}{GParetoFamily}(object, param, tol=.Machine$double.eps)
+%\S4method{validParameter}{WeibullFamily}(object, param, tol=.Machine$double.eps)
 }
 
 \details{

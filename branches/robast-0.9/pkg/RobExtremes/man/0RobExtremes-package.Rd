@@ -232,6 +232,6 @@ a homepage to this package is available under\cr
 \code{\link[distr:0distr-package]{distr-package}},
 \code{\link[distrEx:0distrEx-package]{distrEx-package}},
 \code{\link[distrMod:0distrMod-package]{distrMod-package}},
-\code{\link[RobAStbase:0RobAStbase-package]{RobAStbase-package}},
+\code{\link[RobAStBase:0RobAStBase-package]{RobAStBase-package}},
 \code{\link[ROptEst:0ROptEst-package]{ROptEst-package}}
 }
