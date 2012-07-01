@@ -1,11 +1,13 @@
 \name{getReq}
 \alias{getReq}
 
-\title{getReq -- computation of the radius interval where IC1 is better than IC2}
+\title{getReq -- computation of the radius interval where IC1 is better than IC2.}
 \description{
- (tries to) compute a radius interval where IC1 is better than IC2
+ (tries to) compute a radius interval where IC1 is better than IC2,
+ respectively the number of (worst-case) outliers interval where IC1 is
+ better than IC2.
 }
-\usage{getReq(Risk,neighbor,IC1,IC2,n=1,upper=15)}
+\usage{getReq(Risk,neighbor,IC1,IC2,n=1,upper=15, radOrOutl=c("radius","Outlier"))}
 \arguments{
   \item{Risk}{an object of class \code{"asGRisk"} -- the risk at which IC1 is better than IC2.}
   \item{neighbor}{ object of class \code{"Neighborhood"}; the neighborhood at which to compute the bias. }
@@ -15,6 +17,9 @@
     in the shrinking neighborhood setting of Rieder[94]. Otherwise the radius interval is scaled
     down accordingly.}
   \item{upper}{the upper bound of the radius interval in which to search}  
+  \item{radOrOutl}{ a character string specifying whether an interval of
+          radii  or a number of outliers is returned; must be one
+          of "radius" (default) and "Outlier". }
 }
 %\details{}
 \value{The radius interval (given by its endpoints) where \code{IC1} is better than \code{IC2}
@@ -57,6 +62,7 @@ IC.mad <- makeIC(function(x)sign(abs(x)-qnorm(.75)),L2M)
 d.qn <- (2^.5*qnorm(5/8))^-1
 IC.qn <- makeIC(function(x) d.qn*(1/4 - pnorm(x+1/d.qn) + pnorm(x-1/d.qn)), L2M)
 getReq(asMSE(), neighbor, IC.mad, IC.qn)
+getReq(asMSE(), neighbor, IC.mad, IC.qn, radOrOutl = "Outlier", n = 30)
 # => MAD is better once r > 0.5144 (i.e. for more than 2 outliers for n = 30)
 }
 \concept{Hampel risk}
