@@ -327,7 +327,7 @@ WeibullFamily <- function(scale = 1, shape = 0.5,
     }
 
     FisherInfo <- FisherInfo.fct(param)
-    name <- "Generalized Pareto Family"
+    name <- "Weibull Family"
 
     ## initializing the Weibull family with components of L2-family
     L2Fam <- new("WeibullFamily")
