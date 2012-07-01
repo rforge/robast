@@ -22,14 +22,37 @@ Type 'q()' to quit R.
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
 > library('RobLox')
-Loading required package: distrMod
+Loading required package: lattice
+Loading required package: RColorBrewer
+Loading required package: Biobase
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following object(s) are masked from ‘package:stats’:
+
+    xtabs
+
+The following object(s) are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, cbind,
+    colnames, duplicated, eval, get, intersect, lapply, mapply, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rbind, rep.int,
+    rownames, sapply, setdiff, table, tapply, union, unique
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: distr
 Loading required package: startupmsg
 :startupmsg>  Utilities for start-up messages (version 0.8)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
 
-Loading required package: distr
 Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave together with
@@ -84,6 +107,7 @@ The following object(s) are masked from ‘package:stats’:
 
     df, qqplot, sd
 
+Loading required package: distrMod
 Loading required package: distrEx
 :distrEx>  Extensions of package distr (version 2.4)
 :distrEx> 
@@ -316,32 +340,6 @@ $asCov
 > ind <- rbinom(200, size=1, prob=0.05) 
 > X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
 > rowRoblox(X)
-Loading required package: Biobase
-Loading required package: BiocGenerics
-
-Attaching package: ‘BiocGenerics’
-
-The following object(s) are masked from ‘package:RandVar’:
-
-    Map
-
-The following object(s) are masked from ‘package:stats’:
-
-    xtabs
-
-The following object(s) are masked from ‘package:base’:
-
-    Filter, Find, Map, Position, Reduce, anyDuplicated, cbind,
-    colnames, duplicated, eval, get, intersect, lapply, mapply, mget,
-    order, paste, pmax, pmax.int, pmin, pmin.int, rbind, rep.int,
-    rownames, sapply, setdiff, table, tapply, union, unique
-
-Welcome to Bioconductor
-
-    Vignettes contain introductory material; view with
-    'browseVignettes()'. To cite Bioconductor, see
-    'citation("Biobase")', and for packages 'citation("pkgname")'.
-
 Evaluations of Optimally robust estimate:
 -----------------------------------------
 An object of class “Estimate” 
@@ -365,9 +363,6 @@ steps:
 > 
 > 
 > cleanEx()
-
-detaching ‘package:Biobase’, ‘package:BiocGenerics’
-
 > nameEx("finiteSampleCorrection")
 > ### * finiteSampleCorrection
 > 
@@ -1783,32 +1778,6 @@ steps:
 > ind <- rbinom(200, size=1, prob=0.05) 
 > X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
 > rowRoblox(X)
-Loading required package: Biobase
-Loading required package: BiocGenerics
-
-Attaching package: ‘BiocGenerics’
-
-The following object(s) are masked from ‘package:RandVar’:
-
-    Map
-
-The following object(s) are masked from ‘package:stats’:
-
-    xtabs
-
-The following object(s) are masked from ‘package:base’:
-
-    Filter, Find, Map, Position, Reduce, anyDuplicated, cbind,
-    colnames, duplicated, eval, get, intersect, lapply, mapply, mget,
-    order, paste, pmax, pmax.int, pmin, pmin.int, rbind, rep.int,
-    rownames, sapply, setdiff, table, tapply, union, unique
-
-Welcome to Bioconductor
-
-    Vignettes contain introductory material; view with
-    'browseVignettes()'. To cite Bioconductor, see
-    'citation("Biobase")', and for packages 'citation("pkgname")'.
-
 Evaluations of Optimally robust estimate:
 -----------------------------------------
 An object of class “Estimate” 
@@ -2138,9 +2107,6 @@ steps:
 > 
 > 
 > cleanEx()
-
-detaching ‘package:Biobase’, ‘package:BiocGenerics’
-
 > nameEx("rsOptIC")
 > ### * rsOptIC
 > 
@@ -2184,13 +2150,56 @@ $asCov
 > 
 > 
 > 
+> cleanEx()
+> nameEx("showdown")
+> ### * showdown
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: showdown
+> ### Title: Estimator Showdown by Monte-Carlo Study.
+> ### Aliases: showdown
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> library(MASS)
+> ## compare with Huber's Proposal 2
+> showdown(n = 20, M = 100, eps = 0.02, contD = Norm(mean = 3, sd = 3), 
++          estfun = function(x){ unlist(hubers(x)) },
++          plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
+dev.new(): using pdf(file="Rplots1.pdf")
+                               ML      Med Competitor       rmx
+n x empMSE (loc)         1.151729 1.571687  1.0217407 1.0412422
+relMSE (loc)             1.106111 1.509434  0.9812710 1.0000000
+n x empMSE (scale)       1.086260 1.493500  0.7204599 0.6113725
+relMSE (scale)           1.776757 2.442864  1.1784303 1.0000000
+n x empMSE (loc + scale) 2.237989 3.065187  1.7422006 1.6526147
+relMSE (loc + scale)     1.354211 1.854750  1.0542086 1.0000000
+> 
+> ## compare with Huber M estimator with MAD scale
+> showdown(n = 20, M = 100, eps = 0.02, contD = Norm(mean = 3, sd = 3), 
++          estfun = function(x){ unlist(huber(x)) },
++          plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
+dev.new(): using pdf(file="Rplots2.pdf")
+dev.new(): using pdf(file="Rplots3.pdf")
+                               ML      Med Competitor       rmx
+n x empMSE (loc)         1.151729 1.571687   1.091427 1.0412422
+relMSE (loc)             1.106111 1.509434   1.048197 1.0000000
+n x empMSE (scale)       1.086260 1.493500   1.493499 0.6113725
+relMSE (scale)           1.776757 2.442864   2.442862 1.0000000
+n x empMSE (loc + scale) 2.237989 3.065187   2.584925 1.6526147
+relMSE (loc + scale)     1.354211 1.854750   1.564143 1.0000000
+> 
+> 
+> 
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  56.499 0.168 56.895 0 0 
+Time elapsed:  54.099 0.72 55.019 0 0 
 > grDevices::dev.off()
-null device 
-          1 
+pdf 
+  2 
 > ###
 > ### Local variables: ***
 > ### mode: outline-minor ***

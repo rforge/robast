@@ -13,7 +13,7 @@ estimators in case of normal location and/or scale.
 \tabular{ll}{
 Package: \tab RobLox \cr
 Version: \tab 0.9 \cr
-Date: \tab 2010-12-03 \cr
+Date: \tab 2012-07-1 \cr
 Depends: \tab R(>= 2.7.0), stats, distrMod(>= 2.0.1), RobAStBase(>= 0.1.1) \cr
 LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
