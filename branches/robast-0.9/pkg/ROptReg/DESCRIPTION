@@ -1,7 +1,7 @@
 Package: ROptReg
 Version: 0.9
 Date: 2012-02-01
-Title: Optimally robust estimation for regression-type models
+Title: Optimally robust estimation for regression models
 Description: Optimally robust estimation for regression-type models using S4 classes and
         methods (based on distrMod, RobAStBase, and ROptEst)
 Depends: R (>= 2.14.0), methods, distr(>= 2.3), distrEx(>= 2.3), RandVar(>= 0.8), 
