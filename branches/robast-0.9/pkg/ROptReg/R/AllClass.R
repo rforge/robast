@@ -112,8 +112,9 @@ setClass("L2RegTypeFamily",   ## taken from ROptRegTS
             })
 
 #Link function
-setClass("GLMLink", representation(eta="function", l="function", l1="function"),
-         prototype=prototype(eta=function(x)x, l=function(x)x, l1 = function(x) 1))
+setClass("GLMLink", representation(name = "character", linkfun="function", linkinv="function", linkjacobian="function"),
+         prototype=prototype(name="id", linkfun=function(x)x, linkinv=function(x)x,
+                             linkjacobian = function(x) 1))
 
 # Regression type families ... taken as is from ROptRegTS
 setClass("GLMTypeFamily",
