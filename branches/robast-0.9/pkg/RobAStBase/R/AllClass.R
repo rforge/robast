@@ -317,7 +317,8 @@ setClass("cutoff", representation = representation(name = "character",
 #################################################
 # new risk classes
 #################################################
-setClass("interpolRisk", contains = c("RiskType", "VIRTUAL"))
-setClass("OMSRRisk", contains = "interpolRisk")
-setClass("RMXRRisk", contains = "interpolRisk")
-setClass("MBRRisk", contains = "interpolRisk")
+setClass("interpolRisk", representation = representation(samplesize="numeric"),
+                         contains = c("RiskType", "VIRTUAL"))
+setClass("OMSRRisk", contains = "interpolRisk", prototype(samplesize=100))
+setClass("RMXRRisk", contains = "interpolRisk", prototype(samplesize=100))
+setClass("MBRRisk", contains = "interpolRisk", prototype(samplesize=100))

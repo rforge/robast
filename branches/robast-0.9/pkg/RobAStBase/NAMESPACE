@@ -60,6 +60,7 @@ exportMethods("pICList","ICList", "ksteps", "uksteps",
               "start", "startval", "ustartval")
 exportMethods("ddPlot", "qqplot")
 exportMethods("cutoff.quantile", "cutoff.quantile<-")
+exportMethods("samplesize<-", "samplesize")
 export("oneStepEstimator", "kStepEstimator")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 

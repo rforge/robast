@@ -214,3 +214,14 @@ if(!isGeneric("kStepEstimator.start")){
     setGeneric("kStepEstimator.start",
                 function(start,...) standardGeneric("kStepEstimator.start"))
 }
+if(!isGeneric("radius")){
+    setGeneric("radius", function(object) standardGeneric("radius"))
+}
+if(!isGeneric("radius")){
+    setGeneric("radius", function(object) standardGeneric("radius"))
+}
+
+if(!isGeneric("samplesize<-")){
+    setGeneric("samplesize<-",
+        function(object, value, ...) standardGeneric("samplesize<-"))
+}

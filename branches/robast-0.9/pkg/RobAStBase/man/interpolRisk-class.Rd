@@ -7,6 +7,16 @@
 \alias{OMSRRisk}
 \alias{RMXRRisk}
 \alias{MBRRisk}
+\alias{samplesize}
+\alias{samplesize,interpolRisk-method}
+\alias{samplesize<-}
+\alias{samplesize<-,interpolRisk-method}
+
+\usage{
+MBRRisk(samplesize=100)
+OMSRRisk(samplesize=100)
+RMXRRisk(samplesize=100)
+}
 
 \title{Interpolated Risks}
 \description{Class of risks for which algorithms dispatch to speed-up algorithms}
@@ -28,6 +38,8 @@ convex contamination neighborhoods.
 a radius r of \code{0.5}), \code{RMXRRisk} stands for optimal
 optimally RMX-robust estimation and \code{MBRRisk} stands for optimal
 Bias-robust estimation.
+All these risks have an additional slot samplesize, defaulting to \code{100},
+and for which there is a replacement and an accessor method.
 }
 %\references{}
 \author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
@@ -36,6 +48,9 @@ new("OMSRRisk")
 OMSRRisk()
 RMXRRisk()
 MBRRisk()
+myrisk <- MBRRisk(samplesize=100)
+samplesize(myrisk)
+samplesize(myrisk) <- 20
 }
 
 %\note{}
