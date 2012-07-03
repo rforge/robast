@@ -11,6 +11,7 @@
 \alias{LnormScaleFamily-class}
 \alias{GammaFamily-class}
 \alias{GParetoFamily-class}
+\alias{WeibullFamily-class}
 \alias{BetaFamily-class}
 \alias{NormLocationScaleFamily-class}
 \alias{CauchyLocationScaleFamily-class}
