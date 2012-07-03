@@ -57,7 +57,17 @@ Class \code{"OptionalParameter"}, by class \code{"Parameter"}.
 %\note{}
 \seealso{\code{\link{GEV-class}}, \code{\link[distr]{Parameter-class}}}
 \examples{
-new("GEVParameter")
+P <- new("GEVParameter")
+loc(P)
+## same as
+location(P)
+scale(P)
+shape(P)
+
+scale(P) <- 2
+location(P) <- 4
+shape(P) <- -1 # may be negative!
+P
 }
 \concept{GEV distribution}
 \keyword{distribution}

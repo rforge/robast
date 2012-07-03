@@ -111,6 +111,7 @@ shape(P1)
 loc(P1)
 scale(P1) <- 4
 loc(P1) <- 2
+shape(P1) <- -1 # may be negative!
 plot(P1)
 }
 \concept{GEV}

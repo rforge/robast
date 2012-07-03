@@ -11,9 +11,15 @@ setMethod("Min", "ParetoParameter", function(object) object@Min)
 
 ## Replace Methods
 setReplaceMethod("shape", "ParetoParameter", 
-                  function(object, value){ object@shape <- value; object})
+                  function(object, value){ 
+                    if(length(value) != 1 || value <= 0)
+                        stop("'value' has to be a single positive number")
+                    object@shape <- value; object})
 setReplaceMethod("Min", "ParetoParameter", 
-                  function(object, value){ object@Min <- value; object})
+                  function(object, value){ 
+                    if(length(value) != 1 || value <= 0)
+                        stop("'value' has to be a single positive number")
+                    object@Min <- value; object})
 
 setValidity("ParetoParameter", function(object){
   if(length(shape(object)) != 1)
@@ -42,7 +48,7 @@ setMethod("shape", "Pareto", function(object) shape(param(object)))
 setMethod("Min", "Pareto", function(object) Min(param(object)))
 
 ## wrapped replace methods
-setMethod("shape<-", "Pareto", function(object, value) 
+setMethod("shape<-", "Pareto", function(object, value)
            new("Pareto", shape = value, Min = Min(object)))
 setMethod("Min<-", "Pareto", function(object, value) 
            new("Pareto", shape = shape(object), Min = value))

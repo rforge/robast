@@ -25,11 +25,17 @@
   by the package \pkg{evd} by  Alec Stephenson.}
 \seealso{\code{\link{GPareto-class}}, \code{\link[evd:gpd]{dgpd}}}
 \examples{
-(P1 <- GPareto(loc = 0, scale = 1, shape = 0))
+(P1 <- GPareto(loc = 1, scale = 1, shape = -0.5))
 plot(P1)
 
 E(GPareto()) 
+E(P1)
 E(P1, function(x){x^2})
+var(P1)
+sd(P1)
+median(P1)
+IQR(P1)
+mad(P1)
 
 }
 

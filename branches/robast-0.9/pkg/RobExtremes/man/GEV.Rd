@@ -21,14 +21,20 @@
 %\references{}
 \author{Nataliya Horbenko \email{Nataliya.Horbenko@itwm.fraunhofer.de}}
 \note{The class \code{"GEV"} is based on the code provided 
-  by the package \pkg{evd} by  Alec Stephenson.}
+  by the package \pkg{evd} by Alec Stephenson.}
 \seealso{\code{\link{GEV-class}}, \code{\link[evd:gpd]{dgpd}}}
 \examples{
 (P1 <- GEV(loc = 0, scale = 1, shape = 0))
 plot(P1)
 
 E(GEV()) 
+E(P1)
 E(P1, function(x){x^2})
+var(P1)
+sd(P1)
+median(P1)
+IQR(P1)
+mad(P1)
 
 }
 

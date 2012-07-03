@@ -44,7 +44,14 @@ Class \code{"OptionalParameter"}, by class \code{"Parameter"}.
 %\note{}
 \seealso{\code{\link{Pareto-class}}, \code{\link[distr]{Parameter-class}}}
 \examples{
-new("ParetoParameter")
+(P1 <- new("ParetoParameter"))
+Min(P1)
+shape(P1)
+
+Min(P1) <- 3
+shape(P1) <- 4
+P1
+
 }
 \concept{Pareto distribution}
 \keyword{distribution}

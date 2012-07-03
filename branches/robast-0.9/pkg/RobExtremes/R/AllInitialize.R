@@ -147,9 +147,14 @@ setMethod("initialize", "GPareto",
                            if(!lower.tail) p0 <- 1-p0
                                       
                            q1 <- qgpd(p0, loc = locSub, scale = scaleSub, 
-                                      shape = shapeSub) 
-                           q1[i0] <- if(lower.tail)  locSub else Inf
-                           q1[i1] <- if(!lower.tail) locSub else Inf
+                                      shape = shapeSub)
+                           if(shapeSub >= 0){
+                              q1[i0] <- if(lower.tail)  locSub else Inf
+                              q1[i1] <- if(!lower.tail) locSub else Inf
+                           }else{
+                              q1[i0] <- if(lower.tail)  locSub else locSub-scaleSub/shapeSub
+                              q1[i1] <- if(!lower.tail) locSub else locSub-scaleSub/shapeSub
+                           }
                            q1[in01] <- NaN
                         
                            return(q1) 
@@ -209,6 +214,8 @@ setMethod("initialize", "GEV",
                         }else{
                            ##higher tolerance for .isEqual01
                            tol=1e-20
+                           otol <- getdistrOption("TruncQuantile")
+                           on.exit(distroptions(TruncQuantile=otol))
                            distroptions(TruncQuantile=tol)
                            p1 <- if(log.p) exp(p) else p
                            in01 <- (p1>1 | p1<0)
@@ -220,8 +227,18 @@ setMethod("initialize", "GEV",
                            p0[ii01] <- if(log.p) log(0.5) else 0.5
                            #if(!lower.tail) p0 <- 1-p0
                            q1 <- qgev(p0, loc = locSub, scale = scaleSub, shape = shapeSub, lower.tail=lower.tail) 
-                           q1[i0] <- if(lower.tail)  locSub-scaleSub/shapeSub else Inf
-                           q1[i1] <- if(!lower.tail) locSub-scaleSub/shapeSub else Inf
+                           if(shapeSub > 0){
+                              q1[i0] <- if(lower.tail)  locSub-scaleSub/shapeSub else Inf
+                              q1[i1] <- if(!lower.tail) locSub-scaleSub/shapeSub else Inf
+                           }else{
+                              if(shapeSub == 0){
+                                q1[i0] <- if(lower.tail)  -Inf else Inf
+                                q1[i1] <- if(!lower.tail) -Inf else Inf
+                              }else{
+                                q1[i0] <- if(lower.tail)  -Inf else locSub-scaleSub/shapeSub
+                                q1[i1] <- if(!lower.tail) -Inf else locSub-scaleSub/shapeSub
+                              }
+                           }
                            q1[in01] <- NaN
                            return(q1) 
                          }   

@@ -57,7 +57,17 @@ Class \code{"OptionalParameter"}, by class \code{"Parameter"}.
 %\note{}
 \seealso{\code{\link{GPareto-class}}, \code{\link[distr]{Parameter-class}}}
 \examples{
-new("GParetoParameter")
+P <- new("GParetoParameter")
+loc(P)
+## same as
+location(P)
+scale(P)
+shape(P)
+
+scale(P) <- 2
+loc(P) <- -5
+shape(P) <- -1 # may be negative
+P
 }
 \concept{GPareto distribution}
 \keyword{distribution}

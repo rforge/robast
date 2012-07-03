@@ -21,8 +21,7 @@ exportMethods("validParameter",
               "shape", "shape<-",
               "+", "*",
               "Min", "Min<-",
-              "E", "var", "IQR", "skewness", "kurtosis", 
-              "sd", "median", "mad", "dispersion")
+              "E", "var", "IQR", "skewness", "kurtosis", "median", "dispersion")
 exportMethods("modifyModel")
 
 export("EULERMASCHERONICONSTANT","APERYCONSTANT")

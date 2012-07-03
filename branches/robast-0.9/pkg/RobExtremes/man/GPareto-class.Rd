@@ -107,7 +107,8 @@ plot(P1)
 shape(P1)
 loc(P1)
 scale(P1) <- 4
-loc(P1) <- 2
+location(P1) <- 2 ## same as loc(P1) <- 2
+shape(P1) <- -2 # may be negative
 plot(P1)
 }
 \concept{GPareto}
