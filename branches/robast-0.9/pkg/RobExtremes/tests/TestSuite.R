@@ -1,3 +1,15 @@
+##########################################
+##                                      ## 
+## TestSuite for RobExtremes Package    ##
+##                                      ##
+##########################################
+
+##load RobExtremes package
+require(RobExtremes)
+
+##load RUnit package
+require(RUnit)
+
 #Options: if the exceptions are shown as errors
 ## Not run:
 ## quiet log output
@@ -8,8 +20,8 @@ options("RUnit"=ro)
 ## End(Not run)
 
 ## run test suite
-myTestSuite <- defineTestSuite("RUnit Example",dirs="./tests",
-testFileRegexp = "^test.+\\R$",testFuncRegexp = "^test.+")
+myTestSuite <- defineTestSuite("RUnit Tests for RobExtremes",dirs="./TestSuite",
+testFileRegexp = "^Test.+\\R$",testFuncRegexp = "^test.+")
 testResult <- runTestSuite(myTestSuite)
 
 ## is test suite valid?
