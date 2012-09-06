@@ -59,24 +59,27 @@ LDEstimator <- function(x, loc.est, disp.est,
     if(missing(name))
         name <- "Some estimator"
     LDnames <- paste("Location:",
-                           paste(deparse(substitute(loc.fctal))),
-                           " ","Dispersion:",
-                           paste(deparse(substitute(disp.fctal))))
+                     paste(deparse(substitute(loc.fctal))),
+                     " ","Dispersion:",
+                     paste(deparse(substitute(disp.fctal))))
 
     LDMval <- NULL
     estimator <- function(x,...){
          LDMval <<- .LDMatch(x.0= x,
-                         loc.est.0 = loc.est, disp.est.0 =  disp.est,
-                         loc.fctal.0 = loc.fctal, disp.fctal.0 =  disp.fctal,
+                         loc.est.0 = loc.est, 
+                         disp.est.0 =  disp.est,
+                         loc.fctal.0 = loc.fctal, 
+                         disp.fctal.0 =  disp.fctal,
                          ParamFamily.0 = ParamFamily,
                          loc.est.ctrl.0 = loc.est.ctrl,
                          loc.fctal.ctrl.0 = loc.fctal.ctrl,
                          disp.est.ctrl.0 = disp.est.ctrl,
                          disp.fctal.ctrl.0 = disp.fctal.ctrl,
-                         q.lo.0 = q.lo, q.up.0 = q.up, log.q.0 = log.q)
+                         q.lo.0 = q.lo, 
+                         q.up.0 = q.up, 
+                         log.q.0 = log.q)
          return(LDMval[1:2])
     }
-
 
     asvar.0 <- asvar
     nuis.idx.0 <- nuis.idx
@@ -84,17 +87,29 @@ LDEstimator <- function(x, loc.est, disp.est,
     fixed.0 <- fixed
     na.rm.0 <- na.rm
 
+    print(nuis.idx.0)
+    print(trafo.0)
+    print(fixed.0)
+    
+
     estimate <- Estimator(x, estimator, name, Infos,
                       asvar = asvar.0, nuis.idx = nuis.idx.0,
                       trafo = trafo.0, fixed = fixed.0,
                       na.rm = na.rm.0, ...)
+
+    print(estimate)
+    #print(estimate@untransformed.estimate)
+    print(estimate@untransformed.asvar)
+    cat("\n asvar",estimate@asvar,"\n")
+
+
     if(missing(asvar)) asvar <- NULL
-    if(is.null(asvar))
-       if(!missing(asvar.fct)&&!is.null(asvar.fct))
-             asvar <- asvar.fct(ParamFamily, estimate, ...)
+
+    if((is.null(asvar))&&(!missing(asvar.fct))&&(!is.null(asvar.fct)))
+          asvar <- asvar.fct(ParamFamily, estimate, ...)
 
     estimate@untransformed.asvar <- asvar
-    estimate@asvar <- asvar
+    #print(estimate)
 
     l.e <- length(estimate@untransformed.estimate)
     idx <- NULL
@@ -106,9 +121,12 @@ LDEstimator <- function(x, loc.est, disp.est,
 
     if(!.isUnitMatrix(estimate@trafo$mat)){
        estimate@estimate <- estimate@trafo$fct(estimate)
+       
        if(!is.null(asvar))
            estimate@asvar <- estimate@trafo$mat%*%asvar[idm,idm]%*%t(estimate@trafo$mat)
     }
+
+     print(estimate@asvar)
 
     estimate@estimate.call <- es.call
 
@@ -137,13 +155,15 @@ LDEstimator <- function(x, loc.est, disp.est,
 
 
 medkMAD <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
-                        trafo = NULL, fixed = NULL, na.rm = TRUE,
+                        trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
                         ...){
       es.call <- match.call()
       if(missing(k)) k <- 1
-      asvar.fct <- function(L2Fam=ParamFamily, param){
-                       asvarMedkMAD(model=L2Fam, k = k)}
-      asvar <- asvarMedkMAD(model=ParamFamily, k = k)
+
+      if (is.null(asvar.fct)){asvar.fct <- asvarMedkMAD
+                              asvar <- asvarMedkMAD(ParamFamily, k=k)}
+
+
       es <- LDEstimator(x, loc.est = median, disp.est = kMAD,
                      loc.fctal = median, disp.fctal = kMAD,
                      ParamFamily = ParamFamily,
@@ -155,6 +175,7 @@ medkMAD <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
                      asvar = asvar, nuis.idx = nuis.idx, trafo = trafo, fixed = fixed,
                      asvar.fct = asvar.fct, na.rm = na.rm, ...)
       es@estimate.call <- es.call
+     
       return(es)
                      }
                         
@@ -196,13 +217,13 @@ medSn <- function(x, ParamFamily, q.lo =1e-3, q.up=10, nuis.idx  = NULL,
 
 medkMADhybr <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15,
                         KK=20, nuis.idx = NULL,
-                        trafo = NULL, fixed = NULL,  na.rm = TRUE,
+                        trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
                         ...){
  i <- 1
  es <- try(medkMAD(x, k = k, ParamFamily = ParamFamily,
                             q.lo = q.lo, q.up = q.up,
                             nuis.idx = nuis.idx, trafo = trafo,
-                            fixed = fixed, na.rm = na.rm,
+                            fixed = fixed, asvar.fct = asvar.fct, na.rm = na.rm,
                              ...), silent=TRUE)
  if(! any(is.na(es)) && !is(es,"try-error"))
    {return(es)}
@@ -213,11 +234,9 @@ medkMADhybr <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15,
       es <- try(medkMAD(x, k = k1, ParamFamily = ParamFamily,
                             q.lo = q.lo, q.up = q.up,
                             nuis.idx = nuis.idx, trafo = trafo,
-                            fixed = fixed, na.rm = na.rm,
+                            fixed = fixed, asvar.fct = asvar.fct, na.rm = na.rm,
                              ...), silent=TRUE)
       k1 <- k1 * 3
-      es@asvar.fct <- function(L2Fam=ParamFamily, param){
-                       asvarMedkMAD(model=L2Fam, k = k)}
       if(! any(is.na(es)) && !is(es,"try-error"))
          {return(es)}
       }
