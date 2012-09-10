@@ -78,6 +78,10 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
   the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
   Extended version: \url{http://www.stamats.de/RRlong.pdf}
+  
+  M. Kohl, P. Ruckdeschel, and H. Rieder (2010). Infinitesimally Robust Estimation 
+  in General Smoothly Parametrized Models. \emph{Statistical Methods and Application}, 
+  \bold{19}(3):333-354. 
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
