@@ -1,6 +1,6 @@
 
-R version 2.12.1 Patched (2011-01-04 r53913)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R version 2.15.1 Patched (2012-06-29 r59688) -- "Roasted Marshmallows"
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -25,16 +25,30 @@ Type 'q()' to quit R.
 Loading required package: lattice
 Loading required package: RColorBrewer
 Loading required package: Biobase
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following object(s) are masked from ‘package:stats’:
+
+    xtabs
+
+The following object(s) are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, cbind,
+    colnames, duplicated, eval, get, intersect, lapply, mapply, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rbind, rep.int,
+    rownames, sapply, setdiff, table, tapply, union, unique
 
 Welcome to Bioconductor
 
-  Vignettes contain introductory material. To view, type
-  'openVignette()'. To cite Bioconductor, see
-  'citation("Biobase")' and for packages 'citation(pkgname)'.
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
 
 Loading required package: distr
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.7.1)
+:startupmsg>  Utilities for start-up messages (version 0.8)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
@@ -42,7 +56,7 @@ Loading required package: startupmsg
 Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version 0.5)
+:SweaveListingUtils>  TeX listings package (version 0.6)
 :SweaveListingUtils> 
 :SweaveListingUtils>  Some functions from package 'base'
 :SweaveListingUtils>  are intentionally masked ---see
@@ -61,14 +75,14 @@ Loading required package: SweaveListingUtils
 :SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
 
 
-Attaching package: 'SweaveListingUtils'
+Attaching package: ‘SweaveListingUtils’
 
-The following object(s) are masked from 'package:base':
+The following object(s) are masked from ‘package:base’:
 
     library, require
 
 :distr>  Object oriented implementation of distributions (version
-:distr>  2.3)
+:distr>  2.4)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -87,34 +101,22 @@ The following object(s) are masked from 'package:base':
 :distr>  vignette("distr").
 
 
-Attaching package: 'distr'
+Attaching package: ‘distr’
 
-The following object(s) are masked from 'package:stats':
+The following object(s) are masked from ‘package:stats’:
 
     df, qqplot, sd
 
 Loading required package: distrMod
 Loading required package: distrEx
-Loading required package: evd
-
-Attaching package: 'evd'
-
-The following object(s) are masked from 'package:lattice':
-
-    qq
-
-Loading required package: actuar
-
-Attaching package: 'actuar'
-
-The following object(s) are masked from 'package:grDevices':
-
-    cm
-
-:distrEx>  Extensions of package distr (version 2.3)
+:distrEx>  Extensions of package distr (version 2.4)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
-:distrEx>  attached /before/ package "distrEx". See distrExMASK().
+:distrEx>  attached /before/ package "distrEx". See
+:distrEx>  distrExMASK().Note: Extreme value distribution
+:distrEx>  functionality has been moved to
+:distrEx> 
+:distrEx>        package "RobExtremes". See distrExMOVED().
 :distrEx> 
 :distrEx>  For more information see ?"distrEx", NEWS("distrEx"), as
 :distrEx>  well as
@@ -124,14 +126,14 @@ The following object(s) are masked from 'package:grDevices':
 :distrEx>  vignette("distr").
 
 
-Attaching package: 'distrEx'
+Attaching package: ‘distrEx’
 
-The following object(s) are masked from 'package:stats':
+The following object(s) are masked from ‘package:stats’:
 
     IQR, mad, median, var
 
 Loading required package: RandVar
-:RandVar>  Implementation of random variables (version 0.8)
+:RandVar>  Implementation of random variables (version 0.9)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -142,7 +144,7 @@ Loading required package: RandVar
 Loading required package: MASS
 Loading required package: stats4
 :distrMod>  Object oriented implementation of probability models
-:distrMod>  (version 2.3)
+:distrMod>  (version 2.4)
 :distrMod> 
 :distrMod>  Some functions from pkg's 'base' and 'stats' are
 :distrMod>  intentionally masked ---see distrModMASK().
@@ -161,22 +163,22 @@ Loading required package: stats4
 :distrMod>  vignette("distr").
 
 
-Attaching package: 'distrMod'
+Attaching package: ‘distrMod’
 
-The following object(s) are masked from 'package:stats4':
-
-    confint
-
-The following object(s) are masked from 'package:stats':
+The following object(s) are masked from ‘package:stats4’:
 
     confint
 
-The following object(s) are masked from 'package:base':
+The following object(s) are masked from ‘package:stats’:
+
+    confint
+
+The following object(s) are masked from ‘package:base’:
 
     norm
 
 Loading required package: RobAStBase
-:RobAStBase>  Robust Asymptotic Statistics (version 0.8)
+:RobAStBase>  Robust Asymptotic Statistics (version 0.9)
 :RobAStBase> 
 :RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
 :RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
@@ -189,13 +191,9 @@ Loading required package: RobAStBase
 :RobAStBase>    http://robast.r-forge.r-project.org/
 
 
-Attaching package: 'RobAStBase'
+Attaching package: ‘RobAStBase’
 
-The following object(s) are masked from 'package:stats':
-
-    start
-
-The following object(s) are masked from 'package:graphics':
+The following object(s) are masked from ‘package:graphics’:
 
     clip
 
@@ -276,7 +274,7 @@ An object of class “ContIC”
 ### name:	 IC of contamination type 
 
 ### L2-differentiable parametric family:	 normal location and scale family 
-### param:	An object of class "ParamFamParameter"
+### param:	An object of class "ParamWithScaleFamParameter"
 name:	location and scale
 mean:	-0.111150435088002
 sd:	0.89284240215757
@@ -349,9 +347,9 @@ generated by call
   rowRoblox(x = X)
 samplesize:   100
 estimate:
-            mean       sd
-[1,] -0.09216816 1.131706
-[2,]  0.10169428 0.952022
+            mean        sd
+[1,] -0.09216816 1.1317057
+[2,]  0.10169428 0.9520219
 Infos:
      method   message                                                       
 [1,] "roblox" "radius-minimax estimates for contamination interval [0, 0.5]"
@@ -417,7 +415,7 @@ $asBias
 [1] 2.053826
 
 $asCov
-[1] 1.011980
+[1] 1.01198
 
 > cent(IC1)
 [1] 0
@@ -452,9 +450,9 @@ MSE equation:	 1.207368e-14
 > checkIC(IC1)
 precision of centering:	 0 -6.039278e-07 
 precision of Fisher consistency:
-              mean            sd
-mean -1.102480e-06  0.000000e+00
-sd    0.000000e+00 -1.685676e-05
+             mean            sd
+mean -1.10248e-06  0.000000e+00
+sd    0.00000e+00 -1.685676e-05
 maximum deviation 
      1.685676e-05 
 > distrExOptions("ErelativeTolerance" = .Machine$double.eps^0.25) # default
@@ -478,9 +476,9 @@ $asCov
 > clip(IC1)
 [1] 3.182504
 > stand(IC1)
-         [,1]      [,2]
-[1,] 1.051890 0.0000000
-[2,] 0.000000 0.5958748
+        [,1]      [,2]
+[1,] 1.05189 0.0000000
+[2,] 0.00000 0.5958748
 > plot(IC1)
 > infoPlot(IC1)
 > 
@@ -525,12 +523,12 @@ generated by call
 samplesize:   100
 estimate:
       mean           sd     
-  -0.11387679    0.94029614 
- ( 0.10699408) ( 0.09076235)
+  -0.11387679    0.94042674 
+ ( 0.10700894) ( 0.09077496)
 asymptotic (co)variance (multiplied with samplesize):
          [,1]      [,2]
-[1,] 1.144773 0.0000000
-[2,] 0.000000 0.8237805
+[1,] 1.145091 0.0000000
+[2,] 0.000000 0.8240093
 Infos:
      method            
 [1,] "oneStepEstimator"
@@ -540,16 +538,16 @@ Infos:
 [2,] "computation of IC, trafo, asvar and asbias via useLast = TRUE"
 asymptotic bias:
        sd 
-0.9035723 
+0.9036978 
 (partial) influence curve:
 An object of class “ContIC” 
 ### name:	 IC of contamination type 
 
 ### L2-differentiable parametric family:	 normal location and scale family 
-### param:	An object of class "ParamFamParameter"
+### param:	An object of class "ParamWithScaleFamParameter"
 name:	location and scale
 mean:	-0.113876786446744
-sd:	0.940296140129343
+sd:	0.940426740646572
 trafo:
      mean sd
 mean    1  0
@@ -558,12 +556,12 @@ sd      0  1
 ### neighborhood radius:	 0.5 
 
 ### clip:	      sd 
-1.807145 
-### cent:	[1]  0.000000 -0.347277
+1.807396 
+### cent:	[1]  0.0000000 -0.3473252
 ### stand:
          [,1]     [,2]
-[1,] 1.401722 0.000000
-[2,] 0.000000 1.091808
+[1,] 1.402111 0.000000
+[2,] 0.000000 1.092111
 
 ### Infos:
   method     message                                            
@@ -584,12 +582,12 @@ generated by call
 samplesize:   100
 estimate:
       mean           sd     
-  -0.11639746    0.93646837 
- ( 0.10655853) ( 0.09039288)
+  -0.11639567    0.93647284 
+ ( 0.10655904) ( 0.09039331)
 asymptotic (co)variance (multiplied with samplesize):
-         [,1]      [,2]
-[1,] 1.135472 0.0000000
-[2,] 0.000000 0.8170872
+         [,1]     [,2]
+[1,] 1.135483 0.000000
+[2,] 0.000000 0.817095
 Infos:
      method          
 [1,] "kStepEstimator"
@@ -598,17 +596,17 @@ Infos:
 [1,] "3-step estimate for normal location and scale family"         
 [2,] "computation of IC, trafo, asvar and asbias via useLast = TRUE"
 asymptotic bias:
-      sd 
-0.899894 
+       sd 
+0.8998983 
 (partial) influence curve:
 An object of class “ContIC” 
 ### name:	 IC of contamination type 
 
 ### L2-differentiable parametric family:	 normal location and scale family 
-### param:	An object of class "ParamFamParameter"
+### param:	An object of class "ParamWithScaleFamParameter"
 name:	location and scale
-mean:	-0.116397459115411
-sd:	0.936468369096109
+mean:	-0.116395665238717
+sd:	0.936472837098548
 trafo:
      mean sd
 mean    1  0
@@ -617,12 +615,12 @@ sd      0  1
 ### neighborhood radius:	 0.5 
 
 ### clip:	      sd 
-1.799788 
-### cent:	[1]  0.0000000 -0.3458633
+1.799797 
+### cent:	[1]  0.0000000 -0.3458649
 ### stand:
          [,1]     [,2]
-[1,] 1.390333 0.000000
-[2,] 0.000000 1.082937
+[1,] 1.390346 0.000000
+[2,] 0.000000 1.082947
 
 ### Infos:
   method     message                                            
@@ -648,13 +646,13 @@ generated by call
   oneStepEstimator(x = x, IC = IC2, start = est0)
 samplesize:   100
 estimate:
-      mean          sd    
-  -0.1194805    0.9318553 
- ( 0.1090220) ( 0.0968585)
+      mean           sd     
+  -0.11948046    0.93188234 
+ ( 0.10902521) ( 0.09686132)
 asymptotic (co)variance (multiplied with samplesize):
-         [,1]     [,2]
-[1,] 1.188581 0.000000
-[2,] 0.000000 0.938157
+        [,1]      [,2]
+[1,] 1.18865 0.0000000
+[2,] 0.00000 0.9382114
 Infos:
      method            
 [1,] "oneStepEstimator"
@@ -664,16 +662,16 @@ Infos:
 [2,] "computation of IC, trafo, asvar and asbias via useLast = TRUE"
 asymptotic bias:
       sd 
-1.000433 
+1.000462 
 (partial) influence curve:
 An object of class “ContIC” 
 ### name:	 IC of contamination type 
 
 ### L2-differentiable parametric family:	 normal location and scale family 
-### param:	An object of class "ParamFamParameter"
+### param:	An object of class "ParamWithScaleFamParameter"
 name:	location and scale
 mean:	-0.119480464646407
-sd:	0.931855339791096
+sd:	0.931882340990481
 trafo:
      mean sd
 mean    1  0
@@ -682,12 +680,12 @@ sd      0  1
 ### neighborhood radius:	 0.579 
 
 ### clip:	      sd 
-1.727864 
-### cent:	[1]  0.0000000 -0.4415191
+1.727914 
+### cent:	[1]  0.0000000 -0.4415319
 ### stand:
          [,1]     [,2]
-[1,] 1.505494 0.000000
-[2,] 0.000000 1.206706
+[1,] 1.505582 0.000000
+[2,] 0.000000 1.206776
 
 ### Infos:
   method     message                                            
@@ -710,12 +708,12 @@ generated by call
 samplesize:   100
 estimate:
       mean           sd     
-  -0.12006216    0.92637702 
- ( 0.10838111) ( 0.09628908)
+  -0.12006169    0.92637969 
+ ( 0.10838143) ( 0.09628936)
 asymptotic (co)variance (multiplied with samplesize):
          [,1]      [,2]
-[1,] 1.174647 0.0000000
-[2,] 0.000000 0.9271588
+[1,] 1.174653 0.0000000
+[2,] 0.000000 0.9271641
 Infos:
      method          
 [1,] "kStepEstimator"
@@ -724,17 +722,17 @@ Infos:
 [1,] "3-step estimate for normal location and scale family"         
 [2,] "computation of IC, trafo, asvar and asbias via useLast = TRUE"
 asymptotic bias:
-      sd 
-0.994552 
+       sd 
+0.9945548 
 (partial) influence curve:
 An object of class “ContIC” 
 ### name:	 IC of contamination type 
 
 ### L2-differentiable parametric family:	 normal location and scale family 
-### param:	An object of class "ParamFamParameter"
+### param:	An object of class "ParamWithScaleFamParameter"
 name:	location and scale
-mean:	-0.120062158553744
-sd:	0.926377018794616
+mean:	-0.120061689892252
+sd:	0.926379689897674
 trafo:
      mean sd
 mean    1  0
@@ -743,12 +741,12 @@ sd      0  1
 ### neighborhood radius:	 0.579 
 
 ### clip:	      sd 
-1.717706 
-### cent:	[1]  0.0000000 -0.4389234
+1.717711 
+### cent:	[1]  0.0000000 -0.4389247
 ### stand:
          [,1]     [,2]
-[1,] 1.487845 0.000000
-[2,] 0.000000 1.192559
+[1,] 1.487853 0.000000
+[2,] 0.000000 1.192566
 
 ### Infos:
   method     message                                            
@@ -861,7 +859,7 @@ $asCov
 > 
 > IC1 <- rlsOptIC.AnMad(r = 0.1)
 > checkIC(IC1)
-precision of centering:	 0 -6.56959e-07 
+precision of centering:	 0 -6.569591e-07 
 precision of Fisher consistency:
               mean            sd
 mean -4.044557e-07  0.000000e+00
@@ -948,11 +946,11 @@ $asCov
 > checkIC(IC1)
 precision of centering:	 0 -2.659214e-07 
 precision of Fisher consistency:
-              mean           sd
-mean -8.538336e-07  0.00000e+00
-sd    0.000000e+00 -9.69177e-06
+              mean            sd
+mean -8.538336e-07  0.000000e+00
+sd    0.000000e+00 -9.691769e-06
 maximum deviation 
-      9.69177e-06 
+     9.691769e-06 
 > Risks(IC1)
 $asMSE
 [1] 1.649969
@@ -1028,7 +1026,7 @@ $asCov
 > 
 > IC1 <- rlsOptIC.HaMad(r = 0.1)
 > checkIC(IC1)
-precision of centering:	 0 -6.56959e-07 
+precision of centering:	 0 -6.569591e-07 
 precision of Fisher consistency:
               mean            sd
 mean -2.041724e-06  0.000000e+00
@@ -1151,7 +1149,7 @@ $asCov
 > 
 > IC1 <- rlsOptIC.Hu2a(r = 0.1)
 > checkIC(IC1)
-precision of centering:	 0 -1.524970e-06 
+precision of centering:	 0 -1.52497e-06 
 precision of Fisher consistency:
              mean            sd
 mean -3.15714e-06  0.000000e+00
@@ -1233,7 +1231,7 @@ $asCov
 > 
 > IC1 <- rlsOptIC.HuMad(r = 0.1)
 > checkIC(IC1)
-precision of centering:	 0 -6.56959e-07 
+precision of centering:	 0 -6.569591e-07 
 precision of Fisher consistency:
               mean            sd
 mean -1.987572e-06  0.000000e+00
@@ -1443,7 +1441,7 @@ $asCov
 > 
 > IC1 <- rlsOptIC.TuMad(r = 0.1)
 > checkIC(IC1)
-precision of centering:	 0 -6.56959e-07 
+precision of centering:	 0 -6.569591e-07 
 precision of Fisher consistency:
               mean            sd
 mean -5.410012e-07  0.000000e+00
@@ -1455,7 +1453,7 @@ $asMSE
 [1] 2.434044
 
 $asBias
-[1] 2.413390
+[1] 2.41339
 
 $asCov
 [1] 2.375799
@@ -1515,7 +1513,7 @@ An object of class “ContIC”
 ### name:	 IC of contamination type 
 
 ### L2-differentiable parametric family:	 normal location and scale family 
-### param:	An object of class "ParamFamParameter"
+### param:	An object of class "ParamWithScaleFamParameter"
 name:	location and scale
 mean:	-0.11229868189814
 sd:	0.888017869672977
@@ -1548,7 +1546,7 @@ maximum deviation
       8.11685e-06 
 > Risks(pIC(res1))
 $asMSE
-[1] 2.626910
+[1] 2.62691
 
 $asBias
 [1] 1.615323
@@ -1597,7 +1595,7 @@ An object of class “ContIC”
 ### name:	 IC of contamination type 
 
 ### L2-differentiable parametric family:	 normal location and scale family 
-### param:	An object of class "ParamFamParameter"
+### param:	An object of class "ParamWithScaleFamParameter"
 name:	location and scale
 mean:	-0.111150435088002
 sd:	0.89284240215757
@@ -1748,9 +1746,9 @@ estimate:
   -0.11421421    0.89779415 
  ( 0.10240216) ( 0.07601982)
 asymptotic (co)variance (multiplied with samplesize):
-         [,1]      [,2]
-[1,] 1.048620 0.0000000
-[2,] 0.000000 0.5779013
+        [,1]      [,2]
+[1,] 1.04862 0.0000000
+[2,] 0.00000 0.5779013
 Infos:
      method  
 [1,] "roblox"
@@ -1847,9 +1845,9 @@ generated by call
   rowRoblox(x = X, eps = 0.05, k = 3)
 samplesize:   100
 estimate:
-             mean       sd
-[1,] -0.028278572 0.927434
-[2,] -0.001566506 1.051123
+             mean        sd
+[1,] -0.028278572 0.9274339
+[2,] -0.001566506 1.0511230
 Infos:
      method  
 [1,] "roblox"
@@ -1929,9 +1927,9 @@ generated by call
   colRoblox(x = X1, eps = 0.05, k = 3)
 samplesize:   100
 estimate:
-             mean       sd
-[1,] -0.028278572 0.927434
-[2,] -0.001566506 1.051123
+             mean        sd
+[1,] -0.028278572 0.9274339
+[2,] -0.001566506 1.0511230
 Infos:
      method  
 [1,] "roblox"
@@ -2172,12 +2170,12 @@ $asCov
 +          plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
 dev.new(): using pdf(file="Rplots1.pdf")
                                ML      Med Competitor       rmx
-n x empMSE (loc)         1.151729 1.571687  1.0217401 1.0412422
-relMSE (loc)             1.106111 1.509434  0.9812703 1.0000000
-n x empMSE (scale)       1.086260 1.493500  0.7204555 0.6113725
-relMSE (scale)           1.776757 2.442864  1.1784231 1.0000000
-n x empMSE (loc + scale) 2.237989 3.065187  1.7421956 1.6526147
-relMSE (loc + scale)     1.354211 1.854750  1.0542055 1.0000000
+n x empMSE (loc)         1.151729 1.571687  1.0217407 1.0412422
+relMSE (loc)             1.106111 1.509434  0.9812710 1.0000000
+n x empMSE (scale)       1.086260 1.493500  0.7204599 0.6113725
+relMSE (scale)           1.776757 2.442864  1.1784303 1.0000000
+n x empMSE (loc + scale) 2.237989 3.065187  1.7422006 1.6526147
+relMSE (loc + scale)     1.354211 1.854750  1.0542086 1.0000000
 > 
 > ## compare with Huber M estimator with MAD scale
 > showdown(n = 20, M = 100, eps = 0.02, contD = Norm(mean = 3, sd = 3), 
@@ -2198,10 +2196,10 @@ relMSE (loc + scale)     1.354211 1.854750   1.564143 1.0000000
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  64.36 0.06 64.627 0 0 
+Time elapsed:  54.099 0.72 55.019 0 0 
 > grDevices::dev.off()
-postscript 
-         2 
+pdf 
+  2 
 > ###
 > ### Local variables: ***
 > ### mode: outline-minor ***

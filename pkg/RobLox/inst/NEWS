@@ -8,12 +8,14 @@
  information)
 
 #######################################
+version 0.8.1
+#######################################
++ new internal functions due to changes to .C() and .Call() calls
+
+
+#######################################
 version 0.8
 #######################################
-
-+ added function showdown to compare some estimator for normal location and
-  scale with our rmx estimators. The comparison is based on Monte-Carlo
-  simulation study.
 
 BUG FIX:
 + roblox(): if only sd or mean is to be estimated, starting 
