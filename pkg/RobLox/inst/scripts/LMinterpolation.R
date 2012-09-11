@@ -75,17 +75,7 @@ if(getRversion() < "2.16.0"){
        file = "savedataNew.rda")
 }
 
-.getA1.locsc <- .getA1.locsc.new
-.getA2.locsc <- .getA2.locsc.new
-.getA.loc <- .getA.loc.new
-.getA.sc <- .getA.sc.new
-.geta.locsc <- .geta.locsc.new
-.geta.sc <- .geta.sc.new
-.getb.locsc <- .getb.locsc.new
-.getb.loc <- .getb.loc.new
-.getb.sc <- .getb.sc.new
-
-
+## Saving the results in sysdata.rda
 #load("sysdata.rda")
 #load("savedataOld.rda")
 #load("savedataNew.rda")
@@ -94,7 +84,5 @@ if(getRversion() < "2.16.0"){
 #     .getA.loc.new, .getA.loc.old, .geta.locsc.new, .geta.locsc.old, 
 #     .geta.sc.new, .getA.sc.new, .geta.sc.old, .getA.sc.old, 
 #     .getb.loc.new, .getb.loc.old, .getb.locsc.new, .getb.locsc.old, 
-#     .getb.sc.new, .getb.sc.old, .getA1.locsc, .getA2.locsc, 
-#     .getA.loc, .getA.sc, .geta.locsc, .geta.sc, .getb.locsc,
-#     .getb.loc, .getb.sc, file = "sysdata.rda")
+#     .getb.sc.new, .getb.sc.old, file = "sysdata.rda")
 
