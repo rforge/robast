@@ -1,6 +1,6 @@
 Package: RobLox
-Version: 0.8.1
-Date: 2012-09-10
+Version: 0.8.2
+Date: 2012-09-12
 Title: Optimally robust influence curves and estimators for location and scale
 Description: Functions for the determination of optimally robust influence curves and
         estimators in case of normal location and/or scale
@@ -15,4 +15,4 @@ Encoding: latin1
 URL: http://robast.r-forge.r-project.org/
 LastChangedDate: {$LastChangedDate$}
 LastChangedRevision: {$LastChangedRevision$}
-SVNRevision: 454
+SVNRevision: 519
