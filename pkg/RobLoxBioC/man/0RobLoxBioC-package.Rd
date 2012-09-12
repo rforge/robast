@@ -12,8 +12,8 @@ and estimators for preprocessing omics data, in particular gene expression data.
 \details{
 \tabular{ll}{
 Package: \tab RobLoxBioC \cr
-Version: \tab 0.8.1 \cr
-Date: \tab 2012-01-16 \cr
+Version: \tab 0.8.3 \cr
+Date: \tab 2012-09-12 \cr
 Depends: \tab R(>= 2.14.0), methods, Biobase, affy, beadarray, distr, RobLox,
 lattice, RColorBrewer \cr
 LazyLoad: \tab yes \cr
@@ -32,13 +32,18 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 
-  Kohl M. and Deigner H.P. (2009). Using infinitesimally robust estimators for 
-  preprocessing gene expression data. In preparation.
+  Kohl M. and Deigner H.P. (2010). Preprocessing of gene expression data by optimally 
+  robust estimators. \emph{BMC Bioinformatics}, 11:583. 
 
+  M. Kohl, P. Ruckdeschel, and H. Rieder (2010). Infinitesimally Robust Estimation 
+  in General Smoothly Parametrized Models. \emph{Statistical Methods and Application}, 
+  \bold{19}(3):333-354. 
+  
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
-  the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
+  the Radius. \emph{Statistical Methods and Applications} \bold{17}(1) 13-40.
+  Extended version: \url{http://www.stamats.de/RRlong.pdf}
 }
 \seealso{
 \code{\link[RobLox]{roblox}}, \code{\link[RobLox]{rowRoblox}}

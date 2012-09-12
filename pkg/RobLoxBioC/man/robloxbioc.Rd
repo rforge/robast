@@ -22,9 +22,10 @@ robloxbioc(x, ...)
            mad0 = 1e-4, contrast.tau = 0.03, scale.tau = 10, 
            delta = 2^(-20), sc = 500)
 
-\S4method{robloxbioc}{beadLevelData}(x, log = TRUE, imagesPerArray = 1, what = "G", probes = NULL, 
-           arrays = NULL, eps = NULL, eps.lower = 0, eps.upper = 0.05, 
-           steps = 3L, fsCor = TRUE, mad0 = 1e-4)
+\S4method{robloxbioc}{beadLevelData}(x, channelList = list(greenChannel), probeIDs = NULL, 
+           useSampleFac = FALSE, sampleFac = NULL, weightNames = "wts", 
+           removeUnMappedProbes = TRUE, eps = NULL, eps.lower = 0, 
+           eps.upper = 0.05, steps = 3L, fsCor = TRUE, mad0 = 1e-4)
 }
 \arguments{
   \item{x}{ biological data. }
@@ -55,16 +56,20 @@ robloxbioc(x, ...)
   \item{delta}{ a number denoting the delta parameter; confer the MAS 5.0 
     PM correction algorithm. }
   \item{sc}{ value at which all arrays will be scaled to. }
-  \item{log}{ if \code{TRUE}, then the log2 intensities for each bead-type are summarized. }
-  \item{imagesPerArray}{ Specifies how many images (strips) there are per array. 
-    Normally 1 for a SAM and 1 or 2 for a BeadChip. The images (strips) from the same array 
-    will be combined so that each column in the output represents a sample. }
-  \item{what}{ character string specifying which intensities/values to summarize. 
-    See \code{\link[beadarray]{getBeadData}} for a list of possibilities. }
-  \item{probes}{ Specify particular probes to summarize. If left \code{NULL} then all
-    the probes on the first array are used. }
-  \item{arrays}{ integer (scalar or vector) specifying the strips/arrays to summarize. 
-    If \code{NULL}, then all strips/arrays are summarized. }
+  \item{channelList}{ List of objects of class illuminaChannel that defines the
+    summarisation to be performed where in our setup only the slots \code{transFun}
+    and \code{name} have an effect on the computations. Setting the slots 
+    \code{outlierFun}, \code{exprFun}, and \code{varFun} has no effect. In any 
+    case rmx estimators are applied. }
+  \item{probeIDs}{ Vector of ArrayAddressIDs to be included in the summarized object. 
+    The default is to summarize all probes. }
+  \item{useSampleFac}{if \code{TRUE} sections belonging to the same biological sample
+    will be combined. The default is to summarize each section separately.}
+  \item{sampleFac}{ optional character vector giving which a sample identifer for each section}
+  \item{weightNames}{ name of column in the \code{beadLevelData} to take extract weights}
+  \item{removeUnMappedProbes}{ if TRUE and annotation information is stored in the 
+    \code{beadLevelData} object, any ArrayAddressIDs that cannot be mapped to ILMN IDs 
+    will be removed. }
 }
 \details{
   The optimally-robust resp. the radius-minimax (rmx) estimator for normal location 
@@ -90,8 +95,8 @@ robloxbioc(x, ...)
   is performed as given in Affymetrix (2002).
   
   In case of Illumina data, the rmx estimator is used to summarize the bead types. 
-  The implementation for the most part was taken from function 
-  \code{\link[beadarray]{createBeadSummaryData}}.
+  The implementation for the most part copies \code{\link[beadarray]{summarize}}
+  from \pkg{beadarray}.
 
   For sample size <= 2, median and MAD are used for estimation.
   
@@ -109,18 +114,21 @@ robloxbioc(x, ...)
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 
+  Kohl M. and Deigner H.P. (2010). Preprocessing of gene expression data by optimally 
+  robust estimators. \emph{BMC Bioinformatics}, 11:583. 
+
+  M. Kohl, P. Ruckdeschel, and H. Rieder (2010). Infinitesimally Robust Estimation 
+  in General Smoothly Parametrized Models. \emph{Statistical Methods and Application}, 
+  \bold{19}(3):333-354. 
+  
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
-  the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
-
-  Rieder, H., Kohl, M. and Ruckdeschel, P. (2001) The Costs of not Knowing
-  the Radius. Submitted. Appeared as discussion paper Nr. 81. 
-  SFB 373 (Quantification and Simulation of Economic Processes),
-  Humboldt University, Berlin; also available under
-  \url{www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf}
+  the Radius. \emph{Statistical Methods and Applications} \bold{17}(1) 13-40.
+  Extended version: \url{http://www.stamats.de/RRlong.pdf}
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de},
+
 update for beadarray versions >= 2.0.0 with support by Mark Dunnings and Andy Lynch}
 %\note{}
 \seealso{\code{\link[RobLox]{roblox}}, \code{\link[RobLox]{rowRoblox}},
