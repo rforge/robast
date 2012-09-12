@@ -20,7 +20,7 @@ LazyLoad: \tab yes \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 457 \cr
+SVNRevision: \tab 511 \cr
 Encoding: \tab latin1 \cr
 }
 }
