@@ -4,38 +4,41 @@
 ##                                      ##
 ##########################################
 
+# .setUp(), .tearDown(): Either one or both functions have to be provided by the test case
+#author, take precedence over the dummy definitions provided by the
+#RUnit package and are called once for every test case identified.
 
  .setUp()
  {  
    ##expectation of Pareto distributed random variable
    expectation.Pareto = function(shape0=1,Min0=1){
     X = Pareto(shape=shape0,Min=Min0)
-    expectation.Pareto = E(X)  
+    return(E(X))  
    }
 
    test.expectationPareto = function(){
     checkEquals(expectation.Pareto(1,1), Inf)
-   }    
+    checkEquals(expectation.Pareto(2,1), 0)
+     }    
   
-  test.HTMLInfo.Pareto = function(){
-   track <- tracker()
-   ## initialize the tracker
-   track$init()
- 
-   ## inspect the function
-   resFoo <- inspect(expectation.Pareto(1,1), track = track)
-   ## get the tracked function call info for all inspect calls
-   resTrack <- track$getTrackInfo()
-   }
-
- }
-
- .tearDown()
- {
-  ## create HTML sites in folder ./results for all inspect calls
-  printHTML.trackInfo(resTrack,"TestSuite/TestExpectation")
-
+#   test.HTMLInfo.Pareto = function(){
+#    track <- tracker()
+#    ## initialize the tracker
+#    track$init()
+#  
+#    ## inspect the function
+#    resFoo <- inspect(expectation.Pareto(1,1), track = track)
+#    ## get the tracked function call info for all inspect calls
+#    resTrack <- track$getTrackInfo()
+#    }
+# 
   }
+
+#  .tearDown(){
+#   ##create HTML sites in folder ./results for all inspect calls
+#   printHTML.trackInfo(resTrack,"TestSuite/TestExpectation")
+#   }
+
 
 #  
 # Beispiele
