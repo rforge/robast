@@ -10,7 +10,9 @@ outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
                          cutoff.quantile.y = cutoff.quantile.x,
                          id.n, lab.pts, adj, cex.idn,
                          col.idn, lty.cutoff, lwd.cutoff, col.cutoff,
-                         main = gettext("Outlyingness by means of a distance-distance plot")
+                         robCov.x = TRUE, robCov.y = TRUE, tf.x = data, tf.y = data,
+                         jitt.fac = 10,
+                         main = gettext("Outlyingness \n by means of a distance-distance plot")
                          )
 }
 \arguments{
@@ -43,6 +45,17 @@ outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
                  \code{\link[graphics]{abline}} for drawing the cutoff lines.}
   \item{col.cutoff}{the corresponding \code{col} argument for
                  \code{\link[graphics]{abline}} for drawing the cutoff lines.}
+  \item{robCov.x}{shall x-distances be based on MCD, i.e.,
+                   robust covariances (TRUE) or on classical covariance be used?}
+  \item{robCov.y}{shall y-distances be based on MCD, i.e.,
+                   robust covariances (TRUE) or on classical covariance be used?}
+  \item{tf.x}{transformation for x axis: a function returning the
+                    transformed x-coordinates when applied to the data;
+              by default identity.}
+  \item{tf.y}{transformation for y axis: a function returning the
+          transformed y-coordinates when applied to the data;
+              by default identity.}
+  \item{jitt.fac}{factor for jittering, see \code{\link{jitter}};}
   \item{main}{the main title.}
 }
 \details{

@@ -1,20 +1,32 @@
-.ddPlot.MatNtNtCoCo <- function(data, ...,  
+.presubs <- distr:::.presubs
+
+.ddPlot.MatNtNtCoCo <- function(data, ...,
                                 dist.x = NormType(), 
                                 dist.y  = NormType(),
                                 cutoff.x = cutoff(norm = dist.x, cutoff.quantile  = cutoff.quantile.x),
                                 cutoff.y = cutoff(norm = dist.y, cutoff.quantile  = cutoff.quantile.y),
                                 cutoff.quantile.x = 0.95,  
                                 cutoff.quantile.y = cutoff.quantile.x,
-                                transform.x, 
+                                transform.x,
                                 transform.y = transform.x,
-                                id.n, 
-                                lab.pts, 
-                                adj =0, 
+                                id.n,
+                                lab.pts,
+                                adj =0,
                                 cex.idn = 1,
-                                col.idn = par("col"), 
+                                col.idn = par("col"),
                                 lty.cutoff,
-                                lwd.cutoff, 
+                                lwd.cutoff,
                                 col.cutoff = "red",
+                                text.abline = TRUE,
+                                text.abline.x = NULL, text.abline.y = NULL,
+                                cex.abline = par("cex"), col.abline = col.cutoff,
+                                font.abline = par("font"), adj.abline = c(0,0),
+                                text.abline.x.x = NULL, text.abline.x.y = NULL,
+                                text.abline.y.x = NULL, text.abline.y.y = NULL,
+                                text.abline.x.fmt.cx = "%7.2f",
+                                text.abline.x.fmt.qx = "%4.2f%%",
+                                text.abline.y.fmt.cy = "%7.2f",
+                                text.abline.y.fmt.qy = "%4.2f%%",
                                 jitt.fac = 10){
 
        dots <- match.call(expand.dots = FALSE)$"..."
@@ -168,7 +180,8 @@
       do.call(text, args = c(list(mid.x,co.y+5,paste(cutoff.quantile.x*100," %-cutoff = ",round(co.y,digits=2)))))      
 
       if(length(id.xy))
-         do.call(text, args = c(list(jitter(ndata.x[id.xy],factor=50), jitter(ndata.y[id.xy],factor=50),
+         do.call(text, args = c(list(jitter(ndata.x[id.xy],factor=jitt.fac),
+                                     jitter(ndata.y[id.xy],factor=jitt.fac),
                                  labels=lab.pts[id.xy]), tdots))
           #axis(side=4)
           axis(side=1)

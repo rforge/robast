@@ -1,4 +1,5 @@
 import("methods")
+import("rrcov")
 import("distr")
 import("distrEx")
 import("distrMod")

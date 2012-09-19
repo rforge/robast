@@ -7,17 +7,15 @@
 \alias{OMSRRisk}
 \alias{RMXRRisk}
 \alias{MBRRisk}
-\alias{samplesize}
-\alias{samplesize,interpolRisk-method}
-\alias{samplesize<-}
-\alias{samplesize<-,interpolRisk-method}
 
 \usage{
 MBRRisk(samplesize=100)
 OMSRRisk(samplesize=100)
 RMXRRisk(samplesize=100)
 }
-
+\arguments{
+  \item{samplesize}{sample size at which to look at the risk.}
+}
 \title{Interpolated Risks}
 \description{Class of risks for which algorithms dispatch to speed-up algorithms}
 \section{Objects from the Class}{\code{interpolRisk} is a virtual class: No objects may be created from it.
