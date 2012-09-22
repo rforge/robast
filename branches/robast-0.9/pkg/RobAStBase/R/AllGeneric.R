@@ -223,5 +223,5 @@ if(!isGeneric("radius")){
 
 if(!isGeneric("samplesize<-")){
     setGeneric("samplesize<-",
-        function(object, value, ...) standardGeneric("samplesize<-"))
+        function(object, value) standardGeneric("samplesize<-"))
 }
