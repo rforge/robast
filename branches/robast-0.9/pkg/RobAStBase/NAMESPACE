@@ -1,5 +1,5 @@
 import("methods")
-import("rrcov")
+importFrom("rrcov", "getCov", "CovMcd")
 import("distr")
 import("distrEx")
 import("distrMod")
