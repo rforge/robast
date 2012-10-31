@@ -16,6 +16,6 @@ citEntry(entry="Manual",
          url = "http://robast.r-forge.r-project.org/",
          textVersion = paste("Ruckdeschel, P., Kohl, M., and Horbenko, N.",
                              sprintf("(%s).", year),
-                             "ROptReg: Optimally robust estimation for extreme value distributions.",
+                             "RobExtremes: Optimally robust estimation for extreme value distributions.",
                              paste(note, ".", sep = ""),
                              "URL http://robast.r-forge.r-project.org/"))
