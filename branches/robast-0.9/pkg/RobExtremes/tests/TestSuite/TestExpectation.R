@@ -8,8 +8,9 @@
 #author, take precedence over the dummy definitions provided by the
 #RUnit package and are called once for every test case identified.
 
- .setUp()
- {  
+ .setUp{ 
+
+ 
    ##expectation of Pareto distributed random variable
    expectation.Pareto = function(shape0=1,Min0=1){
     X = Pareto(shape=shape0,Min=Min0)
@@ -19,7 +20,7 @@
    test.expectationPareto = function(){
     checkEquals(expectation.Pareto(1,1), Inf)
     checkEquals(expectation.Pareto(2,1), 0)
-     }    
+   }    
   
 #   test.HTMLInfo.Pareto = function(){
 #    track <- tracker()
@@ -32,13 +33,14 @@
 #    resTrack <- track$getTrackInfo()
 #    }
 # 
-  }
+#  }
 
 #  .tearDown(){
 #   ##create HTML sites in folder ./results for all inspect calls
 #   printHTML.trackInfo(resTrack,"TestSuite/TestExpectation")
 #   }
 
+}
 
 #  
 # Beispiele

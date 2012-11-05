@@ -14,7 +14,7 @@
 ##@fam - parameter family
 ##@alpha - confidence level for quantile
 #
-plotOutlyingness = function(x,X=GPareto(),fam=GParetoFamily(),alpha=0.95){
+plotOutlyingness = function(x,alpha=0.99,X=GPareto(),fam=GParetoFamily()){
 
   ##logarithmic representation (for distributions with positive support)
   fam@distribution = log(fam@distribution)
@@ -39,8 +39,8 @@ outlyingPlotIC(x
  ,cex.idn = 1.7
  ,col.cutoff = rgb(202,202,202,maxColorValue=255) 
  ,offset = 0
- ,cutoff.quantile.y = alpha
- ,cutoff.quantile.x = alpha
+ ,cutoff.quantile.y = 0.99
+ ,cutoff.quantile.x = 0.99
  ,cutoff.x = cutoff()
  ,cutoff.y = cutoff.sememp()
  ,robCov.x = TRUE
@@ -59,3 +59,9 @@ outlyingPlotIC(x
  ,ylab="Mahalanobis distance"
 )
 }
+
+##Example
+X= GPareto()
+fam = GParetoFamily()
+x = r(X)(1000)
+plotOutlyingness(x,alpha=0.9,X=X,fam=fam)

@@ -1,12 +1,14 @@
-RUNIT TEST PROTOCOL -- Thu Sep  6 16:40:17 2012 
+RUNIT TEST PROTOCOL -- Tue Sep 18 10:02:30 2012 
 *********************************************** 
-Number of test functions: 2 
+Number of test functions: 1 
 Number of errors: 0 
-Number of failures: 0 
+Number of failures: 1 
 
  
 1 Test Suite : 
-RUnit Tests for RobExtremes - 2 test functions, 0 errors, 0 failures
+RUnit Tests for RobExtremes - 1 test function, 0 errors, 1 failure
+FAILURE in test.expectationPareto: Error in checkEquals(expectation.Pareto(2, 1), 0) : 
+  Mean relative difference: 1
 
 
 
@@ -14,10 +16,11 @@ Details
 *************************** 
 Test Suite: RUnit Tests for RobExtremes 
 Test function regexp: ^test.+ 
-Test file regexp: ^Test.+\R$ 
+Test file regexp: ^Test.+R$ 
 Involved directory: 
 ./TestSuite 
 --------------------------- 
 Test file: ./TestSuite/TestExpectation.R 
-test.expectationPareto: (1 checks) ... OK (0 seconds)
-test.HTMLInfo.Pareto: (0 checks) ... OK (0.01 seconds)
+test.expectationPareto: FAILURE !! (check number 2)
+Error in checkEquals(expectation.Pareto(2, 1), 0) : 
+  Mean relative difference: 1

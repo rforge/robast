@@ -21,7 +21,7 @@ options("RUnit"=ro)
 
 ## run test suite
 myTestSuite <- defineTestSuite("RUnit Tests for RobExtremes",dirs="./TestSuite",
-testFileRegexp = "^Test.+\\R$",testFuncRegexp = "^test.+")
+testFileRegexp = "^Test.+R$",testFuncRegexp = "^test.+")
 testResult <- runTestSuite(myTestSuite)
 
 ## is test suite valid?
@@ -34,4 +34,12 @@ isValidTestSuite(myTestSuite)
 ## to standard out:
 printTextProtocol(testResult, "testResult.txt",showDetails = TRUE)
 printHTMLProtocol(testResult, "testResult.html")
- 
+
+
+#  
+# runTestFile(absFileName, useOwnErrorHandler = TRUE,
+#                  testFuncRegexp = "^test.+",
+#                  rngKind = "Marsaglia-Multicarry",
+#                  rngNormalKind = "Kinderman-Ramage",
+#                  verbose = getOption("RUnit")$verbose)
+
