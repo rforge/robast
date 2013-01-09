@@ -1,9 +1,56 @@
 .onLoad <- function(lib, pkg){
-    require("methods", character = TRUE, quietly = TRUE) 
-    require("distr", character = TRUE, quietly = TRUE) 
-    require("distrEx", character = TRUE, quietly = TRUE) 
-    require("RandVar", character = TRUE, quietly = TRUE) 
 }
+
+# parameter of Gumbel distribution
+setClass("GumbelParameter", representation(loc = "numeric",
+                                           scale = "numeric"),
+            prototype(name = gettext("parameter of a Gumbel distribution"),
+                      loc = 0, scale = 1),
+            contains = "Parameter",
+            validity = function(object){
+                if(length(object@scale) != 1)
+                    stop("length of 'scale' is not equal to 1")
+                if(length(object@loc) != 1)
+                    stop("length of 'loc' is not equal to 1")
+                if(object@scale <= 0)
+                    stop("'scale' has to be positive")
+                else return(TRUE)
+            })
+
+# Gumbel distribution
+setClass("Gumbel",
+            prototype = prototype(r = function(n){ rgumbel(n, loc = 0, scale = 1) },
+                                  d = function(x, log){ dgumbel(x, loc = 0, scale = 1, log = FALSE) },
+                                  p = function(q, lower.tail = TRUE, log.p = FALSE){
+                                         p0 <- pgumbel(q, loc = 0, scale = 1, lower.tail = lower.tail)
+                                         if(log.p) return(log(p0)) else return(p0)
+                                  },
+                                  q = function(p, loc = 0, scale = 1, lower.tail = TRUE, log.p = FALSE){
+                                      ## P.R.: changed to vectorized form
+                                      p1 <- if(log.p) exp(p) else p
+
+                                      in01 <- (p1>1 | p1<0)
+                                      i01 <- distr:::.isEqual01(p1)
+                                      i0 <- (i01 & p1<1)
+                                      i1 <- (i01 & p1>0)
+                                      ii01 <- distr:::.isEqual01(p1) | in01
+
+                                      p0 <- p
+                                      p0[ii01] <- if(log.p) log(0.5) else 0.5
+
+                                      q1 <- qgumbel(p0, loc = 0, scale = 1,
+                                                    lower.tail = lower.tail)
+                                      q1[i0] <- if(lower.tail) -Inf else Inf
+                                      q1[i1] <- if(!lower.tail) -Inf else Inf
+                                      q1[in01] <- NaN
+
+                                      return(q1)
+                                      },
+                                  img = new("Reals"),
+                                  param = new("GumbelParameter"),
+                                  .logExact = FALSE,
+                                  .lowerExact = TRUE),
+            contains = "AbscontDistribution")
 
 # symmetry of functions
 setClass("FunctionSymmetry", contains = c("Symmetry", "VIRTUAL"))

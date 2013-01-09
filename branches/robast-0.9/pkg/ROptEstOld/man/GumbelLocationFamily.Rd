@@ -25,7 +25,7 @@ GumbelLocationFamily(loc = 0, scale = 1, trafo)
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
-\seealso{\code{\link{L2ParamFamily-class}}, \code{\link[distrEx]{Gumbel-class}}}
+\seealso{\code{\link{L2ParamFamily-class}}, \code{\link{Gumbel-class}}}
 \examples{
 distrExOptions("ElowerTruncQuantile" = 1e-15) # problem with 
                                             # non-finite function value

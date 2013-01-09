@@ -22,3 +22,13 @@ setMethod("E", signature(object = "L2ParamFamily",
 
         return(res)
     })
+setMethod("E", signature(object = "Gumbel",
+                         fun = "missing",
+                         cond = "missing"),
+    function(object, low = NULL, upp = NULL, ...){a <- loc(object); b <- scale(object)
+    if(is.null(low) && is.null(upp))
+           return(a- EULERMASCHERONICONSTANT * b)
+    else
+        return(E(as(object,"AbscontDistribution"), low=low, upp=upp, ...))
+    })
+## http://mathworld.wolfram.com/GumbelDistribution.html
