@@ -225,3 +225,7 @@ if(!isGeneric("samplesize<-")){
     setGeneric("samplesize<-",
         function(object, value) standardGeneric("samplesize<-"))
 }
+if(!isGeneric("getRiskFctBV")){
+    setGeneric("getRiskFctBV", function(risk, biastype) standardGeneric("getRiskFctBV"))
+}
+

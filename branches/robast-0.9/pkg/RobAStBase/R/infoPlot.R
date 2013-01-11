@@ -1,4 +1,3 @@
-DEBUG.INFO <- FALSE
 setMethod("infoPlot", "IC",
     function(object, data = NULL,
              ..., withSweave = getdistrOption("withSweave"),
@@ -7,8 +6,10 @@ setMethod("infoPlot", "IC",
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
-             with.legend = TRUE, legend.bg = "white",
+             with.legend = TRUE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
+             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
@@ -24,11 +25,16 @@ setMethod("infoPlot", "IC",
         if(DEBUG.INFO) print("DATA")
         if(DEBUG.INFO) print(str(data))
         L2Fam <- eval(object@CallL2Fam)
-        
 
-        if(!is.null(dots[["type"]])) dots["type"] <- NULL
-        if(!is.null(dots[["xlab"]])) dots["xlab"] <- NULL
-        if(!is.null(dots[["ylab"]])) dots["ylab"] <- NULL
+        if(missing(scaleX.fct)){
+           scaleX.fct <- p(L2Fam)
+           scaleX.inv <- q(L2Fam)
+        }
+
+
+        dots["type"] <- NULL
+        if(!is.null(dots[["xlab"]])) xlab0 <- dots[["xlab"]]
+        dots["ylab"] <- NULL
         
         trafO <- trafo(L2Fam@param)
         dims <- nrow(trafO)
@@ -52,14 +58,20 @@ setMethod("infoPlot", "IC",
         ncols <- ceiling(dims0/nrows)
         in1to.draw <- (1%in%to.draw)
 
-        if(missing(legend.location)){
-           legend.location <- distr:::.fillList(list("topright"), dims0+in1to.draw   )
-           if (in1to.draw) legend.location[[1]] <-  "bottomright"
-        }else{
-           legend.location <- as.list(legend.location)
-           legend.location <- distr:::.fillList(legend.location, dims0+in1to.draw   )
+        if(with.legend){
+          if(missing(legend.location)){
+             legend.location <- distr:::.fillList(list("topright"), dims0+in1to.draw   )
+             if (in1to.draw) legend.location[[1]] <-  "bottomright"
+          }else{
+             legend.location <- as.list(legend.location)
+             legend.location <- distr:::.fillList(legend.location, dims0+in1to.draw   )
+          }
+          if(is.null(legend)){
+             legend <- vector("list",dims0+in1to.draw)
+             legend <- distr:::.fillList(as.list(c("class. opt. IC", objectc)),
+                                                 dims0+in1to.draw)
+          }
         }
-
         e1 <- L2Fam@distribution
         if(!is(e1, "UnivariateDistribution") | is(e1, "CondDistribution"))
             stop("not yet implemented")
@@ -106,9 +118,11 @@ setMethod("infoPlot", "IC",
                dots$ylim <- NULL
          }
 
-         dotsP <- dotsL <- dotsT <- dots
+         dotsL <- .makeLowLevel(dots)
          dotsL$lwd <- dotsL$col <- dotsL$lty <- NULL
-         dotsP$lwd <- dotsP$col <- dotsP$lty <- NULL
+         dotsT <- dotsP <- dotsL
+         dotsT["main"] <- dotsT["cex.main"] <- dotsT["col.main"] <- NULL
+         dotsT["line"] <- NULL
          dotsP$xlim <- xlim
          
          trafo <- trafo(L2Fam@param)
@@ -249,23 +263,29 @@ setMethod("infoPlot", "IC",
 
             
             pL.rel <- pL.abs <- pL <- expression({})
-            if(!is.null(dotsP$panel.last))
-               {pL.rel <- pL.abs <- pL <- dotsP$panel.last}
-            dotsP$panel.last <- NULL
+            if(!is.null(dots$panel.last))
+               {pL.rel <- pL.abs <- pL <- dots$panel.last}
 
             if(!is.null(data)){
 
                n <- if(!is.null(dim(data))) nrow(data) else length(data)
-               oN0 <- oN0Class <- NULL
-               if(is.null(which.lbs))
-                  which.lbs <- 1:n
-               which.lbs0 <- (1:n) %in% which.lbs
-               which.lbx <- rep(which.lbs0, length.out=length(data))
-               data0C <- data0 <- data[which.lbx]
-               n <- if(!is.null(dim(data0))) nrow(data0) else length(data0)
-               oNC <- oN <- (1:n)[which.lbs0]
+               if(!is.null(lab.pts))
+                    lab.pts <-  matrix(rep(lab.pts, length.out=2*n),n,2)
 
-               cex.pts <- rep(cex.pts, length.out=2)
+               sel <- .SelectOrderData(data, function(x)absInfoEval(x,absInfo.f),
+                                       which.lbs, which.Order)
+               sel.C <- .SelectOrderData(data, function(x)absInfoEval(x,absInfoClass.f),
+                                       which.lbs, which.Order)
+               i.d <- sel$ind
+               i.dC <- sel.C$ind
+               i0.d <- sel$ind1
+               i0.dC <- sel.C$ind1
+               y.d <- sel$y
+               y.dC <- sel.C$y
+               x.d <- sel$data
+               x.dC <- sel.C$data
+               n <- length(i.d)
+               
                if(missing(col.pts)) col.pts <- c(col, colI)
                col.pts <- rep(col.pts, length.out=2)
                pch.pts <- matrix(rep(pch.pts, length.out=2*n),n,2)
@@ -273,154 +293,127 @@ setMethod("infoPlot", "IC",
                with.lab <- rep(with.lab, length.out=2)
                lab.font <- rep(lab.font, length.out=2)
 
-               absInfoClass.data <- absInfoEval(data,absInfoClass.f)
-               absInfo.data <- absInfoEval(data,absInfo.f)
-               
-               if(DEBUG.INFO) print("DATA1")
-               if(DEBUG.INFO) print(absInfo.data)
-               if(DEBUG.INFO) print(absInfoClass.data)
 
-               absInfo0.data <- absInfo.data[which.lbs]
-               absInfo0Class.data <- absInfoClass.data[which.lbs]
-               
-               if(DEBUG.INFO) print("DATA2")
-               if(DEBUG.INFO) print(absInfo0.data)
-               if(DEBUG.INFO) print(absInfo0Class.data)
-               aIC.data.m <- max(absInfo0Class.data)
-               aI.data.m <- max(absInfo0.data)
+               resc.dat <-.rescalefct(x.d, function(x) absInfoEval(x,absInfo.f),
+                              scaleX, scaleX.fct, scaleX.inv,
+                              scaleY, scaleY.fct, scaleY.inv,
+                              dots$xlim, dots$ylim, dots)
+               resc.datC <-.rescalefct(x.d, function(x) absInfoEval(x,absInfoClass.f),
+                              scaleX, scaleX.fct, scaleX.inv,
+                              scaleY, scaleY.fct, scaleY.inv,
+                              dots$xlim, dots$ylim, dots)
 
-               if (n==length(data0)) {
-                   oN <-  order(absInfo0.data)
-                   oNC <-  order(absInfo0Class.data)
+               x.d <- resc.dat$X
+               x.dC <- resc.datC$X
+               y.d <- resc.dat$Y
+               y.dC <- resc.datC$Y
 
-                   oN0 <- order(absInfo.data)
-                   oN0 <- oN0[oN0 %in% which.lbs]
-                   oN0Class <- order(absInfoClass.data)
-                   oN0Class <- oN0Class[oN0Class %in% which.lbs]
-
-                   data0 <-  data0[oN0]
-                   data0C <- data0[oN0Class]
-
-                   if(is.null(which.Order))
-                      which.Order <- 1:n
-                   oN <-  oN0[(n+1)-which.Order]
-                   oNC <- oN0Class[(n+1)-which.Order]
-                   data0 <- data[oN]
-                   data0C <- data[oNC]
-                   absInfo0.data <- absInfo.data[oN]
-                   absInfo0Class.data <- absInfoClass.data[oNC]
-                   if(DEBUG.INFO) print("DATA3")
-                   if(DEBUG.INFO) print(absInfo0.data)
-                   if(DEBUG.INFO) print(absInfo0Class.data)
-
-                   
-                   n <- length(oN)
-               }
                lab.pts <- if(is.null(lab.pts))
-                               matrix(paste(c(oN,oNC)),n,2)
-                          else matrix(rep(lab.pts, length.out=2*n),n,2)
+                               cbind(i.d, i.dC)
+                          else cbind(lab.pts[i.d],lab.pts[i.dC])
 
 
-               dots.points <- dots
-               dots.points$col <- dots.points$cex <- dots.points$pch <- NULL
+               dots.points <-   .makedotsPt(dots)
 
+               do.pts <- function(x,y,cxa,ca,pa)
+                    do.call(points,args=c(list(x,y,cex=cxa,col=ca,pch=pa),
+                            dots.points))
+               tx <- function(xa,ya,lb,cx,ca)
+                     text(x=xa,y=ya,labels=lb,cex=cx, col=ca)
                pL.abs <- substitute({
                    if(is(e1, "DiscreteDistribution")){
                       ICy0 <- jitter(ICy0, factor = jitter.fac0[1])
                       ICy0c <- jitter(ICy0c, factor = jitter.fac0[2])
                    }
-                   do.call(points, args=c(list(y0, ICy0, cex = log(ICy0+1)*3*cex0[1],
-                                   col = col0[1], pch = pch0[,1]), dwo0))
-                   do.call(points, args=c(list(y0c, ICy0c, cex = log(ICy0c+1)*3*cex0[2],
-                                   col = col0[2], pch = pch0[,2]), dwo0))
+                   f1 <- log(ICy0+1)*3*cex0[1]
+                   f1c <- log(ICy0c+1)*3*cex0[2]
+                   do.pts(y0, ICy0, f1,col0[1],pch0[,1])
+                   do.pts(y0c, ICy0c, f1c,col0[2],pch0[,2])
                    if(with.lab0){
-                      text(x = y0, y = ICy0, labels = lab.pts0[,1],
-                           cex = log(ICy0+1)*1.5*cex0[1], col = col0[1])
-                      text(x = y0c, y = ICy0c, labels = lab.pts0[,2],
-                           cex = log(ICy0+1)*1.5*cex0[2], col = col0[2])
+                      tx(y0, ICy0, lab.pts0, f1/2, col0[1])
+                      tx(y0c, ICy0c, lab.pts0C, f1c/2, col0[2])
                    }
-                   if(DEBUG.INFO) print("DATA4")
-                   if(DEBUG.INFO) print(ICy0)
-                   if(DEBUG.INFO) print(ICy0c)
-                   if(DEBUG.INFO) print(y0)
-                   if(DEBUG.INFO) print(y0c)
-
                    pL0
-                   }, list(ICy0 = absInfo0.data, ICy0c = absInfo0Class.data,
-                           pL0 = pL, y0 = data0, y0c = data0C,
-                           dwo0 = dots.points, cex0 = cex.pts, pch0 = pch.pts,
-                           col0 = col.pts, with.lab0 = with.lab,
-                           lab.pts0 = lab.pts, n0 = n,
-                           jitter.fac0 = jitter.fac, aIC.data.m0=aIC.data.m,
-                           aI.data.m0=aI.data.m
-                           ))
+                   }, list(ICy0 = y.d, ICy0c = y.dC,
+                           pL0 = pL, y0 = x.d, y0c = x.dC,
+                           cex0 = cex.pts, pch0 = pch.pts,
+                           col0 = col.pts, with.lab0 = with.lab, n0 = n,
+                           lab.pts0 = lab.pts[i.d], lab.pts0C = lab.pts[i.dC],
+                           jitter.fac0 = jitter.fac)
+                           )
 
                pL.rel <- substitute({
-                   y0.vec <- sapply(y0,  IC1.i.5@Map[[indi]])^2/ICy0
-                   y0c.vec <- sapply(y0c, classIC.i.5@Map[[indi]])^2/ICy0c
+                     y0.vec <- sapply(y0,  IC1.i.5@Map[[indi]])^2/ICy0
+                     y0c.vec <- sapply(y0c, classIC.i.5@Map[[indi]])^2/ICy0c
                    if(is(e1, "DiscreteDistribution")){
                       y0.vec <- jitter(y0.vec, factor = jitter.fac0[1])
                       y0c.vec <- jitter(y0c.vec, factor = jitter.fac0[2])
                    }
-                   do.call(points, args=c(list(y0, y0.vec, cex = log(ICy0+1)*3*cex0[1],
-                                   col = col0[1], pch = pch0[,1]), dwo0))
-                   do.call(points, args=c(list(y0, y0c.vec, cex = log(ICy0c+1)*3*cex0[2],
-                                   col = col0[2], pch = pch0[,2]), dwo0))
+                   f1 <- log(ICy0+1)*3*cex0[1]
+                   f1c <- log(ICy0c+1)*3*cex0[2]
+                   do.pts(y0, y0.vec, f1,col0[1],pch0[,1])
+                   do.pts(y0c, y0c.vec, f1c,col0[2],pch0[,2])
                    if(with.lab0){
-                      text(x = y0, y = y0.vec, labels = lab.pts0[,1],
-                           cex = log(ICy0+1)*1.5*cex0[1], col = col0[1])
-                      text(x = y0, y = y0c.vec, labels = lab.pts0[,2],
-                           cex = log(ICy0c+1)*1.5*cex0[2], col = col0[2])
+                      text(y0, y0.vec, lab.pts0, f1/2, col0[1])
+                      text(y0c, y0c.vec, lab.pts0C, f1c/2, col0[2])
                    }
-                   if(DEBUG.INFO) print("DATA5")
-                   if(DEBUG.INFO) print(ICy0)
-                   if(DEBUG.INFO) print(ICy0c)
-                   if(DEBUG.INFO) print(y0)
-                   if(DEBUG.INFO) print(y0c)
                    pL0
-                   }, list(ICy0c = absInfo0Class.data, ICy0 = absInfo0.data,
-                           pL0 = pL, y0 = data0, y0c = data0C,
-                           dwo0 = dots.points, cex0 = cex.pts, pch0 = pch.pts,
-                           col0 = col.pts, with.lab0 = with.lab,
-                           lab.pts0 = lab.pts, n0 = n,
+                   }, list(ICy0c = y.dC, ICy0 = y.d,
+                           pL0 = pL, y0 = x.d, y0c = x.dC,
+                           cex0 = cex.pts, pch0 = pch.pts,
+                           col0 = col.pts, with.lab0 = with.lab,n0 = n,
+                           lab.pts0 = lab.pts[i.d], lab.pts0C = lab.pts[i.dC],
                            jitter.fac0 = jitter.fac
                            ))
             }
 
-
-            if(!is.null(ylim)) 
+            if(!is.null(ylim))
                 dotsP$ylim <- ylim[,1]       
             
             fac.leg <- if(dims0>1) 3/4 else .75/.8 
+
             
+            dotsP$axes <- NULL
             if(1 %in% to.draw){
-               do.call(plot, args=c(list(x.vec, absInfoClass, type = plty, 
+               resc <-.rescalefct(x.vec, function(x) absInfoEval(x,absInfo.f),
+                              scaleX, scaleX.fct, scaleX.inv,
+                              scaleY, scaleY.fct, scaleY.inv,
+                              dots$xlim, dots$ylim, dotsP)
+               resc.C <-.rescalefct(x.vec, function(x) absInfoEval(x,absInfoClass.f),
+                              scaleX, scaleX.fct, scaleX.inv,
+                              scaleY, scaleY.fct, scaleY.inv,
+                              dots$xlim, dots$ylim, dotsP)
+               dotsP1 <- dotsP <- resc$dots
+               dotsP$yaxt <- dots$yaxt
+               x.vec0 <- resc$x
+               x.vec0C <- resc.C$x
+               x.vec1 <- resc$X
+               x.vec1C <- resc.C$X
+               y.vec1 <- resc$Y
+               y.vec1C <- resc.C$Y
+
+               do.call(plot, args=c(list(x.vec1, y.vec1, type = plty,
                    lty = ltyI, col = colI, lwd = lwdI,
-                   xlab = "x", ylab = ylab.abs, panel.last = pL.abs),
-                   dotsP))
-               do.call(lines, args=c(list(x.vec, absInfo, type = plty, 
+                   xlab = xlab0, ylab = ylab.abs, panel.last = pL.abs),
+                   dotsP1))
+               do.call(lines, args=c(list(x.vec1C, y.vec1C, type = plty,
                        lty = lty, lwd = lwd, col = col), dotsL))
+               .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
+                              scaleY,scaleY.fct, scaleY.inv,
+                              dots$xlim, dots$xlim, x.vec1, ypts = 400)
                if(with.legend)
-               legend(legend.location[[1]],
-                     legend = c("class. opt. IC", objectc), 
-                     bg = legend.bg,
+                 legend(.legendCoord(legend.location[[1]], scaleX, scaleX.fct,
+                        scaleY, scaleY.fct), legend = legend[[1]], bg = legend.bg,
                      lty = c(ltyI, lty), col = c(colI, col), 
                      lwd = c(lwdI, lwd), cex = legend.cex*fac.leg)
 
-               dotsT["main"] <- NULL
-               dotsT["cex.main"] <- NULL
-               dotsT["col.main"] <- NULL
-               dotsT["line"] <- NULL
+
                if(innerL)
                   do.call(title, args=c(list(main = innerT[[1]]),  dotsT,
                           line = lineT, cex.main = cex.inner, col.main = col.inner))
             }
             
             if(dims > 1 && length(to.draw[to.draw!=1])>0){
-                dotsP["log"] <- NULL
-                dotsP["ylim"] <- NULL
-                dotsL["ylim"] <- NULL
-                dotsT["ylim"] <- NULL
                 nrows <- trunc(sqrt(dims))
                 ncols <- ceiling(dims/nrows)
                 if (!withSweave||!mfColRow)
@@ -437,19 +430,26 @@ setMethod("infoPlot", "IC",
                     if(!is.null(ylim)) 
                          dotsP$ylim <- ylim[,in1to.draw+i]       
                     else dotsP$ylim <- c(0,1)
-                    y.vec <- sapply(x.vec, IC1.i.5@Map[[indi]])^2/absInfo
-                    do.call(plot, args=c(list(x.vec, y.vec, type = plty, 
-                                  lty = lty, xlab = "x", 
-                                  ylab = ylab.rel, 
-                                  col = col, lwd = lwd, panel.last = pL.rel), dotsP))
 
-                    yc.vec <- sapply(x.vec, classIC.i.5@Map[[indi]])^2/absInfoClass
-                    do.call(lines, args = c(list(x.vec, yc.vec, type = plty, 
+                    y.vec1 <- sapply(x.vec0, IC1.i.5@Map[[indi]])^2/
+                              absInfoEval(x,absInfo.f)
+                    y.vec1C <- sapply(x.vec0C, classIC.i.5@Map[[indi]])^2/
+                              absInfoEval(x,absInfoClass.f)
+
+                    do.call(plot, args=c(list(x.vec1, y.vec1, type = plty,
+                                  lty = lty, xlab = xlab0, ylab = ylab.rel,
+                                  col = col, lwd = lwd, panel.last = pL.rel),
+                                  dotsP))
+
+                    do.call(lines, args = c(list(x.vec1C, y.vec1C, type = plty,
                             lty = ltyI, col = colI, lwd = lwdI), dotsL))
+                    .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
+                              FALSE,scaleY.fct, scaleY.inv,
+                              dots$xlim, dots$xlim, x.vec1, ypts = 400)
                     if(with.legend)
-                    legend(legend.location[[i+in1to.draw]],
-                           bg = legend.bg,
-                           legend = c("class. opt. IC", objectc),  
+                      legend(.legendCoord(legend.location[[i+in1to.draw]],
+                                 scaleX, scaleX.fct, scaleY, scaleY.fct),
+                           bg = legend.bg, legend = legend[[i+in1to.draw]],
                            col = c(colI, col), lwd = c(lwdI, lwd),
                            lty = c(ltyI, lty), cex = legend.cex*fac.leg)
                     if(innerL)
@@ -458,19 +458,19 @@ setMethod("infoPlot", "IC",
                                col.main = col.inner))
                 }
             }
-        if(!hasArg(cex.main)) cex.main <- par("cex.main") else cex.main <- dots$"cex.main"
-        if(!hasArg(col.main)) col.main <- par("col.main") else col.main <- dots$"col.main"
+        cex.main <- if(!hasArg(cex.main)) par("cex.main") else dots$"cex.main"
+        col.main <- if(!hasArg(col.main)) par("col.main") else dots$"col.main"
         if (mainL)
             mtext(text = main, side = 3, cex = cex.main, adj = .5,
                   outer = TRUE, padj = 1.4, col = col.main)
 
-        if(!hasArg(cex.sub)) cex.sub <- par("cex.sub") else cex.sub <- dots$"cex.sub"
-        if(!hasArg(col.sub)) col.sub <- par("col.sub") else col.sub <- dots$"col.sub"
+        cex.sub <- if(!hasArg(cex.sub)) par("cex.sub") else dots$"cex.sub"
+        col.sub <- if(!hasArg(col.sub)) par("col.sub") else dots$"col.sub"
         if (subL)
             mtext(text = sub, side = 1, cex = cex.sub, adj = .5,
                   outer = TRUE, line = -1.6, col = col.sub)
 
-        if(return.Order) return(list(IC=oN0,IC.class=oN0Class))
+        if(return.Order) return(list(IC=i0.d,IC.class=i0.dC))
 
         invisible()
         }

@@ -98,43 +98,43 @@
       if(is.null(dots$lty)) dots$lty <- par("lty")
 
 
-      pdots <- dots
-      pdots$type <- NULL
+      pdots <- .makeLowLevel(dots)
       pdots$x <- NULL
       pdots$y <- NULL
       pdots$offset <- NULL
       pdots$pos <- NULL
-      pdots$log <- NULL
       pdots$untf <- NULL
 
-      abdots <- pdots
+      abdots <- .makedotsAB(dots)
       abdots$col <- col.cutoff
       if(!missing(lwd.cutoff)) abdots$lwd <- lwd.cutoff
       if(!missing(lty.cutoff)) abdots$lty <- lty.cutoff
-      abdots$pos <- NULL
-      abdots$untf <- dots$untf
-      abdots$adj <- NULL
-
-      abdots$jitt.fac <- pdots$jitt.fac
+      abdots$jitt.fac <- dots$jitt.fac
 
       adots <- pdots
       adots$col <- pdots$col.axis
       adots$lty <- pdots$lty.axis
       adots$adj <- par("adj")
 
-      tdots <- pdots
+      tdots <- .makedotsT(dots)
       tdots$cex <- cex.idn
       tdots$col <- col.idn
       tdots$offset <- dots$offset
       tdots$pos <- dots$pos
       tdots$adj <- adj
-     
+
+      pdots$log <- dots$log
+      pdots$adj <- par("adj")
+
+      adots <- pdots
+      adots$col <- pdots$col.axis
+      adots$lty <- pdots$lty.axis
+      adots$adj <- par("adj")
 
       pdots$axes <- FALSE
       pdots$log <- dots$log
       pdots$adj <- par("adj")
 
-       print(tdots)
       ####
 
       co.x <- fct(cutoff.x)(data.x)

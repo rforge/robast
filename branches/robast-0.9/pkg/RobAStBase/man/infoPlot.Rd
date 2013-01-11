@@ -16,8 +16,10 @@ infoPlot(object,  ...)
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
-             with.legend = TRUE, legend.bg = "white",
+             with.legend = TRUE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
+             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
@@ -48,20 +50,42 @@ infoPlot(object,  ...)
   \item{col}{color of IC in argument \code{object}.}
   \item{lwd}{linewidth of IC in argument \code{object}.}
   \item{lty}{line-type of IC in argument \code{object}.}
-  \item{colI}{color of the classically optimal IC}
-  \item{lwdI}{linewidth of the classically optimal IC}
-  \item{ltyI}{line-type of the classically optimal IC}
+  \item{colI}{color of the classically optimal IC.}
+  \item{lwdI}{linewidth of the classically optimal IC.}
+  \item{ltyI}{line-type of the classically optimal IC.}
   \item{cex.inner}{magnification to be used for inner titles relative
           to the current setting of \code{cex}; as in 
-          \code{\link[graphics]{par}}}
+          \code{\link[graphics]{par}}.}
   \item{col.inner}{character or integer code; color for the inner title}              
   \item{with.legend}{logical; shall a legend be plotted?}
+  \item{legend}{either \code{NULL} or a list of length (number of plotted panels)
+                of items which can be used as argument \code{legend} in
+                command \code{legend}.}
   \item{legend.location}{a valid argument \code{x} for \code{\link{legend}} ---
                          the place where to put the legend on the last issued
                          plot --- or a list of length (number of plotted panels) 
                          of such arguments, one for each plotted panel.}
   \item{legend.bg}{background color for the legend}
   \item{legend.cex}{magnification factor for the legend}
+  \item{scaleX}{logical; shall X-axis be rescaled (by default according to the cdf of
+          the underlying distribution)?}
+  \item{scaleY}{logical; shall Y-axis be rescaled for abs.info-plot
+                (by default according to a probit scale)?}
+  \item{scaleX.fct}{an isotone, vectorized function mapping the domain of the IC
+            to [0,1]; if \code{scaleX} is \code{TRUE} and \code{scaleX.fct} is
+            missing, the cdf of the underlying observation distribution.}
+  \item{scaleX.inv}{the inverse function to \code{scale.fct}, i.e., an isotone,
+            vectorized function mapping [0,1] to the domain of the IC
+            such that for any \code{x} in the domain,
+            \code{scaleX.inv(scaleX.fct(x))==x}; if \code{scaleX} is \code{TRUE}
+            and \code{scaleX.inv} is
+            missing, the quantile function of the underlying observation distribution.}
+  \item{scaleY.fct}{an isotone, vectorized function mapping the
+            range of the norm of the IC to [0,1]; defaulting
+            to the cdf of \eqn{{\cal N}(0,1)}{N(0,1)}.}
+  \item{scaleY.inv}{an isotone, vectorized function mapping [0,1] into the range
+            of the norm of the IC; defaulting to the quantile function
+            of  \eqn{{\cal N}(0,1)}{N(0,1)}.}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
   \item{to.draw.arg}{Either \code{NULL} (default; 
                           everything is plotted) or a vector making a selection
@@ -100,7 +124,7 @@ infoPlot(object,  ...)
     given by their original index is returned (remaining means: after a possible
     reduction by argument \code{which.lbs}, and ordering is according to the norm given by
            \code{normtype(object)});
-   othervise we return \code{invisible()} as usual.}
+   otherwise we return \code{invisible()} as usual.}
   \item{ylab.abs}{character; label to be used for y-axis in absolute information panel} 
   \item{ylab.rel}{character; label to be used for y-axis in relative information panel} 
   \item{\dots}{further parameters for \code{plot}}
