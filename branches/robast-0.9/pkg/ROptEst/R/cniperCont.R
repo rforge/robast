@@ -54,8 +54,6 @@ setMethod("cniperPointPlot", signature(L2Fam = "L2ParamFamily",
                                    neighbor = "ContNeighborhood",
                                    risk = "asMSE"),
     function(L2Fam, neighbor, risk, lower, upper, n = 101, ...,
-             scaleX = FALSE, scaleX.fct, scaleX.inv,
-             scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
     ){
         dots <- as.list(match.call(call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)$"...")
@@ -180,6 +178,7 @@ cniperContPlot <- function(IC1, IC2, data = NULL, ...,
                            upper=1-getdistrOption("DistrResolution"), n = 101,
                            scaleX = FALSE, scaleX.fct, scaleX.inv,
                            scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+                           scaleN = 9, x.ticks = NULL, y.ticks = NULL,
                            cex.pts = 1, col.pts = par("col"),
                            pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
                            lab.pts = NULL, lab.font = NULL,
@@ -263,7 +262,8 @@ cniperContPlot <- function(IC1, IC2, data = NULL, ...,
         do.call(abline, dots)
 
         .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv, scaleY,scaleY.fct,
-                          scaleY.inv, dots$xlim, dots$ylim, x, ypts = 400)
+                          scaleY.inv, dots$xlim, dots$ylim, x, ypts = 400,
+                          n = scaleN, x.ticks = x.ticks, y.ticks = y.ticks)
         if(!is.null(data))
            return(.plotData(data, dots, mc, fun, L2Fam, IC1))
         invisible(NULL)
@@ -307,6 +307,7 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                         upper=1-getdistrOption("DistrResolution"), n = 101,
                            scaleX = FALSE, scaleX.fct, scaleX.inv,
                            scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+                           scaleN = 9, x.ticks = NULL, y.ticks = NULL,
                            cex.pts = 1, col.pts = par("col"),
                            pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
                            lab.pts = NULL, lab.font = NULL,
@@ -389,7 +390,8 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
         dots$h <- if(scaleY) scaleY.fct(0) else 0
         do.call(abline, dots)
         .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv, scaleY,scaleY.fct,
-                          scaleY.inv, dots$xlim, dots$ylim, x, ypts = 400)
+                          scaleY.inv, dots$xlim, dots$ylim, x, ypts = 400,
+                          n = scaleN, x.ticks = x.ticks, y.ticks = y.ticks)
         if(!is.null(data))
            return(.plotData(data, dots, mc, fun, L2Fam, eta))
         return(invisible(NULL))

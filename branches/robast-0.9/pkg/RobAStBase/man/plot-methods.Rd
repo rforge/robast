@@ -17,6 +17,7 @@
              lty.MBR = "dashed", lwd.MBR = 0.8,
              scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+             scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL)
 \S4method{plot}{IC,numeric}(x, y, ..., cex.pts = 1,
                             col.pts = par("col"), pch.pts = 1, jitter.fac = 1,
@@ -57,13 +58,10 @@
   \item{legend.cex}{magnification factor for the legend}
   \item{withMBR}{logical; shall horizontal lines with min and max of MBRE be plotted for
                  comparison?}
-  \item{MBRB}{matrix (or \code{NA}); coerced by usual recycling rules to a matrix with
-              as many rows as plotted panels and with first column the lower bounds and the second column
-              the upper bounds for the respective coordinates (ideally given
-              by the MBR-IC. If all entries
-              are \code{NA} and if \pkg{ROptEst} is already attached, the matrix
-              is filled by a call to \code{optIC} which computes the MBR-IC on
-              the fly.}
+  \item{MBRB}{matrix (or \code{NA}); coerced by usual recycling rules to a
+              matrix with as many rows as plotted panels and with first column
+              the lower bounds and the second column the upper bounds for the
+              respective coordinates (ideally given by the MBR-IC).}
   \item{MBR.fac}{positive factor; scales the bounds given by argument \code{MBRB}}
   \item{col.MBR}{color for the MBR lines; as usual \code{col}-argument;}
   \item{lty.MBR}{line type for the MBR lines; as usual \code{lty}-argument;}
@@ -86,6 +84,12 @@
   \item{scaleY.inv}{an isotone, vectorized function mapping for each coordinate
             the range [0,1] into the range of the respective coordinate of the IC;
             defaulting to the quantile function of  \eqn{{\cal N}(0,1)}{N(0,1)}.}
+  \item{scalen}{integer; defaults to 9; on rescaled axes, number of x and y ticks if drawn automatically;}
+  \item{x.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
+                 if non-NULL, user-given x-ticks (on original scale);}
+  \item{y.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
+                 if non-NULL, user-given y-ticks (on original scale);
+                 can be a list with one (numeric or NULL) item per panel}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
   \item{to.draw.arg}{Either \code{NULL} (default; 
                           everything is plotted) or a vector of either integers 

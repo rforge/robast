@@ -9,6 +9,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
              lty.MBR = "dashed", lwd.MBR = 0.8,
              scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+             scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL){
 
         xc <- match.call(call = sys.call(sys.parent(1)))$x
@@ -49,15 +50,25 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         nrows <- trunc(sqrt(dims0))
         ncols <- ceiling(dims0/nrows)
 
-        MBRB <- matrix(rep(t(MBRB), length.out=dims0*2),ncol=2, byrow=T)
-        if(withMBR && all(is.na(MBRB))){
-           robModel <- InfRobModel(center = L2fam, neighbor =
-                             ContNeighborhood(radius = 0.5))
-           ICmbr <- try(optIC(model = robModel, risk = asBias()), silent=TRUE)
-           if(!is(ICmbr,"try-error"))
-              MBRB <- .getExtremeCoordIC(ICmbr, distribution(L2Fam), todraw)
-           else withMBR <- FALSE
+        if(!is.null(x.ticks)) dots$xaxt <- "n"
+        if(!is.null(y.ticks)){
+           y.ticks <- distr:::.fillList(list(y.ticks), dims0)
+           dots$yaxt <- "n"
         }
+
+        MBRB <- matrix(rep(t(MBRB), length.out=dims0*2),ncol=2, byrow=T)
+
+# Code only useable from ROptEst on...
+#
+#        if(withMBR && all(is.na(MBRB))){
+#           robModel <- InfRobModel(center = L2fam, neighbor =
+#                             ContNeighborhood(radius = 0.5))
+#           ICmbr <- try(optIC(model = robModel, risk = asBias()), silent=TRUE)
+#           if(!is(ICmbr,"try-error"))
+#              MBRB <- .getExtremeCoordIC(ICmbr, distribution(L2Fam), todraw)
+#           else withMBR <- FALSE
+#        }
+
         MBRB <- MBRB * MBR.fac
 
         e1 <- L2Fam@distribution
@@ -107,8 +118,9 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         
         if(!is.null(dots[["lty"]]))  dots["lty"] <- NULL
         if(!is.null(dots[["type"]])) dots["type"] <- NULL
-        if(!is.null(dots[["xlab"]])) dots["xlab"] <- NULL
-        if(!is.null(dots[["ylab"]])) dots["ylab"] <- NULL
+        xlab <- dots$xlab; if(is.null(xlab)) xlab <- "x"
+        ylab <- dots$ylab; if(is.null(ylab)) ylab <- "(partial) IC"
+        dots$xlab <- dots$ylab <- NULL
 
         IC1 <- as(diag(dims) %*% x@Curve, "EuclRandVariable")
 
@@ -190,6 +202,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
      }
 
         if(with.legend){
+          fac.leg <- if(dims0>1) 3/4 else .75/.8
           if(missing(legend.location)){
              legend.location <- distr:::.fillList(list("bottomright"), dims0)
           }else{
@@ -230,49 +243,36 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         for(i in 1:dims0){
             indi <- to.draw[i]
             if(!is.null(ylim)) dots$ylim <- ylim[,i]       
-            resc <-.rescalefct(x.vec, IC1@Map[[indi]], scaleX, scaleX.fct,
+            fct <- function(x) sapply(x, IC1@Map[[indi]])
+            resc <-.rescalefct(x.vec, fct, scaleX, scaleX.fct,
                               scaleX.inv, scaleY, scaleY.fct, xlim[,i],
                               ylim[,i], dots)
             dots <- resc$dots
             x.vec1 <- resc$X
             y.vec1 <- resc$Y
-            do.call(plot, args=c(list(x.vec1, y.vec1,
-                                      type = plty, lty = lty,
-                                      xlab = "x", ylab = "(partial) IC"),
-                                 dots))     
+            do.call(plot, args=c(list(x.vec1, y.vec1, type = plty, lty = lty,
+                                      xlab = xlab, ylab = ylab, dots)))
 
             .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
                               scaleY,scaleY.fct, scaleY.inv,
-                              xlim[,i], ylim[,i], x.vec1, ypts = 400)
+                              xlim[,i], ylim[,i], x.vec1, ypts = 400, n = scaleN,
+                              x.ticks = x.ticks, y.ticks = y.ticks[[i]])
             if(withMBR){
                 MBR.i <- MBRB[i,]
                 if(scaleY) MBR.i <- scaleY.fct(MBR.i)
                 abline(h=MBR.i, col=col.MBR, lty=lty.MBR, lwd = lwd.MBR)
             }
             if(is(e1, "DiscreteDistribution")){
-                x.vec1a <- seq(from = min(x.vec), to = max(x.vec), length = 1000)
-                if(scaleX){
-                   if(!is.null(xlim)){
-                       dots$xlim <- scaleX.fct(xlim[,i])
-                       x.vec10 <- x.vec1a[xvec1a>=xlim[1,i] & xvec1a<=xlim[2,i]]
-                   }
-                   x.vec1 <- scaleX.fct(x.vec10)
-                   x.vec1 <- distr:::.DistrCollapse(x.vec1, 0*x.vec1+1/length(x.vec1))
-                   dots$axes <- NULL
-                   dots$xaxt <- "n"
-                }
-                y.vec1 <- sapply(x.vec1, IC1@Map[[indi]])
-                if(scaleY){
-                   y.vec1 <- scaleY.fct(y.vec)
-                   if(!is.null(ylim)) dots$ylim <- scaleY.fct(ylim[,i])
-                   dots$axes <- NULL
-                   dots$yaxt <- "n"
-                }
+                x.vec1D <- seq(from = min(x.vec), to = max(x.vec), length = 1000)
+                rescD <-.rescalefct(x.vecD, fct, scaleX, scaleX.fct,
+                                scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                                ylim[,i], dotsP)
+                x.vecD <- rescD$X
+                y.vecD <- rescD$Y
 
                 dotsL$lty <- NULL
-                do.call(lines,args=c(list(x.vec1, y.vec1,
+                do.call(lines,args=c(list(x.vecD, y.vecD,
                                           lty = "dotted"), dotsL))
-
             }
             do.call(title,args=c(list(main = innerT[indi]), dotsT, line = lineT,
                     cex.main = cex.inner, col.main = col.inner))
@@ -323,8 +323,6 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
     absInfo <- t(IC1) %*% QF %*% IC1
     ICMap <- IC1@Map
 
-    absInfo <- sapply(y, absInfo@Map[[1]])
-
     sel <- .SelectOrderData(y, function(x)sapply(x, absInfo@Map[[1]]),
                             which.lbs, which.Order)
     i.d <- sel$ind
@@ -371,10 +369,3 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
   invisible()
 })
 
-.getExtremeCoordIC <- function(IC, D, indi, n = 50000){
-    x <- q(D)(seq(1/2/n,1-1/2/n, length=n))
-    li <- length(indi)
-    ICx <- matrix(0,li,n)
-    for( i in 1:li) ICx[i,] <- sapply(x, IC@Map[[indi[i]]])
-    return(cbind(min=apply(ICx,1,min),max=apply(ICx,1,max)))
-}

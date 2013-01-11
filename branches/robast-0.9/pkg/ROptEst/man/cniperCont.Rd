@@ -22,6 +22,7 @@
 %               upper = 1-getdistrOption("DistrResolution"), n = 101,
 %               scaleX = FALSE, scaleX.fct, scaleX.inv,
 %               scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+%               scaleN = 9, x.ticks = NULL, y.ticks = NULL,
 %               cex.pts = 1, col.pts = par("col"),
 %               pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
 %               lab.pts = NULL, lab.font = NULL,
@@ -33,6 +34,7 @@
 %                upper=1-getdistrOption("DistrResolution"), n = 101,
 %                scaleX = FALSE, scaleX.fct, scaleX.inv,
 %                scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+%                scaleN = 9, x.ticks = NULL, y.ticks = NULL,
 %                cex.pts = 1, col.pts = par("col"),
 %                pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
 %                lab.pts = NULL, lab.font = NULL,
@@ -80,6 +82,11 @@ cniperPointPlot(L2Fam, neighbor, risk, ...)
 % \item{scaleY.inv}{an isotone, vectorized function mapping for each coordinate
 %            the range [0,1] into the range of the respective coordinate of the IC(s);
 %            defaulting to the quantile function of  \eqn{{\cal N}(0,1)}{N(0,1)}.}
+%  \item{scalen}{integer; defaults to 9; on rescaled axes, number of x and y ticks if drawn automatically;}
+%  \item{x.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
+%                 if non-NULL, user-given x-ticks (on original scale);}
+%  \item{y.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
+%                 if non-NULL, user-given y-ticks (on original scale);}
 %  \item{cex.pts}{size of the points of the second argument plotted}
 %  \item{col.pts}{color of the points of the second argument plotted}
 %  \item{pch.pts}{symbol of the points of the second argument plotted}

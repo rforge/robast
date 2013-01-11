@@ -98,7 +98,7 @@
       if(is.null(dots$lty)) dots$lty <- par("lty")
 
 
-      pdots <- .makeLowLevel(dots)
+      pdots <- .makedotsLowLevel(dots)
       pdots$x <- NULL
       pdots$y <- NULL
       pdots$offset <- NULL

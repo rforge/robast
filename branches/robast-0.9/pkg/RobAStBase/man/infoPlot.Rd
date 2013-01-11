@@ -20,6 +20,7 @@ infoPlot(object,  ...)
              legend.location = "bottomright", legend.cex = 0.8,
              scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+             scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
@@ -86,6 +87,12 @@ infoPlot(object,  ...)
   \item{scaleY.inv}{an isotone, vectorized function mapping [0,1] into the range
             of the norm of the IC; defaulting to the quantile function
             of  \eqn{{\cal N}(0,1)}{N(0,1)}.}
+  \item{scalen}{integer; defaults to 9; on rescaled axes, number of x and y ticks if drawn automatically;}
+  \item{x.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
+                 if non-NULL, user-given x-ticks (on original scale);}
+  \item{y.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
+                 if non-NULL, user-given y-ticks (on original scale);
+                 can be a list with one (numeric or NULL) item per panel}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
   \item{to.draw.arg}{Either \code{NULL} (default; 
                           everything is plotted) or a vector making a selection

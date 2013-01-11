@@ -16,8 +16,13 @@ comparePlot(obj1, obj2, ... )
              col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
-             with.legend = TRUE, legend.bg = "white",
+             with.legend = FALSE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
+             withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
+             lty.MBR = "dashed", lwd.MBR = 0.8,
+             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+             scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
@@ -58,6 +63,40 @@ comparePlot(obj1, obj2, ... )
                          plot}
   \item{legend.bg}{background color for the legend}
   \item{legend.cex}{magnification factor for the legend}
+  \item{withMBR}{logical; shall horizontal lines with min and max of MBRE be plotted for
+                 comparison?}
+  \item{MBRB}{matrix (or \code{NA}); coerced by usual recycling rules to a
+              matrix with as many rows as plotted panels and with first column
+              the lower bounds and the second column the upper bounds for the
+              respective coordinates (ideally given by the MBR-IC).}
+  \item{MBR.fac}{positive factor; scales the bounds given by argument \code{MBRB}}
+  \item{col.MBR}{color for the MBR lines; as usual \code{col}-argument;}
+  \item{lty.MBR}{line type for the MBR lines; as usual \code{lty}-argument;}
+  \item{lwd.MBR}{line width for the MBR lines; as usual \code{lwd}-argument;}
+  \item{scaleX}{logical; shall X-axis be rescaled (by default according to the cdf of
+          the underlying distribution)?}
+  \item{scaleY}{logical; shall Y-axis be rescaled (by default according to a probit scale)?}
+  \item{scaleX.fct}{an isotone, vectorized function mapping the domain of the IC
+            to [0,1]; if \code{scaleX} is \code{TRUE} and \code{scaleX.fct} is
+            missing, the cdf of the underlying observation distribution.}
+  \item{scaleX.inv}{the inverse function to \code{scale.fct}, i.e., an isotone,
+            vectorized function mapping [0,1] to the domain of the IC
+            such that for any \code{x} in the domain,
+            \code{scaleX.inv(scaleX.fct(x))==x}; if \code{scaleX} is \code{TRUE}
+            and \code{scaleX.inv} is
+            missing, the quantile function of the underlying observation distribution.}
+  \item{scaleY.fct}{an isotone, vectorized function mapping for each coordinate the
+            range of the respective coordinate of the IC
+            to [0,1]; defaulting to the cdf of \eqn{{\cal N}(0,1)}{N(0,1)}.}
+  \item{scaleY.inv}{an isotone, vectorized function mapping for each coordinate
+            the range [0,1] into the range of the respective coordinate of the IC;
+            defaulting to the quantile function of  \eqn{{\cal N}(0,1)}{N(0,1)}.}
+  \item{scalen}{integer; defaults to 9; on rescaled axes, number of x and y ticks if drawn automatically;}
+  \item{x.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
+                 if non-NULL, user-given x-ticks (on original scale);}
+  \item{y.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
+                 if non-NULL, user-given y-ticks (on original scale);
+                 can be a list with one (numeric or NULL) item per panel}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
   \item{to.draw.arg}{Either \code{NULL} (default; 
                           everything is plotted) or a vector of either integers 

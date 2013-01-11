@@ -10,6 +10,7 @@ setMethod("infoPlot", "IC",
              legend.location = "bottomright", legend.cex = 0.8,
              scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+             scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
@@ -22,8 +23,6 @@ setMethod("infoPlot", "IC",
         dots <- match.call(call = sys.call(sys.parent(1)), 
                        expand.dots = FALSE)$"..."
                    
-        if(DEBUG.INFO) print("DATA")
-        if(DEBUG.INFO) print(str(data))
         L2Fam <- eval(object@CallL2Fam)
 
         if(missing(scaleX.fct)){
@@ -58,6 +57,12 @@ setMethod("infoPlot", "IC",
         ncols <- ceiling(dims0/nrows)
         in1to.draw <- (1%in%to.draw)
 
+        if(!is.null(x.ticks)) dots$xaxt <- "n"
+        if(!is.null(y.ticks)){
+           y.ticks <- distr:::.fillList(list(y.ticks), dims0+in1to.draw)
+           dots$yaxt <- "n"
+        }
+
         if(with.legend){
           if(missing(legend.location)){
              legend.location <- distr:::.fillList(list("topright"), dims0+in1to.draw   )
@@ -72,21 +77,21 @@ setMethod("infoPlot", "IC",
                                                  dims0+in1to.draw)
           }
         }
-        e1 <- L2Fam@distribution
-        if(!is(e1, "UnivariateDistribution") | is(e1, "CondDistribution"))
+        distr <- L2Fam@distribution
+        if(!is(distr, "UnivariateDistribution") | is(distr, "CondDistribution"))
             stop("not yet implemented")
 
-        if(is(e1, "UnivariateDistribution")){
+        if(is(distr, "UnivariateDistribution")){
            xlim <- eval(dots$xlim)
            if(!is.null(xlim)){ 
                xm <- min(xlim)
                xM <- max(xlim)
                dots$xlim <- NULL
             }
-            if(is(e1, "AbscontDistribution")){
-                lower0 <- getLow(e1, eps = getdistrOption("TruncQuantile")*2)
-                upper0 <- getUp(e1, eps = getdistrOption("TruncQuantile")*2)
-                me <- median(e1); s <- IQR(e1)
+            if(is(distr, "AbscontDistribution")){
+                lower0 <- getLow(distr, eps = getdistrOption("TruncQuantile")*2)
+                upper0 <- getUp(distr, eps = getdistrOption("TruncQuantile")*2)
+                me <- median(distr); s <- IQR(distr)
                 lower1 <- me - 6 * s
                 upper1 <- me + 6 * s
                 lower <- max(lower0, lower1)
@@ -100,9 +105,9 @@ setMethod("infoPlot", "IC",
                 plty <- "l"
                 if(missing(lty)) lty <- "solid"
             }else{
-                if(is(e1, "DiscreteDistribution")) x.vec <- support(e1)
+                if(is(distr, "DiscreteDistribution")) x.vec <- support(distr)
                 else{
-                   x.vec <- r(e1)(1000)
+                   x.vec <- r(distr)(1000)
                    x.vec <- sort(unique(x.vec))
                 }
                 plty <- "p"
@@ -118,9 +123,12 @@ setMethod("infoPlot", "IC",
                dots$ylim <- NULL
          }
 
-         dotsL <- .makeLowLevel(dots)
-         dotsL$lwd <- dotsL$col <- dotsL$lty <- NULL
-         dotsT <- dotsP <- dotsL
+         dotsP <- dots
+         dotsP$type <- dotsP$lty <- dotsP$col <- dotsP$lwd <- NULL
+         dotsP$xlab <- dotsP$ylab <- NULL
+
+         dotsL <- .makeLowLevel(dotsP)
+         dotsT <- dotsL
          dotsT["main"] <- dotsT["cex.main"] <- dotsT["col.main"] <- NULL
          dotsT["line"] <- NULL
          dotsP$xlim <- xlim
@@ -319,7 +327,7 @@ setMethod("infoPlot", "IC",
                tx <- function(xa,ya,lb,cx,ca)
                      text(x=xa,y=ya,labels=lb,cex=cx, col=ca)
                pL.abs <- substitute({
-                   if(is(e1, "DiscreteDistribution")){
+                   if(is(distr, "DiscreteDistribution")){
                       ICy0 <- jitter(ICy0, factor = jitter.fac0[1])
                       ICy0c <- jitter(ICy0c, factor = jitter.fac0[2])
                    }
@@ -343,7 +351,7 @@ setMethod("infoPlot", "IC",
                pL.rel <- substitute({
                      y0.vec <- sapply(y0,  IC1.i.5@Map[[indi]])^2/ICy0
                      y0c.vec <- sapply(y0c, classIC.i.5@Map[[indi]])^2/ICy0c
-                   if(is(e1, "DiscreteDistribution")){
+                   if(is(distr, "DiscreteDistribution")){
                       y0.vec <- jitter(y0.vec, factor = jitter.fac0[1])
                       y0c.vec <- jitter(y0c.vec, factor = jitter.fac0[2])
                    }
@@ -381,22 +389,18 @@ setMethod("infoPlot", "IC",
                               scaleY, scaleY.fct, dots$xlim, dots$ylim, dotsP)
                dotsP1 <- dotsP <- resc$dots
                dotsP$yaxt <- dots$yaxt
-               x.vec0 <- resc$x
-               x.vec0C <- resc.C$x
-               x.vec1 <- resc$X
-               x.vec1C <- resc.C$X
-               y.vec1 <- resc$Y
-               y.vec1C <- resc.C$Y
 
-               do.call(plot, args=c(list(x.vec1, y.vec1, type = plty,
+               do.call(plot, args=c(list(resc$X, resc$Y, type = plty,
                    lty = ltyI, col = colI, lwd = lwdI,
                    xlab = xlab0, ylab = ylab.abs, panel.last = pL.abs),
                    dotsP1))
-               do.call(lines, args=c(list(x.vec1C, y.vec1C, type = plty,
+               do.call(lines, args=c(list(resc.C$X, resc.C$Y, type = plty,
                        lty = lty, lwd = lwd, col = col), dotsL))
                .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
                               scaleY,scaleY.fct, scaleY.inv,
-                              dots$xlim, dots$xlim, x.vec1, ypts = 400)
+                              dots$xlim, dots$ylim, resc$X, ypts = 400,
+                              n = scaleN, x.ticks = x.ticks,
+                              y.ticks = y.ticks[[1]])
                if(with.legend)
                  legend(.legendCoord(legend.location[[1]], scaleX, scaleX.fct,
                         scaleY, scaleY.fct), legend = legend[[1]], bg = legend.bg,
@@ -427,21 +431,23 @@ setMethod("infoPlot", "IC",
                          dotsP$ylim <- ylim[,in1to.draw+i]       
                     else dotsP$ylim <- c(0,1)
 
-                    y.vec1 <- sapply(x.vec0, IC1.i.5@Map[[indi]])^2/
-                              absInfoEval(x,absInfo.f)
-                    y.vec1C <- sapply(x.vec0C, classIC.i.5@Map[[indi]])^2/
-                              absInfoEval(x,absInfoClass.f)
+                    y.vec1 <- sapply(resc$x, IC1.i.5@Map[[indi]])^2/
+                              absInfoEval(resc$x,absInfo.f)
+                    y.vec1C <- sapply(resc.C$x, classIC.i.5@Map[[indi]])^2/
+                              absInfoEval(resc.C$x,absInfoClass.f)
 
-                    do.call(plot, args=c(list(x.vec1, y.vec1, type = plty,
+                    do.call(plot, args=c(list(resc$X, y.vec1, type = plty,
                                   lty = lty, xlab = xlab0, ylab = ylab.rel,
                                   col = col, lwd = lwd, panel.last = pL.rel),
                                   dotsP))
 
-                    do.call(lines, args = c(list(x.vec1C, y.vec1C, type = plty,
+                    do.call(lines, args = c(list(resc.C$X, y.vec1C, type = plty,
                             lty = ltyI, col = colI, lwd = lwdI), dotsL))
                     .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
-                              FALSE,scaleY.fct, scaleY.inv,
-                              dots$xlim, dots$xlim, x.vec1, ypts = 400)
+                              FALSE,scaleY.fct, scaleY.inv, dots$xlim,
+                              dots$ylim, resc$X, ypts = 400, n = scaleN,
+                              x.ticks = x.ticks,
+                              y.ticks = y.ticks[[i+in1to.draw]])
                     if(with.legend)
                       legend(.legendCoord(legend.location[[i+in1to.draw]],
                                  scaleX, scaleX.fct, scaleY, scaleY.fct),

@@ -7,8 +7,9 @@
    #      y = fct(data)
    #      ind the indices of the selected data in the original data
    #      ind1 the indices of the data selected by which.lbs in the original data
-     n <- if(is.null(dim(data))) nrow(data) else length(data)
-     
+     dimL <- !is.null(dim(data))
+     d1  <- if(dimL) dim(data) else 1
+     n   <- if(dimL) nrow(data) else length(data)
      ind <- 1:n
      
      ### selection
@@ -17,11 +18,10 @@
      n <- sum(which.lbs0)
      which.lbx <- rep(which.lbs0, length.out=length(data))
      data <- data[which.lbx]
+     if(dimL) dim(data) <- c(n,d1[-1])
      ind <- ind[which.lbs0]
-
      ### function evaluation
-     y <- sapply(data,fct)
-
+     y <- if(dimL) apply(data, 1, fct) else sapply(data,fct)
      ## ordering
      oN <- order(y)
      ind1 <- rev(ind[oN])
@@ -30,7 +30,7 @@
      if(is.null(which.Order))
           which.Order <- 1:n
      oN <-  oN[(n+1)-which.Order]
-     data <- if(is.null(dim(data))) data[oN,] else data[oN]
+     data <- if(dimL) data[oN,] else data[oN]
      y <- y[oN]
      ind <- ind[oN]
 
@@ -38,3 +38,7 @@
 }
 
 
+if(FALSE){
+x <- rnorm(1000)
+.SelectOrderData(x, function(x1)x1^2, 1:100, 1:5)
+}
