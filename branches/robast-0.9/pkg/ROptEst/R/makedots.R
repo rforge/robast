@@ -1,3 +1,4 @@
+## dots modifications
 .makedotsLowLevel <- function(dots){
        dots$sub <- dots$xlab <- dots$ylab <- dots$main <- dots$type <- NULL
        dots$xlim <- dots$ylim <- dots$yaxt <- dots$axes <- dots$xaxt <- NULL

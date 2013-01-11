@@ -113,7 +113,19 @@ setMethod("cniperPointPlot", signature(L2Fam = "L2ParamFamily",
     })
 
 if(PETER){
-.plotData <- function(data, dots, origCl, fun, L2Fam, IC){
+.rescalefct <- RobAStBase:::.rescalefct
+.makedotsP <- RobAStBase:::.makedotsP
+.SelectOrderData <- RobAStBase:::.SelectOrderData
+
+.plotData <- function(
+  ## helper function for cniper-type plots to plot in data
+   data, # data to be plot in
+   dots, # dots from the calling function
+   origCl, # call from the calling function
+   fun, # function to determine risk difference
+   L2Fam, # L2Family
+   IC # IC1 in cniperContPlot and eta in cniperPointPlot
+){
                dotsP <- .makedotsP(dots)
                dotsP$col <- rep(origCl$col.pts, length.out=n)
                dotsP$pch <- rep(origCl$pch.pts, length.out=n)
@@ -131,9 +143,9 @@ if(PETER){
                x.d <- sel.C$data
                n <- length(i.d)
 
-               resc.dat <-.rescalefct(x.d, function(x) sapply(x,fun),
+               resc.dat <- .rescalefct(x.d, function(x) sapply(x,fun),
                               origCl$scaleX, origCl$scaleX.fct, origCl$scaleX.inv,
-                              origCl$scaleY, origCl$scaleY.fct, origCl$scaleY.inv,
+                              origCl$scaleY, origCl$scaleY.fct,
                               dots$xlim, dots$ylim, dots)
 
                dotsP$x <- resc.dat$X
@@ -209,10 +221,8 @@ cniperContPlot <- function(IC1, IC2, data = NULL, ...,
             riskfct(R2,r*fct(normtype(risk))(y2))
         }
         x <-  q(L2Fam)(seq(lower,upper,length=n))
-        resc <- RobAStBase:::.rescalefct(x, function(u) sapply(u,fun),
-                              scaleX, scaleX.fct, scaleX.inv,
-                              scaleY, scaleY.fct, scaleY.inv,
-                              dots$xlim, dots$ylim, dots)
+        resc <- .rescalefct(x, function(u) sapply(u,fun), scaleX, scaleX.fct,
+                     scaleX.inv, scaleY, scaleY.fct, dots$xlim, dots$ylim, dots)
         x <- dots$x <- resc$X
         dots$y <- resc$Y
         dots$type <- "l"
@@ -252,9 +262,8 @@ cniperContPlot <- function(IC1, IC2, data = NULL, ...,
         dots$h <- if(scaleY) scaleY.fct(0) else 0
         do.call(abline, dots)
 
-        RobAStBase:::.plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
-                          scaleY,scaleY.fct, scaleY.inv,
-                          dots$xlim, dots$ylim, x, ypts = 400)
+        .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv, scaleY,scaleY.fct,
+                          scaleY.inv, dots$xlim, dots$ylim, x, ypts = 400)
         if(!is.null(data))
            return(.plotData(data, dots, mc, fun, L2Fam, IC1))
         invisible(NULL)
@@ -339,10 +348,8 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
 
 
         x <- q(L2Fam)(seq(lower,upper,length=n))
-        resc <- RobAStBase:::.rescalefct(x, function(u) sapply(u,fun),
-                              scaleX, scaleX.fct, scaleX.inv,
-                              scaleY, scaleY.fct, scaleY.inv,
-                              dots$xlim, dots$ylim, dots)
+        resc <- .rescalefct(x, function(u) sapply(u,fun), scaleX, scaleX.fct,
+                     scaleX.inv, scaleY, scaleY.fct, dots$xlim, dots$ylim, dots)
         x <- dots$x <- resc$X
         dots$y <- resc$Y
 
@@ -381,10 +388,8 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
 
         dots$h <- if(scaleY) scaleY.fct(0) else 0
         do.call(abline, dots)
-        RobAStBase:::.plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
-                          scaleY,scaleY.fct, scaleY.inv,
-                          dots$xlim, dots$ylim, x, ypts = 400)
-
+        .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv, scaleY,scaleY.fct,
+                          scaleY.inv, dots$xlim, dots$ylim, x, ypts = 400)
         if(!is.null(data))
            return(.plotData(data, dots, mc, fun, L2Fam, eta))
         return(invisible(NULL))

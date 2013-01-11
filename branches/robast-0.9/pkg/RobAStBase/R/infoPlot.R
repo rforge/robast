@@ -296,12 +296,10 @@ setMethod("infoPlot", "IC",
 
                resc.dat <-.rescalefct(x.d, function(x) absInfoEval(x,absInfo.f),
                               scaleX, scaleX.fct, scaleX.inv,
-                              scaleY, scaleY.fct, scaleY.inv,
-                              dots$xlim, dots$ylim, dots)
+                              scaleY, scaleY.fct, dots$xlim, dots$ylim, dots)
                resc.datC <-.rescalefct(x.d, function(x) absInfoEval(x,absInfoClass.f),
                               scaleX, scaleX.fct, scaleX.inv,
-                              scaleY, scaleY.fct, scaleY.inv,
-                              dots$xlim, dots$ylim, dots)
+                              scaleY, scaleY.fct, dots$xlim, dots$ylim, dots)
 
                x.d <- resc.dat$X
                x.dC <- resc.datC$X
@@ -377,12 +375,10 @@ setMethod("infoPlot", "IC",
             if(1 %in% to.draw){
                resc <-.rescalefct(x.vec, function(x) absInfoEval(x,absInfo.f),
                               scaleX, scaleX.fct, scaleX.inv,
-                              scaleY, scaleY.fct, scaleY.inv,
-                              dots$xlim, dots$ylim, dotsP)
+                              scaleY, scaleY.fct, dots$xlim, dots$ylim, dotsP)
                resc.C <-.rescalefct(x.vec, function(x) absInfoEval(x,absInfoClass.f),
                               scaleX, scaleX.fct, scaleX.inv,
-                              scaleY, scaleY.fct, scaleY.inv,
-                              dots$xlim, dots$ylim, dotsP)
+                              scaleY, scaleY.fct, dots$xlim, dots$ylim, dotsP)
                dotsP1 <- dotsP <- resc$dots
                dotsP$yaxt <- dots$yaxt
                x.vec0 <- resc$x

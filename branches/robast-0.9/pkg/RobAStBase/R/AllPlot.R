@@ -231,8 +231,8 @@ setMethod("plot", signature(x = "IC", y = "missing"),
             indi <- to.draw[i]
             if(!is.null(ylim)) dots$ylim <- ylim[,i]       
             resc <-.rescalefct(x.vec, IC1@Map[[indi]], scaleX, scaleX.fct,
-                              scaleX.inv, scaleY, scaleY.fct, scaleY.inv,
-                              xlim[,i], ylim[,i], dots)
+                              scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                              ylim[,i], dots)
             dots <- resc$dots
             x.vec1 <- resc$X
             y.vec1 <- resc$Y
@@ -345,8 +345,7 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
         ICy <- sapply(y0s,ICMap0[[indi]])
         resc.dat <-.rescalefct(y0s, function(x) sapply(x,ICMap0[[indi]]),
                               scaleX, scaleX.fct, scaleX.inv,
-                              scaleY, scaleY.fct, scaleY.inv,
-                              dwo0$xlim, dwo0$ylim, dwo0)
+                              scaleY, scaleY.fct, dwo0$xlim, dwo0$ylim, dwo0)
         y1 <- resc.dat$X
         ICy <- resc.dat$Y
 

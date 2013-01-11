@@ -17,27 +17,27 @@
   other procedure.
 }
 \usage{
-cniperContPlot(IC1, IC2, data = NULL, ...,
-               neighbor, risk, lower = getdistrOption("DistrResolution"),
-               upper = 1-getdistrOption("DistrResolution"), n = 101,
-               scaleX = FALSE, scaleX.fct, scaleX.inv,
-               scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
-               cex.pts = 1, col.pts = par("col"),
-               pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
-               lab.pts = NULL, lab.font = NULL,
-               which.lbs = NULL, which.Order  = NULL,
-               return.Order = FALSE)
+%cniperContPlot(IC1, IC2, data = NULL, ...,
+%               neighbor, risk, lower = getdistrOption("DistrResolution"),
+%               upper = 1-getdistrOption("DistrResolution"), n = 101,
+%               scaleX = FALSE, scaleX.fct, scaleX.inv,
+%               scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+%               cex.pts = 1, col.pts = par("col"),
+%               pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
+%               lab.pts = NULL, lab.font = NULL,
+%               which.lbs = NULL, which.Order  = NULL,
+%               return.Order = FALSE)
 
-cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
-                lower=getdistrOption("DistrResolution"),
-                upper=1-getdistrOption("DistrResolution"), n = 101,
-                scaleX = FALSE, scaleX.fct, scaleX.inv,
-                scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
-                cex.pts = 1, col.pts = par("col"),
-                pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
-                lab.pts = NULL, lab.font = NULL,
-                which.lbs = NULL, which.Order  = NULL,
-                return.Order = FALSE)
+%cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
+%                lower=getdistrOption("DistrResolution"),
+%                upper=1-getdistrOption("DistrResolution"), n = 101,
+%                scaleX = FALSE, scaleX.fct, scaleX.inv,
+%                scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+%                cex.pts = 1, col.pts = par("col"),
+%                pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
+%                lab.pts = NULL, lab.font = NULL,
+%                which.lbs = NULL, which.Order  = NULL,
+%                return.Order = FALSE)
 
 
 cniperCont(IC1, IC2, L2Fam, neighbor, risk, ...)
@@ -62,47 +62,47 @@ cniperPointPlot(L2Fam, neighbor, risk, ...)
   \item{lower, upper}{ the lower and upper end points of the 
           contamination interval (in prob-scale). }
   \item{n}{ number of points between \code{lower} and \code{upper}}
-  \item{scaleX}{logical; shall X-axis be rescaled (by default according to the cdf of
-          the underlying distribution)?}
-  \item{scaleY}{logical; shall Y-axis be rescaled (by default according to a probit scale)?}
-  \item{scaleX.fct}{an isotone, vectorized function mapping the domain of the IC(s)
-            to [0,1]; if \code{scaleX} is \code{TRUE} and \code{scaleX.fct} is
-            missing, the cdf of the underlying observation distribution.}
-  \item{scaleX.inv}{the inverse function to \code{scale.fct}, i.e., an isotone,
-            vectorized function mapping [0,1] to the domain of the IC(s)
-            such that for any \code{x} in the domain,
-            \code{scaleX.inv(scaleX.fct(x))==x}; if \code{scaleX} is \code{TRUE}
-            and \code{scaleX.inv} is
-            missing, the quantile function of the underlying observation distribution.}
-  \item{scaleY.fct}{an isotone, vectorized function mapping for each coordinate the
-            range of the respective coordinate of the IC(s)
-            to [0,1]; defaulting to the cdf of \eqn{{\cal N}(0,1)}{N(0,1)}.}
-  \item{scaleY.inv}{an isotone, vectorized function mapping for each coordinate
-            the range [0,1] into the range of the respective coordinate of the IC(s);
-            defaulting to the quantile function of  \eqn{{\cal N}(0,1)}{N(0,1)}.}
-  \item{cex.pts}{size of the points of the second argument plotted}
-  \item{col.pts}{color of the points of the second argument plotted}
-  \item{pch.pts}{symbol of the points of the second argument plotted}
-  \item{with.lab}{logical; shall labels be plotted to the observations?}
-  \item{lab.pts}{character or NULL; labels to be plotted to the observations; if \code{NULL}
-                 observation indices;}
-  \item{lab.font}{font to be used for labels}
-  \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
-                    for plotting points of the second argument in a jittered fashion.}
-  \item{which.lbs}{either an integer vector with the indices of the observations
-          to be plotted into graph or \code{NULL} --- then no observation is excluded}
-  \item{which.Order}{we order the observations (descending) according to the norm given by
-           \code{normtype(object)}; then \code{which.Order}
-           either is an integer vector with the indices of the \emph{ordered}
-           observations (remaining after a possible reduction by argument \code{which.lbs})
-           to be plotted into graph or \code{NULL} --- then no (further) observation
-           is excluded.}
-  \item{return.Order}{logical; if \code{TRUE}, an order vector
-    is returned; more specifically, the order of the (remaining) observations
-    given by their original index is returned (remaining means: after a possible
-    reduction by argument \code{which.lbs}, and ordering is according to the norm given by
-           \code{normtype(object)});
-   otherwise we return \code{invisible()} as usual.}
+%  \item{scaleX}{logical; shall X-axis be rescaled (by default according to the cdf of
+%          the underlying distribution)?}
+%  \item{scaleY}{logical; shall Y-axis be rescaled (by default according to a probit scale)?}
+%  \item{scaleX.fct}{an isotone, vectorized function mapping the domain of the IC(s)
+%            to [0,1]; if \code{scaleX} is \code{TRUE} and \code{scaleX.fct} is
+%            missing, the cdf of the underlying observation distribution.}
+%  \item{scaleX.inv}{the inverse function to \code{scale.fct}, i.e., an isotone,
+%            vectorized function mapping [0,1] to the domain of the IC(s)
+%            such that for any \code{x} in the domain,
+%            \code{scaleX.inv(scaleX.fct(x))==x}; if \code{scaleX} is \code{TRUE}
+%            and \code{scaleX.inv} is
+%            missing, the quantile function of the underlying observation distribution.}
+%  \item{scaleY.fct}{an isotone, vectorized function mapping for each coordinate the
+%            range of the respective coordinate of the IC(s)
+%            to [0,1]; defaulting to the cdf of \eqn{{\cal N}(0,1)}{N(0,1)}.}
+% \item{scaleY.inv}{an isotone, vectorized function mapping for each coordinate
+%            the range [0,1] into the range of the respective coordinate of the IC(s);
+%            defaulting to the quantile function of  \eqn{{\cal N}(0,1)}{N(0,1)}.}
+%  \item{cex.pts}{size of the points of the second argument plotted}
+%  \item{col.pts}{color of the points of the second argument plotted}
+%  \item{pch.pts}{symbol of the points of the second argument plotted}
+%  \item{with.lab}{logical; shall labels be plotted to the observations?}
+%  \item{lab.pts}{character or NULL; labels to be plotted to the observations; if \code{NULL}
+%                 observation indices;}
+%  \item{lab.font}{font to be used for labels}
+%  \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
+%                    for plotting points of the second argument in a jittered fashion.}
+%  \item{which.lbs}{either an integer vector with the indices of the observations
+%          to be plotted into graph or \code{NULL} --- then no observation is excluded}
+%  \item{which.Order}{we order the observations (descending) according to the norm given by
+%           \code{normtype(object)}; then \code{which.Order}
+%           either is an integer vector with the indices of the \emph{ordered}
+%           observations (remaining after a possible reduction by argument \code{which.lbs})
+%           to be plotted into graph or \code{NULL} --- then no (further) observation
+%           is excluded.}
+%  \item{return.Order}{logical; if \code{TRUE}, an order vector
+%    is returned; more specifically, the order of the (remaining) observations
+%    given by their original index is returned (remaining means: after a possible
+%    reduction by argument \code{which.lbs}, and ordering is according to the norm given by
+%           \code{normtype(object)});
+%   otherwise we return \code{invisible()} as usual.}
 }
 \details{
   In case of \code{cniperCont} the difference between the risks of two ICs 

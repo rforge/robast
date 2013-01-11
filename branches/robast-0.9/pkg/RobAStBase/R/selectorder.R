@@ -1,5 +1,12 @@
 .SelectOrderData <- function(data, fct, which.lbs, which.Order){
-
+   ## for data to be plot in performs two selections:
+   ## on unordered (original) data (acc. to which.lbs)
+   ## on data ordered acc. to fct a selection acc. to which.Order is done
+   ## return value: list with elements
+   #      data, the selected/thinned out data,
+   #      y = fct(data)
+   #      ind the indices of the selected data in the original data
+   #      ind1 the indices of the data selected by which.lbs in the original data
      n <- if(is.null(dim(data))) nrow(data) else length(data)
      
      ind <- 1:n
