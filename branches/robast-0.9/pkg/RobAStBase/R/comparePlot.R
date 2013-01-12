@@ -1,3 +1,4 @@
+.makeLenAndOrder <- distr:::.makeLenAndOrder
 setMethod("comparePlot", signature("IC","IC"),
     function(obj1,obj2, obj3 = NULL, obj4 = NULL, data = NULL,
              ..., withSweave = getdistrOption("withSweave"),
@@ -15,11 +16,11 @@ setMethod("comparePlot", signature("IC","IC"),
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
-             lab.pts = NULL, lab.font = NULL,
+             lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, return.Order = FALSE){
 
-        .xc <- function(obj) as.character(deparse(match.call(
-                                call = sys.call(sys.parent(1)))[[obj]]))
+        .mc <- match.call(call = sys.call(sys.parent(1)))
+        .xc<- function(obj) as.character(deparse(.mc[[obj]]))
         xc <- c(.xc("obj1"), .xc("obj2"))
         if(!is.null(obj3)) xc <- c(xc, .xc("obj3"))
         if(!is.null(obj4)) xc <- c(xc, .xc("obj4"))
@@ -87,6 +88,7 @@ setMethod("comparePlot", signature("IC","IC"),
         if(!is.null(xlim)){
                xm <- min(xlim)
                xM <- max(xlim)
+               xlim <- matrix(xlim, 2,dims0)
             }
         if(is(distr, "AbscontDistribution")){
             lower0 <- getLow(distr, eps = getdistrOption("TruncQuantile")*2)
@@ -233,7 +235,7 @@ setMethod("comparePlot", signature("IC","IC"),
 
             absInfoEval <- function(x,IC){
                   QF <- ID
-                  if(is(object,"ContIC") & dims>1 ){
+                  if(is(IC,"ContIC") & dims>1 ){
                      if (is(normtype(object),"QFNorm"))
                           QF <- QuadForm(normtype(object))
                   }
@@ -249,8 +251,9 @@ setMethod("comparePlot", signature("IC","IC"),
             if(is(obj3, "IC")) sel3 <- def.sel(IC3)
             if(is(obj4, "IC")) sel4 <- def.sel(IC4)
 
-            dots.points <- .makeLowLevel(dots)
+            dots.points <- .makedotsLowLevel(dots)
             dots.points$col <- dots.points$cex <- dots.points$pch <- NULL
+            alp.v <- rep(alpha.trsp,length.out = ncomp)
 
             pL <- substitute({
                  doIt <- function(sel.l,fct.l,j.l){
@@ -263,19 +266,22 @@ setMethod("comparePlot", signature("IC","IC"),
                      n.l <- length(i.l)
                      pch.pts.l <- rep(pch0, length.out=n.l)
                      lab.pts.l <- if(is.null(lab0)) paste(i.l) else lab0[i.l]
+
+                     col.l <- if(is.na(al0[j.l])) col0[j.l] else
+                                 addAlphTrsp2col(col0[j.l], al0[j.l])
                      cex.l <- log(sel.l$y+1)*3*cex0[j.l]
                      do.call(points, args=c(list(rescd$X, rescd$Y, cex = cex.l,
-                             col = col0[j.l], pch = pch.pts.l), dwo0))
+                             col = col.l, pch = pch.pts.l), dwo0))
                      if(with.lab0)
-                        text(rescd$X, rescd$Y, labels = lab.pts0.l,
-                             cex = cex.l/2, col = col0[j.l])
+                        text(rescd$X, rescd$Y, labels = lab.pts.l,
+                             cex = cex.l/2, col = col.l)
                  }
                  doIt(sel1,fct1,1);  doIt(sel2,fct2,2)
-                 if(!is.null(obj30)) doIt(sel3,fct3,2)
-                 if(!is.null(obj40)) doIt(sel4,fct4,4)
+                 if(is(obj3, "IC")) doIt(sel3,fct3,3)
+                 if(is(obj4, "IC")) doIt(sel4,fct4,4)
                  pL0
               }, list(pL0 = pL, cex0 = cex.pts, pch0 = pch.pts, col0 = col.pts,
-                      jitter.fac0 = jitter.fac, dwo0 = dots.points,
+                      jitter.fac0 = jitter.fac, dwo0 = dots.points, al0 = alp.v,
                       with.lab0 = with.lab, lab0 = lab.pts)
             )
         }
@@ -301,18 +307,18 @@ setMethod("comparePlot", signature("IC","IC"),
 
             if(is(obj3, "IC")){
                 resc.args$fc <- fct3 <- function(x) sapply(x, IC3@Map[[indi]])
-                resc2 <- do.call(.rescalefct, resc.args)
+                resc3 <- do.call(.rescalefct, resc.args)
                 matp  <- cbind(matp,resc3$Y)
             }
             if(is(obj4, "IC")){
                 resc.args$fc <- fct4 <- function(x) sapply(x, IC4@Map[[indi]])
-                resc2 <- do.call(.rescalefct, resc.args)
+                resc4 <- do.call(.rescalefct, resc.args)
                 matp  <- cbind(matp,resc4$Y)
             }
 
-            do.call(plot, args=c(x = resc1$X, y = matp[,1],
+            do.call(plot, args=c(list(x = resc1$X, y = matp[,1],
                  type = plty, lty = lty, col = col[1], lwd = lwd,
-                 xlab = xlab, ylab = ylab, dotsP, list(panel.last = pL)))
+                 xlab = xlab, ylab = ylab), dotsP, list(panel.last = pL)))
                  
             do.call(matlines, args = c(list( x = resc1$X, y = matp[,-1],
                     lty = lty, col = col[-1], lwd = lwd), dotsL))

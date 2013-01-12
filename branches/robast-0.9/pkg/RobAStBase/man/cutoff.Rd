@@ -37,7 +37,7 @@ are to be taken from the calling environment (not from the defining one),
 so we have delay evaluation of the function body, which is why we assume
 it to be given wrapped into \code{substitute}  resp. \code{quote}.
 \code{body.fct0} is by default (i.e. if argument \code{body.fct0} is missing) set
-to \code{quote(quantile(slot(norm,"fct")(data), cutoff.quantile))}, internally,
+to\cr \code{quote(quantile(slot(norm,"fct")(data), cutoff.quantile))}, internally,
 i.e.; to an empirical quantile of the corresponding norms.\cr
 
 \code{cutoff.sememp()} is a helper function generating the theoretical (asymptotic)

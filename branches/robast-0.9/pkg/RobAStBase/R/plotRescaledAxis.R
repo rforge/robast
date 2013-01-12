@@ -72,8 +72,8 @@ if(FALSE){
                x <- x[is.finite(x)]
                x <- pretty(x,n=length(x))
                x[distr:::.isEqual01(x)&x<0.4] <- 0
+               X <- scaleX.fct(x)
                xf <- prettyNum(x)
-               print(xf)
                i01 <- !distr:::.isEqual01(X)
                xf <- xf[i01]
                Xi <- X
@@ -89,6 +89,7 @@ if(FALSE){
                if(is.null(xlim)){ xlim <- c(-Inf,Inf)}else{
                   if(is.na(xlim[1])) xlim[1] <- -Inf
                   if(is.na(xlim[2])) xlim[2] <- Inf }
+               x.ticks <- sort(unique(x.ticks[!is.na(x.ticks)]))
                xf <- pmin(pmax(x.ticks[is.finite(x.ticks)],xlim[1]),xlim[2])
                Xf <- scaleX.fct(xf)
                axis(1,at=Xf,labels=xf)
@@ -101,6 +102,7 @@ if(FALSE){
                if(is.null(xlim)){ xlim <- c(-Inf,Inf)}else{
                   if(is.na(xlim[1])) xlim[1] <- -Inf
                   if(is.na(xlim[2])) xlim[2] <- Inf }
+               x.ticks <- sort(unique(x.ticks[!is.na(x.ticks)]))
                xf <- pmin(pmax(x.ticks[is.finite(x.ticks)],xlim[1]),xlim[2])
                axis(1,at=xf,labels=xf)
                if(-Inf %in% x.ticks) axis(1,at=0,labels=expression(-infinity))
@@ -114,12 +116,13 @@ if(FALSE){
                Y1 <- if(!is.null(ylim)) min(1, scaleY.fct(ylim[2])) else 1
                Y <- seq(Y0,Y1, length=ypts)
                y <- pretty(scaleY.inv(Y),n=n)
-               print(y)
                Y <- distr:::.DistrCollapse(scaleY.fct(y),0*y)$supp
-               y <- pretty(scaleY.inv(Y), n=length(Y))
+               y <- scaleY.inv(Y)
+               y <- y[is.finite(y)]
+               y <- pretty(y,n=length(y))
                y[distr:::.isEqual01(y)&y<0.4] <- 0
+               Y <- scaleX.fct(y)
                yf <- prettyNum(y)
-               print(y)
                Y <- scaleY.fct(y)
                i01 <- !distr:::.isEqual01(Y)
                yf <- yf[i01]
@@ -136,6 +139,7 @@ if(FALSE){
                if(is.null(ylim)){ ylim <- c(-Inf,Inf)}else{
                   if(is.na(ylim[1])) ylim[1] <- -Inf
                   if(is.na(ylim[2])) ylim[2] <- Inf }
+               y.ticks <- sort(unique(y.ticks[!is.na(y.ticks)]))
                yf <- pmin(pmax(y.ticks[is.finite(y.ticks)],ylim[1]),ylim[2])
                Yf <- scaleY.fct(yf)
                axis(2,at=Yf,labels=yf)
@@ -148,6 +152,7 @@ if(FALSE){
                if(is.null(ylim)){ ylim <- c(-Inf,Inf)}else{
                   if(is.na(ylim[1])) ylim[1] <- -Inf
                   if(is.na(ylim[2])) ylim[2] <- Inf }
+               y.ticks <- sort(unique(y.ticks[!is.na(y.ticks)]))
                yf <- pmin(pmax(y.ticks[is.finite(y.ticks)],ylim[1]),ylim[2])
                axis(2,at=yf,labels=yf)
                if(-Inf %in% y.ticks) axis(2,at=0,labels=expression(-infinity))

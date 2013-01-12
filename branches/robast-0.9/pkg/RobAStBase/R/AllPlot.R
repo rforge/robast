@@ -57,18 +57,6 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         }
 
         MBRB <- matrix(rep(t(MBRB), length.out=dims0*2),ncol=2, byrow=T)
-
-# Code only useable from ROptEst on...
-#
-#        if(withMBR && all(is.na(MBRB))){
-#           robModel <- InfRobModel(center = L2fam, neighbor =
-#                             ContNeighborhood(radius = 0.5))
-#           ICmbr <- try(optIC(model = robModel, risk = asBias()), silent=TRUE)
-#           if(!is(ICmbr,"try-error"))
-#              MBRB <- .getExtremeCoordIC(ICmbr, distribution(L2Fam), todraw)
-#           else withMBR <- FALSE
-#        }
-
         MBRB <- MBRB * MBR.fac
 
         e1 <- L2Fam@distribution
@@ -79,6 +67,9 @@ setMethod("plot", signature(x = "IC", y = "missing"),
            if(!is.null(xlim)){ 
                xm <- min(xlim)
                xM <- max(xlim)
+               if(!length(xlim) %in% c(2,2*dims0))
+                  stop("Wrong length of Argument xlim");
+               xlim <- matrix(xlim, 2,dims0)
             }
             if(is(e1, "AbscontDistribution")){
                 lower0 <- getLow(e1, eps = getdistrOption("TruncQuantile")*2)
@@ -105,7 +96,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
                 plty <- "p"
                 lty <- "dotted"
                 if(!is.null(dots$xlim)) x.vec <- x.vec[(x.vec>=xm) & (x.vec<=xM)]
-                
+
             }
          }
          ylim <- eval(dots$ylim)
@@ -244,15 +235,17 @@ setMethod("plot", signature(x = "IC", y = "missing"),
             indi <- to.draw[i]
             if(!is.null(ylim)) dots$ylim <- ylim[,i]       
             fct <- function(x) sapply(x, IC1@Map[[indi]])
+            print(xlim[,i])
             resc <-.rescalefct(x.vec, fct, scaleX, scaleX.fct,
                               scaleX.inv, scaleY, scaleY.fct, xlim[,i],
                               ylim[,i], dots)
             dots <- resc$dots
+            dots$xlim <- xlim[,i]
+            dots$ylim <- ylim[,i]
             x.vec1 <- resc$X
             y.vec1 <- resc$Y
-            do.call(plot, args=c(list(x.vec1, y.vec1, type = plty, lty = lty,
-                                      xlab = xlab, ylab = ylab, dots)))
-
+            do.call(plot, args=c(list(x=x.vec1, y=y.vec1, type = plty, lty = lty,
+                                      xlab = xlab, ylab = ylab), dots))
             .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
                               scaleY,scaleY.fct, scaleY.inv,
                               xlim[,i], ylim[,i], x.vec1, ypts = 400, n = scaleN,
@@ -264,9 +257,9 @@ setMethod("plot", signature(x = "IC", y = "missing"),
             }
             if(is(e1, "DiscreteDistribution")){
                 x.vec1D <- seq(from = min(x.vec), to = max(x.vec), length = 1000)
-                rescD <-.rescalefct(x.vecD, fct, scaleX, scaleX.fct,
+                rescD <-.rescalefct(x.vec1D, fct, scaleX, scaleX.fct,
                                 scaleX.inv, scaleY, scaleY.fct, xlim[,i],
-                                ylim[,i], dotsP)
+                                ylim[,i], dots)
                 x.vecD <- rescD$X
                 y.vecD <- rescD$Y
 
@@ -282,14 +275,14 @@ setMethod("plot", signature(x = "IC", y = "missing"),
                       legend = legend[[i]], dotsLeg, cex = legend.cex*fac.leg)
 
         }
-        if(!hasArg(cex.main)) cex.main <- par("cex.main") else cex.main <- dots$"cex.main"
-        if(!hasArg(col.main)) col.main <- par("col.main") else col.main <- dots$"col.main"
+        cex.main <- if(!hasArg(cex.main)) par("cex.main") else dots$"cex.main"
+        col.main <- if(!hasArg(col.main)) par("col.main") else dots$"col.main"
         if (mainL)
             mtext(text = main, side = 3, cex = cex.main, adj = .5,
                   outer = TRUE, padj = 1.4, col = col.main)
 
-        if(!hasArg(cex.sub)) cex.sub <- par("cex.sub") else cex.sub <- dots$"cex.sub"
-        if(!hasArg(col.sub)) col.sub <- par("col.sub") else col.sub <- dots$"col.sub"
+        cex.sub <- if(!hasArg(cex.sub)) par("cex.sub") else dots$"cex.sub"
+        col.sub <- if(!hasArg(col.sub)) par("col.sub") else dots$"col.sub"
         if (subL)
             mtext(text = sub, side = 1, cex = cex.sub, adj = .5,
                   outer = TRUE, line = -1.6, col = col.sub)
@@ -301,14 +294,16 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 setMethod("plot", signature(x = "IC",y = "numeric"),
           function(x, y, ..., cex.pts = 1, col.pts = par("col"),
           pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
-          lab.pts = NULL, lab.font = NULL,
-             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE){
+          lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
+          which.lbs = NULL, which.Order  = NULL, return.Order = FALSE){
+
     dots <- match.call(call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)$"..."
 
     n <- if(!is.null(dim(y))) nrow(y) else length(y)
     pch.pts <- rep(pch.pts, length.out=n)
     lab.pts <- if(is.null(lab.pts)) paste(1:n) else rep(lab.pts,n)
+
 
     L2Fam <- eval(x@CallL2Fam)
     trafO <- trafo(L2Fam@param)
@@ -327,11 +322,11 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
                             which.lbs, which.Order)
     i.d <- sel$ind
     i0.d <- sel$ind1
-    x.d <- sel$data
     n <- length(i.d)
 
     dots.without <- dots
     dots.without$col <- dots.without$cex <- dots.without$pch <- NULL
+
 
     pL <- expression({})
     if(!is.null(dots$panel.last))
@@ -341,15 +336,18 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
     pL <- substitute({
         y1 <- y0s
         ICy <- sapply(y0s,ICMap0[[indi]])
+        print(xlim[,i])
         resc.dat <-.rescalefct(y0s, function(x) sapply(x,ICMap0[[indi]]),
                               scaleX, scaleX.fct, scaleX.inv,
-                              scaleY, scaleY.fct, dwo0$xlim, dwo0$ylim, dwo0)
+                              scaleY, scaleY.fct, xlim[,i], ylim[,i],
+                              dwo0)
         y1 <- resc.dat$X
         ICy <- resc.dat$Y
 
         if(is(e1, "DiscreteDistribution"))
            ICy <- jitter(ICy, factor = jitter.fac0)
 
+        if(!is.na(al0)) col0 <- sapply(col0, addAlphTrsp2col,alpha=al0)
 
         do.call(points, args=c(list(y1, ICy, cex = log(absy0+1)*3*cex0,
                         col = col0, pch = pch0), dwo0))
@@ -358,10 +356,10 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
                 cex = log(absy0+1)*1.5*cex0, col = col0)
         }
         pL0
-        }, list(pL0 = pL, ICMap0 = ICMap, y0s = x.d, absy0 = absInfo0,
+        }, list(pL0 = pL, ICMap0 = ICMap, y0s = sel$data, absy0 = sel$y,
                 dwo0 = dots.without, cex0 = cex.pts, pch0 = pch.pts[i.d],
                 col0 = col.pts, with.lab0 = with.lab, lab.pts0 = lab.pts[i.d],
-                jitter.fac0 = jitter.fac
+                al0 = alpha.trsp, jitter.fac0 = jitter.fac
                 ))
 
   do.call("plot", args = c(list(x = x, panel.last = pL), dots))

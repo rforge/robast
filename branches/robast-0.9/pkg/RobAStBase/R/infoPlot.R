@@ -14,7 +14,7 @@ setMethod("infoPlot", "IC",
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
-             lab.pts = NULL, lab.font = NULL,
+             lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
              ylab.abs = "absolute information", 
              ylab.rel= "relative information"){
@@ -32,9 +32,9 @@ setMethod("infoPlot", "IC",
 
 
         dots["type"] <- NULL
-        if(!is.null(dots[["xlab"]])) xlab0 <- dots[["xlab"]]
-        dots["ylab"] <- NULL
-        
+        xlab <- dots$xlab; if(is.null(xlab)) xlab <- "x"
+        dots$xlab <- dots$ylab <- NULL
+
         trafO <- trafo(L2Fam@param)
         dims <- nrow(trafO)
         dimm <- ncol(trafO)
@@ -127,7 +127,7 @@ setMethod("infoPlot", "IC",
          dotsP$type <- dotsP$lty <- dotsP$col <- dotsP$lwd <- NULL
          dotsP$xlab <- dotsP$ylab <- NULL
 
-         dotsL <- .makeLowLevel(dotsP)
+         dotsL <- .makedotsLowLevel(dotsP)
          dotsT <- dotsL
          dotsT["main"] <- dotsT["cex.main"] <- dotsT["col.main"] <- NULL
          dotsT["line"] <- NULL
@@ -326,6 +326,10 @@ setMethod("infoPlot", "IC",
                             dots.points))
                tx <- function(xa,ya,lb,cx,ca)
                      text(x=xa,y=ya,labels=lb,cex=cx, col=ca)
+
+               alp.v <- rep(alpha.trsp, length.out = dims0+in1to.draw)
+
+
                pL.abs <- substitute({
                    if(is(distr, "DiscreteDistribution")){
                       ICy0 <- jitter(ICy0, factor = jitter.fac0[1])
@@ -333,6 +337,10 @@ setMethod("infoPlot", "IC",
                    }
                    f1 <- log(ICy0+1)*3*cex0[1]
                    f1c <- log(ICy0c+1)*3*cex0[2]
+
+                   if(!is.na(al0))
+                      col0 <- sapply(col0, addAlphTrsp2col,alpha=al0)
+
                    do.pts(y0, ICy0, f1,col0[1],pch0[,1])
                    do.pts(y0c, ICy0c, f1c,col0[2],pch0[,2])
                    if(with.lab0){
@@ -342,7 +350,7 @@ setMethod("infoPlot", "IC",
                    pL0
                    }, list(ICy0 = y.d, ICy0c = y.dC,
                            pL0 = pL, y0 = x.d, y0c = x.dC,
-                           cex0 = cex.pts, pch0 = pch.pts,
+                           cex0 = cex.pts, pch0 = pch.pts, al0 = alp.v[1],
                            col0 = col.pts, with.lab0 = with.lab, n0 = n,
                            lab.pts0 = lab.pts[i.d], lab.pts0C = lab.pts[i.dC],
                            jitter.fac0 = jitter.fac)
@@ -357,16 +365,20 @@ setMethod("infoPlot", "IC",
                    }
                    f1 <- log(ICy0+1)*3*cex0[1]
                    f1c <- log(ICy0c+1)*3*cex0[2]
+
+                   if(!is.na(al0))
+                      col0 <- sapply(col0, addAlphTrsp2col, alpha=al0[i1])
+
                    do.pts(y0, y0.vec, f1,col0[1],pch0[,1])
                    do.pts(y0c, y0c.vec, f1c,col0[2],pch0[,2])
                    if(with.lab0){
-                      text(y0, y0.vec, lab.pts0, f1/2, col0[1])
-                      text(y0c, y0c.vec, lab.pts0C, f1c/2, col0[2])
+                      tx(y0, y0.vec, lab.pts0, f1/2, col0[1])
+                      tx(y0c, y0c.vec, lab.pts0C, f1c/2, col0[2])
                    }
                    pL0
                    }, list(ICy0c = y.dC, ICy0 = y.d,
                            pL0 = pL, y0 = x.d, y0c = x.dC,
-                           cex0 = cex.pts, pch0 = pch.pts,
+                           cex0 = cex.pts, pch0 = pch.pts, al0 = alp.v,
                            col0 = col.pts, with.lab0 = with.lab,n0 = n,
                            lab.pts0 = lab.pts[i.d], lab.pts0C = lab.pts[i.dC],
                            jitter.fac0 = jitter.fac
@@ -392,7 +404,7 @@ setMethod("infoPlot", "IC",
 
                do.call(plot, args=c(list(resc$X, resc$Y, type = plty,
                    lty = ltyI, col = colI, lwd = lwdI,
-                   xlab = xlab0, ylab = ylab.abs, panel.last = pL.abs),
+                   xlab = xlab, ylab = ylab.abs, panel.last = pL.abs),
                    dotsP1))
                do.call(lines, args=c(list(resc.C$X, resc.C$Y, type = plty,
                        lty = lty, lwd = lwd, col = col), dotsL))
@@ -427,6 +439,7 @@ setMethod("infoPlot", "IC",
                 classIC.i.5 <- QFc.5%*%classIC
                 for(i in 1:dims0){
                     indi <- to.draw1[i]-1
+                    i1 <- i + in1to.draw
                     if(!is.null(ylim)) 
                          dotsP$ylim <- ylim[,in1to.draw+i]       
                     else dotsP$ylim <- c(0,1)
@@ -437,7 +450,7 @@ setMethod("infoPlot", "IC",
                               absInfoEval(resc.C$x,absInfoClass.f)
 
                     do.call(plot, args=c(list(resc$X, y.vec1, type = plty,
-                                  lty = lty, xlab = xlab0, ylab = ylab.rel,
+                                  lty = lty, xlab = xlab, ylab = ylab.rel,
                                   col = col, lwd = lwd, panel.last = pL.rel),
                                   dotsP))
 
@@ -449,9 +462,9 @@ setMethod("infoPlot", "IC",
                               x.ticks = x.ticks,
                               y.ticks = y.ticks[[i+in1to.draw]])
                     if(with.legend)
-                      legend(.legendCoord(legend.location[[i+in1to.draw]],
+                      legend(.legendCoord(legend.location[[i1]],
                                  scaleX, scaleX.fct, scaleY, scaleY.fct),
-                           bg = legend.bg, legend = legend[[i+in1to.draw]],
+                           bg = legend.bg, legend = legend[[i1]],
                            col = c(colI, col), lwd = c(lwdI, lwd),
                            lty = c(ltyI, lty), cex = legend.cex*fac.leg)
                     if(innerL)

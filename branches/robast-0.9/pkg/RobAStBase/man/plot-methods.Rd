@@ -20,8 +20,8 @@
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL)
 \S4method{plot}{IC,numeric}(x, y, ..., cex.pts = 1,
-                            col.pts = par("col"), pch.pts = 1, jitter.fac = 1,
-                            with.lab = FALSE, lab.pts = NULL, lab.font = NULL,
+             col.pts = par("col"), pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
+             lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, return.Order = FALSE)
 }
 \arguments{
@@ -84,7 +84,8 @@
   \item{scaleY.inv}{an isotone, vectorized function mapping for each coordinate
             the range [0,1] into the range of the respective coordinate of the IC;
             defaulting to the quantile function of  \eqn{{\cal N}(0,1)}{N(0,1)}.}
-  \item{scalen}{integer; defaults to 9; on rescaled axes, number of x and y ticks if drawn automatically;}
+  \item{scaleN}{integer; defaults to 9; on rescaled axes, number of x
+                and y ticks if drawn automatically;}
   \item{x.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
                  if non-NULL, user-given x-ticks (on original scale);}
   \item{y.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
@@ -109,6 +110,14 @@
   \item{lab.pts}{character or NULL; labels to be plotted to the observations; if \code{NULL}
                  observation indices;}
   \item{lab.font}{font to be used for labels}
+  \item{alpha.trsp}{alpha transparency to be added ex post to colors
+        \code{col.pch} and \code{col.lbl}; if one-dim and NA all colors are
+        left unchanged. Otherwise, with usual recycling rules \code{alpha.trsp}
+        gets shorted/prolongated to length the data-symbols to be plotted.
+        Coordinates of this vector \code{alpha.trsp} with NA are left unchanged,
+        while for the remaining ones, the alpha channel in rgb space is set
+        to the respective coordinate value of \code{alpha.trsp}. The non-NA
+        entries must be integers in [0,255] (0 invisible, 255 opaque).}
   \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
                     for plotting points of the second argument in a jittered fashion.}
   \item{which.lbs}{either an integer vector with the indices of the observations
