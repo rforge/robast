@@ -202,11 +202,11 @@ if(FALSE){
 
 }
 
-.legendCoord <- function(x, scX, scX.fct, scY, scY.fct){
+.legendCoord <- function(x, scaleX, scaleX.fct, scaleY, scaleY.fct){
 # rescaled legend coordinates axes acc. to logicals scaleX, scaleY
 # return value: transformed legend coordinates
                 if (is.character(x)) return(x)
-                x1 <- if(scX) scX.fct(x[1]) else x[1]
-                x2 <- if(scY) scY.fct(x[2]) else x[2]
+                x1 <- if(scaleX) scaleX.fct(x[1]) else x[1]
+                x2 <- if(scaleY) scaleY.fct(x[2]) else x[2]
                 return(c(x1,x2))
             }
