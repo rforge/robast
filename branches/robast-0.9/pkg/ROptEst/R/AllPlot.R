@@ -16,6 +16,9 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
         L2Fam <- eval(x@CallL2Fam); trafO <- trafo(L2Fam@param)
         dims  <- nrow(trafO); to.draw <- 1:dims
+        dimnms  <- c(rownames(trafO))
+        if(is.null(dimnms))
+           dimnms <- paste("dim",1:dims,sep="")
         if(! is.null(to.draw.arg)){
             if(is.character(to.draw.arg))
                  to.draw <- pmatch(to.draw.arg, dimnms)

@@ -12,7 +12,9 @@
 S4-Method \code{comparePlot} for signature \code{IC,IC} has been enhanced compared to
 its original definition in \pkg{RobAStBase} so that if
 argument \code{MBRB} is \code{NA}, it is filled automatically by a call
-to \code{optIC} which computes the MBR-IC on the fly.
+to \code{optIC} which computes the MBR-IC on the fly. To this end, there
+is an additional argument \code{n.MBR} defaulting to 10000
+to determine the number of evaluation points.
 }
 \examples{
 if(require(ROptEst)){

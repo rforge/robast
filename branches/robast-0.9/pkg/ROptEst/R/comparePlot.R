@@ -8,7 +8,7 @@ setMethod("comparePlot", signature("IC","IC"),
              with.legend = FALSE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
              withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
-             lty.MBR = "dashed", lwd.MBR = 0.8,
+             lty.MBR = "dashed", lwd.MBR = 0.8,  n.MBR = 10000,
              scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
@@ -22,6 +22,9 @@ setMethod("comparePlot", signature("IC","IC"),
 
         L2Fam <- eval(obj1@CallL2Fam); trafO <- trafo(L2Fam@param)
         dims  <- nrow(trafO); to.draw <- 1:dims
+        dimnms  <- c(rownames(trafO))
+        if(is.null(dimnms))
+           dimnms <- paste("dim",1:dims,sep="")
         if(! is.null(to.draw.arg)){
             if(is.character(to.draw.arg))
                  to.draw <- pmatch(to.draw.arg, dimnms)
@@ -36,7 +39,8 @@ setMethod("comparePlot", signature("IC","IC"),
                              ContNeighborhood(radius = 0.5))
            ICmbr <- try(optIC(model = robModel, risk = asBias()), silent=TRUE)
            if(!is(ICmbr,"try-error"))
-              MBRB <- .getExtremeCoordIC(ICmbr, distribution(L2Fam), to.draw)
+              MBRB <- .getExtremeCoordIC(ICmbr, distribution(L2Fam), to.draw,
+                                         n=n.MBR)
            else withMBR <- FALSE
         }
         mcl$MBRB <- MBRB
