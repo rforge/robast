@@ -6,8 +6,6 @@
 \alias{getRiskFctBV,asMSE,ANY-method}
 \alias{getRiskFctBV,asSemivar,onesidedBias-method}
 \alias{getRiskFctBV,asSemivar,asymmetricBias-method}
-\alias{getRiskFctBV,asL1,ANY-method}
-\alias{getRiskFctBV,asL4,ANY-method}
 \title{Methods for Function getRiskFctBV  in Package `RobAStBase'}
 \description{getRiskFctBV for a given object of S4 class \code{asGRisk}
        returns a function in bias and variance to compute the asymptotic
@@ -33,14 +31,6 @@
   \eqn{E[\nu_1 (S_n-\theta)_+^2+\nu_2(S_n-\theta)_-^2]}{nu1*max(Sn-theta,0)^2+nu2*max(theta-Sn,0)^2]}
   for a given ALE \eqn{S_n}{Sn} at a situation where it has one-sided bias
   \code{bias} (including the radius!) and variance \code{variance}. }
-\item{getRiskFctBV}{\code{signature(risk = "asL1", biastype = "ANY")}:
-  returns a function with arguments \code{bias} and \code{variance}
-  to compute the asymptotic absolute (L1) error for a given ALE at a situation
-  where it has bias \code{bias} (including the radius!) and variance \code{variance}. }
-\item{getRiskFctBV}{\code{signature(risk = "asL4", biastype = "ANY")}:
-  returns a function with arguments \code{bias} and \code{variance}
-  to compute the asymptotic L4 error for a given ALE at a situation where
-  it has bias \code{bias} (including the radius!) and variance \code{variance}. }
 }}
 \examples{
 myrisk <- asMSE()
