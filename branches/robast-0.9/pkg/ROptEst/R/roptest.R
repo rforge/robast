@@ -1,7 +1,7 @@
 ###############################################################################
 ## Optimally robust estimation
 ###############################################################################
-roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
+roptest.old <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
                     distance = CvMDist, startPar = NULL, verbose = NULL,
                     OptOrIter = "iterate",

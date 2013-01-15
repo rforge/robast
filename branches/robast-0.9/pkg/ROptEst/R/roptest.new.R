@@ -2,7 +2,7 @@
 ## Optimally robust estimation
 ###############################################################################
 
-roptest.n <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
+roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
                     distance = CvMDist, startPar = NULL, verbose = NULL,
                     OptOrIter = "iterate",
@@ -17,7 +17,7 @@ roptest.n <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.es
     es.call0 <- match.call(expand.dots=FALSE)
     dots <- es.call0[["..."]]
     es.call0$"..." <- NULL
-    es.call1 <- .constructArg.list(roptest.n,es.call0, onlyFormal=FALSE,
+    es.call1 <- .constructArg.list(roptest,es.call0, onlyFormal=FALSE,
                             debug = ..withCheck)$mc
 
     res <- .constructArg.list(gennbCtrl,es.call1, onlyFormal=TRUE,
@@ -43,17 +43,17 @@ roptest.n <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.es
     list1 <- c(list1,dots)
     list1$..withCheck <- NULL
     if(..withCheck) print(list1)
-    if(..withCheck) return(substitute(do.call(roptEst, lis), list(lis=list1)))
+    if(..withCheck) return(substitute(do.call(robest, lis), list(lis=list1)))
     else{
-    res <- do.call(roptEst, list1)
+    res <- do.call(robest, list1)
     res@estimate.call <- es.call
     return(res)}
 }
-#roptest.n(x=1:10,L2Fam=GammaFamily(),also=3,..withCheck=TRUE)
+#roptest(x=1:10,L2Fam=GammaFamily(),also=3,..withCheck=TRUE)
 
-#roptest.n(x=1:10,L2Fam=GammaFamily(),also=3)
+#roptest(x=1:10,L2Fam=GammaFamily(),also=3)
 
-roptEst <- function(x, L2Fam,  fsCor = 1,
+robest <- function(x, L2Fam,  fsCor = 1,
                      risk = asMSE(), steps = 1L,
                       verbose = NULL,
                     OptOrIter = "iterate",
@@ -93,7 +93,7 @@ roptEst <- function(x, L2Fam,  fsCor = 1,
     x <- res.x$x
     completecases <- res.x$completecases
 
-    es.list[["x"]] <- x
+    es.list$x <- x
     if(debug){   cat("\nes.list:\n");print(es.list);cat("\n\n")}
 
     .isOKfsCor(fsCor)
@@ -154,7 +154,7 @@ roptEst <- function(x, L2Fam,  fsCor = 1,
     if(debug) print(risk)
 
     if(!is(risk,"interpolRisk"))
-       es.list0[["eps"]] <- do.call(.check.eps, args=c(nbCtrl,list("x"=x)))
+       es.list0$eps <- do.call(.check.eps, args=c(nbCtrl,list("x"=x)))
     es.list0$risk <- NULL
     es.list0$L2Fam <- NULL
     neighbor <- eval(es.list0$neighbor)
@@ -167,6 +167,7 @@ roptEst <- function(x, L2Fam,  fsCor = 1,
     es.list0$eps.lower <- NULL
     es.list0$eps.upper <- NULL
     es.list0$na.rm <- NULL
+    es.list0$fsCor <- eval(es.list0$fsCor)
     if(debug) {cat("\n\n\n::::\n\n")
     argList <- c(list(model=L2Fam,risk=risk,neighbor=neighbor),
                                              es.list0)

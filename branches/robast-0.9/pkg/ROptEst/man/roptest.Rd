@@ -1,5 +1,6 @@
 \name{roptest}
 \alias{roptest}
+\alias{roptest.old}
 \title{ Optimally robust estimation }
 \description{
   Function to compute optimally robust estimates for L2-differentiable
@@ -8,6 +9,17 @@
 \usage{
 roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est, 
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
+        distance = CvMDist, startPar = NULL, verbose = NULL,
+        OptOrIter = "iterate",
+        useLast = getRobAStBaseOption("kStepUseLast"),
+        withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+        IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+        withICList = getRobAStBaseOption("withICList"),
+        withPICList = getRobAStBaseOption("withPICList"),
+        na.rm = TRUE, initial.est.ArgList, ...,
+        withLogScale = TRUE, ..withCheck = FALSE)
+roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
+        neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
         distance = CvMDist, startPar = NULL, verbose = NULL,
         OptOrIter = "iterate",
         useLast = getRobAStBaseOption("kStepUseLast"),
@@ -71,6 +83,7 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   \item{withLogScale}{logical; shall a scale component (if existing and found
    with name \code{scalename}) be computed on log-scale and backtransformed
    afterwards? This avoids crossing 0.}
+   \item{..withCheck}{logical: if switched on, debugging info is issued.}
 }
 \details{
   Computes the optimally robust estimator for a given L2 differentiable
@@ -78,6 +91,11 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   appropriate initial estimate; cf. also \code{\link[RobAStBase]{kStepEstimator}}. 
   Valid candidates are e.g. Kolmogorov(-Smirnov) or von Mises minimum 
   distance estimators (default); cf. Rieder (1994) and Kohl (2005).
+
+  Before package version 0.9, this computation was done with the code of
+  function \code{roptest.old} (with the same formals). From package version
+  0.9 on, this function uses the modularized function \code{\link{robest}}
+  internally.
 
   If the amount of gross errors (contamination) is known, it can be 
   specified by \code{eps}. The radius of the corresponding infinitesimal 
@@ -168,6 +186,8 @@ confint(MLest)
 
 ## compute optimally robust estimator (known contamination)
 robest1 <- roptest(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
+robest1.0 <- roptest.old(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
+identical(robest1,robest1.0)
 estimate(robest1)
 confint(robest1, method = symmetricBias())
 ## neglecting bias

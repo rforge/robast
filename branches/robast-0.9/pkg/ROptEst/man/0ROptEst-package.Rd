@@ -59,15 +59,16 @@ MLest
 confint(MLest)
 
 ## compute optimally (w.r.t to MSE) robust estimator (unknown contamination)
-robest <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
-estimate(robest)
+robEst <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
+estimate(robEst)
 ## check influence curve
-checkIC(pIC(robest))
+pIC(robEst)
+checkIC(pIC(robEst))
 ## plot influence curve
-plot(pIC(robest))
+plot(pIC(robEst))
 ## confidence interval based on LAN - neglecting bias
-confint(robest)
+confint(robEst)
 ## confidence interval based on LAN - including bias
-confint(robest, method = symmetricBias())
+confint(robEst, method = symmetricBias())
 }
 \keyword{package}

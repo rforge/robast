@@ -77,15 +77,6 @@ if(!isGeneric("getModifyIC")){
 if(!isGeneric("scaleUpdateIC")){
     setGeneric("scaleUpdateIC", function(neighbor, ...) standardGeneric("scaleUpdateIC"))
 }
-if(!isGeneric("cniperCont")){
-    setGeneric("cniperCont", function(IC1, IC2, L2Fam, neighbor, risk, ...) standardGeneric("cniperCont"))
-}
-if(!isGeneric("cniperPoint")){
-    setGeneric("cniperPoint", function(L2Fam, neighbor, risk, ...) standardGeneric("cniperPoint"))
-}
-if(!isGeneric("cniperPointPlot")){
-    setGeneric("cniperPointPlot", function(L2Fam, neighbor, risk, ...) standardGeneric("cniperPointPlot"))
-}
 if(!isGeneric("eff")){
     setGeneric("eff", function(object) standardGeneric("eff"))
 }

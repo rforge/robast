@@ -1,14 +1,14 @@
 .getPsi <- function(xi, beta, fct, L2Fam , type){
 
    L2deriv <- L2Fam@L2deriv
-   dbeta <- diag(c(beta,1))
+   .dbeta <- diag(c(beta,1))
    b <- fct[[1]](xi)
-   a <-  c(dbeta%*%c(fct[[2]](xi),fct[[3]](xi)))
-   aw <- c(dbeta%*%c(fct[[4]](xi),fct[[5]](xi)))
+   a <-  c(.dbeta%*%c(fct[[2]](xi),fct[[3]](xi)))
+   aw <- c(.dbeta%*%c(fct[[4]](xi),fct[[5]](xi)))
    am <- mean(c(fct[[7]](xi),fct[[8]](xi)))
-   A <-  dbeta%*%matrix(c(fct[[6]](xi),am,am,fct[[9]](xi)),2,2)%*%dbeta
+   A <-  .dbeta%*%matrix(c(fct[[6]](xi),am,am,fct[[9]](xi)),2,2)%*%.dbeta
    am <- mean(c(fct[[11]](xi),fct[[12]](xi)))
-   Aw <- dbeta%*%matrix(c(fct[[10]](xi),am,am,fct[[13]](xi)),2,2)%*%dbeta
+   Aw <- .dbeta%*%matrix(c(fct[[10]](xi),am,am,fct[[13]](xi)),2,2)%*%.dbeta
 
 
 
