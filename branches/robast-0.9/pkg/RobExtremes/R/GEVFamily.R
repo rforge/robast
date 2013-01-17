@@ -4,8 +4,6 @@
 ##
 ################################
 
-## class
-setClass("GEVFamily", contains="L2ParamFamily")
 
 ## methods
 setMethod("validParameter",signature(object="GEVFamily"),
@@ -132,8 +130,8 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                             names(th) <- c("scale", "shape"); th}
                 Dtau <- function(theta){ D <- diag(2);
                             rownames(D) <- c("scale", "shape");D}
-                }
             }
+        }
         if("quantile" %in% of.interest){
             if(is.null(p)) stop("Probability 'p' has to be specified.")
             if(is.null(tau)){
@@ -271,40 +269,27 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     FisherInfo.fct <- function(param) {
         sc <- force(main(param)[1])
         k <- force(main(param)[2])
-#        tr <- force(fixed(param)[1])
-#        fct <- L2deriv.fct(param)
-#        P2 <-  GPareto(loc = tr, scale = sc, shape = k)
         G20 <- gamma(2*k)
         G10 <- gamma(k)
-        G21 <- digamma(2*k)
-        G11 <- digamma(k)
+        G11 <- digamma(k)*gamma(k)
         G01 <- digamma(1)
-        G02 <- trigamma(1)
-        I11 <- G20*2*k*(k^2-4*k+1)+G10*2*k*(k^2+k-1)+1
+        G02 <- trigamma(1)+digamma(1)^2
+        x0 <- (k+1)^2*2*k
+        I11 <- G20*x0-2*G10*k*(k+1)+1
         I11 <- I11/sc^2/k^2
-        I12 <- G20*k*(2*k^2-1)+ G10*k^2*(2-4*k) - k + 3
-        I12 <- I12 + G21*2*k^2 -G11*k^2*(k^2+2*k+1) -G01*k
+        I12 <- G20*(-x0)+ G10*(k^3+4*k^2+3*k) - k -1
+        I12 <- I12 + G11*(k^3+k^2) -G01*k
         I12 <- I12/sc/k^3
-        I22 <- G20*2*k*(k^2+1)-G10*2*k*(2+3*k+k^2) -3*k^2  +8*k +3
-        I22 <- I22 - G11*2*k^2*(1+k)+G10*2*k*(3-k)+k^2 *G02
+        I22 <- G20*x0 +(k+1)^2 -G10*(x0+2*k*(k+1))
+        I22 <- I22 - G11*2*k^2*(k+1) + G01*2*k*(1+k)+k^2 *G02
         I22 <- I22 /k^4
+        mat <- PosSemDefSymmMatrix(matrix(c(I11,I12,I12,I22),2,2))
         mat <- PosSemDefSymmMatrix(matrix(c(I11,I12,I12,I22),2,2))
         dimnames(mat) <- list(scaleshapename,scaleshapename)
         return(mat)
     }
 
 
-#    FisherInfo.fct <- function(param) {
-#        beta <- force(main(param)[1])
-#        xi <- force(main(param)[2])
-#        mu <- force(fixed(param)[1])
-#        fct <- L2deriv.fct(param)
-#        P <-  GEV(loc = mu, scale = beta, shape = xi)
-#       E11 <- E(P,function(x)fct[[1]](x)*fct[[1]](x))
-#        E12 <- E(P,function(x)fct[[1]](x)*fct[[2]](x))
-#        E22 <- E(P,function(x)fct[[2]](x)*fct[[2]](x))
-#        return(PosSemDefSymmMatrix(matrix(c(E11,E12,E12,E22),2,2)))
-#    }
 
     FisherInfo <- FisherInfo.fct(param)
     name <- "Generalized Extreme Value Family with positive shape parameter: Frechet Family"

@@ -235,6 +235,7 @@ setClass("GumbelLocationFamily",
 
 ## Generalized Pareto 
 setClass("GParetoFamily", contains="L2ScaleShapeUnion")
+setClass("GEVFamily", contains="L2ScaleShapeUnion")
 setClass("WeibullFamily", contains="L2ScaleShapeUnion")
 
 
