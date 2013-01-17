@@ -1,0 +1,168 @@
+------------------------------------------------------------------------
+all
+------------------------------------------------------------------------
+added argument no.readonly = TRUE in all assignments of type opar <- par();
+commented out all assignments of type omar$cin <- NULL
+updated *.Rout.save files to R 3.0.0dev
+removed calls to require from R sources and replaced it by directives in the NAMESPACE file
+all packages get a DESCRIPTION tag "ByteCompile"
+
+SVNRevision tags in DESCRPTION files updated
+
+increased version number
+start to implement a backwards compatible version of internal .get*** functions - does not work so far!
+changes according to the idea of Peter, no warnings or errors under R 2.15.1 patched and 2.16.0 - just some notes about no visible bindings ...
+
+Kurt Hornik (CRAN) reported problems with the approach of using approxfun. Hence, I've implemented a new approach based on approx and saved values.
+
+
+------------------------------------------------------------------------
+RandVar
+------------------------------------------------------------------------
+new folder vignettes in RandVar
+some encoding problems with vignette which now includes "\usepackage[utf8]{inputenc}"
+update of Rout.save files, added seed for reproducibility
+
+------------------------------------------------------------------------
+RobAStBase
+------------------------------------------------------------------------
+
+[RobAStBase] Bug in infoPlot(), detected by Nataliya Horbenko, tentatively fixed
+
+use of colnames instead of sampleNames to avoid the error on CRAN ...
+RobAStbase: a small change in kStepEstimator -- now uses the (possibly nonlinear) 
+   trafo instead of the Jacobian to get the pIC-estimator from the untransformed estimator
+RobAStbase: implemented scale estimation on log-scale for kStepEstimator
+RobAStBase: fixed some 1-dim vs >1-dim issues in kStepEstimator.R
+
+RobAStBase: minor Enhancements of ddPlot
+changes in outlyingPlot
+
+...and yet some correction as to variances
+[RobAStBase] Created new interpolRisk-class to be able to use speed up in (new version) of roptest
+argh: yet another one...
+
+Spielwiese...
+
+in my last session forgot to commit something in RobAStBase
+RobAStBase: interpolRisks extended by slot samplesize
+
+Removed "..." in definition of generic for "samplesize<-", this had led to a warning in R CMD check.
+modularized diagnostic plots; still checking + debugging necessary
+
+RobAStBase / ROptEst diagnostics: inserted comments to helper functions;
+.rescalefct looses argument scaleY.inv (not needed).
+
+RobAStBase: finished debugging;remains to find good examples
+RobAStBase: documented helper functions
+
+
+[RobAstBase] thx to hint by Matthias (NAMESPACE), and some (more specific) Rd-links to gettextf, now no more notes or warnings in R-2.16.0dev
+
+------------------------------------------------------------------------
+ROptEst
+------------------------------------------------------------------------
+
+added new function 'showdown' to compare some estimator with our rmx estimator by some Monte-Carlo study. Had to add 'importFrom(distr, q)' to NAMESPACE to avoid error with function 'q' inside of 'showdown' - why?!
+a minimal correction in getInfRobIC_asGRisk.R
+roptest auf logscale-Aufruf von kStepEstimator erweitert
+ROptEst: removed argument scalename from arglist of roptest -- it is computed automatically now.
+
+2) added: Suggests field with RobLox and MASS due to a warning by R CMD check
+3) assigned result of qqplot to some variable to reduce output
+
+ROptEst: first warningless version with new robest (and everything documented)
+moved asL1, asL4 risk methods from RobAStBase to ROptEst
+ROptEst: fixed yet another buglet
+
+------------------------------------------------------------------------
+robLox
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+robLoxBioC
+------------------------------------------------------------------------
+
+had forgotten to also check new items from trunk when creating branch robast-0.9 
+             now added AffymetrixReproducibility.R, AffymetrixSimStudy.R, IlluminaReproducibility.R
+             from [trunc] scripts folder; @Matthias pls check whether I missed something else...
+minor changes to RobLoxBioC to remove check warnings and increase reproducibility of examples
+update for beadarray version  >= 2.0.0, not yet tested
+forgot to add signature from BeadLevelList to BeadLevelData
+it's beadLevelData not BeadLevelData, 
+updated function does not work so far!
+several updates due to changes in R and package beadarray
+
+------------------------------------------------------------------------
+ROptEstOld
+------------------------------------------------------------------------
+adapted ROptEstOld to the move of Gumbel... from distrEx to RobExtremes
+
+------------------------------------------------------------------------
+RobRex
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+ROptRegTS
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+ROptReg
+------------------------------------------------------------------------
+
+even if (by far) not yet ready: I did commit my work of yesterday...
+
+(forgot the NAMESPACE file)
+ROptReg: renamed slots in class "GLMLink" according to slot names in Family in glm ...
+
+
+------------------------------------------------------------------------
+RobExtremes
+------------------------------------------------------------------------
+
++  a first version of package committed
++ considerably improved grid for Sn method for GPareto
++ removed withPos relics in GParetoFamily
++ new LDEstimate class
++ moved definition of S4 method for Sn and GPareto from interpolSn.R to SnQn.R
+RobExtremes: forgot to initialize correctly slots L2derivSymm and L2derivDistrSymm in GParetoFamily.R;
+ some correctinos in interpolation routines for GPD
+to share some ideas: some test files in connection with RobExtremes
+RobExtremes:
+new: + PickandsEstimator (incl. as.var)
+     + as.var(MedkMAD)
+some fixes in generating function to GParetoFamily
+GEV und Weibull Parameter Families
+in my last session forgot to commit something in RobExtremes
+
+in particular GEVFamily.R is still to be checked
+added folder scripts with some R-files that can be used to compute interpolation of Lagrange multipliers and finite sample correction
+used "R CMD build --resave-data RobExtremes" to further compress sysdata.rda
+The Weibull implementation is still incomplete ...
+
+adapted title of the package to other RobASt-packages
+
+Implementation of Weibull family is incomplete: 
+- added class definition for Weibull family
+- minor correction in generating function for Weibull family
+
+Eingbindung von asvar zum LDEstimator
+
+added some example code, minor modification of replacement methods for Pareto distribution
+
+
+cleaned NAMESPACE, added documentation of WeibulFamily
+
+somehow forgot to commit these changes
+
+plotting Functions for RobExtremes and test functions
+
+TestInfrastructure for RobExtremes
+
+Tests for RobExtremes
+RobExtremes: inserted Weibull-Family class
+
+GEV-Family und weitere Änderungen
+
+minor error in CITATION file corrected
+

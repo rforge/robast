@@ -1,0 +1,45 @@
+Hi,
+
+we have just uploaded a new versions for some packages of the
+robastXXX family of packages to CRAN,
+
+more specifically,
+
+RandVar_0.9, RobAStBase_0.9, ROptEst_0.9, RobLox_0.9, RobLoxBioC_0.9, 
+ROptEstOld_0.9, ROptRegTS_0.9, RobRex_0.9,
+
+and new package RobExtremes_0.9
+   (version number coherent with RobAStXXX family)
+
+Kind regards, Peter
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+New versions 0.9 of our RobASt-family of packages are now
+available on CRAN.
+
+(i.e.; RandVar, RobAStBase, ROptEst,
+       RobLox, ROptEstOld, ROptEstTS, RobRex,
+       RobLoxBioC)
+
+and new package RobExtremes providing support for robust
+estimation in extreme value distributions.
+
+Most importantly, we have included:
+
+
+For more details see the corresponding NEWS files
+(e.g. news(package = "RobAStBase")
+or using function NEWS from package startupmsg
+i.e. NEWS("RobAStBase")).
+
+We are looking forward to getting your RFEs, bug reports 
+or simple feedback,
+
+
+Best,
+
+Peter, Matthias, Nataliya
+------------------------------------------------------------------------
+------------------------------------------------------------------------
