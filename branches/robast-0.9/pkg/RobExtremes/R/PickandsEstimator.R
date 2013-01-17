@@ -42,7 +42,7 @@ PickandsEstimator <- function(x, alpha = 2, ParamFamily=GParetoFamily(),
 
     .mPick <- function(x) .PickandsEstimator(x,alpha=alpha, GPD.l=isGP)
     estimate <- Estimator(x, .mPick, name, Infos,
-                          asvar.fct = asvar.fct0 asvar = asvar,
+                          asvar.fct = asvar.fct0, asvar = asvar,
                           nuis.idx = nuis.idx.0, trafo = trafo.0,
                           fixed = fixed.0, na.rm = na.rm.0, ...)
 ##->

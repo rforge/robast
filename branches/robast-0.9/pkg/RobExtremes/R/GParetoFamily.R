@@ -4,6 +4,8 @@
 ##
 ################################
 
+## class
+setClass("GParetoFamily", contains="L2ParamFamily")
 
 ## methods
 setMethod("validParameter",signature(object="GParetoFamily"),
@@ -136,7 +138,6 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
                             rownames(D) <- c("scale", "shape");D}
                 }
             }
-        }
         if("quantile" %in% of.interest){
             if(is.null(p)) stop("Probability 'p' has to be specified.")
             if(is.null(tau)){
