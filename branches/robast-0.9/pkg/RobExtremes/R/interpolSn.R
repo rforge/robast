@@ -1,3 +1,5 @@
+.versionSuff <- RobAStBase:::.versionSuff
+
 getShapeGrid <- function(gridsize=1000,centralvalue=0.7,
                          withPos=TRUE, cutoff.at.0=1e-4, fac = 2){
 
@@ -113,8 +115,8 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
 
   cat("whatIsThereAlready = ", head(whatIsThereAlready), "\n")
 
-  if(exists(nameInSysdata,envir=newEnv)){
-    InterpGrids <- get(nameInSysdata, envir=newEnv)
+  if(exists(.versionSuff(nameInSysdata),envir=newEnv)){
+    InterpGrids <- get(.versionSuff(nameInSysdata), envir=newEnv)
     namesInterpGrids <- names(InterpGrids)
     cat(gettext("Names of existing grids:\n"))
     cat(paste("   ", namesInterpGrids , "\n"))
@@ -163,7 +165,7 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
   }
 
   if(l.ng> -2){
-     assign(nameInSysdata, InterpGrids, envir=newEnv)
+     assign(.versionSuff(nameInSysdata), InterpGrids, envir=newEnv)
      save(list=whatIsThereAlready, file=sysdataFile, envir=newEnv)
      tools::resaveRdaFiles(sysRdaFolder)
      cat(gettextf("%s successfully written to sysdata.rda file.\n",

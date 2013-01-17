@@ -5,6 +5,7 @@
 ##                                      ##
 ##########################################
 
+if(FALSE){
 ##projection distance
   qfun = function(x){p0 = p(X)(x); q0 = q(X)(p0)}
   QProj <- function(){new("NormType", name="Quantiles", fct=qfun)}
@@ -65,3 +66,4 @@ X= GPareto()
 fam = GParetoFamily()
 x = r(X)(1000)
 plotOutlyingness(x,alpha=0.9,X=X,fam=fam)
+}

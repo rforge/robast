@@ -22,7 +22,7 @@
                           loc.fctal.0, disp.fctal.0, ParamFamily.0,
                         loc.est.ctrl.0 = NULL, loc.fctal.ctrl.0=NULL,
                         disp.est.ctrl.0 = NULL, disp.fctal.ctrl.0=NULL,
-                        q.lo.0 =0, q.up.0=Inf, log.q.0 =TRUE, ...
+                        q.lo.0 =0, q.up.0=Inf, log.q.0 =TRUE, ..., vdbg=FALSE
                         ){
     dots <- list(...)
     loc.emp <- do.call(loc.est.0, args = .prepend(x.0,loc.est.ctrl.0, dots))
@@ -34,6 +34,7 @@
        sc.th <- do.call(disp.fctal.0, args = .prepend(distr.new,disp.fctal.ctrl.0, dots))
        val <- if(log.q.0) log(loc.th)-log(sc.th) - q.emp else
                         loc.th/sc.th-q.emp
+       if(vdbg) print(val)
        return(val)
     }
     xi.0 <- uniroot(q.f,lower=q.lo.0,upper=q.up.0)$root
@@ -50,7 +51,7 @@ LDEstimator <- function(x, loc.est, disp.est,
                         q.lo =1e-3, q.up=15, log.q =TRUE,
                         name, Infos, asvar = NULL, nuis.idx = NULL,
                         trafo = NULL, fixed = NULL, asvar.fct  = NULL, na.rm = TRUE,
-                        ...){
+                        ..., vdbg = FALSE){
     param0 <- main(param(ParamFamily))
     if(!all(c("shape","scale") %in% names(param0)))
         stop("LDEstimators expect shape-scale models.")
@@ -77,7 +78,7 @@ LDEstimator <- function(x, loc.est, disp.est,
                          disp.fctal.ctrl.0 = disp.fctal.ctrl,
                          q.lo.0 = q.lo, 
                          q.up.0 = q.up, 
-                         log.q.0 = log.q)
+                         log.q.0 = log.q, vdbg = vdbg)
          return(LDMval[1:2])
     }
 
@@ -156,7 +157,7 @@ LDEstimator <- function(x, loc.est, disp.est,
 
 medkMAD <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
                         trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
-                        ...){
+                        ..., vdbg = FALSE){
       es.call <- match.call()
       if(missing(k)) k <- 1
 
@@ -173,7 +174,7 @@ medkMAD <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
                      q.lo =q.lo, q.up=q.up, log.q=TRUE,
                      name = "medkMAD", Infos="medkMAD",
                      asvar = asvar, nuis.idx = nuis.idx, trafo = trafo, fixed = fixed,
-                     asvar.fct = asvar.fct, na.rm = na.rm, ...)
+                     asvar.fct = asvar.fct, na.rm = na.rm, ..., vdbg = vdbg)
       es@estimate.call <- es.call
      
       return(es)

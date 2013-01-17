@@ -1,13 +1,16 @@
-.PickandsEstimator <- function(x, alpha = 2){
+.PickandsEstimator <- function(x, alpha = 2, GPD.l=TRUE){
  a1 <- 1-1/alpha
  a2 <- 1-1/alpha^2
-
+ if(!GPD.l){
+   a1 <- exp(-1/alpha)
+   a2 <- exp(-1/alpha^2)
+ }
  ms <- quantile(x,c(a1,a2))
  names(ms) <- NULL
  I <- ms[2]
  m <- ms[1]
- xi <- abs( log((I-m)/m)/log(1-a1))
- beta <- xi*m^2/abs(I-2*m)
+ xi <- log((I-m)/m)/log(alpha)
+ beta <- xi*m/(alpha^xi-1)
  theta <- c(beta,xi)
  names(theta) <- c("scale","shape")
  return(theta)
@@ -17,17 +20,16 @@ PickandsEstimator <- function(x, alpha = 2, ParamFamily=GParetoFamily(),
                         name, Infos, asvar = NULL, nuis.idx = NULL,
                         trafo = NULL, fixed = NULL, asvar.fct  = NULL, na.rm = TRUE,
                         ...){
-    if(!is(ParamFamily,"GParetoFamily"))
-         stop("Pickands estimator only available for GPD.")
-    name.est <- "PickandsEstimator"
+    isGP <- is(ParamFamily,"GParetoFamily")
+    if(!(isGP|is(ParamFamily,"GEVFamily")))
+         stop("Pickands estimator only available for GPD and GEVD.")
     es.call <- match.call()
-    error <- FALSE
     if(missing(alpha)) alpha <- 2
     if(length(alpha)>1 || any(!is.finite(alpha)) || any(alpha<=1))
        stop("'alpha' has to be a numeric > 1 of length 1.")
 
     if(missing(name))
-        name <- "Some estimator"
+        name <- "PickandsEstimator"
 
 
     asvar.fct.0 <- function(L2Fam=ParamFamily, param){
@@ -38,11 +40,13 @@ PickandsEstimator <- function(x, alpha = 2, ParamFamily=GParetoFamily(),
     fixed.0 <- fixed
     na.rm.0 <- na.rm
 
-    estimate <- Estimator(x, .PickandsEstimator, name, Infos,
-                      asvar = asvar, nuis.idx = nuis.idx.0,
-                      trafo = trafo.0, fixed = fixed.0,
-                      na.rm = na.rm.0, alpha = alpha, ...)
-
+    .mPick <- function(x) .PickandsEstimator(x,alpha=alpha, GPD.l=isGP)
+    estimate <- Estimator(x, .mPick, name, Infos,
+                          asvar.fct = asvar.fct0 asvar = asvar,
+                          nuis.idx = nuis.idx.0, trafo = trafo.0,
+                          fixed = fixed.0, na.rm = na.rm.0, ...)
+##->
+if(FALSE){
     estimate@untransformed.asvar <- asvar(estimate)
     estimate@asvar <- asvar
 
@@ -60,7 +64,8 @@ PickandsEstimator <- function(x, alpha = 2, ParamFamily=GParetoFamily(),
        if(!is.null(asvar))
            estimate@asvar <- estimate@trafo$mat%*%asvar[idm,idm]%*%t(estimate@trafo$mat)
     }
-
+}
+## <-
     estimate@estimate.call <- es.call
 
     if(missing(Infos))

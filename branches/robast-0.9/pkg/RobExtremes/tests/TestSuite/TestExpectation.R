@@ -12,16 +12,30 @@
 
  
    ##expectation of Pareto distributed random variable
-   expectation.Pareto = function(shape0=1,Min0=1){
+    expectation.Pareto = function(shape0=1,Min0=1){
     X = Pareto(shape=shape0,Min=Min0)
     return(E(X))  
    }
 
+   ### zwei Strategien:
+     ## Ticket Nataliya:
+    # je ein Test für jeden Wert
    test.expectationPareto = function(){
     checkEquals(expectation.Pareto(1,1), Inf)
     checkEquals(expectation.Pareto(2,1), 0)
    }    
-  
+   test.expectationPareto2 = function(){
+    checkEquals(expectation.Pareto(2,1), Inf)
+   }
+   # ein Test für viele Werte
+   test.expectationPareto = function(){
+    a1 <- checkEquals(expectation.Pareto(1,1), Inf)
+    a2 <- checkEquals(expectation.Pareto(1,1), Inf)
+    print(c(a1,a2))
+    return(all(c(a1,a2)))
+   }
+
+
 #   test.HTMLInfo.Pareto = function(){
 #    track <- tracker()
 #    ## initialize the tracker

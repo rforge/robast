@@ -76,169 +76,113 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
     names(theta) <- c("loc", "scale", "shape")
     scaleshapename <- c("scale", "shape")
 
+    if(!is.null(p)){
+       btq <- substitute({ q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
+                           names(q) <- "quantile"
+                           }, list(loc0 = loc, p0 = p))
+
+       bDq <- substitute({ scale <- theta[1];  shape <- theta[2]
+                        D1 <- ((1-p0)^(-shape)-1)/shape
+                        D2 <- -scale/shape*(D1 + log(1-p0)*(1-p0)^(-shape))
+                        D <- t(c(D1, D2))
+                        rownames(D) <- "quantile"; colnames(D) <- NULL
+                        D }, list(p0 = p))
+       btes <- substitute({ if(theta[2]>=1L) es <- NA else {
+                            q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
+                            es <- (q + theta[1] - theta[2]*loc0)/(1-theta[2])}
+                            names(es) <- "expected shortfall"
+                            es }, list(loc0 = loc, p0 = p))
+       bDes <- substitute({ if(theta[2]>=1L){ D1 <- D2 <- NA}else{
+                            scale <- theta[1]; shape <- theta[2]
+                            q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
+                            dq1 <- ((1-p0)^(-shape)-1)/shape
+                            dq2 <- -scale/shape*(dq1 + log(1-p0)*(1-p0)^(-shape))
+                            D1 <- (dq1 + 1)/(1-shape)
+                            D2 <- (dq2 - loc0)/(1-shape) + (q + scale -
+                                       loc0*shape)/(1-shape)^2}
+                            D <- t(c(D1, D2))
+                            rownames(D) <- "expected shortfall"
+                            colnames(D) <- NULL
+                            D }, list(loc0 = loc, p0 = p))
+    }
+    if(!is.null(N)){
+       btel <- substitute({ if(theta[2]>=1L) el <- NA else {
+                            el <- N0*(loc0 + theta[1]/(1-theta[2]))}
+                            names(el) <- "expected loss"
+                            el }, list(loc0 = loc,N0 = N))
+       bDel <- substitute({ if(theta[2]>=1L){ D1 <- D2 <- NA}else{
+                            scale <- theta[1]; shape <- theta[2]
+                            D1 <- N0/(1-shape)
+                            D2 <- D1*scale/(1-shape)}
+                            D <- t(c(D1, D2))
+                            rownames(D) <- "expected loss"
+                            colnames(D) <- NULL
+                            D }, list(loc0 = loc, N0 = N))
+    }
     if(is.null(trafo)){
         tau <- NULL
         if("scale" %in% of.interest){
-            tau <- function(theta){ 
-                th <- theta[1]
-                names(th) <- "scale"
-                th
-            }
-            Dtau <- function(theta){ 
-                D <- t(c(1, 0))
-                rownames(D) <- "scale"
-                D 
-            }
+            tau <- function(theta){ th <- theta[1]; names(th) <- "scale";  th}
+            Dtau <- function(theta){ D <- t(c(1, 0)); rownames(D) <- "scale"; D}
         }
         if("shape" %in% of.interest){
             if(is.null(tau)){
-                tau <- function(theta){ 
-                    th <- theta[2] 
-                    names(th) <- "shape"
-                    th
-                }
-                Dtau <- function(theta){ 
-                    D <- t(c(0, 1))
-                    rownames(D) <- "shape"
-                    D 
-                }
+               tau <- function(theta){th <- theta[2]; names(th) <- "shape"; th}
+               Dtau <- function(theta){D <- t(c(0,1));rownames(D) <- "shape";D}
             }else{
-                tau <- function(theta){ 
-                  th <- theta 
-                  names(th) <- c("scale", "shape")
-                  th
-                }
-                Dtau <- function(theta){ 
-                    D <- diag(2) 
-                    rownames(D) <- c("scale", "shape")
-                    D
+                tau <- function(theta){th <- theta
+                            names(th) <- c("scale", "shape"); th}
+                Dtau <- function(theta){ D <- diag(2);
+                            rownames(D) <- c("scale", "shape");D}
                 }
             }
         }
         if("quantile" %in% of.interest){
             if(is.null(p)) stop("Probability 'p' has to be specified.")
             if(is.null(tau)){
-                tau <- function(theta){ }
-                body(tau) <- substitute({ q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
-                                          names(q) <- "quantile"
-                                          q },
-                                        list(loc0 = loc, p0 = p))
-                Dtau <- function(theta){ }
-                body(Dtau) <- substitute({ scale <- theta[1]
-                                           shape <- theta[2]
-                                           D1 <- ((1-p0)^(-shape)-1)/shape
-                                           D2 <- -scale/shape*(D1 + log(1-p0)*(1-p0)^(-shape))
-                                           D <- t(c(D1, D2))
-                                           rownames(D) <- "quantile"
-                                           colnames(D) <- NULL
-                                           D },
-                                         list(p0 = p))
+                tau <- function(theta){ }; body(tau) <- btq
+                Dtau <- function(theta){ };body(Dtau) <- bDq
             }else{
                 tau1 <- tau
                 tau <- function(theta){ }
-                body(tau) <- substitute({ q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
-                                          names(q) <- "quantile"
-                                          c(tau0(theta), q) },
-                                        list(tau0 = tau1, loc0 = loc, p0 = p))
+                body(tau) <- substitute({ btq0; c(tau0(theta), q) },
+                                        list(btq0=btq, tau0 = tau1))
                 Dtau1 <- Dtau
                 Dtau <- function(theta){}
-                body(Dtau) <- substitute({ scale <- theta[1]
-                                           shape <- theta[2]
-                                           D1 <- ((1-p0)^(-shape)-1)/shape
-                                           D2 <- -scale/shape*(D1 + log(1-p0)*(1-p0)^(-shape))
-                                           D <- t(c(D1, D2))
-                                           rownames(D) <- "quantile"
-                                           colnames(D) <- NULL
-                                           rbind(Dtau0(theta), D) },
-                                         list(Dtau0 = Dtau1, p0 = p))
+                body(Dtau) <- substitute({ bDq0; rbind(Dtau0(theta), D) },
+                                         list(Dtau0 = Dtau1, bDq0 = bDq))
             }
         }
         if("expected shortfall" %in% of.interest){
             if(is.null(p)) stop("Probability 'p' has to be specified.")
             if(is.null(tau)){
-                tau <- function(theta){ }
-                body(tau) <- substitute({ q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
-                                          es <- (q + theta[1] - theta[2]*loc0)/(1-theta[2]) 
-                                          names(es) <- "expected shortfall"
-                                          es }, 
-                                        list(loc0 = loc, p0 = p))
-                Dtau <- function(theta){ }
-                body(Dtau) <- substitute({ scale <- theta[1]
-                                           shape <- theta[2]
-                                           q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
-                                           dq1 <- ((1-p0)^(-shape)-1)/shape
-                                           dq2 <- -scale/shape*(dq1 + log(1-p0)*(1-p0)^(-shape))
-                                           D1 <- (dq1 + 1)/(1-shape)
-                                           D2 <- (dq2 - loc0)/(1-shape) + (q + scale - loc0*shape)/(1-shape)^2
-                                           D <- t(c(D1, D2))
-                                           rownames(D) <- "expected shortfall"
-                                           colnames(D) <- NULL
-                                           D },
-                                         list(loc0 = loc, p0 = p))
+                tau <- function(theta){ };  body(tau) <- btes
+                Dtau <- function(theta){ }; body(Dtau) <- bDes
             }else{
                 tau1 <- tau
                 tau <- function(theta){ }
-                body(tau) <- substitute({ q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
-                                          es <- (q + theta[1] - theta[2]*loc0)/(1-theta[2]) 
-                                          names(es) <- "expected shortfall"
-                                          c(tau0(theta), es) }, 
-                                        list(tau0 = tau1, loc0 = loc, p0 = p))
+                body(tau) <- substitute({ btes0; c(tau0(theta), es) },
+                                        list(tau0 = tau1, btes0=btes))
                 Dtau1 <- Dtau
                 Dtau <- function(theta){}
-                body(Dtau) <- substitute({ scale <- theta[1]
-                                           shape <- theta[2]
-                                           q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
-                                           dq1 <- ((1-p0)^(-shape)-1)/shape
-                                           dq2 <- -scale/shape*(dq1 + log(1-p0)*(1-p0)^(-shape))
-                                           D1 <- (dq1 + 1)/(1-shape)
-                                           D2 <- (dq2 - loc0)/(1-shape) + (q + scale - loc0*shape)/(1-shape)^2
-                                           D <- t(c(D1, D2))
-                                           rownames(D) <- "expected shortfall"
-                                           colnames(D) <- NULL
-                                           rbind(Dtau0(theta), D) },
-                                         list(Dtau0 = Dtau1, loc0 = loc, p0 = p))
+                body(Dtau) <- substitute({ bDes0; rbind(Dtau0(theta), D) },
+                                         list(Dtau0 = Dtau1, bDes0=bDes))
             }
         }
         if("expected loss" %in% of.interest){
             if(is.null(N)) stop("Expected frequency 'N' has to be specified.")
             if(is.null(tau)){
-                tau <- function(theta){ }
-                body(tau) <- substitute({ el <- N0*(loc0 + theta[1]*gamma(1/theta[2]-1)/(theta[2]^2*gamma(1/theta[2]+1)))
-                                          names(el) <- "expected loss"
-                                          el },
-                                        list(loc0 = loc,N0 = N))
-                Dtau <- function(theta){ }
-                body(Dtau) <- substitute({ scale <- theta[1]
-                                           shape <- theta[2]
-                                           Gneg <- gamma(1/shape-1)
-                                           Gpos <- gamma(1/shape+1)
-                                           D1 <- N0*Gneg/(shape^2*Gpos)
-                                           D2 <- N0*scale*Gneg*(digamma(1/shape+1) - 2*shape - digamma(1/shape-1))/(shape^4*Gpos)
-                                           D <- t(c(D1, D2))
-                                           rownames(D) <- "expected loss"
-                                           colnames(D) <- NULL
-                                           D },
-                                         list(loc0 = loc, N0 = N))
+                tau <- function(theta){ }; body(tau) <- btel
+                Dtau <- function(theta){ }; body(Dtau) <- bDel
             }else{
                 tau1 <- tau
                 tau <- function(theta){ }
-                body(tau) <- substitute({ el <- N0*(loc0 + theta[1]*gamma(1/theta[2]-1)/(theta[2]^2*gamma(1/theta[2]+1)))
-                                          names(el) <- "expected loss"
-                                          c(tau0(theta), el) },
-                                        list(tau0 = tau1, loc0 = loc,N0 = N))
+                body(tau) <- substitute({ btel0; c(tau0(theta), el) },
+                                        list(tau0 = tau1, btel0=btel))
                 Dtau1 <- Dtau
                 Dtau <- function(theta){}
-                body(Dtau) <- substitute({ scale <- theta[1]
-                                           shape <- theta[2]
-                                           Gneg <- gamma(1/shape-1)
-                                           Gpos <- gamma(1/shape+1)
-                                           D1 <- N0*Gneg/(shape^2*Gpos)
-                                           D2 <- N0*scale*Gneg*(digamma(1/shape+1) - 2*shape - digamma(1/shape-1))/(shape^4*Gpos)
-                                           D <- t(c(D1, D2))
-                                           rownames(D) <- "expected loss"
-                                           colnames(D) <- NULL
-                                           rbind(Dtau0(theta), D) },
-                                         list(Dtau0 = Dtau1, loc0 = loc, N0 = N))
+                body(Dtau) <- substitute({ bDel0; rbind(Dtau0(theta), D) },
+                                         list(Dtau0 = Dtau1, bDel0=bDel))
             }
         }
         trafo <- function(x){ list(fval = tau(x), mat = Dtau(x)) }
@@ -257,8 +201,6 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
     startPar <- function(x,...){
         tr <- theta[1]
         
-        if(any(x < tr)) stop("some data smaller than 'loc' parameter")
-
         ## Pickand estimator
         if(is.null(start0Est)){
            e0 <- estimate(medkMADhybr(x, k=10, ParamFamily=GParetoFamily(loc = theta[1],
@@ -272,6 +214,10 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
            if(!is.null(names(e0)))
                e0 <- e0[c("scale", "shape")]
         }
+
+        if(any(x < tr-e0["scale"]/e0["shape"]))
+               stop("some data smaller than 'loc-scale/shape' ")
+
         names(e0) <- NULL
         return(e0)
     }
@@ -310,16 +256,18 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
         Lambda1 <- function(x) {
             y <- x*0
-            x0 <- (x-tr)/sc
-            x1 <- x0[x0>0]
-            y[x0>0] <- -1/sc + (1+k)/(1+k*x1)*x1/sc
+            ind <- (x > tr-sc/k) # = [later] (x1>0)
+            x <- (x[ind]-tr)/sc
+            x1 <- 1 + k * x
+            y[ind] <- -1/sc + (1+k)/x1*x/sc
             return(y)
         }
         Lambda2 <- function(x) {
             y <- x*0
-            x0 <- (x-tr)/sc
-            x1 <- x0[x0>0]
-            y[x0>0] <- log(1+k*x1)/k^2 - (1/k+1)*x1/(1+k*x1)
+            ind <- (x > tr-sc/k) # = [later] (x1>0)
+            x <- (x[ind]-tr)/sc
+            x1 <- 1 + k * x
+            y[ind] <- log(x1)/k^2 - (1/k+1)*x/x1
             return(y)
         }
         ## additional centering of scores to increase numerical precision!
@@ -372,7 +320,7 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
                               of.interest0 = of.interest, p0 = p, N0 = N,
                               trafo0 = trafo, withPos0 = withPos))
 
-    L2Fam@LogDeriv <- function(x) (shape+1)/(shape*(scale+(x-loc)))
+    L2Fam@LogDeriv <- function(x) (shape+1)/(scale+shape*(x-loc))
     L2Fam@L2deriv <- L2deriv
 
     L2Fam@L2derivDistr <- imageDistr(RandVar = L2deriv, distr = distribution)

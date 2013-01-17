@@ -1,14 +1,20 @@
-asvarPickands <- function( model, alpha=2){
+asvarPickands <- function(model, alpha=2){
 
-  if(! is(model, "GParetoFamily"))
-     stop("This function only works for GPD models")
+    isGP <- is(ParamFamily,"GParetoFamily")
+    if(!(isGP|is(ParamFamily,"GEVFamily")))
+         stop("Pickands estimator only available for GPD and GEVD.")
+
   scshn <- scaleshapename(model)
   par0 <- main(model@param)[scshn]
   beta <- par0[1]; xi <- par0[2]
 
-
-  al1 <- 1-1/alpha
-  al2 <- 1-1/alpha^2
+  if(isGP){
+    al1 <- 1-1/alpha
+    al2 <- 1-1/alpha^2
+  }else{
+    al1 <- exp(-1/alpha)
+    al2 <- exp(-1/alpha^2)
+  }
   M2 <- q(model)(al1)
   M4 <- q(model)(al2)
 
