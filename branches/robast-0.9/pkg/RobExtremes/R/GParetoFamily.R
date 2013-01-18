@@ -225,9 +225,13 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
     ## what to do in case of leaving the parameter domain
     makeOKPar <- function(theta) {
         if(withPos){
-           if(!is.null(names(theta)))
-                 theta["shape"] <- abs(theta["shape"])
-           else  theta[2] <- abs(theta[2])
+           theta <- abs(theta)
+        }else{
+           if(!is.null(names(theta))){
+              theta["scale"] <- abs(theta["scale"])
+           }else{
+              theta[1] <- abs(theta[1])
+           }
         }
         return(theta)
     }
@@ -255,7 +259,7 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
         Lambda1 <- function(x) {
             y <- x*0
-            ind <- (x > tr-sc/k) # = [later] (x1>0)
+            ind <- (x > tr) #
             x <- (x[ind]-tr)/sc
             x1 <- 1 + k * x
             y[ind] <- -1/sc + (1+k)/x1*x/sc
@@ -263,7 +267,7 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
         }
         Lambda2 <- function(x) {
             y <- x*0
-            ind <- (x > tr-sc/k) # = [later] (x1>0)
+            ind <- (x > tr) #
             x <- (x[ind]-tr)/sc
             x1 <- 1 + k * x
             y[ind] <- log(x1)/k^2 - (1/k+1)*x/x1

@@ -81,20 +81,20 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                         rownames(D) <- "quantile"; colnames(D) <- NULL
                         D }, list(p0 = p))
        btes <- substitute({ if(theta[2]>=1L) es <- NA else {
-                            pg <- pgamma(-log(p0),1-theta[2], lower.tail = FALSE)
-                            es <- theta[1] * gamma(1-theta[2]) * pg / p0 /
-                                   theta[2] + loc0 }
+                            pg <- pgamma(-log(p0),1-theta[2], lower.tail = TRUE)
+                            es <- theta[1] * (gamma(1-theta[2]) * pg/ (1-p0) - 1 )/
+                                   theta[2]  + loc0 }
                             names(es) <- "expected shortfall"
                             es }, list(loc0 = loc, p0 = p))
        bDes <- substitute({ if(theta[2]>=1L){ D1 <- D2 <- NA} else {
                             scale <- theta[1]; shape <- theta[2]
-                            pg <- pgamma(-log(p0), 1-theta[2], lower.tail = FALSE)
+                            pg <- pgamma(-log(p0), 1-theta[2], lower.tail = TRUE)
                             dd <- ddigamma(-log(p0),1-theta[2])
-                            D1 <- gamma(1-theta[2])*pg/p0/theta[2]
-                            D21 <- -theta[1]*gamma(1-theta[2])*pg/p0/theta[2]^2
-                            D22 < -theta[1]*digamma(1-theta[2])*pg/p0/theta[2]
-                            D23 <- theta[1]*dd/p0/theta[2]
-                            D2 <- D21+D22+D23}
+                            g0 <- gamma(1-theta[2])
+                            D1 <- (g0*pg/(1-p0)-1)/theta[2]
+                            D21 <- theta[1]*D1/theta[2]
+                            D22 <- theta[1]*dd/(1-p0)/theta[2]
+                            D2 <- -D21+D22)}
                             D <- t(c(D1, D2))
                             rownames(D) <- "expected shortfall"
                             colnames(D) <- NULL
@@ -221,15 +221,28 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     ## what to do in case of leaving the parameter domain
     makeOKPar <- function(theta) {
         if(withPos){
-           if(!is.null(names(theta)))
-                 theta["shape"] <- abs(theta["shape"])
-           else  theta[2] <- abs(theta[2])
+           theta <- abs(theta)
+        }else{
+           if(!is.null(names(theta))){
+              theta["scale"] <- abs(theta["scale"])
+           }else{
+              theta[1] <- abs(theta[1])
+           }
         }
         return(theta)
     }
 
     modifyPar <- function(theta){
-        theta <- abs(theta)
+        theta <- makeOKPar(theta)
+
+        if(!is.null(names(theta))){
+            sc <- theta["scale"]
+            sh <- theta["shape"]
+        }else{
+            theta <- abs(theta)
+            sc <- theta[1]
+            sh <- theta[2]
+        }
         GEV(loc = loc, scale = theta[1], shape = theta[2])
     }
 
@@ -272,8 +285,8 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
         G20 <- gamma(2*k)
         G10 <- gamma(k)
         G11 <- digamma(k)*gamma(k)
-        G01 <- digamma(1)
-        G02 <- trigamma(1)+digamma(1)^2
+        G01 <- -0.57721566490153 # digamma(1)
+        G02 <- 1.9781119906559 #trigamma(1)+digamma(1)^2
         x0 <- (k+1)^2*2*k
         I11 <- G20*x0-2*G10*k*(k+1)+1
         I11 <- I11/sc^2/k^2
@@ -283,7 +296,6 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
         I22 <- G20*x0 +(k+1)^2 -G10*(x0+2*k*(k+1))
         I22 <- I22 - G11*2*k^2*(k+1) + G01*2*k*(1+k)+k^2 *G02
         I22 <- I22 /k^4
-        mat <- PosSemDefSymmMatrix(matrix(c(I11,I12,I12,I22),2,2))
         mat <- PosSemDefSymmMatrix(matrix(c(I11,I12,I12,I22),2,2))
         dimnames(mat) <- list(scaleshapename,scaleshapename)
         return(mat)
@@ -337,6 +349,6 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
 ddigamma <- function(t,s){
               int <- function(x) exp(-x)*(-log(x))*x^(-s)
-              integrate(int, lower=t, upper=Inf)$value
+              integrate(int, lower=0, upper=t)$value
               }
               

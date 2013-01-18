@@ -83,6 +83,8 @@ slots: [<name>(<class>)]
 |>|>|>"L2GroupParamFamily"                    (from distrMod)
 |>|>|>|>"L2ScaleShapeUnion"                   (from distrMod)
 |>|>|>|>|>"GParetoFamily"               [*]
+|>|>|>|>|>"GEVFamily"                   [*]
+|>|>|>|>|>"WeibullFamily"               [*]
 |>|>|>|>"L2LocationScaleUnion"  /VIRTUAL/     (from distrMod)
 |>|>|>|>|>"L2LocationFamily"                  (from distrMod)
 |>|>|>|>|>|>"GumbelLocationFamily"      [*]
@@ -196,9 +198,9 @@ Ruckdeschel, P. and Horbenko, N. (2011): Optimally-Robust Estimators in Generali
 Pareto Models. ArXiv 1005.1476. To appear at \emph{Statistics}.
 DOI: 10.1080/02331888.2011.628022. \cr
 
-P. Ruckdeschel, N. Horbenko (2011): Yet another breakdown point notion:
-EFSBP --illustrated at scale-shape models. ArXiv 1005.1480. To appear at Metrika.
-DOI: 10.1007/s00184-011-0366-4.
+Ruckdeschel, P. and Horbenko, N. (2012): Yet another breakdown point notion:
+EFSBP --illustrated at scale-shape models. \emph{Metrika}, \bold{75}(8),
+1025--1047.
 
 %a more detailed manual for \pkg{distr}, \pkg{distrSim}, \pkg{distrTEst}, and \pkg{RobExtremes} may be downloaded from
 %\url{http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf}\cr

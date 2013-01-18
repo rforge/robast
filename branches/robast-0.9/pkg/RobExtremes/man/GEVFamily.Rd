@@ -1,16 +1,17 @@
-\name{WeibullFamily}
-\alias{WeibullFamily}
+\name{GEVFamily}
+\alias{GEVFamily}
 
-\title{Generating function for Weibull family}
+\title{Generating function for families of Generalized Extreme Value distributions }
 \description{
-  Generates an object of class \code{"WeibullFamily"} which
-  represents a Generalized Pareto family.
+  Generates an object of class \code{"GEVFamily"} which
+  represents a Generalized EV family.
 }
 \usage{
-WeibullFamily(scale = 1, shape = 0.5, of.interest = c("scale", "shape"),
+GEVFamily(loc = 0, scale = 1, shape = 0.5, of.interest = c("scale", "shape"),
               p = NULL, N = NULL, trafo = NULL, start0Est = NULL, withPos = TRUE)
 }
 \arguments{
+  \item{loc}{ real: known/fixed threshold/location parameter }
   \item{scale}{ positive real: scale parameter }
   \item{shape}{ positive real: shape parameter }
   \item{of.interest}{ character: which parameters, transformations are of interest.\cr
@@ -19,39 +20,36 @@ WeibullFamily(scale = 1, shape = 0.5, of.interest = c("scale", "shape"),
   \item{p}{real or NULL: probability needed for quantile and expected shortfall }
   \item{N}{real or NULL: expected frequency for expected loss }
   \item{trafo}{ matrix or NULL: transformation of the parameter }
-  \item{start0Est}{ startEstimator --- if \code{NULL} \code{\link{medkMADhybr}} is used }
+  \item{start0Est}{ startEstimator --- if \code{NULL} \code{\link{PickandsEstimator}} is used }
   \item{withPos}{ logical of length 1: Is shape restricted to positive values? }
 }
 \details{
-  The slots of the corresponding L2 differentiable parameteric family are filled.
+  The slots of the corresponding L2 differentiable 
+  parameteric family are filled.
 }
-\value{Object of class \code{"WeibullFamily"}}
+\value{Object of class \code{"GEVFamily"}}
 \references{
   Kohl, M. (2005) \emph{Numerical Contributions to 
   the Asymptotic Theory of Robustness}. Bayreuth: Dissertation.\cr
 
-  M.~Kohl, P. Ruckdeschel, H.~Rieder (2010):
-  Infinitesimally Robust Estimation in General Smoothly Parametrized Models.
-  \emph{Stat. Methods Appl.}, \bold{19}, 333--354.\cr
-
-  Ruckdeschel, P. and Horbenko, N. (2011): Optimally-Robust Estimators in Generalized
-  Pareto Models. ArXiv 1005.1476. To appear at \emph{Statistics}.
-  DOI: 10.1080/02331888.2011.628022. \cr
+M.~Kohl, P. Ruckdeschel, H.~Rieder (2010):
+Infinitesimally Robust Estimation in General Smoothly Parametrized Models.
+\emph{Stat. Methods Appl.}, \bold{19}, 333--354.\cr
 
 Ruckdeschel, P. and Horbenko, N. (2012): Yet another breakdown point notion:
 EFSBP --illustrated at scale-shape models. \emph{Metrika}, \bold{75}(8),
 1025--1047.
-}
+  }
 
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}\cr
         Peter Ruckdeschel \email{peter.ruckdeschel@itwm.fraunhofer.de}\cr
         Nataliya Horbenko \email{nataliya.horbenko@itwm.fraunhofer.de}}
 %\note{}
-\seealso{\code{\link[distrMod]{L2ParamFamily-class}}, \code{\link[distr]{Weibull-class}}}
+\seealso{\code{\link[distrMod]{L2ParamFamily-class}}, \code{\linkS4class{GPareto}}}
 \examples{
-(G1 <- WeibullFamily())
+(G1 <- GEVFamily())
 FisherInfo(G1)
 checkL2deriv(G1)
 }
-\concept{Weibull model}
+\concept{Generalized Pareto model}
 \keyword{models}
