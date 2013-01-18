@@ -8,16 +8,16 @@
   (for the Weibull) at real data and returns an object of class \code{Estimate}.
 }
 \usage{
-QuantileBCCEstimator(x, p1 = 1/3, p2 = 1/3,
+QuantileBCCEstimator(x, p1 = 1/3, p2 = 2/3,
             name, Infos, nuis.idx = NULL,
             trafo = NULL, fixed = NULL, na.rm = TRUE,
             ...)
-.QBCC(x, p1 = 1/3, p2 = 1/3)
+.QBCC(x, p1 = 1/3, p2 = 2/3)
 }
 \arguments{
   \item{x}{ (empirical) data }
   \item{p1,p2}{levels of the quantiles; maximal breakdown point is achieved
-               for \eqn{p1=p2=1/3} which is the default.}
+               for \eqn{p1=p2-p1=1-p2=1/3} which is the default.}
   \item{name}{ optional name for estimator. }
   \item{Infos}{ character: optional informations about estimator }
   \item{nuis.idx}{ optionally the indices of the estimate belonging

@@ -4,7 +4,7 @@
 \title{ Function to compute asymptotic variance of Pickands estimator}
 \description{
   Function \code{asvarPickands} computes the asymptotic (co)variance of
-  a Pickands estimator at a GPD model.
+  a Pickands estimator at a GPD or GEVD model.
 }
 \usage{
 asvarPickands( model, alpha=2)
@@ -15,7 +15,7 @@ asvarPickands( model, alpha=2)
    based on matching the empirical \eqn{a_1=1-1/\alpha}{a1=1-1/alpha} and
    \eqn{a_1=1-1/\alpha^2}{a1=1-1/alpha^2} quantiles against the
    population counter parts. The ``classical'' Pickands Estimator is
-   obtained for \code{alpha=2}. }
+   obtained for \code{alpha=2} (GPD) resp. for \code{alpha=1/log(2)} (GEVD). }
 }
 \details{
 All terms are analytic.

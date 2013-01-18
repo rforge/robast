@@ -1,21 +1,18 @@
-\name{asvarPickands}
-\alias{asvarPickands}
+\name{asvarQBCC}
+\alias{asvarQBCC}
 
-\title{ Function to compute asymptotic variance of Pickands estimator}
+\title{ Function to compute asymptotic variance of QuantileBCC estimator}
 \description{
-  Function \code{asvarPickands} computes the asymptotic (co)variance of
-  a Pickands estimator at a GPD model.
+  Function \code{asvarQBCC} computes the asymptotic (co)variance of
+  a QuantileBCC estimator at a Weibull model.
 }
 \usage{
-asvarPickands( model, alpha=2)
+asvarQBCC( model, p1 = 1/3, p2 = 2/3)
 }
 \arguments{
   \item{model}{an object of class \code{"ScaleShapeUnion"}. }
-  \item{alpha}{ numeric > 1; determines the variant of the Pickands-Estimator
-   based on matching the empirical \eqn{a_1=1-1/\alpha}{a1=1-1/alpha} and
-   \eqn{a_1=1-1/\alpha^2}{a1=1-1/alpha^2} quantiles against the
-   population counter parts. The ``classical'' Pickands Estimator is
-   obtained for \code{alpha=2}. }
+  \item{p1,p2}{levels of the quantiles; maximal breakdown point is achieved
+               for \eqn{p1=p2-p1=1-p2=1/3} which is the default.}
 }
 \details{
 All terms are analytic.
@@ -23,20 +20,14 @@ All terms are analytic.
 \value{
   A 2x2 matrix; the covariance. }
 
-\references{
-Ruckdeschel, P. and Horbenko, N. (2011): Optimally-Robust Estimators in Generalized
-Pareto Models. ArXiv 1005.1476. To appear at \emph{Statistics}.
-DOI: 10.1080/02331888.2011.628022. \cr
-
-}
 
 %\references{  }
 \author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
-\seealso{\code{\link{PickandsEstimator}} }
+\seealso{\code{\link{QBCCEstimator}} }
 \examples{
-GP <- GParetoFamily(scale=1,shape=0.7)
-asvarPickands(GP)
-asvarPickands(GP,alpha=2.3)
+GP <- WeibullFamily(scale=1,shape=0.7)
+asvarQBCC(GP)
+asvarQBCC(GP, p1=1/4, p2= 5/8)
 }
 \keyword{asymptotic variance}

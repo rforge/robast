@@ -73,7 +73,7 @@ asvarPickands <- function(model, alpha=2){
   return(ASV_Pick)
 }
 
-asvarQBCC <- function(model, p1 = 1/3, p2= 1/3){
+asvarQBCC <- function(model, p1 = 1/3, p2= 2/3){
 
    if(!(is(model,"WeibullFamily")))
          stop("QuantileBCC estimator only available for Weibull.")

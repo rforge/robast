@@ -5,22 +5,22 @@
 # has bdp min(p1,1-p2,p2-p1), maximal for p1=p2=1/3
 #
 #####################################################################
-.QBCC <- function(x, p1 = 1/3, p2 =1/3){
+.QBCC <- function(x, p1 = 1/3, p2 = 2/3){
  if(p1>=p2) {p<-p1; p1 <- p2; p2 <- p}
- l1 <- -log(p1); l2 <- -log(p2)
+ l1 <- -log(1-p1); l2 <- -log(1-p2)
  ms <- quantile(x,c(p1,p2))
  names(ms) <- NULL
  Q2 <- ms[2]
  Q1 <- ms[1]
- xi <- (log(Q2)-log(Q1))/(log(l2)-log(l1))
- beta <- Q2/l2^(1/xi)
+ xi <- (log(l2)-log(l1))/(log(Q2)-log(Q1))
+ beta <- Q2*l2^(-1/xi)
  ###
  theta <- c(beta,xi)
  names(theta) <- c("scale","shape")
  return(theta)
 }
 
-QuantileBCCEstimator <- function(x, p1=1/3, p2=1/3, ParamFamily=WeibullFamily(),
+QuantileBCCEstimator <- function(x, p1=1/3, p2=2/3, ParamFamily=WeibullFamily(),
                         name, Infos, nuis.idx = NULL,
                         trafo = NULL, fixed = NULL,  na.rm = TRUE,
                         ...){
