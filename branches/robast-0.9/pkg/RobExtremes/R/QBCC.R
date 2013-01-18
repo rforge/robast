@@ -20,12 +20,10 @@
  return(theta)
 }
 
-QuantileBCCEstimator <- function(x, p1=1/3, p2=2/3, ParamFamily=WeibullFamily(),
+QuantileBCCEstimator <- function(x, p1=1/3, p2=2/3,
                         name, Infos, nuis.idx = NULL,
                         trafo = NULL, fixed = NULL,  na.rm = TRUE,
                         ...){
-    if(!(is(ParamFamily,"WeibullFamily")))
-         stop("Pickands estimator only available for Weibull")
     es.call <- match.call()
     if(length(p1)>1 || any(!is.finite(p1)) || p1<=0 || p1>=1)
        stop("'p1' has to be in [0,1] and of length 1.")
@@ -35,7 +33,7 @@ QuantileBCCEstimator <- function(x, p1=1/3, p2=2/3, ParamFamily=WeibullFamily(),
     if(missing(name))
         name <- "QuantileBCCEstimator"
 
-
+    ParamFamily <- WeibullFamily()
     asvar.fct.0 <- function(L2Fam=ParamFamily, param){
                        asvarQBCC(model=L2Fam, p1 = p1, p2 = p2)}
     nuis.idx.0 <- nuis.idx
@@ -45,9 +43,10 @@ QuantileBCCEstimator <- function(x, p1=1/3, p2=2/3, ParamFamily=WeibullFamily(),
 
     .mQBCC <- function(x) .QBCC(x,p1=p1,p2=p2)
     estimate <- Estimator(x, .mQBCC, name, Infos,
-                          asvar.fct = asvar.fct0 asvar = asvar,
+                          asvar.fct = asvar.fct.0, asvar = NULL,
                           nuis.idx = nuis.idx.0, trafo = trafo.0,
-                          fixed = fixed.0, na.rm = na.rm.0, ...)
+                          fixed = fixed.0, na.rm = na.rm.0, ...,
+                          ParamFamily = ParamFamily)
     estimate@estimate.call <- es.call
 
     if(missing(Infos))

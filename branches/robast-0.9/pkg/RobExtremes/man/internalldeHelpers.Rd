@@ -14,7 +14,7 @@ in package ``distrMod''.}
 .LDMatch(x.0, loc.est.0, disp.est.0, loc.fctal.0, disp.fctal.0,
          ParamFamily.0, loc.est.ctrl.0 = NULL, loc.fctal.ctrl.0=NULL,
          disp.est.ctrl.0 = NULL, disp.fctal.ctrl.0=NULL,
-         q.lo.0 =0, q.up.0=Inf, log.q.0 =TRUE, ...)
+         q.lo.0 =0, q.up.0=Inf, log.q.0 =TRUE, ..., vdbg = FALSE)
 }
 
 
@@ -52,6 +52,7 @@ in package ``distrMod''.}
   \item{log.q.0}{logical; shall the zero search be done on log-scale? }
   \item{\dots}{further arguments to be passed to location estimator and functional
   and dispersion estimator and functional. }
+  \item{vdbg}{logical; if \code{TRUE}, debugging information is shown.}
 }
 
 \details{

@@ -40,6 +40,7 @@ PickandsEstimator <- function(x, alpha = 2, ParamFamily=GParetoFamily(),
                         name, Infos, nuis.idx = NULL,
                         trafo = NULL, fixed = NULL,  na.rm = TRUE,
                         ...){
+    force(ParamFamily)
     isGP <- is(ParamFamily,"GParetoFamily")
     if(!(isGP|is(ParamFamily,"GEVFamily")))
          stop("Pickands estimator only available for GPD and GEVD.")
@@ -51,8 +52,7 @@ PickandsEstimator <- function(x, alpha = 2, ParamFamily=GParetoFamily(),
     if(missing(name))
         name <- "PickandsEstimator"
 
-
-    asvar.fct.0 <- function(L2Fam=ParamFamily, param){
+    asvar.fct.0 <- function(L2Fam, param){
                        asvarPickands(model=L2Fam, alpha = alpha)}
     nuis.idx.0 <- nuis.idx
     trafo.0 <- trafo
@@ -61,9 +61,10 @@ PickandsEstimator <- function(x, alpha = 2, ParamFamily=GParetoFamily(),
 
     .mPick <- function(x) .PickandsEstimator(x,alpha=alpha, GPD.l=isGP)
     estimate <- Estimator(x, .mPick, name, Infos,
-                          asvar.fct = asvar.fct0 asvar = asvar,
+                          asvar.fct = asvar.fct.0, asvar = NULL,
                           nuis.idx = nuis.idx.0, trafo = trafo.0,
-                          fixed = fixed.0, na.rm = na.rm.0, ...)
+                          fixed = fixed.0, na.rm = na.rm.0, ...,
+                          ParamFamily = ParamFamily)
 ##->
 if(FALSE){
     estimate@untransformed.asvar <- asvar(estimate)

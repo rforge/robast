@@ -24,7 +24,7 @@ All terms are analytic.
 %\references{  }
 \author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
-\seealso{\code{\link{QBCCEstimator}} }
+\seealso{\code{\link{QuantileBCCEstimator}} }
 \examples{
 GP <- WeibullFamily(scale=1,shape=0.7)
 asvarQBCC(GP)

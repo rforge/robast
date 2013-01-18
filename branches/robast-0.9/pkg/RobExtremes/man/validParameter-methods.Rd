@@ -4,6 +4,7 @@
 \alias{validParameter}
 \alias{validParameter,GParetoFamily-method}
 \alias{validParameter,WeibullFamily-method}
+\alias{validParameter,GEVFamily-method}
 
 
 \title{ Methods for function validParameter in Package `RobExtremes' }
@@ -16,13 +17,20 @@
 \usage{
 validParameter(object, \dots)
 \S4method{validParameter}{GParetoFamily}(object, param, tol=.Machine$double.eps)
-%\S4method{validParameter}{WeibullFamily}(object, param, tol=.Machine$double.eps)
+\S4method{validParameter}{WeibullFamily}(object, param, tol=.Machine$double.eps)
+\S4method{validParameter}{GEVFamily}(object, param, tol=.Machine$double.eps)
 }
 
 \details{
 method for signature
 \describe{
   \item{\code{GParetoFamily}}{checks if both parameters are finite by \code{is.finite},
+  if their length is 1 or 2 (e.g. if one features as nuisance parameter), and if
+  both are strictly larger than 0 (upto argument \code{tol})}
+  \item{\code{WeibullFamily}}{checks if both parameters are finite by \code{is.finite},
+  if their length is 1 or 2 (e.g. if one features as nuisance parameter), and if
+  both are strictly larger than 0 (upto argument \code{tol})}
+  \item{\code{GEVFamily}}{checks if both parameters are finite by \code{is.finite},
   if their length is 1 or 2 (e.g. if one features as nuisance parameter), and if
   both are strictly larger than 0 (upto argument \code{tol})}
 }

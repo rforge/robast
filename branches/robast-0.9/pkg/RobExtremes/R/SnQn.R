@@ -4,7 +4,7 @@ setMethod("Qn", signature(x = "ANY"),
         constant <- ifelse(hasArg(constant), dots$"constant", 2.21914)
         finite.corr <- ifelse(hasArg(finite.corr), dots$"finite.corr",
                               !hasArg(constant))
-        if(hasArg(na.rm)) if(dots$"na.rm") x <- x[!is.na(x)]
+        if(!is.null(dots$"na.rm")) if(dots$"na.rm") x <- x[!is.na(x)]
         robustbase::Qn(x, constant=constant, finite.corr=finite.corr)
     })
 
@@ -14,7 +14,7 @@ setMethod("Sn", signature(x = "ANY"),
         constant <- ifelse(hasArg(constant), dots$"constant", 1.1926)
         finite.corr <- ifelse(hasArg(finite.corr), dots$"finite.corr",
                               !hasArg(constant))
-        if(hasArg(na.rm)) if(dots$"na.rm") x <- x[!is.na(x)]
+        if(!is.null(dots$"na.rm")) if(dots$"na.rm") x <- x[!is.na(x)]
         robustbase::Sn(x, constant=constant, finite.corr=finite.corr)
     })
 
@@ -108,7 +108,7 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
     function(x, ...){
            if(abs(scale(x)-1)< 1e-12){
 #              sng <- .SnGrids
-              sng <- getFromNamespace(".SnGrids", ns = "RobExtremes")
+              sng <- getFromNamespace(.versionSuff(".SnGrids"), ns = "RobExtremes")
               snf <- sng[["Generalized Pareto Family"]][["fct"]]
               ret <- snf(shape(x))
            }else ret <- scale(x)*Sn(x=x/scale(x))

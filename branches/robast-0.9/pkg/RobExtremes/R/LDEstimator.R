@@ -82,6 +82,7 @@ LDEstimator <- function(x, loc.est, disp.est,
          return(LDMval[1:2])
     }
 
+    asvar.fct0 <- asvar.fct
     asvar.0 <- asvar
     nuis.idx.0 <- nuis.idx
     trafo.0 <- trafo
@@ -96,7 +97,9 @@ LDEstimator <- function(x, loc.est, disp.est,
     estimate <- Estimator(x, estimator, name, Infos,
                       asvar = asvar.0, nuis.idx = nuis.idx.0,
                       trafo = trafo.0, fixed = fixed.0,
-                      na.rm = na.rm.0, ...)
+                      asvar.fct = asvar.fct0,
+                      na.rm = na.rm.0, ...,
+                      ParamFamily = ParamFamily)
 
     print(estimate)
     #print(estimate@untransformed.estimate)
@@ -104,6 +107,8 @@ LDEstimator <- function(x, loc.est, disp.est,
     cat("\n asvar",estimate@asvar,"\n")
 
 
+##->
+if(FALSE){
     if(missing(asvar)) asvar <- NULL
 
     if((is.null(asvar))&&(!missing(asvar.fct))&&(!is.null(asvar.fct)))
@@ -128,7 +133,8 @@ LDEstimator <- function(x, loc.est, disp.est,
     }
 
      print(estimate@asvar)
-
+}
+##<-
     estimate@estimate.call <- es.call
 
     if(missing(Infos))

@@ -73,6 +73,7 @@ WeibullFamily <- function(scale = 1, shape = 0.5,
 
     ## parameters
     names(theta) <- c("scale", "shape")
+    scaleshapename <- c("scale", "shape")
 
     if(!is.null(p)){
        btq <- substitute({ q <- theta[1]*(-log(1-p0))^(1/theta[2])

@@ -233,7 +233,12 @@ setClass("GEV",
 setClass("GumbelLocationFamily",
           contains = "L2LocationFamily")
 
-## Generalized Pareto 
+### for integration:
+setClassUnion("DistributionsIntegratingByQuantiles",
+               c("Weibull", "GEV", "GPareto", "Pareto"))
+
+
+## models:
 setClass("GParetoFamily", contains="L2ScaleShapeUnion")
 setClass("GEVFamily", contains="L2ScaleShapeUnion")
 setClass("WeibullFamily", contains="L2ScaleShapeUnion")

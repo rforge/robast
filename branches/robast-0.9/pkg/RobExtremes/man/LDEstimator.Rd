@@ -20,12 +20,12 @@ LDEstimator(x, loc.est, disp.est, loc.fctal, disp.fctal, ParamFamily,
             q.lo =1e-3, q.up=15, log.q =TRUE,
             name, Infos, asvar = NULL, nuis.idx = NULL,
             trafo = NULL, fixed = NULL, asvar.fct  = NULL, na.rm = TRUE,
-            ...)
+            ..., vdbg = FALSE)
 medkMAD(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
-        trafo = NULL, fixed = NULL, na.rm = TRUE,
-        ...)
+        trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
+        ..., vdbg = FALSE)
 medkMADhybr(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, KK = 20, nuis.idx = NULL,
-        trafo = NULL, fixed = NULL, na.rm = TRUE,
+        trafo = NULL, fixed = NULL,  asvar.fct = NULL, na.rm = TRUE,
         ...)
 medSn(x, ParamFamily, q.lo =1e-3, q.up=10, nuis.idx = NULL,
       trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
@@ -83,6 +83,7 @@ medQn(x, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
   \item{accuracy}{numeric: argument to be passed on to \code{\link{Sn}}. }
   \item{\dots}{further arguments to be passed to location estimator and functional
   and dispersion estimator and functional. }
+  \item{vdbg}{logical; if \code{TRUE}, debugging information is shown.}
 }
 \details{
   The arguments \code{loc.est}, \code{disp.est} (location and dispersion estimators)

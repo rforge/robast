@@ -67,6 +67,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
     ## parameters
     names(theta) <- c("loc", "scale", "shape")
+    scaleshapename <- c("scale", "shape")
 
 
     if(!is.null(p)){
@@ -94,7 +95,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                             D1 <- (g0*pg/(1-p0)-1)/theta[2]
                             D21 <- theta[1]*D1/theta[2]
                             D22 <- theta[1]*dd/(1-p0)/theta[2]
-                            D2 <- -D21+D22)}
+                            D2 <- -D21+D22}
                             D <- t(c(D1, D2))
                             rownames(D) <- "expected shortfall"
                             colnames(D) <- NULL
@@ -255,7 +256,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
         Lambda1 <- function(x) {
          y <- x*0
-         ind <- (x > mu-sc/k) # = [later] (x1>0)
+         ind <- (x > tr-sc/k) # = [later] (x1>0)
          x <- (x[ind]-tr)/sc
          x1 <- 1 + k * x
          y[ind] <- (x*(1-x1^(-1/k))-1)/x1/sc
