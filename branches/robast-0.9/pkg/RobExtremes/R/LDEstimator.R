@@ -86,13 +86,11 @@ LDEstimator <- function(x, loc.est, disp.est,
     asvar.0 <- asvar
     nuis.idx.0 <- nuis.idx
     trafo.0 <- trafo
+    if(is.null(fixed)) fixed <- fixed(ParamFamily)
     fixed.0 <- fixed
     na.rm.0 <- na.rm
 
-    print(nuis.idx.0)
-    print(trafo.0)
-    print(fixed.0)
-    
+
 
     estimate <- Estimator(x, estimator, name, Infos,
                       asvar = asvar.0, nuis.idx = nuis.idx.0,
@@ -101,9 +99,6 @@ LDEstimator <- function(x, loc.est, disp.est,
                       na.rm = na.rm.0, ...,
                       ParamFamily = ParamFamily)
 
-    print(estimate)
-    #print(estimate@untransformed.estimate)
-    print(estimate@untransformed.asvar)
     cat("\n asvar",estimate@asvar,"\n")
 
 
@@ -115,7 +110,6 @@ if(FALSE){
           asvar <- asvar.fct(ParamFamily, estimate, ...)
 
     estimate@untransformed.asvar <- asvar
-    #print(estimate)
 
     l.e <- length(estimate@untransformed.estimate)
     idx <- NULL
@@ -132,7 +126,6 @@ if(FALSE){
            estimate@asvar <- estimate@trafo$mat%*%asvar[idm,idm]%*%t(estimate@trafo$mat)
     }
 
-     print(estimate@asvar)
 }
 ##<-
     estimate@estimate.call <- es.call

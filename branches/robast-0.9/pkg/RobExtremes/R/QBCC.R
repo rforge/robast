@@ -38,6 +38,7 @@ QuantileBCCEstimator <- function(x, p1=1/3, p2=2/3,
                        asvarQBCC(model=L2Fam, p1 = p1, p2 = p2)}
     nuis.idx.0 <- nuis.idx
     trafo.0 <- trafo
+    if(is.null(fixed)&!is.null( fixed(ParamFamily))) fixed <- fixed(ParamFamily)
     fixed.0 <- fixed
     na.rm.0 <- na.rm
 

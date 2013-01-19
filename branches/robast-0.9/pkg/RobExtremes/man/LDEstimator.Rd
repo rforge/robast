@@ -127,6 +127,7 @@ Computational Statistics and Data Analysis 32: 79-100 .
          \code{\link{Estimate-class}} }
 \examples{
 ## (empirical) Data
+set.seed(123)
 x <- rgamma(50, scale = 0.5, shape = 3)
 
 ## parametric family of probability measures

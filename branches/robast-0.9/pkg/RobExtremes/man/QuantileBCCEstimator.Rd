@@ -52,6 +52,7 @@ Boudt, K., Caliskan, D., Croux, C. (2011): Robust explicit estimators of Weibull
 \examples{
 ## (empirical) Data
 set.seed(123)
+distroptions("withgaps"=FALSE)
 x <- rweibull(50, scale = 0.5, shape = 3)
 ##
 QuantileBCCEstimator(x = x)

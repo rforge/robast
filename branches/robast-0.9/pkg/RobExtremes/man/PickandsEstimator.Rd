@@ -95,6 +95,7 @@ J. Pickands (1975): Statistical inference using extreme order statistics.
          \code{\link{Estimate-class}} }
 \examples{
 ## (empirical) Data
+set.seed(123)
 x <- rgpd(50, scale = 0.5, shape = 3)
 y <- rgev(50, scale = 0.5, shape = 3)
 ## parametric family of probability measures

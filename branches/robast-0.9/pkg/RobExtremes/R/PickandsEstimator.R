@@ -56,6 +56,7 @@ PickandsEstimator <- function(x, alpha = 2, ParamFamily=GParetoFamily(),
                        asvarPickands(model=L2Fam, alpha = alpha)}
     nuis.idx.0 <- nuis.idx
     trafo.0 <- trafo
+    if(is.null(fixed)) fixed <- fixed(ParamFamily)
     fixed.0 <- fixed
     na.rm.0 <- na.rm
 
