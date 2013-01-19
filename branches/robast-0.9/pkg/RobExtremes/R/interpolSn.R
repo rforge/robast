@@ -59,7 +59,7 @@ getShapeGrid <- function(gridsize=1000,centralvalue=0.7,
 
 getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
                       upp=1.01, accuracy = 10000, withSmooth = TRUE,
-                      withPrint = FALSE){
+                      withPrint = FALSE, withCall = FALSE){
    call <- match.call()
    itSn <- 0
    getSn <- function(xi){
@@ -93,7 +93,7 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
           return(y1)
    }
    return(list(grid = cbind(xi=xiGrid,Sn=SnGrid),
-               fct = fct, call = call))
+               fct = fct, call = if(withCall) call else NULL))
 }
 
 .saveInterpGrid <- function(xiGrid = getShapeGrid(), PFam = GParetoFamily(),
@@ -148,7 +148,7 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
   }else{
     l.ng <- 1
     InterpGrids <- vector("list",1)
-    whatIsThereAlready <- c(whatIsThereAlready,nameInSysdata)
+    whatIsThereAlready <- c(whatIsThereAlready,.versionSuff(nameInSysdata))
   }
 
   if(l.ng>0){

@@ -39,7 +39,7 @@
                       PFam = GParetoFamily(scale=1,shape=2),
                       optFct = .RMXE.xi,
                       withSmooth = TRUE,
-                      withPrint = FALSE){
+                      withPrint = FALSE, withCall = FALSE){
    print(match.call())
    call <- match.call()
    itLM <- 0
@@ -72,7 +72,7 @@
    res <- .MakeGridList(xiGrid, Y=t(LMGrid), withSmooth = withSmooth)
    print(res)
    return(list(grid = res$grid,
-               fct = res$fct, call = call))
+               fct = res$fct, call = if(withCall) call else NULL))
 }
 
 .MakeGridList <- function(xiGrid, Y, withSmooth = TRUE){

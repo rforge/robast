@@ -26,7 +26,7 @@ respective \file{sysdata.rda} file. }
                       PFam = GParetoFamily(scale=1, shape=2),
                       optFct = .RMXE.xi,
                       withSmooth = TRUE,
-                      withPrint = FALSE)
+                      withPrint = FALSE, withCall = FALSE)
 
 .MakeGridList(xiGrid, Y, withSmooth = TRUE)
 }
@@ -43,6 +43,7 @@ respective \file{sysdata.rda} file. }
   \item{Y}{array or matrix; contains precomputed y-values. }
   \item{optFct}{function with arguments \code{xi} and \code{PFam};
                 determines the Lagrange multipliers. }
+  \item{withCall}{logical of length 1: shall the call be saved, too?}
 }
 \details{
   \code{.MBRE.xi} computes the Lagrange multipliers for the MBRE estimator,
@@ -58,7 +59,7 @@ respective \file{sysdata.rda} file. }
   Instead of \code{.getSnGrid} in our case this will call \code{.getLMGrid}
   to compute the Lagrange multipliers.
 }
-\note{These functions are only meant for the developers of package \pkg{ROptEst}
+\note{These functions are only meant for the developers of package \pkg{RobExtremes}
       (or respective packages).
       They can be used to speed up things by interpolation.
       Our use case is a speed up for further scale-shape families (or enhance
@@ -88,8 +89,8 @@ respective \file{sysdata.rda} file. }
 \examples{
 \dontrun{
 ### code to produce grid for GPareto:
-  .saveInterpGrid(sysRdaFolder = "C:/rtest/distr/branches/distr-2.4/pkg/distrMod/R",
-              accuracy = 5000)
+  .saveInterpGrid(sysRdaFolder = "C:/rtest/RobASt/branches/RobASt-0.9/pkg/RobExtremes/R",
+              accuracy = 800)
 }
 }
 \keyword{internal}

@@ -48,7 +48,7 @@ PickandsEstimator(x, alpha=2, ParamFamily=GParetoFamily(),
 \note{
 The scale estimate we use, i.e., with scale = \eqn{\beta}{beta}
 and shape = \eqn{\xi}{xi}, we estimate scale by
-\eqn{\beta= \xi*a_1/(\alpha^\xi-1)}{\code{beta= xi*a1/(alpha^xi-1)}},  differs from
+\eqn{\beta= \xi a_1/(\alpha^\xi-1)}{\code{beta= xi*a1/(alpha^xi-1)}},  differs from
 the one given in the original reference, where it was
 \eqn{\beta= \xi a_1^2/(a_2-2a_1)}{\code{beta= xi * a1^2 /(a2-2*a1)}}.
 The one chosen here avoids taking differences \eqn{a_2-2a_1}{a2-2*a1}
