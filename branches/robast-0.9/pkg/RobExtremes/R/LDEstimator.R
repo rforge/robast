@@ -99,35 +99,6 @@ LDEstimator <- function(x, loc.est, disp.est,
                       na.rm = na.rm.0, ...,
                       ParamFamily = ParamFamily)
 
-    cat("\n asvar",estimate@asvar,"\n")
-
-
-##->
-if(FALSE){
-    if(missing(asvar)) asvar <- NULL
-
-    if((is.null(asvar))&&(!missing(asvar.fct))&&(!is.null(asvar.fct)))
-          asvar <- asvar.fct(ParamFamily, estimate, ...)
-
-    estimate@untransformed.asvar <- asvar
-
-    l.e <- length(estimate@untransformed.estimate)
-    idx <- NULL
-    idm <- 1:l.e
-    if(!is.null(nuis.idx))
-        {idx <- nuis.idx
-         idm <- idm[-idx]
-         mat <- diag(length(idm))}
-
-    if(!.isUnitMatrix(estimate@trafo$mat)){
-       estimate@estimate <- estimate@trafo$fct(estimate)
-       
-       if(!is.null(asvar))
-           estimate@asvar <- estimate@trafo$mat%*%asvar[idm,idm]%*%t(estimate@trafo$mat)
-    }
-
-}
-##<-
     estimate@estimate.call <- es.call
 
     if(missing(Infos))

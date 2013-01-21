@@ -4,33 +4,10 @@
 ##
 ################################
 
+### some reusable blocks of code (to avoid redundancy):
 
-## methods
-setMethod("validParameter",signature(object="GEVFamily"),
-           function(object, param, tol =.Machine$double.eps){
-             if (is(param, "ParamFamParameter")) 
-                 param <- main(param)
-             if (!all(is.finite(param))) 
-                 return(FALSE)
-             if (any(param[1] <= tol)) 
-                 return(FALSE)
-             if (any(param[2] <= tol))
-                 return(FALSE)
-             return(TRUE)
-           })
-
-
-## generating function 
-## loc: known/fixed threshold/location parameter
-## scale: scale parameter
-## shape: shape parameter
-## trafo: optional parameter transformation
-## start0Est: startEstimator for MLE and MDE --- if NULL HybridEstimator is used;
-
-GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
-                          of.interest = c("scale", "shape"),
-                          p = NULL, N = NULL, trafo = NULL,
-                          start0Est = NULL, withPos = TRUE){
+### pretreatment of of.interest
+.pretreat.of.interest <- function(of.interest,trafo){
     if(is.null(trafo)){
         of.interest <- unique(of.interest)
         if(length(of.interest) > 2)
@@ -60,62 +37,11 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
             of.interest[1] <- "expected shortfall"
         }
     }
-    theta <- c(loc, scale, shape)
+  return(of.interest)
+}
 
-    ##symmetry
-    distrSymm <- NoSymmetry()
-
-    ## parameters
-    names(theta) <- c("loc", "scale", "shape")
-    scaleshapename <- c("scale", "shape")
-
-
-    if(!is.null(p)){
-       btq <- substitute({ q <- loc0 + theta[1]*((-log(1-p0))^(-theta[2])-1)/theta[2]
-                           names(q) <- "quantile"
-                           }, list(loc0 = loc, p0 = p))
-
-       bDq <- substitute({ scale <- theta[1];  shape <- theta[2]
-                        D1 <- ((-log(1-p0))^(-shape)-1)/shape
-                        D2 <- -scale/shape*(D1 + log(-log(1-p0))*(-log(1-p0))^(-shape))
-                        D <- t(c(D1, D2))
-                        rownames(D) <- "quantile"; colnames(D) <- NULL
-                        D }, list(p0 = p))
-       btes <- substitute({ if(theta[2]>=1L) es <- NA else {
-                            pg <- pgamma(-log(p0),1-theta[2], lower.tail = TRUE)
-                            es <- theta[1] * (gamma(1-theta[2]) * pg/ (1-p0) - 1 )/
-                                   theta[2]  + loc0 }
-                            names(es) <- "expected shortfall"
-                            es }, list(loc0 = loc, p0 = p))
-       bDes <- substitute({ if(theta[2]>=1L){ D1 <- D2 <- NA} else {
-                            scale <- theta[1]; shape <- theta[2]
-                            pg <- pgamma(-log(p0), 1-theta[2], lower.tail = TRUE)
-                            dd <- ddigamma(-log(p0),1-theta[2])
-                            g0 <- gamma(1-theta[2])
-                            D1 <- (g0*pg/(1-p0)-1)/theta[2]
-                            D21 <- theta[1]*D1/theta[2]
-                            D22 <- theta[1]*dd/(1-p0)/theta[2]
-                            D2 <- -D21+D22}
-                            D <- t(c(D1, D2))
-                            rownames(D) <- "expected shortfall"
-                            colnames(D) <- NULL
-                            D }, list(loc0 = loc, p0 = p))
-    }
-    if(!is.null(N)){
-       btel <- substitute({ if(theta[2]>=1L) el <- NA else{
-                            el <- N0*(loc0+theta[1]*gamma(1-theta[2])/theta[2])}
-                            names(el) <- "expected loss"
-                            el }, list(loc0 = loc,N0 = N))
-       bDel <- substitute({ if(theta[2]>=1L){ D1 <- D2 <- NA}else{
-                            scale <- theta[1]; shape <- theta[2]
-                            D1 <- N0*gamma(1-shape)/shape
-                            D2 <- -N0*theta[1]*digamma(1-theta[2])/theta[2]-
-                                   D1*scale/(1-shape)}
-                            D <- t(c(D1, D2))
-                            rownames(D) <- "expected loss"
-                            colnames(D) <- NULL
-                            D }, list(loc0 = loc, N0 = N))
-    }
+.define.tau.Dtau <- function( trafo, of.interest, btq, bDq, btes,
+                     bDes, btel, bDel, p, N){
     if(is.null(trafo)){
         tau <- NULL
         if("scale" %in% of.interest){
@@ -185,8 +111,100 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     }else{
         if(is.matrix(trafo) & nrow(trafo) > 2) stop("number of rows of 'trafo' > 2")
     }
+    return(list(trafo = trafo, tau = tau, Dtau = Dtau))
+}
+
+## methods
+setMethod("validParameter",signature(object="GEVFamily"),
+           function(object, param, tol =.Machine$double.eps){
+             if (is(param, "ParamFamParameter")) 
+                 param <- main(param)
+             if (!all(is.finite(param))) 
+                 return(FALSE)
+             if (any(param[1] <= tol)) 
+                 return(FALSE)
+             if (any(param[2] <= tol))
+                 return(FALSE)
+             return(TRUE)
+           })
 
 
+## generating function 
+## loc: known/fixed threshold/location parameter
+## scale: scale parameter
+## shape: shape parameter
+## trafo: optional parameter transformation
+## start0Est: startEstimator for MLE and MDE --- if NULL HybridEstimator is used;
+
+GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
+                          of.interest = c("scale", "shape"),
+                          p = NULL, N = NULL, trafo = NULL,
+                          start0Est = NULL, withPos = TRUE){
+    theta <- c(loc, scale, shape)
+
+    of.interest <- .pretreat.of.interest(of.interest,trafo)
+
+    ##symmetry
+    distrSymm <- NoSymmetry()
+
+    ## parameters
+    names(theta) <- c("loc", "scale", "shape")
+    scaleshapename <- c("scale", "shape")
+
+
+    btq <- bDq <- btes <- bDes <- btel <- bDel <- NULL
+    if(!is.null(p)){
+       btq <- substitute({ q <- loc0 + theta[1]*((-log(1-p0))^(-theta[2])-1)/theta[2]
+                           names(q) <- "quantile"
+                           }, list(loc0 = loc, p0 = p))
+
+       bDq <- substitute({ scale <- theta[1];  shape <- theta[2]
+                        D1 <- ((-log(1-p0))^(-shape)-1)/shape
+                        D2 <- -scale/shape*(D1 + log(-log(1-p0))*(-log(1-p0))^(-shape))
+                        D <- t(c(D1, D2))
+                        rownames(D) <- "quantile"; colnames(D) <- NULL
+                        D }, list(p0 = p))
+       btes <- substitute({ if(theta[2]>=1L) es <- NA else {
+                            pg <- pgamma(-log(p0),1-theta[2], lower.tail = TRUE)
+                            es <- theta[1] * (gamma(1-theta[2]) * pg/ (1-p0) - 1 )/
+                                   theta[2]  + loc0 }
+                            names(es) <- "expected shortfall"
+                            es }, list(loc0 = loc, p0 = p))
+       bDes <- substitute({ if(theta[2]>=1L){ D1 <- D2 <- NA} else {
+                            scale <- theta[1]; shape <- theta[2]
+                            pg <- pgamma(-log(p0), 1-theta[2], lower.tail = TRUE)
+                            dd <- ddigamma(-log(p0),1-theta[2])
+                            g0 <- gamma(1-theta[2])
+                            D1 <- (g0*pg/(1-p0)-1)/theta[2]
+                            D21 <- theta[1]*D1/theta[2]
+                            D22 <- theta[1]*dd/(1-p0)/theta[2]
+                            D2 <- -D21+D22}
+                            D <- t(c(D1, D2))
+                            rownames(D) <- "expected shortfall"
+                            colnames(D) <- NULL
+                            D }, list(loc0 = loc, p0 = p))
+    }
+    if(!is.null(N)){
+       btel <- substitute({ if(theta[2]>=1L) el <- NA else{
+                            el <- N0*(loc0+theta[1]*gamma(1-theta[2])/theta[2])}
+                            names(el) <- "expected loss"
+                            el }, list(loc0 = loc,N0 = N))
+       bDel <- substitute({ if(theta[2]>=1L){ D1 <- D2 <- NA}else{
+                            scale <- theta[1]; shape <- theta[2]
+                            D1 <- N0*gamma(1-shape)/shape
+                            D2 <- -N0*theta[1]*digamma(1-theta[2])/theta[2]-
+                                   D1*scale/(1-shape)}
+                            D <- t(c(D1, D2))
+                            rownames(D) <- "expected loss"
+                            colnames(D) <- NULL
+                            D }, list(loc0 = loc, N0 = N))
+    }
+
+    def <- .define.tau.Dtau( trafo, of.interest, btq, bDq, btes,
+                             bDes, btel, bDel, p, N)
+    trafo <- def$trafo; tau <- def$tau; Dtau <- def$Dtau
+
+####
     param <- ParamFamParameter(name = "theta", main = c(theta[2],theta[3]),
                                fixed = theta[1],
                                trafo = trafo, withPosRestr = withPos,

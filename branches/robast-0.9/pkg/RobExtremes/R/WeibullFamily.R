@@ -37,36 +37,10 @@ WeibullFamily <- function(scale = 1, shape = 0.5,
                           of.interest = c("scale", "shape"), 
                           p = NULL, N = NULL, trafo = NULL,
                           start0Est = NULL, withPos = TRUE){
-    if(is.null(trafo)){
-        of.interest <- unique(of.interest)
-        if(length(of.interest) > 2)
-            stop("A maximum number of two parameters resp. parameter transformations may be selected.")
-        if(!all(of.interest %in% c("scale", "shape", "quantile", "expected loss", "expected shortfall")))
-            stop("Parameters resp. transformations of interest have to be selected from: ",
-                "'scale', 'shape', 'quantile', 'expected loss', 'expected shortfall'.")
-
-        ## reordering of of.interest
-        if(("scale" %in% of.interest) && ("scale" != of.interest[1])){
-            of.interest[2] <- of.interest[1]
-            of.interest[1] <- "scale"
-        }
-        if(!("scale" %in% of.interest) && ("shape" %in% of.interest) && ("shape" != of.interest[1])){
-            of.interest[2] <- of.interest[1]
-            of.interest[1] <- "shape"
-        }
-        if(!any(c("scale", "shape") %in% of.interest) && ("quantile" %in% of.interest) 
-          && ("quantile" != of.interest[1])){
-            of.interest[2] <- of.interest[1]
-            of.interest[1] <- "quantile"
-        }
-        if(!any(c("scale", "shape", "quantile") %in% of.interest) 
-          && ("expected shortfall" %in% of.interest) 
-          && ("expected shortfall" != of.interest[1])){
-            of.interest[2] <- of.interest[1]
-            of.interest[1] <- "expected shortfall"
-        }
-    }
     theta <- c(scale, shape)
+
+    of.interest <- .pretreat.of.interest(of.interest,trafo)
+             ## code .pretreat.of.interest in GEV.family.R
 
     ##symmetry
     distrSymm <- NoSymmetry()
@@ -75,6 +49,7 @@ WeibullFamily <- function(scale = 1, shape = 0.5,
     names(theta) <- c("scale", "shape")
     scaleshapename <- c("scale", "shape")
 
+    btq <- bDq <- btes <- bDes <- btel <- bDel <- NULL
     if(!is.null(p)){
        btq <- substitute({ q <- theta[1]*(-log(1-p0))^(1/theta[2])
                            names(q) <- "quantile"
@@ -120,75 +95,10 @@ WeibullFamily <- function(scale = 1, shape = 0.5,
                             D }, list(loc0 = loc, N0 = N))
     }
 
-    if(is.null(trafo)){
-        tau <- NULL
-        if("scale" %in% of.interest){
-            tau <- function(theta){ th <- theta[1]; names(th) <- "scale";  th}
-            Dtau <- function(theta){ D <- t(c(1, 0)); rownames(D) <- "scale"; D}
-        }
-        if("shape" %in% of.interest){
-            if(is.null(tau)){
-               tau <- function(theta){th <- theta[2]; names(th) <- "shape"; th}
-               Dtau <- function(theta){D <- t(c(0,1));rownames(D) <- "shape";D}
-            }else{
-                tau <- function(theta){th <- theta
-                            names(th) <- c("scale", "shape"); th}
-                Dtau <- function(theta){ D <- diag(2);
-                            rownames(D) <- c("scale", "shape");D}
-            }
-        }
-        if("quantile" %in% of.interest){
-            if(is.null(p)) stop("Probability 'p' has to be specified.")
-            if(is.null(tau)){
-                tau <- function(theta){ }; body(tau) <- btq
-                Dtau <- function(theta){ };body(Dtau) <- bDq
-            }else{
-                tau1 <- tau
-                tau <- function(theta){ }
-                body(tau) <- substitute({ btq0; c(tau0(theta), q) },
-                                        list(btq0=btq, tau0 = tau1))
-                Dtau1 <- Dtau
-                Dtau <- function(theta){}
-                body(Dtau) <- substitute({ bDq0; rbind(Dtau0(theta), D) },
-                                         list(Dtau0 = Dtau1, bDq0 = bDq))
-            }
-        }
-        if("expected shortfall" %in% of.interest){
-            if(is.null(p)) stop("Probability 'p' has to be specified.")
-            if(is.null(tau)){
-                tau <- function(theta){ };  body(tau) <- btes
-                Dtau <- function(theta){ }; body(Dtau) <- bDes
-            }else{
-                tau1 <- tau
-                tau <- function(theta){ }
-                body(tau) <- substitute({ btes0; c(tau0(theta), es) },
-                                        list(tau0 = tau1, btes0=btes))
-                Dtau1 <- Dtau
-                Dtau <- function(theta){}
-                body(Dtau) <- substitute({ bDes0; rbind(Dtau0(theta), D) },
-                                         list(Dtau0 = Dtau1, bDes0=bDes))
-            }
-        }
-        if("expected loss" %in% of.interest){
-            if(is.null(N)) stop("Expected frequency 'N' has to be specified.")
-            if(is.null(tau)){
-                tau <- function(theta){ }; body(tau) <- btel
-                Dtau <- function(theta){ }; body(Dtau) <- bDel
-            }else{
-                tau1 <- tau
-                tau <- function(theta){ }
-                body(tau) <- substitute({ btel0; c(tau0(theta), el) },
-                                        list(tau0 = tau1, btel0=btel))
-                Dtau1 <- Dtau
-                Dtau <- function(theta){}
-                body(Dtau) <- substitute({ bDel0; rbind(Dtau0(theta), D) },
-                                         list(Dtau0 = Dtau1, bDel0=bDel))
-            }
-        }
-        trafo <- function(x){ list(fval = tau(x), mat = Dtau(x)) }
-    }else{
-        if(is.matrix(trafo) & nrow(trafo) > 2) stop("number of rows of 'trafo' > 2")
-    }
+    def <- .define.tau.Dtau( trafo, of.interest, btq, bDq, btes,
+                             bDes, btel, bDel, p, N)
+           # code .define.tau.Dtau is in file GEVFamily.R
+    trafo <- def$trafo; tau <- def$tau; Dtau <- def$Dtau
 
 
     param <- ParamFamParameter(name = "theta", main = c(theta[1],theta[2]),

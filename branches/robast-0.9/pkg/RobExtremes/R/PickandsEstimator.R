@@ -66,27 +66,6 @@ PickandsEstimator <- function(x, alpha = 2, ParamFamily=GParetoFamily(),
                           nuis.idx = nuis.idx.0, trafo = trafo.0,
                           fixed = fixed.0, na.rm = na.rm.0, ...,
                           ParamFamily = ParamFamily)
-##->
-if(FALSE){
-    estimate@untransformed.asvar <- asvar(estimate)
-    estimate@asvar <- asvar
-
-
-    l.e <- length(estimate@untransformed.estimate)
-    idx <- NULL
-    idm <- 1:l.e
-    if(!is.null(nuis.idx))
-        {idx <- nuis.idx
-         idm <- idm[-idx]
-         mat <- diag(length(idm))}
-
-    if(!.isUnitMatrix(estimate@trafo$mat)){
-       estimate@estimate <- estimate@trafo$fct(estimate)
-       if(!is.null(asvar))
-           estimate@asvar <- estimate@trafo$mat%*%asvar[idm,idm]%*%t(estimate@trafo$mat)
-    }
-}
-## <-
     estimate@estimate.call <- es.call
 
     if(missing(Infos))
