@@ -95,10 +95,12 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
                             D }, list(loc0 = loc, N0 = N))
     }
 
-    def <- .define.tau.Dtau( trafo, of.interest, btq, bDq, btes,
-                             bDes, btel, bDel, p, N)
+    if(is.null(trafo))
+       trafo <- .define.tau.Dtau(of.interest, btq, bDq, btes, bDes,
+                                 btel, bDel, p, N)
+    else if(is.matrix(trafo) & nrow(trafo) > 2)
+           stop("number of rows of 'trafo' > 2")
            # code .define.tau.Dtau is in file GEVFamily.R
-    trafo <- def$trafo; tau <- def$tau; Dtau <- def$Dtau
 
     param <- ParamFamParameter(name = "theta", main = c(theta[2],theta[3]),
                                fixed = theta[1],

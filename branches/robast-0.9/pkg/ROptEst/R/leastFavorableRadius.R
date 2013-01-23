@@ -125,10 +125,10 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
             return(res)
         }else{
             if(is(L2Fam@distribution, "UnivariateDistribution")){
+                L2derivSymm <- L2Fam@L2derivSymm
+                L2derivDistrSymm <- L2Fam@L2derivDistrSymm
                 if((length(L2Fam@L2deriv) == 1) & is(L2Fam@L2deriv[[1]], "RealRandVariable")){
                     L2deriv <- L2Fam@L2deriv[[1]]
-                    L2derivSymm <- L2Fam@L2derivSymm
-                    L2derivDistrSymm <- L2Fam@L2derivDistrSymm
                 }else{
                     L2deriv <- diag(dimension(L2Fam@L2deriv)) %*% L2Fam@L2deriv
                     L2deriv <- RealRandVariable(Map = L2deriv@Map, Domain = L2deriv@Domain)

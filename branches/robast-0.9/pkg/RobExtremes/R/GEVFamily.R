@@ -40,9 +40,8 @@
   return(of.interest)
 }
 
-.define.tau.Dtau <- function( trafo, of.interest, btq, bDq, btes,
+.define.tau.Dtau <- function(of.interest, btq, bDq, btes,
                      bDes, btel, bDel, p, N){
-    if(is.null(trafo)){
         tau <- NULL
         if("scale" %in% of.interest){
             tau <- function(theta){ th <- theta[1]; names(th) <- "scale";  th}
@@ -108,10 +107,7 @@
             }
         }
         trafo <- function(x){ list(fval = tau(x), mat = Dtau(x)) }
-    }else{
-        if(is.matrix(trafo) & nrow(trafo) > 2) stop("number of rows of 'trafo' > 2")
-    }
-    return(list(trafo = trafo, tau = tau, Dtau = Dtau))
+        return(trafo)
 }
 
 ## methods
@@ -200,10 +196,11 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                             D }, list(loc0 = loc, N0 = N))
     }
 
-    def <- .define.tau.Dtau( trafo, of.interest, btq, bDq, btes,
-                             bDes, btel, bDel, p, N)
-    trafo <- def$trafo; tau <- def$tau; Dtau <- def$Dtau
-
+    if(is.null(trafo))
+       trafo <- .define.tau.Dtau(of.interest, btq, bDq, btes, bDes,
+                                 btel, bDel, p, N)
+    else if(is.matrix(trafo) & nrow(trafo) > 2)
+           stop("number of rows of 'trafo' > 2")
 ####
     param <- ParamFamParameter(name = "theta", main = c(theta[2],theta[3]),
                                fixed = theta[1],
