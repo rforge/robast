@@ -12,9 +12,13 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     withICList = getRobAStBaseOption("withICList"),
                     withPICList = getRobAStBaseOption("withPICList"),
                     na.rm = TRUE, initial.est.ArgList, ...,
-                    withLogScale = TRUE,..withCheck=FALSE){
+                    withLogScale = TRUE,..withCheck=FALSE,
+                    withTimings = FALSE){
     es.call <- match.call()
     es.call0 <- match.call(expand.dots=FALSE)
+    mwt <- !is.null(es.call$withTimings)
+    es.call$withTimings <- NULL
+    es.call0$withTimings <- NULL
     dots <- es.call0[["..."]]
     es.call0$"..." <- NULL
     es.call1 <- .constructArg.list(roptest,es.call0, onlyFormal=FALSE,
@@ -42,10 +46,12 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
       if(length(res)) list1$kStepCtrl <- res
     list1 <- c(list1,dots)
     list1$..withCheck <- NULL
+    list1$withTimings <- withTimings
     if(..withCheck) print(list1)
     if(..withCheck) return(substitute(do.call(robest, lis), list(lis=list1)))
     else{
     res <- do.call(robest, list1)
+    if(mwt) es.call$withTimings <- withTimings
     res@estimate.call <- es.call
     return(res)}
 }
@@ -60,10 +66,13 @@ robest <- function(x, L2Fam,  fsCor = 1,
                     nbCtrl = gennbCtrl(),
                     startCtrl = genstartCtrl(),
                     kStepCtrl = genkStepCtrl(),
-                    na.rm = TRUE, ..., debug = FALSE){
+                    na.rm = TRUE, ..., debug = FALSE, withTimings = FALSE){
 
     es.call <- match.call()
     es.call0 <- match.call(expand.dots=FALSE)
+    mwt <- !is.null(es.call$withTimings)
+    es.call$withTimings <- NULL
+    es.call0$withTimings <- NULL
     dots <- es.call0[["..."]]
     es.call0$"..." <- NULL
 #    if(!is.null(dots[["escall"]])) es.call <- dots[["escall"]]
@@ -137,12 +146,12 @@ robest <- function(x, L2Fam,  fsCor = 1,
                                  ))
       }
     }else{
-    sy <- system.time({
+    sy.start <- system.time({
       initial.est <-  kStepEstimator.start(eval(startCtrl$initial.est), x = x,
                                         nrvalues = nrvalues, na.rm = na.rm,
                                         L2Fam = L2Fam)
      })
-     print(sy)
+     if(withTimings) print(sy.start)
     }
 
     newParam <- param(L2Fam)
@@ -175,11 +184,11 @@ robest <- function(x, L2Fam,  fsCor = 1,
     cat("\n\n\n")
     }
     if(!debug){
-      sy <-  system.time({
+      sy.getStartIC <-  system.time({
        ICstart <- do.call(getStartIC, args=c(list(model=L2FamStart,risk=risk,
                               neighbor=neighbor),es.list0))
      })
-     print(sy)
+     if (withTimings) print(sy.getStartIC)
      }
       if(debug){
          argList <- list(x, IC = ICstart, start = initial.est, steps = steps,
@@ -192,7 +201,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
                             scalename = kStepCtrl$scalename,
                             withLogScale = kStepCtrl$withLogScale)
          print(argList) }
-      sy <- system.time({
+      sy.kStep <- system.time({
          res <- kStepEstimator(x, IC = ICstart, start = initial.est, steps = steps,
                             useLast = kStepCtrl$useLast,
                             withUpdateInKer = kStepCtrl$withUpdateInKer,
@@ -203,9 +212,12 @@ robest <- function(x, L2Fam,  fsCor = 1,
                             scalename = kStepCtrl$scalename,
                             withLogScale = kStepCtrl$withLogScale)
                             })
-       print(sy)
+       if (withTimings) print(sy.kStep)
 
-    if(!debug) res@estimate.call <- es.call
+    if(!debug){
+         if(mwt) es.call$withTimings <- withTimings
+         res@estimate.call <- es.call
+    }
     Infos <- matrix(c("roptest", 
                       paste(steps, "-step estimate for ", name(L2Fam), sep = "")),
                      ncol = 2)
@@ -224,9 +236,13 @@ robest <- function(x, L2Fam,  fsCor = 1,
 
     if(debug) print(Infos)
     if(debug) return(NULL)
-
+    sy.all <- sy.start+sy.getStartIC+sy.kStep
+    if(withTimings) print(sy.all)
+    sy <- rbind(start=sy.start,getStartIC=sy.getStartIC,
+                kStep=sy.kStep, all=sy.all)
     Infos(res) <- Infos
     res@completecases <- completecases
     res@start <- initial.est
+    attr(res, "timings") <- sy
     return(res)
 }

@@ -104,20 +104,20 @@
 }
 
 .check.eps <- function(...){
-   mc <- match.call(expand.dots=TRUE)
+   mc <- as.list(match.call(expand.dots=TRUE)[-1])
 
    eps <- eps.lower <- eps.upper <- NULL
+#   print(names(mc))
 #   lapply(mc, function(xx) print(str(xx)))
 
    ine <- is.null(mc[["eps"]]) || is.symbol(mc[["eps"]])
    inl <- is.null(mc[["eps.lower"]]) || is.symbol(mc[["eps.lower"]])
    inu <- is.null(mc[["eps.upper"]]) || is.symbol(mc[["eps.upper"]])
-
+#   print(c(ine=ine,inl=inl,inu=inu))
    if(ine && inl && inu){
         eps.lower <- 0
         eps.upper <- 0.5
-    }
-    if(ine){
+    }else if(ine){
         if(!inl && !inu)
             eps.lower <- mc[["eps.lower"]]
             eps.upper <- mc[["eps.upper"]]

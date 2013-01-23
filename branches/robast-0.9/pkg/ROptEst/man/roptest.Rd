@@ -17,7 +17,7 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         withICList = getRobAStBaseOption("withICList"),
         withPICList = getRobAStBaseOption("withPICList"),
         na.rm = TRUE, initial.est.ArgList, ...,
-        withLogScale = TRUE, ..withCheck = FALSE)
+        withLogScale = TRUE, ..withCheck = FALSE, withTimings = FALSE)
 roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
         distance = CvMDist, startPar = NULL, verbose = NULL,
@@ -83,7 +83,11 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   \item{withLogScale}{logical; shall a scale component (if existing and found
    with name \code{scalename}) be computed on log-scale and backtransformed
    afterwards? This avoids crossing 0.}
-   \item{..withCheck}{logical: if switched on, debugging info is issued.}
+   \item{..withCheck}{logical: if \code{TRUE}, debugging info is issued.}
+  \item{withTimings}{logical: if \code{TRUE}, separate (and aggregate)
+   timings for the three steps evaluating the starting value, finding
+   the starting influence curve, and evaluating the k-step estimator is
+   issued.}
 }
 \details{
   Computes the optimally robust estimator for a given L2 differentiable
@@ -140,7 +144,8 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   If \code{useLast} is set to \code{TRUE} the computation of \code{asvar}, 
   \code{asbias} and \code{IC} is based on the k-step estimate.
 }
-\value{Object of class \code{"kStepEstimate"}. }
+\value{Object of class \code{"kStepEstimate"}.  In addition, it has
+       an attribute \code{"timings"} where computation time is stored.}
 \references{
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
