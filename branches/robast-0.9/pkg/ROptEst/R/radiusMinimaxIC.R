@@ -139,12 +139,13 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                    args.Ie$loRisk <- rL$Risk; args.Ie$loNorm <- rL$Norm
                }
                if(upRad == Inf){
-                   args.lR <- list(risk = asBias(biastype = biastype(risk),
+                   args.lR <- c(list(risk = asBias(biastype = biastype(risk),
                                                  normtype = normtype),
                                 L2deriv = L2deriv, neighbor = neighbor,
-                                biastype = biastype, normtype = normtype(risk),
-                                li.1, list(Finfo = Finfo, z.start = z.start,
-                                A.start = A.start, maxiter = maxiter, tol = tol,
+                                biastype = biastype, normtype = normtype(risk)),
+                                li.1, list(Finfo = Finfo, trafo = trafo,
+                                z.start = z.start, A.start = A.start,
+                                maxiter = maxiter, tol = tol,
                                 warn = warn, verbose = verbose))
                    biasR <- do.call(getAsRisk, args.lR)
                    args.Ie$upNorm <- biasR$normtype
@@ -167,10 +168,10 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
 
         if(is(leastFavR, "try-error")){
            warnRund <- 1; isE <- TRUE
+           fl <- (0.2/lower)^(1/6); fu <- (0.5/upper)^(1/6)
            while(warnRund < 7 && isE ){
               warnRund <- warnRund + 1
-              lower <- lower * 2;  upper <- upper / 2
-              if( warnRund == 4 ) min(upper, 1.5)
+              lower <- lower * fl;  upper <- upper *fu
               if(is.finite(upRad)){
                  args.Ie$upRad <- upper; rL <- .getRisk(upper)
                  args.Ie$upRisk <- rL$Risk; args.Ie$upNorm <- rL$Norm

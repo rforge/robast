@@ -39,7 +39,8 @@
                       PFam = GParetoFamily(scale=1,shape=2),
                       optFct = .RMXE.xi,
                       withSmooth = TRUE,
-                      withPrint = FALSE, withCall = FALSE){
+                      withPrint = FALSE, withCall = FALSE,
+                      GridFileName="LMGrid.Rdata"){
    print(match.call())
    call <- match.call()
    itLM <- 0
@@ -68,7 +69,7 @@
 
             })
    LMGrid <- sapply(xiGrid,getLM)
-   save(LMGrid, file="LMGrid.Rdata")
+   save(LMGrid, file=GridFileName)
    res <- .MakeGridList(xiGrid, Y=t(LMGrid), withSmooth = withSmooth)
    print(res)
    return(list(grid = res$grid,
@@ -118,8 +119,8 @@
 
 .myFolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/ROptEst/R"
 .svInt <- function(optF = .RMXE.xi, nam = ".RMXE")
-             .saveInterpGrid(xiGrid = getShapeGrid(200,
-                  cutoff.at.0=0.01),
+             .saveInterpGrid(xiGrid = getShapeGrid(500,
+                  cutoff.at.0=0.005),
                   PFam = GParetoFamily(shape=1,scale=2),
                   sysRdaFolder=.myFolder, optFct = optF,
                   nameInSysdata = nam, getFun = .getLMGrid,

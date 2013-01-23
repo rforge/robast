@@ -234,9 +234,10 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                  tol = .Machine$double.eps^0.25)$root, silent =TRUE)
                     if(is(leastFavR, "try-error")){
                        warnRund <- 1; isE <- TRUE
+                       fl <- (0.2/lower)^(1/6); fu <- (0.5/upper)^(1/6)
                        while(warnRund < 7 && isE ){
                          warnRund <- warnRund + 1
-                         lower <- lower * 2;  upper <- upper / 2
+                         lower <- lower * fl;  upper <- upper *fr
                          if( warnRund == 4 ) min(upper, 1.5)
                          if(is.finite(upRad)){
                             args.Ie$upRad <- upper; rL <- .getRisk(upper)
