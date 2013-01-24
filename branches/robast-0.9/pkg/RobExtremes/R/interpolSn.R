@@ -108,7 +108,7 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
   if(missing(sysRdaFolder)) stop("You must specify argument 'sysRdaFolder'.")
 
   if(missing(GridFileName))
-    GridFileName <- paste(sub("^\\.(.+)","\\1"),".Rdata",sep="")
+     GridFileName <- paste(sub("^\\.(.+)","\\1",nameInSysdata),".Rdata",sep="")
   newEnv <- new.env()
   sysdataFile <- file.path(sysRdaFolder,"sysdata.rda")
   cat("sysdataFile = ", sysdataFile, "\n")
@@ -120,7 +120,7 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
 
   cat("whatIsThereAlready = ", head(whatIsThereAlready), "\n")
 
-  if(exists(.versionSuff(nameInSysdata),envir=newEnv)){
+  if(exists(.versionSuff(nameInSysdata),envir=newEnv,inherits=FALSE)){
     InterpGrids <- get(.versionSuff(nameInSysdata), envir=newEnv)
     namesInterpGrids <- names(InterpGrids)
     cat(gettext("Names of existing grids:\n"))
