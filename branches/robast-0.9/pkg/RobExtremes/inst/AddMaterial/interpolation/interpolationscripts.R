@@ -43,9 +43,15 @@ fct[[1]](2);fct[[2]](2)
 #############################################################################
 ### GEVD
 #############################################################################
+##---------------------------------------------------------------------
 ## on R-3.0.0
+##---------------------------------------------------------------------
+## install new versions of distr-family and robast-family of pkgs
+### open R session
 require(RobExtremes)
+### -> change this according to where you checked out the svn repo:
 .basepath <- "C:/rtest/RobASt/branches/robast-0.9/pkg"
+## <-
 .saveInterpGrid <- RobExtremes:::.saveInterpGrid
 .svInt <- RobExtremes:::.svInt
 .OMSE.xi <- RobExtremes:::.OMSE.xi
@@ -56,6 +62,8 @@ require(RobExtremes)
 .myFolder1 <- file.path(.basepath,"RobExtremesBuffer/tmp1")
 .myFolder2 <- file.path(.basepath,"RobExtremesBuffer/tmp2")
 .myFolder3 <- file.path(.basepath,"RobExtremesBuffer/tmp3")
+chkExist <- function(fN) if(!file.exists(fN)) dir.create(fN)
+sapply(c(.myFolder1,.myFolder2,.myFolder3), chkExist)
 PF <- GEVFamily()
 .saveInterpGrid(getShapeGrid(gridsize=500, cutoff.at.0=0.005),
                 sysRdaFolder = .myFolder, accuracy = 5000,upp=10,
@@ -68,15 +76,35 @@ PF <- GEVFamily()
 ### merge and thin out results on R-3.0.0
 rdafiles <- file.path(c(myFolder,.myFolder1,myFolder2,.myFolder3),"sysdata.rda")
 .recomputeInterpolators("sysdata.rda", sysRdaFolder = myFolder)
- ## on R-2.15.2
-require(RobExtremes); RobExtremes:::.recomputeInterpolators(.myfiles1, sysRdaFolder = .myfolder2)
+### close R session;
+##  R CMD build RobExtremes
+##---------------------------------------------------------------------
+## on R-2.15.2
+##---------------------------------------------------------------------
+## install new versions of distr-family and robast-family of pkgs
+##  install RobExtremes from source on R-2.15.2
+require(RobExtremes); RobExtremes:::.recomputeInterpolators(rdafiles, sysRdaFolder = .myFolder)
+### close R session;
+##  R CMD build RobExtremes
+##  R CMD install RobExtremes from source
+##---------------------------------------------------------------------
+## on R-3.0.0
+##---------------------------------------------------------------------
+##  R CMD install RobExtremes from source
+###
 
 #############################################################################
 ### Weibull
 #############################################################################
+##---------------------------------------------------------------------
 ## on R-3.0.0
+##---------------------------------------------------------------------
+## install new versions of distr-family and robast-family of pkgs
+### open R session
 require(RobExtremes)
+### -> change this according to where you checked out the svn repo:
 .basepath <- "C:/rtest/RobASt/branches/robast-0.9/pkg"
+## <-
 .saveInterpGrid <- .saveInterpGrid
 .svInt <- RobExtremes:::.svInt
 .OMSE.xi <- RobExtremes:::.OMSE.xi
@@ -87,6 +115,8 @@ require(RobExtremes)
 .myFolder1 <- file.path(.basepath,"RobExtremesBuffer/tmp1")
 .myFolder2 <- file.path(.basepath,"RobExtremesBuffer/tmp2")
 .myFolder3 <- file.path(.basepath,"RobExtremesBuffer/tmp3")
+chkExist <- function(fN) if(!file.exists(fN)) dir.create(fN)
+sapply(c(.myFolder1,.myFolder2,.myFolder3), chkExist)
 PF <- WeibullFamily()
 .saveInterpGrid(getShapeGrid(gridsize=500, cutoff.at.0=0.005),
                 sysRdaFolder = .myFolder, accuracy = 5000,upp=10,
@@ -99,13 +129,31 @@ PF <- WeibullFamily()
 ### merge and thin out results on R-3.0.0
 rdafiles <- file.path(c(myFolder,.myFolder1,myFolder2,.myFolder3),"sysdata.rda")
 .recomputeInterpolators("sysdata.rda", sysRdaFolder = myFolder)
- ## on R-2.15.2
-require(RobExtremes); RobExtremes:::.recomputeInterpolators(.myfiles1, sysRdaFolder = .myfolder2)
+### close R session;
+##  R CMD build RobExtremes
+##---------------------------------------------------------------------
+## on R-2.15.2
+##---------------------------------------------------------------------
+## install new versions of distr-family and robast-family of pkgs
+##  install RobExtremes from source on R-2.15.2
+require(RobExtremes); RobExtremes:::.recomputeInterpolators(rdafiles, sysRdaFolder = .myFolder)
+### close R session;
+##  R CMD build RobExtremes
+##  R CMD install RobExtremes from source
+##---------------------------------------------------------------------
+## on R-3.0.0
+##---------------------------------------------------------------------
+##  R CMD install RobExtremes from source
+###
 
 #############################################################################
 ### Gamma
 #############################################################################
+##---------------------------------------------------------------------
 ## on R-3.0.0
+##---------------------------------------------------------------------
+## install new versions of distr-family and robast-family of pkgs
+### open R session
 require(RobExtremes)
 .saveInterpGrid <- RobExtremes:::.saveInterpGrid
 .svInt <- RobExtremes:::.svInt
@@ -113,11 +161,15 @@ require(RobExtremes)
 .MBRE.xi <- RobExtremes:::.MBRE.xi
 .RMXE.xi <- RobExtremes:::.RMXE.xi
 .modify.xi.PFam.call <- RobExtremes:::.modify.xi.PFam.call
+### -> change this according to where you checked out the svn repo:
 .basepath <- "C:/rtest/RobASt/branches/robast-0.9/pkg"
+## <-
 .myFolder <- file.path(.basepath,"RobExtremes/R")
 .myFolder1 <- file.path(.basepath,"RobExtremesBuffer/tmp1")
 .myFolder2 <- file.path(.basepath,"RobExtremesBuffer/tmp2")
 .myFolder3 <- file.path(.basepath,"RobExtremesBuffer/tmp3")
+chkExist <- function(fN) if(!file.exists(fN)) dir.create(fN)
+sapply(c(.myFolder1,.myFolder2,.myFolder3), chkExist)
 PF <- GammaFamily()
 .saveInterpGrid(getShapeGrid(gridsize=500, cutoff.at.0=0.005),
                 sysRdaFolder = .myFolder, accuracy = 5000,upp=10,
@@ -130,5 +182,19 @@ PF <- GammaFamily()
 ### merge and thin out results on R-3.0.0
 rdafiles <- file.path(c(myFolder,.myFolder1,myFolder2,.myFolder3),"sysdata.rda")
 .recomputeInterpolators("sysdata.rda", sysRdaFolder = myFolder)
- ## on R-2.15.2
-require(RobExtremes); RobExtremes:::.recomputeInterpolators(.myfiles1, sysRdaFolder = .myfolder2)
+### close R session;
+##  R CMD build RobExtremes
+##---------------------------------------------------------------------
+## on R-2.15.2
+##---------------------------------------------------------------------
+## install new versions of distr-family and robast-family of pkgs
+##  install RobExtremes from source on R-2.15.2
+require(RobExtremes); RobExtremes:::.recomputeInterpolators(rdafiles, sysRdaFolder = .myFolder)
+### close R session;
+##  R CMD build RobExtremes
+##  R CMD install RobExtremes from source
+##---------------------------------------------------------------------
+## on R-3.0.0
+##---------------------------------------------------------------------
+##  R CMD install RobExtremes from source
+###
