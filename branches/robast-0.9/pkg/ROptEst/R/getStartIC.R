@@ -6,7 +6,7 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asRisk"),
     mc <- match.call(expand.dots=FALSE, call = sys.call(sys.parent(1)))
     dots <- as.list(mc$"...")
     if("fsCor" %in% names(dots)){
-        fsCor <- dots[["fsCor"]]
+        fsCor <- eval(dots[["fsCor"]])
         dots$fsCor <- NULL
     }else fsCor <- 1
     if("eps" %in% names(dots)){
@@ -14,7 +14,7 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asRisk"),
        dots$eps <- NULL
     }else eps <- NULL
     if("neighbor" %in% names(dots)){
-       neighbor <- dots[["neighbor"]]
+       neighbor <- eval(dots[["neighbor"]])
        dots$neighbor <- NULL
     }else neighbor <- ContNeighborhood()
 

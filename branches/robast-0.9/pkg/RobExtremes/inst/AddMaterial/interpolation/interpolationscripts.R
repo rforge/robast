@@ -31,3 +31,8 @@ require(RobExtremes)
 RobExtremes:::.recomputeInterpolators(.myfiles, sysRdaFolder = .myFolder)
  ## on R-2.15.2
 RobExtremes:::.recomputeInterpolators(.myfiles1, sysRdaFolder = .myfolder2)
+
+## some check (R-3.0.0) : fct[[1]] and fct[[2]] should be different...
+require(RobExtremes); RobExtremes:::.recomputeInterpolators("sysdata.rda", sysRdaFolder = ".")
+fct <- getFromNamespace(".OMSE.N", "RobExtremes")[[1]]$fct
+fct[[1]](2);fct[[2]](2)

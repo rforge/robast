@@ -85,18 +85,16 @@
       LMGrid2 <- apply(LMGrid,2,function(u) smooth.spline(xiGrid,u)$y)
 
    fctL <- vector("list",ncol(LMGrid))
+   xm <- xiGrid[1]
+   xM <- (rev(xiGrid))[1]
    for(i in 1:ncol(LMGrid)){
        LMG <- LMGrid[,i]
        fct <- splinefun(x=xiGrid,y=LMG)
-       xm <- xiGrid[1]
        ym <- LMG[1]
        dym <- (LMG[2]-LMG[1])/(xiGrid[2]-xiGrid[1])
-       xM <- (rev(xiGrid))[1]
-       yM <- ym
-       dyM <- dym
        yM <- (rev(LMG))[1]
        dyM <- ((rev(LMG))[2]-(rev(LMG))[1])/((rev(xiGrid))[2]-(rev(xiGrid))[1])
-       fctL[[i]] <- function(x){
+       fctX <- function(x){
             y0 <- fct(x)
             y1 <- y0
             y1[x<xm] <- ym+dym*(x[x<xm]-xm)
@@ -105,8 +103,13 @@
                warning("There have been xi-values out of range of the interpolation grid.")
             return(y1)
        }
-       environment(fctL[[i]]) <- new.env()
-       assign("fct",fct, envir=environment(fctL[[i]]))
+       environment(fctX) <- nE <- new.env()
+       assign("fct",fct, envir=nE)
+       assign("yM",yM, envir=nE)
+       assign("ym",ym, envir=nE)
+       assign("dyM",dyM, envir=nE)
+       assign("dym",dym, envir=nE)
+       fctL[[i]] <- fctX
    }
    if(ncol(LMGrid)==1) fctL <- fctL[[1]]
 
