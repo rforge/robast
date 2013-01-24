@@ -58,8 +58,8 @@ getShapeGrid <- function(gridsize=1000,centralvalue=0.7,
 }
 
 getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
-                      upp=1.01, accuracy = 10000, withSmooth = TRUE,
-                      withPrint = FALSE, withCall = FALSE){
+                      upp=1.01, accuracy = 10000, GridFileName="SnGrid.Rdata",
+                      withSmooth = TRUE, withPrint = FALSE, withCall = FALSE){
    call <- match.call()
    itSn <- 0
    getSn <- function(xi){
@@ -69,6 +69,7 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
                return(Sn(x=distr, accuracy = accuracy, low=low, upp = upp))
                }
    SnGrid <- sapply(xiGrid,getSn)
+   if(GridFileName!="") save(SnGrid, file=GridFileName)
    rm(PFam)
    iNA <- is.na(SnGrid)
    SnGrid <- SnGrid[!iNA]
@@ -92,6 +93,8 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
              warning("There have been xi-values out of range of the interpolation grid.")
           return(y1)
    }
+   environment(fct) <- new.env()
+   assign("fct0",fct0, envir=environment(fct))
    return(list(grid = cbind(xi=xiGrid,Sn=SnGrid),
                fct = fct, call = if(withCall) call else NULL))
 }
@@ -99,10 +102,13 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
 .saveInterpGrid <- function(xiGrid = getShapeGrid(), PFam = GParetoFamily(),
                         sysRdaFolder, getFun = getSnGrid,
                         ..., nameInSysdata = ".SnGrids",
-                        withSmooth = TRUE, withPrint = TRUE,
+                        GridFileName, withSmooth = TRUE, withPrint = TRUE,
+                        withCall = FALSE,
                         Y = NULL, elseFun = NULL){
   if(missing(sysRdaFolder)) stop("You must specify argument 'sysRdaFolder'.")
 
+  if(missing(GridFileName))
+    GridFileName <- paste(sub("^\\.(.+)","\\1"),".Rdata",sep="")
   newEnv <- new.env()
   sysdataFile <- file.path(sysRdaFolder,"sysdata.rda")
   cat("sysdataFile = ", sysdataFile, "\n")
@@ -134,7 +140,8 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
        if(ans==1){
           if(is.null(Y)) {
               InterpGrids[[name(PFam)]] <- getFun(xiGrid = xiGrid, PFam = PFam,
-                         ..., withSmooth = withSmooth, withPrint = withPrint)
+                         ..., withSmooth = withSmooth, withPrint = withPrint,
+                         withCall = withCall, GridFileName = GridFileName)
           }else{ if(!is.null(elseFun)){
                    InterpGrids[[name(PFam)]] <- elseFun(xiGrid, Y,
                                                       withSmooth = withSmooth)
@@ -154,7 +161,8 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
   if(l.ng>0){
      if(is.null(Y)) {
            InterpGrids[[l.ng]] <- getFun(xiGrid = xiGrid, PFam = PFam,
-                         ..., withSmooth = withSmooth, withPrint = withPrint)
+                         ..., withSmooth = withSmooth, withPrint = withPrint,
+                         withCall = withCall, GridFileName = GridFileName)
      }else{ if(!is.null(elseFun)){
                InterpGrids[[l.ng]] <- elseFun(xiGrid, Y, withSmooth = withSmooth)
             }else return(NULL)

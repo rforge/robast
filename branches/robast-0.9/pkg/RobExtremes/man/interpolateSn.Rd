@@ -16,8 +16,9 @@ getShapeGrid(gridsize=1000, centralvalue=0.7,
              withPos=TRUE, cutoff.at.0=1e-4, fac = 2)
 
 getSnGrid(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
-                      upp=1.01, accuracy = 10000, withSmooth= TRUE,
-                      withPrint = FALSE, withCall = FALSE)
+                      upp=1.01, accuracy = 10000, GridFileName="SnGrid.Rdata",
+                      withSmooth= TRUE, withPrint = FALSE,
+                      withCall = FALSE)
 }
 \arguments{
   \item{gridsize}{integer; the size of the grid to be created. }
@@ -34,6 +35,8 @@ getSnGrid(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
   \item{low}{numeric; argument for \code{\link{Sn}}. }
   \item{upp}{numeric; argument for \code{\link{Sn}}. }
   \item{accuracy}{numeric; argument for \code{\link{Sn}}. }
+  \item{GridFileName}{character; if \code{GridFileName!=""}, the pure
+  y-grid values are saved under this filename. }
   \item{withSmooth}{logical of length 1: shall a smoothing spline be used?}
   \item{withPrint}{logical of length 1: shall current shape value be printed out?}
   \item{withCall}{logical of length 1: shall the call be saved, too?}
@@ -76,8 +79,6 @@ getSnGrid(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
 ## (empirical) Data
 getShapeGrid(50)
 head(getShapeGrid(withPos=FALSE))
-
-getSnGrid(xiGrid = getShapeGrid(20), PFam=GParetoFamily())
 
 \dontrun{
 ### code used for the grid stored in the namespace of distrMod:

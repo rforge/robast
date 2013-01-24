@@ -34,13 +34,10 @@
       return(res)
 }
 
-
 .getLMGrid <- function(xiGrid = getShapeGrid(),
                       PFam = GParetoFamily(scale=1,shape=2),
-                      optFct = .RMXE.xi,
-                      withSmooth = TRUE,
-                      withPrint = FALSE, withCall = FALSE,
-                      GridFileName="LMGrid.Rdata"){
+                      optFct = .RMXE.xi, GridFileName="LMGrid.Rdata",
+                      withSmooth = TRUE, withPrint = FALSE, withCall = FALSE){
    print(match.call())
    call <- match.call()
    itLM <- 0
@@ -69,7 +66,7 @@
 
             })
    LMGrid <- sapply(xiGrid,getLM)
-   save(LMGrid, file=GridFileName)
+   if(GridFileName!="") save(LMGrid, file=GridFileName)
    res <- .MakeGridList(xiGrid, Y=t(LMGrid), withSmooth = withSmooth)
    print(res)
    return(list(grid = res$grid,
@@ -108,8 +105,8 @@
                warning("There have been xi-values out of range of the interpolation grid.")
             return(y1)
        }
-       environment(fctL) <- new.env()
-       assign("fct", fct, envir=environment(fctL))
+       environment(fctL[[i]]) <- new.env()
+       assign("fct",fct, envir=environment(fctL[[i]]))
    }
    if(ncol(LMGrid)==1) fctL <- fctL[[1]]
 
@@ -117,12 +114,15 @@
                fct = fctL))
 }
 
-.myFolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/ROptEst/R"
-.svInt <- function(optF = .RMXE.xi, nam = ".RMXE")
-             .saveInterpGrid(xiGrid = getShapeGrid(500,
-                  cutoff.at.0=0.005),
-                  PFam = GParetoFamily(shape=1,scale=2),
-                  sysRdaFolder=.myFolder, optFct = optF,
-                  nameInSysdata = nam, getFun = .getLMGrid,
+.svInt <- function(optF = .RMXE.xi, nam = ".RMXE",
+                   xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
+                   sysRdafolder, PFam = GParetoFamily(shape=1,scale=2)){
+             if(missing(sysRdafolder))
+                sysRdafolder <- "C:/rtest/RobASt/branches/robast-0.9/pkg/RobExtremesBuffer"
+             .saveInterpGrid(xiGrid = xiGrid,
+                  PFam = PFam, sysRdaFolder=sysRdafolder, optFct = optF,
+                  nameInSysdata = nam, getFun =  .getLMGrid,
                   withSmooth = TRUE, withPrint = TRUE)
+}
+
 
