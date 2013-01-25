@@ -73,3 +73,30 @@ f <- function(a=1,env=nE){
 }
 
 ls(envir=nE); f(); ls(envir=nE)
+
+
+.myFolderA <- file.path(.basepath,"RobExtremesBuffer/all2")
+.myFolderW <- file.path(.basepath,"RobExtremesBuffer/WTS")
+fn00=file.path(.myFolderW,"tmp0/sysdata.rda")
+fn01=file.path(.myFolderW,"tmp1/sysdata.rda")
+fn02=file.path(.myFolderW,"tmp2/sysdata.rda")
+fn1=file.path(.myFoldera,"sysdata.rda")
+fnA <- file.path(.myFolderA,"sysdata.rda")
+#fn2=file.path(.myFoldera,"sysdata-1.rda")
+RobExtremes:::.recomputeInterpolators(c(fn00, fn01,fn02, fn1), sysRdaFolder = .myFolderA, overwrite=TRUE, translate=FALSE)
+nE= new.env()
+load(fnA,envir=nE)
+w = ls(all=T,envir=nE)
+lapply(w, function(x) {u=get(x,envir=nE); print(x);print(names(u))})
+
+.basepath <- "C:/rtest/RobASt/branches/robast-0.9/pkg"
+.myFolderA <- file.path(.basepath,"RobExtremesBuffer/all2")
+fnA0 <- file.path(.myFolderA,"sysdata0.rda")
+fnA <- file.path(.myFolderA,"sysdata.rda")
+file.copy(fnA,fnA0, overwrite=T)
+#fn2=file.path(.myFoldera,"sysdata-1.rda")
+require(RobExtremes); RobExtremes:::.recomputeInterpolators(fnA0, sysRdaFolder = .myFolderA)
+nE= new.env()
+load(fnA,envir=nE)
+w = ls(all=T,envir=nE)
+lapply(w, function(x) {u=get(x,envir=nE); print(x);print(names(u))})

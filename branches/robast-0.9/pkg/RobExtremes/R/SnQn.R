@@ -117,4 +117,42 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
            return(ret)
     })
 
+ setMethod("Sn", signature(x = "GEV"),
+    function(x, ...){
+           if(abs(scale(x)-1)< 1e-12){
+#              sng <- .SnGrids
+              sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
+                          ns = "RobExtremes"), silent =TRUE)
+              if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
+              snf <- sng[["Generalized Extreme Value Family with positive shape parameter: Frechet Family"]][["fct"]]
+              ret <- snf(shape(x))
+           }else ret <- scale(x)*Sn(x=x/scale(x))
+           return(ret)
+    })
+
+ setMethod("Sn", signature(x = "Gammad"),
+    function(x, ...){
+           if(abs(scale(x)-1)< 1e-12){
+#              sng <- .SnGrids
+              sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
+                          ns = "RobExtremes"), silent =TRUE)
+              if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
+              snf <- sng[["Gamma family"]][["fct"]]
+              ret <- snf(shape(x))
+           }else ret <- scale(x)*Sn(x=x/scale(x))
+           return(ret)
+    })
+
+ setMethod("Sn", signature(x = "Weibull"),
+    function(x, ...){
+           if(abs(scale(x)-1)< 1e-12){
+#              sng <- .SnGrids
+              sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
+                          ns = "RobExtremes"), silent =TRUE)
+              if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
+              snf <- sng[["Weibull Family"]][["fct"]]
+              ret <- snf(shape(x))
+           }else ret <- scale(x)*Sn(x=x/scale(x))
+           return(ret)
+    })
 

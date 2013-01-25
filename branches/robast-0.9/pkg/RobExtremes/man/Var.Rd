@@ -36,6 +36,9 @@
 \alias{Sn,Norm-method}
 \alias{Sn,AffLinDistribution-method}
 \alias{Sn,GPareto-method}
+\alias{Sn,Gammad-method}
+\alias{Sn,Weibull-method}
+\alias{Sn,GEV-method}
 \alias{Sn,DiscreteDistribution-method}
 \alias{Qn}
 \alias{Qn-methods}
@@ -90,6 +93,9 @@ Sn(x, ...)
 \S4method{Sn}{AffLinDistribution}(x,  ...)
 \S4method{Sn}{Norm}(x,  ...)
 \S4method{Sn}{GPareto}(x,  ...)
+\S4method{Sn}{GEV}(x,  ...)
+\S4method{Sn}{Gammad}(x,  ...)
+\S4method{Sn}{Weibull}(x,  ...)
 
 Qn(x, ...)
 \S4method{Qn}{ANY}(x,  ...)
@@ -182,6 +188,12 @@ Qn(x, ...)
   \item{\code{Sn}, \code{signature(x = "Norm")}:}{
     exact evaluation using explicit expressions.}
   \item{\code{Sn}, \code{signature(x = "GPareto")}:}{
+    speeded up using interpolation grid.}
+  \item{\code{Sn}, \code{signature(x = "GEV")}:}{
+    speeded up using interpolation grid.}
+  \item{\code{Sn}, \code{signature(x = "Gammad")}:}{
+    speeded up using interpolation grid.}
+  \item{\code{Sn}, \code{signature(x = "Weibull")}:}{
     speeded up using interpolation grid.}
 
   \item{\code{Qn}, \code{signature(x = "Norm")}:}{
