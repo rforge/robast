@@ -5,6 +5,9 @@
 \alias{.OMSE.xi}
 \alias{.MBEE.xi}
 \alias{.getLMGrid}
+\alias{.mergeF}
+\alias{.copyGrid}
+\alias{.renameGridName}
 \alias{.MakeGridList}
 \alias{.saveInterpGrid}
 \alias{.recomputeInterpolators}
@@ -42,9 +45,13 @@ respective \file{sysdata.rda} file. }
        sysRdafolder, PFam = GParetoFamily(shape=1,scale=2))
 
 .recomputeInterpolators(sysdataFiles, sysRdaFolder = ".", others = FALSE,
-                      onlyothers = FALSE, overwrite = TRUE, integrateto = FALSE,
-                      onlyCurrent = FALSE, withPrint =TRUE, withSmooth = TRUE,
-                      debug = FALSE)
+                      onlyothers = FALSE, translate = TRUE, overwrite = TRUE,
+                      integrateto = FALSE, onlyCurrent = FALSE, withPrint =TRUE,
+                      withSmooth = TRUE, debug = FALSE)
+
+.renameGridName(gridnam, namOld, namNew, rdafileOld, rdafileNew)
+.copyGrid(grid, gridnam, namOld, namNew, rdafileOld, rdafileNew)
+.mergeF(file,envir)
 }
 
 \arguments{
@@ -79,7 +86,9 @@ respective \file{sysdata.rda} file. }
            function to transform \code{Y} to desired return value. }
 
   \item{sysdataFiles}{character; filenames of \file{sysdata.rda} files from
-                      where to extract the interpolation grids}
+                      where to extract the interpolation grids. }
+  \item{overwrite}{logical; if \code{TRUE} foreign grids are translated
+  to current R version. }
   \item{overwrite}{logical; if \code{TRUE} existing interpolation functions
       for the current R version get recomputed.}
   \item{others}{logical; if \code{TRUE} and in the \file{sysdata.rda} files
@@ -95,6 +104,17 @@ respective \file{sysdata.rda} file. }
     ending \code{.N}, \code{.O} and ``others'', these are merged. }
   \item{debug}{logical; if \code{TRUE} the \file{sysdata.rda} file is not
      created/overwritten in the end. }
+  \item{gridnam}{character; name of the grid to be renamed. }
+  \item{namOld}{character; name of the parametric family to be renamed (from). }
+  \item{namNew}{character; name of the parametric family to be renamed (to). }
+  \item{nam}{character; name of the parametric family to be manipulated. }
+  \item{grid}{matrix or array; grid to be inserted. }
+  \item{rdafileOld}{character; filename of the \file{sysdata.rda}-type file
+    to be read out.}
+  \item{rdafileNew}{character; filename of the \file{sysdata.rda}-type file
+    to be written on.}
+  \item{file}{character; the name of a file to be read out}
+  \item{envir}{an environment}
 }
 \details{
   \code{.MBRE.xi} computes the Lagrange multipliers for the MBRE estimator,
@@ -124,6 +144,24 @@ respective \file{sysdata.rda} file. }
    \code{.recomputeInterpolators} recomputes the interpolating functions from
      grids in existing \file{sysdata.rda} files -- either to translate them
      to another R version, or to shrink the respective file.
+
+   \code{.renameGridName} is a utility to rename items from a grid. It takes
+      grid \code{gridnam} from file \code{rdafileOld} and takes
+      the name \code{namOld} of a respective item (i.e., a parametric family),
+      renames it to \code{namNew} and writes the result back
+      to file \code{rdafileNew}.
+
+   \code{.copyGrid} takes out a respective item \code{namOld} (i.e., a parametric
+        family) of grid \code{gridnam} from file \code{rdafileOld}
+        copies it to a new grid object onto item \code{namNew}, replaces
+        the respective grid-entry by \code{grid},  and saves the result to
+        to file \code{rdafileNew}.
+
+   \code{.mergeF} merges the contents of file \code{file} into environment
+     \code{envir} in the sense, that if both  \code{file} and \code{envir}
+     contain a list object \code{a} also the items of \code{a} are merged,
+     where---as for objects themselves--- contents of \code{file} overwrite
+     contents of \code{envir}.
 }
 \note{These functions are only meant for the developers of package \pkg{RobExtremes}
       (or respective packages).
@@ -154,6 +192,9 @@ respective \file{sysdata.rda} file. }
                        in the return value of \code{.getLMGrid}. }
   \item{.saveInterpGrid}{  \code{invisible(NULL)}}
   \item{.svInt}{  \code{invisible(NULL)}}
+  \item{.renameGridName}{  \code{invisible(NULL)}}
+  \item{.mergeF}{  \code{invisible(NULL)}}
+  \item{.copyGrid}{  \code{invisible(NULL)}}
 }
 \seealso{\code{\link{interpolateSn}}}
 \examples{

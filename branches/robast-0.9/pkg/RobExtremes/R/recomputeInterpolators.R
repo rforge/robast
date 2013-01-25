@@ -1,6 +1,6 @@
 .recomputeInterpolators <- function(sysdataFiles, sysRdaFolder = ".",
                                    others = FALSE, onlyothers = FALSE,
-                                   overwrite = TRUE, integrateto = FALSE,
+                                   translate = TRUE, overwrite = TRUE, integrateto = FALSE,
                                    onlyCurrent = FALSE, withPrint =TRUE,
                                    withSmooth = TRUE,
                                    debug = FALSE){
@@ -8,7 +8,7 @@
   wprint <- function(...){ if (withPrint) print(...)}
 
   sam <- new.env()
-  for(File in sysdataFiles) load(File, envir = sam)
+  for(File in sysdataFiles) .mergeF(File, envir = sam)
 
   keep <- if(getRversion()>="2.16") "N" else "O"
   todo <- if(getRversion()>="2.16") "O" else "N"
@@ -95,6 +95,7 @@
     lsA <- ls(all.names=T,envir=only.grid)
     wprint(lsA)
 
+    if(translate)
     for(what in whatIsThereAlready.O){
         wprint("translating foreign to current architecture")
         what.N <- sub(paste("\\.", todo, "$", sep=""),
@@ -148,6 +149,56 @@
   }else{
      print(paste("save(list=lsA, envir=only.grid, file=", sysFile,")", sep=""))
   }
+}
+
+.renameGridName <- function(gridnam, namOld, namNew, rdafileOld, rdafileNew){
+   nE <- new.env()
+   load(rdafileOld,envir=nE)
+   what <- ls(all.names=TRUE,envir=nE)
+   a <- get(gridnam, envir=nE)
+   na <- names(a)
+   wi <- which(namOld==na)
+   na[wi] <- namNew
+   names(a) <- na
+   assign(gridnam,a,envir=nE)
+   save(list=what, file=rdafileNew, envir=nE)
+}
+
+.mergeF <- function(file,envir){
+  envir2 <- new.env()
+  load(file,envir=envir2)
+  what1 <- ls(all.names=TRUE,envir=envir)
+  what2 <- ls(all.names=TRUE,envir=envir2)
+  for(w2 in what2){
+      wG2 <- get(w2, envir=envir2)
+      if(w2 %in% what1){
+         wG1 <- get(w2, envir=envir)
+         for(Fam1 in names(wG1)){
+             if( ! Fam1 %in% names(wG2))  wG2[[Fam1]] <- wG1[[Fam1]]
+         }
+      }
+      assign(w2,wG2,envir=envir)
+  }
+  return(invisible(NULL))
+}
+if(FALSE){
+ a <- NULL; a[["TU"]] = 2
+ save(a,file="testA.Rdata")
+ a <- NULL; a[["HU"]] = 3
+ nE <- new.env(); assign("a",a,envir=nE)
+ .mergeF("testA.Rdata",nE)
+ get("a",envir=nE)
+}
+
+.copyGrid <- function(grid,  gridnam, namOld, namNew, rdafileOld, rdafileNew){
+  nE <- new.env()
+  load(fileOld,envir=nE)
+  gr <- get(gridnam,envir=nE)
+  gr[[namNew]] <- gr[[namOld]]
+  gr[[namNew]]$grid <- grid
+  assign(gridnam,gr,envir=nE)
+  what <- ls(envir=nE, all.names = TRUE)
+  save(list=what, file= fileNew, envir=nE)
 }
 
 if(FALSE){
