@@ -134,7 +134,14 @@ x <- rgamma(50, scale = 0.5, shape = 3)
 G <- GammaFamily(scale = 1, shape = 2)
 
 medQn(x = x, ParamFamily = G)
-medSn(x = x, ParamFamily = G)
+medSn(x = x, ParamFamily = G, q.lo = 0.5, q.up = 4)
+\dontrun{
+## without speedup for Sn:
+LDEstimator(x, loc.est = median, disp.est = Sn, loc.fctal = median,
+            disp.fctal = getMethod("Sn","UnivariateDistribution"),
+            ParamFamily = G, disp.est.ctrl = list(constant=1))
+}
+
 medkMAD(x = x, ParamFamily = G)
 medkMADhybr(x = x, ParamFamily = G)
 medkMAD(x = x, k=10, ParamFamily = G)
