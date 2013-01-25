@@ -119,6 +119,7 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
            return(ret)
     })
 
+
  setMethod("Sn", signature(x = "GEV"),
     function(x, ...){
            if(abs(scale(x)-1)< 1e-12){
