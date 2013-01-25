@@ -111,7 +111,9 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
               sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
                           ns = "RobExtremes"), silent =TRUE)
               if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
-              snf <- sng[["Generalized Pareto Family"]][["fct"]]
+              nam <- "Generalized Pareto Family"
+              if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
+              snf <- sng[[nam]][["fct"]]
               ret <- snf(shape(x))
            }else ret <- scale(x)*Sn(x=x/scale(x))
            return(ret)
@@ -124,7 +126,9 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
               sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
                           ns = "RobExtremes"), silent =TRUE)
               if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
-              snf <- sng[["Generalized Extreme Value Family with positive shape parameter: Frechet Family"]][["fct"]]
+              nam <- "Generalized Extreme Value Family with positive shape parameter: Frechet Family"
+              if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
+              snf <- sng[[nam]][["fct"]]
               ret <- snf(shape(x))
            }else ret <- scale(x)*Sn(x=x/scale(x))
            return(ret)
@@ -137,7 +141,9 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
               sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
                           ns = "RobExtremes"), silent =TRUE)
               if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
-              snf <- sng[["Gamma family"]][["fct"]]
+              nam <- "Gamma family"
+              if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
+              snf <- sng[[nam]][["fct"]]
               ret <- snf(shape(x))
            }else ret <- scale(x)*Sn(x=x/scale(x))
            return(ret)
@@ -150,7 +156,9 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
               sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
                           ns = "RobExtremes"), silent =TRUE)
               if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
-              snf <- sng[["Weibull Family"]][["fct"]]
+              nam <- "Weibull Family"
+              if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
+              snf <- sng[[nam]][["fct"]]
               ret <- snf(shape(x))
            }else ret <- scale(x)*Sn(x=x/scale(x))
            return(ret)

@@ -192,13 +192,13 @@ if(FALSE){
 
 .copyGrid <- function(grid,  gridnam, namOld, namNew, rdafileOld, rdafileNew){
   nE <- new.env()
-  load(fileOld,envir=nE)
+  load(rdafileOld,envir=nE)
   gr <- get(gridnam,envir=nE)
   gr[[namNew]] <- gr[[namOld]]
   gr[[namNew]]$grid <- grid
   assign(gridnam,gr,envir=nE)
   what <- ls(envir=nE, all.names = TRUE)
-  save(list=what, file= fileNew, envir=nE)
+  save(list=what, file= rdafileNew, envir=nE)
 }
 
 if(FALSE){
