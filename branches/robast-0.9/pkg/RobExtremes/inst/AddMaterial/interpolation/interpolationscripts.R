@@ -66,7 +66,7 @@ chkExist <- function(fN) if(!file.exists(fN)) dir.create(fN, recursive = TRUE)
 sapply(c(.myFolder1,.myFolder2,.myFolder3), chkExist)
 PF <- GEVFamily()
 .saveInterpGrid(getShapeGrid(gridsize=500, cutoff.at.0=0.005),
-                sysRdaFolder = .myFolder, accuracy = 5000,upp=10,
+                sysRdaFolder = .myFolder2, accuracy = 5000,upp=10,
                 PFam = PF)
 ## to make this parallel, we write the results to different folders:
 .svInt(.OMSE.xi, ".OMSE", PFam = PF, sysRdafolder = .myFolder1)

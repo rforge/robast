@@ -74,20 +74,26 @@ f <- function(a=1,env=nE){
 
 ls(envir=nE); f(); ls(envir=nE)
 
-
+require(RobExtremes)
+.basepath <- "C:/rtest/RobASt/branches/robast-0.9/pkg"
+.myFolder <- file.path(.basepath,"RobExtremesBuffer")
 .myFolderA <- file.path(.basepath,"RobExtremesBuffer/all2")
-.myFolderW <- file.path(.basepath,"RobExtremesBuffer/WTS")
+.myFolderW <- file.path(.basepath,"RobExtremesBuffer/WTS2")
+fn2 <- file.path(.myFolder,"tmp2/sysdata.rda")
 fn00=file.path(.myFolderW,"tmp0/sysdata.rda")
 fn01=file.path(.myFolderW,"tmp1/sysdata.rda")
 fn02=file.path(.myFolderW,"tmp2/sysdata.rda")
-fn1=file.path(.myFoldera,"sysdata.rda")
+fn03=file.path(.myFolderW,"tmp3/sysdata.rda")
 fnA <- file.path(.myFolderA,"sysdata.rda")
 #fn2=file.path(.myFoldera,"sysdata-1.rda")
-RobExtremes:::.recomputeInterpolators(c(fn00, fn01,fn02, fn1), sysRdaFolder = .myFolderA, overwrite=TRUE, translate=FALSE)
+#RobExtremes:::.recomputeInterpolators(c(fn01,fn02, fn1), sysRdaFolder = .myFolderA, overwrite=TRUE, translate=FALSE)
+file.copy(fnA,fn1, overwrite=T)
+RobExtremes:::.recomputeInterpolators(c(fn02, fn01, fn1), sysRdaFolder = .myFolderA, overwrite=TRUE, translate=FALSE)
 nE= new.env()
 load(fnA,envir=nE)
 w = ls(all=T,envir=nE)
 lapply(w, function(x) {u=get(x,envir=nE); print(x);print(names(u))})
+lapply(grep("\\.N$",w,val=T), function(x) {u=get(x,envir=nE); for(i in 1:length(u)){if(length(u)<4){ print(u[[i]]$fct[[1]](0.3)); print(u[[i]]$fct[[2]](0.3))}else{print(u[[i]]$fct(0.3))}}})
 
 .basepath <- "C:/rtest/RobASt/branches/robast-0.9/pkg"
 .myFolderA <- file.path(.basepath,"RobExtremesBuffer/all2")
@@ -100,3 +106,30 @@ nE= new.env()
 load(fnA,envir=nE)
 w = ls(all=T,envir=nE)
 lapply(w, function(x) {u=get(x,envir=nE); print(x);print(names(u))})
+lapply(grep("\\.O$",w,val=T), function(x) {u=get(x,envir=nE); for(i in 1:length(u)){if(length(u)<4){ print(u[[i]]$fct[[1]](0.3)); print(u[[i]]$fct[[2]](0.3))}else{print(u[[i]]$fct(0.3))}}})
+
+fu <- function(xi){
+  ext <- if(getRversion<"2.16") "\\.O$" else "\\.N$"
+  lapply(grep(ext,w,val=T), function(x) {
+    print(x)
+    u <- get(x,envir=nE);
+    for(i in 1:length(u)){
+        ni <- names(u)[i]
+        print(ni)
+        print(!grepl("Sn",x))
+        if(!grepl("Sn",x)){
+           len <- length(u[[i]]$fct)
+           yi <- sapply(1:len, function(j) u[[i]]$fct[[j]](xi))
+           if(length(xi)==1) yi <- matrix(yi,ncol=len)
+           colnames(yi) <- c("b","a1.a", "a2.a", "a1.i", "a2.i", "A11.a",
+                   "A12.a", "A21.a", "A22.a", "A11.i", "A12.i", "A21.i", "A22.i")
+           print(cbind(xi,yi))
+        }else{
+           Sn <- u[[i]]$fct(xi)
+           print(cbind(xi,Sn))
+        }
+    }
+    return(invisible(NULL))
+    })
+  return(invisible(NULL))
+}
