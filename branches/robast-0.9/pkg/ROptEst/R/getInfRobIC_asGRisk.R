@@ -232,11 +232,11 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         ## sort out upper solution if radius = 0
         if(identical(all.equal(radius, 0), TRUE))
-           return(.getUpperSol(L2deriv = L2deriv, b = b, radius = radius,
+           return(.getUpperSol(L2deriv = L2deriv, radius = radius,
                                risk = risk, neighbor = neighbor,
                                biastype = biastype, normtype = normtype,
                                Distr = Distr, Finfo = Finfo, trafo = trafo,
-                               QF = std, verbose = verbose, warn = warn))
+                               QuadForm = std, verbose = verbose, warn = warn))
 
         ## determine which entries must be computed
         # by default everything
@@ -486,7 +486,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
 
 ### helper function to return the upper case solution if r=0
-.getUpperSol <- function(L2deriv, b, radius, risk, neighbor, biastype,
+.getUpperSol <- function(L2deriv, radius, risk, neighbor, biastype,
                        normtype, Distr, Finfo, trafo,
                        QuadForm, verbose, warn){
 
@@ -495,6 +495,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             res <- getInfRobIC(L2deriv = L2deriv, risk = asCov(), neighbor = neighbor,
                                Distr = Distr, Finfo = Finfo, trafo = trafo,
                                QuadForm = QuadForm, verbose = verbose)
+            b <- res$b
             res <- c(res, list(biastype = biastype, normtype = normtype))
             if(!is(risk, "asMSE")){
                     FI <- trafo%*%solve(Finfo)%*%t(trafo)
