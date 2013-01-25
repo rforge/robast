@@ -340,7 +340,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     L2deriv <- EuclRandVarList(RealRandVariable(L2deriv.fct(param),
                                Domain = Reals()))
 
-    L2Fam@fam.call <- substitute(GEV(loc = loc0, scale = scale0,
+    L2Fam@fam.call <- substitute(GEVFamily(loc = loc0, scale = scale0,
                                  shape = shape0, of.interest = of.interest0,
                                  p = p0, N = N0, trafo = trafo0,
                                  withPos = withPos0),
