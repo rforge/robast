@@ -1,0 +1,47 @@
+********************************************
+short:
+********************************************
+------------------------------------------------------------------------
+r526 | ruckdeschel | 2013-01-09 03:00:15 +0100 (Mi, 09 Jan 2013) | 1 line
+------------------------------------------------------------------------
+
+adapted ROptEstOld to the move of Gumbel... from distrEx to RobExtremes
+
+------------------------------------------------------------------------
+r527 | ruckdeschel | 2013-01-09 14:01:17 +0100 (Mi, 09 Jan 2013) | 1 line
+------------------------------------------------------------------------
+
+RobExtremes: inserted Weibull-Family class
+
+------------------------------------------------------------------------
+********************************************
+complete:
+********************************************
+------------------------------------------------------------------------
+r526 | ruckdeschel | 2013-01-09 03:00:15 +0100 (Mi, 09 Jan 2013) | 1 line
+Changed paths:
+   M /branches/robast-0.9/pkg/ROptEstOld/DESCRIPTION
+   M /branches/robast-0.9/pkg/ROptEstOld/NAMESPACE
+   M /branches/robast-0.9/pkg/ROptEstOld/R/AllClass.R
+   M /branches/robast-0.9/pkg/ROptEstOld/R/AllGeneric.R
+   A /branches/robast-0.9/pkg/ROptEstOld/R/AllInitialize.R
+   M /branches/robast-0.9/pkg/ROptEstOld/R/Expectation.R
+   A /branches/robast-0.9/pkg/ROptEstOld/R/Functionals.R
+   A /branches/robast-0.9/pkg/ROptEstOld/R/Gumbel.R
+   A /branches/robast-0.9/pkg/ROptEstOld/R/GumbelLocationFamily.R
+   A /branches/robast-0.9/pkg/ROptEstOld/R/Kurtosis.R
+   A /branches/robast-0.9/pkg/ROptEstOld/R/Skewness.R
+   A /branches/robast-0.9/pkg/ROptEstOld/man/Gumbel-class.Rd
+   A /branches/robast-0.9/pkg/ROptEstOld/man/Gumbel.Rd
+   M /branches/robast-0.9/pkg/ROptEstOld/man/GumbelLocationFamily.Rd
+   A /branches/robast-0.9/pkg/ROptEstOld/man/GumbelParameter-class.Rd
+   A /branches/robast-0.9/pkg/ROptEstOld/man/ROptEstOldConstants.Rd
+
+adapted ROptEstOld to the move of Gumbel... from distrEx to RobExtremes
+------------------------------------------------------------------------
+r527 | ruckdeschel | 2013-01-09 14:01:17 +0100 (Mi, 09 Jan 2013) | 1 line
+Changed paths:
+   M /branches/robast-0.9/pkg/RobExtremes/R/AllClass.R
+
+RobExtremes: inserted Weibull-Family class
+------------------------------------------------------------------------

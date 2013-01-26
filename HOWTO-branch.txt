@@ -1,0 +1,23 @@
+Merging a branch into the trunk (resp. pkg) folder
+
+(1) Preparations:
+
+update the local chechout by svn update 
+
+(2) Note Starting and ending revision number 
+   (e.g. for branch robast-0.9, it is 436 to 5xx)
+   
+(3) make a merge to reintegrate a branch e.g.
+    specify the branch as
+svn+ssh://<r-forge-login>@svn.r-forge.r-project.org/svnroot/robast/branches/robast-0.9/pkg
+    to <head file of your svn checkout>, e.g. C:\rtest\RobASt
+	
+(4) edit conflicts 
+
+(5) create a new branch
+    mark head of trunk (i.e. pkg folder immediately under your checkout head,
+	  ie. eg. C:\rtest\RobASt\pkg)
+    choose branch
+    to path e.g. /branches/robast-1.0/pkg	
+	
+(6) do the same with www ... (destination eg. /branches/robast-1.0/www)
