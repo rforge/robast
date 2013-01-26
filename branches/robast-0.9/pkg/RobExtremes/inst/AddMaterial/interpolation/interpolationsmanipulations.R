@@ -109,7 +109,7 @@ lapply(w, function(x) {u=get(x,envir=nE); print(x);print(names(u))})
 lapply(grep("\\.O$",w,val=T), function(x) {u=get(x,envir=nE); for(i in 1:length(u)){if(length(u)<4){ print(u[[i]]$fct[[1]](0.3)); print(u[[i]]$fct[[2]](0.3))}else{print(u[[i]]$fct(0.3))}}})
 
 fu <- function(xi){
-  ext <- if(getRversion<"2.16") "\\.O$" else "\\.N$"
+  ext <- if(getRversion()<"2.16") "\\.O$" else "\\.N$"
   lapply(grep(ext,w,val=T), function(x) {
     print(x)
     u <- get(x,envir=nE);
