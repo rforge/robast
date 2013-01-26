@@ -5,8 +5,8 @@ Title: Optimally robust estimation for extreme value distributions
 Description: Optimally robust estimation for extreme value distributions 
              using S4 classes and methods (based on packages distr, distrEx, 
 			 distrMod, RobAStBase, and ROptEst)
-Depends: R (>= 2.14.0), methods, distr(>= 2.3), distrEx(>= 2.3), RandVar(>= 0.8), 
-         distrMod(>= 2.4), RobAStBase(>= 0.8), ROptEst(>= 0.8), robustbase(>= 0.8-0),
+Depends: R (>= 2.14.0), methods, distr(>= 2.4), distrEx(>= 2.4), RandVar(>= 0.8), 
+         distrMod(>= 2.4), RobAStBase(>= 0.9), ROptEst(>= 0.9), robustbase(>= 0.8-0),
 		 evd, actuar
 Author: Peter Ruckdeschel, Matthias Kohl, Nataliya Horbenko
 Maintainer: Peter Ruckdeschel <peter.ruckdeschel@itwm.fraunhofer.de>
