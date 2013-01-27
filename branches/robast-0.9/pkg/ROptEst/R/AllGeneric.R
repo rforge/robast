@@ -18,6 +18,10 @@ if(!isGeneric("getInfClip")){
     setGeneric("getInfClip", 
         function(clip, L2deriv, risk, neighbor, ...) standardGeneric("getInfClip"))
 }
+if(!isGeneric("getInfRad")){
+    setGeneric("getInfRad",
+        function(clip, L2deriv, risk, neighbor, ...) standardGeneric("getInfRad"))
+}
 if(!isGeneric("getFixClip")){
     setGeneric("getFixClip", 
         function(clip, Distr, risk, neighbor, ...) standardGeneric("getFixClip"))

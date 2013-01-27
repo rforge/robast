@@ -1,51 +1,55 @@
-\name{getInfClip}
-\alias{getInfClip}
-\alias{getInfClip-methods}
-\alias{getInfClip,numeric,UnivariateDistribution,asMSE,ContNeighborhood-method}
-\alias{getInfClip,numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood-method}
-\alias{getInfClip,numeric,UnivariateDistribution,asL1,ContNeighborhood-method}
-\alias{getInfClip,numeric,UnivariateDistribution,asL1,TotalVarNeighborhood-method}
-\alias{getInfClip,numeric,UnivariateDistribution,asL4,ContNeighborhood-method}
-\alias{getInfClip,numeric,UnivariateDistribution,asL4,TotalVarNeighborhood-method}
-\alias{getInfClip,numeric,EuclRandVariable,asMSE,UncondNeighborhood-method}
-\alias{getInfClip,numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method}
-\alias{getInfClip,numeric,UnivariateDistribution,asSemivar,ContNeighborhood-method}
+\name{getInfRad}
+\alias{getInfRad}
+\alias{getInfRad-methods}
+\alias{getInfRad,numeric,UnivariateDistribution,asMSE,ContNeighborhood-method}
+\alias{getInfRad,numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood-method}
+\alias{getInfRad,numeric,UnivariateDistribution,asL1,ContNeighborhood-method}
+\alias{getInfRad,numeric,UnivariateDistribution,asL1,TotalVarNeighborhood-method}
+\alias{getInfRad,numeric,UnivariateDistribution,asL4,ContNeighborhood-method}
+\alias{getInfRad,numeric,UnivariateDistribution,asL4,TotalVarNeighborhood-method}
+\alias{getInfRad,numeric,EuclRandVariable,asMSE,UncondNeighborhood-method}
+\alias{getInfRad,numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood-method}
+\alias{getInfRad,numeric,UnivariateDistribution,asSemivar,ContNeighborhood-method}
 
-\title{Generic Function for the Computation of the Optimal Clipping Bound}
+\title{Generic Function for the Computation of the Optimal Radius for Given Clipping Bound}
 \description{
-  Generic function for the computation of the optimal clipping bound
-  in case of infinitesimal robust models. This function is rarely called 
-  directly. It is used to compute optimally robust ICs.
+  The usual robust optimality problem for given asGRisk searches the optimal
+  clipping height b of a Hampel-type IC to given radius of the neighborhood.
+  Instead, again for given asGRisk  and for given Hampel-Type IC with
+  given clipping height b we may determine the radius of the neighborhood
+  for which it is optimal in the sense of the first sentence. This
+  radius is determined by \code{getInfRad}. This function is rarely called
+  directly. It is used withing \code{\link{getRadius}}.
 }
 \usage{
-getInfClip(clip, L2deriv, risk, neighbor, ...)
+getInfRad(clip, L2deriv, risk, neighbor, ...)
 
-\S4method{getInfClip}{numeric,UnivariateDistribution,asMSE,ContNeighborhood}(clip, L2deriv, 
+\S4method{getInfRad}{numeric,UnivariateDistribution,asMSE,ContNeighborhood}(clip, L2deriv,
                                                 risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfClip}{numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood}(clip, L2deriv, 
+\S4method{getInfRad}{numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood}(clip, L2deriv,
                                                     risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfClip}{numeric,UnivariateDistribution,asL1,ContNeighborhood}(clip, L2deriv, 
+\S4method{getInfRad}{numeric,UnivariateDistribution,asL1,ContNeighborhood}(clip, L2deriv,
                                                 risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfClip}{numeric,UnivariateDistribution,asL1,TotalVarNeighborhood}(clip, L2deriv, 
+\S4method{getInfRad}{numeric,UnivariateDistribution,asL1,TotalVarNeighborhood}(clip, L2deriv,
                                                     risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfClip}{numeric,UnivariateDistribution,asL4,ContNeighborhood}(clip, L2deriv, 
+\S4method{getInfRad}{numeric,UnivariateDistribution,asL4,ContNeighborhood}(clip, L2deriv,
                                                 risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfClip}{numeric,UnivariateDistribution,asL4,TotalVarNeighborhood}(clip, L2deriv, 
+\S4method{getInfRad}{numeric,UnivariateDistribution,asL4,TotalVarNeighborhood}(clip, L2deriv,
                                                     risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfClip}{numeric,EuclRandVariable,asMSE,UncondNeighborhood}(clip, L2deriv, risk,
+\S4method{getInfRad}{numeric,EuclRandVariable,asMSE,UncondNeighborhood}(clip, L2deriv, risk,
                                               neighbor, biastype, Distr, stand, cent, trafo)
 
-\S4method{getInfClip}{numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(clip, L2deriv, 
+\S4method{getInfRad}{numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(clip, L2deriv,
                                                         risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfClip}{numeric,UnivariateDistribution,asSemivar,ContNeighborhood}(clip, L2deriv, 
-                                                              risk, neighbor, biastype, cent, symm, trafo)
+\S4method{getInfRad}{numeric,UnivariateDistribution,asSemivar,ContNeighborhood}(clip, L2deriv,
+                                                        risk, neighbor, biastype, cent, symm, trafo)
 }
 \arguments{
   \item{clip}{ positive real: clipping bound }
@@ -116,8 +120,7 @@ getInfClip(clip, L2deriv, risk, neighbor, ...)
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
 }
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de},
-        Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
 \seealso{\code{\link[RobAStBase]{ContIC-class}}, \code{\link[RobAStBase]{TotalVarIC-class}}}
 %\examples{}

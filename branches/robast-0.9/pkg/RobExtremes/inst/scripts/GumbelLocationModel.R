@@ -3,7 +3,7 @@
 ## computations numerically less stable than in case of the 
 ## Exponential Scale Family
 ###############################################################################
-require(ROptEst)
+require(RobExtremes)
 options("newDevice"=TRUE)
 
 ## generates Gumbel Location Family with loc = 0
