@@ -361,7 +361,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     return(L2Fam)
 }
 
-#ddigamma(t,s) is d/ds \int_t^\infty exp(-x) (-log(x)) x^(-s) dx
+#ddigamma(t,s) is d/ds \int_t^\infty exp(-x) x^(-s) dx
 
 ddigamma <- function(t,s){
               int <- function(x) exp(-x)*(-log(x))*x^(-s)

@@ -90,7 +90,8 @@ THIS DOES NOT WORK.
 
 Hence, now there is infrastructure / functions in RobExtremes, i.e. functions 
 getShapeGrid, getSnGrid, .getLMGrid, .svInt, .saveInterpGrid, .MakeGridList, 
-.recomputeInterpolators, .renameGridName, .copyGrid, and .mergeF (see ?.mergeF), 
+.recomputeInterpolators, .renameGridName, .copyGrid, and .mergeF 
+(for documentation to most of them see ?.mergeF), 
 which allow manipulation of the grids _within_ the package namespace.
 
 In particular, to generate I-fct, .MakeGridList calls R base function
@@ -124,7 +125,7 @@ the one from the file, but rather their items get merged.
 9. Exports
 
 As this is functionality which should not bother the standard user of
-Robextremes, most of the infrastructure in 8. is not exported. OTOH, 
+RobExtremes, most of the infrastructure in 8. is not exported. OTOH, 
 these functions could be of interest to the user wanting to generate
 new interpolators for new scale shape families or, say simply for the
 95% VaR, each function remains in the R folder of the pkgs and is
@@ -138,7 +139,7 @@ fct <- RobExtremes:::fct
 To be able to reproduce all operations which I used to generate the
 contents of sysdata.rda, I provide scripts interpolationscripts.R and
 interpolationsmanipulations.R (not quite executable scripts, rather
-to be used line-wise for copy&paste) im pkg subfolder 
+to be used line-wise for copy&paste) in pkg subfolder 
 \inst\AddMaterial\interpolation ; hence they are available after
 pkg installation in the library as Robextremes\AddMaterial\interpolation
  
