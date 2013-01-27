@@ -94,6 +94,53 @@ getShapeGrid, getSnGrid, .getLMGrid, .svInt, .saveInterpGrid, .MakeGridList,
 (for documentation to most of them see ?.mergeF), 
 which allow manipulation of the grids _within_ the package namespace.
 
+--------> extract from .rd file:
+
+  \code{.MakeGridList} transforms the return values of the preceding functions
+  gathered in matrices in respective grids and can also be used for
+  Lagrange multiplier matrices already computed otherwise.
+  
+  \code{.saveInterpGrid} is the utility to do the actual computation.
+   More specifically, the code first loads the contents of file
+   \file{sysdata.rda} into an environment which is particularly created
+   for this purpose (if this file exists). It then looks up whether a
+   respective entry for family \code{PFam} already exists in
+   \file{sysdata.rda}-object \code{nameInSysdata}.
+   If this is the case the developer is asked whether he wants to overwrite
+   the respective entry, and if so he does so with the results of a respective
+   call to \code{getFun}.
+
+   In case there has not been an \file{sysdata.rda}-object \code{nameInSysdata}
+   so far, the code creates one and writes the results of a respective
+   call to \code{getFun} to it.
+
+   \code{.svInt} is a short form for \code{.saveInterpGrid} for LM interpolation.
+
+   \code{.recomputeInterpolators} recomputes the interpolating functions from
+     grids in existing \file{sysdata.rda} files -- either to translate them
+     to another R version, or to shrink the respective file.
+
+   \code{.renameGridName} is a utility to rename items from a grid. It takes
+      grid \code{gridnam} from file \code{rdafileOld} and takes
+      the name \code{namOld} of a respective item (i.e., a parametric family),
+      renames it to \code{namNew} and writes the result back
+      to file \code{rdafileNew}.
+
+   \code{.copyGrid} takes out a respective item \code{namOld} (i.e., a parametric
+        family) of grid \code{gridnam} from file \code{rdafileOld}
+        copies it to a new grid object onto item \code{namNew}, replaces
+        the respective grid-entry by \code{grid},  and saves the result to
+        to file \code{rdafileNew}.
+
+   \code{.mergeF} merges the contents of file \code{file} into environment
+     \code{envir} in the sense, that if both  \code{file} and \code{envir}
+     contain a list object \code{a} also the items of \code{a} are merged,
+     where---as for objects themselves--- contents of \code{file} overwrite
+     contents of \code{envir}.
+
+<--------
+
+
 In particular, to generate I-fct, .MakeGridList calls R base function
 splinefun() _in_ the namespace of RobExtremes hence this namespace figures
 as one of the parent environments of the environment of I-fct.
@@ -117,10 +164,7 @@ for this purpose. Access is provided by get(<symbol>, env) and modification
 by assign(<symbol>, value, env).
 
 To do manipulations within the namespace of RobExtremes, we provide helper
-functions .renameGridName, .copyGrid, and .mergeF; the latter is similar to 
-load() but when in both the file and the environment there is a list with
-the same name, the one from the environment does not get overwritten by
-the one from the file, but rather their items get merged.
+functions .renameGridName, .copyGrid, and .mergeF.
 
 9. Exports
 
