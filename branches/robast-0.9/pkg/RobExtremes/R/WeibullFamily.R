@@ -234,8 +234,9 @@ WeibullFamily <- function(scale = 1, shape = 0.5,
             }###
     L2Fam@L2deriv <- L2deriv
 
+    suppressWarnings(
     L2Fam@L2derivDistr <- imageDistr(RandVar = L2deriv, distr = distribution)
-
+    )
 
     return(L2Fam)
 }

@@ -217,8 +217,8 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
         ## Pickand estimator
         if(is.null(start0Est)){
         #source("kMedMad_Qn_Estimators.R")
-           e0 <- PickandsEstimator(x,ParamFamily=GParetoFamily(loc = theta[1],
-                            scale = theta[2], shape = theta[3]))
+           e0 <- estimate(PickandsEstimator(x,ParamFamily=GParetoFamily(
+                            loc = theta[1], scale = theta[2], shape = theta[3])))
         }else{
            if(is(start0Est,"function")){
               e1 <- start0Est(x, ...)
@@ -355,9 +355,9 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                   }
 
     L2Fam@L2deriv <- L2deriv
-
+    suppressWarnings(
     L2Fam@L2derivDistr <- imageDistr(RandVar = L2deriv, distr = distribution)
-
+    )
     return(L2Fam)
 }
 

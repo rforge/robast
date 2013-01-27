@@ -240,8 +240,9 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
     L2Fam@LogDeriv <- function(x) (shape+1)/(scale+shape*(x-loc))
     L2Fam@L2deriv <- L2deriv
 
-    L2Fam@L2derivDistr <- imageDistr(RandVar = L2deriv, distr = distribution)
-
+    suppressWarnings(
+      L2Fam@L2derivDistr <- imageDistr(RandVar = L2deriv, distr = distribution)
+    )
 
     return(L2Fam)
 }
