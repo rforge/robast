@@ -12,11 +12,15 @@
         qd <- q(distr)
         y <- f(qd(u))
     
+        wmdn <- getdistrOption("warn.makeDNew")
+        on.exit(distroptions(warn.makeDNew=wmdn))
+        distroptions(warn.makeDNew=FALSE)
+        
         if(length(unique(c(rl(10000),y)))==10000+length(y)){
            DPQnew <- RtoDPQ(r=rl, y=y)
            return(AbscontDistribution(r = rl, d = DPQnew$d, p = DPQnew$p, 
                                       q = DPQnew$q, .withArith = TRUE, 
-                                      .withSim = TRUE))
+                                      .withSim = TRUE, withgaps = FALSE))
         
         }else
            return(UnivarLebDecDistribution(r = rl, y = y))
