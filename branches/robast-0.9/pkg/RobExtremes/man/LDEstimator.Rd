@@ -21,10 +21,10 @@ LDEstimator(x, loc.est, disp.est, loc.fctal, disp.fctal, ParamFamily,
             name, Infos, asvar = NULL, nuis.idx = NULL,
             trafo = NULL, fixed = NULL, asvar.fct  = NULL, na.rm = TRUE,
             ..., vdbg = FALSE)
-medkMAD(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
+medkMAD(x, ParamFamily, k=1, q.lo =1e-3, q.up=15, nuis.idx = NULL,
         trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
         ..., vdbg = FALSE)
-medkMADhybr(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, KK = 20, nuis.idx = NULL,
+medkMADhybr(x, ParamFamily, k=1, q.lo =1e-3, q.up=15, KK = 20, nuis.idx = NULL,
         trafo = NULL, fixed = NULL,  asvar.fct = NULL, na.rm = TRUE,
         ...)
 medSn(x, ParamFamily, q.lo =1e-3, q.up=10, nuis.idx = NULL,

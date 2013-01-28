@@ -36,7 +36,7 @@
  return(theta)
 }
 
-PickandsEstimator <- function(x, alpha = 2, ParamFamily=GParetoFamily(),
+PickandsEstimator <- function(x, ParamFamily=GParetoFamily(), alpha = 2,
                         name, Infos, nuis.idx = NULL,
                         trafo = NULL, fixed = NULL,  na.rm = TRUE,
                         ...){

@@ -125,7 +125,7 @@ LDEstimator <- function(x, loc.est, disp.est,
 }
 
 
-medkMAD <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
+medkMAD <- function(x, ParamFamily, k=1, q.lo =1e-3, q.up=15, nuis.idx = NULL,
                         trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
                         ..., vdbg = FALSE){
       es.call <- match.call()
@@ -186,12 +186,12 @@ medSn <- function(x, ParamFamily, q.lo =1e-3, q.up=10, nuis.idx  = NULL,
       return(es)
       }
 
-medkMADhybr <- function(x, k=1, ParamFamily, q.lo =1e-3, q.up=15,
+medkMADhybr <- function(x, ParamFamily, k=1, q.lo =1e-3, q.up=15,
                         KK=20, nuis.idx = NULL,
                         trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
                         ...){
  i <- 1
- es <- try(medkMAD(x, k = k, ParamFamily = ParamFamily,
+ es <- try(medkMAD(x, ParamFamily = ParamFamily, k = k,
                             q.lo = q.lo, q.up = q.up,
                             nuis.idx = nuis.idx, trafo = trafo,
                             fixed = fixed, asvar.fct = asvar.fct, na.rm = na.rm,

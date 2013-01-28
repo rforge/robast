@@ -76,7 +76,7 @@ setMethod("E", signature(object = "DistributionsIntegratingByQuantiles",
          upp <- p(object)(Ib["upp"])
          if(is.nan(low)) low <- 0
          if(is.nan(upp)) upp <- 1
-        return(do.call(distrExIntegrate, c(list(f = integrand,
+         return(do.call(distrExIntegrate, c(list(f = integrand,
                     lower = low,
                     upper = upp,
                     rel.tol = rel.tol,
@@ -137,7 +137,7 @@ setMethod("E", signature(object = "GEV",
         else return(mu+sigma*(gamma(1-xi)-1)/xi)
         }       
     else
-        return(E(as(object,"AbscontDistribution"), low=low, upp=upp, ...))    
+        return(E(object, low=low, upp=upp, fun = function(x)x, ...))
     })
 
 setMethod("E", signature(object = "GEV", fun = "function", cond = "missing"),

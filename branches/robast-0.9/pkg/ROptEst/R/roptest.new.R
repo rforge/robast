@@ -147,9 +147,17 @@ robest <- function(x, L2Fam,  fsCor = 1,
       }
     }else{
     sy.start <- system.time({
-      initial.est <-  kStepEstimator.start(eval(startCtrl$initial.est), x = x,
+      sctrl.init <- eval(startCtrl$initial.est)
+      if(!is.null(startCtrl$initial.est.ArgList)){
+       initial.est <-  kStepEstimator.start(start = sctrl.init, x = x,
                                         nrvalues = nrvalues, na.rm = na.rm,
                                         L2Fam = L2Fam)
+      }else{
+       initial.est <-  kStepEstimator.start(start = sctrl.init, x = x,
+                                        nrvalues = nrvalues, na.rm = na.rm,
+                                        L2Fam = L2Fam,
+                                        startList = startCtrl$initial.est.ArgList)
+      }
      })
      if(withTimings) print(sy.start)
     }
@@ -191,6 +199,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
      if (withTimings) print(sy.getStartIC)
      }
       if(debug){
+         ICstart <- "BUL"
          argList <- list(x, IC = ICstart, start = initial.est, steps = steps,
                             useLast = kStepCtrl$useLast,
                             withUpdateInKer = kStepCtrl$withUpdateInKer,

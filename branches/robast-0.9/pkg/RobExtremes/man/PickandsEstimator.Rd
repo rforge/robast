@@ -8,7 +8,7 @@
   (for the GPD and GEVD) at real data and returns an object of class \code{Estimate}.
 }
 \usage{
-PickandsEstimator(x, alpha=2, ParamFamily=GParetoFamily(),
+PickandsEstimator(x, ParamFamily=GParetoFamily(), alpha=2,
             name, Infos, nuis.idx = NULL,
             trafo = NULL, fixed = NULL, na.rm = TRUE,
             ...)

@@ -217,7 +217,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
         ## Pickand estimator
         if(is.null(start0Est)){
         #source("kMedMad_Qn_Estimators.R")
-           e0 <- estimate(PickandsEstimator(x,ParamFamily=GParetoFamily(
+           e0 <- estimate(PickandsEstimator(x,ParamFamily=GEVFamily(
                             loc = theta[1], scale = theta[2], shape = theta[3])))
         }else{
            if(is(start0Est,"function")){
@@ -227,6 +227,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
            if(!is.null(names(e0)))
                e0 <- e0[c("scale", "shape")]
         }
+        print(e0); print(str(x)); print(head(summary(x))); print(mu)
         if(any(x < mu-e0["scale"]/e0["shape"]))
                stop("some data smaller than 'loc-scale/shape' ")
 
@@ -289,8 +290,10 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
          return(y)
         }
         ## additional centering of scores to increase numerical precision!
+        suppressWarnings({
         z1 <- E(distribution, fun=Lambda1)
         z2 <- E(distribution, fun=Lambda2)
+        })
         return(list(function(x){ Lambda1(x)-z1 },function(x){ Lambda2(x)-z2 }))
     }
 
@@ -355,6 +358,9 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                   }
 
     L2Fam@L2deriv <- L2deriv
+    wG <- getdistrOption("withgaps")
+    on.exit(distroptions(withgaps=wG))
+    distroptions(withgaps=FALSE)
     suppressWarnings(
     L2Fam@L2derivDistr <- imageDistr(RandVar = L2deriv, distr = distribution)
     )
