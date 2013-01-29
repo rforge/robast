@@ -40,8 +40,11 @@ IC1 <- rlsOptIC.Ha3(r = 0.1)
 checkIC(IC1)
 Risks(IC1)
 Infos(IC1)
+## don't run to reduce check time on CRAN
+\dontrun{
 plot(IC1)
 infoPlot(IC1)
+}
 }
 \concept{normal location and scale}
 \concept{influence curve}

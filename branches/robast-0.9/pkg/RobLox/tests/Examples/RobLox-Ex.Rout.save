@@ -1,6 +1,6 @@
 
-R version 2.15.1 Patched (2012-06-29 r59688) -- "Roasted Marshmallows"
-Copyright (C) 2012 The R Foundation for Statistical Computing
+R Under development (unstable) (2013-01-26 r61749) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -26,19 +26,27 @@ Loading required package: lattice
 Loading required package: RColorBrewer
 Loading required package: Biobase
 Loading required package: BiocGenerics
+Loading required package: parallel
 
 Attaching package: ‘BiocGenerics’
 
-The following object(s) are masked from ‘package:stats’:
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following object is masked from ‘package:stats’:
 
     xtabs
 
-The following object(s) are masked from ‘package:base’:
+The following objects are masked from ‘package:base’:
 
-    Filter, Find, Map, Position, Reduce, anyDuplicated, cbind,
-    colnames, duplicated, eval, get, intersect, lapply, mapply, mget,
-    order, paste, pmax, pmax.int, pmin, pmin.int, rbind, rep.int,
-    rownames, sapply, setdiff, table, tapply, union, unique
+    Filter, Find, Map, Position, Reduce, anyDuplicated, as.data.frame,
+    cbind, colnames, duplicated, eval, get, intersect, lapply, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int, rank,
+    rbind, rep.int, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unlist
 
 Welcome to Bioconductor
 
@@ -57,6 +65,13 @@ Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave together with
 :SweaveListingUtils>  TeX listings package (version 0.6)
+:SweaveListingUtils> 
+:SweaveListingUtils>  NOTE: Support for this package
+:SweaveListingUtils>  will stop soon.
+:SweaveListingUtils> 
+:SweaveListingUtils>  Package 'knitr' is providing the
+:SweaveListingUtils>  same functionality in a better
+:SweaveListingUtils>  way.
 :SweaveListingUtils> 
 :SweaveListingUtils>  Some functions from package 'base'
 :SweaveListingUtils>  are intentionally masked ---see
@@ -77,7 +92,7 @@ Loading required package: SweaveListingUtils
 
 Attaching package: ‘SweaveListingUtils’
 
-The following object(s) are masked from ‘package:base’:
+The following object is masked from ‘package:base’:
 
     library, require
 
@@ -103,7 +118,7 @@ The following object(s) are masked from ‘package:base’:
 
 Attaching package: ‘distr’
 
-The following object(s) are masked from ‘package:stats’:
+The following object is masked from ‘package:stats’:
 
     df, qqplot, sd
 
@@ -128,7 +143,7 @@ Loading required package: distrEx
 
 Attaching package: ‘distrEx’
 
-The following object(s) are masked from ‘package:stats’:
+The following object is masked from ‘package:stats’:
 
     IQR, mad, median, var
 
@@ -165,19 +180,25 @@ Loading required package: stats4
 
 Attaching package: ‘distrMod’
 
-The following object(s) are masked from ‘package:stats4’:
+The following object is masked from ‘package:stats4’:
 
     confint
 
-The following object(s) are masked from ‘package:stats’:
+The following object is masked from ‘package:stats’:
 
     confint
 
-The following object(s) are masked from ‘package:base’:
+The following object is masked from ‘package:base’:
 
     norm
 
 Loading required package: RobAStBase
+Loading required package: rrcov
+Loading required package: robustbase
+Loading required package: pcaPP
+Loading required package: mvtnorm
+Scalable Robust Estimators with High Breakdown Point (version 1.3-02)
+
 :RobAStBase>  Robust Asymptotic Statistics (version 0.9)
 :RobAStBase> 
 :RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
@@ -193,18 +214,29 @@ Loading required package: RobAStBase
 
 Attaching package: ‘RobAStBase’
 
-The following object(s) are masked from ‘package:graphics’:
+The following object is masked from ‘package:graphics’:
 
     clip
 
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
+> assign(".ExTimings", "RobLox-Ex.timings", pos = 'CheckExEnv')
+> cat("name\tuser\tsystem\telapsed\n", file=get(".ExTimings", pos = 'CheckExEnv'))
+> assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   format(x[1L:3L])
++ },
++ pos = 'CheckExEnv')
+> 
 > cleanEx()
 > nameEx("0RobLox-package")
 > ### * 0RobLox-package
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RobLox-package
 > ### Title: Optimally robust influence curves and estimators for location
 > ###   and scale
@@ -276,8 +308,8 @@ An object of class “ContIC”
 ### L2-differentiable parametric family:	 normal location and scale family 
 ### param:	An object of class "ParamWithScaleFamParameter"
 name:	location and scale
-mean:	-0.111150435088002
-sd:	0.89284240215757
+mean:	-0.111150435088066
+sd:	0.892842402157418
 trafo:
      mean sd
 mean    1  0
@@ -301,40 +333,15 @@ sd      0  1
 [1,] "finite-sample corrected radius-minimax estimate for contamination interval [0.01, 0.1]"
 [2,] "least favorable (uncorrected) contamination: 0.043"                                    
 [3,] "maximum asymptotic MSE-inefficiency: 1.441"                                            
-> checkIC(pIC(res))
-precision of centering:	 8.833545e-17 1.265596e-05 
-precision of Fisher consistency:
-             mean            sd
-mean 1.652391e-05 -1.822532e-17
-sd   3.168531e-17 -8.653862e-07
-maximum deviation 
-     1.652391e-05 
-> Risks(pIC(res))
-$asMSE
-[1] 2.385308
-
-$asBias
-[1] 1.679196
-
-$trAsCov
-[1] 1.546146
-
-$asCov
-          [,1]      [,2]
-[1,] 0.9947437 0.0000000
-[2,] 0.0000000 0.5514425
-
-> Infos(pIC(res))
-     method  
-[1,] "roblox"
-[2,] "roblox"
-[3,] "roblox"
-     message                                                                                 
-[1,] "finite-sample corrected radius-minimax estimate for contamination interval [0.01, 0.1]"
-[2,] "least favorable (uncorrected) contamination: 0.043"                                    
-[3,] "maximum asymptotic MSE-inefficiency: 1.441"                                            
-> plot(pIC(res))
-> infoPlot(pIC(res))
+> 
+> ## don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D checkIC(pIC(res))
+> ##D Risks(pIC(res))
+> ##D Infos(pIC(res))
+> ##D plot(pIC(res))
+> ##D infoPlot(pIC(res))
+> ## End(Not run)
 > 
 > ## row-wise application
 > ind <- rbinom(200, size=1, prob=0.05) 
@@ -362,12 +369,16 @@ steps:
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("0RobLox-package", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("finiteSampleCorrection")
 > ### * finiteSampleCorrection
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: finiteSampleCorrection
 > ### Title: Function to compute finite-sample corrected radii
 > ### Aliases: finiteSampleCorrection
@@ -384,12 +395,16 @@ steps:
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("finiteSampleCorrection", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlOptIC")
 > ### * rlOptIC
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlOptIC
 > ### Title: Computation of the optimally robust IC for AL estimators
 > ### Aliases: rlOptIC
@@ -425,15 +440,20 @@ $asCov
          [,1]
 [1,] 1.054162
 > plot(IC1)
+NULL
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlOptIC", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.AL")
 > ### * rlsOptIC.AL
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.AL
 > ### Title: Computation of the optimally robust IC for AL estimators
 > ### Aliases: rlsOptIC.AL
@@ -479,295 +499,59 @@ $asCov
         [,1]      [,2]
 [1,] 1.05189 0.0000000
 [2,] 0.00000 0.5958748
-> plot(IC1)
-> infoPlot(IC1)
 > 
-> ## k-step estimation
-> ## better use function roblox (see ?roblox)
-> ## 1. data: random sample
-> ind <- rbinom(100, size=1, prob=0.05) 
-> x <- rnorm(100, mean=0, sd=(1-ind) + ind*9)
-> mean(x)
-[1] 0.07372327
-> sd(x)
-[1] 1.642883
-> median(x)
-[1] -0.1176227
-> mad(x)
-[1] 0.7942541
-> 
-> ## 2. Kolmogorov(-Smirnov) minimum distance estimator (default)
-> ## -> we use it as initial estimate for one-step construction
-> (est0 <- MDEstimator(x, ParamFamily = NormLocationScaleFamily()))
-Evaluations of Minimum Kolmogorov distance estimate:
-----------------------------------------------------
-An object of class “Estimate” 
-generated by call
-  MDEstimator(x = x, ParamFamily = NormLocationScaleFamily())
-samplesize:   100
-estimate:
-       mean          sd 
--0.05297991  0.92479741 
-Criterion:
-Kolmogorov distance 
-         0.05524875 
-> 
-> ## 3.1 one-step estimation: radius known
-> IC1 <- rlsOptIC.AL(r = 0.5, mean = estimate(est0)[1], sd = estimate(est0)[2])
-> (est1 <- oneStepEstimator(x, IC1, est0))
-Evaluations of 1-step estimate:
--------------------------------
-An object of class “Estimate” 
-generated by call
-  oneStepEstimator(x = x, IC = IC1, start = est0)
-samplesize:   100
-estimate:
-      mean           sd     
-  -0.11387679    0.94042674 
- ( 0.10700894) ( 0.09077496)
-asymptotic (co)variance (multiplied with samplesize):
-         [,1]      [,2]
-[1,] 1.145091 0.0000000
-[2,] 0.000000 0.8240093
-Infos:
-     method            
-[1,] "oneStepEstimator"
-[2,] "oneStepEstimator"
-     message                                                        
-[1,] "1-step estimate for normal location and scale family"         
-[2,] "computation of IC, trafo, asvar and asbias via useLast = TRUE"
-asymptotic bias:
-       sd 
-0.9036978 
-(partial) influence curve:
-An object of class “ContIC” 
-### name:	 IC of contamination type 
-
-### L2-differentiable parametric family:	 normal location and scale family 
-### param:	An object of class "ParamWithScaleFamParameter"
-name:	location and scale
-mean:	-0.113876786446744
-sd:	0.940426740646572
-trafo:
-     mean sd
-mean    1  0
-sd      0  1
-
-### neighborhood radius:	 0.5 
-
-### clip:	      sd 
-1.807396 
-### cent:	[1]  0.0000000 -0.3473252
-### stand:
-         [,1]     [,2]
-[1,] 1.402111 0.000000
-[2,] 0.000000 1.092111
-
-### Infos:
-  method     message                                            
-  "rlOptIC"  "optimally robust IC for AL estimators and 'asMSE'"
-  "modifyIC" "The IC has been modified"                         
-  "modifyIC" "The entries in 'Infos' may be wrong"              
-steps:
-[1] 1
-> 
-> ## 3.2 k-step estimation: radius known
-> ## Choose k = 3
-> (est2 <- kStepEstimator(x, IC1, est0, steps = 3L))
-Evaluations of 3-step estimate:
--------------------------------
-An object of class “Estimate” 
-generated by call
-  kStepEstimator(x = x, IC = IC1, start = est0, steps = 3L)
-samplesize:   100
-estimate:
-      mean           sd     
-  -0.11639567    0.93647284 
- ( 0.10655904) ( 0.09039331)
-asymptotic (co)variance (multiplied with samplesize):
-         [,1]     [,2]
-[1,] 1.135483 0.000000
-[2,] 0.000000 0.817095
-Infos:
-     method          
-[1,] "kStepEstimator"
-[2,] "kStepEstimator"
-     message                                                        
-[1,] "3-step estimate for normal location and scale family"         
-[2,] "computation of IC, trafo, asvar and asbias via useLast = TRUE"
-asymptotic bias:
-       sd 
-0.8998983 
-(partial) influence curve:
-An object of class “ContIC” 
-### name:	 IC of contamination type 
-
-### L2-differentiable parametric family:	 normal location and scale family 
-### param:	An object of class "ParamWithScaleFamParameter"
-name:	location and scale
-mean:	-0.116395665238717
-sd:	0.936472837098548
-trafo:
-     mean sd
-mean    1  0
-sd      0  1
-
-### neighborhood radius:	 0.5 
-
-### clip:	      sd 
-1.799797 
-### cent:	[1]  0.0000000 -0.3458649
-### stand:
-         [,1]     [,2]
-[1,] 1.390346 0.000000
-[2,] 0.000000 1.082947
-
-### Infos:
-  method     message                                            
-  "rlOptIC"  "optimally robust IC for AL estimators and 'asMSE'"
-  "modifyIC" "The IC has been modified"                         
-  "modifyIC" "The entries in 'Infos' may be wrong"              
-  "modifyIC" "The IC has been modified"                         
-  "modifyIC" "The entries in 'Infos' may be wrong"              
-  "modifyIC" "The IC has been modified"                         
-  "modifyIC" "The entries in 'Infos' may be wrong"              
-steps:
-[1] 3
-> 
-> ## 4.1 one-step estimation: radius unknown
-> ## take least favorable radius r = 0.579
-> ## cf. Table 8.1 in Kohl(2005)
-> IC2 <- rlsOptIC.AL(r = 0.579, mean = estimate(est0)[1], sd = estimate(est0)[2])
-> (est3 <- oneStepEstimator(x, IC2, est0))
-Evaluations of 1-step estimate:
--------------------------------
-An object of class “Estimate” 
-generated by call
-  oneStepEstimator(x = x, IC = IC2, start = est0)
-samplesize:   100
-estimate:
-      mean           sd     
-  -0.11948046    0.93188234 
- ( 0.10902521) ( 0.09686132)
-asymptotic (co)variance (multiplied with samplesize):
-        [,1]      [,2]
-[1,] 1.18865 0.0000000
-[2,] 0.00000 0.9382114
-Infos:
-     method            
-[1,] "oneStepEstimator"
-[2,] "oneStepEstimator"
-     message                                                        
-[1,] "1-step estimate for normal location and scale family"         
-[2,] "computation of IC, trafo, asvar and asbias via useLast = TRUE"
-asymptotic bias:
-      sd 
-1.000462 
-(partial) influence curve:
-An object of class “ContIC” 
-### name:	 IC of contamination type 
-
-### L2-differentiable parametric family:	 normal location and scale family 
-### param:	An object of class "ParamWithScaleFamParameter"
-name:	location and scale
-mean:	-0.119480464646407
-sd:	0.931882340990481
-trafo:
-     mean sd
-mean    1  0
-sd      0  1
-
-### neighborhood radius:	 0.579 
-
-### clip:	      sd 
-1.727914 
-### cent:	[1]  0.0000000 -0.4415319
-### stand:
-         [,1]     [,2]
-[1,] 1.505582 0.000000
-[2,] 0.000000 1.206776
-
-### Infos:
-  method     message                                            
-  "rlOptIC"  "optimally robust IC for AL estimators and 'asMSE'"
-  "modifyIC" "The IC has been modified"                         
-  "modifyIC" "The entries in 'Infos' may be wrong"              
-steps:
-[1] 1
-> 
-> ## 4.2 k-step estimation: radius unknown
-> ## take least favorable radius r = 0.579
-> ## cf. Table 8.1 in Kohl(2005)
-> ## choose k = 3
-> (est4 <- kStepEstimator(x, IC2, est0, steps = 3L))
-Evaluations of 3-step estimate:
--------------------------------
-An object of class “Estimate” 
-generated by call
-  kStepEstimator(x = x, IC = IC2, start = est0, steps = 3L)
-samplesize:   100
-estimate:
-      mean           sd     
-  -0.12006169    0.92637969 
- ( 0.10838143) ( 0.09628936)
-asymptotic (co)variance (multiplied with samplesize):
-         [,1]      [,2]
-[1,] 1.174653 0.0000000
-[2,] 0.000000 0.9271641
-Infos:
-     method          
-[1,] "kStepEstimator"
-[2,] "kStepEstimator"
-     message                                                        
-[1,] "3-step estimate for normal location and scale family"         
-[2,] "computation of IC, trafo, asvar and asbias via useLast = TRUE"
-asymptotic bias:
-       sd 
-0.9945548 
-(partial) influence curve:
-An object of class “ContIC” 
-### name:	 IC of contamination type 
-
-### L2-differentiable parametric family:	 normal location and scale family 
-### param:	An object of class "ParamWithScaleFamParameter"
-name:	location and scale
-mean:	-0.120061689892252
-sd:	0.926379689897674
-trafo:
-     mean sd
-mean    1  0
-sd      0  1
-
-### neighborhood radius:	 0.579 
-
-### clip:	      sd 
-1.717711 
-### cent:	[1]  0.0000000 -0.4389247
-### stand:
-         [,1]     [,2]
-[1,] 1.487853 0.000000
-[2,] 0.000000 1.192566
-
-### Infos:
-  method     message                                            
-  "rlOptIC"  "optimally robust IC for AL estimators and 'asMSE'"
-  "modifyIC" "The IC has been modified"                         
-  "modifyIC" "The entries in 'Infos' may be wrong"              
-  "modifyIC" "The IC has been modified"                         
-  "modifyIC" "The entries in 'Infos' may be wrong"              
-  "modifyIC" "The IC has been modified"                         
-  "modifyIC" "The entries in 'Infos' may be wrong"              
-steps:
-[1] 3
+> ## don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D plot(IC1)
+> ##D infoPlot(IC1)
+> ##D 
+> ##D ## k-step estimation
+> ##D ## better use function roblox (see ?roblox)
+> ##D ## 1. data: random sample
+> ##D ind <- rbinom(100, size=1, prob=0.05) 
+> ##D x <- rnorm(100, mean=0, sd=(1-ind) + ind*9)
+> ##D mean(x)
+> ##D sd(x)
+> ##D median(x)
+> ##D mad(x)
+> ##D 
+> ##D ## 2. Kolmogorov(-Smirnov) minimum distance estimator (default)
+> ##D ## -> we use it as initial estimate for one-step construction
+> ##D (est0 <- MDEstimator(x, ParamFamily = NormLocationScaleFamily()))
+> ##D 
+> ##D ## 3.1 one-step estimation: radius known
+> ##D IC1 <- rlsOptIC.AL(r = 0.5, mean = estimate(est0)[1], sd = estimate(est0)[2])
+> ##D (est1 <- oneStepEstimator(x, IC1, est0))
+> ##D 
+> ##D ## 3.2 k-step estimation: radius known
+> ##D ## Choose k = 3
+> ##D (est2 <- kStepEstimator(x, IC1, est0, steps = 3L))
+> ##D 
+> ##D ## 4.1 one-step estimation: radius unknown
+> ##D ## take least favorable radius r = 0.579
+> ##D ## cf. Table 8.1 in Kohl(2005)
+> ##D IC2 <- rlsOptIC.AL(r = 0.579, mean = estimate(est0)[1], sd = estimate(est0)[2])
+> ##D (est3 <- oneStepEstimator(x, IC2, est0))
+> ##D 
+> ##D ## 4.2 k-step estimation: radius unknown
+> ##D ## take least favorable radius r = 0.579
+> ##D ## cf. Table 8.1 in Kohl(2005)
+> ##D ## choose k = 3
+> ##D (est4 <- kStepEstimator(x, IC2, est0, steps = 3L))
+> ## End(Not run)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.AL", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.An1")
 > ### * rlsOptIC.An1
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.An1
 > ### Title: Computation of the optimally robust IC for An1 estimators
 > ### Aliases: rlsOptIC.An1
@@ -798,17 +582,24 @@ $asCov
      method         message                                             
 [1,] "rlsOptIC.An1" "optimally robust IC for An1 estimators and 'asMSE'"
 [2,] "rlsOptIC.An1" "where a = 1.577"                                   
-> plot(IC1)
-> infoPlot(IC1)
+> ## don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D plot(IC1)
+> ##D infoPlot(IC1)
+> ## End(Not run)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.An1", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.An2")
 > ### * rlsOptIC.An2
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.An2
 > ### Title: Computation of the optimally robust IC for An2 estimators
 > ### Aliases: rlsOptIC.An2
@@ -840,16 +631,22 @@ $asCov
 [1,] "rlsOptIC.An2" "optimally robust IC for An2 estimators and 'asMSE'"
 [2,] "rlsOptIC.An2" "where a = 1.813 and k = 2.267"                     
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.An2", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.AnMad")
 > ### * rlsOptIC.AnMad
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.AnMad
 > ### Title: Computation of the optimally robust IC for AnMad estimators
 > ### Aliases: rlsOptIC.AnMad
@@ -881,16 +678,22 @@ $asCov
 [1,] "rlsOptIC.AnMad" "optimally robust IC for AnMad estimators and 'asMSE'"
 [2,] "rlsOptIC.AnMad" "where a = 1.814"                                     
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.AnMad", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.BM")
 > ### * rlsOptIC.BM
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.BM
 > ### Title: Computation of the optimally robust IC for BM estimators
 > ### Aliases: rlsOptIC.BM
@@ -925,16 +728,22 @@ $asCov
 [1,] "optimally robust IC for BM estimators and 'asMSE'"                      
 [2,] " where b.loc = 2.121 , b.sc.0 = 4.461 , alpha = 1.053 and gamma = 0.578"
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.BM", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Ha3")
 > ### * rlsOptIC.Ha3
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Ha3
 > ### Title: Computation of the optimally robust IC for Ha3 estimators
 > ### Aliases: rlsOptIC.Ha3
@@ -965,17 +774,24 @@ $asCov
      method         message                                             
 [1,] "rlsOptIC.Ha3" "optimally robust IC for Ha3 estimators and 'asMSE'"
 [2,] "rlsOptIC.Ha3" "where a = 2.132 , b = 2.17 and c = 7.059"          
-> plot(IC1)
-> infoPlot(IC1)
+> ## don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D plot(IC1)
+> ##D infoPlot(IC1)
+> ## End(Not run)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.Ha3", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Ha4")
 > ### * rlsOptIC.Ha4
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Ha4
 > ### Title: Computation of the optimally robust IC for Ha4 estimators
 > ### Aliases: rlsOptIC.Ha4
@@ -1007,16 +823,22 @@ $asCov
 [1,] "rlsOptIC.Ha4" "optimally robust IC for Ha4 estimators and 'asMSE'"  
 [2,] "rlsOptIC.Ha4" "where a = 1.947 , b = 5.244 , c = 6.34 and k = 2.267"
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.Ha4", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.HaMad")
 > ### * rlsOptIC.HaMad
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.HaMad
 > ### Title: Computation of the optimally robust IC for HuMad estimators
 > ### Aliases: rlsOptIC.HaMad
@@ -1048,16 +870,22 @@ $asCov
 [1,] "rlsOptIC.HaMad" "optimally robust IC for HaMad estimators and 'asMSE'"
 [2,] "rlsOptIC.HaMad" "where a = 1.944 , b = 4.368 , c = 10.51"             
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.HaMad", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Hu1")
 > ### * rlsOptIC.Hu1
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Hu1
 > ### Title: Computation of the optimally robust IC for Hu1 estimators
 > ### Aliases: rlsOptIC.Hu1
@@ -1089,16 +917,22 @@ $asCov
 [1,] "rlsOptIC.Hu1" "optimally robust IC for Hu1 estimators and 'asMSE'"
 [2,] "rlsOptIC.Hu1" "where k = 2.197"                                   
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.Hu1", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Hu2")
 > ### * rlsOptIC.Hu2
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Hu2
 > ### Title: Computation of the optimally robust IC for Hu2 estimators
 > ### Aliases: rlsOptIC.Hu2
@@ -1130,16 +964,22 @@ $asCov
 [1,] "rlsOptIC.Hu2" "optimally robust IC for Hu2 estimators and 'asMSE'"
 [2,] "rlsOptIC.Hu2" "where k = 1.945 and c = 2.266"                     
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.Hu2", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Hu2a")
 > ### * rlsOptIC.Hu2a
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Hu2a
 > ### Title: Computation of the optimally robust IC for Hu2a estimators
 > ### Aliases: rlsOptIC.Hu2a
@@ -1171,16 +1011,22 @@ $asCov
 [1,] "rlsOptIC.Hu2a" "optimally robust IC for Hu2a estimators and 'asMSE'"
 [2,] "rlsOptIC.Hu2a" "where k1 = 0 and k2 = 2.198"                        
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.Hu2a", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Hu3")
 > ### * rlsOptIC.Hu3
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Hu3
 > ### Title: Computation of the optimally robust IC for Hu3 estimators
 > ### Aliases: rlsOptIC.Hu3
@@ -1212,16 +1058,22 @@ $asCov
 [1,] "rlsOptIC.Hu3" "optimally robust IC for Hu3 estimators and 'asMSE'"
 [2,] "rlsOptIC.Hu3" "where k = 1.948 , c1 = 0.112 and c2 = 2.268"       
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.Hu3", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.HuMad")
 > ### * rlsOptIC.HuMad
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.HuMad
 > ### Title: Computation of the optimally robust IC for HuMad estimators
 > ### Aliases: rlsOptIC.HuMad
@@ -1253,16 +1105,22 @@ $asCov
 [1,] "rlsOptIC.HuMad" "optimally robust IC for HuMad estimators and 'asMSE'"
 [2,] "rlsOptIC.HuMad" "where k = 1.948"                                     
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.HuMad", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.M")
 > ### * rlsOptIC.M
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.M
 > ### Title: Computation of the optimally robust IC for M estimators
 > ### Aliases: rlsOptIC.M
@@ -1299,16 +1157,22 @@ $asCov
 [1,] "rlsOptIC.M" "optimally robust IC for M estimators and 'asMSE'"           
 [2,] "rlsOptIC.M" "where a1 = 0.724 , a3 = 0.343 , b = 3.187 and gamma = 0.575"
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.M", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.MM2")
 > ### * rlsOptIC.MM2
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.MM2
 > ### Title: Computation of the optimally robust IC for MM2 estimators
 > ### Aliases: rlsOptIC.MM2
@@ -1340,16 +1204,22 @@ $asCov
 [1,] "rlsOptIC.MM2" "optimally robust IC for MM2 estimators and 'asMSE'"
 [2,] "rlsOptIC.MM2" "where c = 2.159 and d = 3.337"                     
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.MM2", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Tu1")
 > ### * rlsOptIC.Tu1
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Tu1
 > ### Title: Computation of the optimally robust IC for Tu1 estimators
 > ### Aliases: rlsOptIC.Tu1
@@ -1381,16 +1251,22 @@ $asCov
 [1,] "rlsOptIC.Tu1" "optimally robust IC for Tu1 estimators and 'asMSE'"
 [2,] "rlsOptIC.Tu1" "where a = 5.527"                                   
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.Tu1", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Tu2")
 > ### * rlsOptIC.Tu2
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Tu2
 > ### Title: Computation of the optimally robust IC for Tu2 estimators
 > ### Aliases: rlsOptIC.Tu2
@@ -1422,16 +1298,22 @@ $asCov
 [1,] "rlsOptIC.Tu2" "optimally robust IC for Tu2 estimators and 'asMSE'"
 [2,] "rlsOptIC.Tu2" "where a = 6.357 and k = 2.264"                     
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.Tu2", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.TuMad")
 > ### * rlsOptIC.TuMad
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.TuMad
 > ### Title: Computation of the optimally robust IC for TuMad estimators
 > ### Aliases: rlsOptIC.TuMad
@@ -1463,16 +1345,22 @@ $asCov
 [1,] "rlsOptIC.TuMad" "optimally robust IC for TuMad estimators and 'asMSE'"
 [2,] "rlsOptIC.TuMad" "where a = 6.352"                                     
 > plot(IC1)
+NULL
+NULL
 > infoPlot(IC1)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rlsOptIC.TuMad", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("roblox")
 > ### * roblox
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: roblox
 > ### Title: Optimally robust estimator for location and/or scale
 > ### Aliases: roblox
@@ -1488,174 +1376,34 @@ $asCov
 > estimate(res1)
       mean         sd 
 -0.1122987  0.8880179 
-> confint(res1)
-A[n] asymptotic (LAN-based) confidence interval:
-          2.5 %     97.5 %
-mean -0.3108177 0.08622035
-sd    0.7406442 1.03539153
-Type of estimator: Optimally robust estimate
-samplesize:   100
-Call by which estimate was produced:
-roblox(x = x, eps = 0.05, returnIC = TRUE)
-> confint(res1, method = symmetricBias())
-A[n] asymptotic (LAN-based), uniform (bias-aware)
- confidence interval:
-for symmetric Bias
-          2.5 %    97.5 %
-mean -0.4138928 0.1892955
-sd    0.6641248 1.1119109
-Type of estimator: Optimally robust estimate
-samplesize:   100
-Call by which estimate was produced:
-roblox(x = x, eps = 0.05, returnIC = TRUE)
-> pIC(res1)
-An object of class “ContIC” 
-### name:	 IC of contamination type 
-
-### L2-differentiable parametric family:	 normal location and scale family 
-### param:	An object of class "ParamWithScaleFamParameter"
-name:	location and scale
-mean:	-0.11229868189814
-sd:	0.888017869672977
-trafo:
-     mean sd
-mean    1  0
-sd      0  1
-
-### neighborhood radius:	 0.63 
-
-### clip:	[1] 1.615323
-### cent:	[1]  0.0000000 -0.4857096
-### stand:
-         [,1]     [,2]
-[1,] 1.448827 0.000000
-[2,] 0.000000 1.178083
-
-### Infos:
-     method  
-[1,] "roblox"
-     message                                                                                       
-[1,] "finite-sample corrected optimally robust estimate for contamination 'eps' = 0.05 and 'asMSE'"
-> checkIC(pIC(res1))
-precision of centering:	 6.748239e-17 -5.989196e-07 
-precision of Fisher consistency:
-              mean            sd
-mean -2.427446e-06  3.688845e-17
-sd    1.051323e-16 -8.116850e-06
-maximum deviation 
-      8.11685e-06 
-> Risks(pIC(res1))
-$asMSE
-[1] 2.62691
-
-$asBias
-[1] 1.615323
-
-$trAsCov
-[1] 1.591291
-
-$asCov
-NULL
-
-> Infos(pIC(res1))
-     method  
-[1,] "roblox"
-     message                                                                                       
-[1,] "finite-sample corrected optimally robust estimate for contamination 'eps' = 0.05 and 'asMSE'"
-> plot(pIC(res1))
-> infoPlot(pIC(res1))
+> ## don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D confint(res1)
+> ##D confint(res1, method = symmetricBias())
+> ##D pIC(res1)
+> ##D checkIC(pIC(res1))
+> ##D Risks(pIC(res1))
+> ##D Infos(pIC(res1))
+> ##D plot(pIC(res1))
+> ##D infoPlot(pIC(res1))
+> ## End(Not run)
 > 
 > ## amount of gross errors unknown
 > res2 <- roblox(x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
 > estimate(res2)
       mean         sd 
 -0.1111504  0.8928424 
-> confint(res2)
-A[n] asymptotic (LAN-based) confidence interval:
-          2.5 %     97.5 %
-mean -0.3066310 0.08433017
-sd    0.7472971 1.03838771
-Type of estimator: Optimally robust estimate
-samplesize:   100
-Call by which estimate was produced:
-roblox(x = x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
-> confint(res2, method = symmetricBias())
-A[n] asymptotic (LAN-based), uniform (bias-aware)
- confidence interval:
-for symmetric Bias
-          2.5 %    97.5 %
-mean -0.3979957 0.1756949
-sd    0.6792714 1.1064134
-Type of estimator: Optimally robust estimate
-samplesize:   100
-Call by which estimate was produced:
-roblox(x = x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
-> pIC(res2)
-An object of class “ContIC” 
-### name:	 IC of contamination type 
-
-### L2-differentiable parametric family:	 normal location and scale family 
-### param:	An object of class "ParamWithScaleFamParameter"
-name:	location and scale
-mean:	-0.111150435088002
-sd:	0.89284240215757
-trafo:
-     mean sd
-mean    1  0
-sd      0  1
-
-### neighborhood radius:	 0.5455335 
-
-### clip:	[1] 1.679196
-### cent:	[1]  0.000000 -0.382342
-### stand:
-         [,1]     [,2]
-[1,] 1.330601 0.000000
-[2,] 0.000000 1.054707
-
-### Infos:
-     method  
-[1,] "roblox"
-[2,] "roblox"
-[3,] "roblox"
-     message                                                                                 
-[1,] "finite-sample corrected radius-minimax estimate for contamination interval [0.01, 0.1]"
-[2,] "least favorable (uncorrected) contamination: 0.043"                                    
-[3,] "maximum asymptotic MSE-inefficiency: 1.441"                                            
-> checkIC(pIC(res2))
-precision of centering:	 8.833545e-17 1.265596e-05 
-precision of Fisher consistency:
-             mean            sd
-mean 1.652391e-05 -1.822532e-17
-sd   3.168531e-17 -8.653862e-07
-maximum deviation 
-     1.652391e-05 
-> Risks(pIC(res2))
-$asMSE
-[1] 2.385308
-
-$asBias
-[1] 1.679196
-
-$trAsCov
-[1] 1.546146
-
-$asCov
-          [,1]      [,2]
-[1,] 0.9947437 0.0000000
-[2,] 0.0000000 0.5514425
-
-> Infos(pIC(res2))
-     method  
-[1,] "roblox"
-[2,] "roblox"
-[3,] "roblox"
-     message                                                                                 
-[1,] "finite-sample corrected radius-minimax estimate for contamination interval [0.01, 0.1]"
-[2,] "least favorable (uncorrected) contamination: 0.043"                                    
-[3,] "maximum asymptotic MSE-inefficiency: 1.441"                                            
-> plot(pIC(res2))
-> infoPlot(pIC(res2))
+> ## don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D confint(res2)
+> ##D confint(res2, method = symmetricBias())
+> ##D pIC(res2)
+> ##D checkIC(pIC(res2))
+> ##D Risks(pIC(res2))
+> ##D Infos(pIC(res2))
+> ##D plot(pIC(res2))
+> ##D infoPlot(pIC(res2))
+> ## End(Not run)
 > 
 > ## estimator comparison
 > # classical optimal (non-robust)
@@ -1762,12 +1510,16 @@ steps:
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("roblox", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rowRoblox")
 > ### * rowRoblox
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rowRoblox and colRoblox
 > ### Title: Optimally robust estimation for location and/or scale
 > ### Aliases: rowRoblox colRoblox
@@ -2106,12 +1858,16 @@ steps:
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rowRoblox", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rsOptIC")
 > ### * rsOptIC
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rsOptIC
 > ### Title: Computation of the optimally robust IC for AL estimators
 > ### Aliases: rsOptIC
@@ -2147,15 +1903,20 @@ $asCov
           [,1]
 [1,] 0.5967817
 > plot(IC1)
+NULL
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("rsOptIC", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("showdown")
 > ### * showdown
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: showdown
 > ### Title: Estimator Showdown by Monte-Carlo Study.
 > ### Aliases: showdown
@@ -2193,10 +1954,13 @@ relMSE (loc + scale)     1.354211 1.854750   1.564143 1.0000000
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("showdown", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  54.099 0.72 55.019 0 0 
+Time elapsed:  74.452 0.16 74.881 0 0 
 > grDevices::dev.off()
 pdf 
   2 

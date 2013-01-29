@@ -12,13 +12,15 @@ estimators in case of normal location and/or scale.
 \details{
 \tabular{ll}{
 Package: \tab RobLox \cr
-Version: \tab 0.9 \cr
-Date: \tab 2012-07-1 \cr
-Depends: \tab R(>= 2.7.0), stats, distrMod(>= 2.0.1), RobAStBase(>= 0.1.1) \cr
+Version: \tab 0.8.2 \cr
+Date: \tab 2012-09-12 \cr
+Depends: \tab R(>= 2.7.0), stats, lattice, RColorBrewer, Biobase, distr, distrMod, RobAStBase\cr
+Suggests: \tab MASS\cr
 LazyLoad: \tab yes \cr
+ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 439 \cr
+SVNRevision: \tab 519 \cr
 }
 }
 \author{Matthias Kohl  \email{matthias.kohl@stamats.de}}
@@ -28,9 +30,13 @@ SVNRevision: \tab 439 \cr
 
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 
-  Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
-  the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
+  Rieder, H., Kohl, M. and Ruckdeschel, P. (2008). The Costs of not Knowing
+  the Radius. \emph{Statistical Methods and Applications} \bold{17}(1) 13-40.
   Extended version: \url{http://www.stamats.de/RRlong.pdf}
+  
+  M. Kohl, P. Ruckdeschel, and H. Rieder (2010). Infinitesimally Robust Estimation 
+  in General Smoothly Parametrized Models. \emph{Statistical Methods and Application}, 
+  \bold{19}(3):333-354. 
 }
 \seealso{ \code{\link[RobAStBase:0RobAStBase-package]{RobAStBase-package}} }
 \section{Package versions}{
@@ -50,11 +56,15 @@ estimate(res)
 confint(res)
 confint(res, method = symmetricBias())
 pIC(res)
+
+## don't run to reduce check time on CRAN
+\dontrun{
 checkIC(pIC(res))
 Risks(pIC(res))
 Infos(pIC(res))
 plot(pIC(res))
 infoPlot(pIC(res))
+}
 
 ## row-wise application
 ind <- rbinom(200, size=1, prob=0.05) 

@@ -1,5 +1,8 @@
 ###############################################################################
 ## Interpolated functions to speed up computation of Lagrange Multipliers
+## 
+## regarding a change to .C calls and approxfun in R 2.16.0, we need to make
+## distinction between version before 2.16.0 and afterwards
 ###############################################################################
 
 library(RobLox)
@@ -15,28 +18,26 @@ fun <- function(radius){
 locationScale <- sapply(radius, fun)
 #locationScale <- sapply(radius, rlsOptIC.AL, computeIC = FALSE)
 
-A.loc <- unlist(location[1,])
-b.loc <- unlist(location[3,])
-.getA.loc <- approxfun(radius, A.loc, yleft = 1)
-.getb.loc <- approxfun(radius, b.loc, yleft = Inf)
+## location
+.A.loc <- unlist(location[1,])
+.b.loc <- unlist(location[3,])
 
-A.sc <- unlist(scale[1,])
-a.sc <- unlist(scale[2,])
-b.sc <- unlist(scale[3,])
-.getA.sc <- approxfun(radius, A.sc, yleft = 0.5)
-.geta.sc <- approxfun(radius, a.sc, yleft = 0)
-.getb.sc <- approxfun(radius, b.sc, yleft = Inf)
+## scale
+.A.sc <- unlist(scale[1,])
+.a.sc <- unlist(scale[2,])
+.b.sc <- unlist(scale[3,])
 
+## location and scale
 n <- length(radius)
-A1.locsc <- unlist(locationScale[1,])[seq(1, 4*n-3, by = 4)]
-A2.locsc <- unlist(locationScale[1,])[seq(4, 4*n, by = 4)]
-a.locsc <- unlist(locationScale[2,])[seq(2, 2*n, by = 2)]
-b.locsc <- unlist(locationScale[3,])
-.getA1.locsc <- approxfun(radius, A1.locsc, yleft = 1)
-.getA2.locsc <- approxfun(radius, A2.locsc, yleft = 0.5)
-.geta.locsc <- approxfun(radius, a.locsc, yleft = 0)
-.getb.locsc <- approxfun(radius, b.locsc, yleft = Inf)
+.A1.locsc <- unlist(locationScale[1,])[seq(1, 4*n-3, by = 4)]
+.A2.locsc <- unlist(locationScale[1,])[seq(4, 4*n, by = 4)]
+.a.locsc <- unlist(locationScale[2,])[seq(2, 2*n, by = 2)]
+.b.locsc <- unlist(locationScale[3,])
 
-save(.getA.loc, .getb.loc, .getA.sc, .geta.sc, .getb.sc, .getA1.locsc, .getA2.locsc,
-     .geta.locsc, .getb.locsc, file = "savedata.rda")
+.radius.gitter <- radius
 
+## Saving the results in sysdata.rda
+#load("sysdata.rda")
+save(.radius.gitter, .finiteSampleRadius.loc, .finiteSampleRadius.locsc, .finiteSampleRadius.sc,
+     .A.loc, .b.loc, .A.sc, .a.sc, .b.sc, .A1.locsc, .A2.locsc, .a.locsc, .b.locsc,
+     file = "sysdata.rda")

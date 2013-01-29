@@ -78,6 +78,10 @@ roblox(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
   the Radius. Statistical Methods and Applications \emph{17}(1) 13-40.
   Extended version: \url{http://www.stamats.de/RRlong.pdf}
+  
+  M. Kohl, P. Ruckdeschel, and H. Rieder (2010). Infinitesimally Robust Estimation 
+  in General Smoothly Parametrized Models. \emph{Statistical Methods and Application}, 
+  \bold{19}(3):333-354. 
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
@@ -92,6 +96,8 @@ x <- rnorm(100, mean=ind*3, sd=(1-ind) + ind*9)
 ## amount of gross errors known
 res1 <- roblox(x, eps = 0.05, returnIC = TRUE)
 estimate(res1)
+## don't run to reduce check time on CRAN
+\dontrun{
 confint(res1)
 confint(res1, method = symmetricBias())
 pIC(res1)
@@ -100,10 +106,13 @@ Risks(pIC(res1))
 Infos(pIC(res1))
 plot(pIC(res1))
 infoPlot(pIC(res1))
+}
 
 ## amount of gross errors unknown
 res2 <- roblox(x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
 estimate(res2)
+## don't run to reduce check time on CRAN
+\dontrun{
 confint(res2)
 confint(res2, method = symmetricBias())
 pIC(res2)
@@ -112,6 +121,7 @@ Risks(pIC(res2))
 Infos(pIC(res2))
 plot(pIC(res2))
 infoPlot(pIC(res2))
+}
 
 ## estimator comparison
 # classical optimal (non-robust)
