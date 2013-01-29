@@ -204,6 +204,8 @@ comparePlot(IC1, IC2, data=data, with.lab = TRUE,
             which.Order = 1:6,
             return.Order = TRUE)
 
+## don't run to reduce check time on CRAN
+\dontrun{
 ## selection of subpanels for plotting
 par(mfrow=c(1,1))
 comparePlot(IC1, IC2 ,mfColRow = FALSE, to.draw.arg=c("mean"),
@@ -249,7 +251,7 @@ system.time(IC2.i <- optIC(model = G2.Rob1, risk = asMSE(normtype=InfoNorm())))
 system.time(IC2.s <- optIC(model = G2.Rob1, risk = asMSE(normtype=SelfNorm())))
 
 comparePlot(IC1,IC2, IC2.i, IC2.s)
-
+}
 
 }
 }

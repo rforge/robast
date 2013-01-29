@@ -100,6 +100,8 @@ ksteps(est1)
 pICList(est1)
 start(est1)
 
+## don't run to reduce check time on CRAN
+\dontrun{
 ## a transformed model
 tfct <- function(x){
     nms0 <- c("mean","sd")
@@ -137,6 +139,7 @@ untransformed.estimate(est1a.traf)
 uksteps(est1a.traf)
 ICList(est1a.traf)
 ustartval(est1a.traf)
+}
 }
 }
 \concept{k-step estimator}

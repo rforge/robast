@@ -195,18 +195,24 @@ one pair for each dimension.
 N <- NormLocationScaleFamily(mean=0, sd=1) 
 IC1 <- optIC(model = N, risk = asCov())
 infoPlot(IC1)
+
+## don't run to reduce check time on CRAN
+\dontrun{
 ## selection of subpanels for plotting
 par(mfrow=c(1,2))
 infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"))
 infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"), log="y")
+
 infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
               panel.first= grid(), ylim = c(0,4), xlim = c(-6,6))
 infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
               panel.first= grid(), ylim = c(0,4,-3,3), xlim = c(-6,6))
+
 par(mfrow=c(1,3))
 infoPlot(IC1, mfColRow = FALSE, panel.first= grid(),
          ylim = c(0,4,0,.3,0,.8), xlim=c(-6,6))
 par(mfrow=c(1,1))
+
 data <- r(N)(20)
 par(mfrow=c(1,3))
 infoPlot(IC1, data=data, mfColRow = FALSE, panel.first= grid(),
@@ -216,6 +222,8 @@ infoPlot(IC1, data=data, mfColRow = FALSE, panel.first= grid(),
 infoPlot(IC1, data=data[1:10], mfColRow = FALSE, panel.first= grid(),
          with.lab = TRUE, cex.pts=0.7)
 par(mfrow=c(1,1))
+}
+
 }
 \concept{absolute information}
 \concept{relative information}

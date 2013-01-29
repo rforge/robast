@@ -101,6 +101,8 @@ checkIC(IC4)
 plot(IC5)
 checkIC(IC5)
 
+## don't run to reduce check time on CRAN
+\dontrun{
 N0 <- NormLocationScaleFamily()
 IC6 <- makeIC(list(sin,cos),N0)
 plot(IC6)
@@ -108,6 +110,7 @@ checkIC(IC6)
 
 getRiskIC(IC6,risk=trAsCov())$trAsCov$value
 getRiskIC(IC6,risk=asBias(),neighbor=ContNeighborhood())$asBias$value
+}
 
 }
 \concept{influence curve}
