@@ -69,6 +69,8 @@
    if(GridFileName!="") save(LMGrid, file=GridFileName)
    res <- .MakeGridList(xiGrid, Y=t(LMGrid), withSmooth = withSmooth)
    print(res)
+   rm(itLM,getLM)
+   if(withCall) rm(call)
    return(list(grid = res$grid,
                fct = res$fct, call = if(withCall) call else NULL))
 }
@@ -112,7 +114,7 @@
        fctL[[i]] <- fctX
    }
    if(ncol(LMGrid)==1) fctL <- fctL[[1]]
-
+   rm(LMG,fct,fctX,iNA,ym,yM,dym,dyM)
    return(list(grid = cbind(xi=xiGrid,LM=LMGrid),
                fct = fctL))
 }

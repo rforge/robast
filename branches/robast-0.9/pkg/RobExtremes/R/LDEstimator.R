@@ -29,7 +29,9 @@
     disp.emp <- do.call(disp.est.0, args = .prepend(x.0,disp.est.ctrl.0, dots))
     q.emp <- if(log.q.0) log(loc.emp)-log(disp.emp) else loc.emp/disp.emp
     q.f <- function(xi){
-       distr.new <- ParamFamily.0@modifyParam(theta=c("scale"=1,"shape"=xi))
+       th0 <- c(1,xi)
+       names(th0) <- c("scale","shape")
+       distr.new <- ParamFamily.0@modifyParam(theta=th0)
        loc.th <- do.call(loc.fctal.0, args = .prepend(distr.new,loc.fctal.ctrl.0, dots))
        sc.th <- do.call(disp.fctal.0, args = .prepend(distr.new,disp.fctal.ctrl.0, dots))
        val <- if(log.q.0) log(loc.th)-log(sc.th) - q.emp else
@@ -38,9 +40,12 @@
        return(val)
     }
     xi.0 <- uniroot(q.f,lower=q.lo.0,upper=q.up.0)$root
-    distr.new.0 <- ParamFamily.0@modifyParam(theta=c("scale"=1,"shape"=xi.0))
+    th0 <- c(1,xi.0)
+    names(th0) <- c("scale","shape")
+    distr.new.0 <- ParamFamily.0@modifyParam(theta=th0)
     m1xi <- do.call(loc.fctal.0, args = .prepend(distr.new.0,loc.fctal.ctrl.0, dots))
-    val <-   c("shape"=xi.0,"scale"=loc.emp/m1xi, "loc"=loc.emp,"disp"=disp.emp)
+    val <-   c(loc.emp/m1xi, xi.0, loc.emp, disp.emp)
+    names(val) <- c("scale", "shape", "loc","disp")
     return(val)
 }
 

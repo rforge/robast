@@ -66,7 +66,8 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
                itSn <<- itSn + 1
                if(withPrint) cat("Evaluation Nr.", itSn," at xi = ",xi,"\n")
                distr <- PFam@modifyParam(theta=c("scale"=1,"shape"=xi))
-               return(Sn(x=distr, accuracy = accuracy, low=low, upp = upp))
+               return(Sn(x=as(distr,"AbscontDistribution"),
+                         accuracy = accuracy, low=low, upp = upp))
                }
    SnGrid <- sapply(xiGrid,getSn)
    if(GridFileName!="") save(SnGrid, file=GridFileName)
@@ -95,6 +96,12 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
    }
    environment(fct) <- new.env()
    assign("fct0",fct0, envir=environment(fct))
+       assign("yM",yM, envir=nE)
+       assign("ym",ym, envir=nE)
+       assign("dyM",dyM, envir=nE)
+       assign("dym",dym, envir=nE)
+   rm(itSn,getSn,iNA,fct0,ym,yM,dym,dyM)
+   if(withCall) rm(call)
    return(list(grid = cbind(xi=xiGrid,Sn=SnGrid),
                fct = fct, call = if(withCall) call else NULL))
 }

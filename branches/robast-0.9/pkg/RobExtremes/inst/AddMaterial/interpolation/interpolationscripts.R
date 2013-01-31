@@ -66,7 +66,7 @@ chkExist <- function(fN) if(!file.exists(fN)) dir.create(fN, recursive = TRUE)
 sapply(c(.myFolder1,.myFolder2,.myFolder3), chkExist)
 PF <- GEVFamily()
 .saveInterpGrid(getShapeGrid(gridsize=500, cutoff.at.0=0.005),
-                sysRdaFolder = .myFolder2, accuracy = 5000,upp=10,
+                sysRdaFolder = .myFolder1, accuracy = 5000,upp=10,
                 PFam = PF)
 ## to make this parallel, we write the results to different folders:
 .svInt(.OMSE.xi, ".OMSE", PFam = PF, sysRdafolder = .myFolder1)
@@ -199,3 +199,21 @@ require(RobExtremes); RobExtremes:::.recomputeInterpolators(rdafiles[1], sysRdaF
 ##---------------------------------------------------------------------
 ##  R CMD install RobExtremes from source
 ###
+
+#### Fix Sn for GEV (which was wrong ...)
+require(RobExtremes)
+### -> change this according to where you checked out the svn repo:
+.basepath <- "C:/rtest/RobASt/branches/robast-0.9/pkg"
+## <-
+.saveInterpGrid <- RobExtremes:::.saveInterpGrid
+.svInt <- RobExtremes:::.svInt
+.OMSE.xi <- RobExtremes:::.OMSE.xi
+.MBRE.xi <- RobExtremes:::.MBRE.xi
+.RMXE.xi <- RobExtremes:::.RMXE.xi
+.modify.xi.PFam.call <- RobExtremes:::.modify.xi.PFam.call
+.myFolder <- file.path(.basepath,"RobExtremes/R")
+.myFolder1 <- file.path(.basepath,"RobExtremesBuffer/tmp1")
+PF <- GEVFamily()
+.saveInterpGrid(getShapeGrid(gridsize=500, cutoff.at.0=0.005),
+                sysRdaFolder = .myFolder1, accuracy = 5000,upp=10,
+                PFam = PF)
