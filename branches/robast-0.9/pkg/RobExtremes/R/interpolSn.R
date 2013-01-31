@@ -94,8 +94,8 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
              warning("There have been xi-values out of range of the interpolation grid.")
           return(y1)
    }
-   environment(fct) <- new.env()
-   assign("fct0",fct0, envir=environment(fct))
+   environment(fct) <- nE <- new.env()
+   assign("fct0",fct0, envir=nE)
        assign("yM",yM, envir=nE)
        assign("ym",ym, envir=nE)
        assign("dyM",dyM, envir=nE)
