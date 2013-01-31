@@ -171,11 +171,14 @@ cniperCont(IC1 = IC1, IC2 = IC2,
 cniperPointPlot(P, neighbor = ContNeighborhood(radius = 0.5), 
                 risk = asMSE(), lower = 0, upper = 10)
 
+## Don't run to reduce check time on CRAN
+\dontrun{
 ## cniper point
 cniperPoint(P, neighbor = ContNeighborhood(radius = 0.5), 
             risk = asMSE(), lower = 0, upper = 4)
 cniperPoint(P, neighbor = ContNeighborhood(radius = 0.5), 
             risk = asMSE(), lower = 4, upper = 8)
+}
 }
 \concept{cniper contamination}
 \concept{cniper point}

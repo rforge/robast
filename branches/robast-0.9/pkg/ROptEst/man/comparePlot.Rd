@@ -17,12 +17,12 @@ is an additional argument \code{n.MBR} defaulting to 10000
 to determine the number of evaluation points.
 }
 \examples{
-if(require(ROptEst)){
-
 N0 <- NormLocationScaleFamily(mean=0, sd=1)
 N0.Rob1 <- InfRobModel(center = N0,
            neighbor = ContNeighborhood(radius = 0.5))
 
+## Don't run to reduce check time on CRAN
+\dontrun{
 IC1 <- optIC(model = N0, risk = asCov())
 IC2 <- optIC(model = N0.Rob1, risk = asMSE())
 

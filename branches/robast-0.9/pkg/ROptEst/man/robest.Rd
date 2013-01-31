@@ -58,6 +58,8 @@ robest(x, L2Fam,  fsCor = 1, risk = asMSE(), steps = 1L,
           \code{\link[RobAStBase]{UncondNeighborhood-class}},
           \code{\link[distrMod]{RiskType-class}} }
 \examples{
+## Don't run to reduce check time on CRAN
+\dontrun{
 #############################
 ## 1. Binomial data
 #############################
@@ -76,6 +78,7 @@ confint(MLest)
 nb <- gennbCtrl(eps=0.05)
 robest1 <- robest(x, BF, nbCtrl = nb, steps = 3)
 estimate(robest1)
+
 confint(robest1, method = symmetricBias())
 ## neglecting bias
 confint(robest1)
@@ -127,6 +130,7 @@ confint(MLest)
 nb1 <- gennbCtrl(eps.upper = 0.1)
 robest <- robest(x, PF, nbCtrl = nb1, steps = 3)
 estimate(robest)
+
 confint(robest, symmetricBias())
 plot(pIC(robest))
 tmp <- qqplot(x, robest, cex.pch=1.5, exp.cex2.pch = -.25,
@@ -138,7 +142,7 @@ robest1 <- robest(x, PF, nbCtrl = nb2, steps = 3)
 estimate(robest1)
 confint(robest1, symmetricBias())
 plot(pIC(robest1))
-
+}
 
 #############################
 ## 3. Normal (Gaussian) location and scale
@@ -155,6 +159,8 @@ MLest <- MLEstimator(chem, NF)
 estimate(MLest)
 confint(MLest)
 
+## Don't run to reduce check time on CRAN
+\dontrun{
 ## compute optimally robust estimator (known contamination)
 ## takes some time -> you can use package RobLox for normal 
 ## location and scale which is optimized for speed
@@ -163,6 +169,7 @@ robEst <- robest(chem, NF, nbCtrl = nb1, steps = 3)
 estimate.call(robEst)
 attr(robEst,"timings")
 estimate(robest)
+
 confint(robest, symmetricBias())
 plot(pIC(robest))
 ## plot of relative and absolute information; cf. Kohl (2005)
@@ -173,17 +180,21 @@ tmp <- qqplot(chem, robest, cex.pch=1.5, exp.cex2.pch = -.25,
               exp.cex2.lbl = .12,exp.fadcol.lbl = .45,
               nosym.pCI = TRUE, adj.lbl=c(1.7,.2),
               exact.pCI = FALSE, log ="xy")
-
+}
+             
 ## finite-sample correction
 if(require(RobLox)){
     n <- length(chem)
     r <- 0.05*sqrt(n)
     r.fi <- finiteSampleCorrection(n = n, r = r)
     fsCor0 <- r.fi/r
+    nb1 <- gennbCtrl(eps = 0.05)
     robest <- robest(chem, NF, nbCtrl = nb1, fsCor = fsCor0, steps = 3)
     estimate(robest)
 }
 
+## Don't run to reduce check time on CRAN
+\dontrun{
 ## compute optimally robust estimator (unknown contamination)
 ## takes some time -> use package RobLox!
 nb2 <- gennbCtrl(eps.lower = 0.05, eps.upper = 0.1)
@@ -193,6 +204,7 @@ confint(robest1, symmetricBias())
 plot(pIC(robest1))
 ## plot of relative and absolute information; cf. Kohl (2005)
 infoPlot(pIC(robest1))
+}
 }
 \concept{k-step construction}
 \concept{optimally robust estimation}

@@ -1,6 +1,6 @@
 
-R version 2.15.1 Patched (2012-06-29 r59688) -- "Roasted Marshmallows"
-Copyright (C) 2012 The R Foundation for Statistical Computing
+R Under development (unstable) (2013-01-26 r61749) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -34,6 +34,13 @@ Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave together with
 :SweaveListingUtils>  TeX listings package (version 0.6)
 :SweaveListingUtils> 
+:SweaveListingUtils>  NOTE: Support for this package
+:SweaveListingUtils>  will stop soon.
+:SweaveListingUtils> 
+:SweaveListingUtils>  Package 'knitr' is providing the
+:SweaveListingUtils>  same functionality in a better
+:SweaveListingUtils>  way.
+:SweaveListingUtils> 
 :SweaveListingUtils>  Some functions from package 'base'
 :SweaveListingUtils>  are intentionally masked ---see
 :SweaveListingUtils>  SweaveListingMASK().
@@ -53,7 +60,7 @@ Loading required package: SweaveListingUtils
 
 Attaching package: ‘SweaveListingUtils’
 
-The following object(s) are masked from ‘package:base’:
+The following object is masked from ‘package:base’:
 
     library, require
 
@@ -79,7 +86,7 @@ The following object(s) are masked from ‘package:base’:
 
 Attaching package: ‘distr’
 
-The following object(s) are masked from ‘package:stats’:
+The following object is masked from ‘package:stats’:
 
     df, qqplot, sd
 
@@ -103,7 +110,7 @@ Loading required package: distrEx
 
 Attaching package: ‘distrEx’
 
-The following object(s) are masked from ‘package:stats’:
+The following object is masked from ‘package:stats’:
 
     IQR, mad, median, var
 
@@ -141,19 +148,25 @@ Loading required package: stats4
 
 Attaching package: ‘distrMod’
 
-The following object(s) are masked from ‘package:stats4’:
+The following object is masked from ‘package:stats4’:
 
     confint
 
-The following object(s) are masked from ‘package:stats’:
+The following object is masked from ‘package:stats’:
 
     confint
 
-The following object(s) are masked from ‘package:base’:
+The following object is masked from ‘package:base’:
 
     norm
 
 Loading required package: RobAStBase
+Loading required package: rrcov
+Loading required package: robustbase
+Loading required package: pcaPP
+Loading required package: mvtnorm
+Scalable Robust Estimators with High Breakdown Point (version 1.3-02)
+
 :RobAStBase>  Robust Asymptotic Statistics (version 0.9)
 :RobAStBase> 
 :RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
@@ -169,18 +182,29 @@ Loading required package: RobAStBase
 
 Attaching package: ‘RobAStBase’
 
-The following object(s) are masked from ‘package:graphics’:
+The following object is masked from ‘package:graphics’:
 
     clip
 
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
+> assign(".ExTimings", "ROptEst-Ex.timings", pos = 'CheckExEnv')
+> cat("name\tuser\tsystem\telapsed\n", file=get(".ExTimings", pos = 'CheckExEnv'))
+> assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   format(x[1L:3L])
++ },
++ pos = 'CheckExEnv')
+> 
 > cleanEx()
 > nameEx("0ROptEst-package")
 > ### * 0ROptEst-package
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ROptEst-package
 > ### Title: Optimally robust estimation
 > ### Aliases: ROptEst-package ROptEst
@@ -224,12 +248,35 @@ Call by which estimate was produced:
 MLEstimator(x = x, ParamFamily = PoisFamily())
 > 
 > ## compute optimally (w.r.t to MSE) robust estimator (unknown contamination)
-> robest <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
-> estimate(robest)
+> robEst <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
+> estimate(robEst)
   lambda 
 3.908135 
 > ## check influence curve
-> checkIC(pIC(robest))
+> pIC(robEst)
+An object of class “ContIC” 
+### name:	 IC of contamination type 
+
+### L2-differentiable parametric family:	 Poisson family 
+### param:	An object of class "ParamFamParameter"
+name:	positive mean
+lambda:	3.90883569611022
+trafo:
+       lambda
+lambda      1
+
+### neighborhood radius:	 0.560986 
+
+### clip:	[1] 2.751564
+### cent:	[1] -0.2472607
+### stand:
+         lambda
+lambda 6.943887
+
+### Infos:
+     method  message                          
+[1,] "optIC" "optimally robust IC for ‘asMSE’"
+> checkIC(pIC(robEst))
 precision of centering:	 -2.707017e-08 
 precision of Fisher consistency:
               lambda
@@ -237,9 +284,10 @@ lambda -1.980378e-06
 maximum deviation 
      1.980378e-06 
 > ## plot influence curve
-> plot(pIC(robest))
+> plot(pIC(robEst))
+NULL
 > ## confidence interval based on LAN - neglecting bias
-> confint(robest)
+> confint(robEst)
 A[n] asymptotic (LAN-based) confidence interval:
           2.5 %   97.5 %
 lambda 3.826169 3.990102
@@ -248,7 +296,7 @@ samplesize:   2608
 Call by which estimate was produced:
 roptest(x = x, L2Fam = PoisFamily(), eps.upper = 0.1, steps = 3)
 > ## confidence interval based on LAN - including bias
-> confint(robest, method = symmetricBias())
+> confint(robEst, method = symmetricBias())
 A[n] asymptotic (LAN-based), uniform (bias-aware)
  confidence interval:
 for symmetric Bias
@@ -261,12 +309,16 @@ roptest(x = x, L2Fam = PoisFamily(), eps.upper = 0.1, steps = 3)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("0ROptEst-package", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("asAnscombe-class")
 > ### * asAnscombe-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: asAnscombe-class
 > ### Title: Asymptotic Anscombe risk
 > ### Aliases: asAnscombe-class eff eff,asAnscombe-method
@@ -282,12 +334,16 @@ ARE in the ideal model:	 0.95
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("asAnscombe-class", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("asAnscombe")
 > ### * asAnscombe
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: asAnscombe
 > ### Title: Generating function for asAnscombe-class
 > ### Aliases: asAnscombe
@@ -310,12 +366,16 @@ function (eff = 0.95, biastype = symmetricBias(), normtype = NormType())
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("asAnscombe", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("asL1-class")
 > ### * asL1-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: asL1-class
 > ### Title: Asymptotic mean absolute error
 > ### Aliases: asL1-class
@@ -329,12 +389,16 @@ risk type:	 asymptotic mean square error
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("asL1-class", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("asL1")
 > ### * asL1
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: asL1
 > ### Title: Generating function for asMSE-class
 > ### Aliases: asL1
@@ -356,12 +420,16 @@ function (biastype = symmetricBias(), normtype = NormType())
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("asL1", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("asL4-class")
 > ### * asL4-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: asL4-class
 > ### Title: Asymptotic mean power 4 error
 > ### Aliases: asL4-class
@@ -375,12 +443,16 @@ risk type:	 asymptotic mean square error
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("asL4-class", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("asL4")
 > ### * asL4
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: asL4
 > ### Title: Generating function for asL4-class
 > ### Aliases: asL4
@@ -402,21 +474,20 @@ function (biastype = symmetricBias(), normtype = NormType())
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("asL4", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cniperCont")
 > ### * cniperCont
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cniperCont
-> ### Title: Generic Functions for Computation and Plot of Cniper
-> ###   Contamination and Cniper Points.
-> ### Aliases: cniperCont cniperCont-methods
-> ###   cniperCont,IC,IC,L2ParamFamily,ContNeighborhood,asMSE-method
-> ###   cniperPoint cniperPoint-methods
-> ###   cniperPoint,L2ParamFamily,ContNeighborhood,asMSE-method
-> ###   cniperPointPlot cniperPointPlot-methods
-> ###   cniperPointPlot,L2ParamFamily,ContNeighborhood,asMSE-method
+> ### Title: Functions for Computation and Plot of Cniper Contamination and
+> ###   Cniper Points.
+> ### Aliases: cniperCont cniperPoint cniperPointPlot
 > ### Keywords: robust
 > 
 > ### ** Examples
@@ -427,7 +498,7 @@ function (biastype = symmetricBias(), normtype = NormType())
 > IC1 <- optIC(model=RobP1, risk=asMSE())
 > RobP2 <- InfRobModel(center = P, neighbor = ContNeighborhood(radius = 1))
 > IC2 <- optIC(model=RobP2, risk=asMSE())
-> cniperCont(IC1 = IC1, IC2 = IC2, L2Fam = P, 
+> cniperCont(IC1 = IC1, IC2 = IC2,
 +            neighbor = ContNeighborhood(radius = 0.5), 
 +            risk = asMSE(),
 +            lower = 0, upper = 8, n = 101)
@@ -436,24 +507,58 @@ function (biastype = symmetricBias(), normtype = NormType())
 > cniperPointPlot(P, neighbor = ContNeighborhood(radius = 0.5), 
 +                 risk = asMSE(), lower = 0, upper = 10)
 > 
-> ## cniper point
-> cniperPoint(P, neighbor = ContNeighborhood(radius = 0.5), 
-+             risk = asMSE(), lower = 0, upper = 4)
-cniper point 
-   0.7803439 
-> cniperPoint(P, neighbor = ContNeighborhood(radius = 0.5), 
-+             risk = asMSE(), lower = 4, upper = 8)
-cniper point 
-    7.219656 
+> ## Don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D ## cniper point
+> ##D cniperPoint(P, neighbor = ContNeighborhood(radius = 0.5), 
+> ##D             risk = asMSE(), lower = 0, upper = 4)
+> ##D cniperPoint(P, neighbor = ContNeighborhood(radius = 0.5), 
+> ##D             risk = asMSE(), lower = 4, upper = 8)
+> ## End(Not run)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("cniperCont", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("comparePlot")
+> ### * comparePlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: comparePlot-methods
+> ### Title: Compare - Plots
+> ### Aliases: comparePlot comparePlot-methods comparePlot,IC,IC-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> N0 <- NormLocationScaleFamily(mean=0, sd=1)
+> N0.Rob1 <- InfRobModel(center = N0,
++            neighbor = ContNeighborhood(radius = 0.5))
+> 
+> ## Don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D IC1 <- optIC(model = N0, risk = asCov())
+> ##D IC2 <- optIC(model = N0.Rob1, risk = asMSE())
+> ##D 
+> ##D comparePlot(IC1,IC2, withMBR=TRUE)
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("comparePlot", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("getL1normL2deriv")
 > ### * getL1normL2deriv
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: getL1normL2deriv
 > ### Title: Calculation of L1 norm of L2derivative
 > ### Aliases: getL1normL2deriv getL1normL2deriv-methods
@@ -467,12 +572,16 @@ cniper point
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("getL1normL2deriv", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("getL2normL2deriv")
 > ### * getL2normL2deriv
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: getL2normL2deriv
 > ### Title: Calculation of L2 norm of L2derivative
 > ### Aliases: getL2normL2deriv
@@ -484,12 +593,16 @@ cniper point
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("getL2normL2deriv", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("getMaxIneff")
 > ### * getMaxIneff
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: getMaxIneff
 > ### Title: getMaxIneff - computation of the maximal inefficiency of an IC
 > ### Aliases: getMaxIneff
@@ -541,25 +654,88 @@ This is larger than the specified 'tol' => the result may be wrong
 > getMaxIneff(N0.ICR,neighbor)
 [1] 1.180746
 > 
-> N0ls <- NormLocationScaleFamily()
-> ICsc <- makeIC(list(sin,cos),N0ls)
-> getMaxIneff(ICsc,neighbor)
-Warning in A[DA.comp] <- matrix(param[1:lA.comp], ncol = k, nrow = p) :
-  number of items to replace is not a multiple of replacement length
-[1] 2.679436
+> ## Don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D N0ls <- NormLocationScaleFamily()
+> ##D ICsc <- makeIC(list(sin,cos),N0ls)
+> ##D getMaxIneff(ICsc,neighbor)
+> ## End(Not run)
 > 
 > 
 > 
 > 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("getMaxIneff", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("getRadius")
+> ### * getRadius
+> 
+> flush(stderr()); flush(stdout())
+> 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: getRadius
+> ### Title: Computation of the Optimal Radius for Given Clipping Bound
+> ### Aliases: getRadius
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> N <- NormLocationFamily(mean=0, sd=1)
+> nb <- ContNeighborhood(); ri <- asMSE()
+> radIC <- radiusMinimaxIC(L2Fam=N, neighbor=nb, risk=ri, loRad=0.1, upRad=0.5)
+> getRadius(radIC, L2Fam=N, neighbor=nb, risk=ri)
+[1] 0.2853168
+> 
+> ## taken from script NormalScaleModel.R in folder scripts
+> N0 <- NormScaleFamily(mean=0, sd=1)
+> (N0.IC7 <- radiusMinimaxIC(L2Fam=N0, neighbor=nb, risk=ri, loRad=0, upRad=Inf))
+An object of class “ContIC” 
+### name:	 IC of contamination type 
+
+### L2-differentiable parametric family:	 normal scale family 
+### param:	An object of class "ParamWithScaleFamParameter"
+name:	scale
+sd:	1
+fixed part of param.:
+	mean:	0
+trafo:
+      scale
+scale     1
+
+### neighborhood radius:	 0.4989504 
+
+### clip:	[1] 1.430943
+### cent:	[1] -0.3562353
+### stand:
+        scale
+scale 1.26182
+
+### Infos:
+     method            message                                         
+[1,] "radiusMinimaxIC" "radius minimax IC for radius interval [0, Inf]"
+[2,] "radiusMinimaxIC" "least favorable radius: 0.499"                 
+[3,] "radiusMinimaxIC" "maximum ‘asMSE’-inefficiency: 1.504"           
+> ##
+> getRadius(N0.IC7, risk=asMSE(), neighbor=nb, L2Fam=N0)
+[1] 0.4989504
+> getRadius(N0.IC7, risk=asL4(), neighbor=nb, L2Fam=N0)
+[1] 0.6127672
+> 
+> 
+> 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("getRadius", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("getReq")
 > ### * getReq
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: getReq
 > ### Title: getReq - computation of the radius interval where IC1 is better
-> ###   than IC2
+> ###   than IC2.
 > ### Aliases: getReq
 > ### Keywords: robust
 > 
@@ -596,8 +772,6 @@ maximum iterations reached!
  achieved precision:	 0.04096877 
 > ## MSE solution
 > N0.ICM <- optIC(model=N0.Rob1, risk=asMSE())
-> ## RMX solution
-> N0.ICR <- radiusMinimaxIC(L2Fam=N0, neighbor=neighbor,risk=asMSE())
 > 
 > getReq(asMSE(),neighbor,N0.ICA,N0.ICM,n=1)
 Warning in .local(IC, risk, L2Fam, ...) :
@@ -609,97 +783,193 @@ Warning in .local(IC, risk, L2Fam, ...) :
   The maximum deviation from the exact IC properties is 0.0020208733776802
 This is larger than the specified 'tol' => the result may be wrong
 [1] 0.00000000 0.06848038
-> getReq(asL1(),neighbor,N0.ICA,N0.ICM,n=30)
-Warning in .local(IC, risk, L2Fam, ...) :
-  The maximum deviation from the exact IC properties is 0.0020208733776802
-This is larger than the specified 'tol' => the result may be wrong
-[1] 0.00000000 0.06544434
-> getReq(asL4(),neighbor,N0.ICA,N0.ICM,n=30)
-Warning in .local(IC, risk, L2Fam, ...) :
-  The maximum deviation from the exact IC properties is 0.0020208733776802
-This is larger than the specified 'tol' => the result may be wrong
-[1] 0.00000000 0.07542161
-> getReq(asMSE(),neighbor,N0.ICA,N0.ICR,n=30)
-Warning in .local(IC, risk, L2Fam, ...) :
-  The maximum deviation from the exact IC properties is 0.0020208733776802
-This is larger than the specified 'tol' => the result may be wrong
-[1] 0.00000000 0.07544307
-> getReq(asL1(),neighbor,N0.ICA,N0.ICR,n=30)
-Warning in .local(IC, risk, L2Fam, ...) :
-  The maximum deviation from the exact IC properties is 0.0020208733776802
-This is larger than the specified 'tol' => the result may be wrong
-[1] 0.00000000 0.07161849
-> getReq(asL4(),neighbor,N0.ICA,N0.ICR,n=30)
-Warning in .local(IC, risk, L2Fam, ...) :
-  The maximum deviation from the exact IC properties is 0.0020208733776802
-This is larger than the specified 'tol' => the result may be wrong
-[1] 0.00000000 0.08429762
-> getReq(asMSE(),neighbor,N0.ICM,N0.ICR,n=30)
-[1] 0.0000000 0.1016517
 > 
-> ### when to use MAD and when Qn 
-> ##  for Qn, see C. Croux, P. Rousseeuw (1993). Alternatives to the Median 
-> ##      Absolute Deviation, JASA 88(424):1273-1283
-> L2M <- NormScaleFamily()
-> IC.mad <- makeIC(function(x)sign(abs(x)-qnorm(.75)),L2M)
-$Curve
-An object of class “EuclRandVarList” 
-Domain:	Real Space with dimension 1 
-[[1]]
-length of Map:	 1 
-Range:	Real Space with dimension 1 
-
-$CallL2Fam
-L2Fam@fam.call
-
-An object of class “IC” 
-### name:	 square integrable (partial) influence curve 
-### L2-differentiable parametric family:	 normal scale family 
-
-### 'Curve':	An object of class “EuclRandVarList” 
-Domain:	Real Space with dimension 1 
-[[1]]
-length of Map:	 1 
-Range:	Real Space with dimension 1 
-
-### Infos:
-     method message
-> d.qn <- (2^.5*qnorm(5/8))^-1
-> IC.qn <- makeIC(function(x) d.qn*(1/4 - pnorm(x+1/d.qn) + pnorm(x-1/d.qn)), L2M)
-$Curve
-An object of class “EuclRandVarList” 
-Domain:	Real Space with dimension 1 
-[[1]]
-length of Map:	 1 
-Range:	Real Space with dimension 1 
-
-$CallL2Fam
-L2Fam@fam.call
-
-An object of class “IC” 
-### name:	 square integrable (partial) influence curve 
-### L2-differentiable parametric family:	 normal scale family 
-
-### 'Curve':	An object of class “EuclRandVarList” 
-Domain:	Real Space with dimension 1 
-[[1]]
-length of Map:	 1 
-Range:	Real Space with dimension 1 
-
-### Infos:
-     method message
-> getReq(asMSE(), neighbor, IC.mad, IC.qn)
-[1] 0.5074459       Inf
-> # => MAD is better once r > 0.5144 (i.e. for more than 2 outliers for n = 30)
+> ## Don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D ## RMX solution
+> ##D N0.ICR <- radiusMinimaxIC(L2Fam=N0, neighbor=neighbor,risk=asMSE())
+> ##D 
+> ##D getReq(asL1(),neighbor,N0.ICA,N0.ICM,n=30)
+> ##D getReq(asL4(),neighbor,N0.ICA,N0.ICM,n=30)
+> ##D getReq(asMSE(),neighbor,N0.ICA,N0.ICR,n=30)
+> ##D getReq(asL1(),neighbor,N0.ICA,N0.ICR,n=30)
+> ##D getReq(asL4(),neighbor,N0.ICA,N0.ICR,n=30)
+> ##D getReq(asMSE(),neighbor,N0.ICM,N0.ICR,n=30)
+> ##D 
+> ##D 
+> ##D ### when to use MAD and when Qn 
+> ##D ##  for Qn, see C. Croux, P. Rousseeuw (1993). Alternatives to the Median 
+> ##D ##      Absolute Deviation, JASA 88(424):1273-1283
+> ##D L2M <- NormScaleFamily()
+> ##D IC.mad <- makeIC(function(x)sign(abs(x)-qnorm(.75)),L2M)
+> ##D d.qn <- (2^.5*qnorm(5/8))^-1
+> ##D IC.qn <- makeIC(function(x) d.qn*(1/4 - pnorm(x+1/d.qn) + pnorm(x-1/d.qn)), L2M)
+> ##D getReq(asMSE(), neighbor, IC.mad, IC.qn)
+> ##D getReq(asMSE(), neighbor, IC.mad, IC.qn, radOrOutl = "Outlier", n = 30)
+> ##D # => MAD is better once r > 0.5144 (i.e. for more than 2 outliers for n = 30)
+> ## End(Not run)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("getReq", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("getRiskFctBV-methods")
+> ### * getRiskFctBV-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: getRiskFctBV-methods
+> ### Title: Methods for Function getRiskFctBV in Package 'ROptEst'
+> ### Aliases: getRiskFctBV getRiskFctBV-methods getRiskFctBV,asL1,ANY-method
+> ###   getRiskFctBV,asL4,ANY-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> myrisk <- asMSE()
+> getRiskFctBV(myrisk)
+function (bias, var) 
+bias^2 + var
+<environment: 0xb596930>
+> 
+> 
+> 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("getRiskFctBV-methods", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("getRiskIC")
+> ### * getRiskIC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: getRiskIC
+> ### Title: Generic function for the computation of a risk for an IC
+> ### Aliases: getRiskIC getRiskIC-methods
+> ###   getRiskIC,HampIC,asCov,missing,missing-method
+> ###   getRiskIC,HampIC,asCov,missing,L2ParamFamily-method
+> ###   getRiskIC,TotalVarIC,asCov,missing,L2ParamFamily-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> B <- BinomFamily(size = 25, prob = 0.25)
+> 
+> ## classical optimal IC
+> IC0 <- optIC(model = B, risk = asCov())
+> getRiskIC(IC0, asCov())
+$asCov
+$asCov$distribution
+[1] "Binom(25, 0.25)"
+
+$asCov$value
+       [,1]
+[1,] 0.0075
+
+
+> 
+> 
+> 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("getRiskIC", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("inputGenerator")
+> ### * inputGenerator
+> 
+> flush(stderr()); flush(stdout())
+> 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: inputGenerators
+> ### Title: Input generating functions for function 'robest'
+> ### Aliases: inputGenerators gennbCtrl genstartCtrl genkStepCtrl
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> genkStepCtrl()
+$useLast
+[1] FALSE
+
+$withUpdateInKer
+[1] FALSE
+
+$IC.UpdateInKer
+getRobAStBaseOption("IC.UpdateInKer")
+
+$withICList
+[1] FALSE
+
+$withPICList
+[1] FALSE
+
+$scalename
+[1] "scale"
+
+$withLogScale
+[1] TRUE
+
+> genstartCtrl()
+$distance
+function (e1, e2, ...) 
+standardGeneric("CvMDist")
+<bytecode: 0x33241f8>
+<environment: 0x335e038>
+attr(,"generic")
+[1] "CvMDist"
+attr(,"generic")attr(,"package")
+[1] "distrEx"
+attr(,"package")
+[1] "distrEx"
+attr(,"group")
+list()
+attr(,"valueClass")
+character(0)
+attr(,"signature")
+[1] "e1" "e2"
+attr(,"default")
+`\001NULL\001`
+attr(,"skeleton")
+function (e1, e2, ...) 
+stop("invalid call in method dispatch to 'CvMDist' (no default method)", 
+    domain = NA)(e1, e2, ...)
+attr(,"class")
+[1] "standardGeneric"
+attr(,"class")attr(,"package")
+[1] "methods"
+
+> gennbCtrl()
+$neighbor
+An object of class “ContNeighborhood” 
+type:	 (uncond.) convex contamination neighborhood 
+radius:	 0 
+
+$eps
+
+
+$eps.lower
+
+
+$eps.upper
+
+
+> 
+> 
+> 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("inputGenerator", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("leastFavorableRadius")
 > ### * leastFavorableRadius
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: leastFavorableRadius
 > ### Title: Generic Function for the Computation of Least Favorable Radii
 > ### Aliases: leastFavorableRadius leastFavorableRadius-methods
@@ -730,17 +1000,22 @@ $leastFavorableRadius
 [1] 0.5736396
 
 $`asMSE-inefficiency`
-[1] 1.044142
+      up 
+1.044142 
 
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("leastFavorableRadius", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("lowerCaseRadius")
 > ### * lowerCaseRadius
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: lowerCaseRadius
 > ### Title: Computation of the lower case radius
 > ### Aliases: lowerCaseRadius lowerCaseRadius-methods
@@ -762,12 +1037,16 @@ lower case radius
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("lowerCaseRadius", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("optIC")
 > ### * optIC
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: optIC
 > ### Title: Generic function for the computation of optimally robust ICs
 > ### Aliases: optIC optIC-methods optIC,InfRobModel,asRisk-method
@@ -782,6 +1061,7 @@ lower case radius
 > ## classical optimal IC
 > IC0 <- optIC(model = B, risk = asCov())
 > plot(IC0) # plot IC
+NULL
 > checkIC(IC0, B)
 precision of centering:	 -4.25449e-18 
 precision of Fisher consistency:
@@ -792,12 +1072,16 @@ maximum deviation
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("optIC", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("optRisk")
 > ### * optRisk
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: optRisk
 > ### Title: Generic function for the computation of the minimal risk
 > ### Aliases: optRisk optRisk-methods optRisk,L2ParamFamily,asCov-method
@@ -816,12 +1100,44 @@ sd      0 0.5
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("optRisk", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("plot-methods")
+> ### * plot-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: plot-methods
+> ### Title: Methods for Function plot in Package 'ROptEst'
+> ### Aliases: plot plot-methods plot,IC,missing-method
+> ### Keywords: methods distribution
+> 
+> ### ** Examples
+> 
+> N <- NormLocationScaleFamily(mean=0, sd=1)
+> IC <- optIC(model = N, risk = asCov())
+> ## Don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D plot(IC, main = TRUE, panel.first= grid(),
+> ##D      col = "blue", cex.main = 2, cex.inner = 0.6,
+> ##D      withMBR=TRUE)
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("plot-methods", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("radiusMinimaxIC")
 > ### * radiusMinimaxIC
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: radiusMinimaxIC
 > ### Title: Generic function for the computation of the radius minimax IC
 > ### Aliases: radiusMinimaxIC radiusMinimaxIC-methods
@@ -834,210 +1150,327 @@ sd      0 0.5
 > radIC <- radiusMinimaxIC(L2Fam=N, neighbor=ContNeighborhood(), 
 +                          risk=asMSE(), loRad=0.1, upRad=0.5)
 > checkIC(radIC)
-precision of centering:	 -8.135927e-16 
+precision of centering:	 0 
 precision of Fisher consistency:
               mean
-mean -3.502745e-06
+mean -3.502695e-06
 maximum deviation 
-     3.502745e-06 
+     3.502695e-06 
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("radiusMinimaxIC", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
+> nameEx("robest")
+> ### * robest
+> 
+> flush(stderr()); flush(stdout())
+> 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: robest
+> ### Title: Optimally robust estimation
+> ### Aliases: robest
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## Don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D #############################
+> ##D ## 1. Binomial data
+> ##D #############################
+> ##D ## generate a sample of contaminated data
+> ##D ind <- rbinom(100, size=1, prob=0.05) 
+> ##D x <- rbinom(100, size=25, prob=(1-ind)*0.25 + ind*0.9)
+> ##D 
+> ##D ## Family
+> ##D BF <- BinomFamily(size = 25)
+> ##D ## ML-estimate
+> ##D MLest <- MLEstimator(x, BF)
+> ##D estimate(MLest)
+> ##D confint(MLest)
+> ##D 
+> ##D ## compute optimally robust estimator (known contamination)
+> ##D nb <- gennbCtrl(eps=0.05)
+> ##D robest1 <- robest(x, BF, nbCtrl = nb, steps = 3)
+> ##D estimate(robest1)
+> ##D 
+> ##D confint(robest1, method = symmetricBias())
+> ##D ## neglecting bias
+> ##D confint(robest1)
+> ##D plot(pIC(robest1))
+> ##D tmp <- qqplot(x, robest1, cex.pch=1.5, exp.cex2.pch = -.25,
+> ##D               exp.fadcol.pch = .55, jit.fac=.9)
+> ##D 
+> ##D ## compute optimally robust estimator (unknown contamination)
+> ##D nb2 <- gennbCtrl(eps.lower = 0, eps.upper = 0.2)
+> ##D robest2 <- robest(x, BF, nbCtrl = nb2, steps = 3)
+> ##D estimate(robest2)
+> ##D confint(robest2, method = symmetricBias())
+> ##D plot(pIC(robest2))
+> ##D 
+> ##D ## total variation neighborhoods (known deviation)
+> ##D nb3 <- gennbCtrl(eps = 0.025, neighbor = TotalVarNeighborhood())
+> ##D robest3 <- robest(x, BF, nbCtrl = nb3, steps = 3)
+> ##D estimate(robest3)
+> ##D confint(robest3, method = symmetricBias())
+> ##D plot(pIC(robest3))
+> ##D 
+> ##D ## total variation neighborhoods (unknown deviation)
+> ##D nb4 <- gennbCtrl(eps.lower = 0, eps.upper = 0.1,
+> ##D                  neighbor = TotalVarNeighborhood())
+> ##D robest3 <- robest(x, BF, nbCtrl = nb4, steps = 3)
+> ##D robest4 <- robest(x, BinomFamily(size = 25), nbCtrl = nb4, steps = 3)
+> ##D estimate(robest4)
+> ##D confint(robest4, method = symmetricBias())
+> ##D plot(pIC(robest4))
+> ##D 
+> ##D 
+> ##D #############################
+> ##D ## 2. Poisson data
+> ##D #############################
+> ##D ## Example: Rutherford-Geiger (1910); cf. Feller~(1968), Section VI.7 (a)
+> ##D x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532), 
+> ##D        rep(5, 408), rep(6, 273), rep(7, 139), rep(8, 45), rep(9, 27), 
+> ##D        rep(10, 10), rep(11, 4), rep(12, 0), rep(13, 1), rep(14, 1))
+> ##D 
+> ##D ## Family
+> ##D PF <- PoisFamily()
+> ##D 
+> ##D ## ML-estimate
+> ##D MLest <- MLEstimator(x, PF)
+> ##D estimate(MLest)
+> ##D confint(MLest)
+> ##D 
+> ##D ## compute optimally robust estimator (unknown contamination)
+> ##D nb1 <- gennbCtrl(eps.upper = 0.1)
+> ##D robest <- robest(x, PF, nbCtrl = nb1, steps = 3)
+> ##D estimate(robest)
+> ##D 
+> ##D confint(robest, symmetricBias())
+> ##D plot(pIC(robest))
+> ##D tmp <- qqplot(x, robest, cex.pch=1.5, exp.cex2.pch = -.25,
+> ##D               exp.fadcol.pch = .55, jit.fac=.9)
+> ##D  
+> ##D ## total variation neighborhoods (unknown deviation)
+> ##D nb2 <- gennbCtrl(eps.upper = 0.05, neighbor = TotalVarNeighborhood())
+> ##D robest1 <- robest(x, PF, nbCtrl = nb2, steps = 3)
+> ##D estimate(robest1)
+> ##D confint(robest1, symmetricBias())
+> ##D plot(pIC(robest1))
+> ## End(Not run)
+> 
+> #############################
+> ## 3. Normal (Gaussian) location and scale
+> #############################
+> ## 24 determinations of copper in wholemeal flour
+> library(MASS)
+> data(chem)
+> plot(chem, main = "copper in wholemeal flour", pch = 20)
+> 
+> ## Family
+> NF <- NormLocationScaleFamily()
+> ## ML-estimate
+> MLest <- MLEstimator(chem, NF)
+> estimate(MLest)
+    mean       sd 
+4.280417 5.185859 
+> confint(MLest)
+A[n] asymptotic (CLT-based) confidence interval:
+        2.5 %   97.5 %
+mean 2.205679 6.355154
+sd   3.718798 6.652920
+Type of estimator: Maximum likelihood estimate
+samplesize:   24
+Call by which estimate was produced:
+MLEstimator(x = chem, ParamFamily = NF)
+> 
+> ## Don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D ## compute optimally robust estimator (known contamination)
+> ##D ## takes some time -> you can use package RobLox for normal 
+> ##D ## location and scale which is optimized for speed
+> ##D nb1 <- gennbCtrl(eps = 0.05)
+> ##D robEst <- robest(chem, NF, nbCtrl = nb1, steps = 3)
+> ##D estimate.call(robEst)
+> ##D attr(robEst,"timings")
+> ##D estimate(robest)
+> ##D 
+> ##D confint(robest, symmetricBias())
+> ##D plot(pIC(robest))
+> ##D ## plot of relative and absolute information; cf. Kohl (2005)
+> ##D infoPlot(pIC(robest))
+> ##D 
+> ##D tmp <- qqplot(chem, robest, cex.pch=1.5, exp.cex2.pch = -.25,
+> ##D               exp.fadcol.pch = .55, withLab = TRUE, which.Order=1:4,
+> ##D               exp.cex2.lbl = .12,exp.fadcol.lbl = .45,
+> ##D               nosym.pCI = TRUE, adj.lbl=c(1.7,.2),
+> ##D               exact.pCI = FALSE, log ="xy")
+> ## End(Not run)
+>              
+> ## finite-sample correction
+> if(require(RobLox)){
++     n <- length(chem)
++     r <- 0.05*sqrt(n)
++     r.fi <- finiteSampleCorrection(n = n, r = r)
++     fsCor0 <- r.fi/r
++     nb1 <- gennbCtrl(eps = 0.05)
++     robest <- robest(chem, NF, nbCtrl = nb1, fsCor = fsCor0, steps = 3)
++     estimate(robest)
++ }
+Loading required package: RobLox
+Loading required package: lattice
+Loading required package: RColorBrewer
+Loading required package: Biobase
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following object is masked from ‘package:RandVar’:
+
+    Map
+
+The following object is masked from ‘package:stats’:
+
+    xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, as.data.frame,
+    cbind, colnames, duplicated, eval, get, intersect, lapply, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int, rank,
+    rbind, rep.int, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unlist
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+     mean        sd 
+3.1521874 0.6656981 
+> 
+> ## Don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D ## compute optimally robust estimator (unknown contamination)
+> ##D ## takes some time -> use package RobLox!
+> ##D nb2 <- gennbCtrl(eps.lower = 0.05, eps.upper = 0.1)
+> ##D robest1 <- robest(chem, NF, nbCtrl = nb2, steps = 3)
+> ##D estimate(robest1)
+> ##D confint(robest1, symmetricBias())
+> ##D plot(pIC(robest1))
+> ##D ## plot of relative and absolute information; cf. Kohl (2005)
+> ##D infoPlot(pIC(robest1))
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("robest", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:RobLox’, ‘package:Biobase’, ‘package:BiocGenerics’,
+  ‘package:parallel’, ‘package:RColorBrewer’, ‘package:lattice’
+
 > nameEx("roptest")
 > ### * roptest
 > 
 > flush(stderr()); flush(stdout())
 > 
+> assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: roptest
 > ### Title: Optimally robust estimation
-> ### Aliases: roptest
+> ### Aliases: roptest roptest.old
 > ### Keywords: robust
 > 
 > ### ** Examples
 > 
-> #############################
-> ## 1. Binomial data
-> #############################
-> ## generate a sample of contaminated data
-> ind <- rbinom(100, size=1, prob=0.05) 
-> x <- rbinom(100, size=25, prob=(1-ind)*0.25 + ind*0.9)
-> 
-> ## ML-estimate
-> MLest <- MLEstimator(x, BinomFamily(size = 25))
-> estimate(MLest)
-[1] 0.2684
-> confint(MLest)
-A[n] asymptotic (CLT-based) confidence interval:
-         2.5 %    97.5 %
-[1,] 0.2510297 0.2857703
-Type of estimator: Maximum likelihood estimate
-samplesize:   100
-Call by which estimate was produced:
-MLEstimator(x = x, ParamFamily = BinomFamily(size = 25))
-Fixed part of the parameter at which estimate was produced:
-size 
-  25 
-> 
-> ## compute optimally robust estimator (known contamination)
-> robest1 <- roptest(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
-> estimate(robest1)
-     prob 
-0.2564327 
-> confint(robest1, method = symmetricBias())
-A[n] asymptotic (LAN-based), uniform (bias-aware)
- confidence interval:
-for symmetric Bias
-        2.5 %    97.5 %
-prob 0.237641 0.2752245
-Type of estimator: 3-step estimate
-samplesize:   100
-Call by which estimate was produced:
-roptest(x = x, L2Fam = BinomFamily(size = 25), eps = 0.05, steps = 3)
-Fixed part of the parameter at which estimate was produced:
-size 
-  25 
-> ## neglecting bias
-> confint(robest1)
-A[n] asymptotic (LAN-based) confidence interval:
-         2.5 %    97.5 %
-prob 0.2382143 0.2746511
-Type of estimator: 3-step estimate
-samplesize:   100
-Call by which estimate was produced:
-roptest(x = x, L2Fam = BinomFamily(size = 25), eps = 0.05, steps = 3)
-Fixed part of the parameter at which estimate was produced:
-size 
-  25 
-> plot(pIC(robest1))
-> tmp <- qqplot(x, robest1, cex.pch=1.5, exp.cex2.pch = -.25,
-+               exp.fadcol.pch = .55, jit.fac=.9)
-> 
-> ## compute optimally robust estimator (unknown contamination)
-> robest2 <- roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.2, steps = 3)
-> estimate(robest2)
-    prob 
-0.256406 
-> confint(robest2, method = symmetricBias())
-A[n] asymptotic (LAN-based), uniform (bias-aware)
- confidence interval:
-for symmetric Bias
-         2.5 %    97.5 %
-prob 0.2375772 0.2752347
-Type of estimator: 3-step estimate
-samplesize:   100
-Call by which estimate was produced:
-roptest(x = x, L2Fam = BinomFamily(size = 25), eps.lower = 0, 
-    eps.upper = 0.2, steps = 3)
-Fixed part of the parameter at which estimate was produced:
-size 
-  25 
-> plot(pIC(robest2))
-> 
-> ## total variation neighborhoods (known deviation)
-> robest3 <- roptest(x, BinomFamily(size = 25), eps = 0.025, 
-+                    neighbor = TotalVarNeighborhood(), steps = 3)
-> estimate(robest3)
-     prob 
-0.2563265 
-> confint(robest3, method = symmetricBias())
-A[n] asymptotic (LAN-based), uniform (bias-aware)
- confidence interval:
-for symmetric Bias
-         2.5 %    97.5 %
-prob 0.2375738 0.2750792
-Type of estimator: 3-step estimate
-samplesize:   100
-Call by which estimate was produced:
-roptest(x = x, L2Fam = BinomFamily(size = 25), eps = 0.025, neighbor = TotalVarNeighborhood(), 
-    steps = 3)
-Fixed part of the parameter at which estimate was produced:
-size 
-  25 
-> plot(pIC(robest3))
-> 
-> ## total variation neighborhoods (unknown deviation)
-> robest4 <- roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.1, 
-+                    neighbor = TotalVarNeighborhood(), steps = 3)
-> estimate(robest4)
-     prob 
-0.2563281 
-> confint(robest4, method = symmetricBias())
-A[n] asymptotic (LAN-based), uniform (bias-aware)
- confidence interval:
-for symmetric Bias
-         2.5 %    97.5 %
-prob 0.2375777 0.2750785
-Type of estimator: 3-step estimate
-samplesize:   100
-Call by which estimate was produced:
-roptest(x = x, L2Fam = BinomFamily(size = 25), eps.lower = 0, 
-    eps.upper = 0.1, neighbor = TotalVarNeighborhood(), steps = 3)
-Fixed part of the parameter at which estimate was produced:
-size 
-  25 
-> plot(pIC(robest4))
-> 
-> 
-> #############################
-> ## 2. Poisson data
-> #############################
-> ## Example: Rutherford-Geiger (1910); cf. Feller~(1968), Section VI.7 (a)
-> x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532), 
-+        rep(5, 408), rep(6, 273), rep(7, 139), rep(8, 45), rep(9, 27), 
-+        rep(10, 10), rep(11, 4), rep(12, 0), rep(13, 1), rep(14, 1))
-> 
-> ## ML-estimate
-> MLest <- MLEstimator(x, PoisFamily())
-> estimate(MLest)
-[1] 3.871549
-> confint(MLest)
-A[n] asymptotic (CLT-based) confidence interval:
-        2.5 %   97.5 %
-[1,] 3.796033 3.947065
-Type of estimator: Maximum likelihood estimate
-samplesize:   2608
-Call by which estimate was produced:
-MLEstimator(x = x, ParamFamily = PoisFamily())
-> 
-> ## compute optimally robust estimator (unknown contamination)
-> robest <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
-> estimate(robest)
-  lambda 
-3.908135 
-> confint(robest, symmetricBias())
-A[n] asymptotic (LAN-based), uniform (bias-aware)
- confidence interval:
-for symmetric Bias
-          2.5 %   97.5 %
-lambda 3.761616 4.054655
-Type of estimator: 3-step estimate
-samplesize:   2608
-Call by which estimate was produced:
-roptest(x = x, L2Fam = PoisFamily(), eps.upper = 0.1, steps = 3)
-> plot(pIC(robest))
-> tmp <- qqplot(x, robest, cex.pch=1.5, exp.cex2.pch = -.25,
-+               exp.fadcol.pch = .55, jit.fac=.9)
->  
-> ## total variation neighborhoods (unknown deviation)
-> robest1 <- roptest(x, PoisFamily(), eps.upper = 0.05, 
-+                   neighbor = TotalVarNeighborhood(), steps = 3)
-> estimate(robest1)
-  lambda 
-3.900709 
-> confint(robest1, symmetricBias())
-A[n] asymptotic (LAN-based), uniform (bias-aware)
- confidence interval:
-for symmetric Bias
-         2.5 %   97.5 %
-lambda 3.75276 4.048659
-Type of estimator: 3-step estimate
-samplesize:   2608
-Call by which estimate was produced:
-roptest(x = x, L2Fam = PoisFamily(), eps.upper = 0.05, neighbor = TotalVarNeighborhood(), 
-    steps = 3)
-> plot(pIC(robest1))
-> 
+> ## Don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D #############################
+> ##D ## 1. Binomial data
+> ##D #############################
+> ##D ## generate a sample of contaminated data
+> ##D ind <- rbinom(100, size=1, prob=0.05) 
+> ##D x <- rbinom(100, size=25, prob=(1-ind)*0.25 + ind*0.9)
+> ##D 
+> ##D ## ML-estimate
+> ##D MLest <- MLEstimator(x, BinomFamily(size = 25))
+> ##D estimate(MLest)
+> ##D confint(MLest)
+> ##D 
+> ##D ## compute optimally robust estimator (known contamination)
+> ##D robest1 <- roptest(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
+> ##D robest1.0 <- roptest.old(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
+> ##D identical(robest1,robest1.0)
+> ##D estimate(robest1)
+> ##D confint(robest1, method = symmetricBias())
+> ##D ## neglecting bias
+> ##D confint(robest1)
+> ##D plot(pIC(robest1))
+> ##D tmp <- qqplot(x, robest1, cex.pch=1.5, exp.cex2.pch = -.25,
+> ##D               exp.fadcol.pch = .55, jit.fac=.9)
+> ##D 
+> ##D ## compute optimally robust estimator (unknown contamination)
+> ##D robest2 <- roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.2, steps = 3)
+> ##D estimate(robest2)
+> ##D confint(robest2, method = symmetricBias())
+> ##D plot(pIC(robest2))
+> ##D 
+> ##D ## total variation neighborhoods (known deviation)
+> ##D robest3 <- roptest(x, BinomFamily(size = 25), eps = 0.025, 
+> ##D                    neighbor = TotalVarNeighborhood(), steps = 3)
+> ##D estimate(robest3)
+> ##D confint(robest3, method = symmetricBias())
+> ##D plot(pIC(robest3))
+> ##D 
+> ##D ## total variation neighborhoods (unknown deviation)
+> ##D robest4 <- roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.1, 
+> ##D                    neighbor = TotalVarNeighborhood(), steps = 3)
+> ##D estimate(robest4)
+> ##D confint(robest4, method = symmetricBias())
+> ##D plot(pIC(robest4))
+> ##D 
+> ##D #############################
+> ##D ## 2. Poisson data
+> ##D #############################
+> ##D ## Example: Rutherford-Geiger (1910); cf. Feller~(1968), Section VI.7 (a)
+> ##D x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532), 
+> ##D        rep(5, 408), rep(6, 273), rep(7, 139), rep(8, 45), rep(9, 27), 
+> ##D        rep(10, 10), rep(11, 4), rep(12, 0), rep(13, 1), rep(14, 1))
+> ##D 
+> ##D ## ML-estimate
+> ##D MLest <- MLEstimator(x, PoisFamily())
+> ##D estimate(MLest)
+> ##D confint(MLest)
+> ##D 
+> ##D ## compute optimally robust estimator (unknown contamination)
+> ##D robest <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
+> ##D estimate(robest)
+> ##D confint(robest, symmetricBias())
+> ##D 
+> ##D plot(pIC(robest))
+> ##D tmp <- qqplot(x, robest, cex.pch=1.5, exp.cex2.pch = -.25,
+> ##D               exp.fadcol.pch = .55, jit.fac=.9)
+> ##D  
+> ##D ## total variation neighborhoods (unknown deviation)
+> ##D robest1 <- roptest(x, PoisFamily(), eps.upper = 0.05, 
+> ##D                   neighbor = TotalVarNeighborhood(), steps = 3)
+> ##D estimate(robest1)
+> ##D confint(robest1, symmetricBias())
+> ##D plot(pIC(robest1))
+> ## End(Not run)
 > 
 > #############################
 > ## 3. Normal (Gaussian) location and scale
@@ -1062,34 +1495,24 @@ samplesize:   24
 Call by which estimate was produced:
 MLEstimator(x = chem, ParamFamily = NormLocationScaleFamily())
 > 
-> ## compute optimally robust estimator (known contamination)
-> ## takes some time -> you can use package RobLox for normal 
-> ## location and scale which is optimized for speed
-> robest <- roptest(chem, NormLocationScaleFamily(), eps = 0.05, steps = 3)
-> estimate(robest)
-     mean        sd 
-3.1431677 0.6671166 
-> confint(robest, symmetricBias())
-A[n] asymptotic (LAN-based), uniform (bias-aware)
- confidence interval:
-for symmetric Bias
-         2.5 %    97.5 %
-mean 2.8118324 3.4745029
-sd   0.4224006 0.9118325
-Type of estimator: 3-step estimate
-samplesize:   24
-Call by which estimate was produced:
-roptest(x = chem, L2Fam = NormLocationScaleFamily(), eps = 0.05, 
-    steps = 3)
-> plot(pIC(robest))
-> ## plot of relative and absolute information; cf. Kohl (2005)
-> infoPlot(pIC(robest))
-> 
-> tmp <- qqplot(chem, robest, cex.pch=1.5, exp.cex2.pch = -.25,
-+               exp.fadcol.pch = .55, withLab = TRUE, which.Order=1:4,
-+               exp.cex2.lbl = .12,exp.fadcol.lbl = .45,
-+               nosym.pCI = TRUE, adj.lbl=c(1.7,.2),
-+               exact.pCI = FALSE, log ="xy")
+> ## Don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D ## compute optimally robust estimator (known contamination)
+> ##D ## takes some time -> you can use package RobLox for normal 
+> ##D ## location and scale which is optimized for speed
+> ##D robest <- roptest(chem, NormLocationScaleFamily(), eps = 0.05, steps = 3)
+> ##D estimate(robest)
+> ##D confint(robest, symmetricBias())
+> ##D plot(pIC(robest))
+> ##D ## plot of relative and absolute information; cf. Kohl (2005)
+> ##D infoPlot(pIC(robest))
+> ##D 
+> ##D tmp <- qqplot(chem, robest, cex.pch=1.5, exp.cex2.pch = -.25,
+> ##D               exp.fadcol.pch = .55, withLab = TRUE, which.Order=1:4,
+> ##D               exp.cex2.lbl = .12,exp.fadcol.lbl = .45,
+> ##D               nosym.pCI = TRUE, adj.lbl=c(1.7,.2),
+> ##D               exact.pCI = FALSE, log ="xy")
+> ## End(Not run)
 > 
 > ## finite-sample correction
 > if(require(RobLox)){
@@ -1102,38 +1525,67 @@ roptest(x = chem, L2Fam = NormLocationScaleFamily(), eps = 0.05,
 +     estimate(robest)
 + }
 Loading required package: RobLox
+Loading required package: lattice
+Loading required package: RColorBrewer
+Loading required package: Biobase
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following object is masked from ‘package:RandVar’:
+
+    Map
+
+The following object is masked from ‘package:stats’:
+
+    xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, as.data.frame,
+    cbind, colnames, duplicated, eval, get, intersect, lapply, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int, rank,
+    rbind, rep.int, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unlist
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
      mean        sd 
 3.1521874 0.6656981 
 > 
-> ## compute optimally robust estimator (unknown contamination)
-> ## takes some time -> use package RobLox!
-> robest1 <- roptest(chem, NormLocationScaleFamily(), eps.lower = 0.05, 
-+                    eps.upper = 0.1, steps = 3)
-> estimate(robest1)
-    mean       sd 
-3.140611 0.666190 
-> confint(robest1, symmetricBias())
-A[n] asymptotic (LAN-based), uniform (bias-aware)
- confidence interval:
-for symmetric Bias
-         2.5 %    97.5 %
-mean 2.7838904 3.4973315
-sd   0.4006334 0.9317465
-Type of estimator: 3-step estimate
-samplesize:   24
-Call by which estimate was produced:
-roptest(x = chem, L2Fam = NormLocationScaleFamily(), eps.lower = 0.05, 
-    eps.upper = 0.1, steps = 3)
-> plot(pIC(robest1))
-> ## plot of relative and absolute information; cf. Kohl (2005)
-> infoPlot(pIC(robest1))
+> ## Don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D ## compute optimally robust estimator (unknown contamination)
+> ##D ## takes some time -> use package RobLox!
+> ##D robest1 <- roptest(chem, NormLocationScaleFamily(), eps.lower = 0.05, 
+> ##D                    eps.upper = 0.1, steps = 3)
+> ##D estimate(robest1)
+> ##D confint(robest1, symmetricBias())
+> ##D plot(pIC(robest1))
+> ##D ## plot of relative and absolute information; cf. Kohl (2005)
+> ##D infoPlot(pIC(robest1))
+> ## End(Not run)
 > 
 > 
 > 
+> 
+> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> cat("roptest", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  104.902 0.408 105.686 0 0 
+Time elapsed:  29.861 0.136 30.106 0 0 
 > grDevices::dev.off()
 null device 
           1 
