@@ -4,16 +4,16 @@ note <- sprintf("R package version %s", meta$Version)
 
 citHeader("To cite package RobLoxBioC in publications use:")
 
-citEntry(entry="Manual",
-         title = "RobLoxBioC: Infinitesimally robust estimators for preprocessing omics data",
-         author = personList(as.person("M. Kohl")),
+citEntry(entry="Article",
+         title = "Preprocessing of gene expression data by optimally robust estimators",
+         author = personList(as.person("M. Kohl"), as.person("H.P. Deigner")),
+         journal = "BMC Bioinformatics",
          language = "English",
-         year = year,
-         note = note,
-         type = "R package",
-         url = "http://robast.r-forge.r-project.org/",
-         textVersion = paste("Kohl, M.",
-                             sprintf("(%s).", year),
-                             "RobLoxBioC: Infinitesimally robust estimators for preprocessing omics data.",
-                             paste(note, ".", sep = ""),
-                             "URL http://robast.r-forge.r-project.org/"))
+         year = 2010,
+         Volume="11",
+         Pages="583",
+         url = "http://www.biomedcentral.com/1471-2105/11/583/abstract",
+         textVersion = paste("Kohl, M. and Deigner, H.P.",
+                             "Preprocessing of gene expression data by optimally robust estimators.",
+                             "BMC Bioinformatics 2010, 11:583",
+                             "URL http://www.biomedcentral.com/1471-2105/11/583/abstract"))

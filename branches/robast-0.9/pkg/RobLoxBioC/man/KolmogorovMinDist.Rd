@@ -55,15 +55,14 @@ or matrix with the corresponding sample sizes. }
 \references{
   Huber, P.J. (1981) \emph{Robust Statistics}. New York: Wiley.
 
-  Kohl M. and Deigner H.P. (2009). Using infinitesimally robust estimators for 
-  preprocessing gene expression data. In preparation.
-
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
 \seealso{\code{\link[distrEx]{KolmogorovDist}}, \code{\link[distrMod]{MDEstimator}} }
 \examples{
+set.seed(123) # to have reproducible results for package checking
+
 ## matrix method for KolmogorovMinDist
 ind <- rbinom(200, size=1, prob=0.05) 
 X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)

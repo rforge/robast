@@ -54,14 +54,13 @@ relMSE with respect to the rmx estimator.
 
   Hampel F.R. (1985). The breakdown points of the mean combined with some rejection
   rules. Technometrics, 27(2):95-107.  
-
-  Kohl M. and Deigner H.P. (2009). Using infinitesimally robust estimators for 
-  preprocessing gene expression data. In preparation.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
 %\note{}
 \seealso{\code{\link[RobLox]{rowRoblox}}}
 \examples{
+set.seed(123) # to have reproducible results for package checking
+
 AffySimStudy(n = 11, M = 100, eps = 0.02, contD = Norm(mean = 0, sd = 3), 
              plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
 IlluminaSimStudy(n = 30, M = 100, eps = 0.02, contD = Norm(mean = 0, sd = 3), 

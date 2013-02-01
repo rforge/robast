@@ -7,7 +7,6 @@ setMethod("robloxbioc", signature(x = "matrix"),
              fsCor = TRUE, mad0 = 1e-4){
         stopifnot(is.numeric(x))
         if(ncol(x) <= 2){
-            warning("Sample size <= 2! => Median and MAD are used for estimation.")
             mean <- rowMedians(x, na.rm = TRUE)
             sd <- rowMedians(abs(x-mean), na.rm = TRUE)/qnorm(0.75)
             robEst <- cbind(mean, sd)
@@ -60,7 +59,7 @@ setMethod("robloxbioc", signature(x = "matrix"),
 
         if(!is.null(eps)){
             r <- sqrt(ncol(x))*eps
-            if(fsCor) r <- .finiteSampleCorrection(r = r, n = ncol(x))
+            if(fsCor) r <- finiteSampleCorrection(r = r, n = ncol(x), model = "locsc")
             if(r > 10){
                 b <- sd*1.618128043
                 const <- 1.263094656
@@ -76,7 +75,7 @@ setMethod("robloxbioc", signature(x = "matrix"),
                 mse <- A1 + A2
             }
             robEst <- .kstep.locsc.matrix(x = x, initial.est = cbind(mean, sd), 
-                                          A1 = A1, A2 = A2, a = a, b = b, k = steps)
+                                          A1 = A1, A2 = A2, a = a, b = b, k = steps)$est
             colnames(robEst) <- c("mean", "sd")
         }else{
             sqrtn <- sqrt(ncol(x))
@@ -88,7 +87,7 @@ setMethod("robloxbioc", signature(x = "matrix"),
                 r <- uniroot(.getlsInterval, lower = rlo+1e-8, upper = rup, 
                             tol = .Machine$double.eps^0.25, rlo = rlo, rup = rup)$root
             }
-            if(fsCor) r <- .finiteSampleCorrection(r = r, n = ncol(x))
+            if(fsCor) r <- finiteSampleCorrection(r = r, n = ncol(x), model = "locsc")
             if(r > 10){
                 b <- sd*1.618128043
                 const <- 1.263094656
@@ -115,56 +114,9 @@ setMethod("robloxbioc", signature(x = "matrix"),
                 }
             }
             robEst <- .kstep.locsc.matrix(x = x, initial.est = cbind(mean, sd), 
-                                          A1 = A1, A2 = A2, a = a, b = b, k = steps)
+                                          A1 = A1, A2 = A2, a = a, b = b, k = steps)$est
             colnames(robEst) <- c("mean", "sd")
         }
         return(robEst)
     })
 
-###############################################################################
-## computation of k-step construction in case x is a matrix
-###############################################################################
-.onestep.locsc.matrix <- function(x, initial.est, A1, A2, a, b){
-    mean <- initial.est[,1]
-    sd <- initial.est[,2]
-    u <- A1*(x-mean)/sd^2
-    v <- A2*(((x-mean)/sd)^2-1)/sd - a
-    ind <- b/sqrt(u^2 + v^2) <= 1
-    IC1 <- rowMeans(u*(ind*b/sqrt(u^2 + v^2) + !ind), na.rm = TRUE)
-    IC2 <- rowMeans(v*(ind*b/sqrt(u^2 + v^2) + !ind), na.rm = TRUE)
-    IC <- cbind(IC1, IC2)
-    return(initial.est + IC)
-}
-.kstep.locsc.matrix <- function(x, initial.est, A1, A2, a, b, mean, k){
-    est <- .onestep.locsc.matrix(x = x, initial.est = initial.est, A1 = A1, A2 = A2, a = a, b = b)
-    if(k > 1){
-        for(i in 2:k){
-            A1 <- est[,2]^2*A1/initial.est[,2]^2
-            A2 <- est[,2]^2*A2/initial.est[,2]^2
-            a <- est[,2]*a/initial.est[,2]
-            b <- est[,2]*b/initial.est[,2]
-            initial.est <- est
-            est <- .onestep.locsc.matrix(x = x, initial.est = est, A1 = A1, A2 = A2, a = a, b = b)
-        }
-    }
-    A1 <- est[,2]^2*A1/initial.est[,2]^2
-    A2 <- est[,2]^2*A2/initial.est[,2]^2
-    a <- est[,2]*a/initial.est[,2]
-    b <- est[,2]*b/initial.est[,2]
-
-    return(est)
-}
-.finiteSampleCorrection <- function(r, n){
-    if(r >= 1.74) return(r)
-
-    eps <- r/sqrt(n)
-    ns <- c(3:50, seq(55, 100, by = 5), seq(110, 200, by = 10), 
-            seq(250, 500, by = 50))
-    epss <- c(seq(0.001, 0.01, by = 0.001), seq(0.02, to = 0.5, by = 0.01))
-    if(n %in% ns){
-        ind <- ns == n
-    }else{
-        ind <- which.min(abs(ns-n))
-    }
-    return(max(r, approx(x = epss, y = .finiteSampleRadius.locsc[,ind], xout = eps, rule = 2)$y))
-}
