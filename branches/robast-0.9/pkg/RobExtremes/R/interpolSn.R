@@ -61,6 +61,7 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
                       upp=1.01, accuracy = 10000, GridFileName="SnGrid.Rdata",
                       withSmooth = TRUE, withPrint = FALSE, withCall = FALSE){
    call <- match.call()
+   xiGrid <- unique(sort(xiGrid))
    itSn <- 0
    getSn <- function(xi){
                itSn <<- itSn + 1

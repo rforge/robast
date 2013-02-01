@@ -40,6 +40,7 @@
                       withSmooth = TRUE, withPrint = FALSE, withCall = FALSE){
    print(match.call())
    call <- match.call()
+   xiGrid <- unique(sort(xiGrid))
    itLM <- 0
    getLM <- function(xi){
                itLM <<- itLM + 1
@@ -83,6 +84,9 @@
    iNA <- apply(LMGrid,1, function(u) any(is.na(u)))
    LMGrid <- LMGrid[!iNA,,drop=FALSE]
    xiGrid <- xiGrid[!iNA]
+   oG <- order(xiGrid)
+   xiGrid <- xiGrid[oG]
+   LMGrid <- LMGrid[oG,,drop=FALSE]
    if(withSmooth)
       LMGrid2 <- apply(LMGrid,2,function(u) smooth.spline(xiGrid,u)$y)
 

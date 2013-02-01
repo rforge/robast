@@ -25,6 +25,7 @@ QuantileBCCEstimator <- function(x, p1=1/3, p2=2/3,
                         trafo = NULL, fixed = NULL,  na.rm = TRUE,
                         ...){
     es.call <- match.call()
+    force(p1); force(p2)
     if(length(p1)>1 || any(!is.finite(p1)) || p1<=0 || p1>=1)
        stop("'p1' has to be in [0,1] and of length 1.")
     if(length(p2)>1 || any(!is.finite(p2)) || p2<=0 || p2>=1 || abs(p1-p2)< 1e-8)
