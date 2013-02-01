@@ -3,7 +3,10 @@
 \alias{getStartIC-methods}
 \alias{getStartIC}
 \alias{getStartIC,ANY,ANY-method}
-\alias{getStartIC,L2ParamFamily,asRisk-method}
+\alias{getStartIC,L2ParamFamily,asGRisk-method}
+\alias{getStartIC,L2ParamFamily,asBias-method}
+\alias{getStartIC,L2ParamFamily,asCov-method}
+\alias{getStartIC,L2ParamFamily,trAsCov-method}
 \alias{getStartIC,L2ScaleShapeUnion,interpolRisk-method}
 
 \title{Methods for Function getStartIC in Package `ROptEst' }

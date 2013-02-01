@@ -1,7 +1,7 @@
 setMethod("getStartIC",signature(model = "ANY", risk = "ANY"),
            function(model, risk, ...) stop("not yet implemented"))
 
-setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asRisk"),
+setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
            function(model, risk, ..., ..debug=FALSE){
     mc <- match.call(expand.dots=FALSE, call = sys.call(sys.parent(1)))
     dots <- as.list(mc$"...")
@@ -19,7 +19,7 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asRisk"),
     }else neighbor <- ContNeighborhood()
 
     sm.rmx <- selectMethod("radiusMinimaxIC", signature(
-                 class(model),class(neighbor),class(risk)))
+               class(model),class(neighbor),class(risk)))
     dots.rmx <- .fix.in.defaults(dots, sm.rmx)
     dots.rmx$L2Fam <- NULL
     dots.rmx$neighbor <- NULL
@@ -31,7 +31,8 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asRisk"),
     dots.optic <- .fix.in.defaults(dots, sm.optic)
     dots.optic$model <- NULL
     dots.optic$risk <- NULL
-    if(is.null(eps$e)){
+
+    if(is.null(eps[["e"]])){
         dots.rmx$loRad <- eps$sqn * eps$lower
         dots.rmx$upRad <- eps$sqn * eps$upper
         arg.rmx <- c(list(L2Fam = model, neighbor = neighbor,
@@ -59,6 +60,34 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asRisk"),
   return(ICstart)
   })
 
+setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asCov"),
+           function(model, risk, ..., ..debug=FALSE){
+    return(optIC(model, risk))
+  })
+setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "trAsCov"),
+     getMethod("getStartIC", signature(model = "L2ParamFamily", risk = "asCov"))
+           )
+
+setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asBias"),
+           function(model, risk, ..., ..debug=FALSE){
+    mc <- match.call(expand.dots=FALSE, call = sys.call(sys.parent(1)))
+    dots <- as.list(mc$"...")
+    if("fsCor" %in% names(dots)){
+        fsCor <- eval(dots[["fsCor"]])
+        dots$fsCor <- NULL
+    }else fsCor <- 1
+    if("eps" %in% names(dots)){
+       eps <- dots[["eps"]]
+       dots$eps <- NULL
+    }else eps <- NULL
+    if("neighbor" %in% names(dots)){
+       neighbor <- eval(dots[["neighbor"]])
+       dots$neighbor <- NULL
+    }else neighbor <- ContNeighborhood()
+
+    infMod <- InfRobModel(center = model, neighbor = neighbor)
+    return(optIC(infMod, risk))
+           })
 
 
 setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRisk"),
@@ -74,9 +103,13 @@ setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRi
     sng <- try(getFromNamespace(.versionSuff(gridn), ns = "RobExtremes"),
                                  silent=TRUE)
     if(!is(sng,"try-error")) nsng <- names(sng)
+    #print(.versionSuff(gridn))
     if(length(nsng)){
        if(nam %in% nsng){
           interpolfct <- sng[[nam]]$fct
+          #print(xi)
+          #print(beta)
+          #print(head(sng[[nam]]$grid))
           #print(xi)
           #print(beta)
           .modifyIC <- function(L2Fam, IC){

@@ -83,7 +83,6 @@ robest <- function(x, L2Fam,  fsCor = 1,
     nbCtrl    <- .fix.in.defaults(nbCtrl, gennbCtrl)
     startCtrl <- .fix.in.defaults(startCtrl, genstartCtrl)
     kStepCtrl <- .fix.in.defaults(kStepCtrl, genkStepCtrl)
-        
     es.list <- as.list(es.call0[-1])
     es.list <- c(es.list,nbCtrl)
     es.list$nbCtrl <- NULL
@@ -148,10 +147,10 @@ robest <- function(x, L2Fam,  fsCor = 1,
     }else{
     sy.start <- system.time({
       sctrl.init <- eval(startCtrl$initial.est)
-      if(!is.null(startCtrl$initial.est.ArgList)){
+      if(is.null(startCtrl$initial.est.ArgList)){
        initial.est <-  kStepEstimator.start(start = sctrl.init, x = x,
                                         nrvalues = nrvalues, na.rm = na.rm,
-                                        L2Fam = L2Fam)
+                                        L2Fam = L2Fam, startList = NULL)
       }else{
        initial.est <-  kStepEstimator.start(start = sctrl.init, x = x,
                                         nrvalues = nrvalues, na.rm = na.rm,
@@ -172,6 +171,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
 
     if(!is(risk,"interpolRisk"))
        es.list0$eps <- do.call(.check.eps, args=c(nbCtrl,list("x"=x)))
+   
     es.list0$risk <- NULL
     es.list0$L2Fam <- NULL
     neighbor <- eval(es.list0$neighbor)
