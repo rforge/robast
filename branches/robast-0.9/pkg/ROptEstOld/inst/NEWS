@@ -8,6 +8,14 @@
  information)
 
 #######################################
+version 0.9
+#######################################
+EVD functionality (including Gumbel distribution) has
+moved from distrEx to new pkg RobExtremes; to avoid failure
+of ROptEstOld, this functionality has been copied to ROptEstOld
+as well.
+
+#######################################
 version 0.8
 #######################################
 

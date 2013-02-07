@@ -122,18 +122,10 @@ kurtosis(x, ...)
     else the (conditional) expection of \code{fun} is computed. }
   \item{cond}{ if not missing the conditional expectation
     given \code{cond} is computed. }
-  \item{Nsim}{ number of MC simulations used to determine the expectation. }
-  \item{rel.tol}{relative tolerance for \code{distrExIntegrate}.}
   \item{low}{lower bound of integration range.}
   \item{upp}{upper bound of integration range.}
-  \item{lowerTruncQuantile}{lower quantile for quantile based integration range.}
-  \item{upperTruncQuantile}{upper quantile for quantile based integration range.}
-  \item{IQR.fac}{factor for scale based integration range (i.e.;
-  median of the distribution \eqn{\pm}{+-}\code{IQR.fac}\eqn{\times}{*}IQR).}
+  \item{x}{ object of class \code{"UnivariateDistribution"}}
   \item{\dots}{ additional arguments to \code{fun} }
-  \item{useApply}{ logical: should \code{sapply}, respectively \code{apply}
-    be used to evaluate \code{fun}. }
-  \item{withCond}{ logical: is \code{cond} in the argument list of \code{fun}. }
 }
 
 
