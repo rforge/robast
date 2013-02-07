@@ -189,6 +189,7 @@ R1[2]
 Map(R1[3])
 Map(R1[c(1,2,4)])
 Map(R1[2:4])
+set.seed(123)
 evalRandVar(R1, rnorm(1))
 x <- as.matrix(rnorm(10))
 res.R1 <- evalRandVar(R1, x)
