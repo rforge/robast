@@ -1,3 +1,4 @@
+import("methods")
 import("distr")
 import("distrEx")
 import("RandVar")
@@ -134,3 +135,10 @@ export("InfluenceCurve",
        "IC", 
        "ContIC", 
        "TotalVarIC")
+exportClasses("GumbelParameter", "Gumbel")
+exportMethods("initialize", "loc", "loc<-")
+exportMethods("scale", "scale<-", "+", "*",
+              "E", "var", "skewness", "kurtosis")
+export("EULERMASCHERONICONSTANT","APERYCONSTANT")
+export("Gumbel")
+export("loc", "loc<-")	   

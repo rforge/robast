@@ -230,3 +230,10 @@ if(!isGeneric("locMEstimator")){
 if(!isGeneric("infoPlot")){
     setGeneric("infoPlot", function(object) standardGeneric("infoPlot"))
 }
+if(!isGeneric("loc")){
+   setGeneric("loc", function(object) standardGeneric("loc"))
+}
+
+if(!isGeneric("loc<-")){
+   setGeneric("loc<-", function(object, value) standardGeneric("loc<-"))
+}
