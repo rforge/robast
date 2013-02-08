@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-01-26 r61749) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-02-06 r61845) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -187,10 +187,10 @@ The following object is masked from ‘package:graphics’:
     clip
 
 > 
-> assign(".oldSearch", search(), pos = 'CheckExEnv')
-> assign(".ExTimings", "ROptEst-Ex.timings", pos = 'CheckExEnv')
-> cat("name\tuser\tsystem\telapsed\n", file=get(".ExTimings", pos = 'CheckExEnv'))
-> assign(".format_ptime",
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".ExTimings", "ROptEst-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
 + function(x) {
 +   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
 +   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
@@ -204,7 +204,7 @@ The following object is masked from ‘package:graphics’:
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ROptEst-package
 > ### Title: Optimally robust estimation
 > ### Aliases: ROptEst-package ROptEst
@@ -310,15 +310,15 @@ roptest(x = x, L2Fam = PoisFamily(), eps.upper = 0.1, steps = 3)
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("0ROptEst-package", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("0ROptEst-package", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("asAnscombe-class")
 > ### * asAnscombe-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: asAnscombe-class
 > ### Title: Asymptotic Anscombe risk
 > ### Aliases: asAnscombe-class eff eff,asAnscombe-method
@@ -335,15 +335,15 @@ ARE in the ideal model:	 0.95
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("asAnscombe-class", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("asAnscombe-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("asAnscombe")
 > ### * asAnscombe
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: asAnscombe
 > ### Title: Generating function for asAnscombe-class
 > ### Aliases: asAnscombe
@@ -367,15 +367,15 @@ function (eff = 0.95, biastype = symmetricBias(), normtype = NormType())
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("asAnscombe", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("asAnscombe", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("asL1-class")
 > ### * asL1-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: asL1-class
 > ### Title: Asymptotic mean absolute error
 > ### Aliases: asL1-class
@@ -390,15 +390,15 @@ risk type:	 asymptotic mean square error
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("asL1-class", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("asL1-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("asL1")
 > ### * asL1
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: asL1
 > ### Title: Generating function for asMSE-class
 > ### Aliases: asL1
@@ -421,15 +421,15 @@ function (biastype = symmetricBias(), normtype = NormType())
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("asL1", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("asL1", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("asL4-class")
 > ### * asL4-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: asL4-class
 > ### Title: Asymptotic mean power 4 error
 > ### Aliases: asL4-class
@@ -444,15 +444,15 @@ risk type:	 asymptotic mean square error
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("asL4-class", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("asL4-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("asL4")
 > ### * asL4
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: asL4
 > ### Title: Generating function for asL4-class
 > ### Aliases: asL4
@@ -475,15 +475,15 @@ function (biastype = symmetricBias(), normtype = NormType())
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("asL4", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("asL4", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cniperCont")
 > ### * cniperCont
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cniperCont
 > ### Title: Functions for Computation and Plot of Cniper Contamination and
 > ###   Cniper Points.
@@ -519,15 +519,15 @@ function (biastype = symmetricBias(), normtype = NormType())
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("cniperCont", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cniperCont", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("comparePlot")
 > ### * comparePlot
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: comparePlot-methods
 > ### Title: Compare - Plots
 > ### Aliases: comparePlot comparePlot-methods comparePlot,IC,IC-method
@@ -550,15 +550,15 @@ function (biastype = symmetricBias(), normtype = NormType())
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("comparePlot", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("comparePlot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("getL1normL2deriv")
 > ### * getL1normL2deriv
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: getL1normL2deriv
 > ### Title: Calculation of L1 norm of L2derivative
 > ### Aliases: getL1normL2deriv getL1normL2deriv-methods
@@ -573,15 +573,15 @@ function (biastype = symmetricBias(), normtype = NormType())
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("getL1normL2deriv", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getL1normL2deriv", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("getL2normL2deriv")
 > ### * getL2normL2deriv
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: getL2normL2deriv
 > ### Title: Calculation of L2 norm of L2derivative
 > ### Aliases: getL2normL2deriv
@@ -594,15 +594,15 @@ function (biastype = symmetricBias(), normtype = NormType())
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("getL2normL2deriv", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getL2normL2deriv", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("getMaxIneff")
 > ### * getMaxIneff
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: getMaxIneff
 > ### Title: getMaxIneff - computation of the maximal inefficiency of an IC
 > ### Aliases: getMaxIneff
@@ -664,15 +664,15 @@ This is larger than the specified 'tol' => the result may be wrong
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("getMaxIneff", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getMaxIneff", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("getRadius")
 > ### * getRadius
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: getRadius
 > ### Title: Computation of the Optimal Radius for Given Clipping Bound
 > ### Aliases: getRadius
@@ -724,15 +724,15 @@ scale 1.26182
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("getRadius", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getRadius", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("getReq")
 > ### * getReq
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: getReq
 > ### Title: getReq - computation of the radius interval where IC1 is better
 > ###   than IC2.
@@ -812,15 +812,15 @@ This is larger than the specified 'tol' => the result may be wrong
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("getReq", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getReq", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("getRiskFctBV-methods")
 > ### * getRiskFctBV-methods
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: getRiskFctBV-methods
 > ### Title: Methods for Function getRiskFctBV in Package 'ROptEst'
 > ### Aliases: getRiskFctBV getRiskFctBV-methods getRiskFctBV,asL1,ANY-method
@@ -833,20 +833,20 @@ This is larger than the specified 'tol' => the result may be wrong
 > getRiskFctBV(myrisk)
 function (bias, var) 
 bias^2 + var
-<environment: 0xb596930>
+<environment: 0xb999678>
 > 
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("getRiskFctBV-methods", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getRiskFctBV-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("getRiskIC")
 > ### * getRiskIC
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: getRiskIC
 > ### Title: Generic function for the computation of a risk for an IC
 > ### Aliases: getRiskIC getRiskIC-methods
@@ -875,15 +875,15 @@ $asCov$value
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("getRiskIC", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getRiskIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("inputGenerator")
 > ### * inputGenerator
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: inputGenerators
 > ### Title: Input generating functions for function 'robest'
 > ### Aliases: inputGenerators gennbCtrl genstartCtrl genkStepCtrl
@@ -917,8 +917,8 @@ $withLogScale
 $distance
 function (e1, e2, ...) 
 standardGeneric("CvMDist")
-<bytecode: 0x33241f8>
-<environment: 0x335e038>
+<bytecode: 0x48f6430>
+<environment: 0x4425678>
 attr(,"generic")
 [1] "CvMDist"
 attr(,"generic")attr(,"package")
@@ -961,15 +961,15 @@ $eps.upper
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("inputGenerator", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("inputGenerator", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("leastFavorableRadius")
 > ### * leastFavorableRadius
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: leastFavorableRadius
 > ### Title: Generic Function for the Computation of Least Favorable Radii
 > ### Aliases: leastFavorableRadius leastFavorableRadius-methods
@@ -1007,15 +1007,15 @@ $`asMSE-inefficiency`
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("leastFavorableRadius", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("leastFavorableRadius", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("lowerCaseRadius")
 > ### * lowerCaseRadius
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: lowerCaseRadius
 > ### Title: Computation of the lower case radius
 > ### Aliases: lowerCaseRadius lowerCaseRadius-methods
@@ -1038,15 +1038,15 @@ lower case radius
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("lowerCaseRadius", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("lowerCaseRadius", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("optIC")
 > ### * optIC
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: optIC
 > ### Title: Generic function for the computation of optimally robust ICs
 > ### Aliases: optIC optIC-methods optIC,InfRobModel,asRisk-method
@@ -1073,15 +1073,15 @@ maximum deviation
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("optIC", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("optIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("optRisk")
 > ### * optRisk
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: optRisk
 > ### Title: Generic function for the computation of the minimal risk
 > ### Aliases: optRisk optRisk-methods optRisk,L2ParamFamily,asCov-method
@@ -1101,15 +1101,15 @@ sd      0 0.5
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("optRisk", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("optRisk", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("plot-methods")
 > ### * plot-methods
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: plot-methods
 > ### Title: Methods for Function plot in Package 'ROptEst'
 > ### Aliases: plot plot-methods plot,IC,missing-method
@@ -1129,15 +1129,15 @@ sd      0 0.5
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("plot-methods", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plot-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("radiusMinimaxIC")
 > ### * radiusMinimaxIC
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: radiusMinimaxIC
 > ### Title: Generic function for the computation of the radius minimax IC
 > ### Aliases: radiusMinimaxIC radiusMinimaxIC-methods
@@ -1160,15 +1160,15 @@ maximum deviation
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("radiusMinimaxIC", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("radiusMinimaxIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("robest")
 > ### * robest
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: robest
 > ### Title: Optimally robust estimation
 > ### Aliases: robest
@@ -1308,60 +1308,18 @@ MLEstimator(x = chem, ParamFamily = NF)
 > ##D               exp.cex2.lbl = .12,exp.fadcol.lbl = .45,
 > ##D               nosym.pCI = TRUE, adj.lbl=c(1.7,.2),
 > ##D               exact.pCI = FALSE, log ="xy")
-> ## End(Not run)
->              
-> ## finite-sample correction
-> if(require(RobLox)){
-+     n <- length(chem)
-+     r <- 0.05*sqrt(n)
-+     r.fi <- finiteSampleCorrection(n = n, r = r)
-+     fsCor0 <- r.fi/r
-+     nb1 <- gennbCtrl(eps = 0.05)
-+     robest <- robest(chem, NF, nbCtrl = nb1, fsCor = fsCor0, steps = 3)
-+     estimate(robest)
-+ }
-Loading required package: RobLox
-Loading required package: lattice
-Loading required package: RColorBrewer
-Loading required package: Biobase
-Loading required package: BiocGenerics
-Loading required package: parallel
-
-Attaching package: ‘BiocGenerics’
-
-The following objects are masked from ‘package:parallel’:
-
-    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-    clusterExport, clusterMap, parApply, parCapply, parLapply,
-    parLapplyLB, parRapply, parSapply, parSapplyLB
-
-The following object is masked from ‘package:RandVar’:
-
-    Map
-
-The following object is masked from ‘package:stats’:
-
-    xtabs
-
-The following objects are masked from ‘package:base’:
-
-    Filter, Find, Map, Position, Reduce, anyDuplicated, as.data.frame,
-    cbind, colnames, duplicated, eval, get, intersect, lapply, mapply,
-    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int, rank,
-    rbind, rep.int, rownames, sapply, setdiff, sort, table, tapply,
-    union, unique, unlist
-
-Welcome to Bioconductor
-
-    Vignettes contain introductory material; view with
-    'browseVignettes()'. To cite Bioconductor, see
-    'citation("Biobase")', and for packages 'citation("pkgname")'.
-
-     mean        sd 
-3.1521874 0.6656981 
-> 
-> ## Don't run to reduce check time on CRAN
-> ## Not run: 
+> ##D              
+> ##D ## finite-sample correction
+> ##D if(require(RobLox)){
+> ##D     n <- length(chem)
+> ##D     r <- 0.05*sqrt(n)
+> ##D     r.fi <- finiteSampleCorrection(n = n, r = r)
+> ##D     fsCor0 <- r.fi/r
+> ##D     nb1 <- gennbCtrl(eps = 0.05)
+> ##D     robest <- robest(chem, NF, nbCtrl = nb1, fsCor = fsCor0, steps = 3)
+> ##D     estimate(robest)
+> ##D }
+> ##D 
 > ##D ## compute optimally robust estimator (unknown contamination)
 > ##D ## takes some time -> use package RobLox!
 > ##D nb2 <- gennbCtrl(eps.lower = 0.05, eps.upper = 0.1)
@@ -1376,19 +1334,15 @@ Welcome to Bioconductor
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("robest", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("robest", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
-
-detaching ‘package:RobLox’, ‘package:Biobase’, ‘package:BiocGenerics’,
-  ‘package:parallel’, ‘package:RColorBrewer’, ‘package:lattice’
-
 > nameEx("roptest")
 > ### * roptest
 > 
 > flush(stderr()); flush(stdout())
 > 
-> assign(".ptime", proc.time(), pos = "CheckExEnv")
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: roptest
 > ### Title: Optimally robust estimation
 > ### Aliases: roptest roptest.old
@@ -1512,60 +1466,18 @@ MLEstimator(x = chem, ParamFamily = NormLocationScaleFamily())
 > ##D               exp.cex2.lbl = .12,exp.fadcol.lbl = .45,
 > ##D               nosym.pCI = TRUE, adj.lbl=c(1.7,.2),
 > ##D               exact.pCI = FALSE, log ="xy")
-> ## End(Not run)
-> 
-> ## finite-sample correction
-> if(require(RobLox)){
-+     n <- length(chem)
-+     r <- 0.05*sqrt(n)
-+     r.fi <- finiteSampleCorrection(n = n, r = r)
-+     fsCor <- r.fi/r
-+     robest <- roptest(chem, NormLocationScaleFamily(), eps = 0.05, 
-+                       fsCor = fsCor, steps = 3)
-+     estimate(robest)
-+ }
-Loading required package: RobLox
-Loading required package: lattice
-Loading required package: RColorBrewer
-Loading required package: Biobase
-Loading required package: BiocGenerics
-Loading required package: parallel
-
-Attaching package: ‘BiocGenerics’
-
-The following objects are masked from ‘package:parallel’:
-
-    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-    clusterExport, clusterMap, parApply, parCapply, parLapply,
-    parLapplyLB, parRapply, parSapply, parSapplyLB
-
-The following object is masked from ‘package:RandVar’:
-
-    Map
-
-The following object is masked from ‘package:stats’:
-
-    xtabs
-
-The following objects are masked from ‘package:base’:
-
-    Filter, Find, Map, Position, Reduce, anyDuplicated, as.data.frame,
-    cbind, colnames, duplicated, eval, get, intersect, lapply, mapply,
-    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int, rank,
-    rbind, rep.int, rownames, sapply, setdiff, sort, table, tapply,
-    union, unique, unlist
-
-Welcome to Bioconductor
-
-    Vignettes contain introductory material; view with
-    'browseVignettes()'. To cite Bioconductor, see
-    'citation("Biobase")', and for packages 'citation("pkgname")'.
-
-     mean        sd 
-3.1521874 0.6656981 
-> 
-> ## Don't run to reduce check time on CRAN
-> ## Not run: 
+> ##D 
+> ##D ## finite-sample correction
+> ##D if(require(RobLox)){
+> ##D     n <- length(chem)
+> ##D     r <- 0.05*sqrt(n)
+> ##D     r.fi <- finiteSampleCorrection(n = n, r = r)
+> ##D     fsCor <- r.fi/r
+> ##D     robest <- roptest(chem, NormLocationScaleFamily(), eps = 0.05, 
+> ##D                       fsCor = fsCor, steps = 3)
+> ##D     estimate(robest)
+> ##D }
+> ##D 
 > ##D ## compute optimally robust estimator (unknown contamination)
 > ##D ## takes some time -> use package RobLox!
 > ##D robest1 <- roptest(chem, NormLocationScaleFamily(), eps.lower = 0.05, 
@@ -1580,12 +1492,12 @@ Welcome to Bioconductor
 > 
 > 
 > 
-> assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> cat("roptest", get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("roptest", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > ### * <FOOTER>
 > ###
-> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  29.861 0.136 30.106 0 0 
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  21.369 0.148 21.602 0 0 
 > grDevices::dev.off()
 null device 
           1 

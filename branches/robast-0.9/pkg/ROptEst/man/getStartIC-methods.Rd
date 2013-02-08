@@ -3,6 +3,7 @@
 \alias{getStartIC-methods}
 \alias{getStartIC}
 \alias{getStartIC,ANY,ANY-method}
+\alias{getStartIC,L2ParamFamily,asRisk-method}
 \alias{getStartIC,L2ParamFamily,asGRisk-method}
 \alias{getStartIC,L2ParamFamily,asBias-method}
 \alias{getStartIC,L2ParamFamily,asCov-method}

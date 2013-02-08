@@ -180,7 +180,6 @@ tmp <- qqplot(chem, robest, cex.pch=1.5, exp.cex2.pch = -.25,
               exp.cex2.lbl = .12,exp.fadcol.lbl = .45,
               nosym.pCI = TRUE, adj.lbl=c(1.7,.2),
               exact.pCI = FALSE, log ="xy")
-}
              
 ## finite-sample correction
 if(require(RobLox)){
@@ -193,8 +192,6 @@ if(require(RobLox)){
     estimate(robest)
 }
 
-## Don't run to reduce check time on CRAN
-\dontrun{
 ## compute optimally robust estimator (unknown contamination)
 ## takes some time -> use package RobLox!
 nb2 <- gennbCtrl(eps.lower = 0.05, eps.upper = 0.1)
