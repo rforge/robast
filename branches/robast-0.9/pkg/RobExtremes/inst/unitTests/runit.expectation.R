@@ -10,9 +10,9 @@
 # RUnit package and are called once for every test case identified.
 
 # we construct different objects for testing the expectation operator
-.setUp{
+.setUp <- function() {
   # expectation of Pareto distributed random variable
-  expectation.Pareto = function(shape0=1,Min0=1){
+  expectation.Pareto <<- function(shape0=1,Min0=1){
     X = Pareto(shape=shape0,Min=Min0)
     return(E(X))  
   }
