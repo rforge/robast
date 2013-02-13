@@ -44,14 +44,15 @@ respective \file{sysdata.rda} file. }
        xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
        sysRdafolder, PFam = GParetoFamily(shape=1,scale=2))
 
-.recomputeInterpolators(sysdataFiles, sysRdaFolder = ".", others = FALSE,
+.recomputeInterpolators(sysdataFiles, sysRdaFolder = ".",
+                      excludeGrids = NULL, excludeNams = NULL, others = FALSE,
                       onlyothers = FALSE, translate = TRUE, overwrite = TRUE,
                       integrateto = FALSE, onlyCurrent = FALSE, withPrint =TRUE,
                       withSmooth = TRUE, debug = FALSE)
 
 .renameGridName(gridnam, namOld, namNew, rdafileOld, rdafileNew)
 .copyGrid(grid, gridnam, namOld, namNew, rdafileOld, rdafileNew)
-.mergeF(file,envir)
+.mergeF(file,envir, excludeGrids = NULL, excludeNams = NULL)
 }
 
 \arguments{
@@ -87,6 +88,10 @@ respective \file{sysdata.rda} file. }
 
   \item{sysdataFiles}{character; filenames of \file{sysdata.rda} files from
                       where to extract the interpolation grids. }
+  \item{excludeGrids}{character (or \code{NULL}); grids to be excluded
+          from recomputation}
+  \item{excludeNams}{character (or \code{NULL}); families to be excluded
+          from recomputation}
   \item{overwrite}{logical; if \code{TRUE} foreign grids are translated
   to current R version. }
   \item{overwrite}{logical; if \code{TRUE} existing interpolation functions

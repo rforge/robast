@@ -11,7 +11,8 @@ exportClasses("GumbelParameter",
 			  "GEVParameter",
 			  "LDEstimate")
 exportClasses("Gumbel", "Pareto", "GPareto", "GEV")
-exportClasses("GParetoFamily", "GumbelLocationFamily", "WeibullFamily")
+exportClasses("GParetoFamily", "GumbelLocationFamily", "WeibullFamily",
+              "ParetoFamily", "GEVFamily")
 exportClasses("DistributionsIntegratingByQuantiles")
 exportMethods("initialize", "show") 
 exportMethods("loc", "loc<-", "kMAD", "Sn", "Qn")
@@ -26,7 +27,8 @@ exportMethods("modifyModel")
 
 export("EULERMASCHERONICONSTANT","APERYCONSTANT")
 export("Gumbel", "Pareto", "GPareto", "GEV")
-export("GParetoFamily", "GumbelLocationFamily", "WeibullFamily", "GEVFamily")
+export("GParetoFamily", "GumbelLocationFamily", "WeibullFamily", "GEVFamily",
+       "ParetoFamily")
 export("LDEstimator", "medkMAD", "medSn", "medQn", "medkMADhybr")
 export("getShapeGrid", "getSnGrid", 
        "PickandsEstimator","QuantileBCCEstimator")

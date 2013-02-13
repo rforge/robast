@@ -135,7 +135,9 @@ setMethod("validParameter",signature(object="GEVFamily"),
 GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                           of.interest = c("scale", "shape"),
                           p = NULL, N = NULL, trafo = NULL,
-                          start0Est = NULL, withPos = TRUE){
+                          start0Est = NULL, withPos = TRUE,
+                          withCentL2 = FALSE,
+                          withL2derivDistr  = FALSE){
     theta <- c(loc, scale, shape)
 
     of.interest <- .pretreat.of.interest(of.interest,trafo)
@@ -290,10 +292,13 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
          return(y)
         }
         ## additional centering of scores to increase numerical precision!
-        suppressWarnings({
-        z1 <- E(distribution, fun=Lambda1)
-        z2 <- E(distribution, fun=Lambda2)
-        })
+        if(withCentL2){
+           dist0 <- GEV(scale = sc, shape = k, loc = tr)
+           suppressWarnings({
+             z1 <- E(dist0, fun=Lambda1)
+             z2 <- E(dist0, fun=Lambda2)
+           })
+        }else{z1 <- z2 <- 0}
         return(list(function(x){ Lambda1(x)-z1 },function(x){ Lambda2(x)-z2 }))
     }
 
@@ -342,11 +347,17 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
     L2deriv <- EuclRandVarList(RealRandVariable(L2deriv.fct(param),
                                Domain = Reals()))
+    L2derivDistr <- NULL
+    if(withL2derivDistr){
+       suppressWarnings(L2derivDistr <-
+          imageDistr(RandVar = L2deriv, distr = distribution))
+    }
 
     L2Fam@fam.call <- substitute(GEVFamily(loc = loc0, scale = scale0,
                                  shape = shape0, of.interest = of.interest0,
                                  p = p0, N = N0, trafo = trafo0,
-                                 withPos = withPos0),
+                                 withPos = withPos0, withCentL2 = FALSE,
+                                 withL2derivDistr  = FALSE),
                          list(loc0 = loc, scale0 = scale, shape0 = shape,
                               of.interest0 = of.interest, p0 = p, N0 = N,
                               trafo0 = trafo, withPos0 = withPos))
@@ -358,12 +369,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                   }
 
     L2Fam@L2deriv <- L2deriv
-    wG <- getdistrOption("withgaps")
-    on.exit(distroptions(withgaps=wG))
-    distroptions(withgaps=FALSE)
-    suppressWarnings(
-    L2Fam@L2derivDistr <- imageDistr(RandVar = L2deriv, distr = distribution)
-    )
+    L2Fam@L2derivDistr <- L2derivDistr
     return(L2Fam)
 }
 

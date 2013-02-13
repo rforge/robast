@@ -81,8 +81,8 @@ setMethod("initialize", "Pareto",
                                       
                         q1 <- qpareto1(p0, shape = shapeSub,  min =  MinSub, 
                                     lower.tail = lower.tail, log.p = log.p) 
-                        q1[i0] <- if(lower.tail) -Inf else Inf
-                        q1[i1] <- if(!lower.tail) -Inf else Inf
+                        q1[i0] <- if(lower.tail) MinSub else Inf
+                        q1[i1] <- if(!lower.tail) MinSub else Inf
                         q1[in01] <- NaN
                         
                         return(q1)  

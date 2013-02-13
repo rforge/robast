@@ -239,6 +239,7 @@ setClassUnion("DistributionsIntegratingByQuantiles",
 
 
 ## models:
+setClass("ParetoFamily", contains="L2ParamFamily")
 setClass("GParetoFamily", contains="L2ScaleShapeUnion")
 setClass("GEVFamily", contains="L2ScaleShapeUnion")
 setClass("WeibullFamily", contains="L2ScaleShapeUnion")

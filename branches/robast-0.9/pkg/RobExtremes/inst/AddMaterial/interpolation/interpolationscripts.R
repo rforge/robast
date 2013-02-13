@@ -112,8 +112,8 @@ require(RobExtremes)
 .RMXE.xi <- RobExtremes:::.RMXE.xi
 .modify.xi.PFam.call <- RobExtremes:::.modify.xi.PFam.call
 .myFolder <- file.path(.basepath,"RobExtremes/R")
-.myFolder0 <- file.path(.basepath,"RobExtremesBuffer/tmp0")
-.myFolder1 <- file.path(.basepath,"RobExtremesBuffer/tmp1")
+.myFolder0 <- file.path(.basepath,"RobExtremesBuffer/rmp0")
+.myFolder1 <- file.path(.basepath,"RobExtremesBuffer/rmp1")
 .myFolder2 <- file.path(.basepath,"RobExtremesBuffer/tmp2")
 .myFolder3 <- file.path(.basepath,"RobExtremesBuffer/tmp3")
 chkExist <- function(fN) if(!file.exists(fN)) dir.create(fN, recursive = TRUE)
@@ -163,12 +163,12 @@ require(RobExtremes)
 .RMXE.xi <- RobExtremes:::.RMXE.xi
 .modify.xi.PFam.call <- RobExtremes:::.modify.xi.PFam.call
 ### -> change this according to where you checked out the svn repo:
-.basepath <- "C:/rtest/RobASt/branches/robast-0.9/pkg"
+#.basepath <- "C:/rtest/RobASt/branches/robast-0.9/pkg"
 ## <-
 .myFolder0 <- file.path(.basepath,"RobExtremesBuffer/tmp0")
-.myFolder1 <- file.path(.basepath,"RobExtremesBuffer/tmp1")
-.myFolder2 <- file.path(.basepath,"RobExtremesBuffer/tmp2")
-.myFolder3 <- file.path(.basepath,"RobExtremesBuffer/tmp3")
+.myFolder1 <- file.path(.basepath,"RobExtremesBuffer/tmp6")
+.myFolder2 <- file.path(.basepath,"RobExtremesBuffer/tmp7")
+.myFolder3 <- file.path(.basepath,"RobExtremesBuffer/tmp8")
 chkExist <- function(fN) if(!file.exists(fN)) dir.create(fN, recursive = TRUE)
 sapply(c(.myFolder0,.myFolder1,.myFolder2,.myFolder3), chkExist)
 PF <- GammaFamily()

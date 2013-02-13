@@ -8,7 +8,8 @@
 }
 \usage{
 GEVFamily(loc = 0, scale = 1, shape = 0.5, of.interest = c("scale", "shape"),
-              p = NULL, N = NULL, trafo = NULL, start0Est = NULL, withPos = TRUE)
+              p = NULL, N = NULL, trafo = NULL, start0Est = NULL, withPos = TRUE,
+              withCentL2 = FALSE, withL2derivDistr  = FALSE)
 }
 \arguments{
   \item{loc}{ real: known/fixed threshold/location parameter }
@@ -22,6 +23,11 @@ GEVFamily(loc = 0, scale = 1, shape = 0.5, of.interest = c("scale", "shape"),
   \item{trafo}{ matrix or NULL: transformation of the parameter }
   \item{start0Est}{ startEstimator --- if \code{NULL} \code{\link{PickandsEstimator}} is used }
   \item{withPos}{ logical of length 1: Is shape restricted to positive values? }
+  \item{withCentL2}{logical: shall L2 derivative be centered by substracting
+       the E()? Defaults to \code{FALSE}, but higher accuracy can be achieved
+       when set to \code{TRUE}.}
+  \item{withL2derivDistr}{logical: shall the distribution of the L2 derivative
+      be computed? Defaults to \code{FALSE} (to speeds up computations).}
 }
 \details{
   The slots of the corresponding L2 differentiable 

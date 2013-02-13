@@ -24,3 +24,7 @@ if(!isGeneric("Sn")){
 if(!isGeneric("dispersion")){
    setGeneric("dispersion", function(object, ...) standardGeneric("dispersion"))
 }
+
+if(!isGeneric(".loc")){
+   setGeneric(".loc", function(L2Fam, ...) standardGeneric(".loc"))
+}

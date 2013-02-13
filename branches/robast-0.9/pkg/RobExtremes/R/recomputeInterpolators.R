@@ -1,4 +1,5 @@
 .recomputeInterpolators <- function(sysdataFiles, sysRdaFolder = ".",
+                                   excludeGrids = NULL, excludeNams = NULL,
                                    others = FALSE, onlyothers = FALSE,
                                    translate = TRUE, overwrite = TRUE, integrateto = FALSE,
                                    onlyCurrent = FALSE, withPrint =TRUE,
@@ -8,7 +9,8 @@
   wprint <- function(...){ if (withPrint) print(...)}
 
   sam <- new.env()
-  for(File in sysdataFiles) .mergeF(File, envir = sam)
+  for(File in sysdataFiles) .mergeF(File, envir = sam,
+            excludeGrids = excludeGrids , excludeNams = excludeNams)
 
   keep <- if(getRversion()>="2.16") "N" else "O"
   todo <- if(getRversion()>="2.16") "O" else "N"
@@ -164,9 +166,10 @@
    save(list=what, file=rdafileNew, envir=nE)
 }
 
-.mergeF <- function(file,envir){
+.mergeF <- function(file,envir, excludeGrids = NULL, excludeNams = NULL){
   envir2 <- new.env()
   load(file,envir=envir2)
+  rm(list=excludeGrids, envir=envir2)
   what1 <- ls(all.names=TRUE,envir=envir)
   what2 <- ls(all.names=TRUE,envir=envir2)
   for(w2 in what2){
@@ -174,6 +177,7 @@
       if(w2 %in% what1){
          wG1 <- get(w2, envir=envir)
          for(Fam1 in names(wG1)){
+             if( Fam1 %in% excludeNams)   wG2[[Fam1]] <- NULL
              if( ! Fam1 %in% names(wG2))  wG2[[Fam1]] <- wG1[[Fam1]]
          }
       }

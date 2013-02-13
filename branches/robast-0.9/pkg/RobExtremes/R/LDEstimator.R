@@ -17,6 +17,18 @@
    }
    return(list1)
 }
+### in order to ensure that in case of GParetoFamily, GEVFamily,
+##  we fit the reference distribution with loc = 0, introduce
+##  function .loc
+
+setMethod(".loc", signature(L2Fam = "L2ParamFamily"),
+           function(L2Fam, ...) 0)
+
+setMethod(".loc", signature(L2Fam = "GParetoFamily"),
+           function(L2Fam,...) loc(L2Fam@distribution))
+setMethod(".loc", signature(L2Fam = "GEVFamily"),
+           function(L2Fam,...) loc(L2Fam@distribution))
+
 
 .LDMatch <- function(x.0, loc.est.0,disp.est.0,
                           loc.fctal.0, disp.fctal.0, ParamFamily.0,
@@ -25,7 +37,9 @@
                         q.lo.0 =0, q.up.0=Inf, log.q.0 =TRUE, ..., vdbg=FALSE
                         ){
     dots <- list(...)
-    loc.emp <- do.call(loc.est.0, args = .prepend(x.0,loc.est.ctrl.0, dots))
+
+    loc0 <- .loc(ParamFamily.0)
+    loc.emp <- do.call(loc.est.0, args = .prepend(x.0,loc.est.ctrl.0, dots))-loc0
     disp.emp <- do.call(disp.est.0, args = .prepend(x.0,disp.est.ctrl.0, dots))
     q.emp <- if(log.q.0) log(loc.emp)-log(disp.emp) else loc.emp/disp.emp
     q.f <- function(xi){
@@ -43,8 +57,8 @@
     th0 <- c(1,xi.0)
     names(th0) <- c("scale","shape")
     distr.new.0 <- ParamFamily.0@modifyParam(theta=th0)
-    m1xi <- do.call(loc.fctal.0, args = .prepend(distr.new.0,loc.fctal.ctrl.0, dots))
-    val <-   c(loc.emp/m1xi, xi.0, loc.emp, disp.emp)
+    l1xi <- do.call(loc.fctal.0, args = .prepend(distr.new.0,loc.fctal.ctrl.0, dots))
+    val <-   c(loc.emp/l1xi, xi.0, loc.emp+loc0, disp.emp)
     names(val) <- c("scale", "shape", "loc","disp")
     return(val)
 }
