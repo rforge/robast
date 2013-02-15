@@ -45,7 +45,7 @@ setMethod(".loc", signature(L2Fam = "GEVFamily"),
     q.f <- function(xi){
        th0 <- c(1,xi)
        names(th0) <- c("scale","shape")
-       distr.new <- ParamFamily.0@modifyParam(theta=th0)
+       distr.new <- ParamFamily.0@modifyParam(theta=th0)-loc0
        loc.th <- do.call(loc.fctal.0, args = .prepend(distr.new,loc.fctal.ctrl.0, dots))
        sc.th <- do.call(disp.fctal.0, args = .prepend(distr.new,disp.fctal.ctrl.0, dots))
        val <- if(log.q.0) log(loc.th)-log(sc.th) - q.emp else
@@ -56,7 +56,7 @@ setMethod(".loc", signature(L2Fam = "GEVFamily"),
     xi.0 <- uniroot(q.f,lower=q.lo.0,upper=q.up.0)$root
     th0 <- c(1,xi.0)
     names(th0) <- c("scale","shape")
-    distr.new.0 <- ParamFamily.0@modifyParam(theta=th0)
+    distr.new.0 <- ParamFamily.0@modifyParam(theta=th0)-loc0
     l1xi <- do.call(loc.fctal.0, args = .prepend(distr.new.0,loc.fctal.ctrl.0, dots))
     val <-   c(loc.emp/l1xi, xi.0, loc.emp+loc0, disp.emp)
     names(val) <- c("scale", "shape", "loc","disp")
@@ -70,7 +70,7 @@ LDEstimator <- function(x, loc.est, disp.est,
                         q.lo =1e-3, q.up=15, log.q =TRUE,
                         name, Infos, asvar = NULL, nuis.idx = NULL,
                         trafo = NULL, fixed = NULL, asvar.fct  = NULL, na.rm = TRUE,
-                        ..., vdbg = FALSE){
+                        ..., .withEvalAsVar = FALSE, vdbg = FALSE){
     param0 <- main(param(ParamFamily))
     if(!all(c("shape","scale") %in% names(param0)))
         stop("LDEstimators expect shape-scale models.")
@@ -116,6 +116,7 @@ LDEstimator <- function(x, loc.est, disp.est,
                       trafo = trafo.0, fixed = fixed.0,
                       asvar.fct = asvar.fct0,
                       na.rm = na.rm.0, ...,
+                      .withEvalAsVar = .withEvalAsVar,
                       ParamFamily = ParamFamily)
 
     estimate@estimate.call <- es.call
@@ -146,7 +147,7 @@ LDEstimator <- function(x, loc.est, disp.est,
 
 medkMAD <- function(x, ParamFamily, k=1, q.lo =1e-3, q.up=15, nuis.idx = NULL,
                         trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
-                        ..., vdbg = FALSE){
+                        ..., .withEvalAsVar = FALSE, vdbg = FALSE){
       es.call <- match.call()
       if(missing(k)) k <- 1
 
@@ -163,7 +164,8 @@ medkMAD <- function(x, ParamFamily, k=1, q.lo =1e-3, q.up=15, nuis.idx = NULL,
                      q.lo =q.lo, q.up=q.up, log.q=TRUE,
                      name = "medkMAD", Infos="medkMAD",
                      asvar = asvar, nuis.idx = nuis.idx, trafo = trafo, fixed = fixed,
-                     asvar.fct = asvar.fct, na.rm = na.rm, ..., vdbg = vdbg)
+                     asvar.fct = asvar.fct, na.rm = na.rm, ...,
+                      .withEvalAsVar = .withEvalAsVar, vdbg = vdbg)
       es@estimate.call <- es.call
      
       return(es)
@@ -171,7 +173,7 @@ medkMAD <- function(x, ParamFamily, k=1, q.lo =1e-3, q.up=15, nuis.idx = NULL,
                         
 medQn <- function(x,  ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
                         trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
-                        ...){
+                        ..., .withEvalAsVar = FALSE){
     es.call <- match.call()
     es <- LDEstimator(x, loc.est = median, disp.est = Qn,
                      loc.fctal = median, disp.fctal = Qn,
@@ -182,14 +184,15 @@ medQn <- function(x,  ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
                      q.lo =q.lo, q.up=q.up, log.q=TRUE,
                      name = "medQn", Infos="medQn",
                      asvar = NULL, nuis.idx = nuis.idx, trafo = trafo, fixed = fixed,
-                     asvar.fct = asvar.fct, na.rm = na.rm, ...)
+                     asvar.fct = asvar.fct, na.rm = na.rm, ...,
+                      .withEvalAsVar = .withEvalAsVar)
       es@estimate.call <- es.call
       return(es)
                      }
 
 medSn <- function(x, ParamFamily, q.lo =1e-3, q.up=10, nuis.idx  = NULL,
                         trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
-                        accuracy = 100, ...){
+                        accuracy = 100, ..., .withEvalAsVar = FALSE){
       es.call <- match.call()
       es <- LDEstimator(x, loc.est = median, disp.est = Sn,
                      loc.fctal = median, disp.fctal = Sn,
@@ -200,7 +203,8 @@ medSn <- function(x, ParamFamily, q.lo =1e-3, q.up=10, nuis.idx  = NULL,
                      q.lo =q.lo, q.up=q.up, log.q=TRUE,
                      name = "medSn", Infos="medSn",
                      asvar = NULL, nuis.idx = nuis.idx, trafo = trafo, fixed = fixed,
-                     asvar.fct = asvar.fct, na.rm = na.rm, ...)
+                     asvar.fct = asvar.fct, na.rm = na.rm, ...,
+                      .withEvalAsVar = .withEvalAsVar)
       es@estimate.call <- es.call
       return(es)
       }
@@ -208,13 +212,14 @@ medSn <- function(x, ParamFamily, q.lo =1e-3, q.up=10, nuis.idx  = NULL,
 medkMADhybr <- function(x, ParamFamily, k=1, q.lo =1e-3, q.up=15,
                         KK=20, nuis.idx = NULL,
                         trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
-                        ...){
+                        ..., .withEvalAsVar = FALSE){
  i <- 1
  es <- try(medkMAD(x, ParamFamily = ParamFamily, k = k,
                             q.lo = q.lo, q.up = q.up,
                             nuis.idx = nuis.idx, trafo = trafo,
                             fixed = fixed, asvar.fct = asvar.fct, na.rm = na.rm,
-                             ...), silent=TRUE)
+                             ..., .withEvalAsVar = FALSE),
+                             silent=TRUE)
  if(! any(is.na(es)) && !is(es,"try-error"))
    {return(es)}
 
@@ -225,10 +230,15 @@ medkMADhybr <- function(x, ParamFamily, k=1, q.lo =1e-3, q.up=15,
                             q.lo = q.lo, q.up = q.up,
                             nuis.idx = nuis.idx, trafo = trafo,
                             fixed = fixed, asvar.fct = asvar.fct, na.rm = na.rm,
-                             ...), silent=TRUE)
+                             ..., .withEvalAsVar = FALSE), silent=TRUE)
       k1 <- k1 * 3
       if(! any(is.na(es)) && !is(es,"try-error"))
-         {return(es)}
+         {if(!missing(asvar.fct)) if(!is.null(asvar.fct)) if(.withEvalAsVar){
+             if(is.call(es@asvar)) es@asvar <- eval(es@asvar)
+             if(is.call(es@untransformed.asvar))
+                es@untransformed.asvar <- eval(es@untransformed.asvar)
+             }
+          return(es)}
       }
  return(c("scale"=NA,"shape"=NA))
 }

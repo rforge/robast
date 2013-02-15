@@ -20,19 +20,19 @@ LDEstimator(x, loc.est, disp.est, loc.fctal, disp.fctal, ParamFamily,
             q.lo =1e-3, q.up=15, log.q =TRUE,
             name, Infos, asvar = NULL, nuis.idx = NULL,
             trafo = NULL, fixed = NULL, asvar.fct  = NULL, na.rm = TRUE,
-            ..., vdbg = FALSE)
+            ..., .withEvalAsVar = FALSE, vdbg = FALSE)
 medkMAD(x, ParamFamily, k=1, q.lo =1e-3, q.up=15, nuis.idx = NULL,
         trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
-        ..., vdbg = FALSE)
+        ..., .withEvalAsVar = FALSE, vdbg = FALSE)
 medkMADhybr(x, ParamFamily, k=1, q.lo =1e-3, q.up=15, KK = 20, nuis.idx = NULL,
         trafo = NULL, fixed = NULL,  asvar.fct = NULL, na.rm = TRUE,
-        ...)
+        ..., .withEvalAsVar = FALSE)
 medSn(x, ParamFamily, q.lo =1e-3, q.up=10, nuis.idx = NULL,
       trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
-      accuracy = 100, ...)
+      accuracy = 100, ..., .withEvalAsVar = FALSE)
 medQn(x, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
       trafo = NULL, fixed = NULL, asvar.fct = NULL, na.rm = TRUE,
-      ...)
+      ..., .withEvalAsVar = FALSE)
 }
 \arguments{
   \item{x}{ (empirical) data }
@@ -84,6 +84,9 @@ medQn(x, ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
   \item{\dots}{further arguments to be passed to location estimator and functional
   and dispersion estimator and functional. }
   \item{vdbg}{logical; if \code{TRUE}, debugging information is shown.}
+  \item{.withEvalAsVar}{logical: shall slot \code{asVar} be evaluated
+                   (if \code{asvar.fct} is given) or
+                   just the call be returned?}
 }
 \details{
   The arguments \code{loc.est}, \code{disp.est} (location and dispersion estimators)
