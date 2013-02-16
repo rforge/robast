@@ -48,13 +48,10 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
         }
     }else{
         neighbor@radius <- eps$sqn * fsCor * eps$e
-#        print(neighbor)
         infMod <- InfRobModel(center = model, neighbor = neighbor)
         arg.optic <- c(list(model = infMod, risk = risk),
                            dots.optic)
         if(..debug) print(c(arg.optic=arg.optic))
-#        print(arg.optic)
-#        print("----------------------------------------------------")
         ICstart <- do.call(optIC, args = arg.optic, envir=parent.frame(2))
     }
   return(ICstart)
@@ -72,14 +69,6 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asBias"),
            function(model, risk, ..., ..debug=FALSE){
     mc <- match.call(expand.dots=FALSE, call = sys.call(sys.parent(1)))
     dots <- as.list(mc$"...")
-    if("fsCor" %in% names(dots)){
-        fsCor <- eval(dots[["fsCor"]])
-        dots$fsCor <- NULL
-    }else fsCor <- 1
-    if("eps" %in% names(dots)){
-       eps <- dots[["eps"]]
-       dots$eps <- NULL
-    }else eps <- NULL
     if("neighbor" %in% names(dots)){
        neighbor <- eval(dots[["neighbor"]])
        dots$neighbor <- NULL
@@ -103,15 +92,9 @@ setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRi
     sng <- try(getFromNamespace(.versionSuff(gridn), ns = "RobExtremes"),
                                  silent=TRUE)
     if(!is(sng,"try-error")) nsng <- names(sng)
-    #print(.versionSuff(gridn))
     if(length(nsng)){
        if(nam %in% nsng){
           interpolfct <- sng[[nam]]$fct
-          #print(xi)
-          #print(beta)
-          #print(head(sng[[nam]]$grid))
-          #print(xi)
-          #print(beta)
           .modifyIC <- function(L2Fam, IC){
                    para <- param(L2Fam)
                    xi0 <- main(para)["shape"]#[scaleshapename(L2Fam)["scale"]]
