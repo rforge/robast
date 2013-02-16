@@ -71,7 +71,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
            start <- L2Fam@startPar
 
 ### use dispatch here  (dispatch only on start)
-        a.var <- if( is(start, "Estimate")) asvar(start) else NULL
+        #a.var <- if( is(start, "Estimate")) asvar(start) else NULL
         IC.UpdateInKer.0 <- if(is(start,"ALEstimate")) start@pIC else NULL
         force(startArgList)
         start.val <- kStepEstimator.start(start, x=x0, nrvalues = k,
