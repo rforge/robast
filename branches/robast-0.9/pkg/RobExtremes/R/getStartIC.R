@@ -8,7 +8,7 @@ setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRi
     xi <- main(param(model))["shape"] #[scaleshapename(model)["shape"]]
     beta <- main(param(model))["scale"] #[scaleshapename(model)["scale"]]
     nsng <- character(0)
-    sng <- try(getFromNamespace(.versionSuff(gridn), ns = "RobAStRda"),
+    sng <- try(getFromNamespace(.versionSuff(gridn), ns = "RobAStRDA"),
                                  silent=TRUE)
     if(!is(sng,"try-error")) nsng <- names(sng)
     if(length(nsng)){
