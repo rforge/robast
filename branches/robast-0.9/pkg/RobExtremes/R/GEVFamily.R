@@ -225,7 +225,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
            if(is(start0Est,"function")){
               e1 <- start0Est(x, ...)
               e0 <-  if(is(e1,"Estimate")) estimate(e1) else e1
-           }
+           }else stop("Argument 'start0Est' must be a function or NULL.")
            if(!is.null(names(e0)))
                e0 <- e0[c("scale", "shape")]
         }
@@ -370,6 +370,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
     L2Fam@L2deriv <- L2deriv
     L2Fam@L2derivDistr <- L2derivDistr
+    L2Fam@.withMDE <- FALSE
     return(L2Fam)
 }
 

@@ -220,7 +220,7 @@ medkMADhybr <- function(x, ParamFamily, k=1, q.lo =1e-3, q.up=15,
                             fixed = fixed, asvar.fct = asvar.fct, na.rm = na.rm,
                              ..., .withEvalAsVar = FALSE),
                              silent=TRUE)
- if(! any(is.na(es)) && !is(es,"try-error"))
+ if(! any(is.na(estimate(es))) && !is(es,"try-error"))
    {return(es)}
 
  k1 <- 3.23

@@ -59,7 +59,7 @@ ParetoFamily <- function(Min = 1, shape = 0.5, trafo = NULL, start0Est = NULL,
            if(is(start0Est,"function")){
               e1 <- start0Est(x, ...)
               e0 <-  if(is(e1,"Estimate")) estimate(e1) else e1
-           }
+           }else stop("Argument 'start0Est' must be a function or NULL.")
         }
         if(any(x < tr))
                stop("some data smaller than 'Min' ")
