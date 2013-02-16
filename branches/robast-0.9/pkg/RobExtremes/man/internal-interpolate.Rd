@@ -5,12 +5,7 @@
 \alias{.OMSE.xi}
 \alias{.MBEE.xi}
 \alias{.getLMGrid}
-\alias{.mergeF}
-\alias{.copyGrid}
-\alias{.renameGridName}
-\alias{.MakeGridList}
-\alias{.saveInterpGrid}
-\alias{.recomputeInterpolators}
+\alias{.getpsi}
 \alias{.svInt}
 
 \title{Internal helper functions for generating interpolation grids for
@@ -23,6 +18,8 @@ to be stored in the
 respective \file{sysdata.rda} file. }
 
 \usage{
+.getPsi(xi, beta, fct, L2Fam , type)
+
 .modify.xi.PFam.call(xi, PFam)
 
 .RMXE.xi(xi, PFam)
@@ -33,26 +30,14 @@ respective \file{sysdata.rda} file. }
            optFct = .RMXE.xi, GridFileName="LMGrid.Rdata", withSmooth = TRUE,
            withPrint = FALSE, withCall = FALSE)
 
-.MakeGridList(xiGrid, Y, withSmooth = TRUE)
-
 .saveInterpGrid(xiGrid = getShapeGrid(), PFam = GParetoFamily(),
-            sysRdaFolder, getFun = getSnGrid, ...,
-            nameInSysdata = ".SnGrids", GridFileName, withSmooth = TRUE,
+            sysRdaFolder, sysdataWriteFile = "sysdata.rda", getFun = getSnGrid,
+            ..., nameInSysdata = ".SnGrids", GridFileName, withSmooth = TRUE,
             withPrint = TRUE, withCall = FALSE, Y = NULL, elseFun = NULL)
 
-.svInt(optF = .RMXE.xi, nam = ".RMXE",
-       xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
-       sysRdafolder, PFam = GParetoFamily(shape=1,scale=2))
-
-.recomputeInterpolators(sysdataFiles, sysRdaFolder = ".",
-                      excludeGrids = NULL, excludeNams = NULL, others = FALSE,
-                      onlyothers = FALSE, translate = TRUE, overwrite = TRUE,
-                      integrateto = FALSE, onlyCurrent = FALSE, withPrint =TRUE,
-                      withSmooth = TRUE, debug = FALSE)
-
-.renameGridName(gridnam, namOld, namNew, rdafileOld, rdafileNew)
-.copyGrid(grid, gridnam, namOld, namNew, rdafileOld, rdafileNew)
-.mergeF(file,envir, excludeGrids = NULL, excludeNams = NULL)
+.svInt(optF = .RMXE.xi, xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
+                   sysRdafolder, PFam = GParetoFamily(shape=1,scale=2),
+                   nam = "GPD")
 }
 
 \arguments{
@@ -76,6 +61,8 @@ respective \file{sysdata.rda} file. }
   \item{xiGrid}{numeric; grid of shape values. }
   \item{sysRdaFolder}{the folder where \pkg{RobExtremes}
        (or the respective package) is being developed; must not be missing. }
+  \item{sysdataWriteFile}{filename for the \file{sysdata.rda} on which to write
+         the results.}
   \item{getFun}{function with first argument \code{xi}, and second argument
                 \code{PFam} and last arguments \code{GridFileName},
                 \code{withSmooth}, \code{withPrint}, and \code{withCall};
@@ -86,49 +73,17 @@ respective \file{sysdata.rda} file. }
   \item{elseFun}{function or \code{NULL}; if \code{Y} is non-null, contains
            function to transform \code{Y} to desired return value. }
 
-  \item{sysdataFiles}{character; filenames of \file{sysdata.rda} files from
-                      where to extract the interpolation grids. }
-  \item{excludeGrids}{character (or \code{NULL}); grids to be excluded
-          from recomputation}
-  \item{excludeNams}{character (or \code{NULL}); families to be excluded
-          from recomputation}
-  \item{overwrite}{logical; if \code{TRUE} foreign grids are translated
-  to current R version. }
-  \item{overwrite}{logical; if \code{TRUE} existing interpolation functions
-      for the current R version get recomputed.}
-  \item{others}{logical; if \code{TRUE} and in the \file{sysdata.rda} files
-       to be modified, there are grids not ending to \code{.N} (for R>2.16)
-       or \code{.O} (for R<2.16), we also recompute the interpolation
-       functions for these grids. }
-  \item{onlyothers}{logical; if \code{TRUE}, only the interpolation functions
-  for \code{others}-grids (see argument \code{others}) are recomupted. }
- \item{onlyCurrent}{logical; if \code{TRUE} existing interpolation functions
-      for the foreign R version are not included in the new \file{sysdata.rda}
-      file.}
-  \item{integrateto}{logical; if \code{TRUE} and there are grids with
-    ending \code{.N}, \code{.O} and ``others'', these are merged. }
-  \item{debug}{logical; if \code{TRUE} the \file{sysdata.rda} file is not
-     created/overwritten in the end. }
-  \item{gridnam}{character; name of the grid to be renamed. }
-  \item{namOld}{character; name of the parametric family to be renamed (from). }
-  \item{namNew}{character; name of the parametric family to be renamed (to). }
-  \item{nam}{character; name of the parametric family to be manipulated. }
+  \item{nam}{character; (short) name of the parametric family to be manipulated. }
   \item{grid}{matrix or array; grid to be inserted. }
-  \item{rdafileOld}{character; filename of the \file{sysdata.rda}-type file
-    to be read out.}
-  \item{rdafileNew}{character; filename of the \file{sysdata.rda}-type file
-    to be written on.}
-  \item{file}{character; the name of a file to be read out}
-  \item{envir}{an environment}
 }
 \details{
+   \code{.getpsi} reads the respective interpolating function
+    from an object from \file{sysdata.rda} and generates a respective
+   \code{HampelIC} object by a call to  \code{generateIC}.
+
   \code{.MBRE.xi} computes the Lagrange multipliers for the MBRE estimator,
   \code{.OMSE.xi} for the OMSE estimator at radius \code{r=0.5},
   and \code{.RMXE.xi} the RMXE estimator.
-  
-  \code{.MakeGridList} transforms the return values of the preceding functions
-  gathered in matrices in respective grids and can also be used for
-  Lagrange multiplier matrices already computed otherwise.
   
   \code{.saveInterpGrid} is the utility to do the actual computation.
    More specifically, the code first loads the contents of file
@@ -146,27 +101,6 @@ respective \file{sysdata.rda} file. }
 
    \code{.svInt} is a short form for \code{.saveInterpGrid} for LM interpolation.
 
-   \code{.recomputeInterpolators} recomputes the interpolating functions from
-     grids in existing \file{sysdata.rda} files -- either to translate them
-     to another R version, or to shrink the respective file.
-
-   \code{.renameGridName} is a utility to rename items from a grid. It takes
-      grid \code{gridnam} from file \code{rdafileOld} and takes
-      the name \code{namOld} of a respective item (i.e., a parametric family),
-      renames it to \code{namNew} and writes the result back
-      to file \code{rdafileNew}.
-
-   \code{.copyGrid} takes out a respective item \code{namOld} (i.e., a parametric
-        family) of grid \code{gridnam} from file \code{rdafileOld}
-        copies it to a new grid object onto item \code{namNew}, replaces
-        the respective grid-entry by \code{grid},  and saves the result to
-        to file \code{rdafileNew}.
-
-   \code{.mergeF} merges the contents of file \code{file} into environment
-     \code{envir} in the sense, that if both  \code{file} and \code{envir}
-     contain a list object \code{a} also the items of \code{a} are merged,
-     where---as for objects themselves--- contents of \code{file} overwrite
-     contents of \code{envir}.
 }
 \note{These functions are only meant for the developers of package \pkg{RobExtremes}
       (or respective packages).
@@ -176,10 +110,12 @@ respective \file{sysdata.rda} file. }
       the \file{sysdata.rda} file of this package and can be used in
       (exported) new particular methods for functional \code{Sn}.
       Special attention has to be paid for R-versions pre and post R-2.16.
-      So if interpolation functions are desired for both alternatives,
-      
+      So if interpolation functions are desired for both alternatives, one
+      has to run \code{ROptEst:::.recomputeInterpolators} once on each
+      version.
       }
 \value{
+  \item{.getpsi}{an IC.}
   \item{.modify.xi.PFam.call}{A call to evaluate the parametric
             family at the new parameter value. }
   \item{.MBRE.xi}{A list with items \code{b} (a number; clipping height),
@@ -193,13 +129,8 @@ respective \file{sysdata.rda} file. }
   \item{.getLMGrid}{A list with items \code{grid}, a matrix with the interpolation
                     grid and \code{fct} a function in \code{x} (the shape)
                     and \code{i} deciding on the Lagrange multiplier. }
-  \item{.MakeGridList}{A list with items \code{grid} and \code{fct} as
-                       in the return value of \code{.getLMGrid}. }
   \item{.saveInterpGrid}{  \code{invisible(NULL)}}
   \item{.svInt}{  \code{invisible(NULL)}}
-  \item{.renameGridName}{  \code{invisible(NULL)}}
-  \item{.mergeF}{  \code{invisible(NULL)}}
-  \item{.copyGrid}{  \code{invisible(NULL)}}
 }
 \seealso{\code{\link{interpolateSn}}}
 \examples{

@@ -6,7 +6,7 @@ getLMs <- function(Gridnam,Famnam,xi=0.7, baseDir="C:/rtest/robast"){
    ##           "Weibull Family"
    ## xi Scaleparameter (can be vector)
    ## basedir: Oberverzeichnis des r-forge svn checkouts
-   file <- file.path(baseDir, "branches/robast-0.9/pkg/RobExtremes/R/sysdata.rda")
+   file <- file.path(baseDir, "branches/robast-0.9/pkg/RobAStRDA/R/sysdata.rda")
    if(!file.exists(file)) stop("Fehler mit Checkout")
    nE <- new.env()
    load(file, envir=nE)

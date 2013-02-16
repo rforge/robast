@@ -3,12 +3,10 @@
 \alias{getStartIC-methods}
 \alias{getStartIC}
 \alias{getStartIC,ANY,ANY-method}
-\alias{getStartIC,L2ParamFamily,asRisk-method}
 \alias{getStartIC,L2ParamFamily,asGRisk-method}
 \alias{getStartIC,L2ParamFamily,asBias-method}
 \alias{getStartIC,L2ParamFamily,asCov-method}
 \alias{getStartIC,L2ParamFamily,trAsCov-method}
-\alias{getStartIC,L2ScaleShapeUnion,interpolRisk-method}
 
 \title{Methods for Function getStartIC in Package `ROptEst' }
 
@@ -16,7 +14,11 @@
 argument \code{ICstart} in \code{kStepEstimator}.}
 
 \usage{getStartIC(model, risk, ...)
-\S4method{getStartIC}{L2ParamFamily,asRisk}(model, risk, ..., ..debug=FALSE)
+\S4method{getStartIC}{ANY,ANY}(model, risk, ...)
+\S4method{getStartIC}{L2ParamFamily,asGRisk}(model, risk, ..., ..debug=FALSE)
+\S4method{getStartIC}{L2ParamFamily,asBias}(model, risk, ..., ..debug=FALSE)
+\S4method{getStartIC}{L2ParamFamily,asCov}(model, risk, ..., ..debug=FALSE)
+\S4method{getStartIC}{L2ParamFamily,trAsCov}(model, risk, ..., ..debug=FALSE)
 }
 
 \arguments{
@@ -28,14 +30,19 @@ argument \code{ICstart} in \code{kStepEstimator}.}
 \section{Methods}{\describe{
 \item{getStartIC}{\code{signature(model = "ANY", risk = "ANY")}:
       issue that this is not yet implemented. }
-\item{getStartIC}{\code{signature(model = "L2ParamFamily", risk = "asRisk")}:
+\item{getStartIC}{\code{signature(model = "L2ParamFamily", risk = "asGRisk")}:
       depending on the values of argument \code{eps} (to be passed on through
       the \code{\dots} argument) computes the optimally robust influence
       function on the fly via calls to \code{optIC} or \code{radiusMinimaxIC}. }
-\item{getStartIC}{\code{signature(model = "L2ScaleShapeUnion", risk = "interpolRisk")}:
-      computes the optimally robust influence function by interpolation
-      on a grid (using helper function \code{.getPsi}).}
-
+\item{getStartIC}{\code{signature(model = "L2ParamFamily", risk = "asBias")}:
+      computes the most-bias-robust influence function on the fly via
+      calls to \code{optIC}. }
+\item{getStartIC}{\code{signature(model = "L2ParamFamily", risk = "asCov")}:
+      computes the classically optimal influence function on the fly via
+      calls to \code{optIC}. }
+\item{getStartIC}{\code{signature(model = "L2ParamFamily", risk = "trAsCov")}:
+      computes the classically optimal influence function on the fly via
+      calls to \code{optIC}. }
 }}
 \value{
 An IC of type \code{HampIC}.

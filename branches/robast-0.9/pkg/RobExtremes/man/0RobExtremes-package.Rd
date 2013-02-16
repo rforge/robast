@@ -32,10 +32,11 @@ robust estimators, with LDEstimators (in general, and with \code{medkMAD},
 Package: \tab RobExtremes \cr
 Version: \tab 0.8 \cr
 Date: \tab 2012-05-17 \cr
-Depends: \tab R (>= 2.14.0), methods, distr(>= 2.3), distrEx(>= 2.3), \cr
-         \tab RandVar(>= 0.8), distrMod(>=2.4), RobAStBase(>=0.8),
-         ROptEst(>=0.8), \cr
-         \tab robustbase(>= 0.8-0), evd, actuar \cr
+Depends: \tab R (>= 2.14.0), methods, distr(>= 2.4), distrEx(>= 2.4), \cr
+         \tab RandVar(>= 0.9), distrMod(>=2.5), RobAStBase(>=0.8-0),
+         ROptEst(>=0.9), \cr
+         \tab robustbase(>= 0.8-0), evd, actuar\cr
+Imports: \tab RobAStRDA \cr
 LazyLoad: \tab yes \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
@@ -81,6 +82,7 @@ slots: [<name>(<class>)]
 |>"ParamFamily"                               (from distrMod)
 |>|>"L2ParamFamily"                           (from distrMod)
 |>|>|>"L2GroupParamFamily"                    (from distrMod)
+|>|>|>|>"ParetoFamily"                  [*]
 |>|>|>|>"L2ScaleShapeUnion"                   (from distrMod)
 |>|>|>|>|>"GParetoFamily"               [*]
 |>|>|>|>|>"GEVFamily"                   [*]
@@ -101,6 +103,8 @@ medkMAD                  loc=median disp=kMAD
 asvarMedkMAD               [asy. variance to MedkMADE]
 PickandsEstimator        PickandsEstimator
 asvarPickands              [asy. variance to PickandsE]
+QuantileBCCEstimator     Quantile based estimator for the Weibull distribution
+asvarQBCC                  [asy. variance to QuantileBCCE]
 }}
 
 \section{Generating Functions}{
@@ -111,6 +115,12 @@ Gumbel                  Generating function for Gumbel-class
 GEVD                    Generating function for GEVD-class
 GPareto                 Generating function for GPareto-class
 Pareto                  Generating function for Pareto-class
+
+L2Param Families
+ParetoFamily            Generating function for ParetoFamily-class
+GParetoFamily           Generating function for GParetoFamily-class
+GEVFamily               Generating function for GEVFamily-class
+WeibullFamily           Generating function for WeibullFamily-class
 
 }}
 \section{Methods}{

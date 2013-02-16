@@ -109,7 +109,7 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
            if(abs(scale(x)-1)< 1e-12){
 #              sng <- .SnGrids
               sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
-                          ns = "RobExtremes"), silent =TRUE)
+                          ns = "RobAStRDA"), silent =TRUE)
               if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
               nam <- "Generalized Pareto Family"
               if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
@@ -125,7 +125,7 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
            if(abs(scale(x)-1)< 1e-12){
 #              sng <- .SnGrids
               sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
-                          ns = "RobExtremes"), silent =TRUE)
+                          ns = "RobAStRDA"), silent =TRUE)
               if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
               nam <- "Generalized Extreme Value Family with positive shape parameter: Frechet Family"
               if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
@@ -140,7 +140,7 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
            if(abs(scale(x)-1)< 1e-12){
 #              sng <- .SnGrids
               sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
-                          ns = "RobExtremes"), silent =TRUE)
+                          ns = "RobAStRDA"), silent =TRUE)
               if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
               nam <- "Gamma family"
               if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
@@ -155,7 +155,7 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
            if(abs(scale(x)-1)< 1e-12){
 #              sng <- .SnGrids
               sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
-                          ns = "RobExtremes"), silent =TRUE)
+                          ns = "RobAStRDA"), silent =TRUE)
               if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
               nam <- "Weibull Family"
               if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))

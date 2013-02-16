@@ -23,7 +23,7 @@ exportMethods("validParameter",
               "+", "*",
               "Min", "Min<-",
               "E", "var", "IQR", "skewness", "kurtosis", "median", "dispersion")
-exportMethods("modifyModel")
+exportMethods("modifyModel", "getStartIC")
 
 export("EULERMASCHERONICONSTANT","APERYCONSTANT")
 export("Gumbel", "Pareto", "GPareto", "GEV")
