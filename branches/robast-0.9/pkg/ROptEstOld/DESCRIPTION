@@ -1,5 +1,5 @@
 Package: ROptEstOld
-Version: 0.9
+Version: 0.9.1
 Date: 2010-12-03
 Title: Optimally robust estimation - old version
 Description: Optimally robust estimation using S4 classes and methods. Old version still needed
