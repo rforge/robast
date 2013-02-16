@@ -15,7 +15,7 @@ genkStepCtrl(useLast = getRobAStBaseOption("kStepUseLast"),
                     withPICList = getRobAStBaseOption("withPICList"),
                     scalename = "scale", withLogScale = TRUE)
 genstartCtrl(initial.est = NULL, initial.est.ArgList = NULL,
-                        startPar = NULL, distance = CvMDist)
+                        startPar = NULL, distance = CvMDist, withMDE = NULL)
 gennbCtrl(neighbor = ContNeighborhood(), eps, eps.lower, eps.upper)
 }
 \arguments{
@@ -48,7 +48,12 @@ gennbCtrl(neighbor = ContNeighborhood(), eps, eps.lower, eps.upper)
     in the multivariate case, \code{startPar} may also be of class \code{Estimate},
     in which case slot \code{untransformed.estimate} is used.}
   \item{distance}{ distance function }
-
+  \item{withMDE}{ logical or NULL: Shall a minimum distance estimator be used as
+       starting estimator in \code{roptest()} / \code{robest()}---in addition to
+       the function given in argument \code{startPar} of the current function
+       or, if the argument is \code{NULL}, in slot \code{startPar} of the L2
+       family? If \code{NULL} (default) the content of slot \code{.withMDE} in
+       the L2 family is used instead to take this decision.}
 
   \item{neighbor}{ object of class \code{"UncondNeighborhood"} }
   \item{eps}{ positive real (0 < \code{eps} <= 0.5): amount of gross errors.

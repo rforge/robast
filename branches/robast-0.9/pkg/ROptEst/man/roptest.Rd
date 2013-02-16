@@ -17,7 +17,8 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         withICList = getRobAStBaseOption("withICList"),
         withPICList = getRobAStBaseOption("withPICList"),
         na.rm = TRUE, initial.est.ArgList, ...,
-        withLogScale = TRUE, ..withCheck = FALSE, withTimings = FALSE)
+        withLogScale = TRUE, ..withCheck = FALSE, withTimings = FALSE,
+        withMDE = NULL)
 roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
         distance = CvMDist, startPar = NULL, verbose = NULL,
@@ -88,6 +89,11 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
    timings for the three steps evaluating the starting value, finding
    the starting influence curve, and evaluating the k-step estimator is
    issued.}
+  \item{withMDE}{ logical or NULL: Shall a minimum distance estimator be used as
+       starting estimator---in addition to the function given in slot
+       \code{startPar} of the L2 family? If \code{NULL} (default) the content
+       of slot \code{.withMDE} in the L2 family is used instead to take
+       this decision.}
 }
 \details{
   Computes the optimally robust estimator for a given L2 differentiable

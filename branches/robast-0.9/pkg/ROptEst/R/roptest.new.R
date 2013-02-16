@@ -13,7 +13,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     withPICList = getRobAStBaseOption("withPICList"),
                     na.rm = TRUE, initial.est.ArgList, ...,
                     withLogScale = TRUE,..withCheck=FALSE,
-                    withTimings = FALSE){
+                    withTimings = FALSE, withMDE = NULL){
     es.call <- match.call()
     es.call0 <- match.call(expand.dots=FALSE)
     mwt <- !is.null(es.call$withTimings)
@@ -66,7 +66,8 @@ robest <- function(x, L2Fam,  fsCor = 1,
                     nbCtrl = gennbCtrl(),
                     startCtrl = genstartCtrl(),
                     kStepCtrl = genkStepCtrl(),
-                    na.rm = TRUE, ..., debug = FALSE, withTimings = FALSE){
+                    na.rm = TRUE, ..., debug = FALSE,
+                    withTimings = FALSE){
 
     es.call <- match.call()
     es.call0 <- match.call(expand.dots=FALSE)
@@ -118,10 +119,19 @@ robest <- function(x, L2Fam,  fsCor = 1,
         startCtrl$initial.est <- "BLUB"
       }
     }else{
-      if(is.null(startCtrl$initial.est))
-         startCtrl$initial.est <- MDEstimator(x = x, ParamFamily = L2Fam,
+      if(is.null(startCtrl$initial.est)){
+         startPar0 <- if(is.null(startCtrl$startPar))
+                         L2Fam@startPar else startCtrl$startPar
+         wMDE <- if(is.null(startCtrl$withMDE))
+                         L2Fam@.withMDE else startCtrl$withMDE
+         if(is(startPar0, "function")) if(!wMDE){
+            startCtrl$initial.est <- function(x,...)startPar0(x)
+         }else
+            startCtrl$initial.est <- MDEstimator(x = x, ParamFamily = L2Fam,
                                   distance = startCtrl$distance,
                                   startPar = startCtrl$startPar, ...)
+
+      }
     }
     nrvalues <-  length(L2Fam@param)
 

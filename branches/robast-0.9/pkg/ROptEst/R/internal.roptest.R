@@ -10,7 +10,7 @@
            nm0 <- names(matchCall)[match.i]
            if(!nm0 %in% names(form0)){
               es.call.0[[nm0]] <- if(is.call(matchCall[[match.i]])){
-                       dprint("HU");eval(matchCall[[match.i]])
+                       eval(matchCall[[match.i]])
                        }else matchCall[[match.i]]
               matchCall[[match.i]] <- NULL
            }else match.i <- match.i + 1
@@ -35,7 +35,7 @@
                   if(!is.null(form0[[form.i]])){
                       dprint(dum <- str(form0[[form.i]]))
                       xu <- if(is.call(form0[[form.i]])){
-                               dprint("HU1"); eval(form0[[form.i]])
+                               eval(form0[[form.i]])
                                }else form0[[form.i]]
                       if(!is.null(xu)) {dprint(xu)
                       matchCall[[nam0]] <- xu
@@ -107,13 +107,10 @@
    mc <- as.list(match.call(expand.dots=TRUE)[-1])
 
    eps <- eps.lower <- eps.upper <- NULL
-#   print(names(mc))
-#   lapply(mc, function(xx) print(str(xx)))
 
    ine <- is.null(mc[["eps"]]) || is.symbol(mc[["eps"]])
    inl <- is.null(mc[["eps.lower"]]) || is.symbol(mc[["eps.lower"]])
    inu <- is.null(mc[["eps.upper"]]) || is.symbol(mc[["eps.upper"]])
-#   print(c(ine=ine,inl=inl,inu=inu))
    if(ine && inl && inu){
         eps.lower <- 0
         eps.upper <- 0.5
@@ -224,7 +221,7 @@ genkStepCtrl <- function(useLast = getRobAStBaseOption("kStepUseLast"),
  return(es.list)
 }
 genstartCtrl<- function(initial.est = NULL, initial.est.ArgList = NULL,
-                        startPar = NULL, distance = CvMDist){
+                        startPar = NULL, distance = CvMDist, withMDE = NULL){
   es.call <- match.call()
   es.list <- as.list(es.call[-1])
   es.list <- .fix.in.defaults(es.list,genstartCtrl)
