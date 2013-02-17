@@ -75,6 +75,8 @@ setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
         if(out){
             cat("precision of Fisher consistency:\n")
             print(consist)
+            cat("precision of Fisher consistency - relativ error [%]:\n")
+            print(100*consist/trafo)
         }
 
         prec <- max(abs(cent), abs(consist))
