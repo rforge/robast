@@ -31,6 +31,7 @@ InfluenceCurve <- function(name, Curve = EuclRandVarList(EuclRandVariable(Domain
 ### helper function to recursively evaluate list
 .evalListRec <- function(list0){ ## a list
     len <- length(list0)
+    if(len==0L) return(list0)
     for(i in 1:len) {
         if(is.list(list0[[i]])){ list0[[i]] <- .evalListRec(list0[[i]])
            }else list0[[i]] <- eval(list0[[i]])

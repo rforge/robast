@@ -445,8 +445,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                      sum(diag(std0%*%eval(Cov0))) + rad0^2 * b0^2}
 
         asMSE.0 <- substitute(do.call(ri.fct, args=list(std0=std1, Cov0=Cov1,
-                                    rad0 = rad1, b0=b1)), list(std1=std,
-                                    Cov1=Cov, rad1=radius, b1=b))
+                                    rad0 = rad1, b0=b1)), list(ri.fct = rifct,
+                                    std1=std, Cov1=Cov, rad1=radius, b1=b))
         if(!is(risk, "asMSE")){
                Risk <- substitute(do.call(getAsRisk, args =list(risk = risk0,
                           L2deriv = L2deriv0, neighbor = neighbor0,
@@ -465,7 +465,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         trAsCov.fct <- function(std0, Cov0) sum(diag(std0%*%eval(Cov0)))
         trAsCov <- substitute(do.call(tr.fct, args=list(std0=std1, Cov0=Cov1)),
-                              list(std1=std, Cov1=Cov))
+                              list(tr.fct = trAsCov.fct, std1=std, Cov1=Cov))
         Risk <- c(Risk, list(asCov = Cov,
                      asBias = list(value = b, biastype = biastype,
                                    normtype = normtype,

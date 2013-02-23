@@ -287,8 +287,9 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                      sum(diag(std0%*%eval(Cov0))) + rad0^2 * b0^2}
 
         asMSE.0 <- substitute(do.call(ri.fct, args=list(std0=std1, Cov0=Cov1,
-                                    rad0 = rad1, b0=b1)), list(std1=std,
-                                    Cov1=Cov, rad1=neighbor@radius, b1=b))
+                                    rad0 = rad1, b0=b1)), list(ri.fct = rifct,
+                                    std1=std, Cov1=Cov, rad1=neighbor@radius,
+                                    b1=b))
 
 
         ### add some further informations for the pIC-slots info and risk
@@ -296,7 +297,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         trAsCov.fct <- function(std0, Cov0) sum(diag(std0%*%eval(Cov0)))
         trAsCov <- substitute(do.call(tr.fct, args=list(std0=std1, Cov0=Cov1)),
-                              list(std1=std, Cov1=Cov))
+                              list(tr.fct = trAsCov.fct, std1=std, Cov1=Cov))
         r <- neighbor@radius
         Risk <- list(trAsCov = list(value = trAsCov,
                                     normtype = normtype),
