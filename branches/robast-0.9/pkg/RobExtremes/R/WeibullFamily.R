@@ -246,6 +246,8 @@ WeibullFamily <- function(scale = 1, shape = 0.5,
     L2Fam@L2deriv <- L2deriv
     L2Fam@L2derivDistr <- L2derivDistr
     L2Fam@.withMDE <- FALSE
+    L2Fam@.withEvalAsVar <- FALSE
+    L2Fam@.withEvalL2derivDistr <- FALSE
 
     return(L2Fam)
 }
