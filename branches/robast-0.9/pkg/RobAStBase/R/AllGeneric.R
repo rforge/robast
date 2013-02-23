@@ -217,9 +217,6 @@ if(!isGeneric("kStepEstimator.start")){
 if(!isGeneric("radius")){
     setGeneric("radius", function(object) standardGeneric("radius"))
 }
-if(!isGeneric("radius")){
-    setGeneric("radius", function(object) standardGeneric("radius"))
-}
 
 if(!isGeneric("samplesize<-")){
     setGeneric("samplesize<-",
@@ -229,3 +226,12 @@ if(!isGeneric("getRiskFctBV")){
     setGeneric("getRiskFctBV", function(risk, biastype) standardGeneric("getRiskFctBV"))
 }
 
+if(!isGeneric("moveL2Fam2RefParam")){
+    setGeneric("moveL2Fam2RefParam", function(L2Fam, ...)
+                standardGeneric("moveL2Fam2RefParam"))
+}
+
+if(!isGeneric("moveICBackFromRefParam")){
+    setGeneric("moveICBackFromRefParam", function(IC, L2Fam, ...)
+               standardGeneric("moveICBackFromRefParam"))
+}

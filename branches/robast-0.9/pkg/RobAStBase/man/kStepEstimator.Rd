@@ -13,7 +13,7 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
       withICList = getRobAStBaseOption("withICList"),
       withPICList = getRobAStBaseOption("withPICList"),
       na.rm = TRUE, startArgList = NULL, ...,
-      withLogScale = TRUE)
+      withLogScale = TRUE, withEvalAsVar = TRUE)
 }
 \arguments{
   \item{x}{ sample }
@@ -42,9 +42,11 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
   \item{withICList}{logical: shall slot \code{ICList} of return value
   be filled?}
   \item{...}{ additional parameters }
-  \item{withLogScale}{logical; shall a scale component (if existing and found
-   with name \code{scalename}) be computed on log-scale and backtransformed
-   afterwards? This avoids crossing 0.}
+  \item{withLogScale}{logical; if \code{TRUE}, a scale component (if existing
+   and found with name \code{scalename}) is computed on log-scale and
+   backtransformed afterwards (default). This avoids crossing 0. }
+  \item{withEvalAsVar}{logical; if \code{TRUE} (default), tells R to evaluate
+   the asymptotic variance or just to produces a call to do so.}
 }
 \details{
   Given an initial estimation \code{start}, a sample \code{x} 

@@ -59,6 +59,8 @@ exportMethods("pIC", "asbias",
               "Mroot","kStepEstimator.start")
 exportMethods("pICList","ICList", "ksteps", "uksteps", 
               "start", "startval", "ustartval")
+exportMethods("moveL2Fam2RefParam",
+			  "moveICBackFromRefParam")			  
 exportMethods("ddPlot", "qqplot")
 exportMethods("cutoff.quantile", "cutoff.quantile<-")
 exportMethods("samplesize<-", "samplesize")

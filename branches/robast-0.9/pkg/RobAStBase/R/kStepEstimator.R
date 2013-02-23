@@ -14,7 +14,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                            withICList = getRobAStBaseOption("withICList"),
                            withPICList = getRobAStBaseOption("withPICList"),
                            na.rm = TRUE, startArgList = NULL, ...,
-                           withLogScale = TRUE){
+                           withLogScale = TRUE, withEvalAsVar = TRUE){
 
         if(missing(IC.UpdateInKer)) IC.UpdateInKer <- NULL
 ## save call
@@ -96,13 +96,19 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         pICList <- if(withPICList) vector("list", steps) else NULL
         ICList  <- if(withICList)  vector("list", steps) else NULL
 
+        cvar.fct <- function(L2, IC, dim, dimn =NULL){
+                if(is.null(dimn)){
+                   return(matrix(E(L2, IC %*% t(IC)),dim,dim))
+                }else{
+                   return(matrix(E(L2, IC %*% t(IC)),dim,dim, dimnames = dimn))
+                }
+        }
+
         ### update - function
         updateStep <- function(u.theta, theta, IC, L2Fam, Param,
                                withModif = TRUE, with.u.var = FALSE){
 
                 IC.c <- as(diag(p) %*% IC@Curve, "EuclRandVariable")
-
-
 
 #                print(theta)
                 tf <- trafo(L2Fam, Param)
@@ -161,18 +167,29 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                 var0 <- u.var <- NULL
                 if(with.u.var){
                    cnms <-  if(is.null(names(u.theta))) colnames(Dtau) else names(u.theta)
-                   if(!is.null(IC.tot.0))
-                      u.var <- matrix(E(L2Fam, IC.tot.0 %*% t(IC.tot.0)),
-                                  k,k, dimnames = list(cnms,cnms))
-                   if(!var.to.be.c)
-                       var0 <- matrix(E(L2Fam, IC.c %*% t(IC.c)),p,p)
+                   if(!is.null(IC.tot.0)){
+                      u.var <- substitute(do.call(cfct, args = list(L2F0, IC0,
+                                   dim0, dimn0)), list(cfct = cvar.fct,
+                                   L2F0 = L2Fam, IC0 = IC.tot.0, dim0 = k,
+                                   dimn0 = list(cnms,cnms)))
+                      if(withEvalAsVar) u.var <- eval(u.var)
+                     #         matrix(E(L2Fam, IC.tot.0 %*% t(IC.tot.0)),
+                     #             k,k, dimnames = list(cnms,cnms))
+                   }
+                   if(!var.to.be.c){
+                      var0 <- substitute(do.call(cfct, args = list(L2F0, IC0,
+                                   dim0, dimn0)), list(cfct = cvar.fct,
+                                   L2F0 = L2Fam, IC0 = IC.c, dim0 = p))
+                      if(withEvalAsVar) var0 <- eval(var0)
+                   }
                 }
 
                 if(withModif){
                    main(Param)[] <- .deleteDim(u.theta[idx])
                    if (lnx) nuisance(Param)[] <- .deleteDim(u.theta[nuis.idx])
 #                   print(L2Fam)
-                   L2Fam <- modifyModel(L2Fam, Param)
+                   L2Fam <- modifyModel(L2Fam, Param,
+                               .withL2derivDistr = L2Fam@.withEvalL2derivDistr)
 #                   print(L2Fam)
                    IC <- modifyIC(IC)(L2Fam, IC)
 #                   print(IC)
@@ -230,10 +247,10 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
               Param <- upd$Param
               tf <- trafo(L2Fam, Param)
               Infos <- rbind(Infos, c("kStepEstimator",
-                  "computation of IC, trafo, asvar and asbias via useLast = TRUE"))
+               "computation of IC, trafo, asvar and asbias via useLast = TRUE"))
            }else{
               Infos <- rbind(Infos, c("kStepEstimator",
-                       "computation of IC, trafo, asvar and asbias via useLast = FALSE"))
+               "computation of IC, trafo, asvar and asbias via useLast = FALSE"))
            }
         }else{
            if(steps > 1)
@@ -286,7 +303,8 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         }else{
                 if(is(IC, "HampIC")){
                     r <- neighborRadius(IC)
-                    asBias <- r*getRiskIC(IC, risk = asBias(), neighbor = neighbor(IC))$asBias$value
+                    asBias <- r*getRiskIC(IC, risk = asBias(),
+                                          neighbor = neighbor(IC))$asBias$value
                 }else{
                     asBias <- NULL
                 }
@@ -305,20 +323,18 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
           asVar <- asVar[idx,idx,drop=FALSE]
 #          print(asVar)
           names(theta) <- nms.theta.idx
-          dimnames(asVar) <- list(nms.theta.idx,nms.theta.idx)
+          dimnames(asVar) <- list(nms.theta.idx, nms.theta.idx)
         }
 
         return(new("kStepEstimate", estimate.call = es.call,
-                       name = paste(steps, "-step estimate", sep = ""),
-                       estimate = theta, samplesize = nrow(x0), asvar = asVar,
-                       trafo = tf, fixed = fixed,
-                       nuis.idx = nuis.idx, untransformed.estimate = u.theta,
-                       completecases = completecases,
-                       untransformed.asvar = u.var,
-                       asbias = asBias, pIC = IC, steps = steps, Infos = Infos,
-                       start = start, startval = start.val, ustartval = u.start.val,
-                       ksteps = ksteps, uksteps = uksteps,
-                       pICList = pICList, ICList = ICList))
+                name = paste(steps, "-step estimate", sep = ""),
+                estimate = theta, samplesize = nrow(x0), asvar = asVar,
+                trafo = tf, fixed = fixed, nuis.idx = nuis.idx,
+                untransformed.estimate = u.theta, completecases = completecases,
+                untransformed.asvar = u.var, asbias = asBias, pIC = IC,
+                steps = steps, Infos = Infos, start = start,
+                startval = start.val, ustartval = u.start.val, ksteps = ksteps,
+                uksteps = uksteps, pICList = pICList, ICList = ICList))
 }
 #  (est1.NS <- kStepEstimator(x, IC2.NS, est0, steps = 1))
 
