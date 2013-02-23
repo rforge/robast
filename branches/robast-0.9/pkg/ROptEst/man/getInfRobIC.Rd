@@ -52,7 +52,8 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
                        L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE,
                        z.start, A.start, upper = NULL, lower=NULL,
                        OptOrIter = "iterate", maxiter, tol, warn,
-                       verbose = NULL, checkBounds = TRUE, ...)
+                       verbose = NULL, checkBounds = TRUE, ...,
+                       .withEvalAsVar = TRUE)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asAnscombe,UncondNeighborhood}(
                        L2deriv, risk, neighbor, symm, Finfo, trafo, upper = NULL,
@@ -75,7 +76,8 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
                        neighbor,  Distr, DistrSymm, L2derivSymm,
                        L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start,
                        A.start, upper = NULL, lower = NULL, OptOrIter = "iterate",
-                       maxiter, tol, warn, verbose = NULL, withPICcheck = TRUE, ...)
+                       maxiter, tol, warn, verbose = NULL, withPICcheck = TRUE,
+                       ..., .withEvalAsVar = TRUE)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(
                        L2deriv, risk, neighbor, symm, Finfo, trafo,
@@ -121,6 +123,10 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
   \item{withPICcheck}{logical: at the end of the algorithm, shall we check
   how accurately this is a pIC; this will only be done if
   \code{withPICcheck && verbose}.}
+  \item{.withEvalAsVar}{logical (of length 1):
+     if \code{TRUE}, risks based on covariances are to be
+     evaluated (default), otherwise just a call is returned.}
+
 }
 %\details{}
 \value{The optimally robust IC is computed.}

@@ -13,7 +13,8 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     withPICList = getRobAStBaseOption("withPICList"),
                     na.rm = TRUE, initial.est.ArgList, ...,
                     withLogScale = TRUE,..withCheck=FALSE,
-                    withTimings = FALSE, withMDE = NULL){
+                    withTimings = FALSE, withMDE = NULL,
+                    withEvalAsVar = NULL){
     es.call <- match.call()
     es.call0 <- match.call(expand.dots=FALSE)
     mwt <- !is.null(es.call$withTimings)
@@ -84,6 +85,16 @@ robest <- function(x, L2Fam,  fsCor = 1,
     nbCtrl    <- .fix.in.defaults(nbCtrl, gennbCtrl)
     startCtrl <- .fix.in.defaults(startCtrl, genstartCtrl)
     kStepCtrl <- .fix.in.defaults(kStepCtrl, genkStepCtrl)
+
+    if(missing(L2Fam))
+        stop("'L2Fam' is missing with no default")
+    if(!is(L2Fam, "L2ParamFamily"))
+        stop("'L2Fam' must be of class 'L2ParamFamily'.")
+
+    withEvalAsVar <- kStepCtrl$withEvalAsVar
+    if(is.null(withEvalAsVar)) withEvalAsVar <- L2Fam@.withEvalAsVar
+
+
     es.list <- as.list(es.call0[-1])
     es.list <- c(es.list,nbCtrl)
     es.list$nbCtrl <- NULL
@@ -91,12 +102,6 @@ robest <- function(x, L2Fam,  fsCor = 1,
 
     if(missing(verbose)|| is.null(verbose))
            es.list$verbose <- getRobAStBaseOption("all.verbose")
-
-    if(missing(L2Fam))
-        stop("'L2Fam' is missing with no default")
-    if(!is(L2Fam, "L2ParamFamily"))
-        stop("'L2Fam' must be of class 'L2ParamFamily'.")
-
 
     res.x <- .pretreat(x,na.rm)
     x <- res.x$x
@@ -193,8 +198,10 @@ robest <- function(x, L2Fam,  fsCor = 1,
     es.list0$steps <- NULL
     es.list0$eps.lower <- NULL
     es.list0$eps.upper <- NULL
+    es.list0$withEvalAsVar <- NULL
     es.list0$na.rm <- NULL
     es.list0$fsCor <- eval(es.list0$fsCor)
+
     if(debug) {cat("\n\n\n::::\n\n")
     argList <- c(list(model=L2Fam,risk=risk,neighbor=neighbor),
                                              es.list0)
@@ -204,10 +211,13 @@ robest <- function(x, L2Fam,  fsCor = 1,
     if(!debug){
       sy.getStartIC <-  system.time({
        ICstart <- do.call(getStartIC, args=c(list(model=L2FamStart,risk=risk,
-                              neighbor=neighbor),es.list0))
+                              neighbor=neighbor, withEvalAsVar = withEvalAsVar),
+                              es.list0))
      })
      if (withTimings) print(sy.getStartIC)
      }
+
+
       if(debug){
          ICstart <- "BUL"
          argList <- list(x, IC = ICstart, start = initial.est, steps = steps,
@@ -218,7 +228,8 @@ robest <- function(x, L2Fam,  fsCor = 1,
                             withPICList = kStepCtrl$withPICList,
                             na.rm = na.rm,
                             scalename = kStepCtrl$scalename,
-                            withLogScale = kStepCtrl$withLogScale)
+                            withLogScale = kStepCtrl$withLogScale,
+                            withEvalAsVar = withEvalAsVar)
          print(argList) }
       sy.kStep <- system.time({
          res <- kStepEstimator(x, IC = ICstart, start = initial.est, steps = steps,
@@ -229,7 +240,8 @@ robest <- function(x, L2Fam,  fsCor = 1,
                             withPICList = kStepCtrl$withPICList,
                             na.rm = na.rm,
                             scalename = kStepCtrl$scalename,
-                            withLogScale = kStepCtrl$withLogScale)
+                            withLogScale = kStepCtrl$withLogScale,
+                            withEvalAsVar = withEvalAsVar)
                             })
        if (withTimings) print(sy.kStep)
 

@@ -18,7 +18,7 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         withPICList = getRobAStBaseOption("withPICList"),
         na.rm = TRUE, initial.est.ArgList, ...,
         withLogScale = TRUE, ..withCheck = FALSE, withTimings = FALSE,
-        withMDE = NULL)
+        withMDE = NULL, withEvalAsVar = NULL)
 roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
         distance = CvMDist, startPar = NULL, verbose = NULL,
@@ -89,10 +89,15 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
    timings for the three steps evaluating the starting value, finding
    the starting influence curve, and evaluating the k-step estimator is
    issued.}
-  \item{withMDE}{ logical or NULL: Shall a minimum distance estimator be used as
+  \item{withMDE}{ logical or \code{NULL}: Shall a minimum distance estimator be used as
        starting estimator---in addition to the function given in slot
-       \code{startPar} of the L2 family? If \code{NULL} (default) the content
+       \code{startPar} of the L2 family? If \code{NULL} (default), the content
        of slot \code{.withMDE} in the L2 family is used instead to take
+       this decision.}
+  \item{withEvalAsVar}{logical or \code{NULL}: if \code{TRUE} (default), tells R
+  to evaluate the asymptotic variance or if \code{FALSE} just to produces a call
+  to do so. If \code{withEvalAsVar} is \code{NULL} (default),  the content
+       of slot \code{.withEvalAsVar} in the L2 family is used instead to take
        this decision.}
 }
 \details{

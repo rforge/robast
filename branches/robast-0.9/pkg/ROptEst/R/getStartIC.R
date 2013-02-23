@@ -2,7 +2,7 @@ setMethod("getStartIC",signature(model = "ANY", risk = "ANY"),
            function(model, risk, ...) stop("not yet implemented"))
 
 setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
-           function(model, risk, ..., ..debug=FALSE){
+           function(model, risk, ..., withEvalAsVar = TRUE, ..debug=FALSE){
     mc <- match.call(expand.dots=FALSE, call = sys.call(sys.parent(1)))
     dots <- as.list(mc$"...")
     if("fsCor" %in% names(dots)){
@@ -31,6 +31,7 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
     dots.optic <- .fix.in.defaults(dots, sm.optic)
     dots.optic$model <- NULL
     dots.optic$risk <- NULL
+    dots.optic$.withEvalAsVar <- withEvalAsVar
 
     if(is.null(eps[["e"]])){
         dots.rmx$loRad <- eps$sqn * eps$lower

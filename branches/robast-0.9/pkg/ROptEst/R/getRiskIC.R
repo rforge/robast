@@ -15,7 +15,7 @@ setMethod("getRiskIC", signature(IC = "HampIC",
                                  neighbor = "missing",
                                  L2Fam = "L2ParamFamily"),
     function(IC, risk, L2Fam){
-        Cov <- IC@Risks[["asCov"]]
+        Cov <- eval(IC@Risks[["asCov"]])
         if(is.null(Cov)){
            if(numberOfMaps(L2Fam@L2deriv)==1){ ## L2derivDim <- L2Fam@L2deriv
               L2deriv <- L2Fam@L2derivDistr[[1]]
@@ -38,7 +38,7 @@ setMethod("getRiskIC", signature(IC = "TotalVarIC",
                                  neighbor = "missing",
                                  L2Fam = "L2ParamFamily"),
     function(IC, risk, L2Fam){
-        Cov <- IC@Risks[["asCov"]]
+        Cov <- eval(IC@Risks[["asCov"]])
         if (is.null(Cov)){
             L2deriv <- L2Fam@L2derivDistr[[1]]
             A <- as.vector(IC@stand)

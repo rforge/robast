@@ -13,7 +13,8 @@ genkStepCtrl(useLast = getRobAStBaseOption("kStepUseLast"),
                     IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
                     withICList = getRobAStBaseOption("withICList"),
                     withPICList = getRobAStBaseOption("withPICList"),
-                    scalename = "scale", withLogScale = TRUE)
+                    scalename = "scale", withLogScale = TRUE,
+                    withEvalAsVar = NULL)
 genstartCtrl(initial.est = NULL, initial.est.ArgList = NULL,
                         startPar = NULL, distance = CvMDist, withMDE = NULL)
 gennbCtrl(neighbor = ContNeighborhood(), eps, eps.lower, eps.upper)
@@ -35,6 +36,11 @@ gennbCtrl(neighbor = ContNeighborhood(), eps, eps.lower, eps.upper)
   \item{withLogScale}{logical; shall a scale component (if existing and found
    with name \code{scalename}) be computed on log-scale and backtransformed
    afterwards? This avoids crossing 0.}
+  \item{withEvalAsVar}{logical or \code{NULL}: if \code{TRUE} (default), tells R
+  to evaluate the asymptotic variance or if \code{FALSE} just to produces a call
+  to do so. If \code{withEvalAsVar} is \code{NULL} (default),  the content
+       of slot \code{.withEvalAsVar} in the L2 family is used instead to take
+       this decision.}
 
   \item{initial.est}{ initial estimate for unknown parameter. If missing
         minimum distance estimator is computed. }

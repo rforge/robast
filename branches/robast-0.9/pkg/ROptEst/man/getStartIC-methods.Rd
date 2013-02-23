@@ -15,7 +15,8 @@ argument \code{ICstart} in \code{kStepEstimator}.}
 
 \usage{getStartIC(model, risk, ...)
 \S4method{getStartIC}{ANY,ANY}(model, risk, ...)
-\S4method{getStartIC}{L2ParamFamily,asGRisk}(model, risk, ..., ..debug=FALSE)
+\S4method{getStartIC}{L2ParamFamily,asGRisk}(model, risk, ...,
+                      withEvalAsVar = TRUE,..debug=FALSE)
 \S4method{getStartIC}{L2ParamFamily,asBias}(model, risk, ..., ..debug=FALSE)
 \S4method{getStartIC}{L2ParamFamily,asCov}(model, risk, ..., ..debug=FALSE)
 \S4method{getStartIC}{L2ParamFamily,trAsCov}(model, risk, ..., ..debug=FALSE)
@@ -25,6 +26,9 @@ argument \code{ICstart} in \code{kStepEstimator}.}
   \item{model}{normtype of class \code{NormType}}
   \item{risk}{normtype of class \code{NormType}}
   \item{\dots}{ further arguments to be passed to specific methods.}
+  \item{withEvalAsVar}{logical (of length 1):
+     if \code{TRUE}, risks based on covariances are to be
+     evaluated (default), otherwise just a call is returned.}
   \item{..debug}{logical; if \code{TRUE} information for debugging is issued.}
 }
 \section{Methods}{\describe{

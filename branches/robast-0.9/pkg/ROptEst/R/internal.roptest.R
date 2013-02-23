@@ -214,7 +214,8 @@ genkStepCtrl <- function(useLast = getRobAStBaseOption("kStepUseLast"),
                     IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
                     withICList = getRobAStBaseOption("withICList"),
                     withPICList = getRobAStBaseOption("withPICList"),
-                    scalename = "scale", withLogScale = TRUE){
+                    scalename = "scale", withLogScale = TRUE,
+                    withEvalAsVar = NULL){
   es.call <- match.call()
   es.list <- as.list(es.call[-1])
   es.list <- .fix.in.defaults(es.list,genkStepCtrl)

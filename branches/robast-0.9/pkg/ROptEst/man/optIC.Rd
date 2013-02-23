@@ -16,7 +16,8 @@ optIC(model, risk, ...)
                                      upper = 1e4, lower = 1e-4,
                                      OptOrIter = "iterate", maxiter = 50,
                                      tol = .Machine$double.eps^0.4, warn = TRUE, 
-                                     noLow = FALSE, verbose = NULL, ...)
+                                     noLow = FALSE, verbose = NULL, ...,
+                                     .withEvalAsVar = TRUE)
 
 \S4method{optIC}{InfRobModel,asUnOvShoot}(model, risk, upper = 1e4,
                                           lower = 1e-4, maxiter = 50,
@@ -52,6 +53,9 @@ optIC(model, risk, ...)
   we use only one (inner) iteration, if matched to \code{"doubleiterate"}
   we use up to \code{Maxiter} (inner) iterations.}
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
+  \item{.withEvalAsVar}{logical (of length 1):
+     if \code{TRUE}, risks based on covariances are to be
+     evaluated (default), otherwise just a call is returned.}
 }
 \details{ In case of the finite-sample risk \code{"fiUnOvShoot"} one can choose
   between two algorithms for the computation of this risk where the least favorable
