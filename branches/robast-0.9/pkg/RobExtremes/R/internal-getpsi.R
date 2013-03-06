@@ -1,6 +1,17 @@
-.getPsi <- function(xi, beta, fct, L2Fam , type){
+.getPsi <- function(param, fct, L2Fam , type){
 
-   L2deriv <- L2Fam@L2deriv
+   scshnm <- scaleshapename(L2Fam)
+   shnam <- scshnm["shape"]
+   scnam <- scshnm["scale"]
+   xi <- main(param)[shnam] #[["shape"]]
+   beta <- main(param)[scnam] #[scaleshapename(model)["scale"]]
+
+   #print(param)
+   #L2deriv <- L2Fam@L2deriv # .fct(param)
+   #print(get("tr",environment(get("Lambda1", environment(L2deriv[[1]]@Map[[1]])))))
+   #print(get("k",environment(get("Lambda1", environment(L2deriv[[1]]@Map[[1]])))))
+   #print(get("sc",environment(get("Lambda1", environment(L2deriv[[1]]@Map[[1]])))))
+
    .dbeta <- diag(c(beta,1))
    b <- fct[[1]](xi)
    a <-  c(.dbeta%*%c(fct[[2]](xi),fct[[3]](xi)))

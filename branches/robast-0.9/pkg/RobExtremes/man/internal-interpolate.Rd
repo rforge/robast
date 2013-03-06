@@ -18,7 +18,7 @@ to be stored in the
 respective \file{sysdata.rda} file. }
 
 \usage{
-.getPsi(xi, beta, fct, L2Fam , type)
+.getPsi(param, fct, L2Fam , type)
 
 .modify.xi.PFam.call(xi, PFam)
 
@@ -41,6 +41,7 @@ respective \file{sysdata.rda} file. }
 }
 
 \arguments{
+  \item{param}{object of class \code{"ParamFamParameter"}. }
   \item{xi}{numeric of length 1; shape value. }
   \item{PFam}{an object of class \code{"ParamFamily"}, the parametric family
               at which to evaluate the Lagrange multipliers or LDEstimators;

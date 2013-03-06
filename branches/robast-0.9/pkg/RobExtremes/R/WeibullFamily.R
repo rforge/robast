@@ -49,7 +49,7 @@ WeibullFamily <- function(scale = 1, shape = 0.5,
 
     ## parameters
     names(theta) <- c("scale", "shape")
-    scaleshapename <- c("scale", "shape")
+    scaleshapename <- c("scale"="scale", "shape"="shape")
 
     btq <- bDq <- btes <- bDes <- btel <- bDel <- NULL
     if(!is.null(p)){

@@ -50,7 +50,7 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
     ## parameters
     names(theta) <- c("loc", "scale", "shape")
-    scaleshapename <- c("scale", "shape")
+    scaleshapename <- c("scale"="scale", "shape"="shape")
 
     btq <- bDq <- btes <- bDes <- btel <- bDel <- NULL
     if(!is.null(p)){
