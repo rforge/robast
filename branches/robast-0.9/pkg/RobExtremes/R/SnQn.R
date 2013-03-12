@@ -116,13 +116,13 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
 }
 
 setMethod("Sn", signature(x = "GPareto"),
-    function(x, ...).Sn.intp(x,"Generalized Pareto Family") )
+    function(x, ...).Sn.intp(x,"GeneralizedParetoFamily") )
 
 setMethod("Sn", signature(x = "GEV"),
-    function(x, ...).Sn.intp(x,"GEV Family") )
+    function(x, ...).Sn.intp(x,"GEVFamily") )
 
 setMethod("Sn", signature(x = "Gammad"),
-    function(x, ...).Sn.intp(x,"Gamma Family") )
+    function(x, ...).Sn.intp(x,"GammaFamily") )
 
 setMethod("Sn", signature(x = "Weibull"),
-    function(x, ...).Sn.intp(x,"Weibull Family") )
+    function(x, ...).Sn.intp(x,"WeibullFamily") )

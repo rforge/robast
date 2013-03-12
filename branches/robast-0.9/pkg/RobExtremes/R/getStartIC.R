@@ -4,7 +4,7 @@ setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRi
     mc <- match.call(expand.dots=TRUE)
 
     gridn <- type(risk)
-    nam <- name(model)
+    nam <- gsub(" ","",name(model))
     param1 <- param(model)
     nsng <- character(0)
     sng <- try(getFromNamespace(gridn, ns = "RobAStRDA"), silent=TRUE)

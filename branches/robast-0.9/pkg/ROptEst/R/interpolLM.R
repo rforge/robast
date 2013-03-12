@@ -80,7 +80,11 @@
 }
 
 .readGridFromCSV <- function(fromFileCSV){
-  Grid <- as.matrix(read.csv(fromFileCSV)); dimnames(Grid) <- NULL
+  rg <- read.table(CSVFiles[1], colClasses=rep("character",2), sep=" ", header=FALSE)
+  nrg <- nrow(rg)
+  Grid <- matrix(as.numeric(as.matrix(rg)),nrow=nrg)
+
+  as.matrix(read.csv(fromFileCSV)); dimnames(Grid) <- NULL
   fromFileTXT <- gsub("(.+\\.)csv$","\\1txt",fromFileCSV)
   res2 <- scan(file=fromFileTXT, what=c("character","character"))
   return(list(Grid=Grid, namPFam=res2[1], namInSysdata=res2[2]))

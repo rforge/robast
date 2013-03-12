@@ -21,7 +21,11 @@
 }
 
 .readGridFromCSV <- function(fromFileCSV){
-  Grid <- as.matrix(read.csv(fromFileCSV)); dimnames(Grid) <- NULL
+  rg <- read.table(CSVFiles[1], colClasses=rep("character",2), sep=" ", header=FALSE)
+  nrg <- nrow(rg)
+  Grid <- matrix(as.numeric(as.matrix(rg)),nrow=nrg)
+
+  as.matrix(read.csv(fromFileCSV)); dimnames(Grid) <- NULL
   fromFileTXT <- gsub("(.+\\.)csv$","\\1txt",fromFileCSV)
   res2 <- scan(file=fromFileTXT, what=c("character","character"))
   return(list(Grid=Grid, namPFam=res2[1], namInSysdata=res2[2]))
@@ -102,7 +106,6 @@
       nameInSysdata <- CSVlist[[i]]$namInSysdata
       namPFam <- CSVlist[[i]]$namPFam
       Grid <- CSVlist[[i]]$Grid
-      GridFileName <- paste(sub("^\\.(.+)","\\1",nameInSysdata),".Rdata",sep="")
 
       ### check whether object nameInSysdata already exists (ie. some
       ##   grids for this family already exist) or not
@@ -141,7 +144,12 @@
                 }
                 l.ng <- -1
              }else l.ng <- -2
-          }else l.ng <- length(InterpGrids)+1
+          }else {
+             l.ng <- length(InterpGrids)+1
+             InterpGrids[[l.ng]] <- InterpGrids[[l.ng-1]]
+             InterpGrids[[l.ng]]$fct.O <- NULL
+             InterpGrids[[l.ng]]$fct.N <- NULL
+          }
       }
       if(l.ng>0){ ## a new family is entered
          InterpGrids[[l.ng]]$grid <- Grid
@@ -194,7 +202,7 @@
             includeGrids = includeGrids , includeNams = includeNams,
             excludeGrids = excludeGrids , excludeNams = excludeNams)
 
-  funN <- paste("fun.", if(getRversion()>="2.16") "N" else "O", sep = "")
+  funN <- .versionSuff("fun")
 
   whatIsThereAlready <-  ls(all.names=TRUE, envir=samEnv)
   wprint(whatIsThereAlready)
@@ -221,7 +229,8 @@
   envir2 <- new.env()
   load(file,envir=envir2)
   what0 <- ls(all.names=TRUE,envir=envir2)
-  rm(list=what0[! what0 %in% includeGrids], envir=envir2)
+  if(!is.null(includeGrids))
+      rm(list=what0[! what0 %in% includeGrids], envir=envir2)
   rm(list=excludeGrids, envir=envir2)
   what1 <- ls(all.names=TRUE,envir=envir)
   what2 <- ls(all.names=TRUE,envir=envir2)
