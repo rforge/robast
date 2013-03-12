@@ -328,7 +328,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
 
     FisherInfo <- FisherInfo.fct(param)
-    name <- "Generalized Extreme Value Family with positive shape parameter: Frechet Family"
+    name <- "GEV Family"
 
     ## initializing the GPareto family with components of L2-family
     L2Fam <- new("GEVFamily")

@@ -6,19 +6,15 @@ setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRi
     gridn <- type(risk)
     nam <- name(model)
     param1 <- param(model)
-#    xi <- main(param(model))["shape"] #[scaleshapename(model)["shape"]]
-#    beta <- main(param(model))["scale"] #[scaleshapename(model)["scale"]]
     nsng <- character(0)
-    sng <- try(getFromNamespace(.versionSuff(gridn), ns = "RobAStRDA"),
-                                 silent=TRUE)
+    sng <- try(getFromNamespace(gridn, ns = "RobAStRDA"), silent=TRUE)
     if(!is(sng,"try-error")) nsng <- names(sng)
     if(length(nsng)){
        if(nam %in% nsng){
-          interpolfct <- sng[[nam]]$fct
+          fctN <- .versionSuff("fct")
+          interpolfct <- sng[[nam]][[fctN]]
           .modifyIC <- function(L2Fam, IC){
                    para <- param(L2Fam)
-                   #xi0 <- main(para)["shape"]#[scaleshapename(L2Fam)["scale"]]
-                   #beta0 <- main(para)["scale"]#[scaleshapename(L2Fam)["scale"]]
                    .getPsi(para, interpolfct, L2Fam, type(risk))}
           IC0 <- .getPsi(param1, interpolfct, model, type(risk))
           IC0@modifyIC <- .modifyIC

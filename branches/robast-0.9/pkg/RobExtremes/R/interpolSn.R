@@ -1,4 +1,5 @@
-.versionSuff <- ROptEst:::.versionSuff
+.versionSuff <- RobAStRDA:::.versionSuff
+
 getShapeGrid <- function(gridsize=1000,centralvalue=0.7,
                          withPos=TRUE, cutoff.at.0=1e-4, fac = 2){
 
@@ -59,8 +60,7 @@ getShapeGrid <- function(gridsize=1000,centralvalue=0.7,
 
 getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
                       upp=1.01, accuracy = 10000, GridFileName="SnGrid.Rdata",
-                      withSmooth = TRUE, withPrint = FALSE, withCall = FALSE){
-   call <- match.call()
+                      withPrint = FALSE){
    xiGrid <- unique(sort(xiGrid))
    itSn <- 0
    getSn <- function(xi){
@@ -76,47 +76,14 @@ getSnGrid <- function(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
    iNA <- is.na(SnGrid)
    SnGrid <- SnGrid[!iNA]
    xiGrid <- xiGrid[!iNA]
-   if(withSmooth)
-      SnGrid <- smooth.spline(xiGrid,SnGrid)$y
-   fct0 <- splinefun(x=xiGrid,y=SnGrid)
-   xm <- xiGrid[1]
-   ym <- SnGrid[1]
-   dym <- (SnGrid[2]-SnGrid[1])/(xiGrid[2]-xiGrid[1])
-
-   xM <- (rev(xiGrid))[1]
-   yM <- (rev(SnGrid))[1]
-   dyM <- ((rev(SnGrid))[2]-(rev(SnGrid))[1])/((rev(xiGrid))[2]-(rev(xiGrid))[1])
-   fct <- function(x){
-          y0 <- fct0(x)
-          y1 <- y0
-          y1[x<xm] <- ym+dym*(x[x<xm]-xm)
-          y1[x>xM] <- yM+dyM*(x[x>xM]-xM)
-          if(any(is.na(y0)))
-             warning("There have been xi-values out of range of the interpolation grid.")
-          return(y1)
-   }
-   environment(fct) <- nE <- new.env()
-   assign("fct0",fct0, envir=nE)
-       assign("yM",yM, envir=nE)
-       assign("ym",ym, envir=nE)
-       assign("dyM",dyM, envir=nE)
-       assign("dym",dym, envir=nE)
-   rm(itSn,getSn,iNA,fct0,ym,yM,dym,dyM)
-   if(withCall) rm(call)
-   return(list(grid = cbind(xi=xiGrid,Sn=SnGrid),
-               fct = fct, call = if(withCall) call else NULL))
+   return(cbind(xi=xiGrid,Sn=SnGrid))
 }
 
-.saveInterpGrid <- function(xiGrid = getShapeGrid(), PFam = GParetoFamily(),
-                        sysRdaFolder, sysdataWriteFile = "sysdata.rda",
-                        getFun = getSnGrid, ..., nameInSysdata = ".SnGrids",
-                        GridFileName, withSmooth = TRUE, withPrint = TRUE,
-                        withCall = FALSE,
-                        Y = NULL, elseFun = NULL){
-   ### changed defaults and argnames (for historical reasons):
-   ROptEst:::.saveInterpGrid(thGrid = xiGrid, PFam = PFam,
-            sysRdaFolder = sysRdaFolder, sysdataWriteFile = sysdataWriteFile,
-            getFun = getFun, ..., modifyfct = NULL,
-            nameInSysdata = nameInSysdata, GridFileName = GridFileName,
-            withSmooth = withSmooth, withPrint = withPrint, withCall = withCall,
-            Y = Y, elseFun = elseFun)}
+.generateInterpGridSn <- function(xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
+                                  PFam = GParetoFamily(), withPrint = TRUE){
+   to <- gsub("XXXX",gsub(" ","",name(PFam)), "interpolSnXXXX.csv")
+   Grid <- getSnGrid(xiGrid, PFam = PFam, withPrint = withPrint,
+                     GridFileName = "Sn.Rdata")
+  .saveGridToCSV(Grid,to,name(PFam),".Sn")
+  return(invisible(NULL))
+}

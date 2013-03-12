@@ -104,64 +104,25 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
            return(abs(x@a) * Qn(x@X0,...))
     })
 
- setMethod("Sn", signature(x = "GPareto"),
-    function(x, ...){
-           if(abs(scale(x)-1)< 1e-12){
-#              sng <- .SnGrids
-              sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
-                          ns = "RobAStRDA"), silent =TRUE)
-              if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
-              nam <- "Generalized Pareto Family"
-              if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
-              snf <- sng[[nam]][["fct"]]
-              ret <- snf(shape(x))
-           }else ret <- scale(x)*Sn(x=x/scale(x))
-           return(ret)
-    })
+.Sn.intp <- function(x, nam){
+    if(abs(scale(x)-1)< 1e-12){
+       sng <- try(getFromNamespace(".Sn", ns = "RobAStRDA"), silent =TRUE)
+       if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
+       if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
+       snf <- sng[[nam]][[.versionSuff("fct")]]
+       ret <- snf(shape(x))
+    }else ret <- scale(x)*Sn(x=x/scale(x))
+    return(ret)
+}
 
+setMethod("Sn", signature(x = "GPareto"),
+    function(x, ...).Sn.intp(x,"Generalized Pareto Family") )
 
- setMethod("Sn", signature(x = "GEV"),
-    function(x, ...){
-           if(abs(scale(x)-1)< 1e-12){
-#              sng <- .SnGrids
-              sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
-                          ns = "RobAStRDA"), silent =TRUE)
-              if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
-              nam <- "Generalized Extreme Value Family with positive shape parameter: Frechet Family"
-              if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
-              snf <- sng[[nam]][["fct"]]
-              ret <- snf(shape(x))
-           }else ret <- scale(x)*Sn(x=x/scale(x))
-           return(ret)
-    })
+setMethod("Sn", signature(x = "GEV"),
+    function(x, ...).Sn.intp(x,"GEV Family") )
 
- setMethod("Sn", signature(x = "Gammad"),
-    function(x, ...){
-           if(abs(scale(x)-1)< 1e-12){
-#              sng <- .SnGrids
-              sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
-                          ns = "RobAStRDA"), silent =TRUE)
-              if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
-              nam <- "Gamma family"
-              if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
-              snf <- sng[[nam]][["fct"]]
-              ret <- snf(shape(x))
-           }else ret <- scale(x)*Sn(x=x/scale(x))
-           return(ret)
-    })
+setMethod("Sn", signature(x = "Gammad"),
+    function(x, ...).Sn.intp(x,"Gamma Family") )
 
- setMethod("Sn", signature(x = "Weibull"),
-    function(x, ...){
-           if(abs(scale(x)-1)< 1e-12){
-#              sng <- .SnGrids
-              sng <- try(getFromNamespace(.versionSuff(".SnGrids"),
-                          ns = "RobAStRDA"), silent =TRUE)
-              if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
-              nam <- "Weibull Family"
-              if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
-              snf <- sng[[nam]][["fct"]]
-              ret <- snf(shape(x))
-           }else ret <- scale(x)*Sn(x=x/scale(x))
-           return(ret)
-    })
-
+setMethod("Sn", signature(x = "Weibull"),
+    function(x, ...).Sn.intp(x,"Weibull Family") )

@@ -17,8 +17,7 @@ getShapeGrid(gridsize=1000, centralvalue=0.7,
 
 getSnGrid(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
                       upp=1.01, accuracy = 10000, GridFileName="SnGrid.Rdata",
-                      withSmooth= TRUE, withPrint = FALSE,
-                      withCall = FALSE)
+                      withPrint = FALSE)
 }
 \arguments{
   \item{gridsize}{integer; the size of the grid to be created. }
@@ -37,9 +36,7 @@ getSnGrid(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
   \item{accuracy}{numeric; argument for \code{\link{Sn}}. }
   \item{GridFileName}{character; if \code{GridFileName!=""}, the pure
   y-grid values are saved under this filename. }
-  \item{withSmooth}{logical of length 1: shall a smoothing spline be used?}
   \item{withPrint}{logical of length 1: shall current shape value be printed out?}
-  \item{withCall}{logical of length 1: shall the call be saved, too?}
 }
 \details{
   \code{getShapeGrid} is a helper function to produce an unequally spaced
@@ -69,10 +66,8 @@ getSnGrid(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
 }
 \value{
  \item{getShapeGrid}{a numeric grid of xi-values. }
- \item{getSnGrid}{a list of length 3 with item \code{grid}, i.e.; a matrix with columns
-  \code{xi} and \code{Sn}--the respective interpolation grid),
-  item \code{fct}, i.e.; the respective interpolating function,
-  and item \code{call}, i.e.; the respective call to \code{getSnGrid}. }
+ \item{getSnGrid}{a grid, i.e.; a matrix with columns
+  \code{xi} and \code{Sn}--the respective interpolation grid). }
 }
 \author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 \examples{
