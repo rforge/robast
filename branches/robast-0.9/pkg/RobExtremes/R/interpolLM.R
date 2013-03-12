@@ -28,6 +28,7 @@
 
 
 .svInt <- function(optF = .RMXE.th, xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
+#.svInt <- function(optF = .RMXE.th, xiGrid = getShapeGrid(5, cutoff.at.0=0.005),
                    PFam = GParetoFamily(shape=1,scale=2)){
              namF <- gsub("\\.th$","",paste(deparse(substitute(optF))))
              to <- gsub("XXXX",gsub(" ","",name(PFam)),

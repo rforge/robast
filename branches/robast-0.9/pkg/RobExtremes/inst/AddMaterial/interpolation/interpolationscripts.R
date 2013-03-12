@@ -25,7 +25,7 @@ PF <- GParetoFamily()
     RobExtremes:::.generateInterpGridSn(PFam = PF)}
 ## to make this parallel, start this on several processors
 #.svInt1()
-#.svInt0(.OMSE.th, PFam=PF)
+#.svInt(.OMSE.th, PFam=PF)
 .svInt(.MBRE.th, PFam=PF)
-.svInt0(.RMXE.th, PFam=PF)
+.svInt(.RMXE.th, PFam=PF)
 setwd(oldwd)

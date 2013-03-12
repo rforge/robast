@@ -55,10 +55,7 @@
    on.exit({do.call(distrExOptions,args=distrExOptions.old)
             do.call(distroptions,args=distroptions.old)
             })
-   LMGrid <- sapply(thGrid,getLM)
-   if(length(dim(LMGrid))==3)
-      LMGrid <- LMGrid[,1,,drop=TRUE]
-   else LMGrid <- LMGrid[,drop=FALSE]
+   LMGrid <- t(sapply(thGrid,getLM))
 
    iNA <- apply(LMGrid,1, function(u) any(is.na(u)))
    LMGrid <- LMGrid[!iNA,,drop=FALSE]
@@ -78,7 +75,7 @@
    write.table(format(Grid,digits=21),
                file=toFileCSV, row.names=FALSE, col.names=FALSE)
    toFileTXT <- gsub("(.+\\.)csv$","\\1txt",toFileCSV)
-   cat(file=toFileTXT,namPFam,"\n",nameInSysdata)
+   cat(file=toFileTXT,gsub(" ","",namPFam),"\n",nameInSysdata)
    return(invisible(NULL))
 }
 
