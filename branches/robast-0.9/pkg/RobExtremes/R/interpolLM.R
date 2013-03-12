@@ -31,14 +31,15 @@
 #.svInt <- function(optF = .RMXE.th, xiGrid = getShapeGrid(5, cutoff.at.0=0.005),
                    PFam = GParetoFamily(shape=1,scale=2)){
              namF <- gsub("\\.th$","",paste(deparse(substitute(optF))))
+             namF <- gsub("^\\.(.+)","\\1",namF)
              to <- gsub("XXXX",gsub(" ","",name(PFam)),
-                    gsub("YYYY", gsub("^\\.(.+)","\\1",namF), "interpolYYYYXXXX.csv"))
+                    gsub("YYYY", namF, "interpolYYYYXXXX.csv"))
              print(to)
              ROptEst:::.generateInterpGrid(thGrid = xiGrid,
                   PFam = PFam, toFileCSV = to,
                   getFun =  ROptEst:::.getLMGrid,
                   modifyfct = .modify.xi.PFam.call, optFct = optF,
-                  nameInSysdata = name(PFam), withPrint = TRUE)
+                  nameInSysdata = namF, withPrint = TRUE)
 }
 
 
