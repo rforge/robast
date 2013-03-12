@@ -109,7 +109,7 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
        sng <- try(getFromNamespace(".Sn", ns = "RobAStRDA"), silent =TRUE)
        if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
        if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
-       snf <- sng[[nam]][[.versionSuff("fct")]]
+       snf <- sng[[nam]][[.versionSuff("fun")]]
        ret <- snf(shape(x))
     }else ret <- scale(x)*Sn(x=x/scale(x))
     return(ret)
@@ -122,7 +122,7 @@ setMethod("Sn", signature(x = "GEV"),
     function(x, ...).Sn.intp(x,"GEVFamily") )
 
 setMethod("Sn", signature(x = "Gammad"),
-    function(x, ...).Sn.intp(x,"GammaFamily") )
+    function(x, ...).Sn.intp(x,"Gammafamily") )
 
 setMethod("Sn", signature(x = "Weibull"),
     function(x, ...).Sn.intp(x,"WeibullFamily") )

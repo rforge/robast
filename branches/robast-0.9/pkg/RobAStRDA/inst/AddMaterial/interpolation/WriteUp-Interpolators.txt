@@ -64,7 +64,7 @@ Let's use the following notation for describing the list structure:
 Each layer in the hierarchie gives one ">" and an item is inserted
 below the item next left to it with number of ">" by 1 smaller than
 its own. I-fct denotes the interpolating function to the grid left
-to it. {} denote optional entries and capture that one may want
+to it (named "fun"). {} denote optional entries and capture that one may want
 to smooth out the original interpolation grids in entries 'grid', 
 giving smoothed grids written into entries 'gridS'. 
 OptCrit for the time being is either in ".OMSE", ".MBRE", ".RMXE" or ".Sn".
@@ -72,6 +72,11 @@ Models for the time being are GPD, GEVD, Gamma, Weibull.
 Then our structure goes as follows:
 [OptCrit], >[model1], >>[grid], {>>[gridS],} >>[I-fct.O], >>[I-Fct.N],
 >[model2], >>[grid], {>>[gridS],} >>[I-fct.O], >>[I-Fct.N], ...
+
+For instance, to get the clipping height "b" in OMSE for "GEV" at 
+theta = (xi=0.3) for >R-2.16, we may write 
+      .OMSE[["GEVFamily"]][["fun.N"]][[1]](0.3)
+
 
 6. Namespace issue
 

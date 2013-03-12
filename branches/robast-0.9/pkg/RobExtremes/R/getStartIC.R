@@ -11,7 +11,7 @@ setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRi
     if(!is(sng,"try-error")) nsng <- names(sng)
     if(length(nsng)){
        if(nam %in% nsng){
-          fctN <- .versionSuff("fct")
+          fctN <- .versionSuff("fun")
           interpolfct <- sng[[nam]][[fctN]]
           .modifyIC <- function(L2Fam, IC){
                    para <- param(L2Fam)
