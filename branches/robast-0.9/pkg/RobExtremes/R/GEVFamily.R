@@ -229,7 +229,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
            if(!is.null(names(e0)))
                e0 <- e0[c("scale", "shape")]
         }
-        print(e0); print(str(x)); print(head(summary(x))); print(mu)
+#        print(e0); print(str(x)); print(head(summary(x))); print(mu)
         if(any(x < mu-e0["scale"]/e0["shape"]))
                stop("some data smaller than 'loc-scale/shape' ")
 
