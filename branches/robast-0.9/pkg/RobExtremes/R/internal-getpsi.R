@@ -1,4 +1,4 @@
-.is.na.Psi <- function(param, fct, nam){
+.is.na.Psi <- function(param, fct, nam = "shape"){
    xi <- main(param)[nam]
    return(is.na(fct[[1]](xi)))
 }

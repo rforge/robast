@@ -11,9 +11,13 @@
       return(nModel)
 }
 
-.RMXE.xi <- function(xi, PFam) ROptEst:::.RMXE.th(xi, PFam, .modify.xi.PFam.call)
-.MBRE.xi <- function(xi, PFam) ROptEst:::.MBRE.th(xi, PFam, .modify.xi.PFam.call)
-.OMSE.xi <- function(xi, PFam) ROptEst:::.OMSE.th(xi, PFam, .modify.xi.PFam.call)
+.RMXE.th <- ROptEst:::.RMXE.th
+.MBRE.th <- ROptEst:::.MBRE.th
+.OMSE.th <- ROptEst:::.OMSE.th
+
+.RMXE.xi <- function(xi, PFam) .RMXE.th(xi, PFam, .modify.xi.PFam.call)
+.MBRE.xi <- function(xi, PFam) .MBRE.th(xi, PFam, .modify.xi.PFam.call)
+.OMSE.xi <- function(xi, PFam) .OMSE.th(xi, PFam, .modify.xi.PFam.call)
 
 
 

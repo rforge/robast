@@ -32,7 +32,7 @@ to be stored in the respective \file{sysdata.rda} file. }
 .getLMGrid(xiGrid = getShapeGrid(), PFam = GParetoFamily(scale=1,shape=2),
            optFct = .RMXE.xi, GridFileName="LMGrid.Rdata", withPrint = FALSE)
 
-.svInt(optF = .RMXE.xi, xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
+.svInt(optF = .RMXE.th, xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
        PFam = GParetoFamily(shape=1,scale=2))
 
 .generateInterpGridSn(xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
