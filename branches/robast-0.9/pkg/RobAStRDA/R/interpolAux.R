@@ -35,12 +35,15 @@
 # .generateInterpolators generates the interpolators to a given grid
 #     and returns a list of the given grid and the function list
 ############################################################################
-.generateInterpolators <- function(Grid, approxOrspline = "spline"){
+.generateInterpolators <- function(Grid, approxOrspline = "spline",
+                                   extrapol = c(NA,NA)){
   thGrid <- Grid[,1]
   LMGrid <- Grid[,-1,drop=FALSE]
   fctL <- vector("list",ncol(LMGrid))
   xm <- thGrid[1]
   xM <- (rev(thGrid))[1]
+  xm0 <- if(is.na(extrapol[1])) -Inf else extrapol[1]
+  xM0 <- if(is.na(extrapol[2]))  Inf else extrapol[2]
   for(i in 1:ncol(LMGrid)){
        LMG <- LMGrid[,i]
        fct <- if(approxOrspline=="spline")
@@ -52,8 +55,10 @@
        fctX <- function(x){
             y0 <- fct(x)
             y1 <- y0
-            y1[x<xm] <- ym+dym*(x[x<xm]-xm)
-            y1[x>xM] <- yM+dyM*(x[x>xM]-xM)
+            y1[x < xm & x >= xm0] <- ym+dym*(x[x < xm & x >= xm0]-xm)
+            y1[x > xM & x <= xM0] <- yM+dyM*(x[x > xM & x <= xM0]-xM)
+            y1[x < xm0] <- NA
+            y1[x > xM0] <- NA
             if(any(is.na(y0)))
                warning(paste("There have been xi-values out of range ",
                              "of the interpolation grid.", sep = ""))
@@ -191,7 +196,8 @@
                                    includeGrids = NULL, includeNams = NULL,
                                    excludeGrids = NULL, excludeNams = NULL,
                                    withPrint = TRUE, withSmoothFct = FALSE,
-                                   approxOrspline = "spline"){
+                                   approxOrspline = "spline",
+                                   extrapol = c(NA,NA)){
 
   wprint <- function(...){ if (withPrint) print(...)}
 

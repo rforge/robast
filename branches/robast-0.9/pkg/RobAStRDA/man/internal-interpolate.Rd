@@ -27,7 +27,7 @@ to be stored in the respective \file{sysdata.rda} file. }
 
 .readGridFromCSV(fromFileCSV)
 
-.generateInterpolators(Grid, approxOrspline = "spline")
+.generateInterpolators(Grid, approxOrspline = "spline", extrapol = c(NA,NA))
 
 .saveGridToRda(fromFileCSV, toFileRDA = "sysdata.rda", withMerge = FALSE,
                withPrint = TRUE, withSmooth = TRUE, df = NULL)
@@ -37,7 +37,8 @@ to be stored in the respective \file{sysdata.rda} file. }
 .computeInterpolators(sysdataFiles, toFileRDA = "sysdata.rda",
       includeGrids = NULL, includeNams = NULL,
       excludeGrids = NULL, excludeNams = NULL,
-      withPrint = TRUE, withSmoothFct = FALSE, approxOrspline = "spline")
+      withPrint = TRUE, withSmoothFct = FALSE,
+      approxOrspline = "spline", extrapol = c(NA,NA))
 
 .mergeF(file,envir, includeGrids = NULL, includeNams = NULL,
         excludeGrids = NULL, excludeNams = NULL)
@@ -65,6 +66,10 @@ to be stored in the respective \file{sysdata.rda} file. }
   \item{approxOrspline}{character; if \code{approxOrspline=="spline"} (default),
     \code{\link{splinefun}} is used for generating the interpolators, otherwise
     we use \code{\link{approxfun}}. }
+  \item{extrapol}{numeric of length 2; lower and upper bound, upto which
+       extrapolation is done; beyond, the interpolator returns \code{NA};
+       if one (or both) entries of \code{extrapol} are \code{NA}, we extrapolate
+       beyond limit. }
   \item{toFileRDA}{character; the \file{.rda}-file to which the interpolators
         are saved. }
   \item{withMerge}{logical of length 1: in case a respective grid already

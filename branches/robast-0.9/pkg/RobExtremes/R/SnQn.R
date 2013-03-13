@@ -111,6 +111,7 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
        if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
        snf <- sng[[nam]][[.versionSuff("fun")]]
        ret <- snf(shape(x))
+       if(is.na(ret)) return(Sn(as(x,"AbscontDistribution")))
     }else ret <- scale(x)*Sn(x=x/scale(x))
     return(ret)
 }

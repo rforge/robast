@@ -6,6 +6,7 @@
 \alias{.MBRE.xi}
 \alias{.getLMGrid}
 \alias{.getPsi}
+\alias{.is.na.Psi}
 \alias{.svInt}
 \alias{.generateInterpGridSn}
 
@@ -19,6 +20,8 @@ to be stored in the respective \file{sysdata.rda} file. }
 
 \usage{
 .getPsi(param, fct, L2Fam , type)
+
+.is.na.Psi(param, fct, nam = "shape")
 
 .modify.xi.PFam.call(xi, PFam)
 
@@ -43,6 +46,7 @@ to be stored in the respective \file{sysdata.rda} file. }
               at which to evaluate the Lagrange multipliers or LDEstimators;
               in our use case, it is a shape-scale model, hence the respective
               (main) parameter must contain \code{"scale"} and \code{"shape"}. }
+  \item{nam}{character; name of the shape parameter. }
   \item{type}{type of the optimality: one of ".OMSE" for maxMSE,
        ".RMXE" for rmx, and  ".MBRE" for MBRE. }
   \item{xi}{numeric of length 1; shape value. }
@@ -61,6 +65,11 @@ to be stored in the respective \file{sysdata.rda} file. }
    \code{.getpsi} reads the respective interpolating function
     from an object from \file{sysdata.rda} and generates a respective
    \code{HampelIC} object by a call to  \code{generateIC}.
+
+   \code{.is.na.Psi} checks whether the shape parameter already lies
+   beyond the range for which inter-/extrapolation is admitted
+   (and, correspondingly, returns \code{TRUE} if one has to compute the
+   IC completely anew.).
 
   \code{.MBRE.xi} computes the Lagrange multipliers for the MBRE estimator,
   \code{.OMSE.xi} for the OMSE estimator at radius \code{r=0.5},
@@ -83,7 +92,8 @@ to be stored in the respective \file{sysdata.rda} file. }
       version.
       }
 \value{
-  \item{.getpsi}{an IC.}
+  \item{.getpsi}{an IC. }
+  \item{.is.na.Psi}{logical of length 1. }
   \item{.modify.xi.PFam.call}{A call to evaluate the parametric
             family at the new parameter value. }
   \item{.MBRE.xi}{A list with items \code{b} (a number; clipping height),
@@ -101,12 +111,5 @@ to be stored in the respective \file{sysdata.rda} file. }
   \item{.svInt}{  \code{invisible(NULL)}}
 }
 \seealso{\code{\link{interpolateSn}}}
-\examples{
-\dontrun{
-### code to produce grid for GPareto:
-  .saveInterpGrid(sysRdaFolder = "C:/rtest/RobASt/branches/RobASt-0.9/pkg/RobExtremes/R",
-              accuracy = 800)
-}
-}
 \keyword{internal}
 \concept{utilities}

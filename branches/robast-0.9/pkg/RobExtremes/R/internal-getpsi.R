@@ -1,3 +1,7 @@
+.is.na.Psi <- function(param, fct, nam){
+   xi <- main(param)[nam]
+   return(is.na(fct[[1]](xi)))
+}
 .getPsi <- function(param, fct, L2Fam , type){
 
    scshnm <- scaleshapename(L2Fam)

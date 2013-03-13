@@ -29,10 +29,24 @@ system.time({ S1g <- sapply(xig, gSn, GPareto)
   S3g <- sapply(xig, gSn, Gammad)
   S4g <- sapply(xig, gSn, Weibull)
 })
+##
+#   user  system elapsed
+#   2.31    0.00    2.32
+#
 system.time({S1ga <- sapply(xig, gSna, GPareto)
 S2ga <- sapply(xig, gSna, GEV)
 S3ga <- sapply(xig, gSna, Gammad)
 S4ga <- sapply(xig, gSna, Weibull)})
+##
+#    user   system  elapsed
+#  966.03     0.83   979.77
+#
+setwd("C:/rtest/RobASt/branches/robast-0.9/pkg/RobExtremes/inst/AddMaterial/interpolation")
+#
+save(S1g, S1ga, S2g, S2ga, S3g, S3ga, S4g, S4ga, file="SnTest.Rdata")
+#
+#
+pdf("Snplot.pdf")
 par(mfrow=c(2,2))
 plot(xig, S1g, type="l")
 lines(xig, S1ga, col="red")
@@ -43,3 +57,4 @@ lines(xig, S3ga, col="red")
 plot(xig, S4g, type="l")
 lines(xig, S4ga, col="red")
 par(mfrow=c(1,1))
+dev.off()
