@@ -1,42 +1,84 @@
-.RMXE.th <- function(th, PFam, modifyfct){
+.RMXE.th <- function(th, PFam, modifyfct, loRad = 0, upRad = Inf, z.start = NULL,
+             A.start = NULL, upper = NULL, lower = NULL,
+             OptOrIter = "iterate", maxiter = 50,
+             tol = .Machine$double.eps^0.4, loRad0 = 1e-3, ...){
       PFam <- modifyfct(th,PFam)
       IC <- radiusMinimaxIC(L2Fam=PFam, neighbor= ContNeighborhood(),
-                            risk = asMSE(), verbose = FALSE)
+                            risk = asMSE(), verbose = FALSE,
+                            loRad = loRad, upRad = upRad, z.start = z.start,
+                            A.start = A.start, upper = upper, lower = lower,
+                            OptOrIter = OptOrIter, maxiter = maxiter,
+                            tol = tol, warn = FALSE,
+                            loRad0 = loRad0)
       return(c(b=clip(IC), a=cent(IC), a.w = cent(weight(IC)),
                            A=stand(IC),  A.w = stand(weight(IC))))
 }
 
-.MBRE.th <- function(th, PFam, modifyfct){
+.MBRE.th <- function(th, PFam, modifyfct,
+             z.start = NULL, A.start = NULL, upper = 1e4,
+             lower = 1e-4, OptOrIter = "iterate",
+             maxiter = 50, tol = .Machine$double.eps^0.4, ...){
       PFam <- modifyfct(th,PFam)
       RobM <- InfRobModel(center = PFam, neighbor = ContNeighborhood(radius = 15))
-      IC <- optIC(model = RobM, risk = asBias(), verbose = FALSE)
+      IC <- optIC(model = RobM, risk = asBias(), verbose = FALSE,
+             z.start = z.start, A.start = A.start, upper = upper,
+             lower = lower, OptOrIter = OptOrIter,
+             maxiter = maxiter, tol = tol, warn = TRUE, noLow = FALSE,
+             .withEvalAsVar = FALSE)
       mA <- max(stand(IC))
       mAw <- max(stand(weight(IC)))
       return(c(b=clip(IC), a=cent(IC), aw=cent(weight(IC)),
                A=stand(IC)/mA, Aw=stand(weight(IC))/mAw))
 }
 
-.OMSE.th <- function(th, PFam, modifyfct){
+.OMSE.th <- function(th, PFam, modifyfct, radius = 0.5,
+             z.start = NULL, A.start = NULL, upper = 1e4,
+             lower = 1e-4, OptOrIter = "iterate",
+             maxiter = 50, tol = .Machine$double.eps^0.4, ...){
       PFam <- modifyfct(th,PFam)
-      RobM <- InfRobModel(center = PFam, neighbor = ContNeighborhood(radius = .5))
-      IC <- optIC(model = RobM, risk = asMSE(), verbose = FALSE)
+      RobM <- InfRobModel(center = PFam,
+                          neighbor = ContNeighborhood(radius = radius))
+      IC <- optIC(model = RobM, risk = asMSE(), verbose = FALSE,
+             z.start = z.start, A.start = A.start, upper = upper,
+             lower = lower, OptOrIter = OptOrIter,
+             maxiter = maxiter, tol = tol, warn = TRUE, noLow = FALSE,
+             .withEvalAsVar = FALSE)
       res=c(b=clip(IC), a=cent(IC), a.w = cent(weight(IC)),
                 A=stand(IC), A.w = stand(weight(IC)))
       return(res)
 }
 
 
-.getLMGrid <- function(thGrid, PFam, optFct = .RMXE.th, modifyfct,
-                       GridFileName="LMGrid.Rdata", withPrint = FALSE){
+.getLMGrid <- function(thGrid, PFam, optFct = .RMXE.th, modifyfct, radius = 0.5,
+                       GridFileName="LMGrid.Rdata", withPrint = FALSE,
+                       upper = 1e4, lower = 1e-4, OptOrIter = "iterate",
+                       maxiter = 50, tol = .Machine$double.eps^0.4,
+                       loRad = 0, upRad = Inf, loRad0 = 1e-3,
+                       withStartLM = TRUE
+                       ){
    wprint <- function(...){ if (withPrint) print(...)}
    thGrid <- unique(sort(thGrid))
    itLM <- 0
+   z.start <- NULL
+   A.start <- NULL
    getLM <- function(th){
                itLM <<- itLM + 1
                if(withPrint) cat("Evaluation Nr.", itLM," at th = ",th,"\n")
                a <- try(
-               optFct(th=th,PFam=PFam,modifyfct=modifyfct) , silent=TRUE)
-               if(is(a,"try-error")) a <- rep(NA,13)
+               optFct(th = th, PFam = PFam, modifyfct = modifyfct,
+                      z.start = z.start, A.start = A.start,
+                      upper = upper, lower = lower, OptOrIter = OptOrIter,
+                       maxiter = maxiter, tol = tol,
+                       loRad = loRad, upRad = upRad, loRad0 = loRad0),
+               silent=TRUE)
+               if(is(a,"try-error")){ a <- rep(NA,13)}else{
+                  if(withStartLM){
+                     pdim <- length(a[["a"]])
+                     kdim <- length(a[["a.w"]])
+                     z.start <<- a[["a.w"]]
+                     A.start <<- matrix(a[["A"]],pdim,kdim)
+                  }
+               }
                return(a)
                }
 

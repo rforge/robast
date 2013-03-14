@@ -1,7 +1,7 @@
-getLMs <- function(Gridnam,Famnam,xi=0.7, baseDir="C:/rtest/robast"){
+getLMs <- function(Gridnam,Famnam,xi=0.7, baseDir="C:/rtest/robast", withPrint=FALSE){
    ## Gridnam in (Sn,OMSE,RMXE,MBRE)
    ## Famnam in "Generalized Pareto Family",
-   ##           "Generalized Extreme Value Family with positive shape parameter: Frechet Family",
+   ##           "GEV Family",
    ##           "Gamma family",
    ##           "Weibull Family"
    ## xi Scaleparameter (can be vector)
@@ -12,17 +12,20 @@ getLMs <- function(Gridnam,Famnam,xi=0.7, baseDir="C:/rtest/robast"){
    load(file, envir=nE)
    Gnams <- c("Sn","OMSE","RMXE","MBRE")
    Fnams <- c("Generalized Pareto Family",
-              "Generalized Extreme Value Family with positive shape parameter: Frechet Family",
+              "GEV Family",
               "Gamma family",
               "Weibull Family")
    if(! Gridnam %in% Gnams) stop("Falscher Gittername")
    if(! Famnam %in% Fnams) stop("Falscher Familienname")
+   Famnam0 <- gsub(" ","",Famnam)
    isSn <- (Gridnam == "Sn")
    GN0 <- Gridnam; if(isSn) GN0 <- "SnGrids"
-   GN <- paste(".",GN0,".",if(getRversion()<"2.16") "O" else "N", sep="")
-   fct <- get(GN,envir=nE)[[Famnam]]$fct
+   GN <- paste(".",GN0, sep="")
+   funN <- paste("fun",".",if(getRversion()<"2.16") "O" else "N",sep="")
+   if(withPrint) print(c(GN, Famnam0, funN))
+   fct <- get(GN,envir=nE)[[Famnam0]][[funN]]
 
-   if(!isSn)){
+   if(!isSn){
    ## für Gridnam != Sn ist LM für jeden xi Wert ein Vektor der Länge 13, genauer
    #           in 1:13 (clip=b, cent.a=a1.a,a2.a, cent.i=a1.i,a2.i,
    ##                  stand.a=A.a=matrix(c(A11.a,(A12.a+A21.a)/2,

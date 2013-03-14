@@ -33,7 +33,11 @@
 
 .svInt <- function(optF = .RMXE.th, xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
 #.svInt <- function(optF = .RMXE.th, xiGrid = getShapeGrid(5, cutoff.at.0=0.005),
-                   PFam = GParetoFamily(shape=1,scale=2)){
+                   PFam = GParetoFamily(shape=1,scale=2), radius = 0.5,
+                   upper = 1e4, lower = 1e-4, OptOrIter = "iterate",
+                   maxiter = 50, tol = .Machine$double.eps^0.4,
+                   loRad = 0, upRad = Inf, loRad0 = 1e-3,
+                   withStartLM = TRUE){
              namF <- gsub("\\.th$","",paste(deparse(substitute(optF))))
              namF <- gsub("^\\.(.+)","\\1",namF)
              to <- gsub("XXXX",gsub(" ","",name(PFam)),
@@ -43,7 +47,10 @@
                   PFam = PFam, toFileCSV = to,
                   getFun =  ROptEst:::.getLMGrid,
                   modifyfct = .modify.xi.PFam.call, optFct = optF,
-                  nameInSysdata = namF, withPrint = TRUE)
+                  nameInSysdata = namF, withPrint = TRUE, radius = radius,
+                  upper = upper, lower = lower, OptOrIter = OptOrIter,
+                  maxiter = maxiter, tol = tol, loRad = loRad, upRad = upRad,
+                  loRad0 = loRad0, withStartLM = withStartLM)
 }
 
 

@@ -33,7 +33,10 @@ to be stored in the respective \file{sysdata.rda} file. }
            optFct = .RMXE.xi, GridFileName="LMGrid.Rdata", withPrint = FALSE)
 
 .svInt(optF = .RMXE.th, xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
-       PFam = GParetoFamily(shape=1,scale=2))
+       PFam = GParetoFamily(shape=1,scale=2), radius = 0.5, upper = 1e4,
+       lower = 1e-4, OptOrIter = "iterate",  maxiter = 50,
+       tol = .Machine$double.eps^0.4, loRad = 0, upRad = Inf, loRad0 = 1e-3,
+       withStartLM = TRUE)
 
 .generateInterpGridSn(xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
                       PFam = GParetoFamily(), withPrint = TRUE)
@@ -60,6 +63,26 @@ to be stored in the respective \file{sysdata.rda} file. }
   \item{GridFileName}{character; if \code{GridFileName!=""}, the pure
             y-grid values are saved under this filename. }
   \item{withPrint}{logical of length 1: shall current shape value be printed out?}
+  \item{radius}{ [for OMSE]: positive numeric of length 1: the radius of the
+                 neighborhood for which the LM's are to be computed;
+                 defaults to 0.5. }
+  \item{loRad}{ the lower end point of the interval to be searched. }
+  \item{upRad}{ the upper end point of the interval to be searched. }
+  \item{upper}{ upper bound for the optimal clipping bound. }
+  \item{lower}{ lower bound for the optimal clipping bound. }
+  \item{OptOrIter}{character; which method to be used for determining Lagrange
+  multipliers \code{A} and \code{a}: if (partially) matched to \code{"optimize"},
+  \code{getLagrangeMultByOptim} is used; otherwise: by default, or if matched to
+  \code{"iterate"} or to \code{"doubleiterate"},
+  \code{getLagrangeMultByIter} is used. More specifically,
+  when using \code{getLagrangeMultByIter}, and if argument \code{risk} is of
+  class \code{"asGRisk"}, by default and if matched to \code{"iterate"}
+  we use only one (inner) iteration, if matched to \code{"doubleiterate"}
+  we use up to \code{Maxiter} (inner) iterations. }
+  \item{loRad0}{ for numerical reasons: the effective lower bound for the zero search;
+   internally set to \code{max(loRad,loRad0)}. }
+  \item{withStartLM}{ logical of length 1: shall the LM's of the preceding grid
+    value serve as starting value for the next grid value? }
 }
 \details{
    \code{.getpsi} reads the respective interpolating function

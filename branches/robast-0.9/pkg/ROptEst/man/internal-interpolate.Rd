@@ -20,12 +20,25 @@ respective \file{sysdata.rda} file. }
 
 \usage{
 
-.RMXE.th(th, PFam, modifyfct)
-.MBRE.th(th, PFam, modifyfct)
-.OMSE.th(th, PFam, modifyfct)
+.RMXE.th(th, PFam, modifyfct, loRad = 0, upRad = Inf, z.start = NULL,
+             A.start = NULL, upper = NULL, lower = NULL,
+             OptOrIter = "iterate", maxiter = 50,
+             tol = .Machine$double.eps^0.4, loRad0 = 1e-3, ...)
+.MBRE.th(th, PFam, modifyfct,
+             z.start = NULL, A.start = NULL, upper = 1e4,
+             lower = 1e-4, OptOrIter = "iterate",
+             maxiter = 50, tol = .Machine$double.eps^0.4, ...)
+.OMSE.th(th, PFam, modifyfct, radius = 0.5,
+             z.start = NULL, A.start = NULL, upper = 1e4,
+             lower = 1e-4, OptOrIter = "iterate",
+             maxiter = 50, tol = .Machine$double.eps^0.4, ...)
 
-.getLMGrid(thGrid, PFam, optFct = .RMXE.th, modifyfct,
-           GridFileName = "LMGrid.Rdata", withPrint = FALSE)
+.getLMGrid(thGrid, PFam, optFct = .RMXE.th, modifyfct, radius = 0.5,
+           GridFileName = "LMGrid.Rdata", withPrint = FALSE,
+           upper = 1e4, lower = 1e-4, OptOrIter = "iterate",
+           maxiter = 50, tol = .Machine$double.eps^0.4,
+           loRad = 0, upRad = Inf, loRad0 = 1e-3,
+           withStartLM = TRUE)
 
 
 .saveGridToCSV(Grid, toFileCSV, namPFam, nameInSysdata)
@@ -46,8 +59,33 @@ respective \file{sysdata.rda} file. }
   \item{modifyfct}{function with arguments \code{th} and \code{PFam} to move
        the parametric family to the point of the grid value; returns the
        moved parametric family.}
-  \item{withSmooth}{logical of length 1: shall a smoothing spline be used?}
-  \item{withPrint}{logical of length 1: shall current grid value be printed out?}
+  \item{radius}{ [for OMSE]: positive numeric of length 1: the radius of the
+                 neighborhood for which the LM's are to be computed;
+                 defaults to 0.5. }
+  \item{loRad}{ the lower end point of the interval to be searched. }
+  \item{upRad}{ the upper end point of the interval to be searched. }
+  \item{z.start}{ initial value for the centering constant. }
+  \item{A.start}{ initial value for the standardizing matrix. }
+  \item{upper}{ upper bound for the optimal clipping bound. }
+  \item{lower}{ lower bound for the optimal clipping bound. }
+  \item{OptOrIter}{character; which method to be used for determining Lagrange
+  multipliers \code{A} and \code{a}: if (partially) matched to \code{"optimize"},
+  \code{getLagrangeMultByOptim} is used; otherwise: by default, or if matched to
+  \code{"iterate"} or to \code{"doubleiterate"},
+  \code{getLagrangeMultByIter} is used. More specifically,
+  when using \code{getLagrangeMultByIter}, and if argument \code{risk} is of
+  class \code{"asGRisk"}, by default and if matched to \code{"iterate"}
+  we use only one (inner) iteration, if matched to \code{"doubleiterate"}
+  we use up to \code{Maxiter} (inner) iterations. }
+  \item{maxiter}{ the maximum number of iterations. }
+  \item{tol}{ the desired accuracy (convergence tolerance).}
+  \item{loRad0}{ for numerical reasons: the effective lower bound for the zero search;
+   internally set to \code{max(loRad,loRad0)}. }
+  \item{\dots}{ additional parameters. }
+  \item{withStartLM}{ logical of length 1: shall the LM's of the preceding grid
+    value serve as starting value for the next grid value? }
+  \item{withSmooth}{logical of length 1: shall a smoothing spline be used? }
+  \item{withPrint}{logical of length 1: shall current grid value be printed out? }
   \item{thGrid}{numeric; grid values. }
   \item{optFct}{function with arguments \code{theta}, \code{PFam},
                 and modifyfct; determines the Lagrange multipliers. }
@@ -68,7 +106,7 @@ respective \file{sysdata.rda} file. }
 }
 \details{
   \code{.MBRE.th} computes the Lagrange multipliers for the MBRE estimator,
-  \code{.OMSE.th} for the OMSE estimator at radius \code{r=0.5},
+  \code{.OMSE.th} for the OMSE estimator at radius \code{radius},
   and \code{.RMXE.th} the RMXE estimator.
 
   \code{.getLMGrid} in a large loop computes the Lagrange multipliers for

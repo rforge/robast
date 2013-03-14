@@ -7,15 +7,23 @@ RobRDA a sysdata.rda only package
 }
 \description{
 This package only contains sysdata.rda (with corresponding interpolation grids
-for speedup); it is currently used in package RobExtremes.
-The code to produce its contents can be drawn from CRAN-packages
-ROptEst and RobExtremes, more specifically: see ?.RMXE.xi (RobExtremes)
-resp. ?.RMXE.th (ROptEst), as well as the contents of the (system) folder
+for speedup); it is currently used in package \pkg{RobExtremes}.
+The code to produce its contents is split into two parts: (a) grid construction
+and (b) interpolator construction. While the code for (a) can be drawn from
+CRAN-packages \pkg{ROptEst} and \pkg{RobExtremes}, more specifically:
+see \code{?.RMXE.xi} (\pkg{RobExtremes}) resp. \code{?.RMXE.th} (\pkg{ROptEst}),
+as well as the contents of the (system) folder
 of package RobExtremes, i.e.,
-  dir(file.path(system.file(package="RobExtremes"),"AddMaterial","interpolation"))
+  \code{dir(file.path(system.file(package="RobExtremes"),"AddMaterial","interpolation"))},
+the code for (b) resides in the present package (and does not need to know anything
+about the grid construction). As it is not meant for users but rather for
+developers, it is not exported to the namespace; still, it is documented,
+see \code{?.generateInterpolators}.
 
 The reason to separate the rda file from the actual R packages is to
-keep the latter small while we expect this package to only need seldom updates.
+keep the latter small while we expect the present package to only need
+seldom updates.
+
 See also mail exchange P.Ruckdeschel - U.Ligges on R-devel---
 \url{https://stat.ethz.ch/pipermail/r-devel/2013-February/065794.html}.
 }
