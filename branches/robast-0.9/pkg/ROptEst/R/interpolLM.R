@@ -10,7 +10,7 @@
                             OptOrIter = OptOrIter, maxiter = maxiter,
                             tol = tol, warn = FALSE,
                             loRad0 = loRad0, returnNAifProblem = TRUE)
-      if(is.na(IC)) return(NA)
+      if(!is(IC,"IC")) if(is.na(IC)) return(NA)
       txt <- "least favorable radius:"
       wL <- grepl(txt, Infos(IC)[,"message"])
       rad <- as.numeric(gsub(txt, "", Infos(IC)[wL,"message"]))
@@ -29,11 +29,11 @@
              lower = lower, OptOrIter = OptOrIter,
              maxiter = maxiter, tol = tol, warn = TRUE, noLow = FALSE,
              .withEvalAsVar = FALSE, returnNAifProblem = TRUE)
-      if(is.na(IC)) return(NA)
+      if(!is(IC,"IC")) if(is.na(IC)) return(NA)
       mA <- max(stand(IC))
       mAw <- max(stand(weight(IC)))
-      return(list(b=clip(IC), a=cent(IC), aw=cent(weight(IC)),
-               A=stand(IC)/mA, Aw=stand(weight(IC))/mAw))
+      return(list(b=clip(IC), a=cent(IC), a.w=cent(weight(IC)),
+               A=stand(IC)/mA, A.w=stand(weight(IC))/mAw))
 }
 
 .OMSE.th <- function(th, PFam, modifyfct, radius = 0.5,
@@ -48,7 +48,7 @@
              lower = lower, OptOrIter = OptOrIter,
              maxiter = maxiter, tol = tol, warn = TRUE, noLow = FALSE,
              .withEvalAsVar = FALSE, returnNAifProblem = TRUE)
-      if(is.na(IC)) return(NA)
+      if(!is(IC,"IC")) if(is.na(IC)) return(NA)
       res=list(b=clip(IC), a=cent(IC), a.w = cent(weight(IC)),
                 A=stand(IC), A.w = stand(weight(IC)))
       return(res)
@@ -114,6 +114,7 @@
                      a <- c(a[["b"]],a[["a"]],a[["a.w"]],a[["A"]],a[["A.w"]])
                   }
                }
+               print(a)
                return(a)
             }
 
