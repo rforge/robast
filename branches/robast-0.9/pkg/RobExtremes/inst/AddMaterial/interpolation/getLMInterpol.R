@@ -1,9 +1,9 @@
 getLMs <- function(Gridnam,Famnam,xi=0.7, baseDir="C:/rtest/robast", withPrint=FALSE){
-   ## Gridnam in (Sn,OMSE,RMXE,MBRE)
+   ## Gridnam in (Sn,OMSE,RMXE,MBRE) ## uses partial matching!!
    ## Famnam in "Generalized Pareto Family",
    ##           "GEV Family",
    ##           "Gamma family",
-   ##           "Weibull Family"
+   ##           "Weibull Family"  ## uses partial matching!!
    ## xi Scaleparameter (can be vector)
    ## basedir: Oberverzeichnis des r-forge svn checkouts
    file <- file.path(baseDir, "branches/robast-0.9/pkg/RobAStRDA/R/sysdata.rda")
@@ -15,6 +15,8 @@ getLMs <- function(Gridnam,Famnam,xi=0.7, baseDir="C:/rtest/robast", withPrint=F
               "GEV Family",
               "Gamma family",
               "Weibull Family")
+   Gridnam <- Gnams[pmatch(Gridnam, Gnams)]
+   Famnam <- Fnams[pmatch(Famnam, Fnams)]
    if(! Gridnam %in% Gnams) stop("Falscher Gittername")
    if(! Famnam %in% Fnams) stop("Falscher Familienname")
    Famnam0 <- gsub(" ","",Famnam)

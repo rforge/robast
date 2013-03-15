@@ -6,7 +6,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper = NULL, lower = NULL, maxiter, tol, warn, noLow = FALSE,
-             verbose = NULL, checkBounds = TRUE){
+             verbose = NULL, checkBounds = TRUE, ...){
 
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")

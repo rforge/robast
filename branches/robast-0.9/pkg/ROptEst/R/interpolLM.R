@@ -9,8 +9,9 @@
                             A.start = A.start, upper = upper, lower = lower,
                             OptOrIter = OptOrIter, maxiter = maxiter,
                             tol = tol, warn = FALSE,
-                            loRad0 = loRad0)
-      return(c(b=clip(IC), a=cent(IC), a.w = cent(weight(IC)),
+                            loRad0 = loRad0, returnNAifProblem = TRUE)
+      if(is.na(IC)) return(NA)
+      return(list(b=clip(IC), a=cent(IC), a.w = cent(weight(IC)),
                            A=stand(IC),  A.w = stand(weight(IC))))
 }
 
@@ -24,10 +25,11 @@
              z.start = z.start, A.start = A.start, upper = upper,
              lower = lower, OptOrIter = OptOrIter,
              maxiter = maxiter, tol = tol, warn = TRUE, noLow = FALSE,
-             .withEvalAsVar = FALSE)
+             .withEvalAsVar = FALSE, returnNAifProblem = TRUE)
+      if(is.na(IC)) return(NA)
       mA <- max(stand(IC))
       mAw <- max(stand(weight(IC)))
-      return(c(b=clip(IC), a=cent(IC), aw=cent(weight(IC)),
+      return(list(b=clip(IC), a=cent(IC), aw=cent(weight(IC)),
                A=stand(IC)/mA, Aw=stand(weight(IC))/mAw))
 }
 
@@ -42,8 +44,9 @@
              z.start = z.start, A.start = A.start, upper = upper,
              lower = lower, OptOrIter = OptOrIter,
              maxiter = maxiter, tol = tol, warn = TRUE, noLow = FALSE,
-             .withEvalAsVar = FALSE)
-      res=c(b=clip(IC), a=cent(IC), a.w = cent(weight(IC)),
+             .withEvalAsVar = FALSE, returnNAifProblem = TRUE)
+      if(is.na(IC)) return(NA)
+      res=list(b=clip(IC), a=cent(IC), a.w = cent(weight(IC)),
                 A=stand(IC), A.w = stand(weight(IC)))
       return(res)
 }
@@ -71,16 +74,20 @@
                        maxiter = maxiter, tol = tol,
                        loRad = loRad, upRad = upRad, loRad0 = loRad0),
                silent=TRUE)
-               if(is(a,"try-error")){ a <- rep(NA,13)}else{
+               print(a)
+               print(A.start)
+               print(z.start)
+               if(is(a,"try-error")|any(is.na(a))){ a <- rep(NA,13)}else{
                   if(withStartLM){
                      pdim <- length(a[["a"]])
                      kdim <- length(a[["a.w"]])
                      z.start <<- a[["a.w"]]
                      A.start <<- matrix(a[["A"]],pdim,kdim)
+                     a <- c(a[["b"]],a[["a"]],a[["a.w"]],a[["A"]],a[["A.w"]])
                   }
                }
                return(a)
-               }
+            }
 
    distroptions.old <- distroptions()
    distrExOptions.old <- distrExOptions()

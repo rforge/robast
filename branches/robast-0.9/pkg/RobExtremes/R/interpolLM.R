@@ -31,11 +31,11 @@
            withPrint = withPrint)}
 
 
-.svInt <- function(optF = .RMXE.th, xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
+.svInt <- function(optF = .RMXE.th, xiGrid = getShapeGrid(700, cutoff.at.0=0.005),
 #.svInt <- function(optF = .RMXE.th, xiGrid = getShapeGrid(5, cutoff.at.0=0.005),
                    PFam = GParetoFamily(shape=1,scale=2), radius = 0.5,
                    upper = 1e4, lower = 1e-4, OptOrIter = "iterate",
-                   maxiter = 50, tol = .Machine$double.eps^0.4,
+                   maxiter = 150, tol = .Machine$double.eps^0.5,
                    loRad = 0, upRad = Inf, loRad0 = 1e-3,
                    withStartLM = TRUE){
              namF <- gsub("\\.th$","",paste(deparse(substitute(optF))))

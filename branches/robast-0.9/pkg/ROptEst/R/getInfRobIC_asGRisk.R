@@ -6,7 +6,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, symm, Finfo, trafo, upper = NULL,
              lower = NULL, maxiter, tol,
-             warn, noLow = FALSE, verbose = NULL){
+             warn, noLow = FALSE, verbose = NULL, ...){
 
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
@@ -62,6 +62,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
 ##        assign("l2D",L2deriv,.GlobalEnv)
 ###
         prec <- 1
+        problem <- FALSE
         repeat{
             iter <- iter + 1
             z.old <- z
@@ -131,11 +132,13 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             if(prec < tol) break
             if(abs(prec.old - prec) < 1e-10){
                 if(iter>1)
+                   problem <- TRUE
                    cat("algorithm did not converge!\n", "achieved precision:\t", prec, "\n")
                 break
             }
             if(iter > maxiter){
                 if(iter>1)
+                   problem <- TRUE
                    cat("maximum iterations reached!\n", "achieved precision:\t", prec, "\n")
                 break
             }
@@ -180,7 +183,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                normW = NormType())
 ##        print(list(A = A, a = a, b = b))
         return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info, w = w,
-                    biastype = biastype, normtype = normtype(risk)))
+                    biastype = biastype, normtype = normtype(risk), problem = problem ))
     })
 
 
@@ -267,7 +270,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         iter <- 0
         prec <- 1
         iter.In <- 0
-
+        problem <- FALSE
 
         ## determining A,a,b with either optimization of iteration:
         if(OptOrIter == 1){
@@ -401,10 +404,12 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                  }
                  if(prec < tol) break
                  if(abs(prec.old - prec) < 1e-10){
+                     problem <- TRUE
                      cat("algorithm did not converge!\n", "achieved precision:\t", prec, "\n")
                      break
                  }
                  if(iter > maxiter){
+                     problem <- TRUE
                      cat("maximum iterations reached!\n", "achieved precision:\t", prec, "\n")
                      break
                  }
@@ -486,7 +491,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info, w = w,
                     biastype = biastype, normtype = normtype,
                     call = mc, iter = iter, prec = prec, OIcall = OptIterCall,
-                    iter.In = iter.In, prec.In = prec.In))
+                    iter.In = iter.In, prec.In = prec.In, problem = problem ))
     })
 
 ### helper function to recursively evaluate list

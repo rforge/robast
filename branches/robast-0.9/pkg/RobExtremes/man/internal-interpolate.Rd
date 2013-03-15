@@ -32,10 +32,10 @@ to be stored in the respective \file{sysdata.rda} file. }
 .getLMGrid(xiGrid = getShapeGrid(), PFam = GParetoFamily(scale=1,shape=2),
            optFct = .RMXE.xi, GridFileName="LMGrid.Rdata", withPrint = FALSE)
 
-.svInt(optF = .RMXE.th, xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
+.svInt(optF = .RMXE.th, xiGrid = getShapeGrid(700, cutoff.at.0=0.005),
        PFam = GParetoFamily(shape=1,scale=2), radius = 0.5, upper = 1e4,
-       lower = 1e-4, OptOrIter = "iterate",  maxiter = 50,
-       tol = .Machine$double.eps^0.4, loRad = 0, upRad = Inf, loRad0 = 1e-3,
+       lower = 1e-4, OptOrIter = "iterate",  maxiter = 150,
+       tol = .Machine$double.eps^0.5, loRad = 0, upRad = Inf, loRad0 = 1e-3,
        withStartLM = TRUE)
 
 .generateInterpGridSn(xiGrid = getShapeGrid(500, cutoff.at.0=0.005),

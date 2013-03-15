@@ -4,6 +4,7 @@
 \alias{.plotRescaledAxis}
 \alias{.legendCoord}
 \alias{.SelectOrderData}
+\alias{.dynScopeEval}
 
 \title{Internal / Helper functions of package ROptEst for function robest}
 
@@ -12,6 +13,7 @@ These functions are internally used helper functions for \code{\link{robest}},
 in package \pkg{ROptEst}.}
 
 \usage{
+.dynScopeEval(expr)
 .constructArg.list(fun,matchCall, onlyFormal=FALSE, debug =FALSE)
 .fix.in.defaults(call.list, fun, withEval=TRUE)
 .pretreat(x, na.rm = TRUE)
@@ -20,24 +22,28 @@ in package \pkg{ROptEst}.}
 .isOKfsCor(fsCor)
 }
 \arguments{
-  \item{fun}{function, a matched call of which is manipulated}
-  \item{matchCall}{a return value of a call to \code{match.call}}
+  \item{expr}{an expression. }
+  \item{fun}{function, a matched call of which is manipulated. }
+  \item{matchCall}{a return value of a call to \code{match.call}. }
   \item{onlyFormal}{logical; shall arguments not explicitely contained in
-   the formals of \code{fun} be kept in the matched call?}
-  \item{debug}{logical: if switched on, issues information for debugging.}
+   the formals of \code{fun} be kept in the matched call? }
+  \item{debug}{logical: if switched on, issues information for debugging. }
   \item{call.list}{a list of matched arguments drawn from a call to \code{match.call}
   applied to \code{fun} which is to be supplemented by defaults of
-  not-yet-matched formals}
-  \item{withEval}{logical: shall arguments be evaluated?}
-  \item{x}{input data \code{x} of \code{robest} or \code{roptest}.}
+  not-yet-matched formals. }
+  \item{withEval}{logical: shall arguments be evaluated? }
+  \item{x}{input data \code{x} of \code{robest} or \code{roptest}. }
   \item{na.rm}{logical: if  \code{TRUE}, the estimator is evaluated at
-   \code{complete.cases(x)}.}
+   \code{complete.cases(x)}. }
   \item{\dots}{input from \code{robest} or \code{roptest} from which to conclude
-     on radiuses}
-  \item{steps}{number of steps to be used in kStep estimator in \code{robest}}
-  \item{fsCor}{argument \code{fsCor} of \code{robest}}
+     on radiuses. }
+  \item{steps}{number of steps to be used in kStep estimator in \code{robest}. }
+  \item{fsCor}{argument \code{fsCor} of \code{robest}. }
 }
 \details{
+\code{.dynScopeEval} marches up the stack of calls to evaluate an expression,
+   hence realizes dynamical scoping.
+
 \code{.constructArg.list} takes a function \code{fun} and the return value
 of \code{match.call} and, as return value, produces a list of arguments where
 the formal arguments of \code{fun} are set to their default values and

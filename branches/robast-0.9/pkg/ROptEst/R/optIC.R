@@ -6,7 +6,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
              lower = 1e-4, OptOrIter = "iterate",
              maxiter = 50, tol = .Machine$double.eps^0.4,
              warn = TRUE, noLow = FALSE, verbose = NULL, ...,
-             .withEvalAsVar = TRUE){
+             .withEvalAsVar = TRUE, returnNAifProblem = FALSE){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         L2derivDim <- numberOfMaps(model@center@L2deriv)
@@ -26,6 +26,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
             res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                  neighbor = model@neighbor, 
                                                  risk = risk))
+            if(returnNAifProblem) if(!is.null(res$problem)) if(res$problem) return(NA)
             IC.o <- generateIC(model@neighbor, model@center, res)
         }else{
             if(is(model@center@distribution, "UnivariateDistribution")){
@@ -58,6 +59,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                             maxiter = maxiter, tol = tol, warn = warn,
                             verbose = verbose, ...,.withEvalAsVar = .withEvalAsVar)
                 options(ow)
+                if(returnNAifProblem) if(!is.null(res$problem)) if(res$problem) return(NA)
                 res$info <- c("optIC", res$info)
                 res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                      neighbor = model@neighbor, 

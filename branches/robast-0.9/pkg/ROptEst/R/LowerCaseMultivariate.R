@@ -86,13 +86,15 @@
         erg <- optim(p.vec, bmin.fct, method = "Nelder-Mead",
                     control = list(reltol = tol, maxit = 100*maxiter),
                     L2deriv = L2deriv, Distr = Distr, trafo = trafo)
+        problem <- (erg$convergence > 0)
         A.max <- max(abs(stand(w)))
         stand(w) <- stand(w)/A.max
         weight(w) <- minbiasweight(w, neighbor = neighbor,
                                            biastype = biastype,
                                            normW = normtype)
 
-        return(list(erg=erg, w=w, normtype = normtype, z.comp = z.comp, itermin = itermin))
+        return(list(erg=erg, w=w, normtype = normtype, z.comp = z.comp, itermin = itermin,
+                    problem = problem ))
     }
 
 
@@ -132,6 +134,7 @@
                     control = list(reltol = tol, maxit = 100*maxiter),
                     L2deriv = L2deriv, Distr = Distr, trafo = trafo)
 
+        problem <- (erg$convergence > 0)
         A <- matrix(erg$par, ncol = k, nrow = 1)
         b <- 1/erg$value
         stand(w) <- A
@@ -153,6 +156,6 @@
         weight(w) <- minbiasweight(w, neighbor = neighbor,
                                            biastype = biastype,
                                            normW = normtype)
-        return(list(A=A,b=b, w=w, a=a, itermin = itermin))
+        return(list(A=A,b=b, w=w, a=a, itermin = itermin, problem = problem))
     }
 

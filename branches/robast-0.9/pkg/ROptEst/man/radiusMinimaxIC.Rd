@@ -14,7 +14,8 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
         L2Fam, neighbor, risk, loRad = 0, upRad = Inf, z.start = NULL, A.start = NULL, 
         upper = NULL, lower = NULL, OptOrIter = "iterate",
         maxiter = 50, tol = .Machine$double.eps^0.4,
-        warn = FALSE, verbose = NULL, loRad0 = 1e-3, ...)
+        warn = FALSE, verbose = NULL, loRad0 = 1e-3, ...,
+        returnNAifProblem = FALSE)
 }
 \arguments{
   \item{L2Fam}{ L2-differentiable family of probability measures. }
@@ -42,6 +43,9 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
   \item{loRad0}{ for numerical reasons: the effective lower bound for the zero search;
    internally set to \code{max(loRad,loRad0)}.}
   \item{\dots}{further arguments to be passed on to \code{getInfRobIC}}
+  \item{returnNAifProblem}{logical (of length 1):
+     if \code{TRUE} (not the default), in case of convergence problems in
+     the algorithm, returns \code{NA}. }
 }
 \details{
 In case the neighborhood radius is unknown, Rieder et al. (2001, 2008)

@@ -15,9 +15,9 @@ setwd(.myFolderTo)
 .RMXE.th <- ROptEst:::.RMXE.th
 .modify.xi.PFam.call <- RobExtremes:::.modify.xi.PFam.call
 #
-PF <- GParetoFamily()
+#PF <- GParetoFamily()
 #PF <- GEVFamily()
-#PF <- GammaFamily()
+PF <- GammaFamily()
 #PF <- WeibullFamily()
 ###
 .svInt <- RobExtremes:::.svInt
@@ -25,7 +25,7 @@ PF <- GParetoFamily()
     RobExtremes:::.generateInterpGridSn(PFam = PF)}
 ## to make this parallel, start this on several processors
 #.svInt1()
-#.svInt(.OMSE.th, PFam=PF)
+.svInt(.OMSE.th, PFam=PF)
 .svInt(.MBRE.th, PFam=PF)
 .svInt(.RMXE.th, PFam=PF)
 setwd(oldwd)

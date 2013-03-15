@@ -9,7 +9,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
              A.start = NULL, upper = NULL, lower = NULL,
              OptOrIter = "iterate", maxiter = 50,
              tol = .Machine$double.eps^0.4, warn = FALSE,
-             verbose = NULL, loRad0 = 1e-3, ...){
+             verbose = NULL, loRad0 = 1e-3, ..., returnNAifProblem = FALSE){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         ow <- options("warn")
@@ -167,6 +167,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                          tol = .Machine$double.eps^0.25)$root , silent = TRUE)
 
         if(is(leastFavR, "try-error")){
+           if(returnNAifProblem) return(NA)
            warnRund <- 1; isE <- TRUE
            fl <- (0.2/lower)^(1/6); fu <- (0.5/upper)^(1/6)
            while(warnRund < 7 && isE ){
@@ -192,8 +193,9 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
         }
         neighbor@radius <- leastFavR
         args.IC$neighbor <- args.R$neighbor <- neighbor
-
+        args.IC$returnNAifProblem <- returnNAifProblem
         res <- do.call(getInfRobIC, args.IC)
+        if(returnNAifProblem) if(!is.null(res$problem)) if(res$problem) return(NA)
         options(ow)
         res$info <- c("radiusMinimaxIC", paste("radius minimax IC for radius interval [",
                         round(loRad, 3), ", ", round(upRad, 3), "]", sep=""))

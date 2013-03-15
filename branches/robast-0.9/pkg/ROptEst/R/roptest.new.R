@@ -1,6 +1,16 @@
 ###############################################################################
 ## Optimally robust estimation
 ###############################################################################
+.dynScopeEval <- function(expr){
+   le <- length(sys.calls())
+   i <- 1
+   while(i< le){
+      a <- try(eval(expr,envir=sys.frame(-i)),silent=TRUE)
+      if(!is(a,"try-error")) return(a)
+      i <- i + 1
+   }
+   stop("Could not evaluate expression.")
+}
 
 roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
@@ -15,14 +25,16 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     withLogScale = TRUE,..withCheck=FALSE,
                     withTimings = FALSE, withMDE = NULL,
                     withEvalAsVar = NULL){
-    es.call <- match.call()
+    es.call <- es.call.e <- match.call()
+    es.call.e <- (as.list(es.call.e))
+    es.call.e[["..."]] <- NULL
+    for(i in seq(along.with=es.call.e))
+        es.call.e[[i]] <- .dynScopeEval(es.call.e[[i]])
     es.call0 <- match.call(expand.dots=FALSE)
     mwt <- !is.null(es.call$withTimings)
     es.call$withTimings <- NULL
-    es.call0$withTimings <- NULL
     dots <- es.call0[["..."]]
-    es.call0$"..." <- NULL
-    es.call1 <- .constructArg.list(roptest,es.call0, onlyFormal=FALSE,
+    es.call1 <- .constructArg.list(roptest,es.call.e, onlyFormal=FALSE,
                             debug = ..withCheck)$mc
 
     res <- .constructArg.list(gennbCtrl,es.call1, onlyFormal=TRUE,

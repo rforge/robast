@@ -1,18 +1,26 @@
 plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
                withSmooth=FALSE, gridRestriction = NULL, prehook={}, posthook={}, ...){
-   ## Gridnam in (Sn,OMSE,RMXE,MBRE)
-   ## Famnam in "Generalized Pareto Family",
+   ## Gridnam in (Sn,OMSE,RMXE,MBRE) ## uses partial matching!!
+   ## Famnam in "Generalized Pareto Family", ## uses partial matching!!
    ##           "GEV Family",
    ##           "Gamma family",
    ##           "Weibull Family"
-   ## whichLM  ignoriert für Gridnam == Sn
+   ## whichLM  is ignored for Gridnam == Sn
    #           in 1:13 (clip=b, cent.a=a1.a,a2.a, cent.i=a1.i,a2.i,
    ##                  stand.a=A.a=matrix(c(A11.a,(A12.a+A21.a)/2,
    #                                       (A12.a+A21.a)/2,A.22.a), 2, 2),
    ##                  stand.i=A.i=matrix(c(A11.i,(A12.i+A21.i)/2,
    #                                       (A12.i+A21.i)/2,A.22.i), 2, 2),
-   ##                 und optIC = Y.a min(1,b/norm(Y.i)), Y.* = A.* Lambda - a.*
+   ##                 and optIC = Y.a min(1,b/norm(Y.i)), Y.* = A.* Lambda - a.*
+   ##          or "all" then all LMs are plotted
    ## basedir: Oberverzeichnis des r-forge svn checkouts
+   ## gridRestriction: an expression that can be used as index in xi[gridRestriction]
+   ##                  to restrict the plotted grid-values
+   ## prehook: an expression to be evaluated before plotting --- typically something
+   ##          like pdf("myfile.pdf")
+   ## posthook: an expression to be evaluated after plotting --- typically something
+   ##          like dev.off()
+   ## withSmooth: logical shall item grid or gridS be used for plotting
    file <- file.path(baseDir, "branches/robast-0.9/pkg/RobAStRDA/R/sysdata.rda")
    if(!file.exists(file)) stop("Fehler mit Checkout")
    nE <- new.env()

@@ -45,7 +45,7 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 \S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv,
                        risk, neighbor, symm, Finfo, trafo, upper = NULL,
                        lower=NULL, maxiter, tol, warn, noLow = FALSE,
-                       verbose = NULL, checkBounds = TRUE)
+                       verbose = NULL, checkBounds = TRUE, ...)
 
 \S4method{getInfRobIC}{RealRandVariable,asHampel,UncondNeighborhood}(L2deriv, risk,
                        neighbor, Distr, DistrSymm, L2derivSymm,
@@ -58,7 +58,7 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 \S4method{getInfRobIC}{UnivariateDistribution,asAnscombe,UncondNeighborhood}(
                        L2deriv, risk, neighbor, symm, Finfo, trafo, upper = NULL,
                        lower=NULL, maxiter, tol, warn, noLow = FALSE,
-                       verbose = NULL, checkBounds = TRUE)
+                       verbose = NULL, checkBounds = TRUE, ...)
 
 \S4method{getInfRobIC}{RealRandVariable,asAnscombe,UncondNeighborhood}(L2deriv, 
                        risk, neighbor, Distr, DistrSymm, L2derivSymm,
@@ -70,7 +70,7 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 \S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv,
                        risk, neighbor, symm, Finfo, trafo, upper = NULL,
                        lower = NULL, maxiter, tol, warn, noLow = FALSE,
-                       verbose = NULL)
+                       verbose = NULL, ...)
 
 \S4method{getInfRobIC}{RealRandVariable,asGRisk,UncondNeighborhood}(L2deriv, risk,
                        neighbor,  Distr, DistrSymm, L2derivSymm,
@@ -81,7 +81,7 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(
                        L2deriv, risk, neighbor, symm, Finfo, trafo,
-                       upper, lower, maxiter, tol, warn)
+                       upper, lower, maxiter, tol, warn, ...)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
