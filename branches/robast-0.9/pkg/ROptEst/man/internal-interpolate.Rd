@@ -38,7 +38,7 @@ respective \file{sysdata.rda} file. }
            upper = 1e4, lower = 1e-4, OptOrIter = "iterate",
            maxiter = 50, tol = .Machine$double.eps^0.4,
            loRad = 0, upRad = Inf, loRad0 = 1e-3,
-           withStartLM = TRUE)
+           loRad.s = 0.2, up.Rad.s = 1, withStartLM = TRUE)
 
 
 .saveGridToCSV(Grid, toFileCSV, namPFam, nameInSysdata)
@@ -62,8 +62,19 @@ respective \file{sysdata.rda} file. }
   \item{radius}{ [for OMSE]: positive numeric of length 1: the radius of the
                  neighborhood for which the LM's are to be computed;
                  defaults to 0.5. }
-  \item{loRad}{ the lower end point of the interval to be searched. }
-  \item{upRad}{ the upper end point of the interval to be searched. }
+  \item{loRad}{ the lower end point of the interval to be searched
+                in the inner optimization (for the least favorable situation
+                to the user-guessed radius). }
+  \item{upRad}{ the upper end point of the interval to be searched in the
+                 inner optimization (for the least favorable situation
+                 to the user-guessed radius). }
+  \item{loRad.s}{ the lower end point of the interval
+                  to be searched in the outer optimization
+                  (for the user-guessed radius); if \code{NULL}
+                  set to \code{loRad} in the algorithm. }
+  \item{upRad.s}{ the upper end point of the interval to be searched in the
+                   outer optimization (for the user-guessed radius); if
+                   \code{NULL} set to \code{upRad} in the algorithm. }
   \item{z.start}{ initial value for the centering constant. }
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{upper}{ upper bound for the optimal clipping bound. }

@@ -9,7 +9,8 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
              A.start = NULL, upper = NULL, lower = NULL,
              OptOrIter = "iterate", maxiter = 50,
              tol = .Machine$double.eps^0.4, warn = FALSE,
-             verbose = NULL, loRad0 = 1e-3, ..., returnNAifProblem = FALSE){
+             verbose = NULL, loRad0 = 1e-3, ..., returnNAifProblem = FALSE,
+             loRad.s = NULL, upRad.s = NULL){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         ow <- options("warn")
@@ -20,6 +21,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
             stop("'upRad' is not of length == 1")
         if(loRad >= upRad)
             stop("'upRad < loRad' is not fulfilled")
+
         biastype <- biastype(risk)
         L2derivDim <- numberOfMaps(L2Fam@L2deriv)
         trafo <- trafo(L2Fam@param)
@@ -160,8 +162,9 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
             }
         }
         
-        lower <- max(loRad, loRad0)
-        upper <- if(upRad == Inf) max(lower+2, 4) else upRad
+        lower <- if(is.null(loRad.s)) max(loRad, loRad0) else loRad.s
+        upper <- if(is.null(upRad.s)) {
+             if(upRad == Inf) max(lower+2, 4) else upRad } else upRad.s
         leastFavR <- try(
                     uniroot(fct.Ie, lower = lower, upper = upper,
                          tol = .Machine$double.eps^0.25)$root , silent = TRUE)

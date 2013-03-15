@@ -21,11 +21,11 @@ PF <- GammaFamily()
 #PF <- WeibullFamily()
 ###
 .svInt <- RobExtremes:::.svInt
-.svInt1 <- function(){
-    RobExtremes:::.generateInterpGridSn(PFam = PF)}
+#.svInt1 <- function(){
+#    RobExtremes:::.generateInterpGridSn(PFam = PF)}
 ## to make this parallel, start this on several processors
 #.svInt1()
-.svInt(.OMSE.th, PFam=PF)
-.svInt(.MBRE.th, PFam=PF)
+#.svInt(.OMSE.th, PFam=PF)
+#.svInt(.MBRE.th, PFam=PF)
 .svInt(.RMXE.th, PFam=PF)
 setwd(oldwd)

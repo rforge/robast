@@ -150,3 +150,7 @@ setMethod("E", signature(object = "Weibull", fun = "function", cond = "missing")
            signature(object = "DistributionsIntegratingByQuantiles",
                      fun = "function", cond = "missing")))
 
+setMethod("E", signature(object = "Gammad", fun = "function", cond = "missing"),
+           getMethod("E",
+           signature(object = "DistributionsIntegratingByQuantiles",
+                     fun = "function", cond = "missing")))

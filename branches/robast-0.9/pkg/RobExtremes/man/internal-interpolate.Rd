@@ -36,7 +36,7 @@ to be stored in the respective \file{sysdata.rda} file. }
        PFam = GParetoFamily(shape=1,scale=2), radius = 0.5, upper = 1e4,
        lower = 1e-4, OptOrIter = "iterate",  maxiter = 150,
        tol = .Machine$double.eps^0.5, loRad = 0, upRad = Inf, loRad0 = 1e-3,
-       withStartLM = TRUE)
+       loRad.s = 0.2, up.Rad.s = 1, withStartLM = TRUE)
 
 .generateInterpGridSn(xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
                       PFam = GParetoFamily(), withPrint = TRUE)
@@ -66,8 +66,19 @@ to be stored in the respective \file{sysdata.rda} file. }
   \item{radius}{ [for OMSE]: positive numeric of length 1: the radius of the
                  neighborhood for which the LM's are to be computed;
                  defaults to 0.5. }
-  \item{loRad}{ the lower end point of the interval to be searched. }
-  \item{upRad}{ the upper end point of the interval to be searched. }
+  \item{loRad}{ the lower end point of the interval to be searched
+                in the inner optimization (for the least favorable situation
+                to the user-guessed radius). }
+  \item{upRad}{ the upper end point of the interval to be searched in the
+                 inner optimization (for the least favorable situation
+                 to the user-guessed radius). }
+  \item{loRad.s}{ the lower end point of the interval
+                  to be searched in the outer optimization
+                  (for the user-guessed radius); if \code{NULL}
+                  set to \code{loRad} in the algorithm. }
+  \item{upRad.s}{ the upper end point of the interval to be searched in the
+                   outer optimization (for the user-guessed radius); if
+                   \code{NULL} set to \code{upRad} in the algorithm. }
   \item{upper}{ upper bound for the optimal clipping bound. }
   \item{lower}{ lower bound for the optimal clipping bound. }
   \item{OptOrIter}{character; which method to be used for determining Lagrange

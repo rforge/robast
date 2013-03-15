@@ -10,6 +10,8 @@
 \alias{E,Weibull,function,missing-method}
 \alias{E,GEV,missing,missing-method}
 \alias{E,Pareto,missing,missing-method}
+\alias{E,Gammad,function,missing-method}
+\alias{E,Pareto,function,missing-method}
 
 \title{Generic Function for the Computation of (Conditional) Expectations}
 \description{

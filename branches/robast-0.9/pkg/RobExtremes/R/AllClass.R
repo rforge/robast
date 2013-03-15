@@ -235,7 +235,7 @@ setClass("GumbelLocationFamily",
 
 ### for integration:
 setClassUnion("DistributionsIntegratingByQuantiles",
-               c("Weibull", "GEV", "GPareto", "Pareto"))
+               c("Weibull", "GEV", "GPareto", "Pareto", "Gammad"))
 
 
 ## models:
