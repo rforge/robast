@@ -172,7 +172,7 @@
             getFun = .getLMGrid, ..., modifyfct, nameInSysdata,
             GridFileName, withPrint = TRUE){
   if(missing(GridFileName))
-     GridFileName <- paste(sub("^\\.(.+)","\\1",nameInSysdata),".Rdata",sep="")
+     GridFileName <- paste(gsub("^\\.(.+)","\\1",nameInSysdata),".Rdata",sep="")
   Grid <- getFun(thGrid = thGrid, PFam = PFam, ..., modifyfct = modifyfct,
                  withPrint = withPrint, GridFileName = GridFileName)
   .saveGridToCSV(Grid,toFileCSV,name(PFam),nameInSysdata)

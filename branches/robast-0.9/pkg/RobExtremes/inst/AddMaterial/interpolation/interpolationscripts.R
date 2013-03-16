@@ -25,7 +25,7 @@ PF <- GammaFamily()
 #    RobExtremes:::.generateInterpGridSn(PFam = PF)}
 ## to make this parallel, start this on several processors
 #.svInt1()
-#.svInt(.OMSE.th, PFam=PF)
+.svInt(.OMSE.th, PFam=PF, xiGrid = getShapeGrid(3, cutoff.at.0=0.005))
 #.svInt(.MBRE.th, PFam=PF)
 .svInt(.RMXE.th, PFam=PF)
 setwd(oldwd)

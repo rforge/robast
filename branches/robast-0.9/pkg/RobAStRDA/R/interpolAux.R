@@ -2,10 +2,24 @@
     paste(sep="", name, if(getRversion()<"2.16") ".O" else ".N")
 }
 
-.MakeSmoothGridList <- function(thGrid, Y, df=NULL){
+.MakeSmoothGridList <- function(thGrid, Y, df = NULL,
+                            gridRestrForSmooth = NULL){
    if(length(dim(Y))==3)
       LMGrid <- Y[,1,,drop=TRUE]
    else LMGrid <- Y[,drop=FALSE]
+
+  if(!is.null(df)){
+    df0 <- vector("list",ncol(LMGrid))
+    if(is.numeric(df)){
+    df <- rep(df,length.out=ncol(LMGrid))
+    for(i in 1:ncol(LMGrid)) df0[[i]] <- df[i]
+    df <- df0
+    }
+  }else{
+    df0 <- vector("list",ncol(LMGrid)+1)
+    df0[[ncol(LMGrid)+1]] <- NULL
+    df <- df0
+  }
 
    iNA <- apply(LMGrid,1, function(u) any(is.na(u)))
    LMGrid <- LMGrid[!iNA,,drop=FALSE]
@@ -14,9 +28,33 @@
    thGrid <- thGrid[oG]
    LMGrid <- LMGrid[oG,,drop=FALSE]
 
-   LMGrid <- apply(LMGrid,2,function(u) if(is.null(df))
-                  smooth.spline(thGrid,u)$y else smooth.spline(thGrid,u,df=df)$y
-                  )
+   if(is.null(gridRestrForSmooth))
+      gridRestrForSmooth <- as.data.frame(matrix(TRUE,nrow(LMGrid),ncol(LMGrid)))
+   if((is.vector(gridRestrForSmooth)&&!is.list(gridRestrForSmooth))||
+       is.matrix(gridRestrForSmooth))
+      gridRestrForSmooth <- as.data.frame(gridRestrForSmooth)
+
+   if(is.list(gridRestrForSmooth)){
+      gm <- vector("list",ncol(LMGrid))
+      idx <- rep(1:length(gridRestrForSmooth), length.out=ncol(LMGrid))
+      for (i in 1:ncol(LMGrid)){
+           if(!is.null(gridRestrForSmooth[[idx[i]]])){
+               gm[[i]] <- gridRestrForSmooth[[idx[i]]]
+           }else{
+               gm[[i]] <- rep(TRUE,nrow(LMGrid))
+           }
+      }
+      gridRestrForSmooth <- gm
+   }
+
+   for(i in 1:ncol(LMGrid)){
+       gmi <- gridRestrForSmooth[[i]]
+       if(is.null(df[[i]])){
+          LMGrid[gmi,i] <- smooth.spline(thGrid[gmi],LMGrid[gmi,i])$y
+       } else {
+          LMGrid[gmi,i] <- smooth.spline(thGrid[gmi],LMGrid[gmi,i],df=df[[i]])$y
+       }
+   }
    return(cbind(xi=thGrid,LM=LMGrid))
 }
 
@@ -86,7 +124,8 @@
 ############################################################################
 .saveGridToRda <- function(fromFileCSV, toFileRDA = "sysdata.rda",
                            withMerge =FALSE, withPrint = TRUE,
-                           withSmooth = TRUE, df = NULL){
+                           withSmooth = TRUE, df = NULL,
+                           gridRestrForSmooth = NULL){
 
   ### check whether input is complete
   if(missing(fromFileCSV)) stop("You must specify argument 'fromFileCSV'.")
@@ -95,7 +134,6 @@
   ## new environment to store all merged information from sysdata.rda-type file
   ## and new grids
   newEnv <- new.env()
-
 
   ### determine what objects already exist in sysdata.rda - type file
   if(file.exists(toFileRDA)){
@@ -137,13 +175,13 @@
                    if(withSmooth)
                       InterpGrids[[namPFam]]$gridS <-
                         .MakeSmoothGridList(gr0[,1],gr0[,-1,drop=FALSE],
-                                            df = df)
+                            df = df, gridRestrForSmooth = gridRestrForSmooth)
                    cat(gettext("Grid successfully merged.\n"))
                 }else{
                    InterpGrids[[namPFam]]$grid <- Grid
                    InterpGrids[[namPFam]]$gridS <-
                         .MakeSmoothGridList(Grid[,1],Grid[,-1,drop=FALSE],
-                                            df = df)
+                            df = df, gridRestrForSmooth = gridRestrForSmooth)
                    cat(gettext("Grid successfully overwritten.\n"))
                 }
                 l.ng <- -1
@@ -158,7 +196,8 @@
       if(l.ng>0){ ## a new family is entered
          InterpGrids[[l.ng]]$grid <- Grid
          InterpGrids[[l.ng]]$gridS <-
-              .MakeSmoothGridList(Grid[,1], Grid[,-1,drop = FALSE], df = df)
+              .MakeSmoothGridList(Grid[,1], Grid[,-1,drop = FALSE],
+                            df = df, gridRestrForSmooth = gridRestrForSmooth)
          cat(gettext("New Grid successfully produced.\n"))
          names(InterpGrids)[l.ng] <- namPFam
       }
@@ -257,7 +296,8 @@
 }
 
 .copy_smoothGrid <- function(gridEntry = NULL, rdafileOld, gridnamOld, FamnamOld,
-                 rdafileNew, gridnamNew, FamnamNew, withSmooth = FALSE, df = NULL){
+                 rdafileNew, gridnamNew, FamnamNew, withSmooth = FALSE,
+                 df = NULL, gridRestrForSmooth = NULL){
 
   if(missing(rdafileOld)) stop("Argument 'rdafileOld' must not be missing.")
   if(missing(gridnamOld)) stop("Argument 'gridnamOld' must not be missing.")
@@ -273,7 +313,8 @@
      gridEntry <- gr[[FamnamOld]]$grid  else  gr[[FamnamNew]]$grid <- gridEntry
   if(withSmooth){
         gr[[FamnamNew]]$gridS <- .MakeSmoothGridList(gridEntry[,1],
-                                    gridEntry[,-1, drop = FALSE],  df = df)
+                                    gridEntry[,-1, drop = FALSE],  df = df,
+                                    gridRestrForSmooth = gridRestrForSmooth)
   }else gr[[FamnamNew]]$gridS <- NULL
   assign(gridnamNew,gr,envir=nE)
   what <- ls(envir=nE, all.names = TRUE)

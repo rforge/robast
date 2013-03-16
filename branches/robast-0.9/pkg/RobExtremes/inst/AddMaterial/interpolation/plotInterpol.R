@@ -1,5 +1,7 @@
 plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
-               withSmooth=FALSE, gridRestriction = NULL, prehook={}, posthook={}, ...){
+               withSmooth = FALSE, plotGridRestriction = NULL,
+               smoothtry = FALSE, df = NULL, gridRestrForSmooth = NULL,
+               prehook={}, posthook={}, ...){
    ## Gridnam in (Sn,OMSE,RMXE,MBRE) ## uses partial matching!!
    ## Famnam in "Generalized Pareto Family", ## uses partial matching!!
    ##           "GEV Family",
@@ -13,14 +15,41 @@ plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
    #                                       (A12.i+A21.i)/2,A.22.i), 2, 2),
    ##                 and optIC = Y.a min(1,b/norm(Y.i)), Y.* = A.* Lambda - a.*
    ##          or "all" then all LMs are plotted
-   ## basedir: Oberverzeichnis des r-forge svn checkouts
-   ## gridRestriction: an expression that can be used as index in xi[gridRestriction]
-   ##                  to restrict the plotted grid-values
+   ## basedir: folder with r-forge svn checkout
+   ## plotGridRestriction: an expression that can be used as index in
+   ##                      xi[plotGridRestriction] to restrict the plotted
+   ##                      grid-values
    ## prehook: an expression to be evaluated before plotting --- typically something
    ##          like pdf("myfile.pdf")
    ## posthook: an expression to be evaluated after plotting --- typically something
    ##          like dev.off()
-   ## withSmooth: logical shall item grid or gridS be used for plotting
+   ## withSmooth: logical; shall item grid or gridS be used for plotting
+   ## ---------------------------
+   ###  for interactive try-out of several smoothing values
+   ##
+   ## smoothtry: logical; shall interactive try-out of smoothing be used
+   ##            if TRUE overrides withSmooth
+   ## df: smoothing parameter (see below)
+   ## gridRestrForSmooth: restriction of smoothing for particular theta-grid-values
+   ##        (see below)
+   ###
+   ## copied from help to .MakeSmoothGridList
+   ##
+#   \item{df}{argument \code{df} of \code{\link{smooth.spline}}; if \code{NULL}
+#            (default) it is omitted (and the default of
+#            \code{\link{smooth.spline}} used); controls the degree to which
+#            we smooth; can be vectorized; to allow for \code{NULL}-entries
+#            in some (of the 13) LMs, it can also be a list of length 13,
+#            some entries being \code{NULL}, some numeric. }
+#  \item{gridRestrForSmooth}{an expression that can be used as index in
+#     \code{theta[gridRestrForSmooth]} to restrict the grid-values to
+#     be smoothed; the excluded grid values are left unchanged. If the argument
+#     is \code{NULL} no restriction is used. Can be a matrix of same dimension
+#     as the \code{Y}-grid to allow for column-individual restrictions,
+#     or a list of same length as number of columns of \code{Y}
+#     with columnwise restrictions of \code{Y} (and \code{NULL} entries
+#     are interpreted as no restriction). }
+
    file <- file.path(baseDir, "branches/robast-0.9/pkg/RobAStRDA/R/sysdata.rda")
    if(!file.exists(file)) stop("Fehler mit Checkout")
    nE <- new.env()
@@ -39,15 +68,23 @@ plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
    GN0 <- Gridnam; if(isSn) GN0 <- "SnGrids"
    GN <- paste(".",GN0,sep="")
    funN <- paste("fun",".",if(getRversion()<"2.16") "O" else "N",sep="")
-   gN <- if(withSmooth) "gridS" else "grid"
-   gr <- get(GN,envir=nE)[[Famnam0]][[gN]]
-   if(is.null(gridRestriction)) gridRestriction <- rep(TRUE, nrow(gr))
+   if(!smoothtry){
+      gN <- if(withSmooth) "gridS" else "grid"
+      gr <- get(GN,envir=nE)[[Famnam0]][[gN]]
+   }else{
+     gr <- get(GN,envir=nE)[[Famnam0]][["grid"]]
+#     gr <- RobAStRDA:::.MakeSmoothGridList(gr[,1],gr[,-1], df = df,
+#                        gridRestrForSmooth = gridRestrForSmooth)
+     gr <- .MakeSmoothGridList(gr[,1],gr[,-1], df = df,
+                        gridRestrForSmooth = gridRestrForSmooth)
+   }
+   if(is.null(plotGridRestriction)) plotGridRestriction <- rep(TRUE, nrow(gr))
    if(!isSn) if(whichLM!="all") if(whichLM<1 | whichLM>13) stop("Falsche Koordinate")
    if(!isSn) if(whichLM=="all"){
       eval(prehook)
       par(mfrow=c(4,4))
       for(i in 2:14)
-          plot(gr[gridRestriction,1], gr[gridRestriction,i], ...)
+          plot(gr[plotGridRestriction,1], gr[plotGridRestriction,i], ...)
       par(mfrow=c(1,1))
       eval(posthook)
    return(invisible(NULL))
@@ -62,17 +99,19 @@ plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
 
 if(FALSE){
 ## Examples
-plotLM("OMSE","Gamma","all", type="l", gridR=-(1:20))
-plotLM("OMSE","Pareto","all", type="l", gridR=-(1:20))
-plotLM("OMSE","Gener","all", type="l", gridR=-(1:20))
-plotLM("OMSE","GEV","all", type="l", gridR=-(1:20))
-plotLM("OMSE","Wei","all", type="l", gridR=-(1:20))
-plotLM("MBRE","Wei","all", type="l", gridR=-(1:20))
-plotLM("MBRE","GE","all", type="l", gridR=-(1:20))
-plotLM("MBRE","Gene","all", type="l", gridR=-(1:20))
-plotLM("MBRE","Gam","all", type="l", gridR=-(1:20))
-plotLM("RMXE","Gam","all", type="l", gridR=-(1:20))
-plotLM("RMXE","Wei","all", type="l", gridR=-(1:20))
-plotLM("RMXE","Gene","all", type="l", gridR=-(1:20))
-plotLM("RMXE","GE","all", type="l", gridR=-(1:20))
+plotLM("OMSE","Gamma","all", type="l", plotG=-(1:8))
+plotLM("OMSE","Gener","all", type="l", plotG=-(1:8))
+plotLM("OMSE","GEV","all", type="l", plotG=-(1:8))
+plotLM("OMSE","Wei","all", type="l", plotG=-(1:8))
+plotLM("MBRE","Wei","all", type="l", plotG=-(1:8))
+plotLM("MBRE","GE","all", type="l", plotG=-(1:8))
+plotLM("MBRE","Gene","all", type="l", plotG=-(1:8))
+plotLM("MBRE","Gam","all", type="l", plotG=-(1:8))
+plotLM("RMXE","Gam","all", type="l", plotG=-(1:8))
+plotLM("RMXE","Wei","all", type="l", plotG=-(1:8))
+plotLM("RMXE","Gene","all", type="l", plotG=-(1:8))
+plotLM("RMXE","GE","all", type="l", plotG=-(1:8))
+plotLM("MBRE","GE","all", type="l")
+plotLM("MBRE","GE","all", type="l", sm = TRUE, df = 10, gridR = -(1:15))
+plotLM("MBRE","GE","all", type="l", sm = TRUE, df = 4, gridR = -(1:15))
 }

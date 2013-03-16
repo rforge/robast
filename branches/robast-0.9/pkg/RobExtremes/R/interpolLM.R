@@ -40,7 +40,7 @@
                    loRad.s=0.2, up.Rad.s=1,
                    withStartLM = TRUE){
              namF <- gsub("\\.th$","",paste(deparse(substitute(optF))))
-             namF <- gsub("^\\.(.+)","\\1",namF)
+             namF <- gsub(" ", "",namF))
              to <- gsub("XXXX",gsub(" ","",name(PFam)),
                     gsub("YYYY", namF, "interpolYYYYXXXX.csv"))
              print(to)

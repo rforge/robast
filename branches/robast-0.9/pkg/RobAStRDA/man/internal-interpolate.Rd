@@ -23,14 +23,15 @@ to be stored in the respective \file{sysdata.rda} file. }
 \usage{
 .versionSuff(name)
 
-.MakeSmoothGridList(thGrid, Y, df=NULL)
+.MakeSmoothGridList(thGrid, Y, df = NULL, gridRestrForSmooth = NULL)
 
 .readGridFromCSV(fromFileCSV)
 
 .generateInterpolators(Grid, approxOrspline = "spline", extrapol = c(NA,NA))
 
 .saveGridToRda(fromFileCSV, toFileRDA = "sysdata.rda", withMerge = FALSE,
-               withPrint = TRUE, withSmooth = TRUE, df = NULL)
+               withPrint = TRUE, withSmooth = TRUE, df = NULL,
+               gridRestrForSmooth = NULL)
 
 .mergeGrid(Grid1, Grid2)
 
@@ -44,7 +45,8 @@ to be stored in the respective \file{sysdata.rda} file. }
         excludeGrids = NULL, excludeNams = NULL)
 
 .copy_smoothGrid(gridEntry = NULL, rdafileOld, gridnamOld, FamnamOld, rdafileNew,
-                 gridnamNew, FamnamNew, withSmooth = FALSE, df = NULL)
+                 gridnamNew, FamnamNew, withSmooth = FALSE, df = NULL,
+                 gridRestrForSmooth = NULL)
 
 .renameGridName(rdafileOld, gridnamOld, FamnamOld, rdafileNew, gridnamNew,
                 FamnamNew)
@@ -59,7 +61,19 @@ to be stored in the respective \file{sysdata.rda} file. }
            contains precomputed y-values, so that call to \code{getFun}
            resp. \code{optFct} can be omitted. }
   \item{df}{argument \code{df} of \code{\link{smooth.spline}}; if \code{NULL}
-            (default) it is omitted; controls the degree to which we smooth.}
+            (default) it is omitted (and the default of
+            \code{\link{smooth.spline}} used); controls the degree to which
+            we smooth; can be vectorized; to allow for \code{NULL}-entries
+            in some (of the 13) LMs, it can also be a list of length 13,
+            some entries being \code{NULL}, some numeric. }
+  \item{gridRestrForSmooth}{an expression that can be used as index in
+     \code{theta[gridRestrForSmooth]} to restrict the grid-values to
+     be smoothed; the excluded grid values are left unchanged. If the argument
+     is \code{NULL} no restriction is used. Can be a matrix of same dimension
+     as the \code{Y}-grid to allow for column-individual restrictions,
+     or a list of same length as number of columns of \code{Y}
+     with columnwise restrictions of \code{Y} (and \code{NULL} entries
+     are interpreted as no restriction). }
   \item{fromFileCSV}{character; names of the csv files from which the grids are
                      read. }
   \item{Grid, gridEntry}{matrix; grid to be used. }
