@@ -7,7 +7,8 @@
 }
 \usage{
 CondIC(name, Curve = EuclRandVarList(EuclRandVariable(Map = list(function(x){x[1] * x[2]}), 
-						      Domain = EuclideanSpace(dimension = 2))), 
+                                                      Domain = EuclideanSpace(dimension = 2),
+                                                      Range = Reals())), 
        Risks, Infos, CallL2Fam = call("L2RegTypeFamily"))
 }
 \arguments{

@@ -14,11 +14,11 @@
 \usage{
 Av1CondTotalVarIC(name, CallL2Fam = call("L2RegTypeFamily"), 
         Curve = EuclRandVarList(RealRandVariable(Map = list(function(x) {x[1] * x[2]}), 
-                                                 Domain = EuclideanSpace(dimension = 1))), 
+                                                 Domain = EuclideanSpace(dimension = 2))), 
         Risks, Infos, clipUp = Inf, stand = as.matrix(1), 
-        clipLo = RealRandVariable(Map = list(function(x) {-Inf}, 
+        clipLo = RealRandVariable(Map = list(function(x) {-Inf}), 
                                   Domain = EuclideanSpace(dimension = 1)), 
-        Domain = EuclideanSpace(dimension = 2)), lowerCase = NULL, neighborRadius = 0)
+                                  lowerCase = NULL, neighborRadius = 0)
 }
 \arguments{
   \item{name}{ object of class \code{"character"}. }
