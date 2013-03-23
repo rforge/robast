@@ -70,14 +70,18 @@ plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
    funN <- paste("fun",".",if(getRversion()<"2.16") "O" else "N",sep="")
    if(!smoothtry){
       gN <- if(withSmooth) "gridS" else "grid"
-      gr <- get(GN,envir=nE)[[Famnam0]][[gN]]
+      gr0 <- gr <- get(GN,envir=nE)[[Famnam0]][[gN]]
    }else{
-     gr <- get(GN,envir=nE)[[Famnam0]][["grid"]]
+     gr0 <- gr <- get(GN,envir=nE)[[Famnam0]][["grid"]]
 #     gr <- RobAStRDA:::.MakeSmoothGridList(gr[,1],gr[,-1], df = df,
 #                        gridRestrForSmooth = gridRestrForSmooth)
      gr <- .MakeSmoothGridList(gr[,1],gr[,-1], df = df,
                         gridRestrForSmooth = gridRestrForSmooth)
    }
+   print(head(gr0[,1]))
+   print(tail(gr0[,1]))
+   print(summary(diff(gr0[,1])))
+   print(c(n=sum(!is.na(gr0[,1])),NA=sum(is.na(gr0[,1]))))
    if(is.null(plotGridRestriction)) plotGridRestriction <- rep(TRUE, nrow(gr))
    if(!isSn) if(whichLM!="all") if(whichLM<1 | whichLM>13) stop("Falsche Koordinate")
    if(!isSn) if(whichLM=="all"){
