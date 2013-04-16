@@ -158,10 +158,9 @@ if(getRversion()<"2.16"){
 ## folgenden Code einsourcen:
 ### change adequately:
 .baseDir.loc <- "C:/rtest/RobASt"
-.basepath <- file.path(baseDir.loc,"branches/robast-0.9/pkg")
-myRDA0 <- file.path(.basepath,"RobExtremesBuffer/sysdata.rda")
+.basepath <- file.path(.baseDir.loc,"branches/robast-0.9/pkg")
 myRDA <- file.path(.basepath,"RobAStRDA/R/sysdata.rda")
 require(RobAStRDA)
-RobAStRDA:::.computeInterpolators(myRDA0, myRDA,withSmoothFct = TRUE)
+RobAStRDA:::.computeInterpolators(myRDA, myRDA,withSmoothFct = TRUE)
 }
 
