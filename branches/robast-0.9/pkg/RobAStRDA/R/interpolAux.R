@@ -127,6 +127,12 @@
                            withSmooth = TRUE, df = NULL,
                            gridRestrForSmooth = NULL){
 
+  ## help functions to capture keyboard input taken from help.request
+    no <- function(answer) answer == "n"
+    yes <- function(answer) answer == "y"
+    readMyLine <- function(..., .A. = "(y/n)") readline(paste(paste(strwrap(paste(...)),
+        collapse = "\n"), .A., ""))
+
   ### check whether input is complete
   if(missing(fromFileCSV)) stop("You must specify argument 'fromFileCSV'.")
   if(missing(toFileRDA)) stop("You must specify argument 'toFileRDA'.")
@@ -163,12 +169,11 @@
           if(namPFam %in% namesInterpGrids){
              cat(gettext("There already is a grid for family "),
                  namPFam,".\n",sep="")
-             cat("\n",
-                 gettext("Do you really want to overwrite/merge it (yes=1/no else)?"),"\n",
-                 sep="")
-             ans <- try(scan(what=integer(1)), silent = TRUE)
-             if(is(ans,"try-error")) ans <- 0
-             if(ans==1){
+             ans <- readMyLine(
+             paste("\n",
+                 gettext("Do you really want to overwrite/merge it (y/n)?"),"\n",
+                 sep=""))
+             if(yes(ans)){
                 if(withMerge){
                    gr0 <- .mergeGrid(InterpGrids[[namPFam]]$grid, Grid)
                    InterpGrids[[namPFam]]$grid <- gr0
@@ -217,7 +222,8 @@
 # .mergeGrid merges two grids according to the lines
 ############################################################################
 .mergeGrid <- function(Grid1, Grid2){
-   if(ncol(Grid1)==ncol(Grid2))
+
+   if(ncol(Grid1)!=ncol(Grid2))
       stop("Grids must have the same number of columns")
    Grid <- rbind(Grid1, Grid2)
    on <- order(Grid[,1])
