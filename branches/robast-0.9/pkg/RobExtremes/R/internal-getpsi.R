@@ -16,10 +16,10 @@
    #print(get("k",environment(get("Lambda1", environment(L2deriv[[1]]@Map[[1]])))))
    #print(get("sc",environment(get("Lambda1", environment(L2deriv[[1]]@Map[[1]])))))
 
-   .dbeta <- diag(c(beta,1))
+   .dbeta <- diag(c(beta,1)); .dbeta1 <- diag(c(1/beta,1))
    b <- fct[[1]](xi)
    a <-  c(.dbeta%*%c(fct[[2]](xi),fct[[3]](xi)))
-   aw <- c(.dbeta%*%c(fct[[4]](xi),fct[[5]](xi)))
+   aw <- c(.dbeta1%*%c(fct[[4]](xi),fct[[5]](xi)))
    am <- mean(c(fct[[7]](xi),fct[[8]](xi)))
    A <-  .dbeta%*%matrix(c(fct[[6]](xi),am,am,fct[[9]](xi)),2,2)%*%.dbeta
    am <- mean(c(fct[[11]](xi),fct[[12]](xi)))

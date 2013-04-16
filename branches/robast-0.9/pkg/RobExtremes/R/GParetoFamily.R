@@ -23,6 +23,7 @@ setMethod("validParameter",signature(object="GParetoFamily"),
 
 ## generating function 
 ## loc: known/fixed threshold/location parameter
+## -------------------------------------
 ## scale: scale parameter
 ## shape: shape parameter
 ## of.interest: which parameters, transformations are of interest
