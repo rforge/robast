@@ -37,24 +37,35 @@ setReplaceMethod("cent", "CondHampelWeight",
 setMethod("getweight",
           signature(Weight = "CondHampelWeight", neighbor = "ContNeighborhood",
                     biastype = "BiasType"),# normtype = "NormType"),
-          function(Weight, neighbor, biastype, normW)
+          getMethod("getweight", signature=signature(Weight = "HampelWeight",
+                    neighbor = "ContNeighborhood", biastype = "BiasType")))
+
+setMethod("getweight",
+          signature(Weight = "CondHampelWeight", neighbor = "TotalVarNeighborhood",
+                    biastype = "BiasType"),
+          getMethod("getweight", signature=signature(Weight = "HampelWeight",
+                    neighbor = "TotalVarNeighborhood", biastype = "BiasType")))
+
+setMethod("getweight",
+          signature(Weight = "CondHampelWeight", neighbor = "Av1CondContNeighborhood",
+                    biastype = "BiasType"),#  norm = "missing"),
+          function(Weight, neighbor, biastype, normW, ...)
                {A <- stand(Weight)
                 b <- clip(Weight)
                 z <- cent(Weight)
                 function(x,X){
-                   y <- A%*%(x-z(X))
+                   y <- as.numeric(as.matrix(A)%*%(x-z(X)))
                    norm0 <- fct(normW)(y)
-                   ind2 <- (norm0 < b(X)/2)
-                   norm1 <- ind2*b(X)/2 + (1-ind2)*norm0
-                   ind1 <- (norm0 < b(X))
-                   ind1 + (1-ind1)*b(X)/norm1
+                   ind2 <- (norm0 < b/2)
+                   norm1 <- ind2*b/2 + (1-ind2)*norm0
+                   ind1 <- (norm0 < b)
+                   ind1 + (1-ind1)*b/norm1
                    }
                 }
           )
 
-
 setMethod("getweight",
-          signature(Weight = "CondHampelWeight", neighbor = "CondContNeighborhood",
+          signature(Weight = "CondHampelWeight", neighbor = "Av1CondContNeighborhood",
                     biastype = "onesidedBias"),#  norm = "missing"),
           function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
@@ -62,44 +73,44 @@ setMethod("getweight",
                 z <- cent(Weight)
                 function(x,X){
                    y <- as.numeric(as.matrix(A)%*%(x-z(X)))*sign(biastype)
-                   norm1 <- pmax(y,b(X)/2)
-                   pmin(1,b(X)/norm1)
+                   norm1 <- pmax(y,b/2)
+                   pmin(1,b/norm1)
                    }
                 }
           )
 
 setMethod("getweight",
-          signature(Weight = "CondHampelWeight", neighbor = "CondContNeighborhood",
+          signature(Weight = "CondHampelWeight", neighbor = "Av1CondContNeighborhood",
                     biastype = "asymmetricBias"),# norm = "missing"),
           function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
                 b <- clip(Weight)
-                b1 <- function(X) b(X)/nu(biastype)[1]
-                b2 <- function(X) b(X)/nu(biastype)[2]
+                b1 <- b/nu(biastype)[1]
+                b2 <- b/nu(biastype)[2]
                 z <- cent(Weight)
                 function(x,X){
                    y <- as.numeric(as.matrix(A)%*%(x-z(X)))
-                   norm1 <- pmax(-y,b1(X)/2)
-                   norm2 <- pmax(y,b2(X)/2)
-                   pmin(1,b1(X)/norm1,b2(X)/norm2)
+                   norm1 <- pmax(-y,b1/2)
+                   norm2 <- pmax(y,b2/2)
+                   pmin(1,b1/norm1,b2/norm2)
                    }
                 }
           )
 
 
 setMethod("getweight",
-          signature(Weight = "CondBdStWeight", neighbor = "CondTotalVarNeighborhood",
+          signature(Weight = "CondBdStWeight", neighbor = "Av1CondTotalVarNeighborhood",
                     biastype = "BiasType"),#  norm = "missing"),
           function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
                 b <- clip(Weight)
-                b1 <- function(X) -b(X)[1]
-                b2 <- function(X)b(X)[2]
+                b1 <- -b[1]
+                b2 <- b[2]
                 function(x,X){
                    y <- as.numeric(as.matrix(A)%*%x)
-                   norm1 <- pmax(-y,b1(X)/2)
-                   norm2 <- pmax(y,b2(X)/2)
-                   pmin(1,b1(X)/norm1,b2(X)/norm2)
+                   norm1 <- pmax(-y,b1/2)
+                   norm2 <- pmax(y,b2/2)
+                   pmin(1,b1/norm1,b2/norm2)
                    }
                 }
           )
@@ -178,10 +189,23 @@ setMethod("getweight",
                 }
           )
 
-
 setMethod("minbiasweight",
           signature(Weight = "CondHampelWeight", neighbor = "ContNeighborhood",
-                    biastype = "BiasType"),#  norm = "NormType"),
+                    biastype = "BiasType"),
+getMethod("minbiasweight", signature=signature(Weight = "CondHampelWeight",
+                    neighbor = "ContNeighborhood",
+                    biastype = "BiasType")))
+
+setMethod("minbiasweight",
+          signature(Weight = "CondHampelWeight", neighbor = "TotalVarNeighborhood",
+                    biastype = "BiasType"),
+getMethod("minbiasweight", signature=signature(Weight = "CondHampelWeight",
+                    neighbor = "TotalVarNeighborhood",
+                    biastype = "BiasType")))
+
+setMethod("minbiasweight",
+          signature(Weight = "CondHampelWeight", neighbor = "Av1CondContNeighborhood",
+                    biastype = "BiasType"),#  norm = "missing"),
           function(Weight, neighbor, biastype, normW)
                {A <- stand(Weight)
                 b <- clip(Weight)
@@ -197,7 +221,7 @@ setMethod("minbiasweight",
 
 
 setMethod("minbiasweight",
-          signature(Weight = "CondHampelWeight", neighbor = "CondContNeighborhood",
+          signature(Weight = "CondHampelWeight", neighbor = "Av1CondContNeighborhood",
                     biastype = "asymmetricBias"),#  norm = "missing"),
           function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
@@ -216,7 +240,7 @@ setMethod("minbiasweight",
           )
 
 setMethod("minbiasweight",
-          signature(Weight = "CondHampelWeight", neighbor = "CondContNeighborhood",
+          signature(Weight = "CondHampelWeight", neighbor = "Av1CondContNeighborhood",
                     biastype = "onesidedBias"),#  norm = "missing"),
           function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
@@ -233,7 +257,7 @@ setMethod("minbiasweight",
 
 
 setMethod("minbiasweight",
-          signature(Weight = "CondBdStWeight", neighbor = "CondTotalVarNeighborhood",
+          signature(Weight = "CondBdStWeight", neighbor = "Av1CondTotalVarNeighborhood",
                     biastype = "BiasType"),
           function(Weight, neighbor, biastype, ...)
                {A <- stand(Weight)
@@ -325,22 +349,3 @@ setMethod("minbiasweight",
           )
 
 
-setMethod("minbiasweight",
-          signature(Weight = "HampelWeight", neighbor = "Av2CondContNeighborhood",
-                    biastype = "asymmetricBias"),#  norm = "missing"),
-          function(Weight, neighbor, biastype, normW, Kinv, D, ...)
-               {A <- stand(Weight)
-                fac <- .fac(normW,D,Kinv)
-                b <- clip(Weight)*fac
-                b1 <- function(X) -b(X)[1]
-                b2 <- function(X) b(X)[2]
-                z <- cent(Weight)
-                function(x,X){
-                   y <- as.numeric(as.matrix(A)%*%(x-z(X)))
-                   indp <- (y>0)
-                   ind0 <- .eq(y)
-                   indm <- (y<0)
-                   indm*b1(X)/(y+ind0) + indp*b2(X)/(y+ind0)
-                   }
-                }
-          )

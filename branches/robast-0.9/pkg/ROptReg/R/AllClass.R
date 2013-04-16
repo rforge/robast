@@ -174,7 +174,7 @@ setClass("L2GLMTypeFamily",   ## taken from ROptRegTS
 
                 return(TRUE)
             })
-# conditional (error-free-variables) neighborhood
+# conditional (error-free-variables) neighborhood cf Ri94: 7.2.2
 setClass("CondNeighborhood", 
             representation(radiusCurve = "function"), 
             contains = c("Neighborhood", "VIRTUAL"),
@@ -200,14 +200,14 @@ setClass("CondTotalVarNeighborhood",
 setClass("AvCondNeighborhood", representation(exponent = "numeric"),
             contains = c("CondNeighborhood", "VIRTUAL"))
 # average conditional neighborhood (exponent = 1)
-setClass("Av1CondNeighborhood", 
+setClass("Av1CondNeighborhood",  ### Ri:94 alpha=1 7.2.2 (9)
             contains = c("AvCondNeighborhood", "VIRTUAL"),
             validity = function(object){
                 if(object@exponent != 1)
                     stop("exponent has to be 1")
             })
 # average conditional convex contamination neighborhood (exponent = 1)
-setClass("Av1CondContNeighborhood", 
+setClass("Av1CondContNeighborhood",       ###### <- first priority
             prototype = prototype(type = "average conditional convex contamination neighborhood",
                                   radius = 0,
                                   radiusCurve = function(x){1},
@@ -221,7 +221,7 @@ setClass("Av1CondTotalVarNeighborhood",
                                   exponent = 1),
             contains = c("Av1CondNeighborhood"))
 # average square conditional neighborhood (exponent = 2)
-setClass("Av2CondNeighborhood", 
+setClass("Av2CondNeighborhood", ### Ri:94 alpha=2 7.2.2 (9)
             representation(Kinv="matrix",D="matrix"),
             prototype(Kinv=matrix(1),D=matrix(1)),
             contains = c("AvCondNeighborhood", "VIRTUAL"),
@@ -230,7 +230,7 @@ setClass("Av2CondNeighborhood",
                     stop("exponent has to be 2")
             })
 # average square conditional convex contamination neighborhood (exponent = 2)
-setClass("Av2CondContNeighborhood", 
+setClass("Av2CondContNeighborhood",      ###### <- first priority
             prototype = prototype(type = "average square conditional convex contamination neighborhood",
                                   radius = 0,
                                   radiusCurve = function(x){1},
@@ -288,6 +288,7 @@ setClass("InfRobRegTypeModel",
                     return(TRUE)
             })
 
+### weights are new w.r.t. ROptRegTS
 setClass("CondBoundedWeight", representation(clip = "function"),
           prototype(clip = function(x) Inf), contains = "RobWeight")
 setClass("CondBdStWeight", representation(stand = "matrix"),
