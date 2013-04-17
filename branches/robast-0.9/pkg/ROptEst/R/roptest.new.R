@@ -12,6 +12,9 @@
    stop("Could not evaluate expression.")
 }
 
+#####################################################################
+### probably a dead end: filling in unevaluated arguments is too tricky...
+if(FALSE){
 roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
                     distance = CvMDist, startPar = NULL, verbose = NULL,
@@ -67,6 +70,57 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     if(mwt) es.call$withTimings <- withTimings
     res@estimate.call <- es.call
     return(res)}
+}
+##############
+}
+### end of dead end.
+#####################################################################
+
+roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
+                    neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
+                    distance = CvMDist, startPar = NULL, verbose = NULL,
+                    OptOrIter = "iterate",
+                    useLast = getRobAStBaseOption("kStepUseLast"),
+                    withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+                    IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+                    withICList = getRobAStBaseOption("withICList"),
+                    withPICList = getRobAStBaseOption("withPICList"),
+                    na.rm = TRUE, initial.est.ArgList, ...,
+                    withLogScale = TRUE,..withCheck=FALSE,
+                    withTimings = FALSE, withMDE = NULL,
+                    withEvalAsVar = NULL){
+    dots <- match.call(expand.dots=FALSE)[["..."]]
+    scalename <- dots[["scalename"]]
+    nbCtrl <- list()
+    nbCtrl[["neighbor"]] <- if(!missing(neighbor)) neighbor else ContNeighborhood()
+    if(!missing(eps)) nbCtrl[["eps"]] <- eps
+    if(!missing(eps.lower)) nbCtrl[["eps.lower"]] <- eps.lower
+    if(!missing(eps.upper)) nbCtrl[["eps.upper"]] <- eps.upper
+
+    startCtrl <- list()
+    if(!missing(initial.est)) startCtrl[["initial.est"]] <- initial.est
+    if(!missing(initial.est.ArgList))
+       startCtrl[["initial.est.ArgList"]] <- initial.est.ArgList
+    startCtrl[["startPar"]] <- if(!missing(startPar)) startPar else NULL
+    startCtrl[["distance"]] <- if(!missing(distance)) distance else NULL
+    startCtrl[["withMDE"]] <- if(!missing(withMDE)) withMDE else NULL
+
+    kStepCtrl <- list()
+    kStepCtrl[["useLast"]] <- if(!missing(useLast)) useLast else getRobAStBaseOption("kStepUseLast")
+    kStepCtrl[["withUpdateInKer"]] <- if(!missing(withUpdateInKer)) withUpdateInKer else getRobAStBaseOption("withUpdateInKer")
+    kStepCtrl[["IC.UpdateInKer"]] <- if(!missing(IC.UpdateInKer)) IC.UpdateInKer else getRobAStBaseOption("IC.UpdateInKer")
+    kStepCtrl[["withICList"]] <- if(!missing(withICList)) withICList else getRobAStBaseOption("withICList")
+    kStepCtrl[["withPICList"]] <- if(!missing(withPICList)) withPICList else getRobAStBaseOption("withPICList")
+    kStepCtrl[["scalename"]] <- if(!is.null(scalename)) scalename else "scale"
+    kStepCtrl[["withLogScale"]] <- if(!missing(withLogScale)) withLogScale else TRUE
+    kStepCtrl[["withEvalAsVar"]] <- if(!missing(withEvalAsVar)) withEvalAsVar else NULL
+
+    return(robest(x=x, L2Fam=L2Fam,  fsCor = fsCor,
+           risk = risk, steps = steps, verbose = verbose,
+           OptOrIter = OptOrIter, nbCtrl = nbCtrl,
+           startCtrl = startCtrl, kStepCtrl = kStepCtrl,
+           na.rm = na.rm, ..., debug = ..withCheck,
+           withTimings = withTimings))
 }
 #roptest(x=1:10,L2Fam=GammaFamily(),also=3,..withCheck=TRUE)
 
