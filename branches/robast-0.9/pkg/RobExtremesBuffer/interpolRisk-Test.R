@@ -2,12 +2,12 @@
 ### Tests fuer InterpolRisiken
 ####################################################
 PFam <- NULL
-mytest <- function(PF = GParetoFamily, xi = 0.5, seed=130313){
+mytest <- function(PF = GParetoFamily, xi = 0.5, seed=130313, beta=1){
 ### arguments
 ## PF: generating function of the family
 ## xi: shape parameter
 ## seed: seed fuer den Zufallszahlengenerator
-   PFam <- PF(shape=xi,scale=1)
+   PFam <- PF(shape=xi,scale=beta)
    cat("\n\n\n---------------------------------\n")
    cat("  ", name(PFam),"  ")
    cat("\n---------------------------------\n")
