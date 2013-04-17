@@ -23,7 +23,7 @@
    am <- mean(c(fct[[7]](xi),fct[[8]](xi)))
    A <-  .dbeta%*%matrix(c(fct[[6]](xi),am,am,fct[[9]](xi)),2,2)%*%.dbeta
    am <- mean(c(fct[[11]](xi),fct[[12]](xi)))
-   Aw <- .dbeta%*%matrix(c(fct[[10]](xi),am,am,fct[[13]](xi)),2,2)%*%.dbeta
+   Aw <- matrix(c(fct[[10]](xi),am,am,fct[[13]](xi)),2,2)%*%.dbeta
 
 
 

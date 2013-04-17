@@ -211,6 +211,7 @@ WeibullFamily <- function(scale = 1, shape = 0.5,
 
     ## initializing the Weibull family with components of L2-family
     L2Fam <- new("WeibullFamily")
+    L2Fam@scaleshapename <- scaleshapename
     L2Fam@name <- name
     L2Fam@param <- param
     L2Fam@distribution <- distribution
@@ -245,6 +246,7 @@ WeibullFamily <- function(scale = 1, shape = 0.5,
             }###
     L2Fam@L2deriv <- L2deriv
     L2Fam@L2derivDistr <- L2derivDistr
+
     L2Fam@.withMDE <- FALSE
     L2Fam@.withEvalAsVar <- FALSE
     L2Fam@.withEvalL2derivDistr <- FALSE
