@@ -6,6 +6,14 @@
 
 ### some reusable blocks of code (to avoid redundancy):
 
+.warningGEVShapeLarge <- function(xi){
+    if(xi>=4.5)
+    warning("A shape estimate larger than 4.5 was produced.\n",
+            "Shape parameter values larger than 4.5 are critical\n",
+            "in the GEV family as to numerical issues. Be careful with \n",
+            "ALE results obtained here; they might be unreliable.")
+    }
+
 ### pretreatment of of.interest
 .pretreat.of.interest <- function(of.interest,trafo){
     if(is.null(trafo)){
@@ -139,7 +147,8 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                           withCentL2 = FALSE,
                           withL2derivDistr  = FALSE){
     theta <- c(loc, scale, shape)
-
+    .warningGEVShapeLarge(shape)
+    
     of.interest <- .pretreat.of.interest(of.interest,trafo)
 
     ##symmetry
@@ -253,7 +262,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
     modifyPar <- function(theta){
         theta <- makeOKPar(theta)
-
+        .warningGEVShapeLarge(theta["shape"])
         if(!is.null(names(theta))){
             sc <- theta["scale"]
             sh <- theta["shape"]
@@ -271,6 +280,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
         sc <- force(main(param)[1])
         k <- force(main(param)[2])
         tr <- fixed(param)[1]
+        .warningGEVShapeLarge(k)
 
         Lambda1 <- function(x) {
          y <- x*0
@@ -306,6 +316,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     FisherInfo.fct <- function(param) {
         sc <- force(main(param)[1])
         k <- force(main(param)[2])
+        .warningGEVShapeLarge(k)
         G20 <- gamma(2*k)
         G10 <- gamma(k)
         G11 <- digamma(k)*gamma(k)
