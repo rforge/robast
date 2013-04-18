@@ -51,6 +51,10 @@ plotG <- function(G=GEVFamily(shape=0.7,scale=1), pfa,qfa){
         plot(z, pf0(L2deriv(G)[[1]]@Map[[i]](q(G)(z))),
               type="l",xlab="x",ylab=if(i==1) "shape" else "scale",axes=F)
         tus()}
+  plot2 <- function(){
+        plot(z, pf0(L2deriv(G)[[1]]@Map[[1]](q(G)(z)))*pf0(L2deriv(G)[[1]]@Map[[2]](q(G)(z))),
+              type="l",xlab="x",ylab="shape x scale",axes=F)
+        tus()}
   windows()
   plot(G)
   if(p(G)(0)<=0){
@@ -58,9 +62,10 @@ plotG <- function(G=GEVFamily(shape=0.7,scale=1), pfa,qfa){
     plot(G,log="x")
   }
   windows()
-  if(ncol(trafo(G))>1) {par(mfrow=c(2,1))
+  if(ncol(trafo(G))>1) {par(mfrow=c(3,1))
   ploti(1);
   ploti(2)
+  plot2()
   par(mfrow=c(1,1))}else ploti(1)
 }
 plotG(G=NormLocationScaleFamily())
