@@ -130,7 +130,7 @@ plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
    if(is.null(pla)) pla <- 1: nrow(gr)
    print(wM)
    print(head(gr[gridRestrForSmooth[[1]],1]))
-   plot(gr[pla,1], cbind(gr0[pla,wM],gr[pla,wM]), type="n",
+   matplot(gr[pla,1], cbind(gr0[pla,wM],gr[pla,wM]), type="n",
             xlab=xlab, ylab=paste(ylab,namesLM[wM-1]), main = main, ...)
    matlines(gr[pla,1],
              cbind(gr0[pla,wM],gr1[pla,wM],gr[pla,wM]),lwd=lwd, lty=lty, col=col)
