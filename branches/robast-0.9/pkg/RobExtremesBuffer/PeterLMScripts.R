@@ -152,7 +152,9 @@ if(getRversion()>"2.16"){
 ### generierung der Interpolatoren (in R>3.0)
 .computeInterpolators(myRDA1, myRDA,withSmoothFct = TRUE)
 }
+######################################---bis hierher mit R-3.0.0 laufen lassen ##
 
+######################################---ab hier mit R-2.15.2 laufen lassen ##
 if(getRversion()<"2.16"){
 ### generierung der Interpolatoren (in R<=2.15)
 ## folgenden Code einsourcen:
