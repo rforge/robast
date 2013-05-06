@@ -149,26 +149,31 @@ file.copy(from=myRDA,to=myRDA1)
 ### 1. Runde
 ### "MBRE"-"GEV"
 ## df und gridR Werte durch Ausprobieren gewonnen
-myplot2(1, df = 10, gridR = -(1:270))
-myplot2(2, df = 12, gridR = -(1:270))
-myplot2(3, df = 10, gridR = -(1:270))
-myplot2(4, df = 10, gridR = -(1:270))
-myplot2(5, df = 10, gridR = -(1:270))
-myplot2(6, df = 20, gridR = -(1:270))
-myplot2(7, df = 20, gridR = -(1:270))
-myplot2(8, df = 20, gridR = -(1:270))
-myplot2(9, df = 20, gridR = -(1:270))
-myplot2(10, df = 20, gridR = -(1:270))
-myplot2(11, df = 20, gridR = -(1:270))
-myplot2(12, df = 20, gridR = -(1:270))
-myplot2(13, df = 20, gridR = -(1:270))
+myplot2(1, df = 3, gridR = -(1:390))
+myplot2(2, df = 5, gridR = -(1:210))
+myplot2(3, df = 3, gridR = -(1:190))
+myplot2(4, df = 6, gridR = -(1:220))
+myplot2(5, df = 8, gridR = -(1:230))
+myplot2(6, df = 15, gridR = -(1:70))
+myplot2(7, df = 20, gridR = -(1:130))
+myplot2(8, df = 15, gridR = -(1:140))
+myplot2(9, df = 6, gridR = -(1:500))
+myplot2(10, df = 15, gridR = -(1:140))
+myplot2(11, df = 20, gridR = -(1:130))
+myplot2(12, df = 17, gridR = -(1:130))
+myplot2(13, df = 6, gridR = -(1:500))
+
 
 ### sammeln der gridR und df Werte (ggf in listen)
-gridR2 <- -(1:275)
-dfR2 <- 20
-
+plotR2 <- list(-(1:20),-(1:20),-(1:20),-(1:20),-(1:20),
+               -(1:20), -(1:20), -(1:20), -(1:20),-(1:20),
+               -(1:20),-(1:20),-(1:20))
+gridR2 <- list(-(1:390),-(1:210),-(1:190),-(1:220),-(1:230),-(1:70),
+               -(1:130),-(1:140),-(1:500),-(1:140),-(1:130),-(1:130), -(1:500))
+dfR2 <- c(3,5,3,6,8,15,20,15,6,15,20,17,6)
 ### alle Plotten zur Kontrolle
-myplot2("all", df=20, gridR=gridR2, withSmooth=FALSE, pre=windows())
+myplot2("all", df=dfR2, gridR=gridR2, plotG=plotR2, withSmooth=FALSE, pre=windows())
+
 
 ### schreiben der geglätteten Gitter ins rda-file,
 ##      aber zunächst noch woanders (myRDA1) gespeichert:
