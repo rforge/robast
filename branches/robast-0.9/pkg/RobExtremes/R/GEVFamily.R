@@ -161,19 +161,19 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
     btq <- bDq <- btes <- bDes <- btel <- bDel <- NULL
     if(!is.null(p)){
-       btq <- substitute({ q <- loc0 + theta[1]*((-log(1-p0))^(-theta[2])-1)/theta[2]
+       btq <- substitute({ q <- loc0 + theta[1]*((-log(p0))^(-theta[2])-1)/theta[2]
                            names(q) <- "quantile"
                            }, list(loc0 = loc, p0 = p))
 
        bDq <- substitute({ scale <- theta[1];  shape <- theta[2]
-                        D1 <- ((-log(1-p0))^(-shape)-1)/shape
-                        D2 <- -scale/shape*(D1 + log(-log(1-p0))*(-log(1-p0))^(-shape))
+                        D1 <- ((-log(p0))^(-shape)-1)/shape
+                        D2 <- -scale/shape*(D1 + log(-log(p0))*(-log(p0))^(-shape))
                         D <- t(c(D1, D2))
                         rownames(D) <- "quantile"; colnames(D) <- NULL
                         D }, list(p0 = p))
        btes <- substitute({ if(theta[2]>=1L) es <- NA else {
                             pg <- pgamma(-log(p0),1-theta[2], lower.tail = TRUE)
-                            es <- theta[1] * (gamma(1-theta[2]) * pg/ (1-p0) - 1 )/
+                            es <- theta[1] * (gamma(1-theta[2]) * pg/ p0 - 1 )/
                                    theta[2]  + loc0 }
                             names(es) <- "expected shortfall"
                             es }, list(loc0 = loc, p0 = p))
@@ -182,9 +182,9 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                             pg <- pgamma(-log(p0), 1-theta[2], lower.tail = TRUE)
                             dd <- ddigamma(-log(p0),1-theta[2])
                             g0 <- gamma(1-theta[2])
-                            D1 <- (g0*pg/(1-p0)-1)/theta[2]
+                            D1 <- (g0*pg/p0-1)/theta[2]
                             D21 <- theta[1]*D1/theta[2]
-                            D22 <- theta[1]*dd/(1-p0)/theta[2]
+                            D22 <- theta[1]*dd/p0/theta[2]
                             D2 <- -D21+D22}
                             D <- t(c(D1, D2))
                             rownames(D) <- "expected shortfall"
