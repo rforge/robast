@@ -173,7 +173,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                         D }, list(p0 = p))
        btes <- substitute({ if(theta[2]>=1L) es <- NA else {
                             pg <- pgamma(-log(p0),1-theta[2], lower.tail = TRUE)
-                            es <- theta[1] * (gamma(1-theta[2]) * pg/ p0 - 1 )/
+                            es <- theta[1] * (gamma(1-theta[2]) * pg/ (1-p0) - 1 )/
                                    theta[2]  + loc0 }
                             names(es) <- "expected shortfall"
                             es }, list(loc0 = loc, p0 = p))
@@ -182,9 +182,9 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                             pg <- pgamma(-log(p0), 1-theta[2], lower.tail = TRUE)
                             dd <- ddigamma(-log(p0),1-theta[2])
                             g0 <- gamma(1-theta[2])
-                            D1 <- (g0*pg/p0-1)/theta[2]
+                            D1 <- (g0*pg/(1-p0)-1)/theta[2]
                             D21 <- theta[1]*D1/theta[2]
-                            D22 <- theta[1]*dd/p0/theta[2]
+                            D22 <- theta[1]*dd/(1-p0)/theta[2]
                             D2 <- -D21+D22}
                             D <- t(c(D1, D2))
                             rownames(D) <- "expected shortfall"
@@ -193,14 +193,14 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     }
     if(!is.null(N)){
        btel <- substitute({ if(theta[2]>=1L) el <- NA else{
-                            el <- N0*(loc0+theta[1]*gamma(1-theta[2])/theta[2])}
+                            el <- N0*(loc0+theta[1]*(gamma(1-theta[2])-1)/theta[2])}
                             names(el) <- "expected loss"
                             el }, list(loc0 = loc,N0 = N))
        bDel <- substitute({ if(theta[2]>=1L){ D1 <- D2 <- NA}else{
                             scale <- theta[1]; shape <- theta[2]
-                            D1 <- N0*gamma(1-shape)/shape
+                            D1 <- N0*(gamma(1-shape)-1)/shape
                             D2 <- -N0*theta[1]*digamma(1-theta[2])/theta[2]-
-                                   D1*scale/(1-shape)}
+                                   D1*scale/shape}
                             D <- t(c(D1, D2))
                             rownames(D) <- "expected loss"
                             colnames(D) <- NULL
