@@ -33,7 +33,46 @@
 # *   RobRex
 #
 ## evtl naechste Zeile modifizieren
+### preparations:
+# (0) R-forge checkout von distr und robast machen; Pakete installieren
+######
+# Reihenfolge
+#### *: von r-forge, **: von CRAN, ***: von BioConductor
+# vorab:
+# CRAN: **  sfsmisc, setRNG, fBasics, fGarch, mvtnorm, lattice, RColorBrewer
+# BioConductor: *** Biobase, affy, beadarray
+# source("http://bioconductor.org/biocLite.R")
+# biocLite()
+# biocLite(c("affy", "beadarray"))
+#
+# *   RobAStRDA
+# *   startupmsg
+# *   SweaveListingUtils
+# *   distr
+# *   distrEx
+# *   distrTeach
+# *   distrRmetrics
+# *   distrSim
+# *   distrEllipse
+# *   distrTEst
+# *   RandVar
+# *   distrMod
+# *   distrDoc
+# *   RobAStBase
+# *   ROptEst
+# *   RobExtremes
+# *   RobLox
+# *   RobLoxBioC
+# *   ROptEstOld
+# *   ROptRegTS
+# *   RobRex
+#
+## evtl naechste Zeile modifizieren
+#Peter
+baseDir0 <- "C:/rtest/RobASt"
+#Dasha
 baseDir0 <- "D:/Mathematics/KL-PhD/robast"
+
 interpolDir <- "branches/robast-0.9/pkg/RobExtremes/inst/AddMaterial/interpolation"
 interpolFile <- "plotInterpol.R"
 ##
@@ -85,8 +124,8 @@ myRDA1 <- file.path(.basepath,"RobExtremesBuffer/sysdata.rda")
 myRDA <- file.path(.basepath,"RobAStRDA/R/sysdata.rda")
 CSVFiles <- grep("\\.csv$", dir(.myFolderFrom), value=TRUE)
 CSVFiles <- paste(.myFolderFrom, CSVFiles, sep="/")
-CSVFiles2 <- file.path(.myFolderFrom,"interpolMBREGEVFamily.csv")
-CSVFiles3 <- file.path(.myFolderFrom,"interpolMBREGammafamily.csv")
+CSVFiles2 <- file.path(.myFolderFrom,"interpolMBREGeneralizedParetoFamily.csv")
+CSVFiles3 <- file.path(.myFolderFrom,"interpolMBREWeibullfamily.csv")
 file.copy(from=myRDA,to=myRDA1)
 
 ### 1. Runde

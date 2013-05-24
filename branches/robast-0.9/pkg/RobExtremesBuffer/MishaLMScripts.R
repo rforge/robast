@@ -33,6 +33,44 @@
 # *   RobRex
 #
 ## evtl naechste Zeile modifizieren
+### preparations:
+# (0) R-forge checkout von distr und robast machen; Pakete installieren
+######
+# Reihenfolge
+#### *: von r-forge, **: von CRAN, ***: von BioConductor
+# vorab:
+# CRAN: **  sfsmisc, setRNG, fBasics, fGarch, mvtnorm, lattice, RColorBrewer
+# BioConductor: *** Biobase, affy, beadarray
+# source("http://bioconductor.org/biocLite.R")
+# biocLite()
+# biocLite(c("affy", "beadarray"))
+#
+# *   RobAStRDA
+# *   startupmsg
+# *   SweaveListingUtils
+# *   distr
+# *   distrEx
+# *   distrTeach
+# *   distrRmetrics
+# *   distrSim
+# *   distrEllipse
+# *   distrTEst
+# *   RandVar
+# *   distrMod
+# *   distrDoc
+# *   RobAStBase
+# *   ROptEst
+# *   RobExtremes
+# *   RobLox
+# *   RobLoxBioC
+# *   ROptEstOld
+# *   ROptRegTS
+# *   RobRex
+#
+## evtl naechste Zeile modifizieren
+#Peter
+baseDir0 <- "C:/rtest/RobASt"
+#Misha
 baseDir0 <- "D:/SVN repositories/robast"
 interpolDir <- "branches/robast-0.9/pkg/RobExtremes/inst/AddMaterial/interpolation"
 interpolFile <- "plotInterpol.R"
@@ -45,51 +83,51 @@ interpolFile <- "plotInterpol.R"
 #     if(trace) cat("\n")
 #   }
 # }
-# 
+#
 # path = "D:/SVN repositories/robast/branches/robast-0.9/pkg/RandVar/R/"
 # setwd(path)
 # sourceDir(path)
-# 
+#
 # path = "D:/SVN repositories/robast/branches/robast-0.9/pkg/RobAStBase/R/"
 # setwd(path)
 # sourceDir(path)
-# 
+#
 # path = "D:/SVN repositories/robast/branches/robast-0.9/pkg/RobAStRDA/R/"
 # setwd(path)
 # sourceDir(path)
-# 
+#
 # path = "D:/SVN repositories/robast/branches/robast-0.9/pkg/RobExtremes/R/"
 # setwd(path)
 # sourceDir(path)
-# 
+#
 # path = "D:/SVN repositories/robast/branches/robast-0.9/pkg/RobExtremesBuffer/R/"
 # setwd(path)
 # sourceDir(path)
-# 
+#
 # path = "D:/SVN repositories/robast/branches/robast-0.9/pkg/RobLox/R/"
 # setwd(path)
 # sourceDir(path)
-# 
+#
 # path = "D:/SVN repositories/robast/branches/robast-0.9/pkg/RobLoxBioC/R/"
 # setwd(path)
 # sourceDir(path)
-# 
+#
 # path = "D:/SVN repositories/robast/branches/robast-0.9/pkg/RobRex/R/"
 # setwd(path)
 # sourceDir(path)
-# 
+#
 # path = "D:/SVN repositories/robast/branches/robast-0.9/pkg/ROptEst/R/"
 # setwd(path)
 # sourceDir(path)
-# 
+#
 # path = "D:/SVN repositories/robast/branches/robast-0.9/pkg/ROptEstOld/R/"
 # setwd(path)
 # sourceDir(path)
-# 
+#
 # path = "D:/SVN repositories/robast/branches/robast-0.9/pkg/ROptReg/R/"
 # setwd(path)
 # sourceDir(path)
-# 
+#
 # path = "D:/SVN repositories/robast/branches/robast-0.9/pkg/ROptRegTS/R/"
 # setwd(path)
 # sourceDir(path)
