@@ -2,7 +2,7 @@
 ### Tests fuer InterpolRisiken
 ####################################################
 PFam <- NULL
-mytest <- function(PF = GParetoFamily, xi = 0.5, seed=130313, beta=1){
+mytest <- function(PF = GParetoFamily, xi = 0.5, seed=130313, beta=1, samples=100){
 ### arguments
 ## PF: generating function of the family
 ## xi: shape parameter
@@ -12,7 +12,7 @@ mytest <- function(PF = GParetoFamily, xi = 0.5, seed=130313, beta=1){
    cat("  ", name(PFam),"  ")
    cat("\n---------------------------------\n")
    set.seed(seed)
-   dat0 <- r(PFam)(100)
+   dat0 <- r(PFam)(samples)
    cat("\n\n\n---------------------------------\n")
    cat("RMXE")
    cat("\n---------------------------------\n")
