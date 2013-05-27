@@ -40,7 +40,8 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
                           p = NULL, N = NULL, trafo = NULL,
                           start0Est = NULL, withPos = TRUE,
                           withCentL2 = FALSE,
-                          withL2derivDistr  = FALSE){
+                          withL2derivDistr  = FALSE,
+                          ..ignoreTrafo = FALSE){
     theta <- c(loc, scale, shape)
 
     of.interest <- .pretreat.of.interest(of.interest,trafo)
@@ -57,6 +58,7 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
     if(!is.null(p)){
        btq <- substitute({ q <- loc0 + theta[1]*((1-p0)^(-theta[2])-1)/theta[2]
                            names(q) <- "quantile"
+                           q
                            }, list(loc0 = loc, p0 = p))
 
        bDq <- substitute({ scale <- theta[1];  shape <- theta[2]
@@ -98,10 +100,11 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
                             D }, list(loc0 = loc, N0 = N))
     }
 
-    if(is.null(trafo))
+    fromOfInt <- FALSE
+    if(is.null(trafo)||..ignoreTrafo){fromOfInt <- TRUE
        trafo <- .define.tau.Dtau(of.interest, btq, bDq, btes, bDes,
                                  btel, bDel, p, N)
-    else if(is.matrix(trafo) & nrow(trafo) > 2)
+    }else if(is.matrix(trafo) & nrow(trafo) > 2)
            stop("number of rows of 'trafo' > 2")
            # code .define.tau.Dtau is in file GEVFamily.R
 
@@ -119,9 +122,11 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
         
         ## Pickand estimator
         if(is.null(start0Est)){
-           e0 <- estimate(medkMADhybr(x, k=10, ParamFamily=GParetoFamily(loc = theta[1],
-                            scale = theta[2], shape = theta[3]),
-                            q.lo = 1e-3, q.up = 15))
+           PF <- GParetoFamily(loc = theta[1],
+                            scale = theta[2], shape = theta[3])
+           e1 <- medkMADhybr(c(x), k=10, ParamFamily = PF,
+                             q.lo = 1e-3, q.up = 15)
+           e0 <- estimate(e1)
         }else{
            if(is(start0Est,"function")){
               e1 <- start0Est(x, ...)
@@ -242,14 +247,26 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
           imageDistr(RandVar = L2deriv, distr = distribution))
     }
 
-    L2Fam@fam.call <- substitute(GParetoFamily(loc = loc0, scale = scale0,
+    if(fromOfInt){
+       L2Fam@fam.call <- substitute(GParetoFamily(loc = loc0, scale = scale0,
                                  shape = shape0, of.interest = of.interest0,
+                                 p = p0, N = N0,
+                                 withPos = withPos0, withCentL2 = FALSE,
+                                 withL2derivDistr  = FALSE, ..ignoreTrafo = TRUE),
+                         list(loc0 = loc, scale0 = scale, shape0 = shape,
+                              of.interest0 = of.interest, p0 = p, N0 = N,
+                              withPos0 = withPos))
+    }else{
+       L2Fam@fam.call <- substitute(GParetoFamily(loc = loc0, scale = scale0,
+                                 shape = shape0, of.interest = NULL,
                                  p = p0, N = N0, trafo = trafo0,
                                  withPos = withPos0, withCentL2 = FALSE,
                                  withL2derivDistr  = FALSE),
                          list(loc0 = loc, scale0 = scale, shape0 = shape,
-                              of.interest0 = of.interest, p0 = p, N0 = N,
-                              trafo0 = trafo, withPos0 = withPos))
+                              p0 = p, N0 = N,
+                              withPos0 = withPos, trafo0 = trafo))
+    }
+                              
 
     L2Fam@LogDeriv <- function(x) (shape+1)/(scale+shape*(x-loc))
     L2Fam@L2deriv <- L2deriv

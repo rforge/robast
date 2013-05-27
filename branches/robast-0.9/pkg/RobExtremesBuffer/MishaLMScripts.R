@@ -71,7 +71,7 @@
 #Peter
 baseDir0 <- "C:/rtest/RobASt"
 #Misha
-baseDir0 <- "D:/SVN repositories/robast"
+#baseDir0 <- "D:/SVN repositories/robast"
 interpolDir <- "branches/robast-0.9/pkg/RobExtremes/inst/AddMaterial/interpolation"
 interpolFile <- "plotInterpol.R"
 ##

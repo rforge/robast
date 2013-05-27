@@ -9,7 +9,7 @@
 \usage{
 GEVFamily(loc = 0, scale = 1, shape = 0.5, of.interest = c("scale", "shape"),
               p = NULL, N = NULL, trafo = NULL, start0Est = NULL, withPos = TRUE,
-              withCentL2 = FALSE, withL2derivDistr  = FALSE)
+              withCentL2 = FALSE, withL2derivDistr  = FALSE, ..ignoreTrafo = FALSE)
 }
 \arguments{
   \item{loc}{ real: known/fixed threshold/location parameter }
@@ -28,6 +28,7 @@ GEVFamily(loc = 0, scale = 1, shape = 0.5, of.interest = c("scale", "shape"),
        when set to \code{TRUE}.}
   \item{withL2derivDistr}{logical: shall the distribution of the L2 derivative
       be computed? Defaults to \code{FALSE} (to speeds up computations).}
+  \item{..ignoreTrafo}{logical: only used internally in \code{kStepEstimator}; do not change this.}
 }
 \details{
   The slots of the corresponding L2 differentiable 
