@@ -198,8 +198,9 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                             el }, list(loc0 = loc,N0 = N))
        bDel <- substitute({ if(theta[2]>=1L){ D1 <- D2 <- NA}else{
                             scale <- theta[1]; shape <- theta[2]
-                            D1 <- N0*(gamma(1-shape)-1)/shape
-                            D2 <- -N0*theta[1]*digamma(1-theta[2])/theta[2]-
+                            ga <- gamma(1-shape)
+                            D1 <- N0*(ga-1)/shape
+                            D2 <- -N0*scale*ga*digamma(1-shape)/shape-
                                    D1*scale/shape}
                             D <- t(c(D1, D2))
                             rownames(D) <- "expected loss"
