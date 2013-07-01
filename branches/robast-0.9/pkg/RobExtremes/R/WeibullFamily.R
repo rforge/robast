@@ -66,18 +66,18 @@ WeibullFamily <- function(scale = 1, shape = 0.5,
                         D <- t(c(D1, D2))
                         rownames(D) <- "quantile"; colnames(D) <- NULL
                         D }, list(p0 = p))
-       btes <- substitute({ if(theta[2]>=1L) es <- NA else {
+       btes <- substitute({ if(theta[2]<= (-1L)) es <- NA else {
                             s1 <- 1+1/theta[2]
-                            pg <- pgamma(-log(p0),s1, lower.tail = FALSE)
+                            pg <- pgamma(-log(1-p0),s1, lower.tail = FALSE)
                             g0 <- gamma(s1)
                             es <- theta[1] * g0 * pg /(1-p0)}
                             names(es) <- "expected shortfall"
                             es }, list(p0 = p))
-       bDes <- substitute({ if(theta[2]>=1L){ D1 <- D2 <- NA} else {
+       bDes <- substitute({ if(theta[2]<= (-1L)){ D1 <- D2 <- NA} else {
                             s1 <- 1+1/theta[2]
-                            pg <- pgamma(-log(p0), s1, lower.tail = FALSE)
+                            pg <- pgamma(-log(1-p0), s1, lower.tail = FALSE)
                             g0 <- gamma(s1)
-                            dd <- digamma(s1)*g0 - ddigamma(-log(p0),s1)
+                            dd <- digamma(s1)*g0 - ddigamma(-log(1-p0),s1)
                             D1 <-  g0 * pg / (1-p0)
                             D2 <- theta[1] * dd /(1-p0)}
                             D <- t(c(D1, D2))
