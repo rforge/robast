@@ -24,14 +24,27 @@ outlyingPlotWrapper = function(x,alpha,fam,...,alpha.trsp = 100, with.legend = T
   ###
   ### do something to fix the good default arguments
   ###
-  mc <- as.list(match.call(expand.dots = FALSE))[-1]
-  dots <- mc$"..."
-  if(is.null(mc$alpha.trsp)) alpha.trsp <- 100
-  if(is.null(mc$with.legend)) mc$with.legend <- TRUE
-  if(is.null(mc$withCall)) mc$withCall <- TRUE
   if(missing(x)) stop("Argument 'x' must be given as argument to 'outlyingPlotWrapper'")
   if(missing(alpha)) stop("Argument 'alpha' must be given as argument to 'outlyingPlotWrapper'")
   if(missing(fam)) stop("Argument 'fam' must be given as argument to 'outlyingPlotWrapper'")
+  mc <- as.list(match.call(expand.dots = FALSE))[-1]
+  dots <- mc$"..."
+  if(missing(x)){
+    alpha.trsp <- 100
+  } else {
+    if(is.null(mc$alpha.trsp)){
+      alpha.trsp <- 30
+      if(length(x) < 1000){
+        alpha.trsp <- 50
+      }
+      if(length(x) < 100){
+        alpha.trsp <- 100
+      }
+    }
+  }
+  if(is.null(mc$with.legend)) mc$with.legend <- TRUE
+  if(is.null(mc$withCall)) mc$withCall <- TRUE
+
   ###
   ### 2. build up the argument list for the (powerful/fullfledged)
   ### graphics/diagnostics function;
@@ -43,8 +56,8 @@ outlyingPlotWrapper = function(x,alpha,fam,...,alpha.trsp = 100, with.legend = T
                    ,dist.x = substitute(QProj())
                    #NormType() - Euclidean norm, default - Mahalanobis norm
                    ,dist.y = substitute(NormType())
-                   ,adj = 0.1
-                   ,pch = 21
+                   ,adj = substitute(0.5)
+                   ,pch = substitute(21)
                    ,col.idn = substitute(rgb(102,102,102,maxColorValue=255))
                    ,cex.idn = substitute(1.7)
                    ,col.cutoff = substitute(rgb(202,202,202,maxColorValue=255))
@@ -66,7 +79,7 @@ outlyingPlotWrapper = function(x,alpha,fam,...,alpha.trsp = 100, with.legend = T
                    ,main = ""#"Outlyingness Plot"
                    ,xlab=substitute("Theoretical log-quantiles")
                    ,ylab=substitute("Mahalanobis distance")
-                   ,bty = substitute("n")
+                   ,bty = substitute("o")
                    ,col = substitute(addAlphTrsp2col(rgb(0,0,0,maxColorValue=255), substitute(alpha.trsp)))
                    )
   
@@ -132,5 +145,5 @@ dev.new()
 fam = WeibullFamily()
 X=distribution(fam)
 x = r(X)(1000)
-outlyingPlotWrapper(x,alpha=0.95,fam=fam, alpha.trsp=50, with.legend = TRUE, withCall = FALSE)
+outlyingPlotWrapper(x,alpha=0.95,fam=fam, alpha.trsp=30, with.legend = TRUE, withCall = FALSE)
 

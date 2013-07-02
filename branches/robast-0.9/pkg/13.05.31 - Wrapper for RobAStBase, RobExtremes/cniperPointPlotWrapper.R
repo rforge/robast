@@ -61,13 +61,13 @@ cniperPointPlotWrapper = function(fam,...
                    ,which.lbs = substitute(NULL)
                    ,which.Order  = substitute(NULL)
                    ,return.Order = substitute(FALSE)
-                   ,adj = 0.1
+                   ,adj = 0.5
                    ,cex.main = substitute(1.5)
                    ,cex.lab = substitute(1.5)
                    ,main = ""#"Outlyingness Plot"
                    ,xlab=substitute("Dirac point")
                    ,ylab=substitute("Asymptotic Risk difference (classic - robust)")
-                   ,bty = substitute("n")
+                   ,bty = substitute("o")
                    )
   
   ##parameter for plotting
@@ -107,7 +107,7 @@ require(RobExtremes)
 require(distr)
 
 # WRite the correct path to the modified file cniperCont.R from the ROptEst package
-source("D:/SVN repositories/robast/branches/robast-0.9/pkg/13.05.31 - Wrapper for RobAStBase, RobExtremes/cniperCont.R")
+source("D:/Dropbox/My Mathematics/Researches Misha/Current Research/11.06 - KL PhD/PhD Thesis/Reports for Project/13.05.31 - Wrapper for RobAStBase, RobExtremes/cniperCont.R")
 
 # GPD
 dev.new()

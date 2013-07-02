@@ -10,26 +10,62 @@
 ## with.legend - optional legend indicator
 ## withCall - optional indicator of the function call
 #
-infoPlotWrapper = function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, withCall = TRUE){
+infoPlotWrapper = function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale = FALSE ,withCall = TRUE){
   ###
   ### 1. grab the dots (and manipulate it within the wrapper function)
   ###
   ###
   ### do something to fix the good default arguments
   ###
-  mc <- as.list(match.call(expand.dots = FALSE))[-1]
-  dots <- mc$"..."
-  if(is.null(mc$alpha.trsp)) alpha.trsp <- 100
-  if(is.null(mc$with.legend)) mc$with.legend <- TRUE
-  if(is.null(mc$withCall)) mc$withCall <- TRUE
   if(missing(IC)) stop("Argument 'IC' must be given as argument to 'ICAllPlotWrapper'")
   if(missing(data)) data <- NULL
+  mc <- as.list(match.call(expand.dots = FALSE))[-1]
+  dots <- mc$"..."
+  if(missing(data)){
+    alpha.trsp <- 100
+  } else {
+    if(is.null(mc$alpha.trsp)){
+      alpha.trsp <- 30
+      if(length(data) < 1000){
+        alpha.trsp <- 50
+      }
+      if(length(data) < 100){
+        alpha.trsp <- 100
+      }
+    }
+  }
+  if(is.null(mc$with.legend)) mc$with.legend <- TRUE
+  if(is.null(mc$rescale)) mc$rescale <- FALSE
+  if(is.null(mc$withCall)) mc$withCall <- TRUE
   ###
   ### 2. build up the argument list for the (powerful/fullfledged)
   ### graphics/diagnostics function;
   ##  
   
-    argsList <- list(object = substitute(IC)
+  ## For GEVFamily we have to scale the axes
+  if((mc$rescale) & (as.list(IC@CallL2Fam)[[1]] == "GEVFamily")){
+      scaleList <- list(scaleX = substitute(TRUE)
+                        ,scaleX.fct = substitute(p(eval(IC@CallL2Fam)))
+                        ,scaleX.inv = substitute(q(eval(IC@CallL2Fam)))
+                        ,scaleY = substitute(TRUE)
+                        ,scaleY.fct = substitute(pnorm)
+                        ,scaleY.inv = substitute(qnorm)
+                        ,x.ticks = substitute(NULL)
+                        ,y.ticks = substitute(NULL)
+      )
+  }else{
+      scaleList <- list(scaleX = substitute(FALSE)
+                        ,scaleX.fct = substitute(p(eval(IC@CallL2Fam)))
+                        ,scaleX.inv = substitute(q(eval(IC@CallL2Fam)))
+                        ,scaleY = substitute(FALSE)
+                        ,scaleY.fct = substitute(pnorm)
+                        ,scaleY.inv=substitute(qnorm)
+                        ,x.ticks = substitute(NULL)
+                        ,y.ticks = substitute(NULL)
+      )
+  }
+  
+    argsList <- c(list(object = substitute(IC)
                      ,data = substitute(data)
                      ,withSweave = substitute(getdistrOption("withSweave"))
                      ,lwd = substitute(par("lwd"))
@@ -49,15 +85,7 @@ infoPlotWrapper = function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, wit
                      ,legend.bg = substitute("white")
                      ,legend.location = substitute("bottomright")
                      ,legend.cex = substitute(0.8)
-                     ,scaleX = substitute(FALSE)
-                     ,scaleX.fct = substitute(p(eval(object@CallL2Fam)))
-                     ,scaleX.inv = substitute(q(eval(object@CallL2Fam)))
-                     ,scaleY = substitute(FALSE)
-                     ,scaleY.fct = substitute(pnorm)
-                     ,scaleY.inv=substitute(qnorm)
                      ,scaleN = substitute(9)
-                     ,x.ticks = substitute(NULL)
-                     ,y.ticks = substitute(NULL)
                      ,mfColRow = substitute(TRUE)
                      ,to.draw.arg = substitute(NULL)
                      ,cex.pts = substitute(1)
@@ -73,14 +101,14 @@ infoPlotWrapper = function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, wit
                      ,return.Order = substitute(FALSE)
                      ,ylab.abs = substitute("absolute information")
                      ,ylab.rel= substitute("relative information")
-                     ,adj = substitute(0.1)
+                     ,adj = substitute(0.5)
                      ,cex.main = substitute(1.5)
                      ,cex.lab = substitute(1.5)
                      ,cex = substitute(1.5)
-                     ,bty = substitute("n")
+                     ,bty = substitute("o")
                      ,panel.first= substitute(grid())
                      ,col = substitute("blue")
-    )
+    ), scaleList)
 
 
 
@@ -127,9 +155,9 @@ IC <- optIC(model = fam, risk = asCov())
 Y=distribution(fam)
 data = r(Y)(1000)
 dev.new()
-infoPlotWrapper(IC, alpha.trsp=50, with.legend = FALSE)
+infoPlotWrapper(IC, alpha.trsp=30, with.legend = FALSE)
 dev.new()
-infoPlotWrapper(IC, data, alpha.trsp=50, with.legend = FALSE)
+infoPlotWrapper(IC, data, alpha.trsp=30, with.legend = FALSE)
 
 
 # GEV
@@ -138,9 +166,9 @@ IC <- optIC(model = fam, risk = asCov())
 Y=distribution(fam)
 data = r(Y)(1000)
 dev.new()
-infoPlotWrapper(IC, with.legend = TRUE, withCall = TRUE)
+infoPlotWrapper(IC, alpha.trsp=100, with.legend = TRUE, rescale = TRUE, withCall = TRUE)
 dev.new()
-infoPlotWrapper(IC, data, with.legend = TRUE, withCall = TRUE)
+infoPlotWrapper(IC, data, alpha.trsp=100, with.legend = TRUE, rescale = TRUE, withCall = TRUE)
 
 # Gamma
 fam = GammaFamily()
@@ -148,9 +176,9 @@ IC <- optIC(model = fam, risk = asCov())
 Y=distribution(fam)
 data = r(Y)(1000)
 dev.new()
-infoPlotWrapper(IC, alpha.trsp=70)
+infoPlotWrapper(IC)
 dev.new()
-infoPlotWrapper(IC, data, alpha.trsp=70)
+infoPlotWrapper(IC, data)
 
 # Weibull
 fam = WeibullFamily()
@@ -158,8 +186,8 @@ IC <- optIC(model = fam, risk = asCov())
 Y=distribution(fam)
 data = r(Y)(1000)
 dev.new()
-infoPlotWrapper(IC, alpha.trsp=50, with.legend = TRUE, withCall = FALSE)
+infoPlotWrapper(IC, alpha.trsp=30, with.legend = TRUE, withCall = FALSE)
 dev.new()
-infoPlotWrapper(IC, data, alpha.trsp=50, with.legend = TRUE, withCall = FALSE)
+infoPlotWrapper(IC, data, alpha.trsp=30, with.legend = TRUE, withCall = FALSE)
 
 
