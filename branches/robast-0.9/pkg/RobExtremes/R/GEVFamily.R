@@ -185,9 +185,9 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                             dd <- ddigamma(-log(p0),1-theta[2])
                             g0 <- gamma(1-theta[2])
                             D1 <- (g0*pg/(1-p0)-1)/theta[2]
-                            D21 <- theta[1]*D1/theta[2]
-                            D22 <- theta[1]*dd/(1-p0)/theta[2]
-                            D2 <- -D21+D22}
+                            D21 <- D1/theta[2]
+                            D22 <- dd/(1-p0)/theta[2]
+                            D2 <- -theta[1]*(D21+D22)}
                             D <- t(c(D1, D2))
                             rownames(D) <- "expected shortfall"
                             colnames(D) <- NULL
