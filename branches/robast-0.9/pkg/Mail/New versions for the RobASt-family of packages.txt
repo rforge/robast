@@ -1,0 +1,12 @@
+#########################################################################################
+# To r-packages:
+#########################################################################################
+
+SUBJECT:: New versions for the RobASt-family of packages and of package startupmsg
+
+We would like to announce the availability on CRAN of new versions
+of our packages in the "RobAStXXX"-family (version 0.9),
+i.e.; "RobAStBase", "ROptEst", "RobLox", "RobBioC", 
+as well as the new packages "RobAStRDA", "RobExtremes"
+[all of them require R >= 2.14.0]
+-----------------------------------------------------------------------------------------

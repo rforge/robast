@@ -1,0 +1,57 @@
+To: CRAN@R-project.org
+Subj: CRAN submission RobAStBase 0.9
+
+we just uploded a revised version (0.9) of our pkg RobAStBase.
+
+
+================================================================================
+To: CRAN@R-project.org
+Subj: CRAN submission ROptEst 0.9
+
+we just uploded a revised version (0.9) of our pkg ROptEst.
+
+
+================================================================================
+To: CRAN@R-project.org
+Subj: CRAN submission RobLox 0.9
+
+we just uploded a revised version (0.9) of our pkg RobLox.
+
+
+================================================================================
+To: CRAN@R-project.org
+Subj: CRAN submission RobLoxBioC 0.9
+
+we just uploded a revised version (0.9) of our pkg RobLoxBioC.
+
+
+================================================================================
+To: CRAN@R-project.org
+Subj: CRAN submission RobExtremes 0.9
+
+we just uploded a new pkg RobExtremes, the version of which
+for consistency with the RobASt family is 0.9;
+
+We have read and agree with the CRAN Repository Policy as of 2013/07/10 from
+http://cran.r-project.org/web/packages/policies.html 
+
+Our licence is LGPL-3, as with the other pkgs of the RobASt family
+
+================================================================================
+To: CRAN@R-project.org
+Subj: CRAN submission RobAStRDA 0.9
+
+we just uploded a new pkg RobAStRDA, the version of which
+for consistency with the RobASt family is 0.9;
+
+as agreed upon in the mail thread "large sysdata.rda file --- strategies?" 
+on r-devel, R-devel Digest, Vol 120, Issue 8, to save space in our other, 
+more frequently updated packages, this is a mere rda package containing 
+only a sysdata.rda file with interpolation grids and respective interpolating 
+functions and is documented accordingly.
+
+We have read and agree with the CRAN Repository Policy as of 2013/07/10 from
+http://cran.r-project.org/web/packages/policies.html 
+
+Our licence is LGPL-3, as with the other pkgs of the RobASt family
+
