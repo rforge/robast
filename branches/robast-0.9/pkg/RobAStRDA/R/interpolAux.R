@@ -50,9 +50,16 @@
    for(i in 1:ncol(LMGrid)){
        gmi <- gridRestrForSmooth[[i]]
        if(is.null(df[[i]])){
-          LMGrid[gmi,i] <- smooth.spline(thGrid[gmi],LMGrid[gmi,i])$y
+##          LMGrid[gmi, i] <- smooth.spline(thGrid[gmi], LMGrid[gmi,
+##              i])$y
+            SmoothSpline <- smooth.spline(thGrid[gmi], LMGrid[gmi, i])
+            LMGrid[, i] <- predict(SmoothSpline, thGrid)$y
        } else {
-          LMGrid[gmi,i] <- smooth.spline(thGrid[gmi],LMGrid[gmi,i],df=df[[i]])$y
+##          LMGrid[gmi, i] <- smooth.spline(thGrid[gmi], LMGrid[gmi,
+##              i], df = df[[i]])$y
+            SmoothSpline <- smooth.spline(thGrid[gmi], LMGrid[gmi, i],
+                                          df = df[[i]])
+            LMGrid[, i] <- predict(SmoothSpline, thGrid)$y
        }
    }
    return(cbind(xi=thGrid,LM=LMGrid))

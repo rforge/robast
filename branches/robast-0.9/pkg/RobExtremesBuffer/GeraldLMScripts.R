@@ -33,8 +33,8 @@
 ## evtl naechste Zeile modifizieren
 #Peter
 baseDir0 <- "C:/rtest/RobASt"
-#Bernhard
-baseDir0 <- "/home/bernhard/university/svn/r-forge/robast"
+#Gerald -> bitte checken
+#baseDir0 <- "/home/bernhard/university/svn/r-forge/robast"
 interpolDir <- "branches/robast-0.9/pkg/RobExtremes/inst/AddMaterial/interpolation"
 interpolFile <- "plotInterpol.R"
 ##
@@ -48,7 +48,7 @@ source(file.path(baseDir0,interpolDir, interpolFile))
 ###############################################
 ###  WARNING: new .MakeSmoothGridList()!!!  ###
 #setwd(file.path(baseDir0,"branches/robast-0.9/pkg/RobExtremesBuffer"))
-source("MakeSmoothGridListBe.R")
+source(file.path(baseDir0,"branches/robast-0.9/pkg/RobExtremesBuffer","MakeSmoothGridListBe.R"))
 ###############################################
 
 
@@ -57,10 +57,10 @@ source("MakeSmoothGridListBe.R")
 .computeInterpolators <- RobAStRDA:::.computeInterpolators
 
 ## Risiken auf P+M+B+G+MP+D (jeder 22)
-#P OMSE.GEV, OMSE.Gamma
-#MP MBRE.GEV, MBRE.Gamma,
-#M RMXE.GEV, RMXE.Gamma
-#G OMSE.GPD, OMSE.Weibull
+#P OMSE.GEV, OMSE.Gamma   oK
+#MP MBRE.GEV, MBRE.Gamma, oK
+#M RMXE.GEV, RMXE.Gamma   oK
+#G OMSE.GPD, OMSE.Weibull oK
 #D MBRE.GPD MBRE.Weibull
 #B RMXE.GPD RMXE.Weibull
 
@@ -72,13 +72,13 @@ source("MakeSmoothGridListBe.R")
 ## Peter: / bei Euch entsprechend erste beide Argumente von myplot2, myplot3, zu ersetzen
 myplot2 <- function(whichLM, plotGridRestriction = NULL,
                df = NULL, gridRestrForSmooth = NULL, withSmooth=TRUE, ...)
-       plotLM("RMXE",Famnam="Generalized",whichLM=whichLM, baseDir=baseDir0, withSmooth=withSmooth,
+       plotLM("OMSE",Famnam="Generalized",whichLM=whichLM, baseDir=baseDir0, withSmooth=withSmooth,
                plotGridRestriction=plotGridRestriction,
                smoothtry = TRUE, df = df,
                gridRestrForSmooth = gridRestrForSmooth, ...)
 myplot3 <- function(whichLM, plotGridRestriction = NULL,
                df = NULL, gridRestrForSmooth = NULL, withSmooth=TRUE, ...)
-       plotLM("RMXE",Famnam="Weibull",whichLM=whichLM, baseDir=baseDir0, withSmooth=withSmooth,
+       plotLM("OMSE",Famnam="Weibull",whichLM=whichLM, baseDir=baseDir0, withSmooth=withSmooth,
                plotGridRestriction=plotGridRestriction,
                smoothtry = TRUE, df = df,
                gridRestrForSmooth = gridRestrForSmooth, ...)
@@ -93,12 +93,12 @@ myRDA1 <- file.path(.basepath,"RobExtremesBuffer/sysdata.rda")
 myRDA <- file.path(.basepath,"RobAStRDA/R/sysdata.rda")
 CSVFiles <- grep("\\.csv$", dir(.myFolderFrom), value=TRUE)
 CSVFiles <- paste(.myFolderFrom, CSVFiles, sep="/")
-CSVFiles2 <- file.path(.myFolderFrom,"interpolRMXEGeneralizedParetoFamily.csv")
-CSVFiles3 <- file.path(.myFolderFrom,"interpolRMXEWeibullFamily.csv")
+CSVFiles2 <- file.path(.myFolderFrom,"interpolOMSEGeneralizedParetoFamily.csv")
+CSVFiles3 <- file.path(.myFolderFrom,"interpolOMSEWeibullFamily.csv")
 file.copy(from=myRDA,to=myRDA1)
 
 ### 1. Runde
-### "RMXE"-"GPD"
+### "OMSE"-"GPD"
 ## df und gridR Werte durch Ausprobieren gewonnen
 
 #myplot2(1, df = NULL, gridR = NULL)
@@ -115,28 +115,31 @@ file.copy(from=myRDA,to=myRDA1)
 #myplot2(12, df = NULL, gridR = NULL)
 #myplot2(13, df = NULL, gridR = NULL)
 
-myplot2(1)
-myplot2(2, gridR=-(106:180), plotG=1:300, withSmooth=FALSE)
-myplot2(3, gridR=-(106:180), plotG=1:300, withSmooth=FALSE)
-myplot2(4, gridR=-(106:180), plotG=1:300, withSmooth=FALSE)
+myplot2(1, df=8)
+myplot2(2, withSmooth=FALSE, df=8)
+myplot2(3, df=8)
+myplot2(4)
 myplot2(5)
 myplot2(6)
-myplot2(7)
-myplot2(8)
-myplot2(9)
-myplot2(10)
-myplot2(11)
-myplot2(12)
-myplot2(13)
+myplot2(7, df=8)
+myplot2(8, df=8)
+myplot2(9, df=14)
+myplot2(10, df=6)
+myplot2(11, df=8)
+myplot2(12, df=8)
+myplot2(13, df=14)
 
 ### sammeln der gridR und df Werte (ggf in listen)
-gridR2 <- list(NULL, -(106:180), -(106:180), -(106:180), NULL, NULL,
+gridR2 <- list(NULL, NULL, NULL, NULL, NULL, NULL,
                NULL, NULL, NULL, NULL, NULL, NULL,
                NULL)
-dfR2 <- NULL
+dfR2 <- list(8,8,8,NULL,NULL,NULL,8,8,14,6,8,8,14)
 
 ### alle Plotten zur Kontrolle
-myplot2("all", df=dfR2, gridR=gridR2, withSmooth=FALSE, pre=X11())
+## linux:
+# myplot2("all", df=dfR2, gridR=gridR2, withSmooth=FALSE, pre=x11())
+myplot2("all", df=dfR2, gridR=gridR2, withSmooth=FALSE, pre=windows())
+myplot2("all", df=dfR2, gridR=gridR2, withSmooth=FALSE,  pre=pdf("GPD-OMSE-s-Gerald.pdf"), post=dev.off())
 
 ### schreiben der geglätteten Gitter ins rda-file,
 ##      aber zunächst noch woanders (myRDA1) gespeichert:
@@ -145,33 +148,38 @@ myplot2("all", df=dfR2, gridR=gridR2, withSmooth=FALSE, pre=X11())
                gridRestrForSmooth=gridR2)
 
 ### 2. Runde
-### "RMXE"-"Weibull"
+### "OMSE"-"Weibull"
 ## df und gridR Werte durch Ausprobieren gewonnen
 
 #myplot3(1, df=25, gridR=-c(1:3, 200:670), plotG=3:200)
 #myplot3(1, df=12, gridR=-c(1:3, 100:670), plotG=3:200)
 
-myplot3(1, gridR=-(1:2), plotG=1:200, withSmooth=FALSE)
-myplot3(2, df=NULL, gridR=-2, plotG=1:200, withSmooth=FALSE)
-myplot3(3, gridR=-(1:2), plotG=1:100, withSmooth=FALSE)
-myplot3(4)
-myplot3(5, gridR=-(1:2), plotG=1:100, withSmooth=FALSE)
-myplot3(6, gridR=-2, plotG=1:100, withSmooth=FALSE)
-myplot3(7, gridR=-(1:2), plotG=c(1, 3:100), withSmooth=FALSE)
-myplot3(8, gridR=-(1:2), plotG=c(1, 3:100), withSmooth=FALSE)
-myplot3(9)
-myplot3(10, gridR=-2, plotG=1:100, withSmooth=FALSE)
-myplot3(11, gridR=-(1:2), plotG=1:100, withSmooth=FALSE)
-myplot3(12, gridR=-(1:2), plotG=1:100, withSmooth=FALSE)
-myplot3(13)
+myplot3(1, plotG=-c(1:15), gridR=-c(1:18), withS=FALSE)
+myplot3(2, plotG=-c(1:28), gridR=-c(1:25), withS=FALSE)
+myplot3(3, df=8, withS=FALSE)
+myplot3(4, withS=FALSE)
+myplot3(5, plotG=-c(1:15), gridR=-c(1:18), withS=FALSE)
+myplot3(6, plotG=-c(1:20), gridR=-c(1:22), withS=FALSE)
+myplot3(7, plotG=-c(1:20), gridR=-c(1:10), withS=FALSE)
+myplot3(8, plotG=-c(1:20), gridR=-c(1:10), withS=FALSE)
+myplot3(9, plotG=-c(1:10), gridR=-c(1:3), withS=FALSE, xlim=c(0,2), ylim=c(0,3))
+myplot3(10, plotG=-c(1:1), gridR=-c(1:10), withS=FALSE, xlim=c(0,6), ylim=c(0,5))
+myplot3(11, plotG=-c(1:20), gridR=-c(1:10), withS=FALSE)
+myplot3(12, plotG=-c(1:20), gridR=-c(1:10), withS=FALSE)
+myplot3(13, plotG=-c(1:10), gridR=-c(1:3), withS=FALSE, xlim=c(0,2), ylim=c(0,3))
+
 
 ### sammeln der gridR, plotR  und df Werte (ggf in listen)
-gridR3 <- list(-(1:2),    -2, -(1:2), NULL, -(1:2),     -2,
-               -(1:2),-(1:2),   NULL,   -2, -(1:2), -(1:2),
-               NULL)
-dfR3 <- NULL
+gridR3 <- list(-(1:18),-(1:25),NULL,NULL,-(1:18),-(1:22),-(1:10),-(1:10),-(1:3),
+               -(1:10), -(1:10), -(1:10),-(1:3))
+dfR3 <- list(NULL,NULL,8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
+             NULL,NULL,NULL)
 ### alle Plotten zur Kontrolle
-myplot3("all", df=dfR3, gridR=gridR3, withSmooth=FALSE, pre=X11())
+#linux
+#myplot3("all", df=dfR3, gridR=gridR3, withSmooth=FALSE, pre=X11())
+myplot3("all", df=dfR3, gridR=gridR3, withSmooth=FALSE, pre=windows())
+myplot3("all", df=dfR3, gridR=gridR3, withSmooth=FALSE, pre=windows(), plotG=-c(1:15))
+myplot3("all", df=dfR3, gridR=gridR3, withSmooth=FALSE, plotG=-c(1:15), pre=pdf("Weibull-OMSE-s-Gerald.pdf"), post=dev.off())
 ### schreiben der geglätteten Gitter ins rda-file,
 ##      aber zunächst noch woanders (myRDA1) gespeichert:
 .saveGridToRda(CSVFiles3, toFileRDA = myRDA1, withMerge = FALSE,

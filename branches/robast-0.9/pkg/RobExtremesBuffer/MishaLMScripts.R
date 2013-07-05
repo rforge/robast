@@ -187,67 +187,70 @@ file.copy(from=myRDA,to=myRDA1)
 ### 1. Runde
 ### "MBRE"-"GEV"
 ## df und gridR Werte durch Ausprobieren gewonnen
-myplot2(1, df = 3, gridR = -(1:390))
-myplot2(2, df = 5, gridR = -(1:210))
-myplot2(3, df = 3, gridR = -(1:190))
-myplot2(4, df = 6, gridR = -(1:220))
-myplot2(5, df = 8, gridR = -(1:230))
-myplot2(6, df = 15, gridR = -(1:70))
-myplot2(7, df = 20, gridR = -(1:130))
-myplot2(8, df = 15, gridR = -(1:140))
-myplot2(9, df = 6, gridR = -(1:500))
-myplot2(10, df = 15, gridR = -(1:140))
-myplot2(11, df = 20, gridR = -(1:130))
-myplot2(12, df = 17, gridR = -(1:130))
-myplot2(13, df = 6, gridR = -(1:500))
+gridR20 <- c(1:205,223:251,  283:290,303:305,324:344, 350,365:389,408:444, 490:506)
+myplot2(1, gridR=gridR20, withS=FALSE, df=12, pre=substitute(print(gr0[,c(1,2)])))
+myplot2(2, gridR=gridR20, withS=FALSE, df=15, pre=substitute(print(gr0[,c(1,3)])))
+myplot2(3, gridR=gridR20, withS=FALSE, df=30, pre=substitute(print(gr0[,c(1,4)])))
+myplot2(4, gridR=gridR20, withS=FALSE, df=45, pre=substitute(print(gr0[,c(1,5)])))
+myplot2(5, gridR=gridR20, withS=FALSE, df=35, pre=substitute(print(gr0[,c(1,6)])),plotG=130:500)
+myplot2(6, gridR=gridR20, withS=FALSE, df=20, pre=substitute(print(gr0[,c(1,6)])),plotG=130:500)
+myplot2(7, gridR=gridR20, withS=FALSE, df=15, pre=substitute(print(gr0[,c(1,6)])),plotG=130:500)
+myplot2(8, gridR=gridR20, withS=FALSE, df=15, pre=substitute(print(gr0[,c(1,6)])),plotG=130:500)
+myplot2(9, gridR=NULL, withS=FALSE, df=NULL, pre=substitute(print(gr0[,c(1,6)])),plotG=130:500)
+myplot2(10, gridR=gridR20, withS=FALSE, df=20, pre=substitute(print(gr0[,c(1,6)])),plotG=130:500)
+myplot2(11, gridR=gridR20, withS=FALSE, df=15, pre=substitute(print(gr0[,c(1,6)])),plotG=130:500)
+myplot2(12, gridR=gridR20, withS=FALSE, df=15, pre=substitute(print(gr0[,c(1,6)])),plotG=130:500)
+myplot2(13, gridR=NULL, withS=FALSE,df=NULL,  pre=substitute(print(gr0[,c(1,14)])),plotG=130:500)
 
 
 ### sammeln der gridR und df Werte (ggf in listen)
-plotR2 <- list(-(1:20),-(1:20),-(1:20),-(1:20),-(1:20),
-               -(1:20), -(1:20), -(1:20), -(1:20),-(1:20),
-               -(1:20),-(1:20),-(1:20))
-gridR2 <- list(-(1:390),-(1:210),-(1:190),-(1:220),-(1:230),-(1:70),
-               -(1:130),-(1:140),-(1:500),-(1:140),-(1:130),-(1:130), -(1:500))
-dfR2 <- c(3,5,3,6,8,15,20,15,6,15,20,17,6)
+gridR2 <- list(gridR20,gridR20,gridR20,gridR20,gridR20,gridR20,gridR20,gridR20,
+               NULL,gridR20,gridR20,gridR20,NULL)
+plotR2 <- 130:500
+#plotR2 <- 1:130
+dfR2 <- list(12,15,30,45,35,20,15,15,NULL,20,15,15,NULL)
 ### alle Plotten zur Kontrolle
 myplot2("all", df=dfR2, gridR=gridR2, plotG=plotR2, withSmooth=FALSE, pre=windows())
 
 
 ### schreiben der geglätteten Gitter ins rda-file,
 ##      aber zunächst noch woanders (myRDA1) gespeichert:
-.saveGridToRda(CSVFiles2, toFileRDA = myRDA1, withMerge = TRUE,
+.saveGridToRda(CSVFiles2, toFileRDA = myRDA1, withMerge = FALSE,
                withPrint = TRUE, withSmooth = TRUE, df = dfR2,
                gridRestrForSmooth=gridR2)
 
 ### 1. Runde
 ### "MBRE"-"Gamma"
 ## df und gridR Werte durch Ausprobieren gewonnen
-myplot3(1, df = 4, gridR = -(1:260), plotG=-(1:20))
-myplot3(2, df = 4, gridR = -(1:260), plotG=-(1:10))
-myplot3(3, df = 4, gridR = -(1:260), plotG=-(1:20))
-myplot3(4, df = 4, gridR = -(1:260))
-myplot3(5, df = 4, gridR = -(1:260), plotG=-(1:20))
-myplot3(6, df = 5, gridR = -(1:150), plotG=-(1:20), withSmooth=FALSE)
-myplot3(7, df = 2, gridR = -(1:260))
-myplot3(8, df = 2, gridR = -(1:260), plotG=-(1:20))
-myplot3(9, df = 5, gridR = -(1:260), plotG=-(1:10))
-myplot3(10, df = 5, gridR = -(1:150), plotG=-(1:20), withSmooth=FALSE)
-myplot3(11, df = 2, gridR = -(1:260), plotG=-(1:10))
-myplot3(12, df = 2, gridR = -(1:260), plotG=-(1:20))
-myplot3(13, df = 4, gridR = -(1:260), plotG=-(1:10))
+gridR30=-c(1:4,270:395,450:500,580:640,665:686)
+plotG30=5:530
+myplot3(1, gridR=gridR30,df=115, plotG=plotG30, withSmooth=FALSE, pre=substitute(print(gr0[,c(1,3)])))
+myplot3(2, gridR=gridR30,df=55, plotG=plotG30, withSmooth=FALSE, pre=substitute(print(gr0[,c(1,3)])))
+myplot3(3, gridR=gridR30,df=55, plotG=plotG30, withSmooth=FALSE, pre=substitute(print(gr0[,c(1,3)])))
+myplot3(4, gridR=gridR30,df=55, plotG=plotG30, withSmooth=FALSE, pre=substitute(print(gr0[,c(1,3)])))
+myplot3(5, gridR=gridR30,df=20, plotG=plotG30, withSmooth=FALSE, pre=substitute(print(gr0[,c(1,3)])))
+myplot3(6, gridR=gridR30,df=55, plotG=plotG30, withSmooth=FALSE, pre=substitute(print(gr0[,c(1,3)])))
+myplot3(7, gridR=gridR30,df=55, plotG=plotG30, withSmooth=FALSE, pre=substitute(print(gr0[,c(1,3)])))
+myplot3(8, gridR=gridR30,df=55, plotG=plotG30, withSmooth=FALSE, pre=substitute(print(gr0[,c(1,3)])))
+myplot3(9, gridR=gridR30,df=55, plotG=plotG30, withSmooth=FALSE, pre=substitute(print(gr0[,c(1,3)])))
+myplot3(10, gridR=gridR30,df=55, plotG=plotG30, withSmooth=FALSE, pre=substitute(print(gr0[,c(1,3)])))
+myplot3(11, gridR=gridR30,df=55, plotG=plotG30, withSmooth=FALSE, pre=substitute(print(gr0[,c(1,3)])))
+myplot3(12, gridR=gridR30,df=55, plotG=plotG30, withSmooth=FALSE, pre=substitute(print(gr0[,c(1,3)])))
+myplot3(13, gridR=gridR30,df=55, plotG=plotG30, withSmooth=FALSE, pre=substitute(print(gr0[,c(1,3)])))
+
+gridR3 <- list(gridR30,gridR30,gridR30,gridR30,gridR30,gridR30,gridR30,gridR30,
+               gridR30,gridR30,gridR30,gridR30)
+dfR3 <- list(115,55,55,55,20,55,55,55,55,55,55,55,55)
 
 ### sammeln der gridR, plotR  und df Werte (ggf in listen)
 plotR3 <- list(-(1:20),-(1:20),-(1:10),NULL,-(1:20),
                                   -(1:20), NULL, -(1:20), -(1:10),-(1:20),
                                   -(1:10),-(1:20),-(1:20))
-gridR3 <- list(-(1:260),-(1:260),-(1:260),-(1:260),-(1:260),-(1:150),
-             -(1:260),-(1:260),-(1:260),-(1:150),-(1:260),-(1:260),-(1:260))
-dfR3 <- c(4,4,4,4,4,5,2,2,5,5,2,2,4)
 ### alle Plotten zur Kontrolle
 myplot3("all", df=dfR3, gridR=gridR3, plotG=plotR3, withSmooth=FALSE, pre=windows())
 ### schreiben der geglätteten Gitter ins rda-file,
 ##      aber zunächst noch woanders (myRDA1) gespeichert:
-.saveGridToRda(CSVFiles3, toFileRDA = myRDA1, withMerge = TRUE,
+.saveGridToRda(CSVFiles3, toFileRDA = myRDA1, withMerge = FALSE,
                withPrint = TRUE, withSmooth = TRUE, df = dfR3,
                gridRestrForSmooth=gridR3)
 
