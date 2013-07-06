@@ -339,7 +339,7 @@ setMethod("infoPlot", "IC",
                    f1c <- log(ICy0c+1)*3*cex0[2]
 
                    if(!is.na(al0))
-                      col0 <- sapply(col0, addAlphTrsp2col,alpha=al0)
+                      col.pts <- sapply(col0, addAlphTrsp2col,alpha=al0)
 
                    do.pts(y0, ICy0, f1,col0[1],pch0[,1])
                    do.pts(y0c, ICy0c, f1c,col0[2],pch0[,2])
@@ -367,7 +367,7 @@ setMethod("infoPlot", "IC",
                    f1c <- log(ICy0c+1)*3*cex0[2]
 
                    if(!is.na(al0))
-                      col0 <- sapply(col0, addAlphTrsp2col, alpha=al0[i1])
+                      col.pts <- sapply(col0, addAlphTrsp2col, alpha=al0[i1])
 
                    do.pts(y0, y0.vec, f1,col0[1],pch0[,1])
                    do.pts(y0c, y0c.vec, f1c,col0[2],pch0[,2])
