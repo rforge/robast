@@ -14,25 +14,29 @@
 # return value: list with (thinned out) x and y, X and Y and modified dots
 
          X <- x
+         wI <- 1:length(x)
          if(scaleX){
             if(!is.null(xlim)){
                    dots$xlim <- scaleX.fct(xlim)
                    x <- x[x>=xlim[1] & x<=xlim[2]]
             }
-            X <- scaleX.fct(x)
+            Xo <- X <- scaleX.fct(x)
             X <- distr:::.DistrCollapse(X, 0*X)$supp
+            wI <- sapply(X, function(uu){ w<- which(uu==Xo); if(length(w)>0) w[1] else NA})
+            wI <- wI[!is.na(wI)]
             x <- scaleX.inv(X)
             dots$axes <- NULL
             dots$xaxt <- "n"
          }
-         Y <- y <- fct(x)
+         Y <- y <- if(is.function(fct)) fct(x) else fct[wI,1]
+         scy <- if(is.function(fct)) NA else fct[wI,2]
          if(scaleY){
             Y <- scaleY.fct(y)
             if(!is.null(ylim)) dots$ylim <- scaleY.fct(ylim)
             dots$axes <- NULL
             dots$yaxt <- "n"
             }
-         return(list(x=x,y=y,X=X,Y=Y,dots=dots))
+         return(list(x=x,y=y,X=X,Y=Y,scy=scy,dots=dots))
 }
 
 if(FALSE){
@@ -53,7 +57,7 @@ if(FALSE){
 .plotRescaledAxis <- function(scaleX,scaleX.fct, scaleX.inv,
                               scaleY,scaleY.fct, scaleY.inv,
                               xlim, ylim, X, ypts = 400, n = 11,
-                              x.ticks = NULL, y.ticks = NULL){
+                              x.ticks = NULL, y.ticks = NULL, withbox = TRUE){
 # plots rescaled axes acc. to logicals scaleX, scaleY
 # to this end uses trafos scaleX.fct with inverse scale.inv
 # resp. scaleY.fct; it respects xlim and  ylim (given in orig. scale)

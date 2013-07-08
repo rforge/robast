@@ -17,7 +17,7 @@ These functions are internally used helper functions for \code{\link{plot}},
          xlim, ylim, dots)
 .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv, scaleY,scaleY.fct,
                   scaleY.inv, xlim, ylim, X, ypts = 400, n = 11,
-                  x.ticks = NULL, y.ticks = NULL)
+                  x.ticks = NULL, y.ticks = NULL, withbox = TRUE)
 .legendCoord(x, scaleX, scaleX.fct, scaleY, scaleY.fct)
 .SelectOrderData(data, fct, which.lbs, which.Order)
 }
@@ -66,6 +66,10 @@ These functions are internally used helper functions for \code{\link{plot}},
     a possible thin-out by \code{which.lbs} and after ordering in descending order
     of the remaining observations. If this argument is \code{NULL} then no
     (further) observation is excluded.}
+  \item{withbox}{logical of length 1. If \code{TRUE}, even if \code{scaleX} and
+   \code{scaleY} are both \code{FALSE} and, simultaneously, \code{x.ticks} and
+   \code{y.ticks} are both \code{NULL}, a respective box is drawn around the
+   panel; otherwise no box is drawn in this case. }
 }
 \details{
 \code{.rescalefct} rescales, if necessary, x and y axis for use in plot

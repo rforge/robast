@@ -30,13 +30,15 @@ setMethod("infoPlot", "IC",
            scaleX.inv <- q(L2Fam)
         }
 
-
+        withbox <- TRUE
+        if(!is.null(dots[["withbox"]])) withbox <- dots[["withbox"]]
+        dots["withbox"] <- NULL
         dots["type"] <- NULL
         xlab <- dots$xlab; if(is.null(xlab)) xlab <- "x"
         dots$xlab <- dots$ylab <- NULL
 
         trafO <- trafo(L2Fam@param)
-        dims <- nrow(trafO)
+        dimsA <- dims <- nrow(trafO)
         dimm <- ncol(trafO)
         
         to.draw <- 1:(dims+1)
@@ -73,7 +75,7 @@ setMethod("infoPlot", "IC",
           }
           if(is.null(legend)){
              legend <- vector("list",dims0+in1to.draw)
-             legend <- distr:::.fillList(as.list(c("class. opt. IC", objectc)),
+             legend <- distr:::.fillList(list(as.list(c("class. opt. IC", objectc))),
                                                  dims0+in1to.draw)
           }
         }
@@ -151,7 +153,7 @@ setMethod("infoPlot", "IC",
                  if (is.logical(main)){
                      if (!main) mainL <-  FALSE
                      else
-                          main <- gettextf("Plot for IC %%A") ###
+                          main <- gettextf("Information Plot for IC %%A") ###
                                   ### double  %% as % is special for gettextf
                      }
                  main <- .mpresubs(main)
@@ -225,8 +227,8 @@ setMethod("infoPlot", "IC",
               }
 
 
-            QFc <- diag(dims)
-            if(is(object,"ContIC") & dims>1 )
+            QFc <- diag(dimsA)
+            if(is(object,"ContIC") & dimsA>1 )
                {if (is(normtype(object),"QFNorm")) QFc <- QuadForm(normtype(object))
                 QFc0 <- solve( trafo %*% solve(L2Fam@FisherInfo) %*% t(trafo ))
                 if (is(normtype(object),"SelfNorm")|is(normtype(object),"InfoNorm")) 
@@ -246,12 +248,12 @@ setMethod("infoPlot", "IC",
             absInfoClass.f <- t(classIC) %*% QFc %*% classIC
             absInfoClass <- absInfoEval(x.vec, absInfoClass.f)
 
-            QF <- diag(dims)
-            if(is(object,"ContIC") & dims>1 )
+            QF <- diag(dimsA)
+            if(is(object,"ContIC") & dimsA>1 )
                {if (is(normtype(object),"QFNorm")) QF <- QuadForm(normtype(object))}
             QF.5 <- sqrt(PosSemDefSymmMatrix(QF))
 
-            IC1 <- as(diag(dims) %*% object@Curve, "EuclRandVariable")
+            IC1 <- as(diag(dimsA) %*% object@Curve, "EuclRandVariable")
             absInfo.f <- t(IC1) %*% QF %*% IC1
             absInfo <- absInfoEval(x.vec, absInfo.f)
 
@@ -266,8 +268,24 @@ setMethod("infoPlot", "IC",
 #               devNew()
 
             omar <- par("mar")
-            parArgs <- list(mar = c(bmar,omar[2],tmar,omar[4]))
-            do.call(par,args=parArgs)
+            lpA <- max(length(to.draw),1)
+            parArgsL <- vector("list",lpA)
+            bmar <- rep(bmar, length.out=lpA)
+            tmar <- rep(tmar, length.out=lpA)
+            xaxt0 <- if(is.null(dots$xaxt)) {
+                      if(is.null(dots$axes)||eval(dots$axes))
+                         rep(par("xaxt"),lpA) else rep("n",lpA)
+                      }else rep(eval(dots$xaxt),lpA)
+            yaxt0 <- if(is.null(dots$yaxt)) {
+                      if(is.null(dots$axes)||eval(dots$axes))
+                         rep(par("yaxt"),lpA) else rep("n",lpA)
+                      }else rep(eval(dots$yaxt),lpA)
+
+            for( i in 1:lpA){
+                 parArgsL[[i]] <- list(mar = c(bmar[i],omar[2],tmar[i],omar[4])
+                                      ,xaxt=xaxt0[i], yaxt= yaxt0[i]
+                                      )
+            }
 
             
             pL.rel <- pL.abs <- pL <- expression({})
@@ -309,10 +327,10 @@ setMethod("infoPlot", "IC",
                               scaleX, scaleX.fct, scaleX.inv,
                               scaleY, scaleY.fct, dots$xlim, dots$ylim, dots)
 
-               x.d <- resc.dat$X
-               x.dC <- resc.datC$X
-               y.d <- resc.dat$Y
-               y.dC <- resc.datC$Y
+               x.dr <- resc.dat$X
+               x.dCr <- resc.datC$X
+               y.dr <- resc.dat$Y
+               y.dCr <- resc.datC$Y
 
                lab.pts <- if(is.null(lab.pts))
                                cbind(i.d, i.dC)
@@ -338,18 +356,19 @@ setMethod("infoPlot", "IC",
                    f1 <- log(ICy0+1)*3*cex0[1]
                    f1c <- log(ICy0c+1)*3*cex0[2]
 
-                   if(!is.na(al0))
-                      col.pts <- sapply(col0, addAlphTrsp2col,alpha=al0)
+                   col.pts <- if(!is.na(al0)) sapply(col0,
+                              addAlphTrsp2col, alpha=al0) else col0
 
-                   do.pts(y0, ICy0, f1,col0[1],pch0[,1])
-                   do.pts(y0c, ICy0c, f1c,col0[2],pch0[,2])
+                   do.pts(y0, ICy0r, f1,col.pts[1],pch0[,1])
+                   do.pts(y0c, ICy0cr, f1c,col.pts[2],pch0[,2])
                    if(with.lab0){
-                      tx(y0, ICy0, lab.pts0, f1/2, col0[1])
-                      tx(y0c, ICy0c, lab.pts0C, f1c/2, col0[2])
+                      tx(y0, ICy0r, lab.pts0, f1/2, col0[1])
+                      tx(y0c, ICy0cr, lab.pts0C, f1c/2, col0[2])
                    }
                    pL0
-                   }, list(ICy0 = y.d, ICy0c = y.dC,
-                           pL0 = pL, y0 = x.d, y0c = x.dC,
+                   }, list(ICy0c = y.dC, ICy0 = y.d,
+                           ICy0r = y.dr, ICy0cr = y.dCr,
+                           pL0 = pL, y0 = x.dr, y0c = x.dCr,
                            cex0 = cex.pts, pch0 = pch.pts, al0 = alp.v[1],
                            col0 = col.pts, with.lab0 = with.lab, n0 = n,
                            lab.pts0 = lab.pts[i.d], lab.pts0C = lab.pts[i.dC],
@@ -363,20 +382,29 @@ setMethod("infoPlot", "IC",
                       y0.vec <- jitter(y0.vec, factor = jitter.fac0[1])
                       y0c.vec <- jitter(y0c.vec, factor = jitter.fac0[2])
                    }
-                   f1 <- log(ICy0+1)*3*cex0[1]
-                   f1c <- log(ICy0c+1)*3*cex0[2]
 
-                   if(!is.na(al0))
-                      col.pts <- sapply(col0, addAlphTrsp2col, alpha=al0[i1])
+                   col.pts <- if(!is.na(al0)) sapply(col0,
+                              addAlphTrsp2col, alpha=al0[i1]) else col0
+                   dotsP0 <- dotsP
+                   resc.rel <- .rescalefct(y0, cbind(y0.vec,ICy0),
+                              scaleX, scaleX.fct, scaleX.inv,
+                              FALSE, scaleY.fct, dots$xlim, dots$ylim, dotsP0)
+                   resc.rel.c <- .rescalefct(y0c, cbind(y0c.vec,ICy0c),
+                              scaleX, scaleX.fct, scaleX.inv,
+                              FALSE, scaleY.fct, dots$xlim, dots$ylim, dotsP0)
 
-                   do.pts(y0, y0.vec, f1,col0[1],pch0[,1])
-                   do.pts(y0c, y0c.vec, f1c,col0[2],pch0[,2])
+                   f1 <- resc.rel$scy*3*cex0[1]
+                   f1c <- resc.rel.c$scy*3*cex0[2]
+
+                   do.pts(resc.rel$X, resc.rel$Y, f1,col.pts[1],pch0[,1])
+                   do.pts(resc.rel.c$X, resc.rel.c$Y, f1c,col.pts[2],pch0[,2])
                    if(with.lab0){
-                      tx(y0, y0.vec, lab.pts0, f1/2, col0[1])
-                      tx(y0c, y0c.vec, lab.pts0C, f1c/2, col0[2])
+                      tx(resc.rel$X, resc.rel$Y, lab.pts0, f1/2, col0[1])
+                      tx(resc.rel.c$X, resc.rel.c$Y, lab.pts0C, f1c/2, col0[2])
                    }
                    pL0
                    }, list(ICy0c = y.dC, ICy0 = y.d,
+                           ICy0r = y.dr, ICy0cr = y.dCr,
                            pL0 = pL, y0 = x.d, y0c = x.dC,
                            cex0 = cex.pts, pch0 = pch.pts, al0 = alp.v,
                            col0 = col.pts, with.lab0 = with.lab,n0 = n,
@@ -390,7 +418,7 @@ setMethod("infoPlot", "IC",
             
             fac.leg <- if(dims0>1) 3/4 else .75/.8 
 
-            
+
             dotsP$axes <- NULL
             if(1 %in% to.draw){
                resc <-.rescalefct(x.vec, function(x) absInfoEval(x,absInfo.f),
@@ -402,17 +430,23 @@ setMethod("infoPlot", "IC",
                dotsP1 <- dotsP <- resc$dots
                dotsP$yaxt <- dots$yaxt
 
-               do.call(plot, args=c(list(resc$X, resc$Y, type = plty,
+               do.call(par, args = parArgsL[[1]])
+
+               do.call(plot, args=c(list(resc.C$X, resc.C$Y, type = plty,
                    lty = ltyI, col = colI, lwd = lwdI,
                    xlab = xlab, ylab = ylab.abs, panel.last = pL.abs),
                    dotsP1))
-               do.call(lines, args=c(list(resc.C$X, resc.C$Y, type = plty,
+               do.call(lines, args=c(list(resc$X, resc$Y, type = plty,
                        lty = lty, lwd = lwd, col = col), dotsL))
-               .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
-                              scaleY,scaleY.fct, scaleY.inv,
+               scaleX0 <- (xaxt0[1]!="n")
+               scaleY0 <- (yaxt0[1]!="n")
+               x.ticks0 <- if(xaxt0[1]!="n") x.ticks else NULL
+               y.ticks0 <- if(yaxt0[1]!="n") y.ticks[[1]] else NULL
+               .plotRescaledAxis(scaleX0, scaleX.fct, scaleX.inv,
+                              scaleY0,scaleY.fct, scaleY.inv,
                               dots$xlim, dots$ylim, resc$X, ypts = 400,
-                              n = scaleN, x.ticks = x.ticks,
-                              y.ticks = y.ticks[[1]])
+                              n = scaleN, x.ticks = x.ticks0,
+                              y.ticks = y.ticks0, withbox = withbox)
                if(with.legend)
                  legend(.legendCoord(legend.location[[1]], scaleX, scaleX.fct,
                         scaleY, scaleY.fct), legend = legend[[1]], bg = legend.bg,
@@ -426,14 +460,10 @@ setMethod("infoPlot", "IC",
             }
             
             if(dims > 1 && length(to.draw[to.draw!=1])>0){
-                nrows <- trunc(sqrt(dims))
-                ncols <- ceiling(dims/nrows)
+                nrows <- trunc(sqrt(dims0))
+                ncols <- ceiling(dims0/nrows)
                 if (!withSweave||!mfColRow)
-                     devNew()
-                if(mfColRow)
-                   parArgs <- c(parArgs,list(mfrow = c(nrows, ncols)))
-
-                do.call(par,args=parArgs)
+                     dN <- substitute({devNew()}) else substitute({})
 
                 IC1.i.5 <- QF.5%*%IC1
                 classIC.i.5 <- QFc.5%*%classIC
@@ -449,6 +479,12 @@ setMethod("infoPlot", "IC",
                     y.vec1C <- sapply(resc.C$x, classIC.i.5@Map[[indi]])^2/
                               absInfoEval(resc.C$x,absInfoClass.f)
 
+                    if(mfColRow){
+                       parArgsL[[i+in1to.draw]] <- c(parArgsL[[i+in1to.draw]],list(mfrow = c(nrows, ncols)))
+                       eval(dN)
+                       if(i==1) do.call(par,args=parArgsL[[i+in1to.draw]])
+                    }else{do.call(par,args=parArgsL[[i+in1to.draw]])}
+
                     do.call(plot, args=c(list(resc$X, y.vec1, type = plty,
                                   lty = lty, xlab = xlab, ylab = ylab.rel,
                                   col = col, lwd = lwd, panel.last = pL.rel),
@@ -456,11 +492,15 @@ setMethod("infoPlot", "IC",
 
                     do.call(lines, args = c(list(resc.C$X, y.vec1C, type = plty,
                             lty = ltyI, col = colI, lwd = lwdI), dotsL))
-                    .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
+                    scaleX0 <- (xaxt0[i+in1to.draw]!="n")
+                    scaleY0 <- (yaxt0[i+in1to.draw]!="n")
+                    x.ticks0 <- if(xaxt0[i+in1to.draw]!="n") x.ticks else NULL
+                    y.ticks0 <- if(yaxt0[i+in1to.draw]!="n") y.ticks[[i+in1to.draw]] else NULL
+                    .plotRescaledAxis(scaleX0, scaleX.fct, scaleX.inv,
                               FALSE,scaleY.fct, scaleY.inv, dots$xlim,
                               dots$ylim, resc$X, ypts = 400, n = scaleN,
-                              x.ticks = x.ticks,
-                              y.ticks = y.ticks[[i+in1to.draw]])
+                              x.ticks = x.ticks0,
+                              y.ticks = y.ticks0, withbox = withbox)
                     if(with.legend)
                       legend(.legendCoord(legend.location[[i1]],
                                  scaleX, scaleX.fct, scaleY, scaleY.fct),

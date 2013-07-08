@@ -347,10 +347,10 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
         if(is(e1, "DiscreteDistribution"))
            ICy <- jitter(ICy, factor = jitter.fac0)
 
-        if(!is.na(al0)) col.pts <- sapply(col0, addAlphTrsp2col,alpha=al0)
+        col.pts <- if(!is.na(al0)) sapply(col0, addAlphTrsp2col,alpha=al0) else col0
 
         do.call(points, args=c(list(y1, ICy, cex = log(absy0+1)*3*cex0,
-                        col = col0, pch = pch0), dwo0))
+                        col = col.pts, pch = pch0), dwo0))
         if(with.lab0){
            text(x = y0s, y = ICy, labels = lab.pts0,
                 cex = log(absy0+1)*1.5*cex0, col = col0)

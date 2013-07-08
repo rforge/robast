@@ -46,8 +46,12 @@ infoPlot(object,  ...)
                \code{main} in \code{\link{plot.default}}.} 
   \item{sub}{logical: is a sub-title to be used? or \cr
               just as argument \code{sub} in \code{\link{plot.default}}.}
-  \item{tmar}{top margin -- useful for non-standard main title sizes}
-  \item{bmar}{bottom margin -- useful for non-standard sub title sizes}
+  \item{tmar}{top margin -- useful for non-standard main title sizes;
+              may be a vector with individual values for
+              each of the panels to be plotted. }
+  \item{bmar}{bottom margin -- useful for non-standard sub title sizes;
+              may be a vector with individual values for
+              each of the panels to be plotted. }
   \item{col}{color of IC in argument \code{object}.}
   \item{lwd}{linewidth of IC in argument \code{object}.}
   \item{lty}{line-type of IC in argument \code{object}.}
@@ -182,6 +186,15 @@ if e is 1, the first two elements are the values for \code{ylim}
 in panel "Abs", while the last 2*(number of plotted dimensions)
 are the values for \code{ylim} for the plotted dimensions of the IC, 
 one pair for each dimension.
+
+Similarly, if argument \code{\dots} contains arguments \code{xaxt} or
+\code{yaxt}, these may be vectorized, with one value for each of the panels
+to be plotted. This is useful for stacking panels over each other, using
+a common x-axis (see example below).
+
+The \code{\dots} argument may also contain an argument \code{withbox} which
+if \code{TRUE} warrants that even if \code{xaxt} and \code{yaxt} both are
+\code{FALSE}, a box is drawn around the respective panel.
 }
 %\value{}
 \references{
@@ -222,6 +235,19 @@ infoPlot(IC1, data=data, mfColRow = FALSE, panel.first= grid(),
 infoPlot(IC1, data=data[1:10], mfColRow = FALSE, panel.first= grid(),
          with.lab = TRUE, cex.pts=0.7)
 par(mfrow=c(1,1))
+
+ICr <- makeIC(list(function(x)sign(x),function(x)sign(abs(x)-qnorm(.75))),N)
+data <- r(N)(600)
+data.c <- c(data, 1000*data[1:30])
+par(mfrow=c(3,1))
+infoPlot(ICr, data=data.c, tmar=c(4.1,0,0), bmar=c(0,0,4.1),
+         xaxt=c("n","n","s"), mfColRow = FALSE, panel.first= grid(),
+         cex.pts=c(.9,.9), alpha.trsp=20, lwd=2, lwdI=1.5, col=3,
+         col.pts=c(3,2), colI=2, pch.pts=c(20,20), inner=FALSE,
+         scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
+         scaleY=TRUE, scaleY.fct=function(x) pchisq(x,df=1),
+         scaleY.inv=function(x)qchisq(x,df=1),legend.cex = 1.0)
+
 }
 
 }
