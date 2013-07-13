@@ -5,7 +5,7 @@ Title: Robust Asymptotic Statistics
 Description: Base S4-classes and functions for robust asymptotic statistics.
 Depends: R(>= 2.12.0), methods, rrcov, distr(>= 2.4), distrEx(>= 2.4), distrMod(>= 2.4), RandVar(>=
         0.6.3)
-Suggests: ROptEst
+Suggests: ROptEst, RUnit (>= 0.4.26)
 Author: Matthias Kohl, Peter Ruckdeschel
 Maintainer: Matthias Kohl <Matthias.Kohl@stamats.de>
 ByteCompile: yes
