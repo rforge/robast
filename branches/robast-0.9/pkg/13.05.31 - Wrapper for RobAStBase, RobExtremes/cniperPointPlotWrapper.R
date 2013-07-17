@@ -5,6 +5,18 @@
 ##                                      ##
 ##########################################
 
+### aditional function
+merge.lists <- function(a, b){
+  a.names <- names(a)
+  b.names <- names(b)
+  m.names <- sort(unique(c(a.names, b.names), fromLast = TRUE))
+  sapply(m.names, function(i) {
+    if (is.list(a[[i]]) & is.list(b[[i]])) merge.lists(a[[i]], b[[i]])
+    else if (i %in% b.names) b[[i]]
+    else a[[i]]
+  }, simplify = FALSE)
+}
+
 ##@fam - parameter family
 ## lower - left point of the x-axis
 ## upper - right point of the x-axis
@@ -82,7 +94,7 @@ cniperPointPlotWrapper = function(fam,...
     argsList$col.lab <- "white"
   }
   
-  args <- c(argsList, dots)
+  args <- merge.lists(argsList, dots)
   ###
   ### 3. build up the call but grab it and write it into an object
   ###
@@ -107,25 +119,27 @@ require(RobExtremes)
 require(distr)
 
 # WRite the correct path to the modified file cniperCont.R from the ROptEst package
-source("D:/Dropbox/My Mathematics/Researches Misha/Current Research/11.06 - KL PhD/PhD Thesis/Reports for Project/13.05.31 - Wrapper for RobAStBase, RobExtremes/cniperCont.R")
+source("D:/Dropbox/My Mathematics/Researches Misha/Current Research/11.06 - KL PhD/PhD Thesis/Reports for Project/13.07.16 - Wrapper for RobAStBase, RobExtremes/cniperCont.R")
 
 # GPD
 dev.new()
 fam = GParetoFamily()
-cniperPointPlotWrapper(fam=fam, lower = 0, upper = 10, with.legend = FALSE)
+cniperPointPlotWrapper(fam=fam, main = "GPD", lower = 0, upper = 10, withCall = FALSE)
 
 # GEV
 dev.new()
 fam = GEVFamily()
-cniperPointPlotWrapper(fam=fam, lower = 0, upper = 5, with.legend = TRUE, withCall = TRUE)
+cniperPointPlotWrapper(fam=fam, main = "GEV", lower = 0, upper = 5, withCall = FALSE)
 
 # Gamma
 dev.new()
 fam = GammaFamily()
-cniperPointPlotWrapper(fam=fam, lower = 0, upper = 5)
+cniperPointPlotWrapper(fam=fam, main = "Gamma", lower = 0, upper = 5, withCall = FALSE)
 
 # Weibull
 dev.new()
 fam = WeibullFamily()
-cniperPointPlotWrapper(fam=fam, with.legend = TRUE, withCall = FALSE)
+cniperPointPlotWrapper(fam=fam, main = "Weibull", withCall = FALSE)
+
+
 

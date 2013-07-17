@@ -5,6 +5,18 @@
 ##                                      ##
 ##########################################
 
+### aditional function
+merge.lists <- function(a, b){
+  a.names <- names(a)
+  b.names <- names(b)
+  m.names <- sort(unique(c(a.names, b.names), fromLast = TRUE))
+  sapply(m.names, function(i) {
+    if (is.list(a[[i]]) & is.list(b[[i]])) merge.lists(a[[i]], b[[i]])
+    else if (i %in% b.names) b[[i]]
+    else a[[i]]
+  }, simplify = FALSE)
+}
+
 ## projection distance
 qfun = function(x){p0 = p(X)(x); q0 = q(X)(p0)}
 QProj <- function(){new("NormType", name="Quantiles", fct=qfun)}
@@ -95,7 +107,7 @@ outlyingPlotWrapper = function(x,alpha,fam,...,alpha.trsp = 100, with.legend = T
     argsList$col.lab <- "white"
   }
   
-  args <- c(argsList, dots)
+  args <- merge.lists(argsList, dots)
   ###
   ### 3. build up the call but grab it and write it into an object
   ###
@@ -124,26 +136,25 @@ dev.new()
 fam = GParetoFamily()
 X=distribution(fam)
 x = r(X)(1000)
-outlyingPlotWrapper(x,alpha=0.99,fam=fam, alpha.trsp=50, with.legend = FALSE)
+outlyingPlotWrapper(x,alpha=0.99,fam=fam, main = "GPD", withCall = FALSE)
 
 # GEV
 dev.new()
 fam = GEVFamily()
 X=distribution(fam)
 x = r(X)(1000)
-outlyingPlotWrapper(x,alpha=0.95,fam=fam, with.legend = TRUE, withCall = TRUE)
+outlyingPlotWrapper(x,alpha=0.95,fam=fam, main = "GEV", withCall = FALSE)
 
 # Gamma
 dev.new()
 fam = GammaFamily()
 X=distribution(fam)
 x = r(X)(1000)
-outlyingPlotWrapper(x,alpha=0.95,fam=fam, alpha.trsp=70)
+outlyingPlotWrapper(x,alpha=0.95,fam=fam, main = "Gamma", withCall = FALSE)
 
 # Weibull
 dev.new()
 fam = WeibullFamily()
 X=distribution(fam)
 x = r(X)(1000)
-outlyingPlotWrapper(x,alpha=0.95,fam=fam, alpha.trsp=30, with.legend = TRUE, withCall = FALSE)
-
+outlyingPlotWrapper(x,alpha=0.95,fam=fam, main = "Weibull", withCall = FALSE)

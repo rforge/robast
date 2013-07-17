@@ -5,6 +5,18 @@
 ##                                      ##
 ##########################################
 
+### aditional function
+merge.lists <- function(a, b){
+  a.names <- names(a)
+  b.names <- names(b)
+  m.names <- sort(unique(c(a.names, b.names), fromLast = TRUE))
+  sapply(m.names, function(i) {
+    if (is.list(a[[i]]) & is.list(b[[i]])) merge.lists(a[[i]], b[[i]])
+    else if (i %in% b.names) b[[i]]
+    else a[[i]]
+  }, simplify = FALSE)
+}
+
 ##IC - influence curve
 ##data - dataset
 ## with.legend - optional legend indicator
@@ -109,9 +121,6 @@ infoPlotWrapper = function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, res
                      ,panel.first= substitute(grid())
                      ,col = substitute("blue")
     ), scaleList)
-
-
-
   
   ##parameter for plotting
   if(mc$with.legend)
@@ -125,7 +134,7 @@ infoPlotWrapper = function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, res
     argsList$col.lab <- "white"
   }
   
-  args <- c(argsList, dots)
+  args <- merge.lists(argsList, dots)
   ###
   ### 3. build up the call but grab it and write it into an object
   ###
@@ -154,10 +163,10 @@ fam = GParetoFamily()
 IC <- optIC(model = fam, risk = asCov())
 Y=distribution(fam)
 data = r(Y)(1000)
+# dev.new()
+# infoPlotWrapper(IC, alpha.trsp=30, with.legend = FALSE)
 dev.new()
-infoPlotWrapper(IC, alpha.trsp=30, with.legend = FALSE)
-dev.new()
-infoPlotWrapper(IC, data, alpha.trsp=30, with.legend = FALSE)
+infoPlotWrapper(IC, data, withCall = FALSE)
 
 
 # GEV
@@ -165,29 +174,29 @@ fam = GEVFamily()
 IC <- optIC(model = fam, risk = asCov())
 Y=distribution(fam)
 data = r(Y)(1000)
+# dev.new()
+# infoPlotWrapper(IC, alpha.trsp=100, with.legend = TRUE, rescale = TRUE, withCall = TRUE)
 dev.new()
-infoPlotWrapper(IC, alpha.trsp=100, with.legend = TRUE, rescale = TRUE, withCall = TRUE)
-dev.new()
-infoPlotWrapper(IC, data, alpha.trsp=100, with.legend = TRUE, rescale = TRUE, withCall = TRUE)
+infoPlotWrapper(IC, data, rescale = TRUE, withCall = FALSE)
 
 # Gamma
 fam = GammaFamily()
 IC <- optIC(model = fam, risk = asCov())
 Y=distribution(fam)
 data = r(Y)(1000)
+# dev.new()
+# infoPlotWrapper(IC)
 dev.new()
-infoPlotWrapper(IC)
-dev.new()
-infoPlotWrapper(IC, data)
+infoPlotWrapper(IC, data, withCall = FALSE)
 
 # Weibull
 fam = WeibullFamily()
 IC <- optIC(model = fam, risk = asCov())
 Y=distribution(fam)
 data = r(Y)(1000)
+# dev.new()
+# infoPlotWrapper(IC, alpha.trsp=30, with.legend = TRUE, withCall = FALSE)
 dev.new()
-infoPlotWrapper(IC, alpha.trsp=30, with.legend = TRUE, withCall = FALSE)
-dev.new()
-infoPlotWrapper(IC, data, alpha.trsp=30, with.legend = TRUE, withCall = FALSE)
+infoPlotWrapper(IC, data, withCall = FALSE)
 
 
