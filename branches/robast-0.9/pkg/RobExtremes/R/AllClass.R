@@ -24,6 +24,12 @@ buildStartupMessage(pkg = "RobExtremes", msga="", msgb="",
 
 .isEqual01 <- distr:::.isEqual01
 
+setClass("ParamWithLocAndScaleAndShapeFamParameter",
+            contains = c("ParamWithScaleFamParameter",
+                         "ParamWithShapeFamParameter")
+         )
+
+
 # parameter of Gumbel distribution
 setClass("GumbelParameter", representation(loc = "numeric", 
                                            scale = "numeric"), 
@@ -243,6 +249,13 @@ setClass("ParetoFamily", contains="L2ParamFamily")
 setClass("GParetoFamily", contains="L2ScaleShapeUnion")
 setClass("GEVFamily", contains="L2ScaleShapeUnion")
 setClass("WeibullFamily", contains="L2ScaleShapeUnion")
+
+## virtual in-between class for common parts in modifyModel - method
+setClass("L2LocScaleShapeUnion", representation(scaleshapename ="character"),
+         contains = c("L2GroupParamFamily","VIRTUAL")
+        )
+
+setClass("GEVFamilyMuUnknown", contains="L2LocScaleShapeUnion")
 
 
 setClass("LDEstimate",
