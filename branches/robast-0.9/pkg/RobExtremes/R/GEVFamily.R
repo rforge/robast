@@ -173,7 +173,10 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                         D <- t(c(D1, D2))
                         rownames(D) <- "quantile"; colnames(D) <- NULL
                         D }, list(p0 = p))
-       btes <- substitute({ if(theta[2]>=1L) es <- NA else {
+       btes <- substitute({ if(theta[2]>=1L){
+                            warning("Expected value is infinite for shape > 1")
+                            es <- NA
+                           }else{
                             pg <- pgamma(-log(p0),1-theta[2], lower.tail = TRUE)
                             es <- theta[1] * (gamma(1-theta[2]) * pg/ (1-p0) - 1 )/
                                    theta[2]  + loc0 }
@@ -194,7 +197,10 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                             D }, list(loc0 = loc, p0 = p))
     }
     if(!is.null(N)){
-       btel <- substitute({ if(theta[2]>=1L) el <- NA else{
+       btel <- substitute({ if(theta[2]>=1L){
+                            warning("Expected value is infinite for shape > 1")
+                            el <- NA
+                           }else{
                             el <- N0*(loc0+theta[1]*(gamma(1-theta[2])-1)/theta[2])}
                             names(el) <- "expected loss"
                             el }, list(loc0 = loc,N0 = N))
