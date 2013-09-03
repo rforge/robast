@@ -68,7 +68,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
                                    theta[3]  + theta[1] }
                             names(es) <- "expected shortfall"
                             es }, list(p0 = p))
-       bDes <- substitute({ if(theta[3]>=1L){ D0 <- NA, D1 <- D2 <- NA} else {
+       bDes <- substitute({ if(theta[3]>=1L){ D0 <- NA; D1 <- D2 <- NA} else {
                             loc <- theta[1]; scale <- theta[2]; shape <- theta[3]
                             pg <- pgamma(-log(p0), 1-theta[3], lower.tail = TRUE)
                             dd <- ddigamma(-log(p0),1-theta[3])
@@ -242,7 +242,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
         x0 <- k1^2*2*k
         I00 <- (2*k)*k1^2*G20/sc^2
         I01 <- (G10-k1*2*G20)*k1/sc^2
-        I02 <- [k1*2 * gamma(2k)- k1* gamma(k) -  gamma(k)-k * G11]*k1/k
+        I02 <- (k1*2 * gamma(2*k)- k1* gamma(k) -  gamma(k)-k * G11)*k1/k
         I02 <- (2*k1*G20 -(k+2)*G10-k*G11)*k1/k/sc
         I11 <- G20*x0-2*G10*k*(k+1)+1
         I11 <- I11/sc^2/k^2

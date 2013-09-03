@@ -8,8 +8,8 @@ Description: Optimally robust estimation for extreme value distributions
 Depends: R (>= 2.14.0), methods, distr(>= 2.4), distrEx(>= 2.4), RandVar(>= 0.8), 
          distrMod(>= 2.5), RobAStBase(>= 0.9), ROptEst(>= 0.9), robustbase(>= 0.8-0),
 		 evd, actuar
+Suggests: RUnit (>= 0.4.26)
 Imports: RobAStRDA
-Suggests: RUnit
 Author: Peter Ruckdeschel, Matthias Kohl, Nataliya Horbenko
 Maintainer: Peter Ruckdeschel <peter.ruckdeschel@itwm.fraunhofer.de>
 LazyLoad: yes

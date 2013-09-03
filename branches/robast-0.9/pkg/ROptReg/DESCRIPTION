@@ -5,7 +5,7 @@ Title: Optimally robust estimation for regression models
 Description: Optimally robust estimation for regression-type models using S4 classes and
         methods (based on distrMod, RobAStBase, and ROptEst)
 Depends: R (>= 2.14.0), methods, distr(>= 2.3), distrEx(>= 2.3), RandVar(>= 0.8), 
-         distrMod(>=2.4), RobAStBase(>=0.8), ROptEst(>=0.8)
+         distrMod(>= 2.4), RobAStBase(>= 0.8), ROptEst(>= 0.8)
 Author: Matthias Kohl, Peter Ruckdeschel, Daria Pupashenko
 Maintainer: Peter Ruckdeschel <peter.ruckdeschel@itwm.fraunhofer.de>
 LazyLoad: yes
