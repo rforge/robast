@@ -1,5 +1,3 @@
-.versionSuff <- RobAStRDA:::.versionSuff
-
 getShapeGrid <- function(gridsize=1000,centralvalue=0.7,
                          withPos=TRUE, cutoff.at.0=1e-4, fac = 2){
 

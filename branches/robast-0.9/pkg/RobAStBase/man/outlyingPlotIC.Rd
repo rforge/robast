@@ -5,14 +5,13 @@
 to ICs}
 \usage{
 outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
-                         dist.y, cutoff.y = cutoff.chisq(), cutoff.x = cutoff.sememp(), ...,
-                         cutoff.quantile.x = 0.95,
-                         cutoff.quantile.y = cutoff.quantile.x,
-                         id.n, lab.pts, adj, cex.idn,
-                         col.idn, lty.cutoff, lwd.cutoff, col.cutoff,
-                         robCov.x = TRUE, robCov.y = TRUE, tf.x = data, tf.y = data,
-                         jitt.fac = 10,
-                         main = gettext("Outlyingness \n by means of a distance-distance plot")
+               dist.y, cutoff.y = cutoff.chisq(), cutoff.x = cutoff.sememp(),
+               ..., cutoff.quantile.x = 0.95,
+               cutoff.quantile.y = cutoff.quantile.x, id.n, lab.pts, adj,
+               cex.idn, col.idn, lty.cutoff, lwd.cutoff, col.cutoff,
+               robCov.x = TRUE, robCov.y = TRUE, tf.x = data, tf.y = data,
+               jitt.fac = 10,
+               main = gettext("Outlyingness \n by means of a distance-distance plot")
                          )
 }
 \arguments{

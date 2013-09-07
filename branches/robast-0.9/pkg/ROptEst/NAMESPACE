@@ -37,3 +37,5 @@ export("roptest","roptest.old", "robest",
        "getLagrangeMultByOptim","getLagrangeMultByIter")
 export("genkStepCtrl", "genstartCtrl", "gennbCtrl")
 export("cniperCont", "cniperPoint", "cniperPointPlot")
+export(".generateInterpGrid",".getLMGrid",".saveGridToCSV", ".readGridFromCSV")
+export(".RMXE.th",".OMSE.th", ".MBRE.th")

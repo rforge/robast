@@ -247,7 +247,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         A.comp <- matrix(rep(TRUE,k*k),nrow=k)
 
         # otherwise if trafo == unitMatrix may use symmetry info
-        if(distrMod:::.isUnitMatrix(trafo)){
+        if(.isUnitMatrix(trafo)){
             comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
             z.comp <- comp$"z.comp"
             A.comp <- comp$"A.comp"
@@ -494,8 +494,6 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                     iter.In = iter.In, prec.In = prec.In, problem = problem ))
     })
 
-### helper function to recursively evaluate list
-.evalListRec <- RobAStBase:::.evalListRec
 
 ### helper function to return the upper case solution if r=0
 .getUpperSol <- function(L2deriv, radius, risk, neighbor, biastype,

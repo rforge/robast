@@ -24,32 +24,32 @@
 \usage{
 getInfRad(clip, L2deriv, risk, neighbor, ...)
 
-\S4method{getInfRad}{numeric,UnivariateDistribution,asMSE,ContNeighborhood}(clip, L2deriv,
-                                                risk, neighbor, biastype, cent, symm, trafo)
+\S4method{getInfRad}{numeric,UnivariateDistribution,asMSE,ContNeighborhood}(
+          clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfRad}{numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood}(clip, L2deriv,
-                                                    risk, neighbor, biastype, cent, symm, trafo)
+\S4method{getInfRad}{numeric,UnivariateDistribution,asMSE,TotalVarNeighborhood}(
+          clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfRad}{numeric,UnivariateDistribution,asL1,ContNeighborhood}(clip, L2deriv,
-                                                risk, neighbor, biastype, cent, symm, trafo)
+\S4method{getInfRad}{numeric,UnivariateDistribution,asL1,ContNeighborhood}(
+          clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfRad}{numeric,UnivariateDistribution,asL1,TotalVarNeighborhood}(clip, L2deriv,
-                                                    risk, neighbor, biastype, cent, symm, trafo)
+\S4method{getInfRad}{numeric,UnivariateDistribution,asL1,TotalVarNeighborhood}(
+          clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfRad}{numeric,UnivariateDistribution,asL4,ContNeighborhood}(clip, L2deriv,
-                                                risk, neighbor, biastype, cent, symm, trafo)
+\S4method{getInfRad}{numeric,UnivariateDistribution,asL4,ContNeighborhood}(
+          clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfRad}{numeric,UnivariateDistribution,asL4,TotalVarNeighborhood}(clip, L2deriv,
-                                                    risk, neighbor, biastype, cent, symm, trafo)
+\S4method{getInfRad}{numeric,UnivariateDistribution,asL4,TotalVarNeighborhood}(
+          clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfRad}{numeric,EuclRandVariable,asMSE,UncondNeighborhood}(clip, L2deriv, risk,
-                                              neighbor, biastype, Distr, stand, cent, trafo)
+\S4method{getInfRad}{numeric,EuclRandVariable,asMSE,UncondNeighborhood}(
+          clip, L2deriv, risk, neighbor, biastype, Distr, stand, cent, trafo)
 
-\S4method{getInfRad}{numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(clip, L2deriv,
-                                                        risk, neighbor, biastype, cent, symm, trafo)
+\S4method{getInfRad}{numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(
+          clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
 
-\S4method{getInfRad}{numeric,UnivariateDistribution,asSemivar,ContNeighborhood}(clip, L2deriv,
-                                                        risk, neighbor, biastype, cent, symm, trafo)
+\S4method{getInfRad}{numeric,UnivariateDistribution,asSemivar,ContNeighborhood}(
+          clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
 }
 \arguments{
   \item{clip}{ positive real: clipping bound }

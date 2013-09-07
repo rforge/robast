@@ -2,9 +2,6 @@
 ## k-step estimator
 ###############################################################################
 
-### helper functions from distrMod:
-.isUnitMatrix <- distrMod:::.isUnitMatrix
-.deleteDim <- distrMod:::.deleteDim
 
 ### no dispatch on top layer -> keep product structure of dependence
 kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
@@ -276,7 +273,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 #        print(IC@Risks$asCov)
 #        print(Risks(IC)$asCov)
 
-        if(! distrMod:::.isUnitMatrix(trafo(L2Fam)))
+        if(! .isUnitMatrix(trafo(L2Fam)))
              Infos <- rbind(Infos, c("kStepEstimator",
                             paste("computation of IC",
                                    ifelse(withUpdateInKer,"with","without") ,

@@ -6,6 +6,7 @@
 \alias{validParameter,WeibullFamily-method}
 \alias{validParameter,GEVFamily-method}
 \alias{validParameter,ParetoFamily-method}
+\alias{validParameter,GEVFamilyMuUnknown-method}
 
 
 \title{ Methods for function validParameter in Package `RobExtremes' }
@@ -21,6 +22,8 @@ validParameter(object, \dots)
 \S4method{validParameter}{WeibullFamily}(object, param, tol=.Machine$double.eps)
 \S4method{validParameter}{GEVFamily}(object, param, tol=.Machine$double.eps)
 \S4method{validParameter}{ParetoFamily}(object, param, tol=.Machine$double.eps)
+\S4method{validParameter}{GEVFamilyMuUnknown}(object, param,
+           tol=.Machine$double.eps)
 }
 
 \details{
@@ -38,6 +41,9 @@ method for signature
   \item{\code{GParetoFamily}}{checks if both parameters are finite by \code{is.finite},
   if their length is 1 or 2 (e.g. if one features as nuisance parameter), and if
   both are strictly larger than 0 (upto argument \code{tol})}
+  \item{\code{GEVFamilyMuUnknown}}{checks if all parameters are finite by \code{is.finite},
+  if their length is in 1,2,3 (e.g. if one features as nuisance parameter), and scale
+  and shape both are strictly larger than 0 (upto argument \code{tol})}
 }
 }
 \arguments{

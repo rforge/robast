@@ -25,35 +25,38 @@
 \usage{
 getInfCentRegTS(ErrorL2deriv, Regressor, neighbor, ...)
 
-\S4method{getInfCentRegTS}{UnivariateDistribution,UnivariateDistribution,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, neighbor, clip, cent, stand, z.comp)
+\S4method{getInfCentRegTS}{UnivariateDistribution,UnivariateDistribution,ContNeighborhood}(
+             ErrorL2deriv, Regressor, neighbor, clip, cent, stand, z.comp)
 
-\S4method{getInfCentRegTS}{UnivariateDistribution,UnivariateDistribution,TotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, neighbor, clip, cent, z.comp)
+\S4method{getInfCentRegTS}{UnivariateDistribution,UnivariateDistribution,TotalVarNeighborhood}(
+             ErrorL2deriv, Regressor, neighbor, clip, cent, z.comp)
 
-\S4method{getInfCentRegTS}{UnivariateDistribution,numeric,CondTotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, neighbor, clip, cent, z.comp)
+\S4method{getInfCentRegTS}{UnivariateDistribution,numeric,CondTotalVarNeighborhood}(
+             ErrorL2deriv, Regressor, neighbor, clip, cent, z.comp)
 
-\S4method{getInfCentRegTS}{UnivariateDistribution,UnivariateDistribution,Av1CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, neighbor, clip, cent, stand, z.comp, x.vec)
+\S4method{getInfCentRegTS}{UnivariateDistribution,UnivariateDistribution,Av1CondContNeighborhood}(
+             ErrorL2deriv, Regressor, neighbor, clip, cent, stand, z.comp, x.vec)
 
-\S4method{getInfCentRegTS}{UnivariateDistribution,UnivariateDistribution,Av1CondTotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, neighbor, clip, cent, stand, z.comp, x.vec, tol.z)
+\S4method{getInfCentRegTS}{UnivariateDistribution,UnivariateDistribution,Av1CondTotalVarNeighborhood}(
+             ErrorL2deriv, Regressor, neighbor, clip, cent, stand, z.comp, x.vec,
+             tol.z)
 
-\S4method{getInfCentRegTS}{UnivariateDistribution,MultivariateDistribution,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, neighbor, clip, cent, stand, z.comp)
+\S4method{getInfCentRegTS}{UnivariateDistribution,MultivariateDistribution,ContNeighborhood}(
+             ErrorL2deriv, Regressor, neighbor, clip, cent, stand, z.comp)
 
-\S4method{getInfCentRegTS}{UnivariateDistribution,MultivariateDistribution,Av1CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, neighbor, clip, cent, stand, z.comp, x.vec)
+\S4method{getInfCentRegTS}{UnivariateDistribution,MultivariateDistribution,Av1CondContNeighborhood}(
+             ErrorL2deriv, Regressor, neighbor, clip, cent, stand, z.comp, x.vec)
 
-\S4method{getInfCentRegTS}{UnivariateDistribution,Distribution,Av2CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, neighbor, clip, cent, stand, z.comp, tol.z)
+\S4method{getInfCentRegTS}{UnivariateDistribution,Distribution,Av2CondContNeighborhood}(
+             ErrorL2deriv, Regressor, neighbor, clip, cent, stand, z.comp, tol.z)
 
-\S4method{getInfCentRegTS}{RealRandVariable,Distribution,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, neighbor, ErrorDistr, stand, cent, clip, z.comp)
+\S4method{getInfCentRegTS}{RealRandVariable,Distribution,ContNeighborhood}(
+             ErrorL2deriv, Regressor, neighbor, ErrorDistr, stand, cent, clip,
+             z.comp)
 
-\S4method{getInfCentRegTS}{RealRandVariable,Distribution,Av1CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, neighbor, ErrorDistr, stand, cent, clip, z.comp, x.vec)
+\S4method{getInfCentRegTS}{RealRandVariable,Distribution,Av1CondContNeighborhood}(
+             ErrorL2deriv, Regressor, neighbor, ErrorDistr, stand, cent, clip,
+             z.comp, x.vec)
 }
 \arguments{
   \item{ErrorL2deriv}{ L2-derivative of \code{ErrorDistr}. }

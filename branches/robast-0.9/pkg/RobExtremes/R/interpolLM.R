@@ -1,7 +1,3 @@
-.saveGridToCSV <- ROptEst:::.saveGridToCSV
-.readGridFromCSV <- ROptEst:::.readGridFromCSV
-.MakeSmoothGridList <- RobAStRDA:::.MakeSmoothGridList
-
 .modify.xi.PFam.call <- function(xi, PFam){
       Param <- param(PFam)
       param <- main(Param)
@@ -10,10 +6,6 @@
       nModel <- modifyModel(PFam, Param)
       return(nModel)
 }
-
-.RMXE.th <- ROptEst:::.RMXE.th
-.MBRE.th <- ROptEst:::.MBRE.th
-.OMSE.th <- ROptEst:::.OMSE.th
 
 .RMXE.xi <- function(xi, PFam) .RMXE.th(xi, PFam, .modify.xi.PFam.call)
 .MBRE.xi <- function(xi, PFam) .MBRE.th(xi, PFam, .modify.xi.PFam.call)
@@ -26,7 +18,7 @@
                       optFct = .RMXE.xi, GridFileName="LMGrid.Rdata",
                       withPrint = FALSE){
    ### changed defaults and argnames (for historical reasons):
-   ROptEst:::.getLMGrid(thGrid = xiGrid, PFam = PFam, optFct = optFct,
+   ROptEst::.getLMGrid(thGrid = xiGrid, PFam = PFam, optFct = optFct,
            modifyfct = NULL, GridFileName = GridFileName,
            withPrint = withPrint)}
 
@@ -44,9 +36,9 @@
              to <- gsub("XXXX",gsub(" ","",name(PFam)),
                     gsub("YYYY", namF, "interpolYYYYXXXX.csv"))
              print(to)
-             ROptEst:::.generateInterpGrid(thGrid = xiGrid,
+             .generateInterpGrid(thGrid = xiGrid,
                   PFam = PFam, toFileCSV = to,
-                  getFun =  ROptEst:::.getLMGrid,
+                  getFun =  ROptEst::.getLMGrid,
                   modifyfct = .modify.xi.PFam.call, optFct = optF,
                   nameInSysdata = namF, withPrint = TRUE, radius = radius,
                   upper = upper, lower = lower, OptOrIter = OptOrIter,

@@ -13,8 +13,9 @@
 }
 \usage{
 CondTotalVarIC(name, CallL2Fam = call("L2RegTypeFamily"), 
-        Curve = EuclRandVarList(RealRandVariable(Map = list(function(x) {x[1] * x[2]}), 
-                                                 Domain = EuclideanSpace(dimension = 2))), 
+        Curve = EuclRandVarList(RealRandVariable(
+                Map = list(function(x) {x[1] * x[2]}),
+                Domain = EuclideanSpace(dimension = 2))),
         Risks, Infos, 
         clipUp = RealRandVariable(Map = list(function(x) {Inf}), Domain = Reals()), 
         stand = as.matrix(1), 

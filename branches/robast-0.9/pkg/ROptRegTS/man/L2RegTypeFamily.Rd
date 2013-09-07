@@ -8,9 +8,10 @@
 \usage{
 L2RegTypeFamily(name, distribution = LMCondDistribution(), distrSymm, 
         main = 0, nuisance, trafo, param, props = character(0), 
-        L2deriv = EuclRandVarList(EuclRandVariable(Map = list(function(x) {x[1] * x[2]}), 
-                                                   Domain = EuclideanSpace(dimension = 2), 
-                                                   dimension = 1)), 
+        L2deriv = EuclRandVarList(EuclRandVariable(
+                  Map = list(function(x) {x[1] * x[2]}),
+                  Domain = EuclideanSpace(dimension = 2),
+                  dimension = 1)),
         ErrorDistr = Norm(), ErrorSymm, RegDistr = Norm(), RegSymm, 
         Regressor = RealRandVariable(Map = list(function(x) {x}), Domain = Reals()), 
         ErrorL2deriv = EuclRandVarList(RealRandVariable(Map = list(function(x) {x}), 

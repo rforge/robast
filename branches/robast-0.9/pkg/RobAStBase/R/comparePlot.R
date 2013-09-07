@@ -1,4 +1,3 @@
-.makeLenAndOrder <- distr:::.makeLenAndOrder
 setMethod("comparePlot", signature("IC","IC"),
     function(obj1,obj2, obj3 = NULL, obj4 = NULL, data = NULL,
              ..., withSweave = getdistrOption("withSweave"),
@@ -74,7 +73,7 @@ setMethod("comparePlot", signature("IC","IC"),
 
         if(!is.null(x.ticks)) dotsP$xaxt <- "n"
         if(!is.null(y.ticks)){
-           y.ticks <- distr:::.fillList(list(y.ticks), dims0)
+           y.ticks <- .fillList(list(y.ticks), dims0)
            dotsP$yaxt <- "n"
         }
 
@@ -142,7 +141,7 @@ setMethod("comparePlot", signature("IC","IC"),
       lineT <- NA
 
       .mpresubs <- function(inx)
-            distr:::.presubs(inx, c(paste("%C",1:ncomp,sep=""),
+            .presubs(inx, c(paste("%C",1:ncomp,sep=""),
                                      "%D",
                                     paste("%A",1:ncomp,sep="")),
                   c(as.character(class(obj1)[1]),
@@ -196,7 +195,7 @@ setMethod("comparePlot", signature("IC","IC"),
         if(!is.logical(inner)){
             if(!is.list(inner))
                 inner <- as.list(inner)
-            innerT <- distr:::.fillList(inner,dims)
+            innerT <- .fillList(inner,dims)
             if(dims0<dims){
                innerT0 <- innerT
                for(i in 1:dims0) innerT[to.draw[i]] <- innerT0[i]

@@ -36,100 +36,111 @@
 \usage{
 getInfRobRegTypeIC(ErrorL2deriv, Regressor, risk, neighbor, ...)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,UnivariateDistribution,asBias,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo, 
-                upper, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,UnivariateDistribution,asBias,ContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,UnivariateDistribution,asBias,Av1CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo, 
-                upper, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,UnivariateDistribution,asBias,Av1CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,UnivariateDistribution,asBias,Av1CondTotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo, 
-                upper, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,UnivariateDistribution,asBias,Av1CondTotalVarNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asBias,Av2CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo, 
-                upper, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asBias,Av2CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asCov,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asCov,ContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,UnivariateDistribution,asCov,TotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,UnivariateDistribution,asCov,TotalVarNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asCov,CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asCov,CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asCov,CondTotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asCov,CondTotalVarNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asCov,Av1CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asCov,Av1CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asCov,Av2CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asCov,Av2CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asCov,Av1CondTotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asCov,Av1CondTotalVarNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asGRisk,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo, 
-                upper, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asGRisk,ContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asGRisk,Av1CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo, 
-                upper, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asGRisk,Av1CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asGRisk,Av2CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo, 
-                upper, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asGRisk,Av2CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asGRisk,Av1CondTotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo, 
-                upper, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,Distribution,asGRisk,Av1CondTotalVarNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,MultivariateDistribution,asBias,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo, 
-                upper, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,MultivariateDistribution,asBias,ContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,MultivariateDistribution,asBias,Av1CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo, 
-                upper, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,MultivariateDistribution,asBias,Av1CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,MultivariateDistribution,asBias,Av1CondTotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo, 
-                upper, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,MultivariateDistribution,asBias,Av1CondTotalVarNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{RealRandVariable,Distribution,asBias,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorSymm, RegSymm, ErrorDistr, ErrorL2derivSymm, 
-                ErrorL2derivDistrSymm, Finfo, trafo, upper, z.start, A.start, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{RealRandVariable,Distribution,asBias,ContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorSymm, RegSymm,
+             ErrorDistr, ErrorL2derivSymm, ErrorL2derivDistrSymm, Finfo, trafo,
+             upper, z.start, A.start, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{RealRandVariable,Distribution,asBias,Av1CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorSymm, RegSymm, ErrorDistr, ErrorL2derivSymm, 
-                ErrorL2derivDistrSymm, Finfo, trafo, upper, z.start, A.start, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{RealRandVariable,Distribution,asBias,Av1CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorSymm, RegSymm,
+             ErrorDistr, ErrorL2derivSymm, ErrorL2derivDistrSymm, Finfo, trafo,
+             upper, z.start, A.start, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{RealRandVariable,Distribution,asCov,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorDistr, Finfo, trafo)
+\S4method{getInfRobRegTypeIC}{RealRandVariable,Distribution,asCov,ContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorDistr, Finfo, trafo)
 
-\S4method{getInfRobRegTypeIC}{RealRandVariable,Distribution,asCov,Av1CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorDistr, Finfo, trafo)
+\S4method{getInfRobRegTypeIC}{RealRandVariable,Distribution,asCov,Av1CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorDistr, Finfo, trafo)
 
-\S4method{getInfRobRegTypeIC}{RealRandVariable,Distribution,asGRisk,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorSymm, RegSymm, ErrorDistr, ErrorL2derivSymm, 
-                ErrorL2derivDistrSymm, Finfo, trafo, upper, z.start, A.start, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{RealRandVariable,Distribution,asGRisk,ContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorSymm, RegSymm,
+             ErrorDistr, ErrorL2derivSymm, ErrorL2derivDistrSymm, Finfo, trafo,
+             upper, z.start, A.start, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{RealRandVariable,Distribution,asGRisk,Av1CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorSymm, RegSymm, ErrorDistr, ErrorL2derivSymm, 
-                ErrorL2derivDistrSymm, Finfo, trafo, upper, z.start, A.start, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{RealRandVariable,Distribution,asGRisk,Av1CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorSymm, RegSymm,
+             ErrorDistr, ErrorL2derivSymm, ErrorL2derivDistrSymm, Finfo, trafo,
+             upper, z.start, A.start, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo, 
-                upper, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo, upper, maxiter, tol, warn)
 
-\S4method{getInfRobRegTypeIC}{UnivariateDistribution,UnivariateDistribution,asUnOvShoot,CondNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorL2derivDistrSymm, RegSymm, Finfo, trafo, 
-                upper, maxiter, tol, warn)
+\S4method{getInfRobRegTypeIC}{UnivariateDistribution,UnivariateDistribution,asUnOvShoot,CondNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm,
+             RegSymm, Finfo, trafo, upper, maxiter, tol, warn)
 }
 \arguments{
   \item{ErrorL2deriv}{ L2-derivative of \code{ErrorDistr}. }

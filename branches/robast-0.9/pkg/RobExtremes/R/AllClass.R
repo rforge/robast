@@ -22,7 +22,6 @@ buildStartupMessage(pkg = "RobExtremes", msga="", msgb="",
     library.dynam.unload("RobExtremes", libpath)
 }
 
-.isEqual01 <- distr:::.isEqual01
 
 setClass("ParamWithLocAndScaleAndShapeFamParameter",
             contains = c("ParamWithScaleFamParameter",

@@ -93,7 +93,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         A.comp <- matrix(rep(TRUE,k*k),nrow=k)
 
         # otherwise if trafo == unitMatrix may use symmetry info
-        if(distrMod:::.isUnitMatrix(trafo)){
+        if(.isUnitMatrix(trafo)){
             comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
             z.comp <- comp$"z.comp"
             A.comp <- comp$"A.comp"

@@ -61,21 +61,21 @@ setMethod("infoPlot", "IC",
 
         if(!is.null(x.ticks)) dots$xaxt <- "n"
         if(!is.null(y.ticks)){
-           y.ticks <- distr:::.fillList(list(y.ticks), dims0+in1to.draw)
+           y.ticks <- .fillList(list(y.ticks), dims0+in1to.draw)
            dots$yaxt <- "n"
         }
 
         if(with.legend){
           if(missing(legend.location)){
-             legend.location <- distr:::.fillList(list("topright"), dims0+in1to.draw   )
+             legend.location <- .fillList(list("topright"), dims0+in1to.draw   )
              if (in1to.draw) legend.location[[1]] <-  "bottomright"
           }else{
              legend.location <- as.list(legend.location)
-             legend.location <- distr:::.fillList(legend.location, dims0+in1to.draw   )
+             legend.location <- .fillList(legend.location, dims0+in1to.draw   )
           }
           if(is.null(legend)){
              legend <- vector("list",dims0+in1to.draw)
-             legend <- distr:::.fillList(list(as.list(c("class. opt. IC", objectc))),
+             legend <- .fillList(list(as.list(c("class. opt. IC", objectc))),
                                                  dims0+in1to.draw)
           }
         }
@@ -143,7 +143,7 @@ setMethod("infoPlot", "IC",
             lineT <- NA
        
            .mpresubs <- function(inx)
-                    distr:::.presubs(inx, c("%C", "%D", "%A"),
+                    .presubs(inx, c("%C", "%D", "%A"),
                           c(as.character(class(object)[1]),
                             as.character(date()),
                             as.character(deparse(objectc))))
@@ -205,7 +205,7 @@ setMethod("infoPlot", "IC",
                 #stop("Argument 'inner' must either be 'logical' or a 'list'")
                 if(!is.list(inner))
                     inner <- as.list(inner)                
-                innerT <- distr:::.fillList(inner,1+dims)
+                innerT <- .fillList(inner,1+dims)
                 if(dims0<dims){
                    innerT0 <- innerT
                    for(i in 1:dims0) innerT[1+to.draw[i]] <- innerT0[1+i]          

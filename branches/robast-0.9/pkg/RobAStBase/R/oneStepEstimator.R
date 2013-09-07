@@ -138,7 +138,7 @@ oneStepEstimator <- function(x, IC, start = NULL,
 #            asBias <- NULL
 #        }
 #        trafo <- trafo(L2Fam, newParam)$mat
-#        if(distrMod:::.isUnitMatrix(trafo)){
+#        if(.isUnitMatrix(trafo)){
 #           uest <- res
 #           uvar <- asVar
 #        }else{

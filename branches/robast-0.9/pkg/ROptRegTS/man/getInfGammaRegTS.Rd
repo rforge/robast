@@ -24,44 +24,46 @@
 \usage{
 getInfGammaRegTS(ErrorL2deriv, Regressor, risk, neighbor, ...)
 
-\S4method{getInfGammaRegTS}{UnivariateDistribution,UnivariateDistribution,asMSE,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, z.comp, stand, cent, clip)
+\S4method{getInfGammaRegTS}{UnivariateDistribution,UnivariateDistribution,asMSE,ContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-\S4method{getInfGammaRegTS}{UnivariateDistribution,UnivariateDistribution,asMSE,Av1CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, z.comp, stand, cent, clip)
+\S4method{getInfGammaRegTS}{UnivariateDistribution,UnivariateDistribution,asMSE,Av1CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-\S4method{getInfGammaRegTS}{UnivariateDistribution,UnivariateDistribution,asMSE,Av1CondTotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, z.comp, stand, cent, clip)
+\S4method{getInfGammaRegTS}{UnivariateDistribution,UnivariateDistribution,asMSE,Av1CondTotalVarNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-\S4method{getInfGammaRegTS}{UnivariateDistribution,MultivariateDistribution,asMSE,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, z.comp, stand, cent, clip)
+\S4method{getInfGammaRegTS}{UnivariateDistribution,MultivariateDistribution,asMSE,ContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-\S4method{getInfGammaRegTS}{UnivariateDistribution,MultivariateDistribution,asMSE,Av1CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, z.comp, stand, cent, clip)
+\S4method{getInfGammaRegTS}{UnivariateDistribution,MultivariateDistribution,asMSE,Av1CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-\S4method{getInfGammaRegTS}{UnivariateDistribution,MultivariateDistribution,asMSE,Av1CondTotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, z.comp, stand, cent, clip)
+\S4method{getInfGammaRegTS}{UnivariateDistribution,MultivariateDistribution,asMSE,Av1CondTotalVarNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-\S4method{getInfGammaRegTS}{UnivariateDistribution,Distribution,asMSE,Av2CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, z.comp, stand, cent, clip)
+\S4method{getInfGammaRegTS}{UnivariateDistribution,Distribution,asMSE,Av2CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent, clip)
 
-\S4method{getInfGammaRegTS}{RealRandVariable,Distribution,asMSE,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorDistr, stand, cent, clip)
+\S4method{getInfGammaRegTS}{RealRandVariable,Distribution,asMSE,ContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorDistr, stand, cent,
+             clip)
 
-\S4method{getInfGammaRegTS}{RealRandVariable,Distribution,asMSE,Av1CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorDistr, stand, cent, clip)
+\S4method{getInfGammaRegTS}{RealRandVariable,Distribution,asMSE,Av1CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, ErrorDistr, stand, cent,
+             clip)
 
-\S4method{getInfGammaRegTS}{UnivariateDistribution,UnivariateDistribution,asUnOvShoot,ContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, cent, clip)
+\S4method{getInfGammaRegTS}{UnivariateDistribution,UnivariateDistribution,asUnOvShoot,ContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, cent, clip)
 
-\S4method{getInfGammaRegTS}{UnivariateDistribution,UnivariateDistribution,asUnOvShoot,TotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, cent, clip)
+\S4method{getInfGammaRegTS}{UnivariateDistribution,UnivariateDistribution,asUnOvShoot,TotalVarNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, cent, clip)
 
-\S4method{getInfGammaRegTS}{UnivariateDistribution,numeric,asUnOvShoot,CondContNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, clip)
+\S4method{getInfGammaRegTS}{UnivariateDistribution,numeric,asUnOvShoot,CondContNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, clip)
 
-\S4method{getInfGammaRegTS}{UnivariateDistribution,numeric,asUnOvShoot,CondTotalVarNeighborhood}(ErrorL2deriv, 
-                Regressor, risk, neighbor, clip)
+\S4method{getInfGammaRegTS}{UnivariateDistribution,numeric,asUnOvShoot,CondTotalVarNeighborhood}(
+             ErrorL2deriv, Regressor, risk, neighbor, clip)
 }
 \arguments{
   \item{ErrorL2deriv}{ L2-derivative of \code{ErrorDistr}. }

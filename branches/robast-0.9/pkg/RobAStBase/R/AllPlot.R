@@ -21,7 +21,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
           if(!is.list(inner))
               inner <- as.list(inner)
             #stop("Argument 'inner' must either be 'logical' or a 'list'")
-           inner <- distr:::.fillList(inner,4)          
+           inner <- .fillList(inner,4)
            innerD <- inner[1:3]
            innerL <- inner[4] 
         }else{innerD <- innerL <- inner}
@@ -52,7 +52,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
         if(!is.null(x.ticks)) dots$xaxt <- "n"
         if(!is.null(y.ticks)){
-           y.ticks <- distr:::.fillList(list(y.ticks), dims0)
+           y.ticks <- .fillList(list(y.ticks), dims0)
            dots$yaxt <- "n"
         }
 
@@ -120,7 +120,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         lineT <- NA
 
      .mpresubs <- function(inx)
-                    distr:::.presubs(inx, c("%C", "%D", "%A"),
+                    .presubs(inx, c("%C", "%D", "%A"),
                           c(as.character(class(x)[1]),
                             as.character(date()),
                             as.character(deparse(xc))))
@@ -185,7 +185,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         }
      }else{
         innerT <- lapply(inner, .mpresubs)
-        innerT <- distr:::.fillList(innerT,dims)
+        innerT <- .fillList(innerT,dims)
         if(dims0<dims){
            innerT0 <- innerT
            for(i in 1:dims0) innerT[to.draw[i]] <- innerT0[i]          
@@ -195,14 +195,14 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         if(with.legend){
           fac.leg <- if(dims0>1) 3/4 else .75/.8
           if(missing(legend.location)){
-             legend.location <- distr:::.fillList(list("bottomright"), dims0)
+             legend.location <- .fillList(list("bottomright"), dims0)
           }else{
              legend.location <- as.list(legend.location)
-             legend.location <- distr:::.fillList(legend.location, dims0)
+             legend.location <- .fillList(legend.location, dims0)
           }
           if(is.null(legend)){
              legend <- vector("list",dims0)
-             legend <- distr:::.fillList(as.list(xc),dims0)
+             legend <- .fillList(as.list(xc),dims0)
           }
         }
 

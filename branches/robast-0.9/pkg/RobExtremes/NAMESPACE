@@ -1,9 +1,16 @@
 useDynLib("RobExtremes")
 
 import("methods")
+import("RobAStRDA")
 import("distr")
 import("distrEx")
+import("RandVar")
 import("distrMod")
+import("robustbase")
+import("RobAStBase")
+import("ROptEst")
+import("actuar")
+import("evd")
 
 exportClasses("GumbelParameter",
               "ParetoParameter",

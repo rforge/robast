@@ -6,6 +6,7 @@
 \alias{moveICBackFromRefParam-methods}
 \alias{moveL2Fam2RefParam,L2ScaleShapeUnion-method}
 \alias{moveICBackFromRefParam,IC,L2ScaleShapeUnion-method}
+\alias{moveICBackFromRefParam,IC,L2LocScaleShapeUnion-method}
 
 \title{Methods for Functions moving from and to reference parameter in Package
     `RobExtremes' }
@@ -30,6 +31,10 @@
       moves \code{L2Fam} to scale \code{1} (and, if existing location to
        \code{0}). }
 \item{moveICBackFromRefParam}{\code{signature(IC = "IC", L2Fam = "L2ScaleShapeUnion")}:
+      moves IC in \code{IC} back to original location and scale in \code{L2Fam}
+      (and in addition changes Lagrange multipliers accordingly),
+      rescaling risk where necessary. }
+\item{moveICBackFromRefParam}{\code{signature(IC = "IC", L2Fam = "L2LocScaleShapeUnion")}:
       moves IC in \code{IC} back to original location and scale in \code{L2Fam}
       (and in addition changes Lagrange multipliers accordingly),
       rescaling risk where necessary. }

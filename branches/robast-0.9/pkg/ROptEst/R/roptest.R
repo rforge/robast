@@ -111,7 +111,7 @@ roptest.old <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.
                     ncol = 2)
     colnames(Infos) <- c("method", "message")
 
-    if(! distrMod:::.isUnitMatrix(trafo(L2Fam)))
+    if(! .isUnitMatrix(trafo(L2Fam)))
        Infos <- rbind(Infos, c("roptest",
                             paste("computation of IC",
                                    ifelse(withUpdateInKer,"with","without") ,

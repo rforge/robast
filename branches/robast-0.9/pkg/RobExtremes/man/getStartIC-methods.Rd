@@ -3,6 +3,7 @@
 \alias{getStartIC-methods}
 \alias{getStartIC}
 \alias{getStartIC,L2ScaleShapeUnion,interpolRisk-method}
+\alias{getStartIC,L2LocScaleShapeUnion,interpolRisk-method}
 
 \title{Methods for Function getStartIC in Package `RobExtremes' }
 
@@ -20,6 +21,9 @@ argument \code{ICstart} in \code{kStepEstimator}.}
 }
 \section{Methods}{\describe{
 \item{getStartIC}{\code{signature(model = "L2ScaleShapeUnion", risk = "interpolRisk")}:
+      computes the optimally robust influence function by interpolation
+      on a grid (using helper function \code{.getPsi}).}
+\item{getStartIC}{\code{signature(model = "LocL2ScaleShapeUnion", risk = "interpolRisk")}:
       computes the optimally robust influence function by interpolation
       on a grid (using helper function \code{.getPsi}).}
 }}

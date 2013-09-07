@@ -15,17 +15,20 @@
 \usage{
 getFiRiskRegTS(risk, ErrorDistr, Regressor, neighbor, ...)
 
-\S4method{getFiRiskRegTS}{fiUnOvShoot,Norm,UnivariateDistribution,ContNeighborhood}(risk, 
-            ErrorDistr, Regressor, neighbor, clip, stand, sampleSize, Algo, cont)
+\S4method{getFiRiskRegTS}{fiUnOvShoot,Norm,UnivariateDistribution,ContNeighborhood}(
+             risk, ErrorDistr, Regressor, neighbor, clip, stand, sampleSize,
+             Algo, cont)
 
-\S4method{getFiRiskRegTS}{fiUnOvShoot,Norm,UnivariateDistribution,TotalVarNeighborhood}(risk, 
-            ErrorDistr, Regressor, neighbor, clip, stand, sampleSize, Algo, cont)
+\S4method{getFiRiskRegTS}{fiUnOvShoot,Norm,UnivariateDistribution,TotalVarNeighborhood}(
+             risk, ErrorDistr, Regressor, neighbor, clip, stand, sampleSize,
+             Algo, cont)
 
-\S4method{getFiRiskRegTS}{fiUnOvShoot,Norm,UnivariateDistribution,CondContNeighborhood}(risk, 
-            ErrorDistr, Regressor, neighbor, clip, stand, sampleSize, cont)
+\S4method{getFiRiskRegTS}{fiUnOvShoot,Norm,UnivariateDistribution,CondContNeighborhood}(
+             risk, ErrorDistr, Regressor, neighbor, clip, stand, sampleSize,
+             cont)
 
-\S4method{getFiRiskRegTS}{fiUnOvShoot,Norm,UnivariateDistribution,CondTotalVarNeighborhood}(risk, 
-            ErrorDistr, Regressor, neighbor, clip, stand, sampleSize, cont)
+\S4method{getFiRiskRegTS}{fiUnOvShoot,Norm,UnivariateDistribution,CondTotalVarNeighborhood}(
+             risk, ErrorDistr, Regressor, neighbor, clip, stand, sampleSize, cont)
 }
 \arguments{
   \item{risk}{ object of class \code{"RiskType"}. }

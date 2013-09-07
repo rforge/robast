@@ -1,8 +1,3 @@
-.rescalefct <- RobAStBase:::.rescalefct
-.plotRescaledAxis <- RobAStBase:::.plotRescaledAxis
-.makedotsP <- RobAStBase:::.makedotsP
-.makedotsLowLevel <- RobAStBase:::.makedotsLowLevel
-.SelectOrderData <- RobAStBase:::.SelectOrderData
 
 .plotData <- function(
   ## helper function for cniper-type plots to plot in data

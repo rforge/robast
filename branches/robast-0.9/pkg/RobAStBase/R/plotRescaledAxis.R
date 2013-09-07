@@ -21,7 +21,7 @@
                    x <- x[x>=xlim[1] & x<=xlim[2]]
             }
             Xo <- X <- scaleX.fct(x)
-            X <- distr:::.DistrCollapse(X, 0*X)$supp
+            X <- .DistrCollapse(X, 0*X)$supp
             wI <- sapply(X, function(uu){ w<- which(uu==Xo); if(length(w)>0) w[1] else NA})
             wI <- wI[!is.na(wI)]
             x <- scaleX.inv(X)
@@ -67,18 +67,18 @@ if(FALSE){
                x <- pretty(scaleX.inv(X))
                if(!is.null(xlim)) x <- pmax(x, xlim[1])
                if(!is.null(xlim)) x <- pmin(x, xlim[2])
-               X <- distr:::.DistrCollapse(scaleX.fct(x),0*x)$supp
+               X <- .DistrCollapse(scaleX.fct(x),0*x)$supp
                x <- scaleX.inv(X)
                x <- x[is.finite(x)]
                x <- pretty(x,n=n)
-               X <- distr:::.DistrCollapse(scaleX.fct(x),0*x)$supp
+               X <- .DistrCollapse(scaleX.fct(x),0*x)$supp
                x <- scaleX.inv(X)
                x <- x[is.finite(x)]
                x <- pretty(x,n=length(x))
-               x[distr:::.isEqual01(x)&x<0.4] <- 0
+               x[.isEqual01(x)&x<0.4] <- 0
                X <- scaleX.fct(x)
                xf <- prettyNum(x)
-               i01 <- !distr:::.isEqual01(X)
+               i01 <- !.isEqual01(X)
                xf <- xf[i01]
                Xi <- X
                X <- X[i01]
@@ -120,15 +120,15 @@ if(FALSE){
                Y1 <- if(!is.null(ylim)) min(1, scaleY.fct(ylim[2])) else 1
                Y <- seq(Y0,Y1, length=ypts)
                y <- pretty(scaleY.inv(Y),n=n)
-               Y <- distr:::.DistrCollapse(scaleY.fct(y),0*y)$supp
+               Y <- .DistrCollapse(scaleY.fct(y),0*y)$supp
                y <- scaleY.inv(Y)
                y <- y[is.finite(y)]
                y <- pretty(y,n=length(y))
-               y[distr:::.isEqual01(y)&y<0.4] <- 0
+               y[.isEqual01(y)&y<0.4] <- 0
                Y <- scaleX.fct(y)
                yf <- prettyNum(y)
                Y <- scaleY.fct(y)
-               i01 <- !distr:::.isEqual01(Y)
+               i01 <- !.isEqual01(Y)
                yf <- yf[i01]
                Yi <- Y
                Y <- Y[i01]

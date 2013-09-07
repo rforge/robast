@@ -1,5 +1,3 @@
-.presubs <- distr:::.presubs
-
 .ddPlot.MatNtNtCoCo <- function(data, ...,
                                 dist.x = NormType(), 
                                 dist.y  = NormType(),

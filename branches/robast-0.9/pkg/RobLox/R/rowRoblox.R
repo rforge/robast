@@ -90,7 +90,7 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
     if(ncol(x) <= 2){
         if(missing(mean) && missing(sd)){
             warning("Sample size <= 2! => Median and MAD are used for estimation.")
-            if(require(Biobase)){
+            if(TRUE){#(require(Biobase))
                 mean <- rowMedians(x, na.rm = TRUE)
                 sd <- rowMedians(abs(x-mean), na.rm = TRUE)/qnorm(0.75)
             }else{
@@ -111,7 +111,7 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
         }
         if(missing(mean)){
             warning("Sample size <= 2! => Median is used for estimation.")
-            if(require(Biobase)){
+            if(TRUE){#(require(Biobase))
                 mean <- rowMedians(x, na.rm = TRUE)
             }else{
                 warning("You can speed up the computations by installing Bioconductor package 'Biobase'!")
@@ -132,7 +132,7 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
             warning("Sample size <= 2! => MAD is used for estimation.")
             if(!is.numeric(mean) || (length(mean) != 1 && length(mean) != nrow(x)))
                 stop("'mean' has wrong dimension")
-            if(require(Biobase)){
+            if(TRUE){#(require(Biobase))
                 sd <- rowMedians(abs(x-mean), na.rm = TRUE)/qnorm(0.75)
             }else{
                 warning("You can speed up the computations by installing Bioconductor package 'Biobase'!")
@@ -231,7 +231,7 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
 
     if(missing(mean) && missing(sd)){
         if(missing(initial.est)){
-            if(require(Biobase)){
+            if(TRUE){#(require(Biobase))
                 mean <- rowMedians(x, na.rm = TRUE)
                 sd <- rowMedians(abs(x-mean), na.rm = TRUE)/qnorm(0.75)
             }else{
@@ -354,7 +354,7 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
             if(!is.numeric(sd) || (length(sd) != 1 && length(sd) != nrow(x)))
                 stop("'sd' has wrong dimension")
             if(missing(initial.est)){
-                if(require(Biobase)){
+                if(TRUE){#(require(Biobase))
                     mean <- rowMedians(x, na.rm = TRUE)
                 }else{
                     warning("You can speed up the computations by installing Bioconductor package 'Biobase'!")
@@ -448,7 +448,7 @@ rowRoblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est,
             if(!is.numeric(mean) || (length(mean) != 1 && length(mean) != nrow(x)))
                 stop("'mean' has wrong dimension")
             if(missing(initial.est)){
-                if(require(Biobase)){
+                if(TRUE){#(require(Biobase))
                     sd <- rowMedians(abs(x-mean), na.rm = TRUE)/qnorm(0.75)
                 }else{
                     warning("You can speed up the computations by installing Bioconductor package 'Biobase'!")
