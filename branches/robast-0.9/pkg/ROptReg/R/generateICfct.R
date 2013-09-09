@@ -213,7 +213,7 @@ setMethod("generateIC.fct", signature(neighbor = "Av2CondContNeighborhood", L2Fa
                 }else{
                     body(ICfct[[1]]) <- substitute(
                                             { L2x <- L2(x[k+1])-z
-                                              ind <- .eq(L2x))
+                                              ind <- .eq(L2x)
                                               D <- matrix(D.vec, ncol = k)
                                               K.inv <- matrix(K.vec, ncol = k)
                                               D %*% K.inv %*% x[1:k]*ifelse(ind, NA, L2x*w(L2x)) },

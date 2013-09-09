@@ -25,7 +25,7 @@ setReplaceMethod("cent", "CondHampelWeight",
 .fac <- function(norm,D,Kinv){
    if(is(norm,"SelfNorm")||is(norm,"InfoNorm")){
       1/sqrt(nrow(D))
-   }else{ if(norm,"QFNorm"){
+   }else{ if(is(norm,"QFNorm")){
              B <- QuadForm(norm)
              sum(diag(t(D)%*%B%*%D%*%Kinv))^-.5
           }else{

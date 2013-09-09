@@ -80,7 +80,7 @@ setClass("L2RegTypeFamily",   ## taken from ROptRegTS
                       ErrorL2derivSymm = new("FunSymmList"),
                       ErrorL2derivDistr = UnivarDistrList(Norm()),
                       ErrorL2derivDistrSymm = new("DistrSymmList"),
-                      FisherInfo = new("PosDefSymmMatrix", matrix(1))
+                      FisherInfo = new("PosDefSymmMatrix", matrix(1)),
                       FisherInfo.fct = function(theta)return(new("PosDefSymmMatrix", matrix(1)))
                       ),
             contains = "RegTypeFamily", 
@@ -144,7 +144,7 @@ setClass("L2GLMTypeFamily",   ## taken from ROptRegTS
                       ErrorL2derivSymm = new("FunSymmList"),
                       ErrorL2derivDistr = UnivarDistrList(Norm()),
                       ErrorL2derivDistrSymm = new("DistrSymmList"),
-                      FisherInfo = new("PosDefSymmMatrix", matrix(1))
+                      FisherInfo = new("PosDefSymmMatrix", matrix(1)),
                       FisherInfo.fct = function(theta)return(new("PosDefSymmMatrix", matrix(1)))
                       ),
             contains = "RegTypeFamily",

@@ -43,23 +43,6 @@ CondTotalVarIC <- function(name, CallL2Fam = call("L2RegTypeFamily"),
 setMethod("generateIC", signature(neighbor = "CondTotalVarNeighborhood", 
                                   L2Fam = "L2RegTypeFamily"),
     function(neighbor, L2Fam, res){
-        return(CondContIC(
-                name = "conditionally centered IC of contamination type",
-                CallL2Fam = L2call,
-                Curve = generateIC.fct(neighbor, L2Fam, res),
-                clip = b,
-                cent = a,
-                stand = A,
-                lowerCase = d,
-                neighborRadius = neighbor@radius,
-                neighborRadiusCurve = neighbor@radiusCurve,
-                modifyIC = res$modifyIC,
-                normtype = normtype,
-                biastype = biastype,
-                Risks = res$risk,
-                Infos = matrix(res$info, ncol = 2,
-                            dimnames = list(character(0), c("method", "message")))))
-    })
         A <- res$A
         a <- res$a
         b <- res$b
@@ -71,7 +54,7 @@ setMethod("generateIC", signature(neighbor = "CondTotalVarNeighborhood",
         L2call$trafo <- trafo(L2Fam)
         return(CondTotalVarIC(
                 name = "conditionally centered IC of contamination type", 
-                CallL2Fam = L2call
+                CallL2Fam = L2call,
                 Curve = generateIC.fct(neighbor, L2Fam, res),
                 clipUp = b,
                 clipLo = a,
