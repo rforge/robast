@@ -37,7 +37,7 @@ exportMethods("moveL2Fam2RefParam",
 export("EULERMASCHERONICONSTANT","APERYCONSTANT")
 export("Gumbel", "Pareto", "GPareto", "GEV")
 export("GParetoFamily", "GumbelLocationFamily", "WeibullFamily", "GEVFamily",
-       "ParetoFamily")
+       "ParetoFamily", "GEVFamilyMuUnknown")
 export("LDEstimator", "medkMAD", "medSn", "medQn", "medkMADhybr")
 export("getShapeGrid", "getSnGrid", 
        "PickandsEstimator","QuantileBCCEstimator")
