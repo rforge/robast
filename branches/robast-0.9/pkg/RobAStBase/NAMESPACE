@@ -60,7 +60,8 @@ exportMethods("pIC", "asbias",
 exportMethods("pICList","ICList", "ksteps", "uksteps", 
               "start", "startval", "ustartval")
 exportMethods("moveL2Fam2RefParam",
-			  "moveICBackFromRefParam")			  
+			  "moveICBackFromRefParam",
+			  "rescaleFunction")			  
 exportMethods("ddPlot", "qqplot")
 exportMethods("cutoff.quantile", "cutoff.quantile<-")
 exportMethods("samplesize<-", "samplesize")
@@ -75,3 +76,6 @@ export("cutoff","cutoff.chisq","cutoff.sememp")
 export("outlyingPlotIC", "RobAStBaseMASK")
 export("OMSRRisk","MBRRisk","RMXRRisk")
 export("getRiskFctBV")
+export(".rescalefct",".plotRescaledAxis",".makedotsP",".makedotsLowLevel",".SelectOrderData")
+export(".merge.lists")
+export("InfoPlot", "ComparePlot", "PlotIC")

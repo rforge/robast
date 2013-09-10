@@ -91,7 +91,7 @@ source("D:/Dropbox/My Mathematics/Researches Misha/Current Research/11.06 - KL P
 ## with.legend - optional legend indicator
 ## withCall - optional indicator of the function call
 #
-infoPlotWrapper = function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale = FALSE ,withCall = TRUE){
+InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale = FALSE ,withCall = TRUE){
   ###
   ### 1. grab the dots (and manipulate it within the wrapper function)
   ###
@@ -124,7 +124,7 @@ infoPlotWrapper = function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, res
   ##  
   
   ## Scaling of the axes
-  scaleList <- rescaleFunction(as.list(IC@CallL2Fam)[[1]], FALSE, mc$rescale)
+  scaleList <- rescaleFunction(eval(IC@CallL2Fam), FALSE, mc$rescale)
   
     argsList <- c(list(object = substitute(IC)
                      ,data = substitute(data)

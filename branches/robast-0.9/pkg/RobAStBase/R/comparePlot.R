@@ -1,6 +1,7 @@
 setMethod("comparePlot", signature("IC","IC"),
     function(obj1,obj2, obj3 = NULL, obj4 = NULL, data = NULL,
              ..., withSweave = getdistrOption("withSweave"),
+             forceSameModel = FALSE,
              main = FALSE, inner = TRUE, sub = FALSE,
              col = par("col"), lwd = par("lwd"), lty,
              col.inner = par("col.main"), cex.inner = 0.8,
@@ -32,6 +33,9 @@ setMethod("comparePlot", signature("IC","IC"),
         ncomp <- 2+ (!missing(obj3)|!is.null(obj3)) +
                     (!missing(obj4)|!is.null(obj4))
 
+        if(missing(cex.pts)) cex.pts <- 1
+        cex.pts <- rep(cex.pts, length.out= ncomp)
+
         if(missing(col)) col <- 1:ncomp
            else col <- rep(col, length.out = ncomp)
         if(missing(lwd))  lwd <- rep(1,ncomp)
@@ -45,6 +49,7 @@ setMethod("comparePlot", signature("IC","IC"),
         dots$xlab <- dots$ylab <- NULL
 
         L2Fam <- eval(obj1@CallL2Fam)
+        if(forceSameModel)
         if(!identical(CallL2Fam(obj1),CallL2Fam(obj2)))
             stop("ICs need to be defined for the same model")
 
@@ -127,12 +132,14 @@ setMethod("comparePlot", signature("IC","IC"),
         IC2 <- as(ID %*% obj2@Curve, "EuclRandVariable")
 
         if(is(obj3, "IC")){
+          if(forceSameModel)
            if(!identical(CallL2Fam(obj1),CallL2Fam(obj3)))
                stop("ICs need to be defined for the same model")
            IC3 <- as(ID %*% obj3@Curve, "EuclRandVariable")
         }
 
         if(is(obj4, "IC")){
+          if(forceSameModel)
            if(!identical(CallL2Fam(obj1),CallL2Fam(obj4)))
                stop("ICs need to be defined for the same model")
            IC4 <- as(ID %*% obj4@Curve, "EuclRandVariable")

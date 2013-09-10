@@ -90,7 +90,7 @@ source("D:/Dropbox/My Mathematics/Researches Misha/Current Research/11.06 - KL P
 ## with.legend - optional legend indicator
 ## withCall - optional indicator of the function call
 #
-ICAllPlotWrapper = function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FALSE ,withCall = TRUE){
+PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FALSE ,withCall = TRUE){
   ###
   ### 1. grab the dots (and manipulate it within the wrapper function)
   ###

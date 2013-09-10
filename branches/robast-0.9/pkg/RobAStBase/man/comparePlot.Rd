@@ -12,6 +12,7 @@
 comparePlot(obj1, obj2, ... )
 \S4method{comparePlot}{IC,IC}(obj1, obj2, obj3 = NULL, obj4 = NULL, 
              data = NULL, ..., withSweave = getdistrOption("withSweave"),
+             forceSameModel = FALSE,
              main = FALSE, inner = TRUE, sub = FALSE, 
              col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
@@ -37,6 +38,9 @@ comparePlot(obj1, obj2, ... )
   \item{data}{optional data argument --- for plotting observations into the plot;}
   \item{withSweave}{logical: if \code{TRUE} (for working with \command{Sweave})
         no extra device is opened}
+  \item{forceSameModel}{logical; shall we check / enforce that the model
+      of the ICs \code{obj1}, \code{obj2}, \code{obj3}, and \code{obj4}
+      be the same? }
   \item{main}{logical: is a main title to be used? or \cr
               just as argument \code{main} in \code{\link[graphics]{plot.default}}.}
   \item{col}{color[s] of ICs in arguments \code{obj1} [,\ldots,\code{obj4}].}

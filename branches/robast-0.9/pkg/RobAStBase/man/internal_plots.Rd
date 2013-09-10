@@ -4,6 +4,8 @@
 \alias{.plotRescaledAxis}
 \alias{.legendCoord}
 \alias{.SelectOrderData}
+\alias{.makedotsP}
+\alias{.makedotsLowLevel}
 
 \title{Internal / Helper functions of package RobAStBase for plot functions}
 
@@ -20,6 +22,8 @@ These functions are internally used helper functions for \code{\link{plot}},
                   x.ticks = NULL, y.ticks = NULL, withbox = TRUE)
 .legendCoord(x, scaleX, scaleX.fct, scaleY, scaleY.fct)
 .SelectOrderData(data, fct, which.lbs, which.Order)
+.makedotsP(dots)
+.makedotsLowLevel(dots)
 }
 \arguments{
   \item{scaleX}{logical; shall X-axis be rescaled (by default according to the cdf of
@@ -70,6 +74,7 @@ These functions are internally used helper functions for \code{\link{plot}},
    \code{scaleY} are both \code{FALSE} and, simultaneously, \code{x.ticks} and
    \code{y.ticks} are both \code{NULL}, a respective box is drawn around the
    panel; otherwise no box is drawn in this case. }
+  \item{dots}{a list; intended to be the \code{\dots} argument of \code{plot}. }
 }
 \details{
 \code{.rescalefct} rescales, if necessary, x and y axis for use in plot
@@ -110,6 +115,9 @@ values of  \code{fct(data)}, \code{ind}, ie., the indices of the selected data
 in the original data (after possibly two selections), and \code{ind1} the
 indices of the data selected by \code{which.lbs} in the original data.
 
+\code{.makedotsP} and \code{.makedotsLowLevel} manipulate the \code{\dots}
+argument, deleting certain items and selecting items which can be digested by
+\code{plot}, returning the manipulated list.
 }
 
 

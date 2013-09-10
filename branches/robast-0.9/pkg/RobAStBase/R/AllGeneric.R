@@ -235,3 +235,8 @@ if(!isGeneric("moveICBackFromRefParam")){
     setGeneric("moveICBackFromRefParam", function(IC, L2Fam, ...)
                standardGeneric("moveICBackFromRefParam"))
 }
+
+if(!isGeneric("rescaleFunction")){
+    setGeneric("rescaleFunction", function(L2Fam, ...)
+               standardGeneric("rescaleFunction"))
+}

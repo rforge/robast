@@ -4,6 +4,7 @@
 \alias{GumbelLocationFamily-class}
 \alias{ParetoFamily-class}
 \alias{GEVFamily-class}
+\alias{GEVFamilyMuUnknown-class}
 \alias{GParetoFamily-class}
 \alias{WeibullFamily-class}
 
@@ -13,7 +14,8 @@
 
 \section{Described classes}{
 In this file we describe classes \code{GParetoFamily}, \code{GEVFamily},
-\code{WeibullFamily} all ``extending'' (no new slots!) class union
+\code{GEVFamilyMuUnknown}, \code{WeibullFamily} all ``extending''
+(no new slots!) class union
 \code{"L2LocationScaleShapeUnion"} and \code{ParetoFamily} ``extending''
  (no new slots!) class \code{L2ParamFamily}.
 }

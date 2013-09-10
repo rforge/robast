@@ -100,7 +100,7 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
                            scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
                            scaleN = 9, x.ticks = NULL, y.ticks = NULL,
                            cex.pts = 1, col.pts = par("col"),
-                           pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
+                           pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
                            lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
                            which.lbs = NULL, which.Order  = NULL,
                            return.Order = FALSE){
@@ -215,12 +215,12 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                            scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
                            scaleN = 9, x.ticks = NULL, y.ticks = NULL,
                            cex.pts = 1, col.pts = par("col"),
-                           pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
+                           pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
                            lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
                            which.lbs = NULL, which.Order  = NULL,
                            return.Order = FALSE){
 
-        mc <- match.call(call = sys.call(sys.parent(1)),
+        mc <- match.call(#call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)
         mcl <- as.list(mc[-1])
         dots <- as.list(mc$"...")

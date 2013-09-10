@@ -19,9 +19,9 @@ exportClasses("GumbelParameter",
 			  "LDEstimate")
 exportClasses("Gumbel", "Pareto", "GPareto", "GEV")
 exportClasses("GParetoFamily", "GumbelLocationFamily", "WeibullFamily",
-              "ParetoFamily", "GEVFamily")
+              "ParetoFamily", "GEVFamily", "GEVFamilyMuUnknown")
 exportClasses("DistributionsIntegratingByQuantiles")
-exportMethods("initialize", "show") 
+exportMethods("initialize", "show", "rescaleFunction") 
 exportMethods("loc", "loc<-", "kMAD", "Sn", "Qn")
 exportMethods("validParameter",
               "location", "location<-", 
@@ -43,3 +43,4 @@ export("getShapeGrid", "getSnGrid",
        "PickandsEstimator","QuantileBCCEstimator")
 export("loc", "loc<-", "kMAD", "Sn", "Qn", 
        "asvarMedkMAD","asvarPickands", "asvarQBCC")
+exportMethods("rescaleFunction")			  

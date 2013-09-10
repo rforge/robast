@@ -393,8 +393,8 @@ setMethod("infoPlot", "IC",
                               scaleX, scaleX.fct, scaleX.inv,
                               FALSE, scaleY.fct, dots$xlim, dots$ylim, dotsP0)
 
-                   f1 <- resc.rel$scy*3*cex0[1]
-                   f1c <- resc.rel.c$scy*3*cex0[2]
+                   f1 <- resc.rel$scy*0.3*cex0[1]
+                   f1c <- resc.rel.c$scy*0.3*cex0[2]
 
                    do.pts(resc.rel$X, resc.rel$Y, f1,col.pts[1],pch0[,1])
                    do.pts(resc.rel.c$X, resc.rel.c$Y, f1c,col.pts[2],pch0[,2])
