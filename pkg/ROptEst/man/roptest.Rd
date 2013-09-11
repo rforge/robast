@@ -1,5 +1,6 @@
 \name{roptest}
 \alias{roptest}
+\alias{roptest.old}
 \title{ Optimally robust estimation }
 \description{
   Function to compute optimally robust estimates for L2-differentiable
@@ -15,7 +16,20 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
         withICList = getRobAStBaseOption("withICList"),
         withPICList = getRobAStBaseOption("withPICList"),
-        na.rm = TRUE, initial.est.ArgList, ...)
+        na.rm = TRUE, initial.est.ArgList, ...,
+        withLogScale = TRUE, ..withCheck = FALSE, withTimings = FALSE,
+        withMDE = NULL, withEvalAsVar = NULL)
+roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
+        neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
+        distance = CvMDist, startPar = NULL, verbose = NULL,
+        OptOrIter = "iterate",
+        useLast = getRobAStBaseOption("kStepUseLast"),
+        withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+        IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+        withICList = getRobAStBaseOption("withICList"),
+        withPICList = getRobAStBaseOption("withPICList"),
+        na.rm = TRUE, initial.est.ArgList, ...,
+        withLogScale = TRUE)
 }
 \arguments{
   \item{x}{ sample }
@@ -67,6 +81,24 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
    is a function; this list by default already starts with two unnamed items,
    the sample \code{x}, and the model \code{L2Fam}.}
   \item{\dots}{ further arguments }
+  \item{withLogScale}{logical; shall a scale component (if existing and found
+   with name \code{scalename}) be computed on log-scale and backtransformed
+   afterwards? This avoids crossing 0.}
+   \item{..withCheck}{logical: if \code{TRUE}, debugging info is issued.}
+  \item{withTimings}{logical: if \code{TRUE}, separate (and aggregate)
+   timings for the three steps evaluating the starting value, finding
+   the starting influence curve, and evaluating the k-step estimator is
+   issued.}
+  \item{withMDE}{ logical or \code{NULL}: Shall a minimum distance estimator be used as
+       starting estimator---in addition to the function given in slot
+       \code{startPar} of the L2 family? If \code{NULL} (default), the content
+       of slot \code{.withMDE} in the L2 family is used instead to take
+       this decision.}
+  \item{withEvalAsVar}{logical or \code{NULL}: if \code{TRUE} (default), tells R
+  to evaluate the asymptotic variance or if \code{FALSE} just to produces a call
+  to do so. If \code{withEvalAsVar} is \code{NULL} (default),  the content
+       of slot \code{.withEvalAsVar} in the L2 family is used instead to take
+       this decision.}
 }
 \details{
   Computes the optimally robust estimator for a given L2 differentiable
@@ -74,6 +106,11 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   appropriate initial estimate; cf. also \code{\link[RobAStBase]{kStepEstimator}}. 
   Valid candidates are e.g. Kolmogorov(-Smirnov) or von Mises minimum 
   distance estimators (default); cf. Rieder (1994) and Kohl (2005).
+
+  Before package version 0.9, this computation was done with the code of
+  function \code{roptest.old} (with the same formals). From package version
+  0.9 on, this function uses the modularized function \code{\link{robest}}
+  internally.
 
   If the amount of gross errors (contamination) is known, it can be 
   specified by \code{eps}. The radius of the corresponding infinitesimal 
@@ -118,7 +155,8 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   If \code{useLast} is set to \code{TRUE} the computation of \code{asvar}, 
   \code{asbias} and \code{IC} is based on the k-step estimate.
 }
-\value{Object of class \code{"kStepEstimate"}. }
+\value{Object of class \code{"kStepEstimate"}.  In addition, it has
+       an attribute \code{"timings"} where computation time is stored.}
 \references{
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
   Bayreuth: Dissertation.
@@ -150,6 +188,8 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
           \code{\link[RobAStBase]{UncondNeighborhood-class}},
           \code{\link[distrMod]{RiskType-class}} }
 \examples{
+## Don't run to reduce check time on CRAN
+\dontrun{
 #############################
 ## 1. Binomial data
 #############################
@@ -164,14 +204,15 @@ confint(MLest)
 
 ## compute optimally robust estimator (known contamination)
 robest1 <- roptest(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
+robest1.0 <- roptest.old(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
+identical(robest1,robest1.0)
 estimate(robest1)
 confint(robest1, method = symmetricBias())
 ## neglecting bias
 confint(robest1)
 plot(pIC(robest1))
-qq1 <- qqplot(x, robest1, cex.pch=1.5, exp.cex2.pch = -.25,
+tmp <- qqplot(x, robest1, cex.pch=1.5, exp.cex2.pch = -.25,
               exp.fadcol.pch = .55, jit.fac=.9)
-str(qq1)
 
 ## compute optimally robust estimator (unknown contamination)
 robest2 <- roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.2, steps = 3)
@@ -193,7 +234,6 @@ estimate(robest4)
 confint(robest4, method = symmetricBias())
 plot(pIC(robest4))
 
-
 #############################
 ## 2. Poisson data
 #############################
@@ -211,10 +251,10 @@ confint(MLest)
 robest <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
 estimate(robest)
 confint(robest, symmetricBias())
+
 plot(pIC(robest))
-qq2 <- qqplot(x, robest, cex.pch=1.5, exp.cex2.pch = -.25,
+tmp <- qqplot(x, robest, cex.pch=1.5, exp.cex2.pch = -.25,
               exp.fadcol.pch = .55, jit.fac=.9)
-str(qq2)
  
 ## total variation neighborhoods (unknown deviation)
 robest1 <- roptest(x, PoisFamily(), eps.upper = 0.05, 
@@ -222,7 +262,7 @@ robest1 <- roptest(x, PoisFamily(), eps.upper = 0.05,
 estimate(robest1)
 confint(robest1, symmetricBias())
 plot(pIC(robest1))
-
+}
 
 #############################
 ## 3. Normal (Gaussian) location and scale
@@ -237,6 +277,8 @@ MLest <- MLEstimator(chem, NormLocationScaleFamily())
 estimate(MLest)
 confint(MLest)
 
+## Don't run to reduce check time on CRAN
+\dontrun{
 ## compute optimally robust estimator (known contamination)
 ## takes some time -> you can use package RobLox for normal 
 ## location and scale which is optimized for speed
@@ -247,12 +289,11 @@ plot(pIC(robest))
 ## plot of relative and absolute information; cf. Kohl (2005)
 infoPlot(pIC(robest))
 
-qq3 <- qqplot(chem, robest, cex.pch=1.5, exp.cex2.pch = -.25,
+tmp <- qqplot(chem, robest, cex.pch=1.5, exp.cex2.pch = -.25,
               exp.fadcol.pch = .55, withLab = TRUE, which.Order=1:4,
               exp.cex2.lbl = .12,exp.fadcol.lbl = .45,
               nosym.pCI = TRUE, adj.lbl=c(1.7,.2),
               exact.pCI = FALSE, log ="xy")
-str(qq3)
 
 ## finite-sample correction
 if(require(RobLox)){
@@ -274,6 +315,7 @@ confint(robest1, symmetricBias())
 plot(pIC(robest1))
 ## plot of relative and absolute information; cf. Kohl (2005)
 infoPlot(pIC(robest1))
+}
 }
 \concept{k-step construction}
 \concept{optimally robust estimation}

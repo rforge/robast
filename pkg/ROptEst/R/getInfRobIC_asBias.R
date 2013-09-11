@@ -93,7 +93,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         A.comp <- matrix(rep(TRUE,k*k),nrow=k)
 
         # otherwise if trafo == unitMatrix may use symmetry info
-        if(distrMod:::.isUnitMatrix(trafo)){
+        if(.isUnitMatrix(trafo)){
             comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
             z.comp <- comp$"z.comp"
             A.comp <- comp$"A.comp"
@@ -145,7 +145,8 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
         weight(w) <- minbiasweight(w, neighbor = neighbor, biastype = biastype,
                        normW = NormType())
         return(list(A = A, a = zi*z, b = b, d = d, risk = Risk, info = info, 
-                    w = w, biastype = biastype, normtype = NormType()))
+                    w = w, biastype = biastype, normtype = NormType(),
+                    problem = FALSE))
     })
 
 setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution", 
@@ -179,7 +180,8 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
         clip(w) <- c(a, a+b)
         weight(w) <- minbiasweight(w, neighbor = neighbor, biastype = biastype)
         return(list(A = A, a = a, b = b, d = 0, risk = Risk, info = info,
-                    w = w, biastype = biastype, normtype = NormType()))
+                    w = w, biastype = biastype, normtype = NormType(),
+                    problem = FALSE))
     })
 
 setMethod("minmaxBias", signature(L2deriv = "RealRandVariable", 
@@ -218,6 +220,7 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
         
         w <- eerg$w
         normtype <- eerg$normtype
+        problem <- eerg$problem
 
         if(verbose)
            .checkPIC(L2deriv, neighbor, Distr, trafo, z, A, w, z.comp, A.comp)
@@ -243,7 +246,8 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
                                   r = r,
                                   at = neighbor))
         return(list(A = A, a = a, b = b, d = d, risk = Risk, info = info, 
-                    w = w, biastype = biastype, normtype = normtype))
+                    w = w, biastype = biastype, normtype = normtype,
+                    problem = problem))
     })
 
 
@@ -301,7 +305,8 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
                                   r = r,
                                   at = neighbor))
         return(list(A = A, a = a, b = b, d = d, risk = Risk, info = info,
-                    w = w, biastype = biastype, normtype = normtype))
+                    w = w, biastype = biastype, normtype = normtype,
+                    problem = problem))
     })
 
 
@@ -346,7 +351,8 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
         weight(w) <- minbiasweight(w, neighbor = neighbor, biastype = biastype)
 
         return(list(A = A, a = zi*z, b = b, d = d, risk = Risk, info = info, 
-                    w = w, biastype = biastype, normtype = NormType()))
+                    w = w, biastype = biastype, normtype = NormType(),
+                    problem = FALSE))
            })
 
 setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution", 
@@ -417,5 +423,6 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
             }else{return(noIC())}                    
         return(list(A = A0, a = a0, b = b0, d = d0, risk = Risk0, 
                     info = infotxt, w = w, biastype = biastype, 
-                    normtype = NormType()))
+                    normtype = NormType(),
+                    problem = FALSE))
            })

@@ -11,6 +11,7 @@ exportMethods("optIC",
               "getFixRobIC",
               "getAsRisk", 
               "getFiRisk",
+              "getInfRad", 
               "getInfClip", 
               "getFixClip",
               "getInfGamma", 
@@ -25,11 +26,17 @@ exportMethods("optIC",
               "lowerCaseRadius",
               "minmaxBias", "getBiasIC", 
               "getL1normL2deriv",
-              "getModifyIC",
-              "cniperCont", "cniperPoint", "cniperPointPlot")
+              "getModifyIC")
 exportMethods("updateNorm", "scaleUpdateIC", "eff", 
-              "get.asGRisk.fct")
+              "get.asGRisk.fct", "getStartIC", "plot",
+			  "comparePlot", "getRiskFctBV")
 export("getL2normL2deriv",
        "asAnscombe", "asL1", "asL4", 
-	   "getReq", "getMaxIneff")
-export("roptest","getLagrangeMultByOptim","getLagrangeMultByIter")
+	   "getReq", "getMaxIneff", "getRadius")
+export("roptest","roptest.old", "robest",
+       "getLagrangeMultByOptim","getLagrangeMultByIter")
+export("genkStepCtrl", "genstartCtrl", "gennbCtrl")
+export("cniperCont", "cniperPoint", "cniperPointPlot")
+export(".generateInterpGrid",".getLMGrid",".saveGridToCSV", ".readGridFromCSV")
+export(".RMXE.th",".OMSE.th", ".MBRE.th")
+export("CniperPointPlot")

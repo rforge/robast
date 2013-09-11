@@ -14,14 +14,19 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
         L2Fam, neighbor, risk, loRad = 0, upRad = Inf, z.start = NULL, A.start = NULL, 
         upper = NULL, lower = NULL, OptOrIter = "iterate",
         maxiter = 50, tol = .Machine$double.eps^0.4,
-        warn = FALSE, verbose = NULL, loRad0 = 1e-3, ...)
+        warn = FALSE, verbose = NULL, loRad0 = 1e-3, ...,
+        returnNAifProblem = FALSE, loRad.s = NULL, upRad.s = NULL)
 }
 \arguments{
   \item{L2Fam}{ L2-differentiable family of probability measures. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{risk}{ object of class \code{"RiskType"}. }
-  \item{loRad}{ the lower end point of the interval to be searched. }
-  \item{upRad}{ the upper end point of the interval to be searched. }
+  \item{loRad}{ the lower end point of the interval to be searched
+                in the inner optimization (for the least favorable situation
+                to the user-guessed radius). }
+  \item{upRad}{ the upper end point of the interval to be searched in the
+                 inner optimization (for the least favorable situation
+                 to the user-guessed radius). }
   \item{z.start}{ initial value for the centering constant. }
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{upper}{ upper bound for the optimal clipping bound. }
@@ -42,6 +47,16 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
   \item{loRad0}{ for numerical reasons: the effective lower bound for the zero search;
    internally set to \code{max(loRad,loRad0)}.}
   \item{\dots}{further arguments to be passed on to \code{getInfRobIC}}
+  \item{returnNAifProblem}{logical (of length 1):
+     if \code{TRUE} (not the default), in case of convergence problems in
+     the algorithm, returns \code{NA}. }
+  \item{loRad.s}{ the lower end point of the interval
+                  to be searched in the outer optimization
+                  (for the user-guessed radius); if \code{NULL} (default)
+                  set to \code{loRad} in the algorithm. }
+  \item{upRad.s}{ the upper end point of the interval to be searched in the
+                   outer optimization (for the user-guessed radius); if
+                   \code{NULL} (default) set to \code{upRad} in the algorithm. }
 }
 \details{
 In case the neighborhood radius is unknown, Rieder et al. (2001, 2008)

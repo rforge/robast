@@ -15,10 +15,21 @@ setMethod("getRiskIC", signature(IC = "HampIC",
                                  neighbor = "missing",
                                  L2Fam = "L2ParamFamily"),
     function(IC, risk, L2Fam){
-        Cov <- IC@Risks[["asCov"]]
-        if(is.null(Cov))
+        Cov <- eval(IC@Risks[["asCov"]])
+        if(is.null(Cov)){
+           if(numberOfMaps(L2Fam@L2deriv)==1){ ## L2derivDim <- L2Fam@L2deriv
+              L2deriv <- L2Fam@L2derivDistr[[1]]
+              A <- as.vector(IC@stand)
+              c0 <- IC@clip/abs(A)
+              z <- IC@cent/A
+              neighbor <- ContNeighborhood(1)
+              Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor,
+                         biastype = biastype(IC), clip = c0, cent = z, stand = A)
+              return(list(asCov = list(distribution = .getDistr(L2Fam),
+                          value = Cov)))
+            }
             return(getRiskIC(as(IC, "IC"), risk = risk, L2Fam = L2Fam))
-        else
+        }else
             return(list(asCov = list(distribution = .getDistr(L2Fam), value = Cov)))
     })
 
@@ -27,12 +38,12 @@ setMethod("getRiskIC", signature(IC = "TotalVarIC",
                                  neighbor = "missing",
                                  L2Fam = "L2ParamFamily"),
     function(IC, risk, L2Fam){
-        Cov <- IC@Risks[["asCov"]]
+        Cov <- eval(IC@Risks[["asCov"]])
         if (is.null(Cov)){
             L2deriv <- L2Fam@L2derivDistr[[1]]
-            A <- IC@stand
-            c0 <- (IC@clipUp-IC@clipLo)/A
-            z <- IC@clipLo/A
+            A <- as.vector(IC@stand)
+            c0 <- (IC@clipUp-IC@clipLo)/abs(A)
+            z <- IC@clipLo/abs(A)
             neighbor <- TotalVarNeighborhood(1)
             Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor, 
                        biastype = biastype(IC), clip = c0, cent = z, stand = A)

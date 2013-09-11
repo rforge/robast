@@ -55,7 +55,7 @@ setMethod("getInfV", signature(L2deriv = "RealRandVariable",
 
         erg[col(erg) < row(erg)] <- erg[col(erg) > row(erg)]
 
-        return(stand %*% erg %*% t(stand))
+        return(as.matrix(stand %*% erg %*% t(stand)))
     })
 setMethod("getInfV", signature(L2deriv = "RealRandVariable",
                                    neighbor = "TotalVarNeighborhood",

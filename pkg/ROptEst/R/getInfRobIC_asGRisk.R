@@ -6,12 +6,13 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, symm, Finfo, trafo, upper = NULL,
              lower = NULL, maxiter, tol,
-             warn, noLow = FALSE, verbose = NULL){
+             warn, noLow = FALSE, verbose = NULL, ...){
 
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
 
         biastype <- biastype(risk)
+        normtype <- normtype(risk)
         radius <- neighbor@radius
 
         p <- nrow(trafo)
@@ -61,24 +62,25 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
 ##        assign("l2D",L2deriv,.GlobalEnv)
 ###
         prec <- 1
+        problem <- FALSE
         repeat{
             iter <- iter + 1
             z.old <- z
             c0.old <- c0
             ## new
             if(is(risk,"asMSE")){
-            L1n <- getL1normL2deriv(L2deriv = L2deriv, cent = z)
-            lower0 <-  L1n/(1 + radius^2)
+               L1n <- getL1normL2deriv(L2deriv = L2deriv, cent = z)
+               lower0 <-  L1n/(1 + radius^2)
 #            if(is(neighbor,"TotalVarNeighborhood")) {
 #                   lower0 <- (L1n-z)/(1 + radius^2)/2}
-            upper0 <- max(L1n/radius,
-                 sqrt( as.numeric( Finfo + z^2 )/(( 1 + radius^2)^2 - 1) ))
-            if (is.null(lower))
+               upper0 <- max(L1n/radius,
+                   sqrt( as.numeric( Finfo + z^2 )/(( 1 + radius^2)^2 - 1) ))
+               if (is.null(lower))
                   lower <- .Machine$double.eps^0.75
-            else {if(iter>1) lower <- min(lower0,2*lower)}
-            if (is.null(upper))#|(iter == 1))
-                  upper <- getUp(L2deriv)
-            else {if(iter>1) upper <- max(0.5*upper,3*upper0)}
+               else {if(iter>1) lower <- min(lower0,2*lower)}
+               if (is.null(upper))#|(iter == 1))
+                   upper <- getUp(L2deriv)
+               else {if(iter>1) upper <- max(0.5*upper,3*upper0)}
 ##            print(c(lower,upper))
             #lower <- 0; upper <- 100
             ##
@@ -130,11 +132,13 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             if(prec < tol) break
             if(abs(prec.old - prec) < 1e-10){
                 if(iter>1)
+                   problem <- TRUE
                    cat("algorithm did not converge!\n", "achieved precision:\t", prec, "\n")
                 break
             }
             if(iter > maxiter){
                 if(iter>1)
+                   problem <- TRUE
                    cat("maximum iterations reached!\n", "achieved precision:\t", prec, "\n")
                 break
             }
@@ -179,7 +183,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                normW = NormType())
 ##        print(list(A = A, a = a, b = b))
         return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info, w = w,
-                    biastype = biastype, normtype = normtype(risk)))
+                    biastype = biastype, normtype = normtype(risk), problem = problem ))
     })
 
 
@@ -196,7 +200,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
              z.start, A.start, upper = NULL, lower = NULL,
              OptOrIter = "iterate",
              maxiter, tol, warn, verbose = NULL, withPICcheck = TRUE,
-             ...){
+             ..., .withEvalAsVar = TRUE){
 
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
@@ -231,11 +235,11 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         ## sort out upper solution if radius = 0
         if(identical(all.equal(radius, 0), TRUE))
-           return(.getUpperSol(L2deriv = L2deriv, b = b, radius = radius,
+           return(.getUpperSol(L2deriv = L2deriv, radius = radius,
                                risk = risk, neighbor = neighbor,
                                biastype = biastype, normtype = normtype,
                                Distr = Distr, Finfo = Finfo, trafo = trafo,
-                               QF = std, verbose = verbose, warn = warn))
+                               QuadForm = std, verbose = verbose, warn = warn))
 
         ## determine which entries must be computed
         # by default everything
@@ -243,7 +247,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         A.comp <- matrix(rep(TRUE,k*k),nrow=k)
 
         # otherwise if trafo == unitMatrix may use symmetry info
-        if(distrMod:::.isUnitMatrix(trafo)){
+        if(.isUnitMatrix(trafo)){
             comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
             z.comp <- comp$"z.comp"
             A.comp <- comp$"A.comp"
@@ -266,7 +270,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         iter <- 0
         prec <- 1
         iter.In <- 0
-
+        problem <- FALSE
 
         ## determining A,a,b with either optimization of iteration:
         if(OptOrIter == 1){
@@ -319,19 +323,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             risk <- erg$risk
             iter <- erg$iter
             prec <- prec.In <- iter.In <- NULL
-            Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor,
-                              biastype = biastype, Distr = Distr,
-                              V.comp = A.comp, cent = a,
-                              stand = A, w = w)
 
-            if(!is(risk, "asMSE")){
-                   Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,
-                                     biastype = biastype, normtype = normtype, 
-                                     clip = b, cent = a, stand = A,
-                                     trafo = trafo, FI = FI0)
-            }else{
-                   Risk <- sum(diag(std%*%Cov)) + radius^2 * b^2
-            }
         }else{
             repeat{
                 iter <- iter + 1
@@ -412,10 +404,12 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                  }
                  if(prec < tol) break
                  if(abs(prec.old - prec) < 1e-10){
+                     problem <- TRUE
                      cat("algorithm did not converge!\n", "achieved precision:\t", prec, "\n")
                      break
                  }
                  if(iter > maxiter){
+                     problem <- TRUE
                      cat("maximum iterations reached!\n", "achieved precision:\t", prec, "\n")
                      break
                  }
@@ -441,36 +435,53 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
           }
 
 
-        ### determine Covariance of pIC
-          Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor,
-                       biastype = biastype, Distr = Distr,
-                       V.comp = A.comp, cent = a,
-                       stand = A, w = w)
-          if(verbose && withPICcheck) print(list(Cov=Cov,A=A,a=a,w=w))
-          if(!is(risk, "asMSE")){
-              Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,
-                                biastype = biastype, normtype = normtype, 
-                                clip = b, cent = a, stand = A,
-                                trafo = trafo, FI = FI0)
-          }else{
-              Risk <- NULL
-          }
+          if(verbose && withPICcheck) print(list(A=A,a=a,w=w))
         }
 
+        Cov <- substitute(do.call(getInfV, args = list(L2deriv = L2deriv0,
+                          neighbor = neighbor0, biastype = biastype0,
+                          Distr = Distr0, V.comp = A.comp0, cent = a0,
+                          stand = A0, w = w0)), list(L2deriv0 = L2deriv,
+                          neighbor0 = neighbor, biastype0 = biastype,
+                          Distr0 = Distr, A.comp0 = A.comp, a0 = a,
+                          A0 = A, w0 = w))
+
+        rifct <- function(std0, Cov0, rad0, b0){
+                     sum(diag(std0%*%eval(Cov0))) + rad0^2 * b0^2}
+
+        asMSE.0 <- substitute(do.call(ri.fct, args=list(std0=std1, Cov0=Cov1,
+                                    rad0 = rad1, b0=b1)), list(ri.fct = rifct,
+                                    std1=std, Cov1=Cov, rad1=radius, b1=b))
+        if(!is(risk, "asMSE")){
+               Risk <- substitute(do.call(getAsRisk, args =list(risk = risk0,
+                          L2deriv = L2deriv0, neighbor = neighbor0,
+                          biastype = biastype0, normtype = normtype0,
+                          clip = b0, cent = a0, stand = A0,
+                          trafo = trafo0, FI = FI000)), list(risk0=risk,
+                          L2deriv0=L2deriv, neighbor0 = neighbor,
+                          biastype0 = biastype, normtype0 = normtype,
+                          b0 = b, a0 = a, A0 = A,
+                          trafo0 = trafo, FI000 = FI0))
+        }else{ Risk <- asMSE.0
+        }
 
         ### add some further informations for the pIC-slots info and risk
         info <- paste("optimally robust IC for", sQuote(class(risk)[1]))
 
-        trAsCov <- sum(diag(std%*%Cov))
+        trAsCov.fct <- function(std0, Cov0) sum(diag(std0%*%eval(Cov0)))
+        trAsCov <- substitute(do.call(tr.fct, args=list(std0=std1, Cov0=Cov1)),
+                              list(tr.fct = trAsCov.fct, std1=std, Cov1=Cov))
         Risk <- c(Risk, list(asCov = Cov,
                      asBias = list(value = b, biastype = biastype,
                                    normtype = normtype,
                                    neighbortype = class(neighbor)),
                      trAsCov = list(value = trAsCov,
                                    normtype = normtype),
-                     asMSE = list(value = trAsCov + radius^2*b^2,
+                     asMSE = list(value = asMSE.0,
                                   r = radius,
                                   at = neighbor)))
+
+        if(.withEvalAsVar) Risk <- .evalListRec(Risk)
 
         if(verbose && withPICcheck)
            .checkPIC(L2deriv = L2deriv, neighbor = neighbor,
@@ -480,12 +491,12 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         return(list(A = A, a = a, b = b, d = NULL, risk = Risk, info = info, w = w,
                     biastype = biastype, normtype = normtype,
                     call = mc, iter = iter, prec = prec, OIcall = OptIterCall,
-                    iter.In = iter.In, prec.In = prec.In))
+                    iter.In = iter.In, prec.In = prec.In, problem = problem ))
     })
 
 
 ### helper function to return the upper case solution if r=0
-.getUpperSol <- function(L2deriv, b, radius, risk, neighbor, biastype,
+.getUpperSol <- function(L2deriv, radius, risk, neighbor, biastype,
                        normtype, Distr, Finfo, trafo,
                        QuadForm, verbose, warn){
 
@@ -494,6 +505,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             res <- getInfRobIC(L2deriv = L2deriv, risk = asCov(), neighbor = neighbor,
                                Distr = Distr, Finfo = Finfo, trafo = trafo,
                                QuadForm = QuadForm, verbose = verbose)
+            b <- res$b
             res <- c(res, list(biastype = biastype, normtype = normtype))
             if(!is(risk, "asMSE")){
                     FI <- trafo%*%solve(Finfo)%*%t(trafo)

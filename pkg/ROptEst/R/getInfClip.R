@@ -155,7 +155,7 @@ setMethod("getInfClip", signature(clip = "numeric",
                                   L2deriv = "UnivariateDistribution",
                                   risk = "asSemivar", 
                                   neighbor = "ContNeighborhood"),
-    function(clip, L2deriv, risk, neighbor, cent,  symm, trafo){   
+    function(clip, L2deriv, risk, neighbor, biastype, cent,  symm, trafo){
         biastype <- if(sign(risk)==1) positiveBias() else negativeBias()
         z0 <- getInfCent(L2deriv = L2deriv, risk = risk, neighbor = neighbor,
                          biastype = biastype,   

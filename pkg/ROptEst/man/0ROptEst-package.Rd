@@ -12,14 +12,14 @@ using S4 classes and methods.
 \details{
 \tabular{ll}{
 Package: \tab ROptEst \cr
-Version: \tab 0.8 \cr
-Date: \tab 2010-12-03 \cr
+Version: \tab 0.9 \cr
+Date: \tab 2013-09-11 \cr
 Depends: \tab R(>= 2.7.0), methods, distr(>= 2.0), distrEx(>= 2.0),
 distrMod(>= 2.0), RandVar(>= 0.6.4), RobAStBase \cr
 LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 439 \cr
+SVNRevision: \tab 693 \cr
 }
 }
 \author{
@@ -59,15 +59,16 @@ MLest
 confint(MLest)
 
 ## compute optimally (w.r.t to MSE) robust estimator (unknown contamination)
-robest <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
-estimate(robest)
+robEst <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
+estimate(robEst)
 ## check influence curve
-checkIC(pIC(robest))
+pIC(robEst)
+checkIC(pIC(robEst))
 ## plot influence curve
-plot(pIC(robest))
+plot(pIC(robEst))
 ## confidence interval based on LAN - neglecting bias
-confint(robest)
+confint(robEst)
 ## confidence interval based on LAN - including bias
-confint(robest, method = symmetricBias())
+confint(robEst, method = symmetricBias())
 }
 \keyword{package}

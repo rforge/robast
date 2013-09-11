@@ -16,7 +16,7 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
           radius, L2Fam, neighbor, risk, loRad, upRad, loRisk, upRisk, 
           z.start = NULL, A.start = NULL, upper.b = NULL, lower.b = NULL,
           OptOrIter = "iterate", MaxIter, eps, warn, loNorm = NULL, upNorm = NULL,
-          verbose = NULL, ...)
+          verbose = NULL, ..., withRetIneff = FALSE)
 }
 \arguments{
   \item{radius}{ neighborhood radius. }
@@ -51,6 +51,18 @@ getIneffDiff(radius, L2Fam, neighbor, risk, ...)
                 bound}  
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
   \item{\dots}{further arguments to be passed on to \code{getInfRobIC}}
+  \item{withRetIneff}{logical: if \code{TRUE}, \code{getIneffDiff}  returns the
+     vector of lower and upper inefficiency (components named "lo" and "up"),
+     otherwise (default) the difference.
+     The latter was used in \code{radiusMinimaxIC} up to version 0.8
+     for a call to \code{uniroot} directly.  In order to speed up things
+     (i.e., not to call the expensive \code{getInfRobIC} once again at the zero,
+     up to version 0.8 we had some awkward \code{assign}-\code{sys.frame}
+     construction to modify the caller writing the upper inefficiency already
+     computed to the caller environment; having capsulated this into \code{try}
+     from version 0.9 on, this became even more awkward, so from version 0.9
+     onwards, we instead use the \code{TRUE}-alternative when calling it
+     from \code{radiusMinimaxIC}.}
 }
 %\details{}
 \value{The inefficieny difference between the left and

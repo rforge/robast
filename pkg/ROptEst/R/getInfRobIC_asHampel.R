@@ -6,7 +6,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, symm, Finfo, trafo, 
              upper = NULL, lower = NULL, maxiter, tol, warn, noLow = FALSE,
-             verbose = NULL, checkBounds = TRUE){
+             verbose = NULL, checkBounds = TRUE, ...){
 
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
@@ -148,7 +148,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
              L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE,
              z.start, A.start, upper = NULL, lower = NULL,
              OptOrIter = "iterate", maxiter, tol, warn,
-             verbose = NULL, checkBounds = TRUE, ...){
+             verbose = NULL, checkBounds = TRUE, ...,
+             .withEvalAsVar = TRUE){
 
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
@@ -208,7 +209,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         A.comp <- matrix(rep(TRUE,k*k),nrow=k)
 
         # otherwise if trafo == unitMatrix may use symmetry info
-        if(distrMod:::.isUnitMatrix(trafo)){
+        if(.isUnitMatrix(trafo)){
             comp <- .getComp(L2deriv, DistrSymm, L2derivSymm, L2derivDistrSymm)
             z.comp <- comp$"z.comp"
             A.comp <- comp$"A.comp"
@@ -274,27 +275,41 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
 
         ### determine Covariance of pIC
-        Cov <- as.matrix(getInfV(L2deriv = L2deriv, neighbor = neighbor,
-                       biastype = biastype, Distr = Distr,
-                       V.comp = A.comp, cent = a,
-                       stand = A, w = w))
+        Cov <- substitute(do.call(getInfV, args = list(L2deriv = L2deriv0,
+                          neighbor = neighbor0, biastype = biastype0,
+                          Distr = Distr0, V.comp = A.comp0, cent = a0,
+                          stand = A0, w = w0)), list(L2deriv0 = L2deriv,
+                          neighbor0 = neighbor, biastype0 = biastype,
+                          Distr0 = Distr, A.comp0 = A.comp, a0 = a,
+                          A0 = A, w0 = w))
 
-        #getAsRisk(risk = asCov(), L2deriv = L2deriv, neighbor = neighbor,
-        #          biastype = biastype, Distr = Distr, clip = b, cent = a,
-        #          stand = A)$asCov
+        rifct <- function(std0, Cov0, rad0, b0){
+                     sum(diag(std0%*%eval(Cov0))) + rad0^2 * b0^2}
+
+        asMSE.0 <- substitute(do.call(ri.fct, args=list(std0=std1, Cov0=Cov1,
+                                    rad0 = rad1, b0=b1)), list(ri.fct = rifct,
+                                    std1=std, Cov1=Cov, rad1=neighbor@radius,
+                                    b1=b))
+
 
         ### add some further informations for the pIC-slots info and risk
         info <- paste("optimally robust IC for 'asHampel' with bound =", round(b,3))
-        trAsCov <- sum(diag(std %*% Cov)); r <- neighbor@radius
+
+        trAsCov.fct <- function(std0, Cov0) sum(diag(std0%*%eval(Cov0)))
+        trAsCov <- substitute(do.call(tr.fct, args=list(std0=std1, Cov0=Cov1)),
+                              list(tr.fct = trAsCov.fct, std1=std, Cov1=Cov))
+        r <- neighbor@radius
         Risk <- list(trAsCov = list(value = trAsCov,
                                     normtype = normtype),
                      asCov = Cov,
                      asBias = list(value = b, biastype = biastype,
                                    normtype = normtype,
                                    neighbortype = class(neighbor)),
-                     asMSE = list(value = trAsCov + r^2*b^2,
+                     asMSE = list(value = asMSE.0,
                                   r = r,
                                   at = neighbor))
+
+        if(.withEvalAsVar) Risk <- .evalListRec(Risk)
 
         if(verbose)
            .checkPIC(L2deriv = L2deriv, neighbor = neighbor,

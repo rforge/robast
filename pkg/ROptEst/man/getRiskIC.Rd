@@ -58,6 +58,12 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
 \author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 \note{This generic function is still under construction.}
 \seealso{\code{\link[ROptEst]{getRiskIC}}, \code{\link[RobAStBase]{InfRobModel-class}}}
-%\examples{}
+\examples{
+B <- BinomFamily(size = 25, prob = 0.25)
+
+## classical optimal IC
+IC0 <- optIC(model = B, risk = asCov())
+getRiskIC(IC0, asCov())
+}
 \concept{influence curve}
 \keyword{robust}

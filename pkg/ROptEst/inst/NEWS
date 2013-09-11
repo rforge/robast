@@ -8,6 +8,130 @@
  information)
 
 #######################################
+version 0.9
+#######################################
+
+user-visible CHANGES:
+
++ new wrapper function CniperPointPlot
+
++ new more modularized user-interface robest
++ roptest (the new one) gains argument withMDE to skip call to MDE
+  when starting estimator is robust anyway;
++ roptest gains argument withEvalAsVar
++ roptest may force logscale when calling kStepEstimator
++ removed argument scalename from arglist of roptest -- 
+  it is computed automatically now.
+
++ added new function 'showdown' to compare some estimator with 
+  our rmx estimator by some Monte-Carlo study. 
+
++ assigned result of qqplot to some variable to reduce output
+
++ generating function genkStepCtrl for control arguments for kStepEstimator
+  gains argument withEvalAsVar
+
++ similarly genstartCtrl() gains optional argument withMDE
+
++ optIC gains argument .withEvalAsVar
+
++ new functionality to determine "optimal" radius (getRadius, getInfRad (the latter an S4method));
+
+GENERAL ENHANCEMENTS:
+
++ RobASt-Pkgs: DESCRIPTION depends become stricter (requiring distrMod, distrEx, distr >=2.4 to be on the safe side)
++ cleaned DESCRIPTION and NAMESPACE file as to Imports/Depends
++ deleted chm folders --- they are no longer needed
+
++ delayed evaluation is done to speed up things
+
++ added argument no.readonly = TRUE in all assignments of type opar <- par();
++ commented out all assignments of type omar$cin <- NULL
++ removed calls to require from R sources and replaced it by directives in the NAMESPACE file
++ all packages get a DESCRIPTION tag "ByteCompile"
++ Suggests field with RobLox and MASS due to a warning by R CMD check
+
+
+under the hood:
+
++ added .Rbuildignore
+
++ Had to add 'importFrom(distr, q)' to NAMESPACE to avoid error with 
+  function 'q' inside of 'showdown' - why?!
+
++ replaced former interface roptest by a new, more modularized one
++ timings in roptest, robest are now optional; at any rate are attached as attribute
+
++ moved asL1, asL4 risk methods from RobAStBase to ROptEst
+
++ getStartIC.R 
+  * cleaned up (deleted unnecessary diagnostic prints) 
+    skipped unnecessary steps when dealing with MBRE
+  * getStartIC for signature L2ParamFamily,asGRisk gains argument withEvalAsVar
++ getStartIC - method for interpolRisks (and hence internal-getpsi, too) moved
+  from ROptEst to RobExtremes
++ getStartIC now also dispatches on asCov, trASCov, and asBias risk
+
++ getRiskIC gains example and for signature(IC = "HampIC", risk = "asCov",                  
+     neighbor = "missing", L2Fam = "L2ParamFamily") in 1dim case now uses getInfV() .
++ getRiskIC is careful and first evaluates covariance objects
+
++++ optIC already contains stubs to use moveL2Fam2RefParam,
+    moveICBackFromRefParam
+   (still some checking necessary before using this really...)
+
++ modified interval search in leastFavorableRadius and radiusMinimaxIC 
+  in case uniroot fails to find zeroes 
++ some more try-catches for radiusMinimaxIC (to keep this clean rewritten, with call
+  manipulations) and leastFavorableRadius (only minimal call manipulations -> got longer)
+
++ getIneffDiff now returns a vector (if called as from radiusMinimaxIC, leastFavorableRadius)
+  with lower and upper inefficiency; difference is computed in local functions now
+
++ getInfRobIC_asGRisk getInfRobIC_asHampel now get argument .withEvalAsVar and,
+  accordingly only produce calls to generate asyVariances or evaluate them as
+  well
+
++ getInfClip, signature(clip = "numeric", L2deriv = "UnivariateDistribution",
+     risk = "asSemivar",   neighbor = "ContNeighborhood") regains argument 
+	 biastype as it is called this way in getInfRobIC_asGRisk.R 
+
++ getInfV now always returns a matrix
+
+	 
++ interpolation infrastructure:
+  * .mergeF
+  * .copyGrid
+  * .renameGridName
+  * .MakeGridList
+  * .saveInterpGrid (with new argument structure / new defaults)
+  * .recomputeInterpolators
+  * .getLMGrid
+  * .RMXE.th
+  * .MBRE.th
+  * .OMSE.th
++ .recomputeInterpolators, .saveInterpGrid gain argument sysdataWriteFile to be
+   able to write to other files (other than sysdata.rda) => no need anymore to
+   write in separate folders when creating new grids in parallel
+
++ use of unit tests
+
+BUGFIXES:
++ a minimal correction in getInfRobIC_asGRisk.R
++ in roptest forgot to treat the case when additional arguments 
+  are passed to the initial estimator
++ two silly errors in roptest.new.R -> threw error when passed on S4-estimators 
+  as starting estimators
++ fixed a bug in in leastFavorableRadius and radiusMinimaxIC
++ .evalListRec was not prepared for length 0
++ some substitute functions have not been passed as arguments...
++ functions where identical in grid..!) 
++ a minor error in helper function .check.eps
++ fixed two bugs (for radius 0) in "getInfRobIC", signature(L2deriv = "RealRandVariable", 
+  risk = "asGRisk",neighbor = "UncondNeighborhood")
++ cleared bug from ticket #131
+
+#######################################
 version 0.8
 #######################################
 

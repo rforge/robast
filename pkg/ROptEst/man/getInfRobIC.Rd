@@ -45,19 +45,20 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 \S4method{getInfRobIC}{UnivariateDistribution,asHampel,UncondNeighborhood}(L2deriv,
                        risk, neighbor, symm, Finfo, trafo, upper = NULL,
                        lower=NULL, maxiter, tol, warn, noLow = FALSE,
-                       verbose = NULL, checkBounds = TRUE)
+                       verbose = NULL, checkBounds = TRUE, ...)
 
 \S4method{getInfRobIC}{RealRandVariable,asHampel,UncondNeighborhood}(L2deriv, risk,
                        neighbor, Distr, DistrSymm, L2derivSymm,
                        L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE,
                        z.start, A.start, upper = NULL, lower=NULL,
                        OptOrIter = "iterate", maxiter, tol, warn,
-                       verbose = NULL, checkBounds = TRUE, ...)
+                       verbose = NULL, checkBounds = TRUE, ...,
+                       .withEvalAsVar = TRUE)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asAnscombe,UncondNeighborhood}(
                        L2deriv, risk, neighbor, symm, Finfo, trafo, upper = NULL,
                        lower=NULL, maxiter, tol, warn, noLow = FALSE,
-                       verbose = NULL, checkBounds = TRUE)
+                       verbose = NULL, checkBounds = TRUE, ...)
 
 \S4method{getInfRobIC}{RealRandVariable,asAnscombe,UncondNeighborhood}(L2deriv, 
                        risk, neighbor, Distr, DistrSymm, L2derivSymm,
@@ -69,17 +70,18 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 \S4method{getInfRobIC}{UnivariateDistribution,asGRisk,UncondNeighborhood}(L2deriv,
                        risk, neighbor, symm, Finfo, trafo, upper = NULL,
                        lower = NULL, maxiter, tol, warn, noLow = FALSE,
-                       verbose = NULL)
+                       verbose = NULL, ...)
 
 \S4method{getInfRobIC}{RealRandVariable,asGRisk,UncondNeighborhood}(L2deriv, risk,
                        neighbor,  Distr, DistrSymm, L2derivSymm,
                        L2derivDistrSymm, Finfo, trafo, onesetLM = FALSE, z.start,
                        A.start, upper = NULL, lower = NULL, OptOrIter = "iterate",
-                       maxiter, tol, warn, verbose = NULL, withPICcheck = TRUE, ...)
+                       maxiter, tol, warn, verbose = NULL, withPICcheck = TRUE,
+                       ..., .withEvalAsVar = TRUE)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(
                        L2deriv, risk, neighbor, symm, Finfo, trafo,
-                       upper, lower, maxiter, tol, warn)
+                       upper, lower, maxiter, tol, warn, ...)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
@@ -121,6 +123,10 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
   \item{withPICcheck}{logical: at the end of the algorithm, shall we check
   how accurately this is a pIC; this will only be done if
   \code{withPICcheck && verbose}.}
+  \item{.withEvalAsVar}{logical (of length 1):
+     if \code{TRUE}, risks based on covariances are to be
+     evaluated (default), otherwise just a call is returned.}
+
 }
 %\details{}
 \value{The optimally robust IC is computed.}

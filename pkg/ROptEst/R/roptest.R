@@ -1,7 +1,7 @@
 ###############################################################################
 ## Optimally robust estimation
 ###############################################################################
-roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
+roptest.old <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
                     distance = CvMDist, startPar = NULL, verbose = NULL,
                     OptOrIter = "iterate",
@@ -10,7 +10,8 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
                     withICList = getRobAStBaseOption("withICList"),
                     withPICList = getRobAStBaseOption("withPICList"),
-                    na.rm = TRUE, initial.est.ArgList, ...){
+                    na.rm = TRUE, initial.est.ArgList, ...,
+                    withLogScale = TRUE){
     if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
     es.call <- match.call()
@@ -102,14 +103,15 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     }
     res <- kStepEstimator(x, IC = ICstart, start = initial.est, steps = steps, useLast = useLast,
                           withUpdateInKer = withUpdateInKer, IC.UpdateInKer = IC.UpdateInKer,
-                          withICList = withICList, withPICList = withPICList, na.rm = na.rm)
+                          withICList = withICList, withPICList = withPICList, na.rm = na.rm,
+                          withLogScale = withLogScale)
     res@estimate.call <- es.call
     Infos <- matrix(c("roptest", 
                       paste(steps, "-step estimate for ", name(L2Fam), sep = "")),
                     ncol = 2)
     colnames(Infos) <- c("method", "message")
 
-    if(! distrMod:::.isUnitMatrix(trafo(L2Fam)))
+    if(! .isUnitMatrix(trafo(L2Fam)))
        Infos <- rbind(Infos, c("roptest",
                             paste("computation of IC",
                                    ifelse(withUpdateInKer,"with","without") ,

@@ -24,7 +24,7 @@ These functions are used internally by package \pkg{ROptEst}.}
                         tol, QuadForm, verbose, nrvalpts, warn)
                         
 ### helper function to return the upper case solution if r=0
-.getUpperSol(L2deriv, b, radius, risk, neighbor, biastype,
+.getUpperSol(L2deriv, radius, risk, neighbor, biastype,
                        normtype, Distr, Finfo, trafo,
                        QuadForm, verbose, warn)
 

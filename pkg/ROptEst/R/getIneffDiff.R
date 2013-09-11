@@ -9,10 +9,10 @@ setMethod("getIneffDiff", signature(radius = "numeric",
              z.start = NULL, A.start = NULL, upper.b = NULL, lower.b = NULL,
              OptOrIter = "iterate", MaxIter, eps, warn,
              loNorm = NULL, upNorm = NULL,
-             verbose = NULL, ...){
-
+             verbose = NULL, ..., withRetIneff = FALSE){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
+
         L2derivDim <- numberOfMaps(L2Fam@L2deriv)
         if(L2derivDim == 1){
             ##print(radius)
@@ -35,9 +35,10 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                 ineffUp <- res$b^2/upRisk
             else
                 ineffUp <- (as.vector(res$A)*trafo - res$b^2*(radius^2-upRad^2))/upRisk
-            assign("ineff", ineffUp, envir = sys.frame(which = -4))
+            ##assign("ineff", ineffUp, envir = sys.frame(which = -5))
             ##print(c(ineffUp,ineffLo,ineffUp - ineffLo))
-            return(ineffUp - ineffLo)
+             if(withRetIneff) return(c(lo= ineffLo, up=ineffUp))
+             else return(ineffUp - ineffLo)
         }else{
             if(is(L2Fam@distribution, "UnivariateDistribution")){
                 if((length(L2Fam@L2deriv) == 1) & is(L2Fam@L2deriv[[1]], "RealRandVariable")){
@@ -94,12 +95,12 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                 }else{
                     ineffLo <- (sum(diag(std%*%res$A%*%t(trafo))) - 
                                 biasLo^2*(radius^2-loRad^2))/loRisk
-                if(upRad == Inf)
-                    ineffUp <- biasUp^2/upRisk
-                else
-                    ineffUp <- (sum(diag(std%*%res$A%*%t(trafo))) - 
-                                biasUp^2*(radius^2-upRad^2))/upRisk}
-                assign("ineff", ineffUp, envir = sys.frame(which = -4))
+                   if(upRad == Inf)
+                      ineffUp <- biasUp^2/upRisk
+                   else
+                      ineffUp <- (sum(diag(std%*%res$A%*%t(trafo))) -
+                                  biasUp^2*(radius^2-upRad^2))/upRisk
+                }
                 if(verbose)
                     cat(paste(rep("-",75), sep = "", collapse = ""),"\n",
                         "current radius:   ", round(radius,4),
@@ -109,7 +110,8 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                                          collapse = ""),"\n",sep="")
                         )
 
-                return(ineffUp - ineffLo)
+                if(withRetIneff) return(c(lo= ineffLo, up=ineffUp))
+                else return(ineffUp - ineffLo)
             }else{
                 stop("not yet implemented")
             }

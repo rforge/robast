@@ -1,5 +1,5 @@
 Package: RandVar
-Version: 0.9.2
+Version: 0.9.3
 Date: 2013-09-06
 Title: Implementation of random variables
 Description: Implementation of random variables by means of S4 classes and methods

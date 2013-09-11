@@ -5,12 +5,15 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
     function(model, risk, z.start = NULL, A.start = NULL, upper = 1e4,
              lower = 1e-4, OptOrIter = "iterate",
              maxiter = 50, tol = .Machine$double.eps^0.4,
-             warn = TRUE, noLow = FALSE, verbose = NULL, ...){
+             warn = TRUE, noLow = FALSE, verbose = NULL, ...,
+             .withEvalAsVar = TRUE, returnNAifProblem = FALSE){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         L2derivDim <- numberOfMaps(model@center@L2deriv)
         ow <- options("warn")
         on.exit(options(ow))
+        #L2Fam <- model@center
+        #model@center <- moveL2Fam2RefParam(L2Fam)
         if(L2derivDim == 1){
             options(warn = -1)
             res <- getInfRobIC(L2deriv = model@center@L2derivDistr[[1]],
@@ -23,7 +26,8 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
             res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                  neighbor = model@neighbor, 
                                                  risk = risk))
-            return(generateIC(model@neighbor, model@center, res))
+            if(returnNAifProblem) if(!is.null(res$problem)) if(res$problem) return(NA)
+            IC.o <- generateIC(model@neighbor, model@center, res)
         }else{
             if(is(model@center@distribution, "UnivariateDistribution")){
                 if((length(model@center@L2deriv) == 1) & is(model@center@L2deriv[[1]], "RealRandVariable")){
@@ -53,18 +57,21 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                             trafo = trafo(model@center@param), z.start = z.start, A.start = A.start, 
                             upper = upper, lower = lower, OptOrIter = OptOrIter,
                             maxiter = maxiter, tol = tol, warn = warn,
-                            verbose = verbose, ...)
+                            verbose = verbose, ...,.withEvalAsVar = .withEvalAsVar)
                 options(ow)
+                if(returnNAifProblem) if(!is.null(res$problem)) if(res$problem) return(NA)
                 res$info <- c("optIC", res$info)
                 res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
                                                      neighbor = model@neighbor, 
                                                      risk = risk, verbose = verbose,
                                                      ...))
-                return(generateIC(model@neighbor, model@center, res))
+                IC.o <- generateIC(model@neighbor, model@center, res)
             }else{
                 stop("not yet implemented")
             }
         }
+        #IC.o <- moveICBackFromRefParam(IC.o,L2Fam)
+        return(IC.o)
     })
 
 ###############################################################################
