@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+  <title>new versions of packages "distr", "distrEx", "distrSim",
+"distrTEst"; new package "startupmsg"</title>
+</head>
+<body bgcolor="#ffffff" text="#000000">
+<meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+<title></title>
+<meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+<title></title>
+<pre>We would like to announce the availability on CRAN of a new versions 
+of our packages "distr", "distrEx", "distrSim", "distrTEst", as well <br>as a new package "startupmsg"<br><br>-----------------------------------------------------------------------------------------<br>************ new package "startupmsg" *****************<br>-----------------------------------------------------------------------------------------<br><br>### startupmsg  -- v0.2 <br><br>Utilities for start-up messages for packages:<br><br>provides: <br><br>+functions:  to display a NEWS file (if existing) and tags from the <br>             DESCRIPTION file of a package <br><br>+conditions: a new sub-condition to 'message'  (with a 'types' slot) <br>             is introduced, allowing for scalable startup messages by <br>             condition "catchers" muffleMessage() [for StartupMessage], <br>             onlytypeMessage(), and custom() &nbsp;<br><br>additionally: <br>+ buildStartupMessage: automatically generates a 'complete' start-up message including <br>         *a start-up message of type "version" as to the version information.<br>         *a start-up message of type "notabene" (optionally)<br>         *a start-up message of "information" mentioning<br>            -?"&lt;pkg-name&gt;",  <br>            -NEWS("&lt;pkg-name&gt;"), if there is a \file{NEWS} file,   <br>            -the URL tag of the package DESCRIPTION file, (if existing),   <br>            -a file / a URL to a manual (optional)<br>(to be called in the .onAttach() / .First.lib() function of a package)<br><br><br>+ takes up thread "Wishlist: 'quietly' argument for .onAttach() / .First.lib()"<br>  on r-devel, April 2006, more precisely:<br>  Brian Ripley: https://stat.ethz.ch/pipermail/r-devel/2006-April/037281.html<br>  Andy Liaw:    https://stat.ethz.ch/pipermail/r-devel/2006-April/037286.html<br>  Seth Falcon:  https://stat.ethz.ch/pipermail/r-devel/2006-April/037317.html<br>  and           https://stat.ethz.ch/pipermail/r-devel/2006-April/037367.html<br><br>  also compare  https://stat.ethz.ch/pipermail/r-devel/2006-April/037382.html<br><br>-----------------------------------------------------------------------------------------
+************ Changes *****************
+-----------------------------------------------------------------------------------------
+
+### distr  -- v1.7 
+Changes from 1.6 to 1.7
+
++ taking up a suggestion by Martin Maechler, we now issue warnings as to the
+  intepretation of arithmetics applied to distributions, as well as to the
+  accuracy of slots p,d,q filled by means of simulations;
+  these warnings are issued at two places:
+  (1) on attaching the package
+  (2) at every show/print of a distribution
++ (2) can be cancelled by switching off a corresponding global option
+  in distroptions() (see ?distroptions)    
++ distroptions() now behaves like options --- also compare mail
+  "Re: [Rd] How to implement package-specific options?" by Brian Ripley on 
+  r-devel, <span
+ id="date">Fri 09 Dec 2005 - 11:52:46, see</span> 
+       <a
+ class="moz-txt-link-freetext"
+ href="http://tolstoy.newcastle.edu.au/R/devel/05/12/3408.html">http://tolstoy.newcastle.edu.au/R/devel/05/12/3408.html</a> 
++ all specific distributions (those realized as [r|d|p|q]&lt;name&gt; like rnorm in stats)
+  now have valid prototypes
++ fixed arguments xlim and ylim for plot(signature("AbscontDistribution" 
+  or "DiscreteDistribution")) thus: plot(Cauchy(),xlim=c(-4,4)) gives 
+  reasonable result (and plot(Cauchy()) does not)
++ Internationalization: use of <span
+ style="color: rgb(51, 102, 255);">gettext</span>, <span
+ style="color: rgb(51, 102, 255);">gettextf</span> for <span
+ style="color: rgb(51, 102, 255);">output
++ </span>explicitly implemented <span
+ style="color: rgb(51, 102, 255);">is()</span> relations:&nbsp; R "knows" that:
+  * an Exponential(lambda) distribution also is 
+    a Weibull(shape =1, scale = 1/lambda) distribution, 
+    as well as a Gamma(shape = 1, scale = 1/lambda) distribution
+  * a Geometric(p) distribution also is 
+    a Negativ Binomial(size = 1,p) distribution
+  * a Uniform(0,1) distribution also is a Beta(1,1) distribution
+  * a Cauchy(0,1) distribution also is a T(df=1, ncp=0) distribution
+  * a Chisq(df=n, ncp=0) distribution also is a Gamma(shape=n/2,scale=2) distribution 
++ noncentrality parameter included for Beta, T, F distribution </pre>
+<pre wrap="">### distrEx  -- v0.4-3 
+Changes from 0.4-2 to 0.4-3 
+
+* Implementation of functionals:
++ evaluation of exact expressions of E (expectation functional) 
+  for most specific distributions
++ var, sd methods for UnivariateDistributions: these include calls like 
+  N &lt;- Norm()
+  var(N,function(t)abs(t)^(1/2))   # calculates Var[|N|^(1/2)] 
+  also (factorized) conditional variance is available
++ evaluation of exact expressions of var for most specific distributions
++ median, IQR, mad methods for UnivariateDistributions  
++ for var, sd, median, IQR, mad:
+  *all* functionality/arguments of stats methods is/are preserved and 
+  only if first argument / argument x is of class UnivariateDistribution 
+  (or descendant) a different method is applied
+* Demos are included
++ an illustration of the use of these functionals in programming
++ an illustration of the (iid-setup)-CLT (for [almost] arbitrary summand distribution)
++ a deconvolution expample: let X and E be independet univariate random variables with
+  [almost] arbitrary, given absolsutely continuous distributions. We generate the
+  (factorized) conditional distribution of X given X+E=y.
++ Internationalization: use of gettext, gettextf in output
++ C-interface .GLaw() to replace respective R-Code in distrExintegrate.R
++ exact formula for E, Var for Fd (with ncp) and Td (with ncp)
+
+
+### distrSim  -- v1.7 
+Changes from 1.6 to 1.7
+
++ the (new) Namespace of setRNG by Paul Gilbert is imported
+
+### distrTEst  -- v1.7 
+Changes from 1.6 to 1.7
+
++ "..." included into evaluate 
+
+some more details to be found at
+<a class="moz-txt-link-freetext"
+ href="http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR">http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR</a>
+and a more detailed manual is available at
+<a class="moz-txt-link-freetext"
+ href="http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf">http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf</a>
+
+-----------------------------------------------------------------------------------------
+Short Descriptions
+-----------------------------------------------------------------------------------------
+Short Description of "distr":
+"distr" is to provide a conceptual treatment of random variables
+(r.v.'s) by means of S4--classes. A virtual mother class "Distribution"
+is introduced.
+All distributions of the "base" package are implemented as subclasses of
+either "AbscontDistribution" or "DiscreteDistribution".
+
+Using these classes, we also provide (default) methods to automatically
+generate the image distributions under unary mathematical operations as
+well as a general convolution algorithm.
+-----------------------------------------------------------------------------------------
+Short Description of "distrSim":
+Classes and methods are provided for a standardized treatment of
+simulations (also under contaminations) .
+-----------------------------------------------------------------------------------------
+Short Description of "distrTEst":
+Classes and methods are provided for a standardized treatment of
+the evaluation of statistical procedures (up to now only estimators)
+at data/simulations
+-----------------------------------------------------------------------------------------
+Short Description of "distrEx":
+This package provides some extensions to package "distr"
+like:
+* extreme value distribution classes,
+*expectations
+  +in the form E(X)  for the expectation of X where X is some
+    distribution or
+  +in the form E(X,f) for the expectation of f(X) where X is
+     some distribution and f some function in X,
+* further functionals: var, sd, IQR, mad, median
+* truncated moments,
+* distances between distributions
+  (Hellinger, Kolmogorov, total variation, "convex contamination")
+* lists of distributions,
+* conditional distributions in factorized form 
+* conditional expectations in factorized form
+-----------------------------------------------------------------------------------------
+We look forward to receiving questions, comments and suggestions
+
+Peter Ruckdeschel
+Matthias Kohl
+Thomas Stabla
+Florian Camphausen
+<br>-----------------------------------------------------------------------------------------
+DESCRIPTIONS
+-----------------------------------------------------------------------------------------
+Package: startupmsg<br>Version: 0.3<br>Date: 2006-04-30<br>Title: Utilities for start-up messages<br>Description: Utilities for start-up messages<br>Author: Peter Ruckdeschel<br>Maintainer: Peter Ruckdeschel &lt;Peter.Ruckdeschel@uni-bayreuth.de&gt;<br>Depends: R(&gt;= 2.2.0)<br>SaveImage: no<br>LazyLoad: yes<br>License: GPL (version 2 or later)<br>-----------------------------------------------------------------------------------------<br>Package: distr<br>Version: 1.7<br>Date: 2006-04-30<br>Title: distr<br>Authors: Peter Ruckdeschel <a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:peter.ruckdeschel@uni-bayreuth.de">&lt;peter.ruckdeschel@uni-bayreuth.de&gt;</a>,<br>Matthias Kohl <a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:matthias.kohl@uni-bayreuth.de">&lt;matthias.kohl@</a><a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:matthias.kohl@uni-bayreuth.de">stamats</a><a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:matthias.kohl@uni-bayreuth.de">.de&gt;</a>,<br>Thomas Stabla <a
+ class="moz-txt-link-rfc2396E" href="mailto:statho3@web.de">&lt;statho3@web.de&gt;</a>,<br>Florian Camphausen <a
+ class="moz-txt-link-rfc2396E" href="mailto:fcampi@gmx.de">&lt;fcampi@gmx.de&gt;</a>
+Maintainer: Peter Ruckdeschel <a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:peter.ruckdeschel@uni-bayreuth.de">&lt;peter.ruckdeschel@uni-bayreuth.de&gt;</a>
+Description: S4 Classes for Distributions
+Depends: R (&gt;= 2.2.0), (versions for &lt;=2.2.0, on URL cited below), startupmsg
+License: GPL version 2 or later
+URL: <a
+ class="moz-txt-link-freetext"
+ href="http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/">http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/</a>
+Reference:
+<a class="moz-txt-link-freetext"
+ href="http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf">http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf</a><br>-----------------------------------------------------------------------------------------<br>Package: distrSim<br>Version: 1.7<br>Date: 2006-04-30<br>Title: Simulation classes based on package distr<br>Depends: R(&gt;= 2.2.0), methods, graphics, setRNG(&gt;= 2006.2-1),<br>        &nbsp;distr(&gt;= 1.7), startupmsg<br>Imports: stats<br>Authors: Peter Ruckdeschel <a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:peter.ruckdeschel@uni-bayreuth.de">&lt;peter.ruckdeschel@uni-bayreuth.de&gt;</a>,<br>Matthias Kohl <a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:matthias.kohl@uni-bayreuth.de">&lt;matthias.kohl@</a><a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:matthias.kohl@uni-bayreuth.de">stamats</a><a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:matthias.kohl@uni-bayreuth.de">.de&gt;</a>,<br>Thomas Stabla <a
+ class="moz-txt-link-rfc2396E" href="mailto:statho3@web.de">&lt;statho3@web.de&gt;</a>,<br>Florian Camphausen <a
+ class="moz-txt-link-rfc2396E" href="mailto:fcampi@gmx.de">&lt;fcampi@gmx.de&gt;</a>
+Description: Simulation (S4-)classes based on package distr
+Maintainer: Peter Ruckdeschel <a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:Peter.Ruckdeschel@uni-bayreuth.de">&lt;Peter.Ruckdeschel@uni-bayreuth.de&gt;</a>
+License: GPL (version 2 or later)
+URL: <a
+ class="moz-txt-link-freetext"
+ href="http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/">http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/</a>
+Reference:
+<a class="moz-txt-link-freetext"
+ href="http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf">http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf</a><br>-----------------------------------------------------------------------------------------<br>Package: distrTEst<br>Version: 1.7<br>Date: 2006-04-30<br>Title: Estimation and Testing classes based on package distr<br>Depends: R(&gt;= 2.2.0), methods, graphics, setRNG(&gt;= 2006.2-1), <br>         distr(&gt;= 1.7), distrSim(&gt;= 1.7), startupmsg<br>Imports: stats<br>Authors: Peter Ruckdeschel <a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:peter.ruckdeschel@uni-bayreuth.de">&lt;peter.ruckdeschel@uni-bayreuth.de&gt;</a>,<br>Matthias Kohl <a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:matthias.kohl@uni-bayreuth.de">&lt;matthias.kohl@stamats.de&gt;</a>,<br>Thomas Stabla <a
+ class="moz-txt-link-rfc2396E" href="mailto:statho3@web.de">&lt;statho3@web.de&gt;</a>,<br>Florian Camphausen <a
+ class="moz-txt-link-rfc2396E" href="mailto:fcampi@gmx.de">&lt;fcampi@gmx.de&gt;</a>
+Description: Evaluation (S4-)classes based on package distr for
+evaluating procedures (estimators/tests) at data/simulation in 
+a unified way.
+Maintainer: Peter Ruckdeschel <a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:Peter.Ruckdeschel@uni-bayreuth.de">&lt;Peter.Ruckdeschel@uni-bayreuth.de&gt;</a>
+License: GPL (version 2 or later)
+URL: <a
+ class="moz-txt-link-freetext"
+ href="http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/">http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/</a>
+Reference:
+<a class="moz-txt-link-freetext"
+ href="http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf">http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf</a><br>-----------------------------------------------------------------------------------------<br>Package: distrEx<br>Version: 0-4.3<br>Date: 2006-04-30<br>Title: Extensions of package distr<br>Description: Extensions of package distr and some additional functionality<br>Depends: R(&gt;= 2.0.1), methods, distr(&gt;= 1.7), evd, startupmsg<br>Authors: Matthias Kohl <a
+ class="moz-txt-link-rfc2396E" href="mailto:Matthias.Kohl@stamats.de">&lt;Matthias.Kohl@stamats.de&gt;,</a>
+Peter Ruckdeschel <a
+ class="moz-txt-link-rfc2396E"
+ href="mailto:peter.ruckdeschel@uni-bayreuth.de">&lt;peter.ruckdeschel@uni-bayreuth.de&gt;</a>
+Maintainer: Matthias Kohl <a
+ class="moz-txt-link-rfc2396E" href="mailto:Matthias.Kohl@stamats.de">&lt;Matthias.Kohl@stamats.de&gt;</a>
+License: GPL (version 2 or later)
+URL: <a
+ class="moz-txt-link-freetext"
+ href="http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/">http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/</a>
+Reference:  <a
+ class="moz-txt-link-freetext" href="http://stamats.de/ThesisMKohl.pdf">http://stamats.de/ThesisMKohl.pdf</a> , App. D<br>-----------------------------------------------------------------------------------------<br><br></pre>
+</body>
+</html>

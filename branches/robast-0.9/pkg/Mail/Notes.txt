@@ -1,0 +1,287 @@
+notes obtained: 
+==========================================================
+distr_2.5 oK -> submitted -> Peter Maintainer
+==========================================================
+*****
+R-3.0.1patched r63805 && R-3.1.0dev r63824
+*****
+
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+--
+has already been discussed along our last submissions, with attached mail 
+"new package distrRmetrics (version 2.4) uploaded", Feb 07, 2013.
+
+* checking foreign function calls ... WARNING
+Foreign function calls with 'PACKAGE' argument in a base package:
+.C("pkolmogorov2x", ..., PACKAGE = "stats")
+.C("pkstwo", ..., PACKAGE = "stats")
+Packages should not make .C/.Call/.Fortran calls to base packages. They
+are not part of the API, for use only by R itself and subject to change
+without notice.
+--
+
+We are aware of it and have already had the same issue 
+in mail "distr 2.4 uploaded" to CRAN@R-project.org on 07.02.2013 18:51
+As far as we can see, nothing has changed on R-side inbetween.
+  
+==========================================================
+distrMod_2.5 oK -> submitted -> Peter Maintainer
+==========================================================
+*****
+R-3.0.1patched r63805 && R-3.1.0dev r63824
+*****
+
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+--
+has already been discussed along our last submissions, with attached mail 
+"new package distrRmetrics (version 2.4) uploaded", Feb 07, 2013.
+
+
+==========================================================
+distrSim_2.5 oK -> submitted -> Peter Maintainer
+==========================================================
+*****
+R-3.0.1patched r63805 && R-3.1.0dev r63824
+*****
+
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+--
+has already been discussed along our last submissions, with attached mail 
+"new package distrRmetrics (version 2.4) uploaded", Feb 07, 2013.
+
+==========================================================
+RandVar_0.9.2 oK -> Matthias Maintainer
+==========================================================
+*****
+R-3.0.1patched r63805
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+*****
+R-3.1.0dev r63824
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+==========================================================
+RobAStBase_0.9 oK -> Matthias Maintainer
+==========================================================
+needs (in addition to _0.8.1: install.packages(c("rrcov", "RUnit"))
+*****
+R-3.0.1patched r63805
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+*****
+R-3.1.0dev r63824
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+==========================================================
+RobAStRDA_0.9 oK -> Peter Maintainer
+==========================================================
+%----------------
+New submission
+%----------------
+License: LGPL-3
+%----------------
+as agreed upon in the mail thread "large sysdata.rda file --- strategies?" 
+on r-devel, R-devel Digest, Vol 120, Issue 8, to save space in our other, 
+more frequently updated packages, this is a mere rda package containing 
+only a sysdata.rda file with interpolation grids and respective interpolating 
+functions and is documented accordingly.
+
+We have read and agree with the CRAN Repository Policy as of 2013/07/10 from
+http://cran.r-project.org/web/packages/policies.html 
+
+Our licence is LGPL-3, as with the other pkgs of the RobASt family
+
+*****
+R-3.0.1patched r63805
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+* checking installed package size ... NOTE
+  installed size is  7.9Mb
+  sub-directories of 1Mb or more:
+    R   7.9Mb
+
+*****
+R-3.1.0dev r63824
+*****
+* Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+* checking installed package size ... NOTE
+  installed size is  7.9Mb
+  sub-directories of 1Mb or more:
+    R   7.9Mb
+==========================================================
+ROptEst_0.9 oK -> Matthias Maintainer
+==========================================================
+*****
+R-3.0.1patched r63805
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+*****
+R-3.1.0dev r63824
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+==========================================================
+RobExtremes_0.9 oK -> Peter Maintainer
+==========================================================
+*****
+R-3.0.1patched r63805
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+* checking package dependencies ... NOTE
+Depends: includes the non-default packages:
+  'distr' 'distrEx' 'RandVar' 'distrMod' 'RobAStBase' 'ROptEst'
+  'robustbase' 'evd' 'actuar'
+Adding so many packages to the search path is excessive and importing
+selectively is preferable.
+*****
+R-3.1.0dev r63824
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+* checking package dependencies ... NOTE
+Depends: includes the non-default packages:
+  'distr' 'distrEx' 'RandVar' 'distrMod' 'RobAStBase' 'ROptEst'
+  'robustbase' 'evd' 'actuar'
+Adding so many packages to the search path is excessive and importing
+selectively is preferable.
+
+Not sure how to deal with this. How can we enforce certain versions
+only needed by this package then while still making available all
+exported objects to the user?
+
+==========================================================
+RobLox_0.9 oK -> Matthias Maintainer
+==========================================================
+*****
+R-3.0.1patched r63805
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+*****
+R-3.1.0dev r63824
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+* checking package dependencies ... NOTE
+Depends: includes the non-default packages:
+  'lattice' 'RColorBrewer' 'RandVar' 'Biobase' 'distr' 'distrMod'
+  'RobAStBase'
+Adding so many packages to the search path is excessive and importing
+selectively is preferable.
+Not sure how to deal with this. How can we enforce certain versions
+only needed by this package then while still making available all
+exported objects to the user?
+
+==========================================================
+RobLoxBioC_0.9 oK -> Matthias Maintainer
+==========================================================
+*****
+R-3.0.1patched r63805
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+*****
+R-3.1.0dev r63824
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+
+* checking package dependencies ... NOTE
+Depends: includes the non-default packages:
+  'Biobase' 'affy' 'beadarray' 'distr' 'RobLox' 'lattice'
+  'RColorBrewer' 'BiocGenerics' 'distrMod'
+Adding so many packages to the search path is excessive and importing
+selectively is preferable.
+
+Adding so many packages to the search path is excessive and importing
+selectively is preferable.
+Not sure how to deal with this. How can we enforce certain versions
+only needed by this package then while still making available all
+exported objects to the user?
+  
+==========================================================
+RobRex_0.9 oK -> Matthias Maintainer
+==========================================================
+*****
+R-3.0.1patched r63805
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+*****
+R-3.1.0dev r63824
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+==========================================================
+ROptEstOld_0.9.1 oK -> Matthias Maintainer
+==========================================================
+*****
+R-3.0.1patched r63805
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+*****
+R-3.1.0dev r63824
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+==========================================================
+ROptRegTS_0.9.1 -> Matthias Maintainer
+==========================================================
+*****
+R-3.0.1patched r63805
+*****
+Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
+*****
+R-3.1.0dev r63824
+*****
++ Maintainer: 'Matthias Kohl <Matthias.Kohl@stamats.de>'
+Possibly mis-spelled fields in DESCRIPTION:
+  'SVNRevision'
++   \usage lines wider than 90 characters:
+  Rd file 'getAsRiskRegTS.Rd':
+  Rd file 'getFiRiskRegTS.Rd':
+  Rd file 'getInfClipRegTS.Rd':
+  Rd file 'getInfGammaRegTS.Rd':
+  Rd file 'getInfRobRegTypeIC.Rd':
+  Rd file 'getInfStandRegTS.Rd':
+  cannot be avoided, because signature is longer than 90 chars and 
+  within signature argument of \S4method no linebreak is allowed
+  
