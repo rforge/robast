@@ -18,7 +18,7 @@ distrMod(>= 2.0), RandVar(>= 0.6.3)\cr
 LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 693 \cr
+SVNRevision: \tab 694 \cr
 }
 }
 \author{

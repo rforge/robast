@@ -18,7 +18,7 @@ Depends: \tab R (>= 2.12.0), methods, startupmsg, distr(>= 2.0), distrEx(>=
 LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 693 \cr
+SVNRevision: \tab 694 \cr
 }
 }
 \author{
