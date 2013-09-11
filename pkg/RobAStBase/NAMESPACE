@@ -1,4 +1,5 @@
 import("methods")
+importFrom("rrcov", "getCov", "CovMcd")
 import("distr")
 import("distrEx")
 import("distrMod")
@@ -19,6 +20,7 @@ exportClasses("RobAStControl", "RobWeight", "BoundedWeight",
               "BdStWeight", "HampelWeight")
 exportClasses("ALEstimate", "kStepEstimate", "MEstimate")
 exportClasses("cutoff")
+exportClasses("interpolRisk", "OMSRRisk","MBRRisk","RMXRRisk")
 exportClasses("StartClass", "pICList", "OptionalpICList")
 exportMethods("show", 
               "plot")
@@ -57,8 +59,13 @@ exportMethods("pIC", "asbias",
               "Mroot","kStepEstimator.start")
 exportMethods("pICList","ICList", "ksteps", "uksteps", 
               "start", "startval", "ustartval")
+exportMethods("moveL2Fam2RefParam",
+			  "moveICBackFromRefParam",
+			  "rescaleFunction")			  
 exportMethods("ddPlot", "qqplot")
 exportMethods("cutoff.quantile", "cutoff.quantile<-")
+exportMethods("samplesize<-", "samplesize")
+exportMethods("getRiskFctBV")
 export("oneStepEstimator", "kStepEstimator")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 
@@ -67,3 +74,8 @@ export(".eq", ".getDistr", "getBoundedIC")
 export("RobAStBaseOptions", "getRobAStBaseOption")
 export("cutoff","cutoff.chisq","cutoff.sememp")
 export("outlyingPlotIC", "RobAStBaseMASK")
+export("OMSRRisk","MBRRisk","RMXRRisk")
+export("getRiskFctBV")
+export(".rescalefct",".plotRescaledAxis",".makedotsP",".makedotsLowLevel",".SelectOrderData")
+export(".merge.lists")
+export("InfoPlot", "ComparePlot", "PlotIC")

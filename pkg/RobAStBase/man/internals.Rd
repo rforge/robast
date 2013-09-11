@@ -11,6 +11,7 @@ These functions are used internally by package RobAStBase.}
 \usage{
 .eq(x,y = 0*x, tol = 1e-7)
 .getDistr(L2Fam)
+.evalListRec(list0)
 }
 
 \arguments{
@@ -18,17 +19,21 @@ These functions are used internally by package RobAStBase.}
   \item{y}{a (numeric) vector}
   \item{tol}{numeric --- tolerance}
   \item{L2fam}{object of class \code{L2ParamFamily}}
+  \item{list0}{a list}
 }
 
 \details{
-\code{.eq}checks equality of two vectors up to a given precision;
+\code{.eq} checks equality of two vectors up to a given precision;
 \code{.getDistr} produces a string with the class of the family and its parameter value;
+\code{.evalListRec} recursively goes through the entries of a list, evaluating
+   each entry.
 }
 
 
 \value{
 \item{.eq}{(a vector of) \code{logical}.}
 \item{.getDistr}{\code{character}.}
+\item{.evalListRec}{a list.}
 }
 
 

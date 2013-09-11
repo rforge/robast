@@ -10,7 +10,23 @@
 #######################################
 version 0.9
 #######################################
+
+user-visible CHANGES:
+
+GENERAL ENHANCEMENTS:
++ cleaned DESCRIPTION and NAMESPACE file as to Imports/Depends
+
+under the hood:
+
++ added .Rbuildignore
 + introduced folder vignettes
++ some encoding problems with vignette which now includes "\usepackage[utf8]{inputenc}"
++ update of Rout.save files, added seed for reproducibility
++ suppressed gaps handling and warnings from .makeDNew (annoying with GEVD) in .getImageDistr
++ deleted chm folders --- they are no longer needed
++ RobASt-Pkgs: DESCRIPTION depends become stricter (requiring distrMod, distrEx, distr >=2.4 to be on the safe side)
+ 
+BUGFIXES
 
 
 #######################################

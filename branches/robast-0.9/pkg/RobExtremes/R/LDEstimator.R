@@ -53,7 +53,9 @@ setMethod(".loc", signature(L2Fam = "GEVFamily"),
        if(vdbg) print(val)
        return(val)
     }
-    xi.0 <- uniroot(q.f,lower=q.lo.0,upper=q.up.0)$root
+    xi.01 <- try(uniroot(q.f,lower=q.lo.0,upper=q.up.0), silent=TRUE)
+    if(is(xi.01, "try-error")) stop("Error in calculating LD-estimator: 'uniroot' did not converge.")
+    xi.0 <- xi.01$root
     th0 <- c(1,xi.0)
     names(th0) <- c("scale","shape")
     distr.new.0 <- ParamFamily.0@modifyParam(theta=th0)-loc0

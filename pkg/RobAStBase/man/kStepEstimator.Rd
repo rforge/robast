@@ -12,7 +12,8 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
       IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
       withICList = getRobAStBaseOption("withICList"),
       withPICList = getRobAStBaseOption("withPICList"),
-      na.rm = TRUE, startArgList = NULL, ...)
+      na.rm = TRUE, startArgList = NULL, ...,
+      withLogScale = TRUE, withEvalAsVar = TRUE)
 }
 \arguments{
   \item{x}{ sample }
@@ -41,6 +42,11 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
   \item{withICList}{logical: shall slot \code{ICList} of return value
   be filled?}
   \item{...}{ additional parameters }
+  \item{withLogScale}{logical; if \code{TRUE}, a scale component (if existing
+   and found with name \code{scalename}) is computed on log-scale and
+   backtransformed afterwards (default). This avoids crossing 0. }
+  \item{withEvalAsVar}{logical; if \code{TRUE} (default), tells R to evaluate
+   the asymptotic variance or just to produces a call to do so.}
 }
 \details{
   Given an initial estimation \code{start}, a sample \code{x} 
@@ -96,6 +102,8 @@ ksteps(est1)
 pICList(est1)
 start(est1)
 
+## don't run to reduce check time on CRAN
+\dontrun{
 ## a transformed model
 tfct <- function(x){
     nms0 <- c("mean","sd")
@@ -133,6 +141,7 @@ untransformed.estimate(est1a.traf)
 uksteps(est1a.traf)
 ICList(est1a.traf)
 ustartval(est1a.traf)
+}
 }
 }
 \concept{k-step estimator}

@@ -70,7 +70,9 @@
       function to add an information to slot \code{Infos}. }
 
     \item{Risks}{\code{signature(object = "InfluenceCurve")}: 
-      accessor function for slot \code{Risks}. }
+      accessor function for slot \code{Risks}. By means of internal
+      function \code{.evalListRec} recursively evaluates all non evaluated
+      calls and writes back the evaluated calls to the calling envirionment.}
 
     \item{Risks<-}{\code{signature(object = "InfluenceCurve")}: 
       replacement function for slot \code{Risks}. }

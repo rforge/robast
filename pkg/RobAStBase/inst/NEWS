@@ -8,6 +8,83 @@
  information)
 
 #######################################
+version 0.9
+#######################################
+
+user-visible CHANGES:
++ new wrapper function InfoPlot, ComparePlot, PlotIC
+
+
+GENERAL ENHANCEMENTS:
+
++ RobASt-Pkgs: DESCRIPTION depends become stricter (requiring distrMod, distrEx, distr >=2.4 to be on the safe side)
++ deleted chm folders --- they are no longer needed
++ added argument no.readonly = TRUE in all assignments of type opar <- par();
++ commented out all assignments of type omar$cin <- NULL
++ removed calls to require from R sources and replaced it by directives in the NAMESPACE file
++ all packages get a DESCRIPTION tag "ByteCompile"
+
+under the hood:
+
++ wrapper functions use default rescaling controlled by S4-method rescaleFct
+  dispatching on the respective model
+
++ added .Rbuildignore
+
++ cleaned DESCRIPTION and NAMESPACE file as to Imports/Depends
+
++ created new interpolRisk-class to be able to use speed up in (new version) of roptest
++ interpolRisks extended by slot samplesize
+
++ implemented scale estimation on log-scale for kStepEstimator
++ in kStepEstimator asyvar of starting estimator is no longer computed
+  (unless done so anyway in the call to the starting estimator)/ as not needed
++ in kStepEstimator one can now delay evaluations of covariance matrices,
+  depending on new argument  withEvalAsVar
++ a small change in kStepEstimator -- now uses the (possibly nonlinear) 
+   trafo instead of the Jacobian to get the pIC-estimator from the untransformed estimator
++ in kStepEstimator we force an argument list (to avoid an "argument missing" error)
+
++ checkIC now also reports relative errors (has possibly already been there
+  but not merged?)
+
++ new S4methods/functions moveL2Fam2RefParam and moveICBackFromRefParam to only
+  solve optimization problems for  ICs at reference parameters (if these are
+  available) and the to backtransform the IC to the original parameter
+  (is not yet in place in optIC; still testing necessary).
+
++ the accessor to slot Risks now checks if all items of the list are already
+  evaluated or if some calls still have to be forced; to this end it uses
+  new auxiliary .evalListRec
+
++ minor Enhancements of ddPlot, changes in outlyingPlot
++ modularized diagnostic plots; still checking + debugging necessary
+
++ documented helper functions
+  
++ thx to hint by Matthias (NAMESPACE), and some (more specific) Rd-links to 
+  gettextf, now no more notes or warnings in R-2.16.0dev
+
++ .rescalefct looses argument scaleY.inv (not needed).
+
++ use of unit tests
+
+BUGFIXES:
+
++ Bug in infoPlot(), detected by Nataliya Horbenko, tentatively fixed
++ use of colnames instead of sampleNames to avoid the error on CRAN ...
++ fixed some 1-dim vs >1-dim issues in kStepEstimator.R
++ ...and yet some correction as to variances
++ Removed "..." in definition of generic for "samplesize<-", this had led to a warning in R CMD check.
++ .evalListRec was not prepared for length 0
++ some substitute functions have not been passed as arguments...
+
+
+
+
+
+
+#######################################
 version 0.8
 #######################################
 

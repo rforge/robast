@@ -12,16 +12,22 @@
 comparePlot(obj1, obj2, ... )
 \S4method{comparePlot}{IC,IC}(obj1, obj2, obj3 = NULL, obj4 = NULL, 
              data = NULL, ..., withSweave = getdistrOption("withSweave"),
+             forceSameModel = FALSE,
              main = FALSE, inner = TRUE, sub = FALSE, 
              col = par("col"), lwd = par("lwd"), lty, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
-             with.legend = TRUE, legend.bg = "white",
+             with.legend = FALSE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
+             withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
+             lty.MBR = "dashed", lwd.MBR = 0.8,
+             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+             scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
-             lab.pts = NULL, lab.font = NULL,
+             lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, return.Order = FALSE)
 }
 \arguments{
@@ -32,6 +38,9 @@ comparePlot(obj1, obj2, ... )
   \item{data}{optional data argument --- for plotting observations into the plot;}
   \item{withSweave}{logical: if \code{TRUE} (for working with \command{Sweave})
         no extra device is opened}
+  \item{forceSameModel}{logical; shall we check / enforce that the model
+      of the ICs \code{obj1}, \code{obj2}, \code{obj3}, and \code{obj4}
+      be the same? }
   \item{main}{logical: is a main title to be used? or \cr
               just as argument \code{main} in \code{\link[graphics]{plot.default}}.}
   \item{col}{color[s] of ICs in arguments \code{obj1} [,\ldots,\code{obj4}].}
@@ -53,11 +62,49 @@ comparePlot(obj1, obj2, ... )
           \code{\link[graphics]{par}}}
   \item{col.inner}{character or integer code; color for the inner title}              
   \item{with.legend}{logical; shall a legend be plotted?}
+  \item{legend}{either \code{NULL} or a list of length (number of plotted panels)
+                of items which can be used as argument \code{legend} in
+                command \code{legend}.}
   \item{legend.location}{a valid argument \code{x} for \code{\link{legend}} ---
                          the place where to put the legend on the last issued
                          plot}
   \item{legend.bg}{background color for the legend}
   \item{legend.cex}{magnification factor for the legend}
+  \item{withMBR}{logical; shall horizontal lines with min and max of MBRE be plotted for
+                 comparison?}
+  \item{MBRB}{matrix (or \code{NA}); coerced by usual recycling rules to a
+              matrix with as many rows as plotted panels and with first column
+              the lower bounds and the second column the upper bounds for the
+              respective coordinates (ideally given by the MBR-IC).}
+  \item{MBR.fac}{positive factor; scales the bounds given by argument \code{MBRB}}
+  \item{col.MBR}{color for the MBR lines; as usual \code{col}-argument;}
+  \item{lty.MBR}{line type for the MBR lines; as usual \code{lty}-argument;}
+  \item{lwd.MBR}{line width for the MBR lines; as usual \code{lwd}-argument;}
+  \item{scaleX}{logical; shall X-axis be rescaled (by default according to the cdf of
+          the underlying distribution)?}
+  \item{scaleY}{logical; shall Y-axis be rescaled (by default according to a probit scale)?}
+  \item{scaleX.fct}{an isotone, vectorized function mapping the domain of the IC
+            to [0,1]; if \code{scaleX} is \code{TRUE} and \code{scaleX.fct} is
+            missing, the cdf of the underlying observation distribution.}
+  \item{scaleX.inv}{the inverse function to \code{scale.fct}, i.e., an isotone,
+            vectorized function mapping [0,1] to the domain of the IC
+            such that for any \code{x} in the domain,\cr
+            \code{scaleX.inv(scaleX.fct(x))==x}; if \code{scaleX} is \code{TRUE}
+            and \code{scaleX.inv} is
+            missing, the quantile function of the underlying observation distribution.}
+  \item{scaleY.fct}{an isotone, vectorized function mapping for each coordinate the
+            range of the respective coordinate of the IC
+            to [0,1]; defaulting to the cdf of \eqn{{\cal N}(0,1)}{N(0,1)}.}
+  \item{scaleY.inv}{an isotone, vectorized function mapping for each coordinate
+            the range [0,1] into the range of the respective coordinate of the IC;
+            defaulting to the quantile function of  \eqn{{\cal N}(0,1)}{N(0,1)}.}
+  \item{scaleN}{integer; defaults to 9; on rescaled axes, number of x
+                and y ticks if drawn automatically;}
+  \item{x.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
+                 if non-NULL, user-given x-ticks (on original scale);}
+  \item{y.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
+                 if non-NULL, user-given y-ticks (on original scale);
+                 can be a list with one (numeric or NULL) item per panel}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
   \item{to.draw.arg}{Either \code{NULL} (default; 
                           everything is plotted) or a vector of either integers 
@@ -77,6 +124,14 @@ comparePlot(obj1, obj2, ... )
   \item{lab.pts}{character or NULL; labels to be plotted to the observations; if \code{NULL}
                  observation indices;}
   \item{lab.font}{font to be used for labels}
+  \item{alpha.trsp}{alpha transparency to be added ex post to colors
+        \code{col.pch} and \code{col.lbl}; if one-dim and NA all colors are
+        left unchanged. Otherwise, with usual recycling rules \code{alpha.trsp}
+        gets shorted/prolongated to length the data-symbols to be plotted.
+        Coordinates of this vector \code{alpha.trsp} with NA are left unchanged,
+        while for the remaining ones, the alpha channel in rgb space is set
+        to the respective coordinate value of \code{alpha.trsp}. The non-NA
+        entries must be integers in [0,255] (0 invisible, 255 opaque).}
   \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
                     for plotting points of the \code{data} argument in a jittered fashion.}
   \item{which.lbs}{either an integer vector with the indices of the observations
@@ -134,7 +189,8 @@ one pair for each dimension.
 }
 \author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
 %\note{}
-\seealso{\code{\link[distrMod]{L2ParamFamily-class}}, \code{\link{IC-class}}, \code{\link[graphics]{plot}}}
+\seealso{\code{\link[distrMod]{L2ParamFamily-class}},
+         \code{\link{IC-class}}, \code{\link[graphics]{plot}}}
 \examples{
 if(require(ROptEst)){
 
@@ -146,18 +202,36 @@ IC2 <- optIC(model = N0.Rob1, risk = asMSE())
 
 comparePlot(IC1,IC2)
 
-data <- r(N0)(20)
+set.seed(12); data <- r(N0)(20)
 comparePlot(IC1, IC2, data=data, with.lab = TRUE,
             which.lbs = c(1:4,15:20),
             which.Order = 1:6,
             return.Order = TRUE)
 
+## don't run to reduce check time on CRAN
+\dontrun{
 ## selection of subpanels for plotting
 par(mfrow=c(1,1))
 comparePlot(IC1, IC2 ,mfColRow = FALSE, to.draw.arg=c("mean"),
             panel.first= grid(),ylim=c(-4,4),xlim=c(-6,6))
 ## matrix-valued ylim
 comparePlot(IC1, IC2, panel.first= grid(),ylim=c(-4,4,0,4),xlim=c(-6,6))
+
+x <- c(data,-12,10)
+comparePlot(IC1, IC2, data=x, which.Order=10,
+            panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
+
+Y <- Chisq(df=1)* DiscreteDistribution(c(-1,1))
+comparePlot(IC1, IC2, data=x, which.Order=10,
+            scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
+            scaleY = TRUE, scaleY.fct=p(Y), scaleY.inv=q(Y),
+            panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
+comparePlot(IC1, IC2, data=x, which.Order=10,
+            scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
+            scaleY = TRUE, scaleY.fct=p(Y), scaleY.inv=q(Y),
+            x.ticks = c(-Inf, -10, -1,0,1,10,Inf),
+            y.ticks = c(-Inf, -5, -1,0,1,5,Inf),
+            panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
 
 ## with use of trafo-matrix:
 G <- GammaFamily(scale = 1, shape = 2)
@@ -181,7 +255,7 @@ system.time(IC2.i <- optIC(model = G2.Rob1, risk = asMSE(normtype=InfoNorm())))
 system.time(IC2.s <- optIC(model = G2.Rob1, risk = asMSE(normtype=SelfNorm())))
 
 comparePlot(IC1,IC2, IC2.i, IC2.s)
-
+}
 
 }
 }

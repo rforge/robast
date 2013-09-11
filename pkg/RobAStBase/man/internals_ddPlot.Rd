@@ -22,7 +22,8 @@ This function is an internally used helper function for \code{\link{ddPlot}} in 
        text.abline.x.x = NULL, text.abline.x.y = NULL, 
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "\%7.2f", text.abline.x.fmt.qx = "\%4.2f\%\%",
-       text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%")
+       text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%",
+       jitt.fac)
 }
 \arguments{
   \item{data}{data in \code{matrix} form (columns are observations; rows are variable
@@ -77,10 +78,11 @@ This function is an internally used helper function for \code{\link{ddPlot}} in 
                          if \code{NULL} (default) set to 1.05 times the cutoff value.}
   \item{text.abline.y.y}{y-coordinate of text to be added to cutoff lines in y direction;
                          if \code{NULL} (default) set to 1.05 times the cutoff value.}
-  \item{text.abline.x.fmt.cx}{format string (see \code{\link[base]{gettextf}}) to format the cutoff value in label in x direction.}
+  \item{text.abline.x.fmt.cx}{format string (see \code{\link[base:sprintf]{gettextf}}) to format the cutoff value in label in x direction.}
   \item{text.abline.x.fmt.qx}{format string to format cutoff probability in label in x direction.}
   \item{text.abline.y.fmt.cy}{format string to format the cutoff value in label in y direction.}
   \item{text.abline.y.fmt.qy}{format string to format cutoff probability in label in y direction.}
+  \item{jitt.fac}{factor for jittering, see \code{jitter};}
 }
 
 \details{

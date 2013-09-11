@@ -1,26 +1,37 @@
 setMethod("plot", signature(x = "IC", y = "missing"),
-    function(x,...,withSweave = getdistrOption("withSweave"), 
+    function(x, ...,withSweave = getdistrOption("withSweave"),
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
+             with.legend = FALSE, legend = NULL, legend.bg = "white",
+             legend.location = "bottomright", legend.cex = 0.8,
+             withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
+             lty.MBR = "dashed", lwd.MBR = 0.8,
+             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+             scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL){
 
         xc <- match.call(call = sys.call(sys.parent(1)))$x
         dots <- match.call(call = sys.call(sys.parent(1)), 
                        expand.dots = FALSE)$"..."
-
+        dotsLeg <- dotsT <- dotsL <- .makedotsLowLevel(dots)
 
         if(!is.logical(inner)){
           if(!is.list(inner))
               inner <- as.list(inner)
             #stop("Argument 'inner' must either be 'logical' or a 'list'")
-           inner <- distr:::.fillList(inner,4)          
+           inner <- .fillList(inner,4)
            innerD <- inner[1:3]
            innerL <- inner[4] 
         }else{innerD <- innerL <- inner}
 
 
         L2Fam <- eval(x@CallL2Fam)
+        if(missing(scaleX.fct)){
+           scaleX.fct <- p(L2Fam)
+           scaleX.inv <- q(L2Fam)
+        }
 
         trafO <- trafo(L2Fam@param)
         dims  <- nrow(trafO)
@@ -39,6 +50,14 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         nrows <- trunc(sqrt(dims0))
         ncols <- ceiling(dims0/nrows)
 
+        if(!is.null(x.ticks)) dots$xaxt <- "n"
+        if(!is.null(y.ticks)){
+           y.ticks <- .fillList(list(y.ticks), dims0)
+           dots$yaxt <- "n"
+        }
+
+        MBRB <- matrix(rep(t(MBRB), length.out=dims0*2),ncol=2, byrow=T)
+        MBRB <- MBRB * MBR.fac
 
         e1 <- L2Fam@distribution
         if(!is(e1, "UnivariateDistribution")) stop("not yet implemented")
@@ -48,6 +67,9 @@ setMethod("plot", signature(x = "IC", y = "missing"),
            if(!is.null(xlim)){ 
                xm <- min(xlim)
                xM <- max(xlim)
+               if(!length(xlim) %in% c(2,2*dims0))
+                  stop("Wrong length of Argument xlim");
+               xlim <- matrix(xlim, 2,dims0)
             }
             if(is(e1, "AbscontDistribution")){
                 lower0 <- getLow(e1, eps = getdistrOption("TruncQuantile")*2)
@@ -74,7 +96,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
                 plty <- "p"
                 lty <- "dotted"
                 if(!is.null(dots$xlim)) x.vec <- x.vec[(x.vec>=xm) & (x.vec<=xM)]
-                
+
             }
          }
          ylim <- eval(dots$ylim)
@@ -87,8 +109,9 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         
         if(!is.null(dots[["lty"]]))  dots["lty"] <- NULL
         if(!is.null(dots[["type"]])) dots["type"] <- NULL
-        if(!is.null(dots[["xlab"]])) dots["xlab"] <- NULL
-        if(!is.null(dots[["ylab"]])) dots["ylab"] <- NULL
+        xlab <- dots$xlab; if(is.null(xlab)) xlab <- "x"
+        ylab <- dots$ylab; if(is.null(ylab)) ylab <- "(partial) IC"
+        dots$xlab <- dots$ylab <- NULL
 
         IC1 <- as(diag(dims) %*% x@Curve, "EuclRandVariable")
 
@@ -97,7 +120,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         lineT <- NA
 
      .mpresubs <- function(inx)
-                    distr:::.presubs(inx, c("%C", "%D", "%A"),
+                    .presubs(inx, c("%C", "%D", "%A"),
                           c(as.character(class(x)[1]),
                             as.character(date()),
                             as.character(deparse(xc))))
@@ -162,12 +185,26 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         }
      }else{
         innerT <- lapply(inner, .mpresubs)
-        innerT <- distr:::.fillList(innerT,dims)
+        innerT <- .fillList(innerT,dims)
         if(dims0<dims){
            innerT0 <- innerT
            for(i in 1:dims0) innerT[to.draw[i]] <- innerT0[i]          
         }
      }
+
+        if(with.legend){
+          fac.leg <- if(dims0>1) 3/4 else .75/.8
+          if(missing(legend.location)){
+             legend.location <- .fillList(list("bottomright"), dims0)
+          }else{
+             legend.location <- as.list(legend.location)
+             legend.location <- .fillList(legend.location, dims0)
+          }
+          if(is.null(legend)){
+             legend <- vector("list",dims0)
+             legend <- .fillList(as.list(xc),dims0)
+          }
+        }
 
 
         w0 <- getOption("warn")
@@ -188,37 +225,64 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
         do.call(par,args=parArgs)
 
-        dotsT <- dots
-        dotsT["main"] <- NULL
-        dotsT["cex.main"] <- NULL
-        dotsT["col.main"] <- NULL
-        dotsT["line"] <- NULL
 
-
+        dotsT["pch"] <- dotsT["cex"] <- NULL
+        dotsT["col"] <- dotsT["lwd"] <- NULL
+        dotsL["cex"] <- dotsLeg["bg"] <- dotsLeg["cex"] <- NULL
         dots$ylim <- NULL
+
         for(i in 1:dims0){
             indi <- to.draw[i]
             if(!is.null(ylim)) dots$ylim <- ylim[,i]       
-            do.call(plot, args=c(list(x.vec, sapply(x.vec, IC1@Map[[indi]]), 
-                                      type = plty, lty = lty,
-                                      xlab = "x", ylab = "(partial) IC"),
-                                 dots))     
+            fct <- function(x) sapply(x, IC1@Map[[indi]])
+            print(xlim[,i])
+            resc <-.rescalefct(x.vec, fct, scaleX, scaleX.fct,
+                              scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                              ylim[,i], dots)
+            dots <- resc$dots
+            dots$xlim <- xlim[,i]
+            dots$ylim <- ylim[,i]
+            x.vec1 <- resc$X
+            y.vec1 <- resc$Y
+            do.call(plot, args=c(list(x=x.vec1, y=y.vec1, type = plty, lty = lty,
+                                      xlab = xlab, ylab = ylab), dots))
+            .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
+                              scaleY,scaleY.fct, scaleY.inv,
+                              xlim[,i], ylim[,i], x.vec1, ypts = 400, n = scaleN,
+                              x.ticks = x.ticks, y.ticks = y.ticks[[i]])
+            if(withMBR){
+                MBR.i <- MBRB[i,]
+                if(scaleY) MBR.i <- scaleY.fct(MBR.i)
+                abline(h=MBR.i, col=col.MBR, lty=lty.MBR, lwd = lwd.MBR)
+            }
             if(is(e1, "DiscreteDistribution")){
-                x.vec1 <- seq(from = min(x.vec), to = max(x.vec), length = 1000)
-                do.call(lines,args=c(list(x.vec1, sapply(x.vec1, IC1@Map[[indi]]), 
-                                          lty = "dotted"), dots))
+                x.vec1D <- seq(from = min(x.vec), to = max(x.vec), length = 1000)
+                rescD <-.rescalefct(x.vec1D, fct, scaleX, scaleX.fct,
+                                scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                                ylim[,i], dots)
+                x.vecD <- rescD$X
+                y.vecD <- rescD$Y
+
+                dotsL$lty <- NULL
+                do.call(lines,args=c(list(x.vecD, y.vecD,
+                                          lty = "dotted"), dotsL))
             }
             do.call(title,args=c(list(main = innerT[indi]), dotsT, line = lineT,
                     cex.main = cex.inner, col.main = col.inner))
+            if(with.legend)
+               legend(.legendCoord(legend.location[[i]], scaleX, scaleX.fct,
+                        scaleY, scaleY.fct), bg = legend.bg,
+                      legend = legend[[i]], dotsLeg, cex = legend.cex*fac.leg)
+
         }
-        if(!hasArg(cex.main)) cex.main <- par("cex.main") else cex.main <- dots$"cex.main"
-        if(!hasArg(col.main)) col.main <- par("col.main") else col.main <- dots$"col.main"
+        cex.main <- if(!hasArg(cex.main)) par("cex.main") else dots$"cex.main"
+        col.main <- if(!hasArg(col.main)) par("col.main") else dots$"col.main"
         if (mainL)
             mtext(text = main, side = 3, cex = cex.main, adj = .5,
                   outer = TRUE, padj = 1.4, col = col.main)
 
-        if(!hasArg(cex.sub)) cex.sub <- par("cex.sub") else cex.sub <- dots$"cex.sub"
-        if(!hasArg(col.sub)) col.sub <- par("col.sub") else col.sub <- dots$"col.sub"
+        cex.sub <- if(!hasArg(cex.sub)) par("cex.sub") else dots$"cex.sub"
+        col.sub <- if(!hasArg(col.sub)) par("col.sub") else dots$"col.sub"
         if (subL)
             mtext(text = sub, side = 1, cex = cex.sub, adj = .5,
                   outer = TRUE, line = -1.6, col = col.sub)
@@ -230,20 +294,15 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 setMethod("plot", signature(x = "IC",y = "numeric"),
           function(x, y, ..., cex.pts = 1, col.pts = par("col"),
           pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
-          lab.pts = NULL, lab.font = NULL,
-             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE){
+          lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
+          which.lbs = NULL, which.Order  = NULL, return.Order = FALSE){
+
     dots <- match.call(call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)$"..."
 
     n <- if(!is.null(dim(y))) nrow(y) else length(y)
-    oN0 <- NULL
-    if(is.null(which.lbs))
-       which.lbs <- 1:n
-    which.lbs0 <- (1:n) %in% which.lbs
-    which.lbx <- rep(which.lbs0, length.out=length(y))
-    y0 <- y[which.lbx]
-    n <- if(!is.null(dim(y0))) nrow(y0) else length(y0)
-    oN <- (1:n)[which.lbs0]
+    pch.pts <- rep(pch.pts, length.out=n)
+    lab.pts <- if(is.null(lab.pts)) paste(1:n) else rep(lab.pts,n)
 
 
     L2Fam <- eval(x@CallL2Fam)
@@ -259,26 +318,15 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
     absInfo <- t(IC1) %*% QF %*% IC1
     ICMap <- IC1@Map
 
-    absInfo <- sapply(y, absInfo@Map[[1]])
-    absInfo0 <- absInfo[which.lbs]/max(absInfo)
-
-    if (n==length(y0)) {
-        oN <-  order(absInfo0)
-        oN0 <- order(absInfo)
-        oN0 <- oN0[oN0 %in% which.lbs]
-        y0 <- y0[oN]
-        if(!is.null(which.Order)){
-            oN <- oN0[(n+1)-which.Order]
-            y0 <- y[oN]
-            absInfo0 <- absInfo[oN]/max(absInfo[oN])
-        }
-    }
-    if(is.null(lab.pts)) lab.pts <- paste(oN)
-    else {lab.pts <- rep(lab.pts, length.out=length(y))
-          lab.pts <- lab.pts[oN]}
+    sel <- .SelectOrderData(y, function(x)sapply(x, absInfo@Map[[1]]),
+                            which.lbs, which.Order)
+    i.d <- sel$ind
+    i0.d <- sel$ind1
+    n <- length(i.d)
 
     dots.without <- dots
     dots.without$col <- dots.without$cex <- dots.without$pch <- NULL
+
 
     pL <- expression({})
     if(!is.null(dots$panel.last))
@@ -286,23 +334,36 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
     dots$panel.last <- NULL
 
     pL <- substitute({
+        y1 <- y0s
         ICy <- sapply(y0s,ICMap0[[indi]])
+        print(xlim[,i])
+        resc.dat <-.rescalefct(y0s, function(x) sapply(x,ICMap0[[indi]]),
+                              scaleX, scaleX.fct, scaleX.inv,
+                              scaleY, scaleY.fct, xlim[,i], ylim[,i],
+                              dwo0)
+        y1 <- resc.dat$X
+        ICy <- resc.dat$Y
+
         if(is(e1, "DiscreteDistribution"))
            ICy <- jitter(ICy, factor = jitter.fac0)
-        do.call(points, args=c(list(y0s, ICy, cex = log(absy0+1)*3*cex0,
-                        col = col0, pch = pch0), dwo0))
+
+        col.pts <- if(!is.na(al0)) sapply(col0, addAlphTrsp2col,alpha=al0) else col0
+
+        do.call(points, args=c(list(y1, ICy, cex = log(absy0+1)*3*cex0,
+                        col = col.pts, pch = pch0), dwo0))
         if(with.lab0){
            text(x = y0s, y = ICy, labels = lab.pts0,
                 cex = log(absy0+1)*1.5*cex0, col = col0)
         }
         pL0
-        }, list(pL0 = pL, ICMap0 = ICMap, y0s = y0, absy0 = absInfo0,
-                dwo0 = dots.without, cex0 = cex.pts, pch0 = pch.pts,
-                col0 = col.pts, with.lab0 = with.lab, lab.pts0 = lab.pts,
-                jitter.fac0 = jitter.fac
+        }, list(pL0 = pL, ICMap0 = ICMap, y0s = sel$data, absy0 = sel$y,
+                dwo0 = dots.without, cex0 = cex.pts, pch0 = pch.pts[i.d],
+                col0 = col.pts, with.lab0 = with.lab, lab.pts0 = lab.pts[i.d],
+                al0 = alpha.trsp, jitter.fac0 = jitter.fac
                 ))
 
   do.call("plot", args = c(list(x = x, panel.last = pL), dots))
-  if(return.Order) return(oN0)
+  if(return.Order) return(i0.d)
   invisible()
 })
+
