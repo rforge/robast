@@ -3,7 +3,6 @@
 ################################################################
 
 
-.makeLenAndOrder <- distr:::.makeLenAndOrder
 
 .fadeColor <- function(col,x, bg = "white"){
  ind <- seq(along=x)

@@ -1,8 +1,7 @@
 
-R version 2.12.1 Patched (2011-01-04 r53913)
-Copyright (C) 2011 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+R version 3.0.1 Patched (2013-09-02 r63805) -- "Good Sport"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: i386-w64-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -21,10 +20,29 @@ Type 'q()' to quit R.
 > pkgname <- "RobAStBase"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
+> options(pager = "console")
+> base::assign(".ExTimings", "RobAStBase-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
 > library('RobAStBase')
+Loading required package: rrcov
+Loading required package: robustbase
+Loading required package: pcaPP
+Loading required package: mvtnorm
+Scalable Robust Estimators with High Breakdown Point (version 1.3-4)
+
 Loading required package: distr
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.7.1)
+:startupmsg>  Utilities for start-up messages (version 0.8)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
@@ -32,7 +50,15 @@ Loading required package: startupmsg
 Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version 0.5)
+:SweaveListingUtils>  TeX listings package (version
+:SweaveListingUtils>  0.6.1)
+:SweaveListingUtils> 
+:SweaveListingUtils>  NOTE: Support for this package
+:SweaveListingUtils>  will stop soon.
+:SweaveListingUtils> 
+:SweaveListingUtils>  Package 'knitr' is providing the
+:SweaveListingUtils>  same functionality in a better
+:SweaveListingUtils>  way.
 :SweaveListingUtils> 
 :SweaveListingUtils>  Some functions from package 'base'
 :SweaveListingUtils>  are intentionally masked ---see
@@ -53,12 +79,12 @@ Loading required package: SweaveListingUtils
 
 Attaching package: 'SweaveListingUtils'
 
-The following object(s) are masked from 'package:base':
+The following objects are masked from 'package:base':
 
     library, require
 
 :distr>  Object oriented implementation of distributions (version
-:distr>  2.3)
+:distr>  2.5)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -79,24 +105,19 @@ The following object(s) are masked from 'package:base':
 
 Attaching package: 'distr'
 
-The following object(s) are masked from 'package:stats':
+The following objects are masked from 'package:stats':
 
     df, qqplot, sd
 
 Loading required package: distrEx
-Loading required package: evd
-Loading required package: actuar
-
-Attaching package: 'actuar'
-
-The following object(s) are masked from 'package:grDevices':
-
-    cm
-
-:distrEx>  Extensions of package distr (version 2.3)
+:distrEx>  Extensions of package distr (version 2.4)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
-:distrEx>  attached /before/ package "distrEx". See distrExMASK().
+:distrEx>  attached /before/ package "distrEx". See
+:distrEx>  distrExMASK().Note: Extreme value distribution
+:distrEx>  functionality has been moved to
+:distrEx> 
+:distrEx>        package "RobExtremes". See distrExMOVED().
 :distrEx> 
 :distrEx>  For more information see ?"distrEx", NEWS("distrEx"), as
 :distrEx>  well as
@@ -108,13 +129,13 @@ The following object(s) are masked from 'package:grDevices':
 
 Attaching package: 'distrEx'
 
-The following object(s) are masked from 'package:stats':
+The following objects are masked from 'package:stats':
 
     IQR, mad, median, var
 
 Loading required package: distrMod
 Loading required package: RandVar
-:RandVar>  Implementation of random variables (version 0.8)
+:RandVar>  Implementation of random variables (version 0.9.2)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -125,7 +146,7 @@ Loading required package: RandVar
 Loading required package: MASS
 Loading required package: stats4
 :distrMod>  Object oriented implementation of probability models
-:distrMod>  (version 2.3)
+:distrMod>  (version 2.5)
 :distrMod> 
 :distrMod>  Some functions from pkg's 'base' and 'stats' are
 :distrMod>  intentionally masked ---see distrModMASK().
@@ -146,19 +167,19 @@ Loading required package: stats4
 
 Attaching package: 'distrMod'
 
-The following object(s) are masked from 'package:stats4':
+The following object is masked from 'package:stats4':
 
     confint
 
-The following object(s) are masked from 'package:stats':
+The following object is masked from 'package:stats':
 
     confint
 
-The following object(s) are masked from 'package:base':
+The following object is masked from 'package:base':
 
     norm
 
-:RobAStBase>  Robust Asymptotic Statistics (version 0.8)
+:RobAStBase>  Robust Asymptotic Statistics (version 0.9)
 :RobAStBase> 
 :RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
 :RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
@@ -173,22 +194,19 @@ The following object(s) are masked from 'package:base':
 
 Attaching package: 'RobAStBase'
 
-The following object(s) are masked from 'package:stats':
-
-    start
-
-The following object(s) are masked from 'package:graphics':
+The following object is masked from 'package:graphics':
 
     clip
 
 > 
-> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > cleanEx()
 > nameEx("0RobAStBase-package")
 > ### * 0RobAStBase-package
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RobAStBase-package
 > ### Title: Robust Asymptotic Statistics
 > ### Aliases: RobAStBase-package RobAStBase
@@ -204,22 +222,29 @@ The following object(s) are masked from 'package:graphics':
 > ## classical optimal IC
 > IC0 <- optIC(model = B, risk = asCov())
 > plot(IC0) # plot IC
+NULL
 > checkIC(IC0, B)
-precision of centering:	 -4.254490e-18 
+precision of centering:	 -2.631986e-17 
 precision of Fisher consistency:
-             prob
-prob 2.220446e-16
+              prob
+prob -1.110223e-16
+precision of Fisher consistency - relativ error [%]:
+              prob
+prob -1.110223e-14
 maximum deviation 
-     2.220446e-16 
+     1.110223e-16 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("0RobAStBase-package", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("ALEstimate-class")
 > ### * ALEstimate-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ALEstimate-class
 > ### Title: ALEstimate-class.
 > ### Aliases: ALEstimate-class pIC pIC,ALEstimate-method asbias
@@ -236,7 +261,7 @@ maximum deviation
 > new("ALEstimate")
 Evaluations of Asymptotically linear estimate:
 ----------------------------------------------
-An object of class “Estimate” 
+An object of class "Estimate" 
 generated by call
   `{}`()
 estimate:
@@ -246,12 +271,15 @@ NULL
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("ALEstimate-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("BdStWeight-class")
 > ### * BdStWeight-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: BdStWeight-class
 > ### Title: Robust Weight classes for bounded, standardized weights
 > ### Aliases: BdStWeight-class stand,BdStWeight-method
@@ -276,17 +304,21 @@ Slot "name":
 Slot "weight":
 function (x) 
 1
+<bytecode: 0x07976854>
 <environment: namespace:RobAStBase>
 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("BdStWeight-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("BoundedWeight-class")
 > ### * BoundedWeight-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: BoundedWeight-class
 > ### Title: Robust Weight classes for bounded weights
 > ### Aliases: BoundedWeight-class clip,BoundedWeight-method
@@ -307,17 +339,63 @@ Slot "name":
 Slot "weight":
 function (x) 
 1
+<bytecode: 0x0796fce0>
 <environment: namespace:RobAStBase>
 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("BoundedWeight-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("ComparePlotWrapper")
+> ### * ComparePlotWrapper
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: ComparePlot
+> ### Title: Wrapper function for function comparePlot
+> ### Aliases: ComparePlot
+> 
+> ### ** Examples
+> 
+> # Gamma
+> fam <- GammaFamily()
+> rfam <- InfRobModel(fam, ContNeighborhood(0.5))
+> IC1 <- optIC(model = fam, risk = asCov())
+> IC2 <- makeIC(list(function(x)sin(x),function(x)x^2), L2Fam = fam)
+> Y <- distribution(fam)
+> y <- r(Y)(100)
+> ComparePlot(IC1, IC2, y, withCall = TRUE)
+comparePlot(obj1 = IC1, obj2 = IC2, MBR.fac = 2, MBRB = NA, adj = 0.5, 
+    alpha.trsp = 50, bmar = par("mar")[1], bty = "o", cex = 1.5, 
+    cex.inner = 0.8, cex.lab = 1.5, cex.main = 1.5, cex.pts = 1, 
+    col = "blue", col.MBR = par("col"), col.inner = par("col.main"), 
+    col.lab = "black", col.main = "black", col.pts = c(1, 2, 
+        3, 4), data = y, forceSameModel = FALSE, inner = TRUE, 
+    jitter.fac = 1, legend.bg = "white", legend.cex = 0.8, legend.location = "bottomright", 
+    lty.MBR = "dashed", lwd.MBR = 0.8, main = FALSE, mfColRow = TRUE, 
+    panel.first = grid(), pch.pts = 19, return.Order = FALSE, 
+    scaleN = 9, scaleX = FALSE, scaleY = FALSE, scaleY.fct = function (q, 
+        mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) 
+    .External(C_pnorm, q, mean, sd, lower.tail, log.p), scaleY.inv = function (p, 
+        mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) 
+    .External(C_qnorm, p, mean, sd, lower.tail, log.p), sub = FALSE, 
+    tmar = par("mar")[3], with.lab = FALSE, with.legend = FALSE, 
+    withMBR = FALSE, withSweave = getdistrOption("withSweave"))
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("ComparePlotWrapper", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("ContIC-class")
 > ### * ContIC-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ContIC-class
 > ### Title: Influence curve of contamination type
 > ### Aliases: ContIC-class CallL2Fam<-,ContIC-method cent cent,ContIC-method
@@ -331,15 +409,19 @@ function (x)
 > 
 > IC1 <- new("ContIC")
 > plot(IC1)
+NULL
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("ContIC-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("ContIC")
 > ### * ContIC
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ContIC
 > ### Title: Generating function for ContIC-class
 > ### Aliases: ContIC
@@ -349,15 +431,19 @@ function (x)
 > 
 > IC1 <- ContIC()
 > plot(IC1)
+NULL
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("ContIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("ContNeighborhood-class")
 > ### * ContNeighborhood-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ContNeighborhood-class
 > ### Title: Contamination Neighborhood
 > ### Aliases: ContNeighborhood-class
@@ -366,18 +452,21 @@ function (x)
 > ### ** Examples
 > 
 > new("ContNeighborhood")
-An object of class “ContNeighborhood” 
+An object of class "ContNeighborhood" 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("ContNeighborhood-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("ContNeighborhood")
 > ### * ContNeighborhood
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ContNeighborhood
 > ### Title: Generating function for ContNeighborhood-class
 > ### Aliases: ContNeighborhood
@@ -386,7 +475,7 @@ radius:	 0
 > ### ** Examples
 > 
 > ContNeighborhood()
-An object of class “ContNeighborhood” 
+An object of class "ContNeighborhood" 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
@@ -401,12 +490,15 @@ function (radius = 0)
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("ContNeighborhood", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("FixRobModel-class")
 > ### * FixRobModel-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: FixRobModel-class
 > ### Title: Robust model with fixed (unconditional) neighborhood
 > ### Aliases: FixRobModel-class neighbor<-,FixRobModel-method
@@ -416,7 +508,7 @@ function (radius = 0)
 > ### ** Examples
 > 
 > new("FixRobModel")
-An object of class “FixRobModel” 
+An object of class "FixRobModel" 
 ###### center:	An object of class "ParamFamily"
 ### name:	parametric family of probability measures
 
@@ -428,18 +520,21 @@ An object of class “FixRobModel”
 name:	parameter of a parametric family of probability measures
 main:	0
 
-###### neighborhood:	An object of class “ContNeighborhood” 
+###### neighborhood:	An object of class "ContNeighborhood" 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("FixRobModel-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("FixRobModel")
 > ### * FixRobModel
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: FixRobModel
 > ### Title: Generating function for FixRobModel-class
 > ### Aliases: FixRobModel
@@ -448,7 +543,7 @@ radius:	 0
 > ### ** Examples
 > 
 > (M1 <- FixRobModel())
-An object of class “FixRobModel” 
+An object of class "FixRobModel" 
 ###### center:	An object of class "ParamFamily"
 ### name:	parametric family of probability measures
 
@@ -460,7 +555,7 @@ An object of class “FixRobModel”
 name:	location
 main:	0
 
-###### neighborhood:	An object of class “ContNeighborhood” 
+###### neighborhood:	An object of class "ContNeighborhood" 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
@@ -475,12 +570,15 @@ function (center = ParamFamily(), neighbor = ContNeighborhood())
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("FixRobModel", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("HampIC-class")
 > ### * HampIC-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: HampIC-class
 > ### Title: Influence curve of Hampel type
 > ### Aliases: HampIC-class lowerCase lowerCase,HampIC-method neighborRadius
@@ -493,15 +591,19 @@ function (center = ParamFamily(), neighbor = ContNeighborhood())
 > 
 > IC1 <- new("HampIC")
 > plot(IC1)
+NULL
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("HampIC-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("HampelWeight-class")
 > ### * HampelWeight-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: HampelWeight-class
 > ### Title: Robust Weight classes for weights of Hampel type
 > ### Aliases: HampelWeight-class cent,HampelWeight-method
@@ -529,17 +631,21 @@ Slot "name":
 Slot "weight":
 function (x) 
 1
+<bytecode: 0x07933778>
 <environment: namespace:RobAStBase>
 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("HampelWeight-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("IC-class")
 > ### * IC-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: IC-class
 > ### Title: Influence curve
 > ### Aliases: IC-class CallL2Fam CallL2Fam,IC-method CallL2Fam<-
@@ -552,15 +658,19 @@ function (x)
 > 
 > IC1 <- new("IC")
 > plot(IC1)
+NULL
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("IC-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("IC")
 > ### * IC
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: IC
 > ### Title: Generating function for IC-class
 > ### Aliases: IC
@@ -570,15 +680,19 @@ function (x)
 > 
 > IC1 <- IC()
 > plot(IC1)
+NULL
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("IC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("InfRobModel-class")
 > ### * InfRobModel-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: InfRobModel-class
 > ### Title: Robust model with infinitesimal (unconditional) neighborhood
 > ### Aliases: InfRobModel-class neighbor<-,InfRobModel-method
@@ -588,7 +702,7 @@ function (x)
 > ### ** Examples
 > 
 > new("InfRobModel")
-An object of class “InfRobModel” 
+An object of class "InfRobModel" 
 ###### center:	An object of class "L2ParamFamily"
 ### name:	L_2 differentiable parametric family of probability measures
 
@@ -600,18 +714,21 @@ An object of class “InfRobModel”
 name:	parameter of a parametric family of probability measures
 main:	0
 
-###### neighborhood:	An object of class “ContNeighborhood” 
+###### neighborhood:	An object of class "ContNeighborhood" 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("InfRobModel-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("InfRobModel")
 > ### * InfRobModel
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: InfRobModel
 > ### Title: Generating function for InfRobModel-class
 > ### Aliases: InfRobModel
@@ -620,7 +737,7 @@ radius:	 0
 > ### ** Examples
 > 
 > (M1 <- InfRobModel())
-An object of class “InfRobModel” 
+An object of class "InfRobModel" 
 ###### center:	An object of class "L2ParamFamily"
 ### name:	L_2 differentiable parametric family of probability measures
 
@@ -632,7 +749,7 @@ An object of class “InfRobModel”
 name:	location
 main:	0
 
-###### neighborhood:	An object of class “ContNeighborhood” 
+###### neighborhood:	An object of class "ContNeighborhood" 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
@@ -647,12 +764,15 @@ function (center = L2ParamFamily(), neighbor = ContNeighborhood())
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("InfRobModel", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("InfluenceCurve-class")
 > ### * InfluenceCurve-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: InfluenceCurve-class
 > ### Title: Influence curve
 > ### Aliases: InfluenceCurve-class addInfo<- addInfo<-,InfluenceCurve-method
@@ -668,10 +788,10 @@ function (center = L2ParamFamily(), neighbor = ContNeighborhood())
 > ### ** Examples
 > 
 > new("InfluenceCurve")
-An object of class “InfluenceCurve” 
+An object of class "InfluenceCurve" 
 ### name:	  
 
-### 'Curve':	An object of class “EuclRandVarList” 
+### 'Curve':	An object of class "EuclRandVarList" 
 Domain:	NULL
 [[1]]
 length of Map:	 1 
@@ -682,12 +802,15 @@ Range:	Euclidean Space with dimension 1
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("InfluenceCurve-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("InfluenceCurve")
 > ### * InfluenceCurve
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: InfluenceCurve
 > ### Title: Generating function for InfluenceCurve-class
 > ### Aliases: InfluenceCurve
@@ -696,10 +819,10 @@ Range:	Euclidean Space with dimension 1
 > ### ** Examples
 > 
 > InfluenceCurve()
-An object of class “InfluenceCurve” 
+An object of class "InfluenceCurve" 
 ### name:	 influence curve 
 
-### 'Curve':	An object of class “EuclRandVarList” 
+### 'Curve':	An object of class "EuclRandVarList" 
 Domain:	Real Space with dimension 1 
 [[1]]
 length of Map:	 1 
@@ -725,12 +848,711 @@ Range:	Euclidean Space with dimension 1
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("InfluenceCurve", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("InfoPlotWrapper")
+> ### * InfoPlotWrapper
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: InfoPlot
+> ### Title: Wrapper function for information plot method
+> ### Aliases: InfoPlot
+> 
+> ### ** Examples
+> 
+> # Gamma
+> fam  <-  GammaFamily()
+> IC <- optIC(model = fam, risk = asCov())
+> Y <- distribution(fam)
+> data  <-  r(Y)(1000)
+> InfoPlot(IC, data, withCall = FALSE)
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+Warning in log(x/1) : NaNs produced
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("InfoPlotWrapper", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("MEstimate-class")
 > ### * MEstimate-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: MEstimate-class
 > ### Title: MEstimate-class.
 > ### Aliases: MEstimate-class Mroot Mroot,MEstimate-method
@@ -743,7 +1565,7 @@ Range:	Euclidean Space with dimension 1
 > new("MEstimate")
 Evaluations of Asymptotically linear estimate:
 ----------------------------------------------
-An object of class “Estimate” 
+An object of class "Estimate" 
 generated by call
   `{}`()
 estimate:
@@ -755,12 +1577,42 @@ numeric(0)
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("MEstimate-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("PlotICWrapper")
+> ### * PlotICWrapper
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: PlotIC
+> ### Title: Wrapper function for plot method for IC
+> ### Aliases: PlotIC
+> 
+> ### ** Examples
+> 
+> # Gamma
+> fam <- GammaFamily()
+> rfam <- InfRobModel(fam, ContNeighborhood(0.5))
+> IC <- optIC(model = fam, risk = asCov())
+> Y <- distribution(fam)
+> y <- r(Y)(1000)
+> PlotIC(IC, y, withCall = FALSE)
+NULL
+NULL
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("PlotICWrapper", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("RobAStBaseMASK")
 > ### * RobAStBaseMASK
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RobAStBaseMASK
 > ### Title: Masking of/by other functions in package "RobAStBase"
 > ### Aliases: RobAStBaseMASK MASKING
@@ -787,16 +1639,18 @@ masking:
 +clip()    (package "graphics")
  
  
-
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("RobAStBaseMASK", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("RobAStBaseOptions")
 > ### * RobAStBaseOptions
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RobAStBaseOptions
 > ### Title: Function to change the global variables of the package
 > ###   'RobAStBase'
@@ -836,12 +1690,15 @@ $kStepUseLast
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("RobAStBaseOptions", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("RobWeight-class")
 > ### * RobWeight-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RobWeight-class
 > ### Title: Robust Weight classes
 > ### Aliases: RobWeight-class name,RobWeight-method name<-,RobWeight-method
@@ -860,17 +1717,21 @@ Slot "name":
 Slot "weight":
 function (x) 
 1
+<bytecode: 0x06c35cfc>
 <environment: namespace:RobAStBase>
 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("RobWeight-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("TotalVarIC-class")
 > ### * TotalVarIC-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: TotalVarIC-class
 > ### Title: Influence curve of total variation type
 > ### Aliases: TotalVarIC-class CallL2Fam<-,TotalVarIC-method clipLo
@@ -886,15 +1747,19 @@ function (x)
 > 
 > IC1 <- new("TotalVarIC")
 > plot(IC1)
+NULL
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("TotalVarIC-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("TotalVarIC")
 > ### * TotalVarIC
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: TotalVarIC
 > ### Title: Generating function for TotalVarIC-class
 > ### Aliases: TotalVarIC
@@ -904,15 +1769,19 @@ function (x)
 > 
 > IC1 <- TotalVarIC()
 > plot(IC1)
+NULL
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("TotalVarIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("TotalVarNeighborhood-class")
 > ### * TotalVarNeighborhood-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: TotalVarNeighborhood-class
 > ### Title: Total variation neighborhood
 > ### Aliases: TotalVarNeighborhood-class
@@ -921,18 +1790,21 @@ function (x)
 > ### ** Examples
 > 
 > new("TotalVarNeighborhood")
-An object of class “TotalVarNeighborhood” 
+An object of class "TotalVarNeighborhood" 
 type:	 (uncond.) total variation neighborhood 
 radius:	 0 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("TotalVarNeighborhood-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("TotalVarNeighborhood")
 > ### * TotalVarNeighborhood
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: TotalVarNeighborhood
 > ### Title: Generating function for TotalVarNeighborhood-class
 > ### Aliases: TotalVarNeighborhood
@@ -941,7 +1813,7 @@ radius:	 0
 > ### ** Examples
 > 
 > TotalVarNeighborhood()
-An object of class “TotalVarNeighborhood” 
+An object of class "TotalVarNeighborhood" 
 type:	 (uncond.) total variation neighborhood 
 radius:	 0 
 > 
@@ -956,12 +1828,15 @@ function (radius = 0)
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("TotalVarNeighborhood", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("checkIC")
 > ### * checkIC
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: checkIC
 > ### Title: Generic Function for Checking ICs
 > ### Aliases: checkIC
@@ -975,17 +1850,23 @@ precision of centering:	 0
 precision of Fisher consistency:
               [,1]
 [1,] -5.794001e-06
+precision of Fisher consistency - relativ error [%]:
+              [,1]
+[1,] -0.0005794001
 maximum deviation 
      5.794001e-06 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("checkIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("comparePlot")
 > ### * comparePlot
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: comparePlot-methods
 > ### Title: Compare - Plots
 > ### Aliases: comparePlot comparePlot-methods comparePlot,IC,IC-method
@@ -1003,58 +1884,90 @@ maximum deviation
 + 
 + comparePlot(IC1,IC2)
 + 
-+ data <- r(N0)(20)
++ set.seed(12); data <- r(N0)(20)
 + comparePlot(IC1, IC2, data=data, with.lab = TRUE,
 +             which.lbs = c(1:4,15:20),
 +             which.Order = 1:6,
 +             return.Order = TRUE)
 + 
-+ ## selection of subpanels for plotting
-+ par(mfrow=c(1,1))
-+ comparePlot(IC1, IC2 ,mfColRow = FALSE, to.draw.arg=c("mean"),
-+             panel.first= grid(),ylim=c(-4,4),xlim=c(-6,6))
-+ ## matrix-valued ylim
-+ comparePlot(IC1, IC2, panel.first= grid(),ylim=c(-4,4,0,4),xlim=c(-6,6))
-+ 
-+ ## with use of trafo-matrix:
-+ G <- GammaFamily(scale = 1, shape = 2)
-+ ## explicitely transforming to
-+ ## MASS parametrization:
-+ mtrafo <- function(x){
-+      nms0 <- names(c(main(param(G)),nuisance(param(G))))
-+      nms <- c("shape","rate")
-+      fval0 <- c(x[2], 1/x[1])
-+      names(fval0) <- nms
-+      mat0 <- matrix( c(0, -1/x[1]^2, 1, 0), nrow = 2, ncol = 2,
-+                      dimnames = list(nms,nms0))                          
-+      list(fval = fval0, mat = mat0)}
-+ G2 <- G
-+ trafo(G2) <- mtrafo
-+ G2
-+ G2.Rob1 <- InfRobModel(center = G2, neighbor = ContNeighborhood(radius = 0.5))
-+ system.time(IC1 <- optIC(model = G2, risk = asCov()))
-+ system.time(IC2 <- optIC(model = G2.Rob1, risk = asMSE()))
-+ system.time(IC2.i <- optIC(model = G2.Rob1, risk = asMSE(normtype=InfoNorm())))
-+ system.time(IC2.s <- optIC(model = G2.Rob1, risk = asMSE(normtype=SelfNorm())))
-+ 
-+ comparePlot(IC1,IC2, IC2.i, IC2.s)
-+ 
++ ## don't run to reduce check time on CRAN
++ ## Not run: 
++ ##D ## selection of subpanels for plotting
++ ##D par(mfrow=c(1,1))
++ ##D comparePlot(IC1, IC2 ,mfColRow = FALSE, to.draw.arg=c("mean"),
++ ##D             panel.first= grid(),ylim=c(-4,4),xlim=c(-6,6))
++ ##D ## matrix-valued ylim
++ ##D comparePlot(IC1, IC2, panel.first= grid(),ylim=c(-4,4,0,4),xlim=c(-6,6))
++ ##D 
++ ##D x <- c(data,-12,10)
++ ##D comparePlot(IC1, IC2, data=x, which.Order=10,
++ ##D             panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
++ ##D 
++ ##D Y <- Chisq(df=1)* DiscreteDistribution(c(-1,1))
++ ##D comparePlot(IC1, IC2, data=x, which.Order=10,
++ ##D             scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
++ ##D             scaleY = TRUE, scaleY.fct=p(Y), scaleY.inv=q(Y),
++ ##D             panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
++ ##D comparePlot(IC1, IC2, data=x, which.Order=10,
++ ##D             scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
++ ##D             scaleY = TRUE, scaleY.fct=p(Y), scaleY.inv=q(Y),
++ ##D             x.ticks = c(-Inf, -10, -1,0,1,10,Inf),
++ ##D             y.ticks = c(-Inf, -5, -1,0,1,5,Inf),
++ ##D             panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
++ ##D 
++ ##D ## with use of trafo-matrix:
++ ##D G <- GammaFamily(scale = 1, shape = 2)
++ ##D ## explicitely transforming to
++ ##D ## MASS parametrization:
++ ##D mtrafo <- function(x){
++ ##D      nms0 <- names(c(main(param(G)),nuisance(param(G))))
++ ##D      nms <- c("shape","rate")
++ ##D      fval0 <- c(x[2], 1/x[1])
++ ##D      names(fval0) <- nms
++ ##D      mat0 <- matrix( c(0, -1/x[1]^2, 1, 0), nrow = 2, ncol = 2,
++ ##D                      dimnames = list(nms,nms0))                          
++ ##D      list(fval = fval0, mat = mat0)}
++ ##D G2 <- G
++ ##D trafo(G2) <- mtrafo
++ ##D G2
++ ##D G2.Rob1 <- InfRobModel(center = G2, neighbor = ContNeighborhood(radius = 0.5))
++ ##D system.time(IC1 <- optIC(model = G2, risk = asCov()))
++ ##D system.time(IC2 <- optIC(model = G2.Rob1, risk = asMSE()))
++ ##D system.time(IC2.i <- optIC(model = G2.Rob1, risk = asMSE(normtype=InfoNorm())))
++ ##D system.time(IC2.s <- optIC(model = G2.Rob1, risk = asMSE(normtype=SelfNorm())))
++ ##D 
++ ##D comparePlot(IC1,IC2, IC2.i, IC2.s)
++ ## End(Not run)
 + 
 + }
 Loading required package: ROptEst
+$obj1
+ [1]  2  1 17  3  4 16 19 18 20 15
+
+$obj2
+ [1]  2  1 17  3  4 16 19 18 20 15
+
+$obj3
+NULL
+
+$obj4
+NULL
+
 > 
 > 
 > 
-> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("comparePlot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 
-detaching ‘package:ROptEst’
+detaching 'package:ROptEst'
 
 > nameEx("cutoff-class")
 > ### * cutoff-class
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cutoff-class
 > ### Title: Cutoff class for distance-distance plots
 > ### Aliases: cutoff-class cutoff.quantile<-,cutoff-method cutoff.quantile<-
@@ -1079,7 +1992,7 @@ function (data)
     }
     quantile(slot(norm, "fct")(data), cutoff.quantile)
 }
-<environment: 0x7266808>
+<environment: 0x0647b414>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -1087,12 +2000,15 @@ Slot "cutoff.quantile":
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cutoff-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cutoff")
 > ### * cutoff
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cutoff
 > ### Title: Generating function(s) for class 'cutoff'
 > ### Aliases: cutoff cutoff.sememp cutoff.chisq
@@ -1115,7 +2031,7 @@ function (data)
     }
     quantile(slot(norm, "fct")(data), cutoff.quantile)
 }
-<environment: 0x71cf950>
+<environment: 0x09adb78c>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -1140,7 +2056,7 @@ function (data)
         quantile((rowSums(N0^2))^0.5, cutoff.quantile)
     }
 }
-<environment: 0x7170648>
+<environment: 0x0994ac1c>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -1163,7 +2079,7 @@ function (data)
         qchisq(df = dim, cutoff.quantile)^0.5
     }
 }
-<environment: 0x707c890>
+<environment: 0x098f74f0>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -1171,12 +2087,15 @@ Slot "cutoff.quantile":
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cutoff", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("ddPlot-methods")
 > ### * ddPlot-methods
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ddPlot-methods
 > ### Title: Methods for Function ddPlot in Package 'RobAStBase'
 > ### Aliases: ddPlot ddPlot-methods ddPlot,matrix-method
@@ -1188,9 +2107,6 @@ Slot "cutoff.quantile":
 > MX <- matrix(rnorm(1500),nrow=6)
 > QM <- matrix(rnorm(36),nrow=6); QM <- QM %*% t(QM)
 > ddPlot(data=MX, dist.y=QFNorm(QuadF=PosSemDefSymmMatrix(QM)))
-NULL
-[1] 1
-[1] "black"
 $id.x
  [1]  35  75  81  83 103 134 141 156 161 195 201 216 241
 
@@ -1219,12 +2135,42 @@ $cutoff.y.v
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("ddPlot-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("getRiskFctBV-methods")
+> ### * getRiskFctBV-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: getRiskFctBV-methods
+> ### Title: Methods for Function getRiskFctBV in Package 'RobAStBase'
+> ### Aliases: getRiskFctBV getRiskFctBV-methods
+> ###   getRiskFctBV,asGRisk,ANY-method getRiskFctBV,asMSE,ANY-method
+> ###   getRiskFctBV,asSemivar,onesidedBias-method
+> ###   getRiskFctBV,asSemivar,asymmetricBias-method
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> myrisk <- asMSE()
+> getRiskFctBV(myrisk)
+function (bias, var) 
+bias^2 + var
+<environment: 0x09959b74>
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getRiskFctBV-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("infoPlot")
 > ### * infoPlot
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: infoPlot
 > ### Title: Plot absolute and relative information
 > ### Aliases: infoPlot infoPlot-methods infoPlot,IC-method
@@ -1235,42 +2181,60 @@ $cutoff.y.v
 > N <- NormLocationScaleFamily(mean=0, sd=1) 
 > IC1 <- optIC(model = N, risk = asCov())
 > infoPlot(IC1)
-> ## selection of subpanels for plotting
-> par(mfrow=c(1,2))
-> infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"))
-> infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
-+               panel.first= grid(), ylim = c(0,4), xlim = c(-6,6))
-> infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
-+               panel.first= grid(), ylim = c(0,4,-3,3), xlim = c(-6,6))
-> par(mfrow=c(1,3))
-> infoPlot(IC1, mfColRow = FALSE, panel.first= grid(),
-+          ylim = c(0,4,0,.3,0,.8), xlim=c(-6,6))
-> par(mfrow=c(1,1))
-> data <- r(N)(20)
-> par(mfrow=c(1,3))
-> infoPlot(IC1, data=data, mfColRow = FALSE, panel.first= grid(),
-+          with.lab = TRUE, cex.pts=2,
-+          which.lbs = c(1:4,15:20), which.Order = 1:6,
-+          return.Order = TRUE)
-$IC
- [1] 17 16  2 20  1 19  3 18 15  4
-
-$IC.class
- [1] 17 16  2 20  1 19  3 18 15  4
-
-> infoPlot(IC1, data=data[1:10], mfColRow = FALSE, panel.first= grid(),
-+          with.lab = TRUE, cex.pts=0.7)
-> par(mfrow=c(1,1))
+> 
+> ## don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D ## selection of subpanels for plotting
+> ##D par(mfrow=c(1,2))
+> ##D infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"))
+> ##D infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"), log="y")
+> ##D 
+> ##D infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
+> ##D               panel.first= grid(), ylim = c(0,4), xlim = c(-6,6))
+> ##D infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
+> ##D               panel.first= grid(), ylim = c(0,4,-3,3), xlim = c(-6,6))
+> ##D 
+> ##D par(mfrow=c(1,3))
+> ##D infoPlot(IC1, mfColRow = FALSE, panel.first= grid(),
+> ##D          ylim = c(0,4,0,.3,0,.8), xlim=c(-6,6))
+> ##D par(mfrow=c(1,1))
+> ##D 
+> ##D data <- r(N)(20)
+> ##D par(mfrow=c(1,3))
+> ##D infoPlot(IC1, data=data, mfColRow = FALSE, panel.first= grid(),
+> ##D          with.lab = TRUE, cex.pts=2,
+> ##D          which.lbs = c(1:4,15:20), which.Order = 1:6,
+> ##D          return.Order = TRUE)
+> ##D infoPlot(IC1, data=data[1:10], mfColRow = FALSE, panel.first= grid(),
+> ##D          with.lab = TRUE, cex.pts=0.7)
+> ##D par(mfrow=c(1,1))
+> ##D 
+> ##D ICr <- makeIC(list(function(x)sign(x),function(x)sign(abs(x)-qnorm(.75))),N)
+> ##D data <- r(N)(600)
+> ##D data.c <- c(data, 1000*data[1:30])
+> ##D par(mfrow=c(3,1))
+> ##D infoPlot(ICr, data=data.c, tmar=c(4.1,0,0), bmar=c(0,0,4.1),
+> ##D          xaxt=c("n","n","s"), mfColRow = FALSE, panel.first= grid(),
+> ##D          cex.pts=c(.9,.9), alpha.trsp=20, lwd=2, lwdI=1.5, col=3,
+> ##D          col.pts=c(3,2), colI=2, pch.pts=c(20,20), inner=FALSE,
+> ##D          scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
+> ##D          scaleY=TRUE, scaleY.fct=function(x) pchisq(x,df=1),
+> ##D          scaleY.inv=function(x)qchisq(x,df=1),legend.cex = 1.0)
+> ##D 
+> ## End(Not run)
 > 
 > 
 > 
-> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("infoPlot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("internals_ddPlot")
 > ### * internals_ddPlot
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: internals_for_RobAStBase_ddPlot
 > ### Title: Internal / Helper functions of package RobAStBase for ddPlot
 > ### Aliases: internals_for_RobAStBase_ddPlot .ddPlot.MatNtNtCoCo
@@ -1286,41 +2250,8 @@ $IC.class
 +         lwd=2, lwd.cutoff=4, lty=2, col.cutoff =2, col.idn="green",
 +         col = "blue", adj=0.4, pos=4,id.n = sample(1:200,size=100),
 +         lab.pts=letters,log="x", main="GA", sub="NO",cex.sub=0.2)
-$xlab
-[1] "Norm.x"
-
-$ylab
-[1] "Norm.y"
-
-$offset
-[1] 0
-
-$lwd
-[1] 2
-
-$lty
-[1] 2
-
-$col
-[1] "blue"
-
-$pos
-[1] 4
-
-$log
-[1] "x"
-
-$main
-[1] "GA"
-
-$sub
-[1] "NO"
-
-$cex.sub
-[1] 0.2
-
-[1] 1.3
-[1] "green"
+Warning in (function (which = "plot", lty = "solid", ...)  :
+  "log" is not a graphical parameter
 $id.x
 [1]  83 161 156 134  81 177
 
@@ -1349,12 +2280,51 @@ $cutoff.y.v
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("internals_ddPlot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("interpolRisk-class")
+> ### * interpolRisk-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: interpolRisk-class
+> ### Title: Interpolated Risks
+> ### Aliases: interpolRisk-class OMSRRisk-class RMXRRisk-class MBRRisk-class
+> ###   OMSRRisk RMXRRisk MBRRisk
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> new("OMSRRisk")
+An object of class "OMSRRisk" 
+risk type:	 .OMSE 
+> OMSRRisk()
+An object of class "OMSRRisk" 
+risk type:	 .OMSE 
+> RMXRRisk()
+An object of class "RMXRRisk" 
+risk type:	 .RMXE 
+> MBRRisk()
+An object of class "MBRRisk" 
+risk type:	 .MBRE 
+> myrisk <- MBRRisk(samplesize=100)
+> samplesize(myrisk)
+[1] 100
+> samplesize(myrisk) <- 20
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("interpolRisk-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("kStepEstimator")
 > ### * kStepEstimator
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: kStepEstimator
 > ### Title: Function for the computation of k-step estimates
 > ### Aliases: kStepEstimator
@@ -1380,60 +2350,75 @@ $cutoff.y.v
 + pICList(est1)
 + start(est1)
 + 
-+ ## a transformed model
-+ tfct <- function(x){
-+     nms0 <- c("mean","sd")
-+     nms  <- "comb"
-+     fval0 <- x[1]+2*x[2]
-+     names(fval0) <- nms
-+     mat0 <- matrix(c(1,2), nrow = 1, dimnames = list(nms,nms0))
-+     return(list(fval = fval0, mat = mat0))
-+ }
-+ 
-+ N1.traf <- N1; trafo(N1.traf) <- tfct
-+ N1R.traf <- N1.Rob; trafo(N1R.traf) <- tfct
-+ IC1.traf <- optIC(model = N1R.traf, risk = asMSE())
-+ (est0.traf <- MDEstimator(x, N1.traf))
-+ (est1.traf <- kStepEstimator(x, IC1.traf, est0, steps = 3,
-+                 withIC = TRUE, withPIC = TRUE, withUpdateInKer = FALSE))
-+ (est1a.traf <- kStepEstimator(x, IC1.traf, est0, steps = 3,
-+                 withIC = TRUE, withPIC = TRUE, withUpdateInKer = TRUE))
-+ estimate(est1.traf)
-+ ksteps(est1.traf)
-+ pICList(est1.traf)
-+ startval(est1.traf)
-+ 
-+ untransformed.estimate(est1.traf)
-+ uksteps(est1.traf)
-+ ICList(est1.traf)
-+ ustartval(est1.traf)
-+ 
-+ estimate(est1a.traf)
-+ ksteps(est1a.traf)
-+ pICList(est1a.traf)
-+ startval(est1a.traf)
-+ 
-+ untransformed.estimate(est1a.traf)
-+ uksteps(est1a.traf)
-+ ICList(est1a.traf)
-+ ustartval(est1a.traf)
++ ## don't run to reduce check time on CRAN
++ ## Not run: 
++ ##D ## a transformed model
++ ##D tfct <- function(x){
++ ##D     nms0 <- c("mean","sd")
++ ##D     nms  <- "comb"
++ ##D     fval0 <- x[1]+2*x[2]
++ ##D     names(fval0) <- nms
++ ##D     mat0 <- matrix(c(1,2), nrow = 1, dimnames = list(nms,nms0))
++ ##D     return(list(fval = fval0, mat = mat0))
++ ##D }
++ ##D 
++ ##D N1.traf <- N1; trafo(N1.traf) <- tfct
++ ##D N1R.traf <- N1.Rob; trafo(N1R.traf) <- tfct
++ ##D IC1.traf <- optIC(model = N1R.traf, risk = asMSE())
++ ##D (est0.traf <- MDEstimator(x, N1.traf))
++ ##D (est1.traf <- kStepEstimator(x, IC1.traf, est0, steps = 3,
++ ##D                 withIC = TRUE, withPIC = TRUE, withUpdateInKer = FALSE))
++ ##D (est1a.traf <- kStepEstimator(x, IC1.traf, est0, steps = 3,
++ ##D                 withIC = TRUE, withPIC = TRUE, withUpdateInKer = TRUE))
++ ##D estimate(est1.traf)
++ ##D ksteps(est1.traf)
++ ##D pICList(est1.traf)
++ ##D startval(est1.traf)
++ ##D 
++ ##D untransformed.estimate(est1.traf)
++ ##D uksteps(est1.traf)
++ ##D ICList(est1.traf)
++ ##D ustartval(est1.traf)
++ ##D 
++ ##D estimate(est1a.traf)
++ ##D ksteps(est1a.traf)
++ ##D pICList(est1a.traf)
++ ##D startval(est1a.traf)
++ ##D 
++ ##D untransformed.estimate(est1a.traf)
++ ##D uksteps(est1a.traf)
++ ##D ICList(est1a.traf)
++ ##D ustartval(est1a.traf)
++ ## End(Not run)
 + }
 Loading required package: ROptEst
-            [,1]
-mean -0.05297991
-sd    0.92479741
+Evaluations of Minimum Kolmogorov distance estimate:
+----------------------------------------------------
+An object of class "Estimate" 
+generated by call
+  MDEstimator(x = x, ParamFamily = NormLocationScaleFamily())
+samplesize:   100
+estimate:
+       mean          sd 
+-0.05297991  0.92479741 
+Criterion:
+Kolmogorov distance 
+         0.05524875 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("kStepEstimator", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 
-detaching ‘package:ROptEst’
+detaching 'package:ROptEst'
 
 > nameEx("makeIC-methods")
 > ### * makeIC-methods
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: makeIC-methods
 > ### Title: Generic Function for making ICs consistent at a possibly
 > ###   different model
@@ -1456,6 +2441,9 @@ precision of centering:	 3.9
 precision of Fisher consistency:
      prob
 prob   12
+precision of Fisher consistency - relativ error [%]:
+     prob
+prob 1200
 maximum deviation 
                12 
 > 
@@ -1464,34 +2452,43 @@ maximum deviation
 > 
 > ## check IC properties
 > checkIC(IC2)
-precision of centering:	 7.272702e-17 
+precision of centering:	 -3.523763e-18 
 precision of Fisher consistency:
               prob
 prob -1.110223e-16
+precision of Fisher consistency - relativ error [%]:
+              prob
+prob -1.110223e-14
 maximum deviation 
      1.110223e-16 
 > 
 > ## slot modifyIC is filled in case of IC2
 > IC3 <- modifyIC(IC2)(BinomFamily(13, 0.2), IC2)
 > checkIC(IC3)
-precision of centering:	 -3.091672e-18 
+precision of centering:	 2.152077e-17 
 precision of Fisher consistency:
      prob
 prob    0
+precision of Fisher consistency - relativ error [%]:
+     prob
+prob    0
 maximum deviation 
-     3.091672e-18 
+     2.152077e-17 
 > ## identical to
 > checkIC(IC3, BinomFamily(13, 0.2))
-precision of centering:	 -3.091672e-18 
+precision of centering:	 2.152077e-17 
 precision of Fisher consistency:
      prob
 prob    0
+precision of Fisher consistency - relativ error [%]:
+     prob
+prob    0
 maximum deviation 
-     3.091672e-18 
+     2.152077e-17 
 > 
 > IC4 <- makeIC(sin, B)
 $Curve
-An object of class “EuclRandVarList” 
+An object of class "EuclRandVarList" 
 Domain:	Real Space with dimension 1 
 [[1]]
 length of Map:	 1 
@@ -1500,11 +2497,11 @@ Range:	Real Space with dimension 1
 $CallL2Fam
 L2Fam@fam.call
 
-An object of class “IC” 
+An object of class "IC" 
 ### name:	 square integrable (partial) influence curve 
 ### L2-differentiable parametric family:	 Binomial family 
 
-### 'Curve':	An object of class “EuclRandVarList” 
+### 'Curve':	An object of class "EuclRandVarList" 
 Domain:	Real Space with dimension 1 
 [[1]]
 length of Map:	 1 
@@ -1513,19 +2510,22 @@ Range:	Real Space with dimension 1
 ### Infos:
      method message
 > checkIC(IC4)
-precision of centering:	 2.715274e-17 
+precision of centering:	 6.336912e-18 
 precision of Fisher consistency:
               prob
 prob -1.110223e-16
+precision of Fisher consistency - relativ error [%]:
+              prob
+prob -1.110223e-14
 maximum deviation 
      1.110223e-16 
 > 
 > (IC5 <- makeIC(list(function(x)x^3), B, name="a try"))
-An object of class “IC” 
+An object of class "IC" 
 ### name:	 a try 
 ### L2-differentiable parametric family:	 Binomial family 
 
-### 'Curve':	An object of class “EuclRandVarList” 
+### 'Curve':	An object of class "EuclRandVarList" 
 Domain:	Real Space with dimension 1 
 [[1]]
 length of Map:	 1 
@@ -1535,40 +2535,41 @@ Range:	Real Space with dimension 1
      method message                                                  
 [1,] "IC<-" "generated by affine linear trafo to enforce consistency"
 > plot(IC5)
+NULL
 > checkIC(IC5)
-precision of centering:	 2.565774e-17 
+precision of centering:	 1.149699e-17 
 precision of Fisher consistency:
      prob
 prob    0
+precision of Fisher consistency - relativ error [%]:
+     prob
+prob    0
 maximum deviation 
-     2.565774e-17 
+     1.149699e-17 
 > 
-> N0 <- NormLocationScaleFamily()
-> IC6 <- makeIC(list(sin,cos),N0)
-> plot(IC6)
-> checkIC(IC6)
-precision of centering:	 0 -1.999999e-07 
-precision of Fisher consistency:
-              mean           sd
-mean -2.220446e-16 0.000000e+00
-sd    0.000000e+00 2.220446e-16
-maximum deviation 
-     1.999999e-07 
-> 
-> getRiskIC(IC6,risk=trAsCov())$trAsCov$value
-[1] 1.718278
-> getRiskIC(IC6,risk=asBias(),neighbor=ContNeighborhood())$asBias$value
-[1] 2.648721
+> ## don't run to reduce check time on CRAN
+> ## Not run: 
+> ##D N0 <- NormLocationScaleFamily()
+> ##D IC6 <- makeIC(list(sin,cos),N0)
+> ##D plot(IC6)
+> ##D checkIC(IC6)
+> ##D 
+> ##D getRiskIC(IC6,risk=trAsCov())$trAsCov$value
+> ##D getRiskIC(IC6,risk=asBias(),neighbor=ContNeighborhood())$asBias$value
+> ## End(Not run)
 > 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("makeIC-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("optIC")
 > ### * optIC
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: optIC
 > ### Title: Generic function for the computation of optimally robust ICs
 > ### Aliases: optIC optIC-methods optIC,L2ParamFamily,asCov-method
@@ -1581,22 +2582,29 @@ maximum deviation
 > ## classical optimal IC
 > IC0 <- optIC(model = B, risk = asCov())
 > plot(IC0) # plot IC
+NULL
 > checkIC(IC0, B)
-precision of centering:	 -4.254490e-18 
+precision of centering:	 -2.631986e-17 
 precision of Fisher consistency:
-             prob
-prob 2.220446e-16
+              prob
+prob -1.110223e-16
+precision of Fisher consistency - relativ error [%]:
+              prob
+prob -1.110223e-14
 maximum deviation 
-     2.220446e-16 
+     1.110223e-16 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("optIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("outlyingPlotIC")
 > ### * outlyingPlotIC
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: outlyingPlotIC
 > ### Title: Function outlyingPlotIC in Package 'RobAStBase'
 > ### Aliases: outlyingPlotIC
@@ -1615,28 +2623,22 @@ maximum deviation
 + outlyingPlotIC(xn, IC.x=N0.IC1)
 + }
 Loading required package: ROptEst
-$xlim
-[1] TRUE
 
-$ylim
-[1] TRUE
+Robust asVar:
+          evIC.1... evIC.2...
+evIC.1...  1.792119 -2.648152
+evIC.2... -2.648152 33.365165
+Warning in rep(col.cutoff, length.out = 2) :
+  'x' is NULL so the result will be NULL
+Warning in stats::runif(length(x), -amount, amount) : NAs produced
+Warning in stats::runif(length(x), -amount, amount) : NAs produced
 
-$main
-[1] "Outlyingness by means of a distance-distance plot"
-
-[1] 1
-[1] "black"
-$xlim
-[1] TRUE
-
-$ylim
-[1] TRUE
-
-$main
-[1] "Outlyingness by means of a distance-distance plot"
-
-[1] 1
-[1] "black"
+Robust asVar:
+           evIC.1...  evIC.2...
+evIC.1...  0.7130141 -0.6763236
+evIC.2... -0.6763236  5.4699718
+Warning in rep(col.cutoff, length.out = 2) :
+  'x' is NULL so the result will be NULL
 $id.x
 integer(0)
 
@@ -1648,15 +2650,15 @@ integer(0)
 
 $qtx
        0%       25%       50%       75%      100% 
-0.8655423 0.9150694 1.1443920 1.9218964 1.9218966 
+0.9254527 1.4720053 1.9122569 2.8925078 4.4553510 
 
 $qty
-      0%      25%      50%      75%     100% 
-0.986385 1.009222 1.056527 1.982846 2.333311 
+       0%       25%       50%       75%      100% 
+0.3674573 0.7756047 1.0718009 1.6382899 2.3754474 
 
 $cutoff.x.v
      95% 
-2.439106 
+4.684533 
 
 $cutoff.y.v
 [1] 2.447747
@@ -1664,15 +2666,18 @@ $cutoff.y.v
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("outlyingPlotIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 
-detaching ‘package:ROptEst’
+detaching 'package:ROptEst'
 
 > nameEx("plot-methods")
 > ### * plot-methods
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: plot-methods
 > ### Title: Methods for Function plot in Package 'RobAStBase'
 > ### Aliases: plot plot-methods plot,IC,missing-method
@@ -1683,8 +2688,10 @@ detaching ‘package:ROptEst’
 > 
 > IC1 <- new("IC")
 > plot(IC1)
+NULL
 > plot(IC1, main = TRUE, panel.first= grid(),
 +      col = "blue", cex.main = 2, cex.inner = 1)
+NULL
 > 
 > ### selection of subpanels for plotting
 > N <- NormLocationScaleFamily(mean=0, sd=1) 
@@ -1693,12 +2700,18 @@ detaching ‘package:ROptEst’
 > plot(IC2, main = TRUE, panel.first= grid(),
 +      col = "blue", cex.main = 2, cex.inner = 0.6,
 +      mfColRow = FALSE, to.draw.arg=c("sd"))
+NULL
 > 
 > ## xlim and ylim arguments
 > plot(IC2, main = TRUE, panel.first= grid(), 
 +      ylim=c(-3,3), xlim=c(-2,3))
+[1] -2  3
+[1] -2  3
 > plot(IC2, main = TRUE, panel.first= grid(), 
-+      ylim=c(-3,3,-1,3), xlim=c(-2,3))
++      ylim=c(-3,3,-1,3), xlim=c(-2,3),
++      with.legend = TRUE)
+[1] -2  3
+[1] -2  3
 > 
 > data <- r(N)(30)
 > plot(IC2, data, panel.first= grid(),
@@ -1706,10 +2719,16 @@ detaching ‘package:ROptEst’
 +      cex.pts = 3, pch.pts = 1:2, col.pts="green",
 +      with.lab = TRUE, which.lbs = c(1:4,15:20),
 +      which.Order = 1:6, return.Order = TRUE)
- [1] 17 16  2 20  1 19  3 18 15  4
+[1] -2  3
+[1] -2  3
+[1] -2  3
+[1] -2  3
+ [1]  4 15 18  3 19  1 20  2 16 17
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plot-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("qqplot")
@@ -1717,6 +2736,7 @@ detaching ‘package:ROptEst’
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: qqplot
 > ### Title: Methods for Function qqplot in Package 'RobAStBase'
 > ### Aliases: qqplot qqplot-methods qqplot,ANY,RobModel-method
@@ -1772,10 +2792,37 @@ $y
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("qqplot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("samplesize-methods")
+> ### * samplesize-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: samplesize-methods
+> ### Title: Methods for Function samplesize in Package 'RobAStBase'
+> ### Aliases: samplesize,interpolRisk-method samplesize
+> ###   samplesize<-,interpolRisk-method samplesize<-
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> myrisk <- MBRRisk(samplesize=100)
+> samplesize(myrisk)
+[1] 100
+> samplesize(myrisk) <- 20
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("samplesize-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > ### * <FOOTER>
 > ###
-> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  83.43 0.1 83.867 0 0 
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  30.05 0.38 30.78 NA NA 
 > grDevices::dev.off()
 null device 
           1 

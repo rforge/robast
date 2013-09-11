@@ -28,10 +28,27 @@ InfluenceCurve <- function(name, Curve = EuclRandVarList(EuclRandVariable(Domain
     return(IC1)
 }
 
+### helper function to recursively evaluate list
+.evalListRec <- function(list0){ ## a list
+    len <- length(list0)
+    if(len==0L) return(list0)
+    for(i in 1:len) {
+        if(is.list(list0[[i]])){ list0[[i]] <- .evalListRec(list0[[i]])
+           }else list0[[i]] <- eval(list0[[i]])
+    }
+    return(list0)
+}
+
 ## access methods
 setMethod("name", "InfluenceCurve", function(object) object@name)
 setMethod("Curve", "InfluenceCurve", function(object) object@Curve)
-setMethod("Risks", "InfluenceCurve", function(object) object@Risks)
+setMethod("Risks", "InfluenceCurve", function(object){
+            risks <- object@Risks
+            risks <- .evalListRec(risks)
+            eval.parent(object@Risks <- risks)
+            risks
+})
+
 setMethod("Infos", "InfluenceCurve", function(object) object@Infos)
 
 ## add risk or information
