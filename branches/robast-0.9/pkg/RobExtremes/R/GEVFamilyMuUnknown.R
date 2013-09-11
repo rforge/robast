@@ -253,7 +253,8 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
         I22 <- I22 - G11*2*k^2*(k+1) + G01*2*k*(1+k)+k^2 *G02
         I22 <- I22 /k^4
         mat <- PosSemDefSymmMatrix(matrix(c(I00,I01,I02,I01,I11,I12,I02,I12,I22),3,3))
-        dimnames(mat) <- list(scaleshapename,scaleshapename)
+        lcs <- c("location",scaleshapename)
+        dimnames(mat) <- list(lcs,lcs)
         return(mat)
     }
 

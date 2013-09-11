@@ -10,10 +10,22 @@
 #######################################
 version 0.9
 #######################################
-EVD functionality (including Gumbel distribution) has
+
+user-visible CHANGES:
++ EVD functionality (including Gumbel distribution) has been
 moved from distrEx to new pkg RobExtremes; to avoid failure
 of ROptEstOld, this functionality has been copied to ROptEstOld
 as well.
+
+GENERAL ENHANCEMENTS:
++ cleaned DESCRIPTION and NAMESPACE file as to Imports/Depends
+
+under the hood:
+
++ added .Rbuildignore
+ 
+BUGFIXES
+
 
 #######################################
 version 0.8

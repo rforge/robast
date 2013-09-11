@@ -20,9 +20,14 @@ Creation of this new package
 + created generating functions for GEV, Weibull, Pareto families  
 + PickandsEstimator (incl. as.var)
 
++ new L2ParamFamily GEVFamilyMuUnkown (with corresponding ES, EL, VaR)
+
 under the hood:
 
++ cleaned DESCRIPTION and NAMESPACE file as to Imports/Depends
 + RobASt-Pkgs: DESCRIPTION depends become stricter (requiring distrMod, distrEx, distr >=2.4 to be on the safe side)
+
++ added .Rbuildignore
 
 ++ kMad:
 + kMad.c now has Unix ending (LF instead of CR, CRLF
@@ -109,7 +114,11 @@ under the hood:
 + TestInfrastructure for RobExtremes
   Tests for RobExtremes
 +  to share some ideas: some test files in connection with RobExtremes
++ use of unit tests
 
++ wrapper functions use default rescaling controlled by S4-method rescaleFct
+  dispatching on the respective model; particular methods for GEV, GPareto, 
+  GEVMuUnknown
 
 bugfixes:
 

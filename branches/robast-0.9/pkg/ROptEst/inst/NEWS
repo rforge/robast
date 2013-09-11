@@ -13,6 +13,7 @@ version 0.9
 
 user-visible CHANGES:
 
++ new wrapper function CniperPointPlot
 
 + new more modularized user-interface robest
 + roptest (the new one) gains argument withMDE to skip call to MDE
@@ -39,6 +40,7 @@ user-visible CHANGES:
 GENERAL ENHANCEMENTS:
 
 + RobASt-Pkgs: DESCRIPTION depends become stricter (requiring distrMod, distrEx, distr >=2.4 to be on the safe side)
++ cleaned DESCRIPTION and NAMESPACE file as to Imports/Depends
 + deleted chm folders --- they are no longer needed
 
 + delayed evaluation is done to speed up things
@@ -51,6 +53,8 @@ GENERAL ENHANCEMENTS:
 
 
 under the hood:
+
++ added .Rbuildignore
 
 + Had to add 'importFrom(distr, q)' to NAMESPACE to avoid error with 
   function 'q' inside of 'showdown' - why?!
@@ -110,6 +114,7 @@ under the hood:
    able to write to other files (other than sysdata.rda) => no need anymore to
    write in separate folders when creating new grids in parallel
 
++ use of unit tests
 
 BUGFIXES:
 + a minimal correction in getInfRobIC_asGRisk.R

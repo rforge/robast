@@ -12,6 +12,8 @@ version 0.9
 #######################################
 
 user-visible CHANGES:
++ new wrapper function InfoPlot, ComparePlot, PlotIC
+
 
 GENERAL ENHANCEMENTS:
 
@@ -22,8 +24,14 @@ GENERAL ENHANCEMENTS:
 + removed calls to require from R sources and replaced it by directives in the NAMESPACE file
 + all packages get a DESCRIPTION tag "ByteCompile"
 
-
 under the hood:
+
++ wrapper functions use default rescaling controlled by S4-method rescaleFct
+  dispatching on the respective model
+
++ added .Rbuildignore
+
++ cleaned DESCRIPTION and NAMESPACE file as to Imports/Depends
 
 + created new interpolRisk-class to be able to use speed up in (new version) of roptest
 + interpolRisks extended by slot samplesize
@@ -59,6 +67,7 @@ under the hood:
 
 + .rescalefct looses argument scaleY.inv (not needed).
 
++ use of unit tests
 
 BUGFIXES:
 
