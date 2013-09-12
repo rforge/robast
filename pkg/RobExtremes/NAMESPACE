@@ -14,9 +14,9 @@ import("evd")
 
 exportClasses("GumbelParameter",
               "ParetoParameter",
-			  "GParetoParameter",
-			  "GEVParameter",
-			  "LDEstimate")
+              "GParetoParameter",
+              "GEVParameter",
+              "LDEstimate")
 exportClasses("Gumbel", "Pareto", "GPareto", "GEV")
 exportClasses("GParetoFamily", "GumbelLocationFamily", "WeibullFamily",
               "ParetoFamily", "GEVFamily", "GEVFamilyMuUnknown")
@@ -32,7 +32,7 @@ exportMethods("validParameter",
               "E", "var", "IQR", "skewness", "kurtosis", "median", "dispersion")
 exportMethods("modifyModel", "getStartIC")
 exportMethods("moveL2Fam2RefParam",
-			  "moveICBackFromRefParam")			  
+              "moveICBackFromRefParam")			  
 
 export("EULERMASCHERONICONSTANT","APERYCONSTANT")
 export("Gumbel", "Pareto", "GPareto", "GEV")
