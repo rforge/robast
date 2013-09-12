@@ -36,9 +36,9 @@
   invisible(NULL)
 }
 \description{
-  The wrapper takes most of arguments to function
-  comparePlot by default and gives a user possibility to
-  run the function with low number of arguments
+  The wrapper \code{ComparePlot} (capital C!) takes most of arguments 
+  to function \code{comparePlot} (lower case c!) by default and gives a user 
+  possibility to run the function with low number of arguments.
 }
 \section{Details}{
   Calls \code{comparePlot} with suitably chosen defaults;

@@ -29,9 +29,9 @@
   invisible(NULL)
 }
 \description{
-  The wrapper takes most of arguments to the plot method by
-  default and gives a user possibility to run the function
-  with low number of arguments
+  The wrapper \code{PlotIC} takes most of arguments to the \code{plot} 
+  method by default and gives a user possibility to run the function
+  with low number of arguments.
 }
 \section{Details}{
   Calls \code{plot} with suitably chosen defaults; if
