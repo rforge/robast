@@ -12,15 +12,16 @@ estimators in case of normal location and/or scale.
 \details{
 \tabular{ll}{
 Package: \tab RobLox \cr
-Version: \tab 0.8.2 \cr
-Date: \tab 2012-09-12 \cr
-Depends: \tab R(>= 2.7.0), stats, lattice, RColorBrewer, Biobase, distr, distrMod, RobAStBase\cr
+Version: \tab 0.9 \cr
+Date: \tab 2013-09-12 \cr
+Depends: \tab R(>= 2.7.0), stats, lattice, RColorBrewer, RandVar, Biobase, distr, distrMod,
+RobAStBase \cr
 Suggests: \tab MASS\cr
 LazyLoad: \tab yes \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 519 \cr
+SVNRevision: \tab 696 \cr
 }
 }
 \author{Matthias Kohl  \email{matthias.kohl@stamats.de}}
@@ -56,11 +57,15 @@ estimate(res)
 confint(res)
 confint(res, method = symmetricBias())
 pIC(res)
+
+## don't run to reduce check time on CRAN
+\dontrun{
 checkIC(pIC(res))
 Risks(pIC(res))
 Infos(pIC(res))
 plot(pIC(res))
 infoPlot(pIC(res))
+}
 
 ## row-wise application
 ind <- rbinom(200, size=1, prob=0.05) 

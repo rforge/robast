@@ -13,14 +13,16 @@
 \usage{
 \S4method{optIC}{L2RegTypeFamily,asCov}(model, risk)
 
-\S4method{optIC}{InfRobRegTypeModel,asRisk}(model, risk, z.start = NULL, A.start = NULL, upper = 1e4, 
-             maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE)
+\S4method{optIC}{InfRobRegTypeModel,asRisk}(model, risk, z.start = NULL,
+                 A.start = NULL, upper = 1e4, maxiter = 50,
+                 tol = .Machine$double.eps^0.4, warn = TRUE)
 
-\S4method{optIC}{InfRobRegTypeModel,asUnOvShoot}(model, risk, upper = 1e4, maxiter = 50, 
-             tol = .Machine$double.eps^0.4, warn = TRUE)
+\S4method{optIC}{InfRobRegTypeModel,asUnOvShoot}(model, risk, upper = 1e4,
+                 maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE)
 
-\S4method{optIC}{FixRobRegTypeModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, 
-             maxiter = 50, tol = .Machine$double.eps^0.4, warn = TRUE, Algo = "A", cont = "left")
+\S4method{optIC}{FixRobRegTypeModel,fiUnOvShoot}(model, risk, sampleSize,
+                 upper = 1e4, maxiter = 50, tol = .Machine$double.eps^0.4,
+                 warn = TRUE, Algo = "A", cont = "left")
 }
 \arguments{
   \item{model}{ probability model. }

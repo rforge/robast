@@ -1,6 +1,6 @@
 
-R version 2.14.2 RC (2012-02-25 r58490)
-Copyright (C) 2012 The R Foundation for Statistical Computing
+R Under development (unstable) (2013-02-06 r61845) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -23,21 +23,43 @@ Type 'q()' to quit R.
 > options(warn = 1)
 > library('RobLoxBioC')
 Loading required package: Biobase
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following object is masked from ‘package:stats’:
+
+    xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, as.data.frame,
+    cbind, colnames, duplicated, eval, get, intersect, lapply, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int, rank,
+    rbind, rep.int, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unlist
 
 Welcome to Bioconductor
 
-  Vignettes contain introductory material. To view, type
-  'browseVignettes()'. To cite Bioconductor, see
-  'citation("Biobase")' and for packages 'citation("pkgname")'.
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
 
 Loading required package: affy
 Loading required package: beadarray
 Loading required package: ggplot2
-Welcome to beadarray version 2.4.1
+Welcome to beadarray version 2.9.1
 beadarray versions >= 2.0.0 are substantial updates from beadarray 1.16.0 and earlier. Please see package vignette for details
 Loading required package: distr
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.7.3)
+:startupmsg>  Utilities for start-up messages (version 0.8)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
@@ -45,8 +67,14 @@ Loading required package: startupmsg
 Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version
-:SweaveListingUtils>  0.5.5)
+:SweaveListingUtils>  TeX listings package (version 0.6)
+:SweaveListingUtils> 
+:SweaveListingUtils>  NOTE: Support for this package
+:SweaveListingUtils>  will stop soon.
+:SweaveListingUtils> 
+:SweaveListingUtils>  Package 'knitr' is providing the
+:SweaveListingUtils>  same functionality in a better
+:SweaveListingUtils>  way.
 :SweaveListingUtils> 
 :SweaveListingUtils>  Some functions from package 'base'
 :SweaveListingUtils>  are intentionally masked ---see
@@ -67,12 +95,12 @@ Loading required package: SweaveListingUtils
 
 Attaching package: ‘SweaveListingUtils’
 
-The following object(s) are masked from ‘package:base’:
+The following object is masked from ‘package:base’:
 
     library, require
 
 :distr>  Object oriented implementation of distributions (version
-:distr>  2.3.4)
+:distr>  2.4)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -93,7 +121,7 @@ The following object(s) are masked from ‘package:base’:
 
 Attaching package: ‘distr’
 
-The following object(s) are masked from ‘package:stats’:
+The following object is masked from ‘package:stats’:
 
     df, qqplot, sd
 
@@ -102,26 +130,14 @@ Loading required package: lattice
 Loading required package: RColorBrewer
 Loading required package: distrMod
 Loading required package: distrEx
-Loading required package: evd
-
-Attaching package: ‘evd’
-
-The following object(s) are masked from ‘package:lattice’:
-
-    qq
-
-Loading required package: actuar
-
-Attaching package: ‘actuar’
-
-The following object(s) are masked from ‘package:grDevices’:
-
-    cm
-
-:distrEx>  Extensions of package distr (version 2.3.2)
+:distrEx>  Extensions of package distr (version 2.4)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
-:distrEx>  attached /before/ package "distrEx". See distrExMASK().
+:distrEx>  attached /before/ package "distrEx". See
+:distrEx>  distrExMASK().Note: Extreme value distribution
+:distrEx>  functionality has been moved to
+:distrEx> 
+:distrEx>        package "RobExtremes". See distrExMOVED().
 :distrEx> 
 :distrEx>  For more information see ?"distrEx", NEWS("distrEx"), as
 :distrEx>  well as
@@ -133,12 +149,12 @@ The following object(s) are masked from ‘package:grDevices’:
 
 Attaching package: ‘distrEx’
 
-The following object(s) are masked from ‘package:stats’:
+The following object is masked from ‘package:stats’:
 
     IQR, mad, median, var
 
 Loading required package: RandVar
-:RandVar>  Implementation of random variables (version 0.8.1)
+:RandVar>  Implementation of random variables (version 0.9)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -149,7 +165,7 @@ Loading required package: RandVar
 Loading required package: MASS
 Loading required package: stats4
 :distrMod>  Object oriented implementation of probability models
-:distrMod>  (version 2.3.3)
+:distrMod>  (version 2.4)
 :distrMod> 
 :distrMod>  Some functions from pkg's 'base' and 'stats' are
 :distrMod>  intentionally masked ---see distrModMASK().
@@ -170,20 +186,26 @@ Loading required package: stats4
 
 Attaching package: ‘distrMod’
 
-The following object(s) are masked from ‘package:stats4’:
+The following object is masked from ‘package:stats4’:
 
     confint
 
-The following object(s) are masked from ‘package:stats’:
+The following object is masked from ‘package:stats’:
 
     confint
 
-The following object(s) are masked from ‘package:base’:
+The following object is masked from ‘package:base’:
 
     norm
 
 Loading required package: RobAStBase
-:RobAStBase>  Robust Asymptotic Statistics (version 0.8.1)
+Loading required package: rrcov
+Loading required package: robustbase
+Loading required package: pcaPP
+Loading required package: mvtnorm
+Scalable Robust Estimators with High Breakdown Point (version 1.3-02)
+
+:RobAStBase>  Robust Asymptotic Statistics (version 0.9)
 :RobAStBase> 
 :RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
 :RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
@@ -198,18 +220,29 @@ Loading required package: RobAStBase
 
 Attaching package: ‘RobAStBase’
 
-The following object(s) are masked from ‘package:graphics’:
+The following object is masked from ‘package:graphics’:
 
     clip
 
 > 
-> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".ExTimings", "RobLoxBioC-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   format(x[1L:3L])
++ },
++ pos = 'CheckExEnv')
+> 
 > cleanEx()
 > nameEx("0RobLoxBioC-package")
 > ### * 0RobLoxBioC-package
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RobLoxBioC-package
 > ### Title: Infinitesimally robust estimators for preprocessing omics data
 > ### Aliases: RobLoxBioC-package RobLoxBioC
@@ -221,12 +254,16 @@ The following object(s) are masked from ‘package:graphics’:
 > 
 > 
 > 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("0RobLoxBioC-package", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("KolmogorovMinDist")
 > ### * KolmogorovMinDist
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: KolmogorovMinDist
 > ### Title: Generic Function for Computing Minimum Kolmogorov Distance for
 > ###   Biological Data
@@ -299,12 +336,16 @@ $n
 > 
 > 
 > 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("KolmogorovMinDist", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("SimStudies")
 > ### * SimStudies
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: SimStudies
 > ### Title: Perform Monte-Carlo Study.
 > ### Aliases: AffySimStudy IlluminaSimStudy
@@ -338,12 +379,16 @@ relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 > 
 > 
 > 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("SimStudies", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("robloxbioc")
 > ### * robloxbioc
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: robloxbioc
 > ### Title: Generic Function for Preprocessing Biological Data
 > ### Aliases: robloxbioc robloxbioc-methods robloxbioc,matrix-method
@@ -374,37 +419,31 @@ relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 [1,] -0.02545634 1.042738
 [2,] -0.16757528 1.004658
 > 
-> ## the function is designed for large scale problems
-> X <- matrix(rnorm(50000*20, mean = 1), nrow = 50000)
-> system.time(robloxbioc(X))
-   user  system elapsed 
-  5.425   0.084   5.528 
-> 
-> ## using Affymetrix-Data
-> ## confer example to generateExprVal.method.mas
-> ## A more worked out example can be found in the scripts folder
-> ## of the package.
-> data(SpikeIn)
-> probes <- pm(SpikeIn) 
-> mas <- generateExprVal.method.mas(probes)
-> rl <- 2^robloxbioc(log2(t(probes)))
-> concentrations <- as.numeric(colnames(SpikeIn))
-> plot(concentrations, mas$exprs, log="xy", ylim=c(50,10000), type="b",
-+      ylab = "expression measures")
-> points(concentrations, rl[,1], pch = 20, col="orange", type="b")
-> legend("topleft", c("MAS", "roblox"), pch = c(1, 20))
-> 
+> ## Don't run to reduce check time on CRAN
 > ## Not run: 
-> ##D ## "Not run" just because of computation time
+> ##D ## the function is designed for large scale problems
+> ##D X <- matrix(rnorm(50000*20, mean = 1), nrow = 50000)
+> ##D system.time(robloxbioc(X))
+> ##D 
+> ##D ## using Affymetrix-Data
+> ##D ## confer example to generateExprVal.method.mas
+> ##D ## A more worked out example can be found in the scripts folder
+> ##D ## of the package.
+> ##D data(SpikeIn)
+> ##D probes <- pm(SpikeIn) 
+> ##D mas <- generateExprVal.method.mas(probes)
+> ##D rl <- 2^robloxbioc(log2(t(probes)))
+> ##D concentrations <- as.numeric(colnames(SpikeIn))
+> ##D plot(concentrations, mas$exprs, log="xy", ylim=c(50,10000), type="b",
+> ##D      ylab = "expression measures")
+> ##D points(concentrations, rl[,1], pch = 20, col="orange", type="b")
+> ##D legend("topleft", c("MAS", "roblox"), pch = c(1, 20))
+> ##D 
 > ##D require(affydata)
 > ##D data(Dilution)
 > ##D eset <- robloxbioc(Dilution)
 > ##D ## Affymetrix scale normalization
 > ##D eset1 <- robloxbioc(Dilution, normalize = TRUE)
-> ## End(Not run)
-> 
-> ## using Illumina-Data
-> ## Not run: 
 > ##D ## "Not run" just because of computation time
 > ##D require(beadarrayExampleData)
 > ##D data(exampleBLData)
@@ -414,10 +453,13 @@ relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 > 
 > 
 > 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("robloxbioc", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > ### * <FOOTER>
 > ###
-> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  17.865 0.2 18.129 0 0 
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  12.136 0.156 12.385 0 0 
 > grDevices::dev.off()
 pdf 
   2 

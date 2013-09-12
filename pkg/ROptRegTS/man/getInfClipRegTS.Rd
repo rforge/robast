@@ -15,20 +15,21 @@
 \usage{
 getInfClipRegTS(clip, ErrorL2deriv, Regressor, risk, neighbor, ...)
 
-\S4method{getInfClipRegTS}{numeric,UnivariateDistribution,Distribution,asMSE,Neighborhood}(clip, 
-                ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent)
+\S4method{getInfClipRegTS}{numeric,UnivariateDistribution,Distribution,asMSE,Neighborhood}(
+             clip, ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent)
 
-\S4method{getInfClipRegTS}{numeric,UnivariateDistribution,Distribution,asMSE,Av1CondTotalVarNeighborhood}(clip, 
-                ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent)
+\S4method{getInfClipRegTS}{numeric,UnivariateDistribution,Distribution,asMSE,Av1CondTotalVarNeighborhood}(
+             clip, ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent)
 
-\S4method{getInfClipRegTS}{numeric,EuclRandVariable,Distribution,asMSE,Neighborhood}(clip, ErrorL2deriv, 
-                Regressor, risk, neighbor, ErrorDistr, stand, cent, trafo)
+\S4method{getInfClipRegTS}{numeric,EuclRandVariable,Distribution,asMSE,Neighborhood}(
+             clip, ErrorL2deriv, Regressor, risk, neighbor, ErrorDistr, stand,
+             cent, trafo)
 
-\S4method{getInfClipRegTS}{numeric,UnivariateDistribution,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(clip, 
-                ErrorL2deriv, Regressor, risk, neighbor, z.comp, cent)
+\S4method{getInfClipRegTS}{numeric,UnivariateDistribution,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(
+             clip, ErrorL2deriv, Regressor, risk, neighbor, z.comp, cent)
 
-\S4method{getInfClipRegTS}{numeric,UnivariateDistribution,numeric,asUnOvShoot,CondNeighborhood}(clip, 
-                ErrorL2deriv, Regressor, risk, neighbor)
+\S4method{getInfClipRegTS}{numeric,UnivariateDistribution,numeric,asUnOvShoot,CondNeighborhood}(
+             clip, ErrorL2deriv, Regressor, risk, neighbor)
 }
 \arguments{
   \item{clip}{ optimal clipping bound. }

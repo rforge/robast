@@ -25,47 +25,56 @@
 \usage{
 getAsRiskRegTS(risk, ErrorL2deriv, Regressor, neighbor, ...)
 
-\S4method{getAsRiskRegTS}{asMSE,UnivariateDistribution,Distribution,Neighborhood}(risk, ErrorL2deriv, 
-                Regressor, neighbor, clip, cent, stand, trafo)
+\S4method{getAsRiskRegTS}{asMSE,UnivariateDistribution,Distribution,Neighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, clip, cent, stand, trafo)
 
-\S4method{getAsRiskRegTS}{asMSE,UnivariateDistribution,Distribution,Av2CondContNeighborhood}(risk, ErrorL2deriv, 
-                Regressor, neighbor, clip, cent, stand, trafo)
+\S4method{getAsRiskRegTS}{asMSE,UnivariateDistribution,Distribution,Av2CondContNeighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, clip, cent, stand, trafo)
 
-\S4method{getAsRiskRegTS}{asMSE,EuclRandVariable,Distribution,Neighborhood}(risk, ErrorL2deriv, 
-                Regressor, neighbor, clip, cent, stand, trafo)
+\S4method{getAsRiskRegTS}{asMSE,EuclRandVariable,Distribution,Neighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, clip, cent, stand, trafo)
 
-\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,UnivariateDistribution,ContNeighborhood}(risk, ErrorL2deriv, 
-                Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
+\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,UnivariateDistribution,ContNeighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm,
+             trafo, maxiter, tol)
 
-\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,UnivariateDistribution,Av1CondContNeighborhood}(risk, 
-                ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
+\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,UnivariateDistribution,Av1CondContNeighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm,
+             trafo, maxiter, tol)
 
-\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,UnivariateDistribution,Av1CondTotalVarNeighborhood}(risk, 
-                ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
+\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,UnivariateDistribution,Av1CondTotalVarNeighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm,
+             trafo, maxiter, tol)
 
-\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,MultivariateDistribution,ContNeighborhood}(risk, 
-                ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
+\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,MultivariateDistribution,ContNeighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm,
+             trafo, maxiter, tol)
 
-\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,MultivariateDistribution,Av1CondContNeighborhood}(risk, 
-                ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
+\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,MultivariateDistribution,Av1CondContNeighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm,
+             trafo, maxiter, tol)
 
-\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,MultivariateDistribution,Av1CondTotalVarNeighborhood}(risk, 
-                ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
+\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,MultivariateDistribution,Av1CondTotalVarNeighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm,
+             trafo, maxiter, tol)
 
-\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,Distribution,Av2CondContNeighborhood}(risk, 
-                ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm, trafo, maxiter, tol)
+\S4method{getAsRiskRegTS}{asBias,UnivariateDistribution,Distribution,Av2CondContNeighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, ErrorL2derivDistrSymm,
+             trafo, maxiter, tol)
 
-\S4method{getAsRiskRegTS}{asBias,RealRandVariable,Distribution,ContNeighborhood}(risk, 
-                ErrorL2deriv, Regressor, neighbor, ErrorDistr, trafo, z.start, A.start, maxiter, tol)
+\S4method{getAsRiskRegTS}{asBias,RealRandVariable,Distribution,ContNeighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, ErrorDistr, trafo, z.start,
+             A.start, maxiter, tol)
 
-\S4method{getAsRiskRegTS}{asBias,RealRandVariable,Distribution,Av1CondContNeighborhood}(risk, 
-                ErrorL2deriv, Regressor, neighbor, ErrorDistr, trafo, z.start, A.start, maxiter, tol)
+\S4method{getAsRiskRegTS}{asBias,RealRandVariable,Distribution,Av1CondContNeighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, ErrorDistr, trafo, z.start,
+             A.start, maxiter, tol)
 
-\S4method{getAsRiskRegTS}{asUnOvShoot,UnivariateDistribution,UnivariateDistribution,UncondNeighborhood}(risk, 
-                ErrorL2deriv, Regressor, neighbor, clip, cent, stand)
+\S4method{getAsRiskRegTS}{asUnOvShoot,UnivariateDistribution,UnivariateDistribution,UncondNeighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, clip, cent, stand)
 
-\S4method{getAsRiskRegTS}{asUnOvShoot,UnivariateDistribution,UnivariateDistribution,CondNeighborhood}(risk, 
-                ErrorL2deriv, Regressor, neighbor, clip, cent, stand)
+\S4method{getAsRiskRegTS}{asUnOvShoot,UnivariateDistribution,UnivariateDistribution,CondNeighborhood}(
+             risk, ErrorL2deriv, Regressor, neighbor, clip, cent, stand)
 }
 
 \arguments{

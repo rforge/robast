@@ -2,6 +2,7 @@ import("methods")
 import("distr")
 import("distrEx")
 import("RandVar")
+import("evd")
 
 exportClasses("FunctionSymmetry",
               "NonSymmetric",

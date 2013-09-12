@@ -60,6 +60,9 @@ Risks(IC1)
 cent(IC1)
 clip(IC1)
 stand(IC1)
+
+## don't run to reduce check time on CRAN
+\dontrun{
 plot(IC1)
 infoPlot(IC1)
 
@@ -96,6 +99,7 @@ IC2 <- rlsOptIC.AL(r = 0.579, mean = estimate(est0)[1], sd = estimate(est0)[2])
 ## cf. Table 8.1 in Kohl(2005)
 ## choose k = 3
 (est4 <- kStepEstimator(x, IC2, est0, steps = 3L))
+}
 }
 \concept{normal location and scale}
 \concept{influence curve}

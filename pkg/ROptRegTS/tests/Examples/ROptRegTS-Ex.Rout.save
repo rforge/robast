@@ -1,6 +1,6 @@
 
-R version 2.12.1 Patched (2011-01-04 r53913)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R Under development (unstable) (2013-03-13 r62247) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -24,7 +24,7 @@ Type 'q()' to quit R.
 > library('ROptRegTS')
 Loading required package: distr
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.7.1)
+:startupmsg>  Utilities for start-up messages (version 0.8)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
@@ -32,7 +32,15 @@ Loading required package: startupmsg
 Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version 0.5)
+:SweaveListingUtils>  TeX listings package (version
+:SweaveListingUtils>  0.6.1)
+:SweaveListingUtils> 
+:SweaveListingUtils>  NOTE: Support for this package
+:SweaveListingUtils>  will stop soon.
+:SweaveListingUtils> 
+:SweaveListingUtils>  Package 'knitr' is providing the
+:SweaveListingUtils>  same functionality in a better
+:SweaveListingUtils>  way.
 :SweaveListingUtils> 
 :SweaveListingUtils>  Some functions from package 'base'
 :SweaveListingUtils>  are intentionally masked ---see
@@ -51,14 +59,14 @@ Loading required package: SweaveListingUtils
 :SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
 
 
-Attaching package: 'SweaveListingUtils'
+Attaching package: ‘SweaveListingUtils’
 
-The following object(s) are masked from 'package:base':
+The following object is masked from ‘package:base’:
 
     library, require
 
 :distr>  Object oriented implementation of distributions (version
-:distr>  2.3)
+:distr>  2.4)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -77,26 +85,21 @@ The following object(s) are masked from 'package:base':
 :distr>  vignette("distr").
 
 
-Attaching package: 'distr'
+Attaching package: ‘distr’
 
-The following object(s) are masked from 'package:stats':
+The following object is masked from ‘package:stats’:
 
     df, qqplot, sd
 
 Loading required package: distrEx
-Loading required package: evd
-Loading required package: actuar
-
-Attaching package: 'actuar'
-
-The following object(s) are masked from 'package:grDevices':
-
-    cm
-
-:distrEx>  Extensions of package distr (version 2.3)
+:distrEx>  Extensions of package distr (version 2.4)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
-:distrEx>  attached /before/ package "distrEx". See distrExMASK().
+:distrEx>  attached /before/ package "distrEx". See
+:distrEx>  distrExMASK().Note: Extreme value distribution
+:distrEx>  functionality has been moved to
+:distrEx> 
+:distrEx>        package "RobExtremes". See distrExMOVED().
 :distrEx> 
 :distrEx>  For more information see ?"distrEx", NEWS("distrEx"), as
 :distrEx>  well as
@@ -106,14 +109,14 @@ The following object(s) are masked from 'package:grDevices':
 :distrEx>  vignette("distr").
 
 
-Attaching package: 'distrEx'
+Attaching package: ‘distrEx’
 
-The following object(s) are masked from 'package:stats':
+The following object is masked from ‘package:stats’:
 
     IQR, mad, median, var
 
 Loading required package: RandVar
-:RandVar>  Implementation of random variables (version 0.8)
+:RandVar>  Implementation of random variables (version 0.9)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -122,15 +125,16 @@ Loading required package: RandVar
 :RandVar>  vignette("RandVar").
 
 Loading required package: ROptEstOld
+Loading required package: evd
 
-Attaching package: 'ROptEstOld'
+Attaching package: ‘ROptEstOld’
 
-The following object(s) are masked from 'package:graphics':
+The following object is masked from ‘package:graphics’:
 
     clip
 
 > 
-> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > cleanEx()
 > nameEx("Av1CondContIC-class")
 > ### * Av1CondContIC-class
@@ -1201,7 +1205,7 @@ function (x)
 {
     as.vector(x[1:1L] * (x[1L + 1] - x[1:1L] %*% 0))
 }
-<environment: 0x7b35fc8>
+<environment: 0xa6549e0>
 
 > FisherInfo(LM1)
 An object of class "PosDefSymmMatrix"
@@ -1257,7 +1261,7 @@ function (x)
 {
     as.vector(x[1:1L] * (x[1L + 1] - x[1:1L] %*% 0 - 0))
 }
-<environment: 0x5e29468>
+<environment: 0xa4c53f8>
 
 > FisherInfo(LM1)
 An object of class "PosDefSymmMatrix"
@@ -1315,7 +1319,7 @@ function (x)
 {
     as.vector(x[1:1L] * (x[1L + 1] - x[1:1L] %*% 0)/1^2)
 }
-<environment: 0x5e6f150>
+<environment: 0xaa67150>
 
 > FisherInfo(LM1)
 An object of class "PosDefSymmMatrix"
@@ -1401,8 +1405,8 @@ main:	 0
 > 
 > ### * <FOOTER>
 > ###
-> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  19.17 0.06 19.312 0 0 
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  21.925 0.108 22.113 0 0 
 > grDevices::dev.off()
 null device 
           1 

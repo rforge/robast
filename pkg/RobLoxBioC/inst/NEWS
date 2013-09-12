@@ -8,6 +8,22 @@
  information)
 
 #######################################
+version 0.9
+#######################################
+
+user-visible CHANGES:
+
+GENERAL ENHANCEMENTS:
++ cleaned DESCRIPTION and NAMESPACE file as to Imports/Depends
+
+under the hood:
+
++ added .Rbuildignore
+ 
+BUGFIXES
+
+
+#######################################
 version 0.8.3
 #######################################
 + update for beadarray versions >= 2.0.0 with support by Mark Dunnings and 

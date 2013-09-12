@@ -96,6 +96,8 @@ x <- rnorm(100, mean=ind*3, sd=(1-ind) + ind*9)
 ## amount of gross errors known
 res1 <- roblox(x, eps = 0.05, returnIC = TRUE)
 estimate(res1)
+## don't run to reduce check time on CRAN
+\dontrun{
 confint(res1)
 confint(res1, method = symmetricBias())
 pIC(res1)
@@ -104,10 +106,13 @@ Risks(pIC(res1))
 Infos(pIC(res1))
 plot(pIC(res1))
 infoPlot(pIC(res1))
+}
 
 ## amount of gross errors unknown
 res2 <- roblox(x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
 estimate(res2)
+## don't run to reduce check time on CRAN
+\dontrun{
 confint(res2)
 confint(res2, method = symmetricBias())
 pIC(res2)
@@ -116,6 +121,7 @@ Risks(pIC(res2))
 Infos(pIC(res2))
 plot(pIC(res2))
 infoPlot(pIC(res2))
+}
 
 ## estimator comparison
 # classical optimal (non-robust)

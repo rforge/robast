@@ -13,11 +13,13 @@
 }
 \usage{
 Av1CondContIC(name, CallL2Fam = call("L2RegTypeFamily"),
-       Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x[1]*x[2]}), 
-                                                Domain = EuclideanSpace(dimension = 2))), 
+       Curve = EuclRandVarList(RealRandVariable(
+               Map = list(function(x){x[1]*x[2]}),
+               Domain = EuclideanSpace(dimension = 2))),
        Risks, Infos, clip = Inf, stand = as.matrix(1), 
-       cent = EuclRandVarList(RealRandVariable(Map = list(function(x){numeric(length(x))}),
-                                               Domain = EuclideanSpace(dimension = 2))), 
+       cent = EuclRandVarList(RealRandVariable(
+               Map = list(function(x){numeric(length(x))}),
+               Domain = EuclideanSpace(dimension = 2))),
        lowerCase = NULL, neighborRadius = 0)
 }
 \arguments{

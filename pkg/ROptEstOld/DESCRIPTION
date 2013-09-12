@@ -1,10 +1,10 @@
 Package: ROptEstOld
 Version: 0.9.1
-Date: 2013-02-08
+Date: 2013-09-12
 Title: Optimally robust estimation - old version
 Description: Optimally robust estimation using S4 classes and methods. Old version still needed
         for current versions of ROptRegTS and RobRex.
-Depends: R(>= 2.4.0), methods, distr(>= 2.4), distrEx(>= 2.4), RandVar(>= 0.8), evd
+Depends: R(>= 2.4.0), methods, distr(>= 2.5.1), distrEx(>= 2.2), RandVar(>= 0.9), evd
 Author: Matthias Kohl
 Maintainer: Matthias Kohl <Matthias.Kohl@stamats.de>
 LazyLoad: yes
@@ -14,4 +14,4 @@ URL: http://robast.r-forge.r-project.org/
 Encoding: latin1
 LastChangedDate: {$LastChangedDate$}
 LastChangedRevision: {$LastChangedRevision$}
-SVNRevision: 591
+SVNRevision: 696
