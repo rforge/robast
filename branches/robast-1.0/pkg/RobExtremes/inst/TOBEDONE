@@ -1,0 +1,7 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+to be done in package RobExtremes
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
++ generate LM-Grids for GEVFamilyMuUnknown
++ write code so that it uses different (semi-equivariant) norms 
+  in GEVFamily, GParetoFamily, GParetoFamilyMuUnknown

@@ -4,8 +4,8 @@ Date: 2013-09-12
 Title: Optimally robust influence curves and estimators for location and scale
 Description: Functions for the determination of optimally robust influence curves and
         estimators in case of normal location and/or scale
-Depends: R(>= 2.7.0), stats, lattice, RColorBrewer, RandVar, Biobase, distr(>= 2.5.1),
-        distrMod(>= 2.5.1), RobAStBase(>= 0.9)
+Depends: R(>= 2.14.0), stats, lattice, RColorBrewer, RandVar(>= 0.9.2), Biobase, 
+         distr(>= 2.5.2), distrMod(>= 2.5.2), RobAStBase(>= 0.9.2)
 Suggests: MASS
 Author: Matthias Kohl <Matthias.Kohl@stamats.de>
 Maintainer: Matthias Kohl <Matthias.Kohl@stamats.de>

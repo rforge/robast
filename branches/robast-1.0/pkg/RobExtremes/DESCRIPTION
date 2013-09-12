@@ -1,0 +1,19 @@
+Package: RobExtremes
+Version: 1.0
+Date: 2013-09-11
+Title: Optimally robust estimation for extreme value distributions
+Description: Optimally robust estimation for extreme value distributions using S4 classes and methods (based on
+         packages distr, distrEx, distrMod, RobAStBase, and ROptEst)
+Depends: R (>= 2.14.0), methods, distr(>= 2.5.2), distrEx(>= 2.5), RandVar(>= 0.9.2), distrMod(>= 2.5.2),
+         RobAStBase(>= 0.9), ROptEst(>= 0.9), robustbase(>= 0.8-0), evd, actuar
+Suggests: RUnit (>= 0.4.26)
+Imports: RobAStRDA
+Author: Peter Ruckdeschel, Matthias Kohl, Nataliya Horbenko
+Maintainer: Peter Ruckdeschel <peter.ruckdeschel@itwm.fraunhofer.de>
+LazyLoad: yes
+ByteCompile: yes
+License: LGPL-3
+URL: http://robast.r-forge.r-project.org/
+LastChangedDate: {$LastChangedDate: 2011-09-30 11:10:33 +0200 (Fr, 30 Sep 2011) $}
+LastChangedRevision: {$LastChangedRevision: 453 $}
+SVNRevision: 694

@@ -4,8 +4,8 @@ Date: 2013-09-12
 Title: Optimally robust estimation
 Description: Optimally robust estimation in general smoothly parameterized models using S4
         classes and methods.
-Depends: R(>= 2.10.0), methods, distr(>= 2.4), distrEx(>= 2.4), distrMod(>= 2.4), RandVar(>=
-        0.6.4), RobAStBase
+Depends: R(>= 2.14.0), methods, distr(>= 2.5.2), distrEx(>= 2.5), distrMod(>= 2.5.2), 
+         RandVar(>=0.9.2), RobAStBase(>= 0.9)
 Suggests: RobLox, MASS
 Author: Matthias Kohl, Peter Ruckdeschel
 Maintainer: Matthias Kohl <Matthias.Kohl@stamats.de>
