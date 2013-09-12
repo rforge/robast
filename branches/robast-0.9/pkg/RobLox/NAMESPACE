@@ -5,9 +5,9 @@ importFrom("distr", "q","Reals")
 importClassesFrom("distr","Reals")
 importFrom("RandVar", "EuclRandVarList", "RealRandVariable")		 
 importClassesFrom("RandVar", "EuclRandVarList", "RealRandVariable")		 
-importFrom("distrMod","NormLocationFamily","NormLocationScaleFamily","symmetricBias", "NormType")
-importClassesFrom("distrMod","L2LocationFamily","NormLocationFamily","NormLocationScaleFamily")
-importMethodsFrom("distrMod","distribution","main", "addInfo<-", "Infos", "Infos<-",
+importFrom("distrMod", "NormLocationFamily", "NormLocationScaleFamily", "symmetricBias", "NormType")
+importClassesFrom("distrMod", "L2LocationFamily", "NormLocationFamily", "NormLocationScaleFamily")
+importMethodsFrom("distrMod", "distribution", "main", "addInfo<-", "Infos", "Infos<-",
                   "normtype", "biastype","normtype<-","biastype<-", "estimate")
 importFrom("RobAStBase","generateIC","ContNeighborhood")
 importClassesFrom("RobAStBase","HampelWeight","ALEstimate","kStepEstimate","ContNeighborhood")
