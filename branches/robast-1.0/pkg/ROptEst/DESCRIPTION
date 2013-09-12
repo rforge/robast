@@ -1,0 +1,19 @@
+Package: ROptEst
+Version: 1.0
+Date: 2013-09-12
+Title: Optimally robust estimation
+Description: Optimally robust estimation in general smoothly parameterized models using S4
+        classes and methods.
+Depends: R(>= 2.10.0), methods, distr(>= 2.4), distrEx(>= 2.4), distrMod(>= 2.4), RandVar(>=
+        0.6.4), RobAStBase
+Suggests: RobLox, MASS
+Author: Matthias Kohl, Peter Ruckdeschel
+Maintainer: Matthias Kohl <Matthias.Kohl@stamats.de>
+ByteCompile: yes
+LazyLoad: yes
+License: LGPL-3
+URL: http://robast.r-forge.r-project.org/
+Encoding: latin1
+LastChangedDate: {$LastChangedDate$}
+LastChangedRevision: {$LastChangedRevision$}
+SVNRevision: -Inf

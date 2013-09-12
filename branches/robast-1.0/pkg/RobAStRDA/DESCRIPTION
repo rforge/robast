@@ -1,0 +1,17 @@
+Package: RobAStRDA
+Version: 1.0
+Date: 2013-09-12
+Title: sysdata.rda for packages of RobASt - Family of Pkgs
+Description: sysdata.rda for packages of RobASt - Family of Pkgs; is currently used by pkg
+        RobExtremes only.
+Depends: R (>= 2.14.0), methods
+Author: Peter Ruckdeschel, Matthias Kohl
+Maintainer: Peter Ruckdeschel <peter.ruckdeschel@itwm.fraunhofer.de>
+LazyData: yes
+LazyLoad: yes
+ByteCompile: yes
+License: LGPL-3
+URL: http://robast.r-forge.r-project.org/
+LastChangedDate: {$LastChangedDate: 2011-09-30 11:10:33 +0200 (Fr, 30 Sep 2011) $}
+LastChangedRevision: {$LastChangedRevision: 453 $}
+SVNRevision: -Inf
