@@ -35,8 +35,7 @@ KolmogorovMinDist(x, D, ...)
   \item{imagesPerArray}{ Specifies how many images (strips) there are per array. 
     Normally 1 for a SAM and 1 or 2 for a BeadChip. The images (strips) from the same array 
     will be combined so that each column in the output represents a sample. }
-  \item{what}{ character string specifying which intensities/values to summarize. 
-    See \code{\link[beadarray]{getArrayData}} for a list of possibilities. }
+  \item{what}{ character string specifying which intensities/values to summarize. }
   \item{probes}{ Specify particular probes to summarize. If left \code{NULL} then all
     the probes on the first array are used. }
   \item{arrays}{ integer (scalar or vector) specifying the strips/arrays to summarize. 
