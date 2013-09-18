@@ -1,5 +1,5 @@
 Package: RobAStBase
-Version: 0.9
+Version: 0.9.1
 Date: 2013-09-11
 Title: Robust Asymptotic Statistics
 Description: Base S4-classes and functions for robust asymptotic statistics.

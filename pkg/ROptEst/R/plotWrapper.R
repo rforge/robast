@@ -105,7 +105,7 @@ CniperPointPlot <- function(fam,...
                    ,ylab=substitute("Asymptotic Risk difference (classic - robust)")
                    ,bty = substitute("o")
                    ), scaleList)
-  print(argsList)
+#  print(argsList)
   ##parameter for plotting
   if(mc$with.legend)
   {
@@ -119,7 +119,7 @@ CniperPointPlot <- function(fam,...
   }
 
   args <- .merge.lists(argsList, dots)
-  print(args)
+#  print(args)
   ###
   ### 3. build up the call but grab it and write it into an object
   ###

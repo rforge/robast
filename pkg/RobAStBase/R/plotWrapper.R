@@ -308,7 +308,7 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,panel.first= substitute(grid())
                      ,col = substitute("blue")
     ), scaleList)
-  if(missing(y)){c(argsList, y = substitute(y)
+  if(!missing(y)){c(argsList, y = substitute(y)
                      ,cex.pts = substitute(0.3)
                      ,col.pts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), substitute(alpha.trsp)))
                      ,pch.pts = substitute(19)
