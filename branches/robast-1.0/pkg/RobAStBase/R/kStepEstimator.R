@@ -103,7 +103,20 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 
         ### update - function
         updateStep <- function(u.theta, theta, IC, L2Fam, Param,
-                               withModif = TRUE, with.u.var = FALSE){
+                               withPreModif = FALSE,
+                               withPostModif = TRUE, with.u.var = FALSE
+                               ){
+
+                if(withPreModif){
+                   main(Param)[] <- .deleteDim(u.theta[idx])
+                   if (lnx) nuisance(Param)[] <- .deleteDim(u.theta[nuis.idx])
+#                   print(L2Fam)
+                   L2Fam <- modifyModel(L2Fam, Param,
+                               .withL2derivDistr = L2Fam@.withEvalL2derivDistr)
+#                   print(L2Fam)
+                   IC <- modifyIC(IC)(L2Fam, IC)
+#                   print(IC)
+                }
 
                 IC.c <- as(diag(p) %*% IC@Curve, "EuclRandVariable")
 
@@ -181,7 +194,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                    }
                 }
 
-                if(withModif){
+                if(withPostModif){
                    main(Param)[] <- .deleteDim(u.theta[idx])
                    if (lnx) nuisance(Param)[] <- .deleteDim(u.theta[nuis.idx])
 #                   print(L2Fam)
@@ -219,9 +232,11 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                   L2Fam <- upd$L2Fam
                   Param <- upd$Param
                   tf <- trafo(L2Fam, Param)
-               }
+                  withPre <- FALSE
+               }else withPre <- TRUE
                upd <- updateStep(u.theta,theta,IC, L2Fam, Param,
-                                 withModif = (steps>1) | useLast,
+                                 withPreModif = withPre,
+                                 withPostModif = (steps>i) | useLast,
                                  with.u.var = i==steps)
                uksteps[,i] <- u.theta <- upd$u.theta
                ksteps[,i] <- theta <- upd$theta
