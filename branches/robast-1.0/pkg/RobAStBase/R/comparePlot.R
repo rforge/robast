@@ -348,7 +348,7 @@ setMethod("comparePlot", signature("IC","IC"),
                  resc2D <- do.call(.rescalefct, rescD.args)
                  matpD  <- cbind(resc1D$Y, resc2D$Y)
                  if(is(obj3, "IC")){
-                    resc.Dargs$fc <- fct3
+                    rescD.args$fc <- fct3
                     resc3D <- do.call(.rescalefct, rescD.args)
                     matpD  <- cbind(matpD, resc3D$Y)
                  }
