@@ -46,7 +46,7 @@ cutoff.sememp <- function(){cutoff(name = "semi-empirical",
                    cutoff.quantile  = 0.95)}
 
 cutoff.chisq <- function(){cutoff(name = "chisq",
-                   body.fct0 = substitute({dim = nrow(data)
-                                  qchisq(df=dim,cutoff.quantile)^.5
+                   body.fct0 = substitute({dim = nrow(as.matrix(data))
+                                  qchisq(df = dim, cutoff.quantile)^.5
                                   }),
                    cutoff.quantile  = 0.95)}

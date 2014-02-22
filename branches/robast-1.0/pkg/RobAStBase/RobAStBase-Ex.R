@@ -4,7 +4,7 @@ options(warn = 1)
 options(pager = "console")
 library('RobAStBase')
 
-assign(".oldSearch", search(), pos = 'CheckExEnv')
+base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 cleanEx()
 nameEx("0RobAStBase-package")
 ### * 0RobAStBase-package
@@ -88,6 +88,29 @@ flush(stderr()); flush(stdout())
 
 ## prototype
 new("BoundedWeight")
+
+
+
+cleanEx()
+nameEx("ComparePlotWrapper")
+### * ComparePlotWrapper
+
+flush(stderr()); flush(stdout())
+
+### Name: ComparePlot
+### Title: Wrapper function for function comparePlot
+### Aliases: ComparePlot
+
+### ** Examples
+
+# Gamma
+fam <- GammaFamily()
+rfam <- InfRobModel(fam, ContNeighborhood(0.5))
+IC1 <- optIC(model = fam, risk = asCov())
+IC2 <- makeIC(list(function(x)sin(x),function(x)x^2), L2Fam = fam)
+Y <- distribution(fam)
+y <- r(Y)(100)
+ComparePlot(IC1, IC2, y, withCall = TRUE)
 
 
 
@@ -386,6 +409,27 @@ InfluenceCurve <- function(name, Curve = EuclRandVarList(EuclRandVariable(Domain
 
 
 cleanEx()
+nameEx("InfoPlotWrapper")
+### * InfoPlotWrapper
+
+flush(stderr()); flush(stdout())
+
+### Name: InfoPlot
+### Title: Wrapper function for information plot method
+### Aliases: InfoPlot
+
+### ** Examples
+
+# Gamma
+fam  <-  GammaFamily()
+IC <- optIC(model = fam, risk = asCov())
+Y <- distribution(fam)
+data  <-  r(Y)(1000)
+InfoPlot(IC, data, withCall = FALSE)
+
+
+
+cleanEx()
 nameEx("MEstimate-class")
 ### * MEstimate-class
 
@@ -401,6 +445,28 @@ flush(stderr()); flush(stdout())
 
 ## prototype
 new("MEstimate")
+
+
+
+cleanEx()
+nameEx("PlotICWrapper")
+### * PlotICWrapper
+
+flush(stderr()); flush(stdout())
+
+### Name: PlotIC
+### Title: Wrapper function for plot method for IC
+### Aliases: PlotIC
+
+### ** Examples
+
+# Gamma
+fam <- GammaFamily()
+rfam <- InfRobModel(fam, ContNeighborhood(0.5))
+IC <- optIC(model = fam, risk = asCov())
+Y <- distribution(fam)
+y <- r(Y)(1000)
+PlotIC(IC, y, withCall = FALSE)
 
 
 
@@ -767,6 +833,19 @@ infoPlot(IC1)
 ##D infoPlot(IC1, data=data[1:10], mfColRow = FALSE, panel.first= grid(),
 ##D          with.lab = TRUE, cex.pts=0.7)
 ##D par(mfrow=c(1,1))
+##D 
+##D ICr <- makeIC(list(function(x)sign(x),function(x)sign(abs(x)-qnorm(.75))),N)
+##D data <- r(N)(600)
+##D data.c <- c(data, 1000*data[1:30])
+##D par(mfrow=c(3,1))
+##D infoPlot(ICr, data=data.c, tmar=c(4.1,0,0), bmar=c(0,0,4.1),
+##D          xaxt=c("n","n","s"), mfColRow = FALSE, panel.first= grid(),
+##D          cex.pts=c(.9,.9), alpha.trsp=20, lwd=2, lwdI=1.5, col=3,
+##D          col.pts=c(3,2), colI=2, pch.pts=c(20,20), inner=FALSE,
+##D          scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
+##D          scaleY=TRUE, scaleY.fct=function(x) pchisq(x,df=1),
+##D          scaleY.inv=function(x)qchisq(x,df=1),legend.cex = 1.0)
+##D 
 ## End(Not run)
 
 
@@ -1092,7 +1171,8 @@ samplesize(myrisk) <- 20
 
 ### * <FOOTER>
 ###
-cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
+options(digits = 7L)
+base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
 grDevices::dev.off()
 ###
 ### Local variables: ***

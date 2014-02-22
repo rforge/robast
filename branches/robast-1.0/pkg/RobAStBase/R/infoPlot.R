@@ -315,6 +315,7 @@ setMethod("infoPlot", "IC",
                if(missing(col.pts)) col.pts <- c(col, colI)
                col.pts <- rep(col.pts, length.out=2)
                pch.pts <- matrix(rep(pch.pts, length.out=2*n),n,2)
+               cex.pts <- rep(cex.pts,length.out=2)
                jitter.fac <- rep(jitter.fac, length.out=2)
                with.lab <- rep(with.lab, length.out=2)
                lab.font <- rep(lab.font, length.out=2)
@@ -349,27 +350,31 @@ setMethod("infoPlot", "IC",
 
 
                pL.abs <- substitute({
+                   ICy0r1 <- ICy0r
+                   ICy0cr1 <- ICy0cr
                    if(is(distr, "DiscreteDistribution")){
-                      ICy0 <- jitter(ICy0, factor = jitter.fac0[1])
-                      ICy0c <- jitter(ICy0c, factor = jitter.fac0[2])
+                      ICy0r1 <- jitter(ICy0r1, factor = jitter.fac0[1])
+                      ICy0cr1 <- jitter(ICy0cr1, factor = jitter.fac0[2])
                    }
+
                    f1 <- log(ICy0+1)*3*cex0[1]
                    f1c <- log(ICy0c+1)*3*cex0[2]
 
                    col.pts <- if(!is.na(al0)) sapply(col0,
                               addAlphTrsp2col, alpha=al0) else col0
 
-                   do.pts(y0, ICy0r, f1,col.pts[1],pch0[,1])
-                   do.pts(y0c, ICy0cr, f1c,col.pts[2],pch0[,2])
+                   do.pts(y0, ICy0r1, f1,col.pts[1],pch0[,1])
+                   do.pts(y0c, ICy0cr1, f1c,col.pts[2],pch0[,2])
                    if(with.lab0){
-                      tx(y0, ICy0r, lab.pts0, f1/2, col0[1])
-                      tx(y0c, ICy0cr, lab.pts0C, f1c/2, col0[2])
+                      tx(y0, ICy0r1, lab.pts0, f1/2, col0[1])
+                      tx(y0c, ICy0cr1, lab.pts0C, f1c/2, col0[2])
                    }
                    pL0
                    }, list(ICy0c = y.dC, ICy0 = y.d,
                            ICy0r = y.dr, ICy0cr = y.dCr,
                            pL0 = pL, y0 = x.dr, y0c = x.dCr,
-                           cex0 = cex.pts, pch0 = pch.pts, al0 = alp.v[1],
+                           cex0 = cex.pts,
+                           pch0 = pch.pts, al0 = alp.v[1],
                            col0 = col.pts, with.lab0 = with.lab, n0 = n,
                            lab.pts0 = lab.pts[i.d], lab.pts0C = lab.pts[i.dC],
                            jitter.fac0 = jitter.fac)

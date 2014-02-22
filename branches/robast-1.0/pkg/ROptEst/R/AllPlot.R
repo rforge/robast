@@ -47,6 +47,6 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
 .getExtremeCoordIC <- function(IC, D, indi, n = 10000){
     x <- q(D)(seq(1/2/n,1-1/2/n, length=n))
-    y <- (matrix(evalIC(IC,matrix(x,ncol=1)),ncol=n))[indi,]
+    y <- (matrix(evalIC(IC,matrix(x,ncol=1)),ncol=n))[indi,,drop=FALSE]
     return(cbind(min=apply(y,1,min),max=apply(y,1,max)))
 }

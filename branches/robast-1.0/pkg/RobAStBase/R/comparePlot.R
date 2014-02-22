@@ -24,7 +24,6 @@ setMethod("comparePlot", signature("IC","IC"),
         xc <- c(.xc("obj1"), .xc("obj2"))
         if(!is.null(obj3)) xc <- c(xc, .xc("obj3"))
         if(!is.null(obj4)) xc <- c(xc, .xc("obj4"))
-
         dots <- match.call(call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)$"..."
         dotsP <- dots

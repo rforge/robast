@@ -107,6 +107,7 @@
       if(is.null(dots$lwd)) dots$lwd <- par("lwd")
       if(is.null(dots$lty)) dots$lty <- par("lty")
 
+      if(is.null(col.cutoff)) col.cutoff <- "red"
       col.cutoff <- rep(col.cutoff,length.out=2)
       if(missing(lty.cutoff) && !is.null(dots$lty)) lty.cutoff <- dots$lty
       if(missing(lwd.cutoff) && !is.null(dots$lwd)) lwd.cutoff <- dots$lwd
