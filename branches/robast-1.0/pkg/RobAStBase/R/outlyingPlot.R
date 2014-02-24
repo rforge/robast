@@ -9,8 +9,11 @@ outlyingPlotIC <- function(data,
                            cutoff.quantile.x = 0.95,
                            cutoff.quantile.y = cutoff.quantile.x,
                            id.n,
-                           lab.pts, 
-                           adj, 
+                           cex.pts = 1,
+                           lab.pts,
+                           jitt.pts = 0,
+                           alpha.trsp = NA,
+                           adj,
                            cex.idn,
                            col.idn, 
                            lty.cutoff, 
@@ -25,6 +28,7 @@ outlyingPlotIC <- function(data,
                            ){
      mc <- as.list(match.call(expand.dots = FALSE))[-1]
      dots <- mc$"..."
+
      if(is.null(dots$xlim)) dots$xlim <- TRUE
      if(is.null(dots$ylim)) dots$ylim <- TRUE
      if(is.null(mc$cutoff.quantile.x)) mc$cutoff.quantile.x <- 0.95
@@ -130,6 +134,8 @@ outlyingPlotIC <- function(data,
        transform.y = tf.y,
        id.n = mc$id.n, 
        lab.pts = mc$lab.pts, 
+       alpha.trsp = alpha.trsp,
+       cex.pts = cex.pts,
        adj = mc$adj, 
        cex.idn = mc$cex.idn,
        col.idn = mc$col.idn, 

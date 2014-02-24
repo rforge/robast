@@ -28,7 +28,8 @@ setMethod("comparePlot", signature("IC","IC"),
                        expand.dots = FALSE)$"..."
         dotsP <- dots
         dotsLeg <- dotsT <- dotsL <- .makedotsLowLevel(dots)
-
+        dots.points <-   .makedotsPt(dots)
+        
         ncomp <- 2+ (!missing(obj3)|!is.null(obj3)) +
                     (!missing(obj4)|!is.null(obj4))
 
@@ -321,12 +322,20 @@ setMethod("comparePlot", signature("IC","IC"),
                 matp  <- cbind(matp,resc4$Y)
             }
 
-            do.call(plot, args=c(list(x = resc1$X, y = matp[,1],
-                 type = plty, lty = lty, col = col[1], lwd = lwd,
-                 xlab = xlab, ylab = ylab), dotsP, list(panel.last = pL)))
-                 
-            do.call(matlines, args = c(list( x = resc1$X, y = matp[,-1],
-                    lty = lty, col = col[-1], lwd = lwd), dotsL))
+            ym <- min(matp,na.rm=T)
+            yM <- max(matp,na.rm=T)
+            y0 <- matp[,1]
+            y0[1:2] <- c(ym,yM)
+            do.call(plot, args=c(list(x = resc1$X, y = y0,
+                 type = "n", xlab = xlab, ylab = ylab,
+                 lty = lty[1], col = addAlphTrsp2col(col[1],0),
+                 lwd = lwd[1]), dotsP, list(panel.last = pL)))
+            if(plty=="p")
+               do.call(matpoints, args = c(list( x = resc1$X, y = matp,
+                    col = col), dots.points))
+
+            do.call(matlines, args = c(list( x = resc1$X, y = matp,
+                    lty = lty, col = col, lwd = lwd), dotsL))
 
             .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
                               scaleY,scaleY.fct, scaleY.inv, xlim[,i],

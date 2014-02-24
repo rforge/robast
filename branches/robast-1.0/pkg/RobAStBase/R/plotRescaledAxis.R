@@ -100,7 +100,7 @@ if(FALSE){
                if(-Inf %in% x.ticks) axis(1,at=0,labels=expression(-infinity))
                if(Inf %in% x.ticks)  axis(1,at=1,labels=expression(infinity))
             }
-            box()
+            if(withbox) box()
         }else{
             if(!is.null(x.ticks)){
                if(is.null(xlim)){ xlim <- c(-Inf,Inf)}else{
@@ -111,7 +111,7 @@ if(FALSE){
                axis(1,at=xf,labels=xf)
                if(-Inf %in% x.ticks) axis(1,at=0,labels=expression(-infinity))
                if(Inf %in% x.ticks)  axis(1,at=1,labels=expression(infinity))
-               box()
+               if(withbox) box()
             }
         }
         if(scaleY){
@@ -150,7 +150,7 @@ if(FALSE){
                if(-Inf %in% y.ticks) axis(2,at=0,labels=expression(-infinity))
                if(Inf %in% y.ticks)  axis(2,at=1,labels=expression(infinity))
             }
-            box()
+            if(withbox) box()
         }else{
             if(!is.null(y.ticks)){
                if(is.null(ylim)){ ylim <- c(-Inf,Inf)}else{
@@ -161,7 +161,7 @@ if(FALSE){
                axis(2,at=yf,labels=yf)
                if(-Inf %in% y.ticks) axis(2,at=0,labels=expression(-infinity))
                if(Inf %in% y.ticks)  axis(2,at=1,labels=expression(infinity))
-               box()
+               if(withbox) box()
            }
         }
    return(invisible(NULL))

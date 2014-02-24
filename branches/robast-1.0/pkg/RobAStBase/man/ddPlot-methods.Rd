@@ -13,7 +13,7 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        cutoff.x, cutoff.y, ...,
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, lab.pts, adj, cex.idn,
+       id.n, cex.pts = 1,lab.pts, jitt.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
        col.idn, lty.cutoff, lwd.cutoff, col.cutoff, text.abline = TRUE,
        text.abline.x = NULL, text.abline.y = NULL,
        cex.abline = par("cex"), col.abline = col.cutoff,
@@ -27,7 +27,7 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        cutoff.x, cutoff.y, ...,
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, lab.pts, adj, cex.idn,
+       id.n, cex.pts = 1,lab.pts, jitt.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
        col.idn, lty.cutoff, lwd.cutoff, col.cutoff, text.abline = TRUE,
        text.abline.x = NULL, text.abline.y = NULL,
        cex.abline = par("cex"), col.abline = col.cutoff,
@@ -41,7 +41,7 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        cutoff.x, cutoff.y, ...,
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, lab.pts, adj, cex.idn,
+       id.n, cex.pts = 1,lab.pts, jitt.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
        col.idn, lty.cutoff, lwd.cutoff, col.cutoff, text.abline = TRUE,
        text.abline.x = NULL, text.abline.y = NULL,
        cex.abline = par("cex"), col.abline = col.cutoff,
@@ -69,7 +69,18 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
   distances of the \code{y} axis.}
   \item{id.n}{a set of indices (or a corresponding logical vector); to select a subset
   of the data in argument \code{data}.}
+  \item{cex.pts}{the corresponding \code{cex} argument for plotted points.}
   \item{lab.pts}{a vector of labels for the (unsubsetted) \code{data}.}
+  \item{jitt.pts}{the corresponding \code{jitter} argument for plotted points;
+    may be a vector of length 2 -- for separate factors for x- and y-coordinate.}
+  \item{alpha.trsp}{alpha transparency to be added ex post to colors
+        \code{col.pch} and \code{col.lbl}; if one-dim and NA all colors are
+        left unchanged. Otherwise, with usual recycling rules \code{alpha.trsp}
+        gets shorted/prolongated to length the data-symbols to be plotted.
+        Coordinates of this vector \code{alpha.trsp} with NA are left unchanged,
+        while for the remaining ones, the alpha channel in rgb space is set
+        to the respective coordinate value of \code{alpha.trsp}. The non-NA
+        entries must be integers in [0,255] (0 invisible, 255 opaque).}
   \item{adj}{the corresponding argument for \code{\link[graphics]{text}} for
              labelling the outliers.}
   \item{cex.idn}{the corresponding \code{cex} argument for

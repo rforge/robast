@@ -8,7 +8,10 @@
                                 transform.x,
                                 transform.y = transform.x,
                                 id.n,
+                                cex.pts = 1,
                                 lab.pts,
+                                jitt.pts = 0,
+                                alpha.trsp = NA,
                                 adj =0,
                                 cex.idn = 1,
                                 col.idn = par("col"),
@@ -28,6 +31,12 @@
                                 jitt.fac = 10){
 
        dots <- match.call(expand.dots = FALSE)$"..."
+
+       jitt.pts <- rep(jitt.pts,length.out=2)
+
+       col <- if(is.null(dots$col)) par("col") else dots$col
+       if(!is.na(alpha.trsp)) col <- addAlphTrsp2col(col, alpha.trsp)
+
 
        id.n1 <- 1:ncol(data)
 
@@ -116,6 +125,8 @@
       if(missing(font.abline) && !is.null(dots$font)) font.abline <- dots$font
 
       pdots <- .makedotsLowLevel(dots)
+      pdots$pch <- if(is.null(dots$pch)) "." else dots$pch
+      pdots$cex <- cex.pts
       pdots$xlab <- dots$xlab
       pdots$ylab <- dots$ylab
       pdots$nsim <- NULL
@@ -232,12 +243,16 @@
       id0.x <- id.n1[id.x]
       id0.y <- id.n1[id.y]
 
-      if(any(duplicated(ndata.x)&duplicated(ndata.y))){
-          ndata.x <- jitter(ndata.x, factor=jitt.fac)
-          ndata.y <- jitter(ndata.y, factor=jitt.fac)
-      }
+      ndata.x0 <- ndata.x
+      ndata.y0 <- ndata.y
+      isna <- is.na(ndata.x0)|is.na(ndata.y0)
+      if(any(duplicated(ndata.x0[!isna])))
+          ndata.x0[!isna] <- jitter(ndata.x0[!isna], factor=jitt.pts[1])
+      if(any(duplicated(ndata.y0[!isna])))
+          ndata.y0[!isna] <- jitter(ndata.y0[!isna], factor=jitt.pts[2])
 
-      do.call(plot, args = c(list(x = ndata.x, y=ndata.y, type = "p"), pdots))
+      pdots$col <- col
+      do.call(plot, args = c(list(x = ndata.x0, y=ndata.y0, type = "p"), pdots))
       do.call(box,args=c(adots))
 
       pusr <- par("usr")

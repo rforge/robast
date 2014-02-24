@@ -7,8 +7,9 @@ to ICs}
 outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
                dist.y, cutoff.y = cutoff.chisq(), cutoff.x = cutoff.sememp(),
                ..., cutoff.quantile.x = 0.95,
-               cutoff.quantile.y = cutoff.quantile.x, id.n, lab.pts, adj,
-               cex.idn, col.idn, lty.cutoff, lwd.cutoff, col.cutoff,
+               cutoff.quantile.y = cutoff.quantile.x,
+               id.n, cex.pts = 1,lab.pts, jitt.pts = 0, alpha.trsp = NA,
+               adj =0, cex.idn, col.idn, lty.cutoff, lwd.cutoff, col.cutoff,
                robCov.x = TRUE, robCov.y = TRUE, tf.x = data, tf.y = data,
                jitt.fac = 10,
                main = gettext("Outlyingness \n by means of a distance-distance plot")
@@ -31,7 +32,18 @@ outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
   \item{cutoff.quantile.y}{numeric; the cutoff quantile for the \code{y} axis.}
   \item{id.n}{a set of indices (or a corresponding logical vector); to select a subset
   of the data in argument \code{data}.}
+  \item{cex.pts}{the corresponding \code{cex} argument for plotted points.}
   \item{lab.pts}{a vector of labels for the (unsubsetted) \code{data}.}
+  \item{jitt.pts}{the corresponding \code{jitter} argument for plotted points;
+    may be a vector of length 2 -- for separate factors for x- and y-coordinate.}
+  \item{alpha.trsp}{alpha transparency to be added ex post to colors
+        \code{col.pch} and \code{col.lbl}; if one-dim and NA all colors are
+        left unchanged. Otherwise, with usual recycling rules \code{alpha.trsp}
+        gets shorted/prolongated to length the data-symbols to be plotted.
+        Coordinates of this vector \code{alpha.trsp} with NA are left unchanged,
+        while for the remaining ones, the alpha channel in rgb space is set
+        to the respective coordinate value of \code{alpha.trsp}. The non-NA
+        entries must be integers in [0,255] (0 invisible, 255 opaque).}
   \item{adj}{the corresponding argument for \code{\link[graphics]{text}} for
              labelling the outliers.}
   \item{cex.idn}{the corresponding \code{cex} argument for

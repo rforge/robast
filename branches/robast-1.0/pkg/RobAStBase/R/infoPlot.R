@@ -443,8 +443,8 @@ setMethod("infoPlot", "IC",
                    dotsP1))
                do.call(lines, args=c(list(resc$X, resc$Y, type = plty,
                        lty = lty, lwd = lwd, col = col), dotsL))
-               scaleX0 <- (xaxt0[1]!="n")
-               scaleY0 <- (yaxt0[1]!="n")
+               scaleX0 <- scaleX & (xaxt0[1]!="n")
+               scaleY0 <- scaleY & (yaxt0[1]!="n")
                x.ticks0 <- if(xaxt0[1]!="n") x.ticks else NULL
                y.ticks0 <- if(yaxt0[1]!="n") y.ticks[[1]] else NULL
                .plotRescaledAxis(scaleX0, scaleX.fct, scaleX.inv,
@@ -497,8 +497,8 @@ setMethod("infoPlot", "IC",
 
                     do.call(lines, args = c(list(resc.C$X, y.vec1C, type = plty,
                             lty = ltyI, col = colI, lwd = lwdI), dotsL))
-                    scaleX0 <- (xaxt0[i+in1to.draw]!="n")
-                    scaleY0 <- (yaxt0[i+in1to.draw]!="n")
+                    scaleX0 <- scaleX & (xaxt0[i+in1to.draw]!="n")
+                    scaleY0 <- scaleY & (yaxt0[i+in1to.draw]!="n")
                     x.ticks0 <- if(xaxt0[i+in1to.draw]!="n") x.ticks else NULL
                     y.ticks0 <- if(yaxt0[i+in1to.draw]!="n") y.ticks[[i+in1to.draw]] else NULL
                     .plotRescaledAxis(scaleX0, scaleX.fct, scaleX.inv,
