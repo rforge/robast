@@ -231,6 +231,12 @@
       id0.xy <- id.n1[id.xy]
       id0.x <- id.n1[id.x]
       id0.y <- id.n1[id.y]
+
+      if(any(duplicated(ndata.x)&duplicated(ndata.y))){
+          ndata.x <- jitter(ndata.x, factor=jitt.fac)
+          ndata.y <- jitter(ndata.y, factor=jitt.fac)
+      }
+
       do.call(plot, args = c(list(x = ndata.x, y=ndata.y, type = "p"), pdots))
       do.call(box,args=c(adots))
 

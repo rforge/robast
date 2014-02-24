@@ -109,13 +109,15 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 
                 if(withPreModif){
                    main(Param)[] <- .deleteDim(u.theta[idx])
+#                   print(Param)
                    if (lnx) nuisance(Param)[] <- .deleteDim(u.theta[nuis.idx])
+#                   print(Param)
 #                   print(L2Fam)
                    L2Fam <- modifyModel(L2Fam, Param,
                                .withL2derivDistr = L2Fam@.withEvalL2derivDistr)
 #                   print(L2Fam)
                    IC <- modifyIC(IC)(L2Fam, IC)
-#                   print(IC)
+ #                  print(IC)
                 }
 
                 IC.c <- as(diag(p) %*% IC@Curve, "EuclRandVariable")
@@ -126,6 +128,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                 IC.tot.0 <- NULL
 #                print(Dtau)
                 if(!.isUnitMatrix(Dtau)){
+ #                    print("HU1!")
                      Dminus <- solve(Dtau, generalized = TRUE)
                      projker <- diag(k) - Dminus %*% Dtau
 
@@ -159,6 +162,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 
                      theta <- (tf$fct(u.theta))$fval
                 }else{
+#                     print("HU2!")
                      correct <- rowMeans(evalRandVar(IC.c, x0), na.rm = na.rm )
                      iM <- is.matrix(theta)
                      names(correct) <- if(iM) rownames(theta) else names(theta)
@@ -173,6 +177,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                      IC.tot <- IC.c
                      u.theta <- theta
                 }
+#                print("HU3!")
 
                 var0 <- u.var <- NULL
                 if(with.u.var){
@@ -193,7 +198,6 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                       if(withEvalAsVar) var0 <- eval(var0)
                    }
                 }
-
                 if(withPostModif){
                    main(Param)[] <- .deleteDim(u.theta[idx])
                    if (lnx) nuisance(Param)[] <- .deleteDim(u.theta[nuis.idx])
