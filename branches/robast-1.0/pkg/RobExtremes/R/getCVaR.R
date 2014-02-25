@@ -1,0 +1,30 @@
+.getTau <- function(data, model, level, rob=TRUE, of.interest, what){
+  if(rob){
+     est <- roptest(data,model, risk=RMXRRisk())
+     L2FamC <- CallL2Fam(pIC(est))
+  }else{
+     est <- MLEstimator(data,model)
+     IC <- optIC(model,risk=asCov())
+     L2FamC <- CallL2Fam(IC)
+     L2FamC$scale <- estimate(est)["scale"]
+     L2FamC$shape <- estimate(est)["shape"]
+  }
+  eval(what)
+  L2FamC$of.interest <- of.interest # "quantile"
+  L2Fam <- eval(L2FamC)
+  res <- param(L2Fam)@trafo(estimate(est))
+  VaR <- res[[1]]
+  varVaR <- (res[[2]]) %*% asvar(est) %*% t(res[[2]])
+  return(c(VaR=VaR,sqrt(varVaR/length(data))))
+}
+
+getVaR <- function(data, model, level, rob=TRUE)
+             .getTau(data, model, level, rob, of.interest="quantile", substitute(L2FamC$p <- level))
+
+getCVaR <- function(data, model, level, rob=TRUE)
+             .getTau(data, model, level, rob, of.interest="expected shortfall", substitute(L2FamC$p <- level))
+
+getEL <- function(data, model, N0, rob=TRUE)
+             .getTau(data, model, N0, rob, of.interest="expected loss", substitute(L2FamC$N <- N0))
+
+

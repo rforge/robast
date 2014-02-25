@@ -35,6 +35,7 @@ exportMethods("moveL2Fam2RefParam",
 			  "moveICBackFromRefParam")			  
 
 export("EULERMASCHERONICONSTANT","APERYCONSTANT")
+export("getCVaR", "getVaR", "getEL")
 export("Gumbel", "Pareto", "GPareto", "GEV")
 export("GParetoFamily", "GumbelLocationFamily", "WeibullFamily", "GEVFamily",
        "ParetoFamily", "GEVFamilyMuUnknown")
