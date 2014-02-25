@@ -22,6 +22,9 @@ getEL(data, model, N0, rob=TRUE)
   \item{rob}{logical; if \code{TRUE} (default) the RMXE-parametric estimator is
              used; otherwise the MLE.}
  }
+\value{A vector of length 2 with first coordinate the respective risk measure
+and the second a corresponding (asymptotic) standard error for the risk
+measure.}
 \references{
 P. Ruckdeschel, N. Horbenko (2013): Optimally-Robust Estimators in Generalized
 Pareto Models. Statistics 47(4), 762--791.
