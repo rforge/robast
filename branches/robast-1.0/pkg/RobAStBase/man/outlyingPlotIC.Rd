@@ -9,7 +9,7 @@ outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
                ..., cutoff.quantile.x = 0.95,
                cutoff.quantile.y = cutoff.quantile.x,
                id.n, cex.pts = 1,lab.pts, jitt.pts = 0, alpha.trsp = NA,
-               adj =0, cex.idn, col.idn, lty.cutoff, lwd.cutoff, col.cutoff,
+               adj, cex.idn, col.idn, lty.cutoff, lwd.cutoff, col.cutoff,
                robCov.x = TRUE, robCov.y = TRUE, tf.x = data, tf.y = data,
                jitt.fac = 10,
                main = gettext("Outlyingness \n by means of a distance-distance plot")
