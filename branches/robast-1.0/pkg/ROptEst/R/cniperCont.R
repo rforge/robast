@@ -65,7 +65,7 @@
         }
 
 
-.getFunCnip <- function(IC1,IC2, risk, L2Fam, r, b20=NULL){
+.getFunCnip <- function(IC1, IC2, risk, L2Fam, r, b20=NULL){
 
         riskfct <- getRiskFctBV(risk, biastype(risk))
 
@@ -75,17 +75,18 @@
            if(length(R) > 1) R <- R$value
            return(R)
         }
-        R1 <- .getTrVar (IC1)
-        R2 <- .getTrVar (IC2)
+        R1 <- .getTrVar(IC1)
+        R2 <- .getTrVar(IC2)
 
 
         fun <- function(x){
-            y1 <- evalIC(IC1,as.matrix(x,ncol=1))
-            r1 <- riskfct(var=R1,bias=r*fct(normtype(risk))(y1))
-            if(!is.null(b20))
-               r2 <- riskfct(var=R1,bias=b20) else{
-               y2 <- sapply(x,function(x0) evalIC(IC2,x0))
-               r2 <- riskfct(var=R2,bias=r*fct(normtype(risk))(y2))
+            y1 <- evalIC(IC1, as.matrix(x,ncol=1))
+            r1 <- riskfct(var=R1, bias=r*fct(normtype(risk))(y1))
+            if(!is.null(b20)){
+               r2 <- riskfct(var=R1, bias=b20)
+            }else{
+               y2 <- sapply(x, function(x0) evalIC(IC2,x0))
+               r2 <- riskfct(var=R2, bias=r*fct(normtype(risk))(y2))
             }
             r1 - r2
         }
@@ -120,7 +121,7 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
             if(fCpl) b20 <- neighbor@radius*Risks(IC2)$asBias$value
         dots$fromCniperPlot <- NULL
         
-        fun <- .getFunCnip(IC1,IC2, risk, L2Fam, neighbor@radius, b20)
+        fun <- .getFunCnip(IC1, IC2, risk, L2Fam, neighbor@radius, b20)
 
         if(missing(scaleX.fct)){
            scaleX.fct <- p(L2Fam)
@@ -201,7 +202,7 @@ cniperPoint <- function(L2Fam, neighbor, risk= asMSE(),
         psi <- optIC(model = L2Fam, risk = asCov())
         eta <- optIC(model = robMod, risk = risk)
 
-        fun <- .getFunCnip(psi,eta, risk, L2Fam, neighbor@radius)
+        fun <- .getFunCnip(psi, eta, risk, L2Fam, neighbor@radius)
 
         res <- uniroot(fun, lower = lower, upper = upper)$root
         names(res) <- "cniper point"
