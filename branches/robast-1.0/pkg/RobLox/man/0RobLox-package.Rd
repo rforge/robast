@@ -14,8 +14,8 @@ estimators in case of normal location and/or scale.
 Package: \tab RobLox \cr
 Version: \tab 1.0 \cr
 Date: \tab 2013-09-12 \cr
-Depends: \tab R(>= 2.7.0), stats, lattice, RColorBrewer, RandVar, Biobase, distr, distrMod,
-RobAStBase \cr
+Depends: \tab R(>= 2.14.0), stats, distrMod(>= 2.5.2), RobAStBase(>= 0.9) \cr
+Imports: \tab lattice, RColorBrewer, Biobase, RandVar(>= 0.9.2), distr(>= 2.5.2) \cr
 Suggests: \tab MASS\cr
 LazyLoad: \tab yes \cr
 ByteCompile: \tab yes \cr
