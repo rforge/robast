@@ -164,6 +164,7 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
                    dots$lty <- ltyo[[1]]
             }
         }
+        dots <- dots[names(dots) != "withMaxRisk"]
         do.call(plot,dots)
 
         dots <- .makedotsLowLevel(dots)
@@ -223,7 +224,9 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
         mc <- match.call(#call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)
         mcl <- as.list(mc[-1])
+        mcl <- mcl[names(mcl) != "..."]
         dots <- as.list(mc$"...")
+        mcl <- .merge.lists(mcl, dots)
 
         robMod <- InfRobModel(center = L2Fam, neighbor = neighbor)
 
