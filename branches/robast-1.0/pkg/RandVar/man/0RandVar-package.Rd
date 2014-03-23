@@ -13,8 +13,9 @@ Implementation of random variables by means of S4 classes and methods.
 Package: \tab RandVar \cr
 Version: \tab 1.0 \cr
 Date: \tab 2013-09-12 \cr
-Depends: \tab R (>= 2.12.0), methods, startupmsg, distr(>= 2.0), distrEx(>=
-2.0)\cr
+Depends: \tab R (>= 2.14.0), methods, distr(>= 2.5.2), distrEx(>=
+2.5)\cr
+ByteCompile: \tab yes \cr
 LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
