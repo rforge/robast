@@ -13,7 +13,9 @@ setMethod("validParameter",signature(object="GEVFamilyMuUnknown"),
                  return(FALSE)
              if (any(param[2] <= tol))
                  return(FALSE)
-             if (any(param[3] <= tol))
+             if(object@param@withPosRestr) if (any(param[3] <= tol))
+                 return(FALSE)
+             if (any(param[3] <= -1/2))
                  return(FALSE)
              return(TRUE)
            })
@@ -32,9 +34,10 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
                           start0Est = NULL, withPos = TRUE,
                           withCentL2 = FALSE,
                           withL2derivDistr  = FALSE,
-                          ..ignoreTrafo = FALSE){
+                          ..ignoreTrafo = FALSE,
+                          ..withWarningGEV = TRUE){
     theta <- c(loc, scale, shape)
-    .warningGEVShapeLarge(shape)
+    if(..withWarningGEV).warningGEVShapeLarge(shape)
     
     of.interest <- .pretreat.of.interest(of.interest,trafo)
 
@@ -121,24 +124,25 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
 
     ## starting parameters
     startPar <- function(x,...){
-        mu <- min(x)
-        
+
         ## Pickand estimator
         if(is.null(start0Est)){
+        ### replaced 20140402: CvMMDE-with xi on Grid
         #source("kMedMad_Qn_Estimators.R")
-           PF <- GEVFamily(loc = theta[1], scale = theta[2], shape = theta[3])
-           e1 <- PickandsEstimator(x,ParamFamily=PF)
-           e0 <- estimate(e1)
+        #   PF <- GEVFamily(loc = theta[1], scale = theta[2], shape = theta[3])
+        #   e1 <- PickandsEstimator(x,ParamFamily=PF)
+        #   e0 <- estimate(e1)
+          e0 <- .getMuBetaXiGEV(x=x, xiGrid=.getXiGrid(), withPos=withPos)
         }else{
            if(is(start0Est,"function")){
               e1 <- start0Est(x, ...)
               e0 <-  if(is(e1,"Estimate")) estimate(e1) else e1
            }else stop("Argument 'start0Est' must be a function or NULL.")
            if(!is.null(names(e0)))
-               e0 <- e0[c("scale", "shape")]
+               e0 <- e0[c("loc","scale", "shape")]
         }
 #        print(e0); print(str(x)); print(head(summary(x))); print(mu)
-        if(any(x < mu-e0["scale"]/e0["shape"]))
+        if(any(x < e0[1]-e0[2]/e0[3]))
                stop("some data smaller than 'loc-scale/shape' ")
 
         names(e0) <- NULL
@@ -148,12 +152,14 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
     ## what to do in case of leaving the parameter domain
     makeOKPar <- function(theta) {
         if(withPos){
-           theta <- abs(theta)
+           theta[2:3] <- abs(theta[2:3])
         }else{
            if(!is.null(names(theta))){
+              if(theta["shape"]< (-1/2)) theta["shape"] <- -1/2+1e-4
               theta["scale"] <- abs(theta["scale"])
            }else{
-              theta[1] <- abs(theta[1])
+              theta[2] <- abs(theta[2])
+              if(theta[3]< (-1/2)) theta[3] <- -1/2+1e-4
            }
         }
         return(theta)
@@ -161,14 +167,14 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
 
     modifyPar <- function(theta){
         theta <- makeOKPar(theta)
-        .warningGEVShapeLarge(theta["shape"])
+        if(..withWarningGEV).warningGEVShapeLarge(theta["shape"])
         if(!is.null(names(theta))){
             loc <- theta["loc"]
             sc <- theta["scale"]
             sh <- theta["shape"]
         }else{
             loc <- theta[1]
-            theta[2:3] <- abs(theta[2:3])
+            #theta[2:3] <- abs(theta[2:3])
             sc <- theta[2]
             sh <- theta[3]
         }
@@ -181,7 +187,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
         sc <- force(main(param)[2])
         k <- force(main(param)[3])
         tr <- force(main(param)[1])
-        .warningGEVShapeLarge(k)
+        if(..withWarningGEV).warningGEVShapeLarge(k)
 
         k1 <- k+1
         Lambda0 <- function(x) {
@@ -233,7 +239,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
         sc <- force(main(param)[2])
         k <- force(main(param)[3])
         k1 <- k+1
-        .warningGEVShapeLarge(k)
+        if(..withWarningGEV).warningGEVShapeLarge(k)
         G20 <- gamma(2*k)
         G10 <- gamma(k)
         G11 <- digamma(k)*gamma(k)
@@ -319,11 +325,3 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
     L2Fam@.withEvalL2derivDistr <- FALSE
     return(L2Fam)
 }
-
-#ddigamma(t,s) is d/ds \int_0^t exp(-x) x^(s-1) dx
-
-ddigamma <- function(t,s){
-              int <- function(x) exp(-x)*(log(x))*x^(s-1)
-              integrate(int, lower=0, upper=t)$value
-              }
-              

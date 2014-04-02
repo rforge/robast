@@ -15,8 +15,24 @@
   res <- param(L2Fam)@trafo(estimate(est))
   VaR <- res[[1]]
   varVaR <- (res[[2]]) %*% asvar(est) %*% t(res[[2]])
-  return(c(VaR=VaR,sqrt(varVaR/length(data))))
+  res <- c(VaR,sqrt(varVaR/length(data)))
+  names(res) <- c("Risk","varofRisk")
+  class(res) <- "riskMeasure"
+  res
 }
+print.riskMeasure <- function(x, level=NULL, ...){
+   mc <- as.list(match.call(expand.dots=TRUE)[-1])
+   digits <- if(is.null(mc$digits)) 3 else  mc$digits
+   if(is.null(level)){
+      cat(" ",signif(x[1],digits),"\n")
+      cat("(",signif(x[2],digits),")\n")
+   }else{qn <- qnorm((level+1)/2)
+      CI <- c(-1,1)*qn*x[2]+x[1]
+      cat(" ",signif(x[1],digits),"         [", signif(CI[1],digits), ",",
+              signif(CI[2],digits),"]\n")
+  }
+}
+
 
 getVaR <- function(data, model, level, rob=TRUE)
              .getTau(data, model, level, rob, of.interest="quantile", substitute(L2FamC$p <- level))

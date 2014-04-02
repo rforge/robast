@@ -12,10 +12,12 @@ setMethod("validParameter",signature(object="GParetoFamily"),
                  param <- main(param)
              if (!all(is.finite(param))) 
                  return(FALSE)
-             #if (any(param[1] <= tol))
-             #    return(FALSE)
+             if (any(param[1] <= tol))
+                 return(FALSE)
              if(object@param@withPosRestr)
                  if (any(param[2] <= tol))
+                     return(FALSE)
+             if (any(param[2] <= -1/2))
                      return(FALSE)
              return(TRUE)
            })
@@ -142,8 +144,10 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
                e0 <- e0[c("scale", "shape")]
         }
 
-        if(any(x < tr-e0["scale"]/e0["shape"]))
-               stop("some data smaller than 'loc-scale/shape' ")
+        if(any(x < tr-.Machine$double.eps))
+               stop("some data smaller than 'loc' ")
+#        if(any(x < tr-e0["scale"]/e0["shape"]))
+#               stop("some data smaller than 'loc-scale/shape' ")
 
         names(e0) <- NULL
         return(e0)
@@ -156,9 +160,11 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
            theta <- abs(theta)
         }else{
            if(!is.null(names(theta))){
+              if(theta["shape"]< (-1/2)) theta["shape"] <- -1/2+1e-4
               theta["scale"] <- abs(theta["scale"])
            }else{
               theta[1] <- abs(theta[1])
+              if(theta[2]< (-1/2)) theta[2] <- -1/2+1e-4
            }
         }
         return(theta)

@@ -45,3 +45,4 @@ export("getShapeGrid", "getSnGrid",
 export("loc", "loc<-", "kMAD", "Sn", "Qn", 
        "asvarMedkMAD","asvarPickands", "asvarQBCC")
 exportMethods("rescaleFunction")			  
+S3method(print, riskMeasure)

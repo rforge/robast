@@ -127,7 +127,9 @@ setMethod("validParameter",signature(object="GEVFamily"),
                  return(FALSE)
              if (any(param[1] <= tol)) 
                  return(FALSE)
-             if (any(param[2] <= tol))
+             if(object@param@withPosRestr) if (any(param[2] <= tol))
+                 return(FALSE)
+             if (any(param[2] <= -1/2))
                  return(FALSE)
              return(TRUE)
            })
@@ -146,9 +148,10 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                           start0Est = NULL, withPos = TRUE,
                           withCentL2 = FALSE,
                           withL2derivDistr  = FALSE,
-                          ..ignoreTrafo = FALSE){
+                          ..ignoreTrafo = FALSE,
+                          ..withWarningGEV = TRUE){
     theta <- c(loc, scale, shape)
-    .warningGEVShapeLarge(shape)
+    if(..withWarningGEV).warningGEVShapeLarge(shape)
     
     of.interest <- .pretreat.of.interest(of.interest,trafo)
 
@@ -234,13 +237,16 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     ## starting parameters
     startPar <- function(x,...){
         mu <- theta[1]
-        
+
         ## Pickand estimator
         if(is.null(start0Est)){
+        ### replaced 20140402: CvMMDE-with xi on Grid
         #source("kMedMad_Qn_Estimators.R")
-           PF <- GEVFamily(loc = theta[1], scale = theta[2], shape = theta[3])
-           e1 <- PickandsEstimator(x,ParamFamily=PF)
-           e0 <- estimate(e1)
+        ### replaced 20140402:
+        #   PF <- GEVFamily(loc = theta[1], scale = theta[2], shape = theta[3])
+        #   e1 <- PickandsEstimator(x,ParamFamily=PF)
+        #   e0 <- estimate(e1)
+           e0 <- .getBetaXiGEV(x=x, mu=mu, xiGrid=.getXiGrid(), withPos=withPos)
         }else{
            if(is(start0Est,"function")){
               e1 <- start0Est(x, ...)
@@ -263,9 +269,11 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
            theta <- abs(theta)
         }else{
            if(!is.null(names(theta))){
+              if(theta["shape"]< (-1/2)) theta["shape"] <- -1/2+1e-4
               theta["scale"] <- abs(theta["scale"])
            }else{
               theta[1] <- abs(theta[1])
+              if(theta[2]< (-1/2)) theta[2] <- -1/2+1e-4
            }
         }
         return(theta)
@@ -273,12 +281,12 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
     modifyPar <- function(theta){
         theta <- makeOKPar(theta)
-        .warningGEVShapeLarge(theta["shape"])
+        if(..withWarningGEV).warningGEVShapeLarge(theta["shape"])
         if(!is.null(names(theta))){
             sc <- theta["scale"]
             sh <- theta["shape"]
         }else{
-            theta <- abs(theta)
+            # changed 20140402: theta <- abs(theta)
             sc <- theta[1]
             sh <- theta[2]
         }
@@ -291,7 +299,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
         sc <- force(main(param)[1])
         k <- force(main(param)[2])
         tr <- fixed(param)[1]
-        .warningGEVShapeLarge(k)
+        if(..withWarningGEV).warningGEVShapeLarge(k)
 
         Lambda1 <- function(x) {
          y <- x*0
@@ -327,7 +335,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     FisherInfo.fct <- function(param) {
         sc <- force(main(param)[1])
         k <- force(main(param)[2])
-        .warningGEVShapeLarge(k)
+        if(..withWarningGEV).warningGEVShapeLarge(k)
         G20 <- gamma(2*k)
         G10 <- gamma(k)
         G11 <- digamma(k)*gamma(k)
