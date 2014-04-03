@@ -11,23 +11,33 @@
          mygev1 <- GEV(loc=0,scale=sig,shape=xi)
          CvMDist(x0,mygev1)
       }
-      intup <- min(xi*(x-mu))
-      if(intup<0) break
-      intv <-  c(1e-5,min(s0,intup))
+      intlo <- max(-xi*(x-mu))
+      intv <-  c(max(1e-5,intlo), s0)
       sigCvMMD1 <- optimize(funl, interval=intv)$minimum
       mygev <- GEVFamily(loc=0,scale=sigCvMMD1,shape=xi, withPos=withPos,
                          start0Est = fu, ..withWarningGEV=FALSE)
       mde0 <- try(MDEstimator(x0, mygev, distance=CvMDist, startPar=c("scale"=sigCvMMD1,"shape"=xi)),silent=TRUE)
+      es0 <- c(NA,NA)
       if(!is(mde0,"try-error")){
           es <- estimate(mde0)
           crit1 <- criterion(mde0)
-          if(crit1<crit0&(1+min(es[2]*x0/es[1])>0)){
-             mdeb <- mde0
-             crit0 <- crit1
+          if(1+min(es[2]*x0/es[1])>0){
+             if(crit1<crit0){
+                mdeb <- mde0
+                crit0 <- crit1
+                es0 <- es
+             }
+          }else{
+             es[1] <- intlo+1e-5
+             mygev2 <- GEV(loc=0,scale=es[1],shape=es[2])
+             crit1 <- CvMDist(x0,mygev2)
+             if(crit1<crit0){
+                crit0 <- crit1
+                es0 <- es
+             }
           }
       }
   }
-  es <- estimate(mdeb)
   names(es) <- c("scale","shape")
   return(es)
 }
