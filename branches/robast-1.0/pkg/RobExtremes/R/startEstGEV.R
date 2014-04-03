@@ -18,9 +18,10 @@
       mde0 <- try(MDEstimator(x0, mygev, distance=CvMDist, startPar=c("scale"=sigCvMMD1,"shape"=xi)),silent=TRUE)
       if(!is(mde0,"try-error")){
           es <- estimate(mde0)
-          if(criterion(mde0)<crit0&(1+es[2]*min(x0)/es[1]>0)){
+          crit1 <- criterion(mde0)
+          if(crit1<crit0&(1+min(es[2]*x0/es[1])>0)){
              mdeb <- mde0
-             crit0 <- criterion(mde0)
+             crit0 <- crit1
           }
       }
   }
