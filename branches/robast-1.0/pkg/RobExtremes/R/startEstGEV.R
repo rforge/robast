@@ -11,7 +11,7 @@
          mygev1 <- GEV(loc=0,scale=sig,shape=xi)
          CvMDist(x0,mygev1)
       }
-      intv <- if(xi<0) c(min(1e-5,xi/4*min(x)-mu), max(xi*min(x)-mu,2e-5)) else c(max(1e-5,xi*max(x)-mu),max(s0,2*xi*max(x)-mu))
+      intv <- if(xi<0) c(max(1e-5,xi/4*min(x)-mu), max(xi*min(x)-mu,2e-5)) else c(max(1e-5,xi*max(x)-mu),max(s0,2*xi*max(x)-mu))
       sigCvMMD1 <- optimize(funl, interval=intv)$minimum
       mygev <- GEVFamily(loc=0,scale=sigCvMMD1,shape=xi, withPos=withPos,
                          start0Est = fu, ..withWarningGEV=FALSE)
