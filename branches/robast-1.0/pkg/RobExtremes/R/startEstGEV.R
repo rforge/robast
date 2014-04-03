@@ -11,7 +11,8 @@
          mygev1 <- GEV(loc=0,scale=sig,shape=xi)
          CvMDist(x0,mygev1)
       }
-      sigCvMMD1 <- optimize(funl, interval=c(1e-5,s0))$minimum
+      intv <- if(xi<0) c(1e-5, max(xi*min(x)-mu,2e-5)) else c(max(1e-5,xi*min(x)-mu),s0)
+      sigCvMMD1 <- optimize(funl, interval=intv)$minimum
       mygev <- GEVFamily(loc=0,scale=sigCvMMD1,shape=xi, withPos=withPos,
                          start0Est = fu, ..withWarningGEV=FALSE)
       mde0 <- MDEstimator(x0, mygev, distance=CvMDist, startPar=c("scale"=sigCvMMD1,"shape"=xi))

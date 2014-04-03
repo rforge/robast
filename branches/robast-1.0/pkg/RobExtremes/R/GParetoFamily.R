@@ -146,6 +146,8 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
         if(any(x < tr-.Machine$double.eps))
                stop("some data smaller than 'loc' ")
+        if(e0[2]<0) if(any(x > tr-e0[1]/e0[2]))
+               stop("shape is negative and some data larger than 'loc-scale/shape' ")
 #        if(any(x < tr-e0["scale"]/e0["shape"]))
 #               stop("some data smaller than 'loc-scale/shape' ")
 

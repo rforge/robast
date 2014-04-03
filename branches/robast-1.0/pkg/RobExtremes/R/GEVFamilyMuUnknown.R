@@ -143,10 +143,10 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
         }
 #        print(e0); print(str(x)); print(head(summary(x))); print(mu)
         if(e0[3]>0) if(any(x < e0[1]-e0[2]/e0[3]))
-               stop("some data smaller than 'loc-scale/shape' ")
+               stop("shape is positive and some data smaller than 'loc-scale/shape' ")
 
         if(e0[3]<0) if(any(x > e0[1]-e0[2]/e0[3]))
-               stop("some data larger than 'loc-scale/shape' ")
+               stop("shape is negative and some data larger than 'loc-scale/shape' ")
 
         names(e0) <- NULL
         return(e0)
