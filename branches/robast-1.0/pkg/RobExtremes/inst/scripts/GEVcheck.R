@@ -4,7 +4,7 @@ set.seed(123)
 x <- rgev(100,shape=2,scale=30,loc=4) ### x still causes problems....
 x1 <- rgev(100,shape=-.2,scale=30,loc=4)
 gev0 <- GEVFamilyMuUnknown(withPos=FALSE)
-gev1 <- GEVFamilyMuUnknown(loc=quantile(x,exp(-1)),withPos=FALSE)
+gev1 <- GEVFamily(loc=quantile(x,exp(-1)),withPos=FALSE)
 MLEstimator(x,gev0)
 MLEstimator(x,gev1)
 MLEstimator(x1,gev0)
