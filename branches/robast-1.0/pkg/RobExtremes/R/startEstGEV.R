@@ -1,4 +1,4 @@
-.getXiGrid <- function(){seq(-0.4,4,by=0.3)}
+.getXiGrid <- function(){seq(-0.48,5,by=0.5)}
 
 
 .getBetaXiGEV <- function(x, mu, xiGrid = .getXiGrid(), withPos=TRUE){
@@ -12,13 +12,9 @@
          CvMDist(x0,mygev1)
       }
       sigCvMMD1 <- optimize(funl, interval=c(1e-5,s0))$minimum
-      print(c("sigma"=sigCvMMD1,"xi"=xi))
       mygev <- GEVFamily(loc=0,scale=sigCvMMD1,shape=xi, withPos=withPos,
                          start0Est = fu, ..withWarningGEV=FALSE)
-      print(mygev)
-      print(param(mygev))
       mde0 <- MDEstimator(x0, mygev, distance=CvMDist, startPar=c("scale"=sigCvMMD1,"shape"=xi))
-      print(c("roh"=estimate(mde0)))
       if(criterion(mde0)<crit0){
          mdeb <- mde0
          crit0 <- criterion(mde0)
