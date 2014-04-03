@@ -15,10 +15,12 @@
       sigCvMMD1 <- optimize(funl, interval=intv)$minimum
       mygev <- GEVFamily(loc=0,scale=sigCvMMD1,shape=xi, withPos=withPos,
                          start0Est = fu, ..withWarningGEV=FALSE)
-      mde0 <- MDEstimator(x0, mygev, distance=CvMDist, startPar=c("scale"=sigCvMMD1,"shape"=xi))
-      if(criterion(mde0)<crit0){
-         mdeb <- mde0
-         crit0 <- criterion(mde0)
+      mde0 <- try(MDEstimator(x0, mygev, distance=CvMDist, startPar=c("scale"=sigCvMMD1,"shape"=xi)),silent=TRUE)
+      if(!is(mde0,"try-error")){
+          if(criterion(mde0)<crit0){
+             mdeb <- mde0
+             crit0 <- criterion(mde0)
+          }
       }
   }
   es <- estimate(mdeb)
