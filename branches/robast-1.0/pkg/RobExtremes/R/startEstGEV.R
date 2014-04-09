@@ -1,7 +1,11 @@
-.getXiGrid <- function(){seq(-0.48,5,by=0.5)}
+.getXiGrid <- function(){c(0.1,seq(-0.48,5,by=0.5))}
 
 
-.getBetaXiGEV <- function(x, mu, xiGrid = .getXiGrid(), withPos=TRUE){
+.getBetaXiGEV <- function(x, mu, xiGrid = .getXiGrid(), withPos=TRUE, secLevel = 0.7){
+
+  n <- length(x)
+  epsn <- min(floor(secLevel*sqrt(n))+1,n)
+
   x0 <- x-mu
   s0 <- max(x0)-min(x0)
   crit0 <- Inf
@@ -11,7 +15,7 @@
          mygev1 <- GEV(loc=0,scale=sig,shape=xi)
          CvMDist(x0,mygev1)
       }
-      intlo <- max(-xi*(x-mu))
+      intlo <- quantile(-xi*(x-mu),1-epsn/n)
       intv <-  c(max(1e-5,intlo), s0)
       sigCvMMD1 <- optimize(funl, interval=intv)$minimum
       mygev <- GEVFamily(loc=0,scale=sigCvMMD1,shape=xi, withPos=withPos,
@@ -21,7 +25,7 @@
       if(!is(mde0,"try-error")){
           es <- estimate(mde0)
           crit1 <- criterion(mde0)
-          if(1+min(es[2]*x0/es[1])>0){
+          if(quantile(1+es[2]*x0/es[1], epsn/n)>0){
              if(crit1<crit0){
                 mdeb <- mde0
                 crit0 <- crit1
@@ -42,9 +46,9 @@
   return(es)
 }
 
-.getMuBetaXiGEV <- function(x, xiGrid = .getXiGrid(), withPos=TRUE){
+.getMuBetaXiGEV <- function(x, xiGrid = .getXiGrid(), withPos=TRUE, secLevel = 0.7){
   mu <- quantile(x,exp(-1))
-  es <- .getBetaXiGEV(x=x, mu=mu, xiGrid=xiGrid, withPos=withPos)
+  es <- .getBetaXiGEV(x=x, mu=mu, xiGrid=xiGrid, withPos=withPos, secLevel = secLevel)
   es0 <- c(mu,es)
   names(es0) <- c("loc","scale","shape")
   return(es0)

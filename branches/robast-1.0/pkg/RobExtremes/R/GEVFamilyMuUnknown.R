@@ -32,6 +32,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
                           of.interest = c("scale", "shape"),
                           p = NULL, N = NULL, trafo = NULL,
                           start0Est = NULL, withPos = TRUE,
+                          secLevel = 0.7,
                           withCentL2 = FALSE,
                           withL2derivDistr  = FALSE,
                           ..ignoreTrafo = FALSE,
@@ -125,6 +126,9 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
     ## starting parameters
     startPar <- function(x,...){
 
+        n <- length(x)
+        epsn <- min(floor(secLevel*sqrt(n))+1,n)
+
         ## Pickand estimator
         if(is.null(start0Est)){
         ### replaced 20140402: CvMMDE-with xi on Grid
@@ -142,12 +146,12 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
                e0 <- e0[c("loc","scale", "shape")]
         }
 #        print(e0); print(str(x)); print(head(summary(x))); print(mu)
-        if(e0[3]>0) if(any(x < e0[1]-e0[2]/e0[3]))
+        if(quantile(e0[3]/e0[2]*(x-e0[1]), epsn/n)< (-1)){
+           if(e0[3]>0)
                stop("shape is positive and some data smaller than 'loc-scale/shape' ")
-
-        if(e0[3]<0) if(any(x > e0[1]-e0[2]/e0[3]))
+           else if(e0[3]<0)
                stop("shape is negative and some data larger than 'loc-scale/shape' ")
-
+        }
         names(e0) <- NULL
         return(e0)
     }
