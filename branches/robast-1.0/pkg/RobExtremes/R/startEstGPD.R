@@ -1,7 +1,4 @@
-.getXiGrid <- function(){c(0.1,seq(-0.48,5,by=0.5))}
-
-
-.getBetaXiGEV <- function(x, mu, xiGrid = .getXiGrid(), withPos=TRUE, secLevel = 0.7,
+.getBetaXiGPD <- function(x, mu, xiGrid = .getXiGrid(), withPos=TRUE, secLevel = 0.7,
                           .issueIntermediateParams = FALSE){
 
   n <- length(x)
@@ -11,21 +8,20 @@
   s0 <- max(x0)-min(x0)
   crit0 <- Inf
 
-  fu <- function(x,...) .getBetaXiGEV(x,mu,xiGrid = xiGrid,withPos=withPos)
+  fu <- function(x,...) .getBetaXiGPD(x,mu,xiGrid = xiGrid,withPos=withPos)
   e0 <- NULL
 
   ### first try (to ensure global consistency): PickandsEstimator
-  try({mygev <- GEVFamily(loc=0,scale=1,shape=0.1, withPos=withPos,
-                     ..withWarningGEV=FALSE)
-       e1 <- PickandsEstimator(x,ParamFamily=mygev)
+  try({mygpd <- GParetoFamily(loc=0,scale=1,shape=0.1, withPos=withPos)
+       e1 <- medkMADhybr(x,ParamFamily=mygpd, k=10)
        if(.issueIntermediateParams){
-           cat("Pickands:\n");print(e1) }
+       cat("MedkMAD:\n");print(e1)}
        e0 <- estimate(e1)}, silent=TRUE)
 
   if(!is.null(e0)) if(!is(e0,"try-error")){
-      mygev <- GEVFamily(loc=0,scale=e0[1],shape=e0[2], withPos=withPos,
-                         start0Est = fu, ..withWarningGEV=FALSE)
-      mde0 <- try(MDEstimator(x0, mygev, distance=CvMDist, startPar=c("scale"=es0[1],"shape"=es0[2])),silent=TRUE)
+      mygpd <- GParetoFamily(loc=0,scale=e0[1],shape=e0[2], withPos=withPos,
+                         start0Est = fu)
+      mde0 <- try(MDEstimator(x0, mygpd, distance=CvMDist, startPar=c("scale"=es0[1],"shape"=es0[2])),silent=TRUE)
       es0 <- c(NA,NA)
       if(!is(mde0,"try-error")){
           es <- estimate(mde0)
@@ -52,15 +48,15 @@
   for(xi in xiGrid){
       i <- i + 1
       funl <- function(sig){
-         mygev1 <- GEV(loc=0,scale=sig,shape=xi)
-         CvMDist(x0,mygev1)
+         mygpd1 <- GPareto(loc=0,scale=sig,shape=xi)
+         CvMDist(x0,mygpd1)
       }
       intlo <- quantile(-xi*(x-mu),1-epsn/n)
       intv <-  c(max(1e-5,intlo), s0)
       sigCvMMD1 <- optimize(funl, interval=intv)$minimum
-      mygev <- GEVFamily(loc=0,scale=sigCvMMD1,shape=xi, withPos=withPos,
-                         start0Est = fu, ..withWarningGEV=FALSE)
-      mde0 <- try(MDEstimator(x0, mygev, distance=CvMDist, startPar=c("scale"=sigCvMMD1,"shape"=xi)),silent=TRUE)
+      mygpd <- GParetoFamily(loc=0,scale=sigCvMMD1,shape=xi, withPos=withPos,
+                         start0Est = fu)
+      mde0 <- try(MDEstimator(x0, mygpd, distance=CvMDist, startPar=c("scale"=sigCvMMD1,"shape"=xi)),silent=TRUE)
       es0 <- c(NA,NA)
       if(!is(mde0,"try-error")){
           es <- estimate(mde0)
@@ -82,8 +78,8 @@
                 cat("side condition '1+sc/sh (x-mu) >0' violated;\n")
              }
              es[1] <- intlo+1e-5
-             mygev2 <- GEV(loc=0,scale=es[1],shape=es[2])
-             crit1 <- CvMDist(x0,mygev2)
+             mygpd2 <- GPareto(loc=0,scale=es[1],shape=es[2])
+             crit1 <- CvMDist(x0,mygpd2)
              if(.issueIntermediateParams){
                  cat("candidate no",i+1, "(b):\n", round(es,6), " crit:", round(crit1,6), "   ")
              }
@@ -98,13 +94,13 @@
   return(es)
 }
 
-.getMuBetaXiGEV <- function(x, xiGrid = .getXiGrid(), withPos=TRUE, secLevel = 0.7,
-                            .issueIntermediateParams = FALSE){
-  mu <- quantile(x,exp(-1))
-  es <- .getBetaXiGEV(x=x, mu=mu, xiGrid=xiGrid, withPos=withPos,
-                      secLevel = secLevel,
-                      .issueIntermediateParams = .issueIntermediateParams)
-  es0 <- c(mu,es)
-  names(es0) <- c("loc","scale","shape")
-  return(es0)
-}
+#.getMuBetaXiGPD <- function(x, xiGrid = .getXiGrid(), withPos=TRUE, secLevel = 0.7,
+#                            .issueIntermediateParams = FALSE){
+#  mu <- quantile(x,exp(-1))
+#  es <- .getBetaXiGPD(x=x, mu=mu, xiGrid=xiGrid, withPos=withPos,
+#                      secLevel = secLevel,
+#                      .issueIntermediateParams = .issueIntermediateParams)
+#  es0 <- c(mu,es)
+#  names(es0) <- c("loc","scale","shape")
+#  return(es0)
+#}

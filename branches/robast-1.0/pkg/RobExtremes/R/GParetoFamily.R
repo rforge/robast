@@ -41,6 +41,7 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
                           of.interest = c("scale", "shape"), 
                           p = NULL, N = NULL, trafo = NULL,
                           start0Est = NULL, withPos = TRUE,
+                          secLevel = 0.7,
                           withCentL2 = FALSE,
                           withL2derivDistr  = FALSE,
                           ..ignoreTrafo = FALSE){
@@ -127,14 +128,19 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
     ## starting parameters
     startPar <- function(x,...){
         tr <- theta[1]
-        
+        n <- length(x)
+        epsn <- min(floor(secLevel*sqrt(n))+1,n)
+
         ## Pickand estimator
         if(is.null(start0Est)){
            PF <- GParetoFamily(loc = theta[1],
                             scale = theta[2], shape = theta[3])
-           e1 <- medkMADhybr(c(x), k=10, ParamFamily = PF,
-                             q.lo = 1e-3, q.up = 15)
-           e0 <- estimate(e1)
+           e1 <- try(
+           medkMADhybr(c(x), k=10, ParamFamily = PF,
+                             q.lo = 1e-3, q.up = 15), silent =TRUE)
+           if(is(e1,"try-error")){ e0 <- .getBetaXiGPD(x=x, mu=tr,
+                       xiGrid=.getXiGrid(), withPos=withPos)
+           }else e0 <- estimate(e1)
         }else{
            if(is(start0Est,"function")){
               e1 <- start0Est(x, ...)
@@ -144,9 +150,9 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
                e0 <- e0[c("scale", "shape")]
         }
 
-        if(any(x < tr-.Machine$double.eps))
+        if(quantile(e0[2]*(x-tr), epsn/n)<.Machine$double.eps)
                stop("some data smaller than 'loc' ")
-        if(e0[2]<0) if(any(x > tr-e0[1]/e0[2]))
+        if(e0[2]<0) if(quantile(x,1-epsn/n) > tr-e0[1]/e0[2])
                stop("shape is negative and some data larger than 'loc-scale/shape' ")
 #        if(any(x < tr-e0["scale"]/e0["shape"]))
 #               stop("some data smaller than 'loc-scale/shape' ")
