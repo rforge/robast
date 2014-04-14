@@ -73,9 +73,7 @@ CniperPointPlot <- function(fam,...
   ##
 
   ## Scaling of the axes
-  print(fam)
   scaleList <- rescaleFunction(fam, FALSE, rescale)
-  print(scaleList)
 
   argsList <- c(list(L2Fam = substitute(fam)
                    ,data = substitute(NULL)

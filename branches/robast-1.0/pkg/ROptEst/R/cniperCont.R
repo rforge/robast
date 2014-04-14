@@ -82,7 +82,7 @@
             y1 <- sapply(x, function(x1)evalIC(IC1,as.matrix(x1,ncol=1)))
             r1 <- riskfct(var=R1,bias=r*fct(normtype(risk))(y1))
             if(!is.null(b20)){
-               r2 <- riskfct(var=R1, bias=b20)
+               r2 <- riskfct(var=R2, bias=b20)
             }else{
                y2 <- sapply(x,function(x0) evalIC(IC2,x0))
                r2 <- riskfct(var=R2,bias=r*fct(normtype(risk))(y2))
