@@ -65,28 +65,27 @@
         }
 
 
-.getFunCnip <- function(IC1, IC2, risk, L2Fam, r, b20=NULL){
+.getFunCnip <- function(IC1,IC2, risk, L2Fam, r, b20=NULL){
 
         riskfct <- getRiskFctBV(risk, biastype(risk))
-
        .getTrVar <- function(IC){
            R <- Risks(IC)[["trAsCov"]]
            if(is.null(R)) R <- getRiskIC(IC, risk = trAsCov(), L2Fam = L2Fam)
            if(length(R) > 1) R <- R$value
            return(R)
         }
-        R1 <- .getTrVar(IC1)
-        R2 <- .getTrVar(IC2)
+        R1 <- .getTrVar (IC1)
+        R2 <- .getTrVar (IC2)
 
 
         fun <- function(x){
-            y1 <- evalIC(IC1, as.matrix(x,ncol=1))
-            r1 <- riskfct(var=R1, bias=r*fct(normtype(risk))(y1))
+            y1 <- sapply(x, function(x1)evalIC(IC1,as.matrix(x1,ncol=1)))
+            r1 <- riskfct(var=R1,bias=r*fct(normtype(risk))(y1))
             if(!is.null(b20)){
                r2 <- riskfct(var=R1, bias=b20)
             }else{
-               y2 <- sapply(x, function(x0) evalIC(IC2,x0))
-               r2 <- riskfct(var=R2, bias=r*fct(normtype(risk))(y2))
+               y2 <- sapply(x,function(x0) evalIC(IC2,x0))
+               r2 <- riskfct(var=R2,bias=r*fct(normtype(risk))(y2))
             }
             r1 - r2
         }
@@ -121,7 +120,7 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
             if(fCpl) b20 <- neighbor@radius*Risks(IC2)$asBias$value
         dots$fromCniperPlot <- NULL
         
-        fun <- .getFunCnip(IC1, IC2, risk, L2Fam, neighbor@radius, b20)
+        fun <- .getFunCnip(IC1,IC2, risk, L2Fam, neighbor@radius, b20)
 
         if(missing(scaleX.fct)){
            scaleX.fct <- p(L2Fam)
@@ -137,7 +136,6 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
                      scaleX.inv, scaleY, scaleY.fct, dots$xlim, dots$ylim, dots)
         dots$x <- resc$X
         dots$y <- resc$Y
-
 
         dots$type <- "l"
         if(is.null(dots$main)) dots$main <- gettext("Cniper region plot")
@@ -165,7 +163,6 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
                    dots$lty <- ltyo[[1]]
             }
         }
-        dots <- dots[names(dots) != "withMaxRisk"]
         do.call(plot,dots)
 
         dots <- .makedotsLowLevel(dots)
@@ -192,18 +189,17 @@ cniperPoint <- function(L2Fam, neighbor, risk= asMSE(),
 
         mc <- match.call(expand.dots = FALSE)
 
-        if(!is.null(as.list(mc)$lower)) lower <- p(L2Fam)(lower)
-        if(!is.null(as.list(mc)$upper)) upper <- p(L2Fam)(upper)
-        lower <- q(L2Fam)(lower)
-        upper <- q(L2Fam)(upper)
+        if(is.null(as.list(mc)$lower)) lower <- q(L2Fam)(lower)
+        if(is.null(as.list(mc)$upper)) upper <- q(L2Fam)(upper)
+#        lower <- q(L2Fam)(lower)
+#        upper <- q(L2Fam)(upper)
 
         robMod <- InfRobModel(center = L2Fam, neighbor = neighbor)
 
         psi <- optIC(model = L2Fam, risk = asCov())
         eta <- optIC(model = robMod, risk = risk)
 
-        fun <- .getFunCnip(psi, eta, risk, L2Fam, neighbor@radius)
-
+        fun <- .getFunCnip(psi,eta, risk, L2Fam, neighbor@radius)
         res <- uniroot(fun, lower = lower, upper = upper)$root
         names(res) <- "cniper point"
         res
@@ -222,12 +218,12 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                            which.lbs = NULL, which.Order  = NULL,
                            return.Order = FALSE){
 
-        mc <- match.call(#call = sys.call(sys.parent(1)),
+        mc0 <- match.call(#call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)
+        mc <- match.call(#call = sys.call(sys.parent(1)),
+                       expand.dots = TRUE)
         mcl <- as.list(mc[-1])
-        mcl <- mcl[names(mcl) != "..."]
-        dots <- as.list(mc$"...")
-        mcl <- .merge.lists(mcl, dots)
+        dots <- as.list(mc0$"...")
 
         robMod <- InfRobModel(center = L2Fam, neighbor = neighbor)
 
@@ -240,6 +236,7 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
            mcl$main <- gettext("Cniper point plot")
 
         if(withMaxRisk) mcl$fromCniperPlot <- TRUE
+        mcl$withMaxRisk <- NULL
         do.call(cniperCont, mcl)
 }
 
