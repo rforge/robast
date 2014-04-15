@@ -61,7 +61,7 @@
                        maxiter = 50, tol = .Machine$double.eps^0.4,
                        loRad = 0, upRad = Inf, loRad0 = 1e-3,
                        loRad.s=0.2, up.Rad.s=1,
-                       withStartLM = TRUE
+                       withStartLM = TRUE, len = 13
                        ){
    wprint <- function(...){ if (withPrint) print(...)}
    thGrid <- unique(sort(thGrid))
@@ -89,7 +89,7 @@
                print(A.start)
                print(z.start)
                print(c(r.start.l,r.start.u))
-               if(is(a,"try-error")|any(is.na(a))){ a <- rep(NA,13)}else{
+               if(is(a,"try-error")|any(is.na(a))){ a <- rep(NA,len)}else{
                   if(withStartLM){
                      if(itLM==1){
                         z1 <<- a[["a.w"]]
@@ -170,11 +170,11 @@
 
 .generateInterpGrid <- function(thGrid, PFam, toFileCSV = "temp.csv",
             getFun = .getLMGrid, ..., modifyfct, nameInSysdata,
-            GridFileName, withPrint = TRUE){
+            GridFileName, withPrint = TRUE, len = 13){
   if(missing(GridFileName))
      GridFileName <- paste(gsub("^\\.(.+)","\\1",nameInSysdata),".Rdata",sep="")
   Grid <- getFun(thGrid = thGrid, PFam = PFam, ..., modifyfct = modifyfct,
-                 withPrint = withPrint, GridFileName = GridFileName)
+                 withPrint = withPrint, GridFileName = GridFileName, len = len)
   .saveGridToCSV(Grid,toFileCSV,name(PFam),nameInSysdata)
   return(invisible(NULL))
 }
