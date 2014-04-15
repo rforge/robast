@@ -5,7 +5,7 @@
 ### open R session
 require(RobExtremes)
 ### -> change this according to where you checked out the svn repo:
-.basepath <- "C:/rtest/RobASt/branches/robast-0.9/pkg"
+.basepath <- "C:/rtest/RobASt/branches/robast-1.0./pkg"
 ## <-
 oldwd <- getwd()
 .myFolderTo <- file.path(.basepath,"RobExtremesBuffer")
@@ -17,7 +17,8 @@ setwd(.myFolderTo)
 #
 #PF <- GParetoFamily()
 #PF <- GEVFamily()
-PF <- GammaFamily()
+PF <- GEVFamilyMuUnknown(withPos=FALSE, ..name="GEVU Family")
+#PF <- GammaFamily()
 #PF <- WeibullFamily()
 ###
 .svInt <- RobExtremes:::.svInt
@@ -25,7 +26,8 @@ PF <- GammaFamily()
 #    RobExtremes:::.generateInterpGridSn(PFam = PF)}
 ## to make this parallel, start this on several processors
 #.svInt1()
-.svInt(.OMSE.th, PFam=PF, xiGrid = getShapeGrid(3, cutoff.at.0=0.005))
+#.svInt(.OMSE.th, PFam=PF, xiGrid = getShapeGrid(3, cutoff.at.0=0.005))
+#.svInt(.OMSE.th, PFam=PF)
 #.svInt(.MBRE.th, PFam=PF)
 .svInt(.RMXE.th, PFam=PF)
 setwd(oldwd)

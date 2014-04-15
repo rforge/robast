@@ -1,4 +1,4 @@
-getLMs <- function(Gridnam,Famnam,xi=0.7, baseDir="C:/rtest/robast", withPrint=FALSE){
+getLMs <- function(Gridnam,Famnam,xi=0.7, baseDir="C:/rtest/robast", withPrint=FALSE, withLoc = FALSE){
    ## Gridnam in (Sn,OMSE,RMXE,MBRE) ## uses partial matching!!
    ## Famnam in "Generalized Pareto Family",
    ##           "GEV Family",
@@ -6,12 +6,15 @@ getLMs <- function(Gridnam,Famnam,xi=0.7, baseDir="C:/rtest/robast", withPrint=F
    ##           "Weibull Family"  ## uses partial matching!!
    ## xi Scaleparameter (can be vector)
    ## basedir: Oberverzeichnis des r-forge svn checkouts
+   ## withPrint: diagnostischer Output?
+   ## withLoc: anzuschalten bei GEVFamilyMuUnknown...
    file <- file.path(baseDir, "branches/robast-0.9/pkg/RobAStRDA/R/sysdata.rda")
    if(!file.exists(file)) stop("Fehler mit Checkout")
    nE <- new.env()
    load(file, envir=nE)
    Gnams <- c("Sn","OMSE","RMXE","MBRE")
    Fnams <- c("Generalized Pareto Family",
+              "GEVU Family",
               "GEV Family",
               "Gamma family",
               "Weibull Family")
@@ -38,8 +41,16 @@ getLMs <- function(Gridnam,Famnam,xi=0.7, baseDir="C:/rtest/robast", withPrint=F
       len <- length(fct)
       LM <- sapply(1:len, function(i) fct[[i]](xi))
       if(length(xi)==1) LM <- matrix(LM,ncol=len)
-      colnames(LM) <- c("b","a1.a", "a2.a", "a1.i", "a2.i", "A11.a",
-                 "A12.a", "A21.a", "A22.a", "A11.i", "A12.i", "A21.i", "A22.i")
+      if(withLoc){
+         colnames(LM) <- c("b","a1.a", "a2.a", "a3.a", "a1.i", "a2.i", "a3.i",
+                           "A11.a", "A12.a", "A13.a", "A21.a", "A22.a", "A23.a",
+                           "A31.a", "A32.a", "A33.a", "A11.i", "A12.i", "A13.i",
+                           "A21.i", "A22.i", "A23.i", "A31.i", "A32.i", "A33.i")
+      }else{
+         colnames(LM) <- c("b","a1.a", "a2.a", "a1.i", "a2.i", "A11.a",
+                           "A12.a", "A21.a", "A22.a", "A11.i", "A12.i",
+                           "A21.i", "A22.i")
+      }
       return(cbind(xi,LM))
    }else{
       Sn <- fct(xi)

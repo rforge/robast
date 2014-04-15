@@ -28,19 +28,130 @@ setMethod("validParameter",signature(object="GEVFamilyMuUnknown"),
 ## trafo: optional parameter transformation
 ## start0Est: startEstimator for MLE and MDE --- if NULL HybridEstimator is used;
 
+.define.tau.Dtau.withMu <- function(of.interest, btq, bDq, btes,
+                                    bDes, btel, bDel, p, N){
+        tau <- NULL
+        if("loc" %in% of.interest){
+            tau <- function(theta){ th <- theta[1]; names(th) <- "loc";  th}
+            Dtau <- function(theta){ D <- t(c(1, 0,0)); rownames(D) <- "loc"; D}
+        }
+        if("scale" %in% of.interest){
+            if(is.null(tau)){
+               tau <- function(theta){th <- theta[2]; names(th) <- "scale"; th}
+               Dtau <- function(theta){D <- t(c(0,1,0));rownames(D) <- "scale";D}
+            }else{
+               tau <- function(theta){ th <- theta;
+                                       names(th) <- c("loc","scale");  th}
+               Dtau <- function(theta){ D <- t(matrix(c(1,0,0,0,1, 0),3,2))
+                                        rownames(D) <- c("loc","scale"); D}
+            }
+        }
+        if("shape" %in% of.interest){
+            if(is.null(tau)){
+               tau <- function(theta){th <- theta[3]; names(th) <- "shape"; th}
+               Dtau <- function(theta){D <- t(c(0,0,1));rownames(D) <- "shape";D}
+            }else{
+                .tauo <- tau
+                .Dtauo <- Dtau
+                tau <- function(theta){
+                            th1 <- .tauo(theta)
+                            th <- c(th1,theta[3])
+                            names(th) <- c(names(th1),"shape")
+                            th}
+                Dtau <- function(theta){
+                            D0 <- .Dtauo(theta)
+                            D <- rbind(D0,t(c(0,0,1)))
+                            rownames(D) <- c(rownames(D0),"shape")
+                            D}
+            }
+        }
+        if("quantile" %in% of.interest){
+            if(is.null(p)) stop("Probability 'p' has to be specified.")
+            if(is.null(tau)){
+                tau <- function(theta){ }; body(tau) <- btq
+                Dtau <- function(theta){ };body(Dtau) <- bDq
+            }else{
+                tau1 <- tau
+                tau <- function(theta){ }
+                body(tau) <- substitute({ btq0
+                                          th0 <- tau0(theta)
+                                          th <- c(th0, q)
+                                          names(th) <- c(names(th0),"quantile")
+                                          th
+                                         }, list(btq0=btq, tau0 = tau1))
+                Dtau1 <- Dtau
+                Dtau <- function(theta){}
+                body(Dtau) <- substitute({ bDq0
+                                           D0 <- Dtau0(theta)
+                                           D1 <- rbind(D0, D)
+                                           rownames(D1) <- c(rownames(D0),"quantile")
+                                           D1
+                                           }, list(Dtau0 = Dtau1, bDq0 = bDq))
+            }
+        }
+        if("expected shortfall" %in% of.interest){
+            if(is.null(p)) stop("Probability 'p' has to be specified.")
+            if(is.null(tau)){
+                tau <- function(theta){ };  body(tau) <- btes
+                Dtau <- function(theta){ }; body(Dtau) <- bDes
+            }else{
+                tau1 <- tau
+                tau <- function(theta){ }
+                body(tau) <- substitute({ btes0
+                                          th0 <- tau0(theta)
+                                          th <- c(th0, es)
+                                          names(th) <- c(names(th0),"expected shortfall")
+                                          th}, list(tau0 = tau1, btes0=btes))
+                Dtau1 <- Dtau
+                Dtau <- function(theta){}
+                body(Dtau) <- substitute({ bDes0
+                                           D0 <- Dtau0(theta)
+                                           D1 <- rbind(D0, D)
+                                           rownames(D1) <- c(rownames(D0),"expected shortfall")
+                                           D1}, list(Dtau0 = Dtau1, bDes0=bDes))
+            }
+        }
+        if("expected loss" %in% of.interest){
+            if(is.null(N)) stop("Expected frequency 'N' has to be specified.")
+            if(is.null(tau)){
+                tau <- function(theta){ }; body(tau) <- btel
+                Dtau <- function(theta){ }; body(Dtau) <- bDel
+            }else{
+                tau1 <- tau
+                tau <- function(theta){ }
+                body(tau) <- substitute({ btel0
+                                          th0 <- tau0(theta)
+                                          th <- c(th0, el)
+                                          names(th) <- c(names(th0),"expected los")
+                                          th}, list(tau0 = tau1, btel0=btel))
+                Dtau1 <- Dtau
+                Dtau <- function(theta){}
+                body(Dtau) <- substitute({ bDel0
+                                           D0 <- Dtau0(theta)
+                                           D1 <- rbind(D0, D)
+                                           rownames(D1) <- c(rownames(D0),"expected loss")
+                                           D1}, list(Dtau0 = Dtau1, bDel0=bDel))
+            }
+        }
+        trafo <- function(x){ list(fval = tau(x), mat = Dtau(x)) }
+        return(trafo)
+}
+
+
 GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
-                          of.interest = c("scale", "shape"),
+                          of.interest = c("loc","scale", "shape"),
                           p = NULL, N = NULL, trafo = NULL,
                           start0Est = NULL, withPos = TRUE,
                           secLevel = 0.7,
                           withCentL2 = FALSE,
                           withL2derivDistr  = FALSE,
                           ..ignoreTrafo = FALSE,
-                          ..withWarningGEV = TRUE){
+                          ..withWarningGEV = TRUE,
+                          ..name =""){
     theta <- c(loc, scale, shape)
     if(..withWarningGEV).warningGEVShapeLarge(shape)
     
-    of.interest <- .pretreat.of.interest(of.interest,trafo)
+    of.interest <- .pretreat.of.interest(of.interest,trafo,withMu=TRUE)
 
     ##symmetry
     distrSymm <- NoSymmetry()
@@ -110,8 +221,8 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
 
     fromOfInt <- FALSE
     if(is.null(trafo)||..ignoreTrafo){fromOfInt <- TRUE
-       trafo <- .define.tau.Dtau(of.interest, btq, bDq, btes, bDes,
-                                 btel, bDel, p, N)
+       trafo <- .define.tau.Dtau.withMu(of.interest, btq, bDq, btes, bDes,
+                                        btel, bDel, p, N)
     }else if(is.matrix(trafo) & nrow(trafo) > 3)
            stop("number of rows of 'trafo' > 3")
 ####
@@ -174,7 +285,8 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
 
     modifyPar <- function(theta){
         theta <- makeOKPar(theta)
-        if(..withWarningGEV).warningGEVShapeLarge(theta["shape"])
+        sh <- if(!is.null(names(theta))) theta["shape"] else theta[3]
+        if(..withWarningGEV).warningGEVShapeLarge(sh)
         if(!is.null(names(theta))){
             loc <- theta["loc"]
             sc <- theta["scale"]
@@ -274,7 +386,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
 
 
     FisherInfo <- FisherInfo.fct(param)
-    name <- "GEV Family"
+    name <- if(..name=="") "GEV Family" else ..name
 
     ## initializing the GPareto family with components of L2-family
     L2Fam <- new("GEVFamilyMuUnknown")
@@ -288,8 +400,8 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
     L2Fam@startPar <- startPar
     L2Fam@makeOKPar <- makeOKPar
     L2Fam@modifyParam <- modifyPar
-    L2Fam@L2derivSymm <- FunSymmList(NonSymmetric(), NonSymmetric())
-    L2Fam@L2derivDistrSymm <- DistrSymmList(NoSymmetry(), NoSymmetry())
+    L2Fam@L2derivSymm <- FunSymmList(NonSymmetric(), NonSymmetric(), NonSymmetric())
+    L2Fam@L2derivDistrSymm <- DistrSymmList(NoSymmetry(), NoSymmetry(), NoSymmetry())
 
     L2deriv <- EuclRandVarList(RealRandVariable(L2deriv.fct(param),
                                Domain = Reals()))
@@ -300,7 +412,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
     }
 
     if(fromOfInt){
-       L2Fam@fam.call <- substitute(GEVFamily(loc = loc0, scale = scale0,
+       L2Fam@fam.call <- substitute(GEVFamilyMuUnknown(loc = loc0, scale = scale0,
                                  shape = shape0, of.interest = of.interest0,
                                  p = p0, N = N0,
                                  withPos = withPos0, withCentL2 = FALSE,
@@ -309,7 +421,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
                               of.interest0 = of.interest, p0 = p, N0 = N,
                               withPos0 = withPos))
     }else{
-       L2Fam@fam.call <- substitute(GEVFamily(loc = loc0, scale = scale0,
+       L2Fam@fam.call <- substitute(GEVFamilyMuUnknown(loc = loc0, scale = scale0,
                                  shape = shape0, of.interest = NULL,
                                  p = p0, N = N0, trafo = trafo0,
                                  withPos = withPos0, withCentL2 = FALSE,

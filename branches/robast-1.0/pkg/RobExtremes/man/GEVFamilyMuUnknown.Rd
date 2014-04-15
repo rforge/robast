@@ -7,10 +7,11 @@
   represents a Generalized EV family with unknown location parameter \code{mu}.
 }
 \usage{
-GEVFamilyMuUnknown(loc = 0, scale = 1, shape = 0.5, of.interest = c("scale", "shape"),
-              p = NULL, N = NULL, trafo = NULL, start0Est = NULL, withPos = TRUE,
-              secLevel = 0.7, withCentL2 = FALSE, withL2derivDistr  = FALSE,
-              ..ignoreTrafo = FALSE, ..withWarningGEV = TRUE)
+GEVFamilyMuUnknown(loc = 0, scale = 1, shape = 0.5, of.interest = c("loc",
+              "scale", "shape"), p = NULL, N = NULL, trafo = NULL,
+              start0Est = NULL, withPos = TRUE, secLevel = 0.7,
+              withCentL2 = FALSE, withL2derivDistr  = FALSE,
+              ..ignoreTrafo = FALSE, ..withWarningGEV = TRUE, ..name = "")
 }
 \arguments{
   \item{loc}{ real: known/fixed threshold/location parameter }
@@ -38,6 +39,8 @@ GEVFamilyMuUnknown(loc = 0, scale = 1, shape = 0.5, of.interest = c("scale", "sh
       be computed? Defaults to \code{FALSE} (to speeds up computations).}
   \item{..ignoreTrafo}{logical: only used internally in \code{kStepEstimator}; do not change this.}
   \item{..withWarningGEV}{logical: shall warnings be issued if shape is large?}
+  \item{..name}{character: optional alternative name for the parametric family;
+                used in generating interpolating grids. }
 }
 \details{
   The slots of the corresponding L2 differentiable 
