@@ -30,9 +30,9 @@
                    maxiter = 150, tol = .Machine$double.eps^0.5,
                    loRad = 0, upRad = Inf, loRad0 = 1e-3,
                    loRad.s=0.2, up.Rad.s=1,
-                   withStartLM = TRUE, len = 13){
+                   withStartLM = TRUE, len = 13,namFzus =""){
              namF <- gsub("\\.th$","",paste(deparse(substitute(optF))))
-             namF <- gsub(" ", "",namF)
+             namF <- paste(gsub(" ", "",namF),namFzus,sep="")
              to <- gsub("XXXX",gsub(" ","",name(PFam)),
                     gsub("YYYY", namF, "interpolYYYYXXXX.csv"))
              print(to)
