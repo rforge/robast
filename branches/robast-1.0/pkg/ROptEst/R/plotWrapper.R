@@ -91,7 +91,7 @@ CniperPointPlot <- function(fam,...
                    ,with.lab = substitute(FALSE)
                    ,lab.pts = substitute(NULL)
                    ,lab.font = substitute(NULL)
-                   ,alpha.trsp = substitute(NA)
+                   ,alpha.trsp = substitute(alpha.trsp)
                    ,which.lbs = substitute(NULL)
                    ,which.Order  = substitute(NULL)
                    ,return.Order = substitute(FALSE)
