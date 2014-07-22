@@ -357,8 +357,8 @@ setMethod("infoPlot", "IC",
                       ICy0cr1 <- jitter(ICy0cr1, factor = jitter.fac0[2])
                    }
 
-                   f1 <- log(ICy0+1)*3*cex0[1]
-                   f1c <- log(ICy0c+1)*3*cex0[2]
+                   f1 <- .cexscale(ICy0,ICy0c,cex=cex0[1])
+                   f1c <- .cexscale(ICy0c,ICy0,cex=cex0[2])
 
                    col.pts <- if(!is.na(al0)) sapply(col0,
                               addAlphTrsp2col, alpha=al0) else col0
@@ -398,8 +398,8 @@ setMethod("infoPlot", "IC",
                               scaleX, scaleX.fct, scaleX.inv,
                               FALSE, scaleY.fct, dots$xlim, dots$ylim, dotsP0)
 
-                   f1 <- resc.rel$scy*0.3*cex0[1]
-                   f1c <- resc.rel.c$scy*0.3*cex0[2]
+                   f1 <- .cexscale(resc.rel$scy,resc.rel.c$scy,cex=cex0[1])
+                   f1c <- .cexscale(resc.rel.c$scy,resc.rel$scy,cex=cex0[2])
 
                    do.pts(resc.rel$X, resc.rel$Y, f1,col.pts[1],pch0[,1])
                    do.pts(resc.rel.c$X, resc.rel.c$Y, f1c,col.pts[2],pch0[,2])
@@ -535,4 +535,15 @@ setMethod("infoPlot", "IC",
         invisible()
         }
     )
+ 
+ .cexscale <- function(y, y1=y, maxcex=4,mincex=0.05,cex, fun=NULL){
+         if(is.null(fun)) fun <- function(x) log(1+abs(x))
+         ly <- fun(y)
+         ly1 <- fun(unique(c(y,y1)))
+         my <- min(ly1,na.rm=TRUE)
+         My <- max(ly1,na.rm=TRUE)
+         ly0 <- (ly-my)/My
+         ly1 <- ly0*(maxcex-mincex)+mincex
+         return(cex*ly1)
+ }
  

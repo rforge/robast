@@ -253,9 +253,14 @@ setMethod("comparePlot", signature("IC","IC"),
                  return(.SelectOrderData(data, fct.aI, which.lbs, which.Order))}
                  
             sel1 <- def.sel(IC1); sel2 <- def.sel(IC2)
+            selAlly <- c(sel1$y,sel2$y)
 
-            if(is(obj3, "IC")) sel3 <- def.sel(IC3)
-            if(is(obj4, "IC")) sel4 <- def.sel(IC4)
+            if(is(obj3, "IC")){ sel3 <- def.sel(IC3)
+                                selAlly <- c(selAlly,sel3$y)
+                              }
+            if(is(obj4, "IC")){ sel4 <- def.sel(IC4)
+                                selAlly <- c(selAlly,sel4$y)
+                              }
 
             dots.points <- .makedotsLowLevel(dots)
             dots.points$col <- dots.points$cex <- dots.points$pch <- NULL
@@ -275,7 +280,7 @@ setMethod("comparePlot", signature("IC","IC"),
 
                      col.l <- if(is.na(al0[j.l])) col0[j.l] else
                                  addAlphTrsp2col(col0[j.l], al0[j.l])
-                     cex.l <- log(sel.l$y+1)*3*cex0[j.l]
+                     cex.l <- .cexscale(sel.l$y,selAlly,cex=cex0[j.l])   ##.cexscale in infoPlot.R
                      do.call(points, args=c(list(rescd$X, rescd$Y, cex = cex.l,
                              col = col.l, pch = pch.pts.l), dwo0))
                      if(with.lab0)
