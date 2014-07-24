@@ -52,7 +52,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
         if(!is.null(x.ticks)) dots$xaxt <- "n"
         if(!is.null(y.ticks)){
-           y.ticks <- .fillList(list(y.ticks), dims0)
+           y.ticks <- .fillList(y.ticks, dims0)
            dots$yaxt <- "n"
         }
 
@@ -195,7 +195,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         if(with.legend){
           fac.leg <- if(dims0>1) 3/4 else .75/.8
           if(missing(legend.location)){
-             legend.location <- .fillList(list("bottomright"), dims0)
+             legend.location <- .fillList("bottomright", dims0)
           }else{
              legend.location <- as.list(legend.location)
              legend.location <- .fillList(legend.location, dims0)

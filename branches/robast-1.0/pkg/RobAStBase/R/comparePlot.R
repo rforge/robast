@@ -78,12 +78,12 @@ setMethod("comparePlot", signature("IC","IC"),
 
         if(!is.null(x.ticks)) dotsP$xaxt <- "n"
         if(!is.null(y.ticks)){
-           y.ticks <- .fillList(list(y.ticks), dims0)
+           y.ticks <- .fillList(y.ticks, dims0)
            dotsP$yaxt <- "n"
         }
 
         if(!is.null(cex.pts.fun)){
-           cex.pts.fun <- .fillList(list(cex.pts.fun), dims0*ncomp)
+           cex.pts.fun <- .fillList(cex.pts.fun, dims0*ncomp)
         }
 
 
@@ -410,3 +410,4 @@ setMethod("comparePlot", signature("IC","IC"),
                                      obj3=sel3$ind1, obj4=sel4$ind1))
         invisible()
     })
+

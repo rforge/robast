@@ -6,6 +6,7 @@
 \alias{.SelectOrderData}
 \alias{.makedotsP}
 \alias{.makedotsLowLevel}
+\alias{.cexscale}
 
 \title{Internal / Helper functions of package RobAStBase for plot functions}
 
@@ -24,6 +25,7 @@ These functions are internally used helper functions for \code{\link{plot}},
 .SelectOrderData(data, fct, which.lbs, which.Order)
 .makedotsP(dots)
 .makedotsLowLevel(dots)
+.cexscale(y, y1=y, maxcex=4,mincex=0.05,cex, fun=NULL)
 }
 \arguments{
   \item{scaleX}{logical; shall X-axis be rescaled (by default according to the cdf of
@@ -75,6 +77,12 @@ These functions are internally used helper functions for \code{\link{plot}},
    \code{y.ticks} are both \code{NULL}, a respective box is drawn around the
    panel; otherwise no box is drawn in this case. }
   \item{dots}{a list; intended to be the \code{\dots} argument of \code{plot}. }
+  \item{y}{}
+  \item{y1}{}
+  \item{maxcex}{}
+  \item{mincex}{}
+  \item{cex}{}
+  \item{fun}{}
 }
 \details{
 \code{.rescalefct} rescales, if necessary, x and y axis for use in plot
@@ -118,6 +126,18 @@ indices of the data selected by \code{which.lbs} in the original data.
 \code{.makedotsP} and \code{.makedotsLowLevel} manipulate the \code{\dots}
 argument, deleting certain items and selecting items which can be digested by
 \code{plot}, returning the manipulated list.
+
+\code{.cexscale}{rescales the point sizes of the points to be plotted;
+     the unscaled sizes are given in argument \code{y}, \code{y1} in
+     case of several lines of points to be plotted may contain the
+     vector of the sizes of all points to be plotted in (e.g., including
+     those of the other lines of points). \code{maxcex} and \code{mincex}
+     are maximum and minimum of the raw rescaled sizes; \code{cex} is
+     a factor drawn from argument \code{cex.pts} by which the raw sizes
+     are rescaled before being returned. \code{fun} is the function
+     by which the rescaling is done; by default this argument is \code{NULL}
+     and in this case the function \code{log(1+abs(x))} is used.
+}
 }
 
 

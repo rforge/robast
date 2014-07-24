@@ -60,19 +60,19 @@ setMethod("infoPlot", "IC",
         in1to.draw <- (1%in%to.draw)
 
         if(!is.null(cex.pts.fun)){
-           cex.pts.fun <- .fillList(list(cex.pts.fun), (dims0+in1to.draw)*2)
+           cex.pts.fun <- .fillList(cex.pts.fun, (dims0+in1to.draw)*2)
         }
 
 
         if(!is.null(x.ticks)) dots$xaxt <- "n"
         if(!is.null(y.ticks)){
-           y.ticks <- .fillList(list(y.ticks), dims0+in1to.draw)
+           y.ticks <- .fillList(y.ticks, dims0+in1to.draw)
            dots$yaxt <- "n"
         }
 
         if(with.legend){
           if(missing(legend.location)){
-             legend.location <- .fillList(list("topright"), dims0+in1to.draw   )
+             legend.location <- .fillList("topright", dims0+in1to.draw   )
              if (in1to.draw) legend.location[[1]] <-  "bottomright"
           }else{
              legend.location <- as.list(legend.location)

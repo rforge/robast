@@ -17,6 +17,7 @@ if(packageVersion("distr")<"2.5"){
           {as.character(arg) %in% names(formals(fct))}
 
 .fillList <- function(list0, len = length(list0)){
+            if(!is.list(list0)) list0 <- list(list0)
             if(len == length(list0))
                return(list0)
             i <- 0
