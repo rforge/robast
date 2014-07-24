@@ -67,29 +67,35 @@
 
 .getFunCnip <- function(IC1,IC2, risk, L2Fam, r, b20=NULL){
 
-        riskfct <- getRiskFctBV(risk, biastype(risk))
+        bType <- biastype(risk)
+        nType <- normtype(risk)
+        fnorm <- fct(nType)
+        riskfct <- getRiskFctBV(risk, bType)
+
        .getTrVar <- function(IC){
            R <- Risks(IC)[["trAsCov"]]
            if(is.null(R)) R <- getRiskIC(IC, risk = trAsCov(), L2Fam = L2Fam)
+           if("trAsCov" %in% names(R)) R <- R[["trAsCov"]]
            if(length(R) > 1) R <- R$value
-           return(R)
+           return(c(R))
         }
         R1 <- .getTrVar (IC1)
         R2 <- .getTrVar (IC2)
 
-
         fun <- function(x){
             y1 <- sapply(x, function(x1)evalIC(IC1,as.matrix(x1,ncol=1)))
-            r1 <- riskfct(var=R1,bias=r*fct(normtype(risk))(y1))
+            b1 <- r*fnorm(y1)
+            r1 <- riskfct(var=R1,bias=b1)
             if(!is.null(b20)){
                r2 <- riskfct(var=R2, bias=b20)
             }else{
                y2 <- sapply(x,function(x0) evalIC(IC2,x0))
-               r2 <- riskfct(var=R2,bias=r*fct(normtype(risk))(y2))
+               b2 <- r*fnorm(y2)
+               r2 <- riskfct(var=R2,bias=b2)
             }
             r1 - r2
+            return(r1-r2)
         }
-
         return(fun)
 }
 
@@ -116,7 +122,7 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
 
         b20 <- NULL
         fCpl <- eval(dots$fromCniperPlot)
-        if(!is.null(fCpl))
+        if(!is.null(fCpl)&&length(Risks(IC2)))
             if(fCpl) b20 <- neighbor@radius*Risks(IC2)$asBias$value
         dots$fromCniperPlot <- NULL
         
@@ -127,11 +133,13 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
            scaleX.inv <- q(L2Fam)
         }
 
-        if(!is.null(as.list(mc)$lower)) lower <- p(L2Fam)(lower)
-        if(!is.null(as.list(mc)$upper)) upper <- p(L2Fam)(upper)
+        if("lower" %in% names(as.list(mc))) lower <- p(L2Fam)(lower)
+        if("upper" %in% names(as.list(mc))) upper <- p(L2Fam)(upper)
+
         x <-  q(L2Fam)(seq(lower,upper,length=n))
         if(is(distribution(L2Fam), "DiscreteDistribution"))
            x <- seq(q(L2Fam)(lower),q(L2Fam)(upper),length=n)
+
         resc <- .rescalefct(x, fun, scaleX, scaleX.fct,
                      scaleX.inv, scaleY, scaleY.fct, dots$xlim, dots$ylim, dots)
         dots$x <- resc$X

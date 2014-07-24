@@ -1,8 +1,11 @@
+setMethod("getRiskFctBV", signature(risk = "interpolRisk", biastype = "ANY"),
+    function(risk) function(bias, var)  return(bias^2+var))
+
 setMethod("getRiskFctBV", signature(risk = "asGRisk", biastype = "ANY"),
     function(risk) function(bias, var)stop("not yet implemented"))
 
 setMethod("getRiskFctBV", signature(risk = "asMSE", biastype = "ANY"),
-    function(risk) function(bias, var) bias^2+var)
+    function(risk) function(bias, var)  return(bias^2+var))
 
 setMethod("getRiskFctBV", signature(risk = "asSemivar", biastype = "onesidedBias"),
     function(risk, biastype=biastype(risk))
