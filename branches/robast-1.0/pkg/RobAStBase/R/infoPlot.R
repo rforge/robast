@@ -12,7 +12,7 @@ setMethod("infoPlot", "IC",
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
-             cex.pts = 1, col.pts = par("col"),
+             cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
              lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
@@ -59,6 +59,11 @@ setMethod("infoPlot", "IC",
         ncols <- ceiling(dims0/nrows)
         in1to.draw <- (1%in%to.draw)
 
+        if(!is.null(cex.pts.fun)){
+           cex.pts.fun <- .fillList(list(cex.pts.fun), (dims0+in1to.draw)*2)
+        }
+
+
         if(!is.null(x.ticks)) dots$xaxt <- "n"
         if(!is.null(y.ticks)){
            y.ticks <- .fillList(list(y.ticks), dims0+in1to.draw)
@@ -71,7 +76,7 @@ setMethod("infoPlot", "IC",
              if (in1to.draw) legend.location[[1]] <-  "bottomright"
           }else{
              legend.location <- as.list(legend.location)
-             legend.location <- .fillList(legend.location, dims0+in1to.draw   )
+             legend.location <- .fillList(legend.location, dims0+in1to.draw  )
           }
           if(is.null(legend)){
              legend <- vector("list",dims0+in1to.draw)
@@ -357,8 +362,10 @@ setMethod("infoPlot", "IC",
                       ICy0cr1 <- jitter(ICy0cr1, factor = jitter.fac0[2])
                    }
 
-                   f1 <- .cexscale(ICy0,ICy0c,cex=cex0[1])
-                   f1c <- .cexscale(ICy0c,ICy0,cex=cex0[2])
+                   c1fun <- if(is.null(cexfun)) NULL else cexfun[[1]]
+                   c2fun <- if(is.null(cexfun)) NULL else cexfun[[2]]
+                   f1 <- .cexscale(ICy0,ICy0c,cex=cex0[1], fun = c1fun)
+                   f1c <- .cexscale(ICy0c,ICy0,cex=cex0[2], fun = c2fun)
 
                    col.pts <- if(!is.na(al0)) sapply(col0,
                               addAlphTrsp2col, alpha=al0) else col0
@@ -377,7 +384,7 @@ setMethod("infoPlot", "IC",
                            pch0 = pch.pts, al0 = alp.v[1],
                            col0 = col.pts, with.lab0 = with.lab, n0 = n,
                            lab.pts0 = lab.pts[i.d], lab.pts0C = lab.pts[i.dC],
-                           jitter.fac0 = jitter.fac)
+                           jitter.fac0 = jitter.fac, cexfun = cex.pts.fun)
                            )
 
                pL.rel <- substitute({
@@ -398,8 +405,11 @@ setMethod("infoPlot", "IC",
                               scaleX, scaleX.fct, scaleX.inv,
                               FALSE, scaleY.fct, dots$xlim, dots$ylim, dotsP0)
 
-                   f1 <- .cexscale(resc.rel$scy,resc.rel.c$scy,cex=cex0[1])
-                   f1c <- .cexscale(resc.rel.c$scy,resc.rel$scy,cex=cex0[2])
+                   c1fun <- if(is.null(cexfun)) NULL else cexfun[[(i1-1)*2+1]]
+                   c2fun <- if(is.null(cexfun)) NULL else cexfun[[(i1-1)*2+2]]
+
+                   f1 <- .cexscale(resc.rel$scy,resc.rel.c$scy,cex=cex0[1], fun=c1fun)
+                   f1c <- .cexscale(resc.rel.c$scy,resc.rel$scy,cex=cex0[2], fun=c2fun)
 
                    do.pts(resc.rel$X, resc.rel$Y, f1,col.pts[1],pch0[,1])
                    do.pts(resc.rel.c$X, resc.rel.c$Y, f1c,col.pts[2],pch0[,2])
@@ -414,7 +424,7 @@ setMethod("infoPlot", "IC",
                            cex0 = cex.pts, pch0 = pch.pts, al0 = alp.v,
                            col0 = col.pts, with.lab0 = with.lab,n0 = n,
                            lab.pts0 = lab.pts[i.d], lab.pts0C = lab.pts[i.dC],
-                           jitter.fac0 = jitter.fac
+                           jitter.fac0 = jitter.fac, cexfun = cex.pts.fun
                            ))
             }
 

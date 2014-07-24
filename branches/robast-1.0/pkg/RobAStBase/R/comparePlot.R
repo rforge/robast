@@ -14,7 +14,7 @@ setMethod("comparePlot", signature("IC","IC"),
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
-             cex.pts = 1, col.pts = par("col"),
+             cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
              lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, return.Order = FALSE){
@@ -81,6 +81,11 @@ setMethod("comparePlot", signature("IC","IC"),
            y.ticks <- .fillList(list(y.ticks), dims0)
            dotsP$yaxt <- "n"
         }
+
+        if(!is.null(cex.pts.fun)){
+           cex.pts.fun <- .fillList(list(cex.pts.fun), dims0*ncomp)
+        }
+
 
         MBRB <- matrix(rep(t(MBRB), length.out=dims0*2),ncol=2, byrow=T)
         MBRB <- MBRB * MBR.fac
@@ -280,7 +285,10 @@ setMethod("comparePlot", signature("IC","IC"),
 
                      col.l <- if(is.na(al0[j.l])) col0[j.l] else
                                  addAlphTrsp2col(col0[j.l], al0[j.l])
-                     cex.l <- .cexscale(sel.l$y,selAlly,cex=cex0[j.l])   ##.cexscale in infoPlot.R
+
+                     cfun <- if(is.null(cexfun)) NULL else cexfun[[(i-1)*ncomp+j.l]]
+
+                     cex.l <- .cexscale(sel.l$y,selAlly,cex=cex0[j.l], fun = cfun)   ##.cexscale in infoPlot.R
                      do.call(points, args=c(list(rescd$X, rescd$Y, cex = cex.l,
                              col = col.l, pch = pch.pts.l), dwo0))
                      if(with.lab0)
@@ -293,7 +301,7 @@ setMethod("comparePlot", signature("IC","IC"),
                  pL0
               }, list(pL0 = pL, cex0 = cex.pts, pch0 = pch.pts, col0 = col.pts,
                       jitter.fac0 = jitter.fac, dwo0 = dots.points, al0 = alp.v,
-                      with.lab0 = with.lab, lab0 = lab.pts)
+                      with.lab0 = with.lab, lab0 = lab.pts, cexfun=cex.pts.fun)
             )
         }
 

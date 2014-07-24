@@ -25,7 +25,7 @@ comparePlot(obj1, obj2, ... )
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
-             cex.pts = 1, col.pts = par("col"),
+             cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
              lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, return.Order = FALSE)
@@ -118,6 +118,14 @@ comparePlot(obj1, obj2, ... )
                          the number of rows of the trafo matrix.
                          }
   \item{cex.pts}{size of the points of the \code{data} argument plotted}
+  \item{cex.pts.fun}{rescaling function for the size of the points to be plotted;
+        either \code{NULL} (default), then \code{log(1+abs(x))} is used for each of
+        the rescalings, or a function which is then used for each of the
+        rescalings, or a list of functions; if it is a function or a list of
+        functions, if necessary it is recylced to length \code{nIC * dim}
+        where \code{nIC} is the number of pICs and \code{dim} is the number of
+        dimensions of the pICs to be plotted; in the index of this list,
+        \code{nIC} is incremented first; then \code{dim}.}
   \item{col.pts}{color of the points of the \code{data} argument plotted}
   \item{pch.pts}{symbol of the points of the \code{data} argument plotted}
   \item{with.lab}{logical; shall labels be plotted to the observations?}
