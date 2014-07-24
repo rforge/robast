@@ -228,7 +228,9 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
         robMod <- InfRobModel(center = L2Fam, neighbor = neighbor)
 
         mcl$IC1 <- optIC(model = L2Fam, risk = asCov())
-        mcl$IC2 <- optIC(model = robMod, risk = risk)
+        mcl$IC2 <- if(is(risk,"interpolRisk")){
+                     getStartIC(model=L2Fam, risk = risk)
+                   }else optIC(model = robMod, risk = risk)
         mcl$L2Fam <- NULL
         if(is.null(dots$ylab))
            mcl$ylab <- gettext("Asymptotic Risk difference (classic - robust)")
