@@ -11,7 +11,7 @@
   returns the slot \code{biastype} of an object of class \code{"interpolrisk"}. }
 }}
 \examples{
-myrisk <- MBRRisk(biastype=100)
+myrisk <- MBRRisk(samplesize=100)
 biastype(myrisk)
 }
 \concept{risk}

@@ -11,7 +11,7 @@
   returns the slot \code{normtype} of an object of class \code{"interpolrisk"}. }
 }}
 \examples{
-myrisk <- MBRRisk(normtype=100)
+myrisk <- MBRRisk(samplesize=100)
 normtype(myrisk)
 }
 \concept{risk}
