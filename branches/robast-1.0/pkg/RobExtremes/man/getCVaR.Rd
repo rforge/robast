@@ -48,12 +48,14 @@ Journal of Operational Risk 6(2), 3--30.
   set.seed(123)
   GPD <- GParetoFamily(loc=20480, scale=7e4, shape=0.3)
   data <- r(GPD)(500)
-  getVaR(data,GPD,0.99)
-  getVaR(data,GPD,0.99, rob=FALSE)
   getCVaR(data,GPD,0.99)
-  getCVaR(data,GPD,0.99, rob=FALSE)
+  \dontrun{ # to reduce checking time
+  getVaR(data,GPD,0.99)
   getEL(data,GPD,5)
+  getVaR(data,GPD,0.99, rob=FALSE)
   getEL(data,GPD,5, rob=FALSE)
+  getCVaR(data,GPD,0.99, rob=FALSE)
+  }
 }
 \concept{estimator}
 \keyword{risk measure}
