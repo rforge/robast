@@ -1,3 +1,4 @@
+import(ROptRegTS)
 export(rgsOptIC.AL, 
        rgsOptIC.M, 
        rgsOptIC.MK, 
