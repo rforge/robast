@@ -30,10 +30,10 @@ setClass("Gumbel",
                                       p1 <- if(log.p) exp(p) else p
 
                                       in01 <- (p1>1 | p1<0)
-                                      i01 <- distr:::.isEqual01(p1)
+                                      i01 <- .isEqual01(p1)
                                       i0 <- (i01 & p1<1)
                                       i1 <- (i01 & p1>0)
-                                      ii01 <- distr:::.isEqual01(p1) | in01
+                                      ii01 <- .isEqual01(p1) | in01
 
                                       p0 <- p
                                       p0[ii01] <- if(log.p) log(0.5) else 0.5
@@ -391,3 +391,4 @@ setClass("TotalVarIC",
                                 "!= dimension of 'stand'"))
                 return(TRUE)
             })
+
