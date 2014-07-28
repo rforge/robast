@@ -1,12 +1,3 @@
-.rescalefct <- RobAStBase:::.rescalefct
-.plotRescaledAxis <- RobAStBase:::.plotRescaledAxis
-.makedotsP <- RobAStBase:::.makedotsP
-.makedotsLowLevel <- RobAStBase:::.makedotsLowLevel
-.SelectOrderData <- RobAStBase:::.SelectOrderData
-### helper function to recursively evaluate list
-.evalListRec <- RobAStBase:::.evalListRec
-
-
 if(packageVersion("distrMod")<"2.5"){
 .isUnitMatrix <- function(m){
 ### checks whether m is unit matrix
