@@ -9,7 +9,7 @@ These functions are internally used helper function for \code{\link{cniperCont}}
 and \code{cniperPointPlot}.}
 
 \usage{
-.plotData(data, dots, origCl, fun, L2Fam,  IC )
+.plotData(data, dots, fun, L2Fam,  IC )
 .getFunCnip(IC1,IC2, risk, L2Fam, r, b20=NULL)
 }
 \arguments{
