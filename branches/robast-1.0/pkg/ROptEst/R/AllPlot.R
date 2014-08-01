@@ -7,7 +7,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
              legend.location = "bottomright", legend.cex = 0.8,
              withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
              lty.MBR = "dashed", lwd.MBR = 0.8,  n.MBR = 10000,
-             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL){
