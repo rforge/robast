@@ -8,7 +8,7 @@ setMethod("infoPlot", "IC",
              bmar = par("mar")[1], tmar = par("mar")[3], 
              with.legend = TRUE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
-             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
@@ -108,14 +108,20 @@ setMethod("infoPlot", "IC",
                   upper <- max(upper,xM)
                 }
                 h <- upper - lower
-                x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
+                if(is.null(x.vec))
+                   x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
                 plty <- "l"
                 if(missing(lty)) lty <- "solid"
             }else{
-                if(is(distr, "DiscreteDistribution")) x.vec <- support(distr)
-                else{
-                   x.vec <- r(distr)(1000)
-                   x.vec <- sort(unique(x.vec))
+                if(!is.null(x.vec)){
+                   if(is(distr, "DiscreteDistribution"))
+                      x.vec <- intersect(x.vec,support(distr))
+                }else{
+                   if(is(e1, "DiscreteDistribution")) x.vec <- support(distr)
+                   else{
+                      x.vec <- r(e1)(1000)
+                      x.vec <- sort(unique(x.vec))
+                   }
                 }
                 plty <- "p"
                 if(missing(lty)) lty <- "dotted"

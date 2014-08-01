@@ -21,7 +21,7 @@ comparePlot(obj1, obj2, ... )
              legend.location = "bottomright", legend.cex = 0.8,
              withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
              lty.MBR = "dashed", lwd.MBR = 0.8,
-             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
@@ -80,6 +80,15 @@ comparePlot(obj1, obj2, ... )
   \item{col.MBR}{color for the MBR lines; as usual \code{col}-argument;}
   \item{lty.MBR}{line type for the MBR lines; as usual \code{lty}-argument;}
   \item{lwd.MBR}{line width for the MBR lines; as usual \code{lwd}-argument;}
+  \item{x.vec}{a numeric vector of grid points to evaluate the influence curve;
+               by default, \code{x.vec} is \code{NULL}; then the grid is
+               produced automatically according to the distribution of the IC.
+               \code{x.vec} can be useful for usage with a rescaling of the
+               x-axis to avoid that the evaluation points be selected too
+               unevenly (i.e. on an equally spaced grid in the original scale,
+               but then, after rescaling non-equally).
+               The grid has to be specified in original scale; i.e.; when used
+               with rescaling, it should be chosen non-equally spaced. }
   \item{scaleX}{logical; shall X-axis be rescaled (by default according to the cdf of
           the underlying distribution)?}
   \item{scaleY}{logical; shall Y-axis be rescaled (by default according to a probit scale)?}

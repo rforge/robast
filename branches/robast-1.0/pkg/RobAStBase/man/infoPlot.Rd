@@ -18,7 +18,7 @@ infoPlot(object,  ...)
              bmar = par("mar")[1], tmar = par("mar")[3],
              with.legend = TRUE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
-             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
@@ -72,6 +72,15 @@ infoPlot(object,  ...)
                          of such arguments, one for each plotted panel.}
   \item{legend.bg}{background color for the legend}
   \item{legend.cex}{magnification factor for the legend}
+  \item{x.vec}{a numeric vector of grid points to evaluate the influence curve;
+               by default, \code{x.vec} is \code{NULL}; then the grid is
+               produced automatically according to the distribution of the IC.
+               \code{x.vec} can be useful for usage with a rescaling of the
+               x-axis to avoid that the evaluation points be selected too
+               unevenly (i.e. on an equally spaced grid in the original scale,
+               but then, after rescaling non-equally).
+               The grid has to be specified in original scale; i.e.; when used
+               with rescaling, it should be chosen non-equally spaced. }
   \item{scaleX}{logical; shall X-axis be rescaled (by default according to the cdf of
           the underlying distribution)?}
   \item{scaleY}{logical; shall Y-axis be rescaled for abs.info-plot
