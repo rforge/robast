@@ -84,8 +84,16 @@ setMethod("plot", signature(x = "IC", y = "missing"),
                   upper <- max(upper,xM)
                 }
                 h <- upper - lower
-                if(is.null(x.vec))
-                   x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
+                if(is.null(x.vec)){
+                   if(scaleX){
+                      xpl <- scaleX.fct(lower - 0.1*h)
+                      xpu <- scaleX.fct(upper + 0.1*h)
+                      xp.vec <- seq(from = xpl, to = xpu, length = 1000)
+                      x.vec <- scaleX.inv(xp.vec)
+                   }else{
+                      x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
+                   }
+                }
                 plty <- "l"
                 lty <- "solid"
             }else{
