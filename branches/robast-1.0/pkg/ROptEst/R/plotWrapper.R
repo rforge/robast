@@ -71,12 +71,14 @@ CniperPointPlot <- function(fam,...
   ### 2. build up the argument list for the (powerful/fullfledged)
   ### graphics/diagnostics function;
   ##
+  data <- dots$data
+  alpha.trsp <- eval(dots$alpha.trsp); if(is.null(alpha.trsp)) alpha.trsp <- NA
 
   ## Scaling of the axes
   scaleList <- rescaleFunction(fam, FALSE, rescale)
 
   argsList <- c(list(L2Fam = substitute(fam)
-                   ,data = substitute(NULL)
+                   ,data = data
                    ,neighbor = substitute(ContNeighborhood(radius = 0.5))
                    ,risk = substitute(asMSE())
                    ,lower = substitute(lower)
@@ -91,7 +93,7 @@ CniperPointPlot <- function(fam,...
                    ,with.lab = substitute(FALSE)
                    ,lab.pts = substitute(NULL)
                    ,lab.font = substitute(NULL)
-                   ,alpha.trsp = substitute(alpha.trsp)
+                   ,alpha.trsp = alpha.trsp
                    ,which.lbs = substitute(NULL)
                    ,which.Order  = substitute(NULL)
                    ,return.Order = substitute(FALSE)
