@@ -480,8 +480,8 @@ setMethod("infoPlot", "IC",
                   finiteEndpoints[2] <- is.finite(scaleX.inv(max(resc.C$X, xlim[2],na.rm=TRUE)))
                }
                if(scaleY){
-                  finiteEndpoints[3] <- is.finite(scaleY.inv(min(resc.C$Y, ylim[1,1],na.rm=TRUE)))
-                  finiteEndpoints[4] <- is.finite(scaleY.inv(max(resc.C$Y, ylim[2,1],na.rm=TRUE)))
+                  finiteEndpoints[3] <- is.finite(scaleY.inv[[1]](min(resc.C$Y, ylim[1,1],na.rm=TRUE)))
+                  finiteEndpoints[4] <- is.finite(scaleY.inv[[1]](max(resc.C$Y, ylim[2,1],na.rm=TRUE)))
                }
 
                .plotRescaledAxis(scaleX0, scaleX.fct, scaleX.inv,

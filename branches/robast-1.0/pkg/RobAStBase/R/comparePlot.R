@@ -363,8 +363,8 @@ setMethod("comparePlot", signature("IC","IC"),
                finiteEndpoints[2] <- is.finite(scaleX.inv(max(x.vec1, xlim[2],na.rm=TRUE)))
             }
             if(scaleY){
-               finiteEndpoints[3] <- is.finite(scaleY.inv(min(ym, ylim[1,i],na.rm=TRUE)))
-               finiteEndpoints[4] <- is.finite(scaleY.inv(max(yM, ylim[2,i],na.rm=TRUE)))
+               finiteEndpoints[3] <- is.finite(scaleY.inv[[i]](min(ym, ylim[1,i],na.rm=TRUE)))
+               finiteEndpoints[4] <- is.finite(scaleY.inv[[i]](max(yM, ylim[2,i],na.rm=TRUE)))
             }
 
             do.call(plot, args=c(list(x = resc1$X, y = y0,

@@ -88,8 +88,8 @@ if(FALSE){
                if(i0){ xf <- c(NA,xf); X <- c(0, X)}
                if(i1){ xf <- c(xf,NA); X <- c(X, 1)}
                axis(1,at=X,labels=xf)
-               if(finiteEndpoints[1]&i0) axis(1,at=0,labels=expression(-infinity))
-               if(finiteEndpoints[2]&i1) axis(1,at=1,labels=expression(infinity))
+               if(!finiteEndpoints[1]&i0) axis(1,at=0,labels=expression(-infinity))
+               if(!finiteEndpoints[2]&i1) axis(1,at=1,labels=expression(infinity))
             }else{
                if(is.null(xlim)){ xlim <- c(-Inf,Inf)}else{
                   if(is.na(xlim[1])) xlim[1] <- -Inf
@@ -138,8 +138,8 @@ if(FALSE){
                if(i0){ yf <- c(NA,yf); Y <- c(0, Y)}
                if(i1){ yf <- c(yf,NA); Y <- c(Y, 1)}
                axis(2,at=Y,labels=yf)
-               if(finiteEndpoints[3]&i0) axis(2,at=0,labels=expression(-infinity))
-               if(finiteEndpoints[4]&i1) axis(2,at=1,labels=expression(infinity))
+               if(!finiteEndpoints[3]&i0) axis(2,at=0,labels=expression(-infinity))
+               if(!finiteEndpoints[4]&i1) axis(2,at=1,labels=expression(infinity))
             }else{
                if(is.null(ylim)){ ylim <- c(-Inf,Inf)}else{
                   if(is.na(ylim[1])) ylim[1] <- -Inf
