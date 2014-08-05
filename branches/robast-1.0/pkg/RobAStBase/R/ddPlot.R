@@ -12,7 +12,7 @@ setMethod("ddPlot", signature = signature(data = "matrix"),
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "%7.2f", text.abline.x.fmt.qx = "%4.2f%%",
        text.abline.y.fmt.cy = "%7.2f", text.abline.y.fmt.qy = "%4.2f%%",
-       jitt.fac){
+       jitt.fac, doplot = TRUE){
        mc <- as.list(match.call(expand.dots = TRUE, 
                                 call = sys.call(sys.parent(1)))[-1])
        mc$data <- data
@@ -33,7 +33,7 @@ setMethod("ddPlot", signature = signature(data = "data.frame"),
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "%7.2f", text.abline.x.fmt.qx = "%4.2f%%",
        text.abline.y.fmt.cy = "%7.2f", text.abline.y.fmt.qy = "%4.2f%%",
-       jitt.fac){
+       jitt.fac, doplot = TRUE){
 
          mc <- match.call(call = sys.call(sys.parent(1)))
          mc$data <- t(as.matrix(data))
@@ -55,7 +55,7 @@ setMethod("ddPlot", signature = signature(data = "numeric"),
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "%7.2f", text.abline.x.fmt.qx = "%4.2f%%",
        text.abline.y.fmt.cy = "%7.2f", text.abline.y.fmt.qy = "%4.2f%%",
-       jitt.fac){
+       jitt.fac, doplot = TRUE){
 
          mc <- match.call(call = sys.call(sys.parent(1)))
          mc$data <- matrix(data,nrow=1)

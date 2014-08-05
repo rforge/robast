@@ -87,6 +87,9 @@ setMethod("comparePlot", signature("IC","IC"),
         }
 
 
+        scaleY.fct <- .fillList(scaleY.fct, dims0)
+        scaleY.inv <- .fillList(scaleY.inv, dims0)
+
         MBRB <- matrix(rep(t(MBRB), length.out=dims0*2),ncol=2, byrow=T)
         MBRB <- MBRB * MBR.fac
 
@@ -288,7 +291,7 @@ setMethod("comparePlot", signature("IC","IC"),
             pL <- substitute({
                  doIt <- function(sel.l,fct.l,j.l){
                      rescd <- .rescalefct(sel.l$data, fct.l, scaleX, scaleX.fct,
-                                   scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                                   scaleX.inv, scaleY, scaleY.fct[[i]], xlim[,i],
                                    ylim[,i], dotsP)
                      if(is(distr, "DiscreteDistribution"))
                         rescd$Y <- jitter(rescd$Y, factor = jitter.fac0[j.l])
@@ -329,7 +332,7 @@ setMethod("comparePlot", signature("IC","IC"),
             fct1 <- function(x) sapply(x, IC1@Map[[indi]])
 
             resc.args <- c(list(x.vec, "fc"=fct1, scaleX, scaleX.fct,
-                                scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                                scaleX.inv, scaleY, scaleY.fct[[i]], xlim[,i],
                                 ylim[,i], dotsP))
             resc1 <- do.call(.rescalefct, resc.args)
             resc.args$fc <- fct2 <- function(x) sapply(x, IC2@Map[[indi]])
@@ -353,6 +356,17 @@ setMethod("comparePlot", signature("IC","IC"),
             yM <- max(matp,na.rm=T)
             y0 <- matp[,1]
             y0[1:2] <- c(ym,yM)
+
+            finiteEndpoints <- rep(FALSE,4)
+            if(scaleX){
+               finiteEndpoints[1] <- is.finite(scaleX.inv(min(x.vec1, xlim[1],na.rm=TRUE)))
+               finiteEndpoints[2] <- is.finite(scaleX.inv(max(x.vec1, xlim[2],na.rm=TRUE)))
+            }
+            if(scaleY){
+               finiteEndpoints[3] <- is.finite(scaleY.inv(min(ym, ylim[1,i],na.rm=TRUE)))
+               finiteEndpoints[4] <- is.finite(scaleY.inv(max(yM, ylim[2,i],na.rm=TRUE)))
+            }
+
             do.call(plot, args=c(list(x = resc1$X, y = y0,
                  type = "n", xlab = xlab, ylab = ylab,
                  lty = lty[1], col = addAlphTrsp2col(col[1],0),
@@ -364,19 +378,21 @@ setMethod("comparePlot", signature("IC","IC"),
             do.call(matlines, args = c(list( x = resc1$X, y = matp,
                     lty = lty, col = col, lwd = lwd), dotsL))
 
+
             .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
-                              scaleY,scaleY.fct, scaleY.inv, xlim[,i],
+                              scaleY,scaleY.fct[[i]], scaleY.inv[[i]], xlim[,i],
                               ylim[,i], resc1$X, ypts = 400, n = scaleN,
+                              finiteEndpoints = finiteEndpoints,
                               x.ticks = x.ticks, y.ticks = y.ticks[[i]])
             if(withMBR){
                 MBR.i <- MBRB[i,]
-                if(scaleY) MBR.i <- scaleY.fct(MBR.i)
+                if(scaleY) MBR.i <- scaleY.fct[[i]](MBR.i)
                 abline(h=MBR.i, col=col.MBR, lty=lty.MBR, lwd = lwd.MBR)
             }
 
             if(is(distr, "DiscreteDistribution")){
                  rescD.args <- c(list(x.vecD, "fc"=fct1, scaleX, scaleX.fct,
-                                scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                                scaleX.inv, scaleY, scaleY.fct[[i]], xlim[,i],
                                 ylim[,i], dotsP))
                  resc1D <- do.call(.rescalefct, rescD.args)
                  rescD.args$fc <- fct2
@@ -404,7 +420,7 @@ setMethod("comparePlot", signature("IC","IC"),
         if(with.legend){
            if(is.null(legend)) legend <- xc
            legend(.legendCoord(legend.location, scaleX, scaleX.fct,
-                        scaleY, scaleY.fct), col = col, bg = legend.bg,
+                        scaleY, scaleY.fct[[i]]), col = col, bg = legend.bg,
                       legend = legend, dotsLeg, cex = legend.cex)
         }
 

@@ -103,10 +103,14 @@ comparePlot(obj1, obj2, ... )
             missing, the quantile function of the underlying observation distribution.}
   \item{scaleY.fct}{an isotone, vectorized function mapping for each coordinate the
             range of the respective coordinate of the IC
-            to [0,1]; defaulting to the cdf of \eqn{{\cal N}(0,1)}{N(0,1)}.}
+            to [0,1]; defaulting to the cdf of \eqn{{\cal N}(0,1)}{N(0,1)};
+            can also be a list of functions with one list element for each
+            of the panels to be plot. }
   \item{scaleY.inv}{an isotone, vectorized function mapping for each coordinate
             the range [0,1] into the range of the respective coordinate of the IC;
-            defaulting to the quantile function of  \eqn{{\cal N}(0,1)}{N(0,1)}.}
+            defaulting to the quantile function of  \eqn{{\cal N}(0,1)}{N(0,1)};
+            can also be a list of functions with one list element for each
+            of the panels to be plot. }
   \item{scaleN}{integer; defaults to 9; on rescaled axes, number of x
                 and y ticks if drawn automatically;}
   \item{x.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);

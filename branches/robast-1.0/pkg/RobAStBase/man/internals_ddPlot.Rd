@@ -23,7 +23,7 @@ This function is an internally used helper function for \code{\link{ddPlot}} in 
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "\%7.2f", text.abline.x.fmt.qx = "\%4.2f\%\%",
        text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%",
-       jitt.fac)
+       jitt.fac, doplot = TRUE)
 }
 \arguments{
   \item{data}{data in \code{matrix} form (columns are observations; rows are variable
@@ -94,6 +94,7 @@ This function is an internally used helper function for \code{\link{ddPlot}} in 
   \item{text.abline.y.fmt.cy}{format string to format the cutoff value in label in y direction.}
   \item{text.abline.y.fmt.qy}{format string to format cutoff probability in label in y direction.}
   \item{jitt.fac}{factor for jittering, see \code{jitter};}
+  \item{doplot}{logical; shall a plot be produced? if \code{FALSE} only the return values are produced.}
 }
 
 \details{
@@ -112,7 +113,7 @@ we do
 
 
 \value{
-a list with items
+a list (returned as \code{invisible()}) with items
 \item{id.x}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{x}-cutoff}
 \item{id.y}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{y}-cutoff}
 \item{id.xy}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{x}-cutoff and the \code{y}-cutoff}

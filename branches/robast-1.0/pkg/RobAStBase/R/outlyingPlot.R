@@ -24,6 +24,7 @@ outlyingPlotIC <- function(data,
                            tf.x = data,
                            tf.y = data,
                            jitt.fac=10,
+                           doplot = TRUE,
                            main = gettext("Outlyingness \n by means of a distance-distance plot")
                            ){
      mc <- as.list(match.call(expand.dots = FALSE))[-1]
@@ -48,7 +49,7 @@ outlyingPlotIC <- function(data,
             dimevIC <- dim(evIC)[1]
             devIC <- data.frame(t(evIC[1:dimevIC,,drop=FALSE]))
             CMcd <- PosSemDefSymmMatrix(getCov(CovMcd(devIC,alpha=0.5)))
-            asVar <- solve(CMcd)
+            asVar <- CMcd
  #           cat("\n", sep="", gettext("Robust asVar"), ":\n")
  #           print(asVar)
           }
@@ -143,6 +144,7 @@ outlyingPlotIC <- function(data,
        lwd.cutoff = mc$lwd.cutoff, 
        col.cutoff = mc$col.cutoff, 
        jitt.fac = mc$jitt.fac,
+       doplot = doplot,
        main = main)))
 
      }

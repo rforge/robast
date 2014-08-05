@@ -28,7 +28,8 @@
                                 text.abline.x.fmt.qx = "%4.2f%%",
                                 text.abline.y.fmt.cy = "%7.2f",
                                 text.abline.y.fmt.qy = "%4.2f%%",
-                                jitt.fac = 10){
+                                jitt.fac = 10,
+                                doplot = TRUE){
 
        dots <- match.call(expand.dots = FALSE)$"..."
 
@@ -252,34 +253,35 @@
           ndata.y0[!isna] <- jitter(ndata.y0[!isna], factor=jitt.pts[2])
 
       pdots$col <- col
-      do.call(plot, args = c(list(x = ndata.x0, y=ndata.y0, type = "p"), pdots))
-      do.call(box,args=c(adots))
+      if(doplot){
+        do.call(plot, args = c(list(x = ndata.x0, y=ndata.y0, type = "p"), pdots))
+        do.call(box,args=c(adots))
 
-      pusr <- par("usr")
-      mid.x <- mean(pusr[c(1,2)])
-      mid.y <- mean(pusr[c(3,4)])
-      abtdots.y$x <- if(is.null(text.abline.y.x)) mid.x else text.abline.y.x
-      abtdots.x$y <- if(is.null(text.abline.x.y)) mid.y else text.abline.x.y
+        pusr <- par("usr")
+        mid.x <- mean(pusr[c(1,2)])
+        mid.y <- mean(pusr[c(3,4)])
+        abtdots.y$x <- if(is.null(text.abline.y.x)) mid.x else text.abline.y.x
+        abtdots.x$y <- if(is.null(text.abline.x.y)) mid.y else text.abline.x.y
 
-      do.call(abline, args = c(list(v=co.x), abdots[[1]]))
-	    do.call(abline, args = c(list(h=co.y), abdots[[2]]))
+        do.call(abline, args = c(list(v=co.x), abdots[[1]]))
+	      do.call(abline, args = c(list(h=co.y), abdots[[2]]))
 
-      if(ab.textL[1])
-         do.call(text, args = c(list(y=co.y*1.03), abtdots.y))
+        if(ab.textL[1])
+           do.call(text, args = c(list(y=co.y*1.03), abtdots.y))
 #         do.call(text, args = c(list(co.x-5,mid.y,paste(cutoff.quantile.y*100,"%-cutoff = ",round(co.x,digits=2)),srt=90)))
-      if(ab.textL[2])
-         do.call(text, args = c(list(x=co.x*1.03), abtdots.x,srt=90))
+        if(ab.textL[2])
+           do.call(text, args = c(list(x=co.x*1.03), abtdots.x,srt=90))
 #      do.call(text, args = c(list(mid.x,co.y+5,paste(cutoff.quantile.x*100," %-cutoff = ",round(co.y,digits=2)))))
 
-      if(length(id.xy))
-         do.call(text, args = c(list(jitter(ndata.x[id.xy],factor=jitt.fac),
+        if(length(id.xy))
+           do.call(text, args = c(list(jitter(ndata.x[id.xy],factor=jitt.fac),
                                      jitter(ndata.y[id.xy],factor=jitt.fac),
                                 labels=lab.pts[id.xy]), tdots))
           #axis(side=4)
 #      axis(side=1)
-
-      return(list(id.x=id0.x, id.y= id0.y, id.xy = id0.xy,
+      }
+      return(invisible(list(id.x=id0.x, id.y= id0.y, id.xy = id0.xy,
              qtx = quantile(ndata.x), qty = quantile(ndata.y),
              cutoff.x.v = co.x, cutoff.y.v = co.y
-             ))
+             )))
 }

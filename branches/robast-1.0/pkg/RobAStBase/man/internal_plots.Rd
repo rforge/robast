@@ -20,6 +20,7 @@ These functions are internally used helper functions for \code{\link{plot}},
          xlim, ylim, dots)
 .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv, scaleY,scaleY.fct,
                   scaleY.inv, xlim, ylim, X, ypts = 400, n = 11,
+                  finiteEndpoints = rep(FALSE,4),
                   x.ticks = NULL, y.ticks = NULL, withbox = TRUE)
 .legendCoord(x, scaleX, scaleX.fct, scaleY, scaleY.fct)
 .SelectOrderData(data, fct, which.lbs, which.Order)
@@ -53,6 +54,8 @@ These functions are internally used helper functions for \code{\link{plot}},
               scale).}
   \item{ylim}{numeric vector of length 2: limits of the plotted y region (in original
               scale).}
+  \item{finiteEndpoints}{a logical of length 4: are the  unscaled \code{xlim[1]},
+                         \code{xlim[2]}, \code{ylim[1]}, \code{ylim[2]} finite? }
   \item{x.ticks}{numeric: coordinates in original scale of user-given ticks on x-axis.}
   \item{y.ticks}{numeric: coordinates in original scale of user-given ticks on y-axis.}
   \item{n}{integer: number of default ticks in x and y axis.}

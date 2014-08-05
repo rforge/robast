@@ -13,7 +13,7 @@ qqplot(x, y, ...)
    n = length(x), withIdLine = TRUE, withConf = TRUE,
    withConf.pw  = withConf,  withConf.sim = withConf,
     plot.it = TRUE, xlab = deparse(substitute(x)),
-    ylab = deparse(substitute(y)), ..., n.adj = TRUE)
+    ylab = deparse(substitute(y)), ..., cex.pts.fun = NULL, n.adj = TRUE)
 \S4method{qqplot}{ANY,kStepEstimate}(x, y,
    n = length(x), withIdLine = TRUE, withConf = TRUE,
    withConf.pw  = withConf,  withConf.sim = withConf,
@@ -45,6 +45,9 @@ class \code{"kStepEstimate"}.}
 \item{ylab}{y-label}
 \item{\dots}{further parameters for method \code{qqplot} with signature
 \code{ANY,ProbFamily} (see \code{\link[distrMod]{qqplot}}) or with function \code{plot}}
+\item{cex.pts.fun}{rescaling function for the size of the points to be plotted;
+        either \code{NULL} (default), then \code{log(1+abs(x))} is used,
+        or a function which is then used. }
 \item{n.adj}{logical; shall sample size be adjusted for possible outliers according
 to radius of the corresponding neighborhood?}
 \item{distance}{a function mapping observations \code{x} to the positive reals;

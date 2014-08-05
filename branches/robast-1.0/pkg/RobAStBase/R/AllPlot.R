@@ -56,6 +56,9 @@ setMethod("plot", signature(x = "IC", y = "missing"),
            dots$yaxt <- "n"
         }
 
+        scaleY.fct <- .fillList(scaleY.fct, dims0)
+        scaleY.inv <- .fillList(scaleY.inv, dims0)
+
         MBRB <- matrix(rep(t(MBRB), length.out=dims0*2),ncol=2, byrow=T)
         MBRB <- MBRB * MBR.fac
 
@@ -251,18 +254,29 @@ setMethod("plot", signature(x = "IC", y = "missing"),
             fct <- function(x) sapply(x, IC1@Map[[indi]])
             print(xlim[,i])
             resc <-.rescalefct(x.vec, fct, scaleX, scaleX.fct,
-                              scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                              scaleX.inv, scaleY, scaleY.fct[[i]], xlim[,i],
                               ylim[,i], dots)
             dots <- resc$dots
             dots$xlim <- xlim[,i]
             dots$ylim <- ylim[,i]
             x.vec1 <- resc$X
             y.vec1 <- resc$Y
+
+            finiteEndpoints <- rep(FALSE,4)
+            if(scaleX){
+               finiteEndpoints[1] <- is.finite(scaleX.inv(min(x.vec1, xlim[1,i])))
+               finiteEndpoints[2] <- is.finite(scaleX.inv(max(x.vec1, xlim[2,i])))
+            }
+            if(scaleY){
+               finiteEndpoints[3] <- is.finite(scaleY.inv(min(y.vec1, ylim[1,i])))
+               finiteEndpoints[4] <- is.finite(scaleY.inv(max(y.vec1, ylim[2,i])))
+            }
             do.call(plot, args=c(list(x=x.vec1, y=y.vec1, type = plty, lty = lty,
                                       xlab = xlab, ylab = ylab), dots))
             .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
-                              scaleY,scaleY.fct, scaleY.inv,
+                              scaleY,scaleY.fct[[i]], scaleY.inv[[i]],
                               xlim[,i], ylim[,i], x.vec1, ypts = 400, n = scaleN,
+                              finiteEndpoints = finiteEndpoints,
                               x.ticks = x.ticks, y.ticks = y.ticks[[i]])
             if(withMBR){
                 MBR.i <- MBRB[i,]
@@ -272,7 +286,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
             if(is(e1, "DiscreteDistribution")){
                 x.vec1D <- seq(from = min(x.vec), to = max(x.vec), length = 1000)
                 rescD <-.rescalefct(x.vec1D, fct, scaleX, scaleX.fct,
-                                scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                                scaleX.inv, scaleY, scaleY.fct[[i]], xlim[,i],
                                 ylim[,i], dots)
                 x.vecD <- rescD$X
                 y.vecD <- rescD$Y
@@ -341,7 +355,6 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
     dots.without <- dots
     dots.without$col <- dots.without$cex <- dots.without$pch <- NULL
 
-
     pL <- expression({})
     if(!is.null(dots$panel.last))
         pL <- dots$panel.last
@@ -353,7 +366,7 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
         print(xlim[,i])
         resc.dat <-.rescalefct(y0s, function(x) sapply(x,ICMap0[[indi]]),
                               scaleX, scaleX.fct, scaleX.inv,
-                              scaleY, scaleY.fct, xlim[,i], ylim[,i],
+                              scaleY, scaleY.fct[[i]], xlim[,i], ylim[,i],
                               dwo0)
         y1 <- resc.dat$X
         ICy <- resc.dat$Y

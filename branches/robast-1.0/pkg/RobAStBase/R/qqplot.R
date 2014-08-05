@@ -58,7 +58,7 @@ setMethod("qqplot", signature(x = "ANY", y = "InfRobModel"),
       function(x, y, n = length(x), withIdLine = TRUE, withConf = TRUE,
                withConf.pw  = withConf,  withConf.sim = withConf,
                plot.it = TRUE, xlab = deparse(substitute(x)),
-               ylab = deparse(substitute(y)), ..., n.adj = TRUE){
+               ylab = deparse(substitute(y)), ..., cex.pts.fun = NULL, n.adj = TRUE){
 
     mc <- match.call(call = sys.call(sys.parent(1)))
     if(missing(xlab)) mc$xlab <- as.character(deparse(mc$x))
@@ -88,7 +88,17 @@ setMethod("qqplot", signature(x = "ANY", y = "InfRobModel"),
     L2Dx <- evalRandVar(L2D,matrix(x))[,,1]
     scx <-  solve(sqrt(FI),L2Dx)
     xD <- fct(distance)(scx)
-    x.cex <- 3/(1+log(1+xD))
+    cex.pts <- if(is.null(mcl[["cex.pts"]])){
+                  if(is.null(mcl[["cex"]])){
+                     par("cex")
+                  }else{
+                     eval(mcl$cex)}
+               }else{
+                  eval(mcl$cex.pts)
+               }
+
+    x.cex <- 3/(1+.cexscale(xD,xD,cex=cex.pts, fun = cex.pts.fun))
+
     mcl$cex.pch <- x.cex
 
     return(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),

@@ -11,7 +11,7 @@ outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
                id.n, cex.pts = 1,lab.pts, jitt.pts = 0, alpha.trsp = NA,
                adj, cex.idn, col.idn, lty.cutoff, lwd.cutoff, col.cutoff,
                robCov.x = TRUE, robCov.y = TRUE, tf.x = data, tf.y = data,
-               jitt.fac = 10,
+               jitt.fac = 10, doplot = TRUE,
                main = gettext("Outlyingness \n by means of a distance-distance plot")
                          )
 }
@@ -67,6 +67,7 @@ outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
           transformed y-coordinates when applied to the data;
               by default identity.}
   \item{jitt.fac}{factor for jittering, see \code{\link{jitter}};}
+  \item{doplot}{logical; shall a plot be produced? if \code{FALSE} only the return values are produced.}
   \item{main}{the main title.}
 }
 \details{
@@ -77,7 +78,7 @@ calls a corresponding \code{\link{ddPlot}} method to produce the plot.
   }
 
 \value{
-a list with items
+a list (returned as \code{invisible()}) with items
 \item{id.x}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{x}-cutoff}
 \item{id.y}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{y}-cutoff}
 \item{id.xy}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{x}-cutoff and the \code{y}-cutoff}

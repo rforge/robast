@@ -80,13 +80,17 @@
   \item{scaleY}{logical; shall Y-axis be rescaled (by default according to a probit scale)?}
   \item{scaleX.fct}{an isotone, vectorized function mapping the domain of the IC
             to [0,1]; if \code{scaleX} is \code{TRUE} and \code{scaleX.fct} is
-            missing, the cdf of the underlying observation distribution.}
+            missing, the cdf of the underlying observation distribution;
+            can also be a list of functions with one list element for each
+            of the panels to be plot.}
   \item{scaleX.inv}{the inverse function to \code{scale.fct}, i.e., an isotone,
             vectorized function mapping [0,1] to the domain of the IC
             such that for any \code{x} in the domain,
             \code{scaleX.inv(scaleX.fct(x))==x}; if \code{scaleX} is \code{TRUE}
             and \code{scaleX.inv} is
-            missing, the quantile function of the underlying observation distribution.}
+            missing, the quantile function of the underlying observation distribution;
+            can also be a list of functions with one list element for each
+            of the panels to be plot.}
   \item{scaleY.fct}{an isotone, vectorized function mapping for each coordinate the
             range of the respective coordinate of the IC
             to [0,1]; defaulting to the cdf of \eqn{{\cal N}(0,1)}{N(0,1)}.}

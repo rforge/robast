@@ -63,6 +63,8 @@ setMethod("infoPlot", "IC",
            cex.pts.fun <- .fillList(cex.pts.fun, (dims0+in1to.draw)*2)
         }
 
+        scaleY.fct <- .fillList(scaleY.fct, length(to.draw1))
+        scaleY.inv <- .fillList(scaleY.inv, length(to.draw1))
 
         if(!is.null(x.ticks)) dots$xaxt <- "n"
         if(!is.null(y.ticks)){
@@ -414,10 +416,10 @@ setMethod("infoPlot", "IC",
                    dotsP0 <- dotsP
                    resc.rel <- .rescalefct(y0, cbind(y0.vec,ICy0),
                               scaleX, scaleX.fct, scaleX.inv,
-                              FALSE, scaleY.fct, dots$xlim, dots$ylim, dotsP0)
+                              FALSE, scaleY.fct[[i]], dots$xlim, dots$ylim, dotsP0)
                    resc.rel.c <- .rescalefct(y0c, cbind(y0c.vec,ICy0c),
                               scaleX, scaleX.fct, scaleX.inv,
-                              FALSE, scaleY.fct, dots$xlim, dots$ylim, dotsP0)
+                              FALSE, scaleY.fct[[i]], dots$xlim, dots$ylim, dotsP0)
 
                    c1fun <- if(is.null(cexfun)) NULL else cexfun[[(i1-1)*2+1]]
                    c2fun <- if(is.null(cexfun)) NULL else cexfun[[(i1-1)*2+2]]
@@ -471,6 +473,17 @@ setMethod("infoPlot", "IC",
                scaleY0 <- scaleY & (yaxt0[1]!="n")
                x.ticks0 <- if(xaxt0[1]!="n") x.ticks else NULL
                y.ticks0 <- if(yaxt0[1]!="n") y.ticks[[1]] else NULL
+
+               finiteEndpoints <- rep(FALSE,4)
+               if(scaleX){
+                  finiteEndpoints[1] <- is.finite(scaleX.inv(min(resc.C$X, xlim[1],na.rm=TRUE)))
+                  finiteEndpoints[2] <- is.finite(scaleX.inv(max(resc.C$X, xlim[2],na.rm=TRUE)))
+               }
+               if(scaleY){
+                  finiteEndpoints[3] <- is.finite(scaleY.inv(min(resc.C$Y, ylim[1,1],na.rm=TRUE)))
+                  finiteEndpoints[4] <- is.finite(scaleY.inv(max(resc.C$Y, ylim[2,1],na.rm=TRUE)))
+               }
+
                .plotRescaledAxis(scaleX0, scaleX.fct, scaleX.inv,
                               scaleY0,scaleY.fct, scaleY.inv,
                               dots$xlim, dots$ylim, resc$X, ypts = 400,
@@ -525,14 +538,27 @@ setMethod("infoPlot", "IC",
                     scaleY0 <- scaleY & (yaxt0[i+in1to.draw]!="n")
                     x.ticks0 <- if(xaxt0[i+in1to.draw]!="n") x.ticks else NULL
                     y.ticks0 <- if(yaxt0[i+in1to.draw]!="n") y.ticks[[i+in1to.draw]] else NULL
+
+                    finiteEndpoints <- rep(FALSE,4)
+                    if(scaleX){
+                      finiteEndpoints[1] <- is.finite(scaleX.inv(min(resc$X, xlim[1],na.rm=TRUE)))
+                      finiteEndpoints[2] <- is.finite(scaleX.inv(max(resc$X, xlim[2],na.rm=TRUE)))
+                    }
+                    if(scaleY){
+                       finiteEndpoints[3] <- is.finite(scaleY.inv[[i+in1to.draw]](min(yvec1, ylim[1,i+in1to.draw],na.rm=TRUE)))
+                       finiteEndpoints[4] <- is.finite(scaleY.inv[[i+in1to.draw]](max(yvec1, ylim[2,i+in1to.draw],na.rm=TRUE)))
+                    }
+
                     .plotRescaledAxis(scaleX0, scaleX.fct, scaleX.inv,
-                              FALSE,scaleY.fct, scaleY.inv, dots$xlim,
+                              FALSE,scaleY.fct[[i+in1to.draw]],
+                              scaleY.inv[[i+in1to.draw]], dots$xlim,
                               dots$ylim, resc$X, ypts = 400, n = scaleN,
+                              finiteEndpoints = finiteEndpoints,
                               x.ticks = x.ticks0,
                               y.ticks = y.ticks0, withbox = withbox)
                     if(with.legend)
                       legend(.legendCoord(legend.location[[i1]],
-                                 scaleX, scaleX.fct, scaleY, scaleY.fct),
+                                 scaleX, scaleX.fct, scaleY, scaleY.fct[[i]]),
                            bg = legend.bg, legend = legend[[i1]],
                            col = c(colI, col), lwd = c(lwdI, lwd),
                            lty = c(ltyI, lty), cex = legend.cex*fac.leg)
