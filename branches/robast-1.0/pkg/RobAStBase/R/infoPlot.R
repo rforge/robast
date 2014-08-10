@@ -312,7 +312,16 @@ setMethod("infoPlot", "IC",
             pL.rel <- pL.abs <- pL <- expression({})
             if(!is.null(dots$panel.last))
                {pL.rel <- pL.abs <- pL <- dots$panel.last}
+            pF.rel <- pF.abs <-  expression({})
+            if(!is.null(dots$panel.first))
+               {pF.rel <- pF.abs <- dots$panel.first}
+            pF.rel <- substitute({.absInd <- FALSE
+                                   pF}, list(pF=pF.rel))
+            pF.abs <- substitute({.absInd <- TRUE
+                                   pF}, list(pF=pF.abs))
 
+            dotsP$panel.last <- dotsP$panel.first <- NULL
+            
             if(!is.null(data)){
 
                n <- if(!is.null(dim(data))) nrow(data) else length(data)
@@ -465,7 +474,8 @@ setMethod("infoPlot", "IC",
 
                do.call(plot, args=c(list(resc.C$X, resc.C$Y, type = plty,
                    lty = ltyI, col = colI, lwd = lwdI,
-                   xlab = xlab, ylab = ylab.abs, panel.last = pL.abs),
+                   xlab = xlab, ylab = ylab.abs, panel.last = pL.abs,
+                   panel.first = pF.abs),
                    dotsP1))
                do.call(lines, args=c(list(resc$X, resc$Y, type = plty,
                        lty = lty, lwd = lwd, col = col), dotsL))
@@ -529,8 +539,8 @@ setMethod("infoPlot", "IC",
 
                     do.call(plot, args=c(list(resc$X, y.vec1, type = plty,
                                   lty = lty, xlab = xlab, ylab = ylab.rel,
-                                  col = col, lwd = lwd, panel.last = pL.rel),
-                                  dotsP))
+                                  col = col, lwd = lwd, panel.last = pL.rel,
+                                  panel.first = pF.rel),  dotsP))
 
                     do.call(lines, args = c(list(resc.C$X, y.vec1C, type = plty,
                             lty = ltyI, col = colI, lwd = lwdI), dotsL))

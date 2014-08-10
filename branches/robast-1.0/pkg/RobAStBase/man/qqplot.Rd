@@ -131,7 +131,7 @@ RobM <- InfRobModel(center = NormLocationFamily(mean=13,sd=sqrt(28)),
                     neighbor = ContNeighborhood(radius = 0.4))
 x <- r(Norm(15,sqrt(30)))(20)
 qqplot(x, RobM)
-qqplot(x, RobM, alpha.CI=0.9)
+qqplot(x, RobM, alpha.CI=0.9, add.points.CI=FALSE)
 ## further examples for ANY,kStepEstimator-method
 ## in example to roptest() in package ROptEst
 }

@@ -34,7 +34,8 @@ user-visible CHANGES:
   default use an equidistant grid on the rescaled x-Axis.
 + qqplot-method for c("ANY","InfRobModel") gains argument 
  'cex.pts.fun' to better control the scaling of points-sizes
-  
++ new helper function cutoff.quant() to produce cutoff from model quantiles
+ 
 GENERAL ENHANCEMENTS:
   
 under the hood:
