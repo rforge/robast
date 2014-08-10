@@ -86,13 +86,17 @@
 
       if(is.null(cutoff.x))
          cutoff.x <- cutoff(norm = dist.x, cutoff.quantile  = cutoff.quantile.x)
-      else {assign("norm", dist.x, environment(fct(cutoff.x)))
-            assign("cutoff.quantile", cutoff.quantile.x, environment(fct(cutoff.x)))}
+      else {assign("norm", dist.x, envir=environment(fct(cutoff.x)))
+            assign("cutoff.quantile", cutoff.quantile.x, envir=environment(fct(cutoff.x)))
+            assign("..trf", if(missing(transform.x)||is.null(transform.x)) function(x)x else transform.x,
+                   envir=environment(fct(cutoff.x)))}
 
       if(is.null(cutoff.y))
          cutoff.y <- cutoff(norm = dist.y, cutoff.quantile  = cutoff.quantile.y)
-      else {assign("norm", dist.y, environment(fct(cutoff.y)))
-            assign("cutoff.quantile", cutoff.quantile.y, environment(fct(cutoff.y)))}
+      else {assign("norm", dist.y, envir=environment(fct(cutoff.y)))
+            assign("cutoff.quantile", cutoff.quantile.y, envir=environment(fct(cutoff.y)))
+            assign("..trf", if(missing(transform.y)||is.null(transform.y)) function(x)x else transform.y,
+                   envir=environment(fct(cutoff.y)))}
 
       if(!is(dist.x, "NormType")) stop("Argument 'dist.x' of 'ddPlot' must be of class 'NormType'")
       if(!is(dist.y, "NormType")) stop("Argument 'dist.y' of 'ddPlot' must be of class 'NormType'")

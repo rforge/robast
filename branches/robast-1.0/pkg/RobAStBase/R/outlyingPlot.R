@@ -124,11 +124,13 @@ outlyingPlotIC <- function(data,
      tf.y <- function(x) apply(x,2,function(xx) evalIC(IC.y,xx))
      }else{tf.y <- mc$tf.y}
 
-     do.call(ddPlot,args=c(list(data=data),dots, 
+    if(!missing(cutoff.x)) assign("..ICloc", IC.x, envir=environment(fct(cutoff.x)))
+    if(!missing(cutoff.y)) assign("..ICloc", IC.y, envir=environment(fct(cutoff.y)))
+     do.call(ddPlot,args=c(list(data=data),dots,
        list(dist.x = mc$dist.x,
        dist.y = mc$dist.y, 
-       cutoff.x = mc$cutoff.x, 
-       cutoff.y = mc$cutoff.y,
+       cutoff.x = cutoff.x,
+       cutoff.y = cutoff.y,
        cutoff.quantile.x = mc$cutoff.quantile.x, 
        cutoff.quantile.y = mc$cutoff.quantile.y,
        transform.x = tf.x, 

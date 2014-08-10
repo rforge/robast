@@ -50,3 +50,25 @@ cutoff.chisq <- function(){cutoff(name = "chisq",
                                   qchisq(df = dim, cutoff.quantile)^.5
                                   }),
                    cutoff.quantile  = 0.95)}
+
+cutoff.quant <- function(qfct){
+                   if(missing(qfct)) qfct <- NULL
+                   cutoff(name = "quantile",
+                   body.fct0 = substitute({
+                                  if(is.null(qfctA)){
+                                     if(exists("..ICloc")){
+                                        L2m <- eval(CallL2Fam(get("..ICloc")))
+                                        qfct0 <- q(L2m)
+                                     }else{
+                                        qfct0 <- qnorm
+                                     }
+                                  }else{
+                                     qfct0 <- qfctA
+                                  }
+                                  q0 <- qfct0(cutoff.quantile)
+                                  if(exists("..trf")){
+                                     q0 <- get("..trf")(q0)
+                                  }
+                                  return(q0)
+                                }, list(qfctA=qfct)),
+                   cutoff.quantile  = 0.95)}
