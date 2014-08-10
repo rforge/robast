@@ -48,8 +48,8 @@ setMethod("qqplot", signature(x = "ANY",
     x.cex <- 3/(1+log(1+xD))
     mcl$cex.pch <- x.cex
 
-    return(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
-            args=mcl))
+    return(invisible(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
+            args=mcl)))
     })
 
 
@@ -101,8 +101,8 @@ setMethod("qqplot", signature(x = "ANY", y = "InfRobModel"),
 
     mcl$cex.pch <- x.cex
 
-    return(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
-            args=mcl))
+    return(invisible(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
+            args=mcl)))
     })
 
 ## into RobAStBase
@@ -129,8 +129,10 @@ setMethod("qqplot", signature(x = "ANY",
        stop("IC of the kStepEstimator needs to be of class 'IC'")
 
     L2Fam <- eval(IC@CallL2Fam)
-
-    mcl$y <- L2Fam
+    param <- ParamFamParameter(main=untransformed.estimate(y), nuisance=nuisance(y),
+                               fixed=fixed(y))
+    L2Fam0 <- modifyModel(L2Fam,param)
+    mcl$y <- L2Fam0
 
     if(is(IC,"HampIC")){
       dim0 <- nrow(FisherInfo(L2Fam))
@@ -154,6 +156,6 @@ setMethod("qqplot", signature(x = "ANY",
       mcl$col.pch <- .fadeColor(col.pch,wx^exp.fadcol.pch, bg = bg)
     }
 
-    return(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
-            args=mcl))
+    return(invisible(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
+            args=mcl)))
     })
