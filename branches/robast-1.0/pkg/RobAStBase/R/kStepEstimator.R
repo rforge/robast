@@ -342,7 +342,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
           dimnames(asVar) <- list(nms.theta.idx, nms.theta.idx)
         }
 
-        return(new("kStepEstimate", estimate.call = es.call,
+        estres <- new("kStepEstimate", estimate.call = es.call,
                 name = paste(steps, "-step estimate", sep = ""),
                 estimate = theta, samplesize = nrow(x0), asvar = asVar,
                 trafo = tf, fixed = fixed, nuis.idx = nuis.idx,
@@ -350,7 +350,9 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                 untransformed.asvar = u.var, asbias = asBias, pIC = IC,
                 steps = steps, Infos = Infos, start = start,
                 startval = start.val, ustartval = u.start.val, ksteps = ksteps,
-                uksteps = uksteps, pICList = pICList, ICList = ICList))
+                uksteps = uksteps, pICList = pICList, ICList = ICList)
+        return(.checkEstClassForParamFamily(L2Fam,estres))
+
 }
 #  (est1.NS <- kStepEstimator(x, IC2.NS, est0, steps = 1))
 

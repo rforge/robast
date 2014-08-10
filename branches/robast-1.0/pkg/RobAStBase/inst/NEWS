@@ -48,6 +48,14 @@ under the hood:
  whether values +-infinity are taken at all. (This was a bug
  before for distributions passed on as cdf and quantile function
  with finite left or right endpoint.)
++ output in kStepEstimator() and oneStepEstimator() is filtered
+  by  .checkEstClassForParamFamily(); this allows to return an
+  object of S4 class specific to the resp. parametric family (by means of
+  S4 method dispatch); this is used in pkg 'RobExtremes' to produce, e.g., 
+  objects of class "GEVkStepEstimate", i.e. which inherit from both 
+  "kStepEstimate", so that a diag-method for "GEVEstimate" becomes 
+  available for this class.
+
   
 BUGFIXES:
 + two bugs in plotWrapper.R in pkgs RobAStBase and ROptEst detected by Misha
