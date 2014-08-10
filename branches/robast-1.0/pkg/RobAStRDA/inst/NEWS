@@ -8,6 +8,20 @@
  information)
 
 #######################################
+version 1.0
+#######################################
+
+user-visible CHANGES:
+
+GENERAL ENHANCEMENTS:
+
+under the hood:
++ warning methods about not importing from methods ...
+
+BUGFIXES:
+
+
+#######################################
 version 0.9
 #######################################
 

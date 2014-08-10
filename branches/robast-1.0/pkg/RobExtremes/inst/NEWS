@@ -8,6 +8,57 @@
  information) 
 
 #######################################
+version 1.0
+#######################################
+
+user-visible CHANGES:
++ GEV now has a robust starting estimator for mu unknown
++ GEVFamily and GEVFamilyMuUnknown now have changed default starting estimators
+  realized in startEstGEV.R : a CvM-MDE with xi varying on a grid...
+
+GENERAL ENHANCEMENTS:
+
+under the hood:
++ deleted some .bak file from R folder
++ risk measures VaR, CVaR, and EL for GPD, Weibull, Gamma, ... (ScaleShapeModels)
++ packed startEstGEV.R into a try-catch...
++ checking script to check GEV in scripts folder
++ prepared code for evaluation of LMs on xi grid for GEVFamilyMuUnknown family; 
++ .pretreat.of.interest and .define.tau.Dtau are more accurate now; 
++ moved some packages to Imports to avoid note on many packages in Depends, 
+  added Encoding due to warning about character 2292 in my locale
++ removed ::: internal dependencies (within distr&robast-Fam's of pkgs) by 
+  copying respective routines
+
+BUGFIXES:
++ fixed issue with updateStep in kStepEstimator when using interpol risks 
+  (somehow modifyIC had not been attached in prior steps...)
++ added \value tag in getCVaR.Rd
++ fixed some issues with help of getVaR, getCVaR, ...
++ new print method for the results of these functions (and a corresponding S3class)
++ GParetoFamily now handles left endpoint correctly and catches xi < -1/2
++ GEVFamily[MuUnknown] for xi>0 now handles left endpoint correctly and catches xi < -1/2
++ warning for large xi is switched off in GEVFamily[MuUnknown] if called internally
++ double definition of ddigamma eliminated
++ bugfix in bounds / must be right for shape < 0
++ eliminated some erroneous prints
++ in startEstGEV.R, the sigma search range could include negative values, 
+  now only let pass admissible starting estimators
++ bug in (population) variance of GEV xi=0 discovered
++ fixed the problem with inadmissible return values of MLE in startEstGEV.R
++ startEstGEV.R now works with soft bound 1+ xi (x-mu)/sigma > 0 (only to hold 
+  for lower quantile...) controlled by argument secLevel
++ fixed issue with check.validity as notified by B. Spangl, and extended 
+  starting estimator in GParetoFamily
++ fixed Matthias' error-issue in TeaserExample.R in cniperCont.R /plotWrapper.R
+  --  used the wrong variance
++ fixed buglets in GEVFamilyMuUnknown which hindered evaluation of LagrangeMults, 
++ cleaned small buglet in modifyPar  
++ corrected link in Var.Rd
++ put code in \dontrun to reduce checking time
+ 
+  
+#######################################
 version 0.9
 #######################################
 
