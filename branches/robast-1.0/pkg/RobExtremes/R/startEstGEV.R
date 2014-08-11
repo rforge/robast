@@ -13,7 +13,8 @@
 
   fu <- function(x,...) .getBetaXiGEV(x,mu,xiGrid = xiGrid,withPos=withPos)
   e0 <- NULL
-
+  es <- c(NA,NA)
+  
   ### first try (to ensure global consistency): PickandsEstimator
   try({mygev <- GEVFamily(loc=0,scale=1,shape=0.1, withPos=withPos,
                      ..withWarningGEV=FALSE)
@@ -25,7 +26,7 @@
   if(!is.null(e0)) if(!is(e0,"try-error")){
       mygev <- GEVFamily(loc=0,scale=e0[1],shape=e0[2], withPos=withPos,
                          start0Est = fu, ..withWarningGEV=FALSE)
-      mde0 <- try(MDEstimator(x0, mygev, distance=CvMDist, startPar=c("scale"=es0[1],"shape"=es0[2])),silent=TRUE)
+      mde0 <- try(MDEstimator(x0, mygev, distance=CvMDist, startPar=c("scale"=e0[1],"shape"=e0[2])),silent=TRUE)
       es0 <- c(NA,NA)
       if(!is(mde0,"try-error")){
           es <- estimate(mde0)

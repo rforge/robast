@@ -15,6 +15,8 @@ user-visible CHANGES:
 + GEV now has a robust starting estimator for mu unknown
 + GEVFamily and GEVFamilyMuUnknown now have changed default starting estimators
   realized in startEstGEV.R : a CvM-MDE with xi varying on a grid...
++ provide wrapper for ismev-diagnostics ie gev.diag, gev.prof, gev.profxi, 
+  gpd.diag, gpd.prof, gpd.profxi
 
 GENERAL ENHANCEMENTS:
 

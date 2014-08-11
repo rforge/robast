@@ -10,7 +10,8 @@
 
   fu <- function(x,...) .getBetaXiGPD(x,mu,xiGrid = xiGrid,withPos=withPos)
   e0 <- NULL
-
+  es <- c(NA,NA)
+  
   ### first try (to ensure global consistency): PickandsEstimator
   try({mygpd <- GParetoFamily(loc=0,scale=1,shape=0.1, withPos=withPos)
        e1 <- medkMADhybr(x,ParamFamily=mygpd, k=10)
