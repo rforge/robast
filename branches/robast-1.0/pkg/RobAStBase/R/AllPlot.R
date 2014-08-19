@@ -3,6 +3,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
+             with.automatic.grid = TRUE,
              with.legend = FALSE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
              withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
@@ -58,6 +59,38 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
         scaleY.fct <- .fillList(scaleY.fct, dims0)
         scaleY.inv <- .fillList(scaleY.inv, dims0)
+
+        pF <- expression({})
+        if(!is.null(dots[["panel.first"]])){
+            pF <- .panel.mingle(dots,"panel.first")
+        }
+        ..panelFirst <- .fillList(pF,dims0)
+        if(with.automatic.grid)
+            ..panelFirst <- .producePanelFirstS(
+                  ..panelFirst,x, to.draw.arg, FALSE,
+                  x.ticks = x.ticks, scaleX = scaleX, scaleX.fct = scaleX.fct,
+                  y.ticks = y.ticks, scaleY = scaleY, scaleY.fct = scaleY.fct)
+        gridS <- if(with.automatic.grid)
+                 substitute({grid <- function(...){}}) else expression({})
+        pF <- vector("list",dims0)
+        if(dims0>0)
+           for(i in 1:dims0){
+               pF[[i]] <- substitute({ gridS0
+                                        pF0},
+                          list(pF0=..panelFirst[[i]], gridS0=gridS))
+           }
+
+        pL <- expression({})
+        if(!is.null(dots[["panel.last"]])){
+            pL <- .panel.mingle(dots,"panel.last")
+        }
+        ..panelLast <- .fillList(pL,dims0)
+        pL <- vector("list",dims0)
+        if(dims0>0)
+           for(i in 1:dims0)
+               pL[[i]] <- if(is.null(..panelLast[[i]])) expression({}) else ..panelLast[[i]]
+
+        dots$panel.last <- dots$panel.first <- NULL
 
         MBRB <- matrix(rep(t(MBRB), length.out=dims0*2),ncol=2, byrow=T)
         MBRB <- MBRB * MBR.fac
@@ -271,8 +304,12 @@ setMethod("plot", signature(x = "IC", y = "missing"),
                finiteEndpoints[3] <- is.finite(scaleY.inv[[i]](min(y.vec1, ylim[1,i])))
                finiteEndpoints[4] <- is.finite(scaleY.inv[[i]](max(y.vec1, ylim[2,i])))
             }
+
+
             do.call(plot, args=c(list(x=x.vec1, y=y.vec1, type = plty, lty = lty,
-                                      xlab = xlab, ylab = ylab), dots))
+                                      xlab = xlab, ylab = ylab,
+                                      panel.first = pF[[i]],
+                                      panel.last = pL[[i]]), dots))
             .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
                               scaleY,scaleY.fct[[i]], scaleY.inv[[i]],
                               xlim[,i], ylim[,i], x.vec1, ypts = 400, n = scaleN,
@@ -355,15 +392,22 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
     dots.without <- dots
     dots.without$col <- dots.without$cex <- dots.without$pch <- NULL
 
+    dims0 <- .getDimsTD(L2Fam,dots[["to.draw.arg"]])
+
     pL <- expression({})
     if(!is.null(dots$panel.last))
-        pL <- dots$panel.last
+        pL <- .panel.mingle(dots,"panel.last")
+    pL <- .fillList(pL, dims0)
+    if(dims0) for(i in 1:dims0){
+       if(is.null(pL[[i]])) pL[[i]] <- expression({})
+    }
     dots$panel.last <- NULL
+
 
     pL <- substitute({
         y1 <- y0s
         ICy <- sapply(y0s,ICMap0[[indi]])
-        print(xlim[,i])
+        #print(xlim[,i])
         resc.dat <-.rescalefct(y0s, function(x) sapply(x,ICMap0[[indi]]),
                               scaleX, scaleX.fct, scaleX.inv,
                               scaleY, scaleY.fct[[i]], xlim[,i], ylim[,i],

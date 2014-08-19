@@ -106,18 +106,6 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
   if(is.null(mc$withCall)) mc$withCall <- TRUE
 
 
-  ##### plotting in grid
-
-  ..panelFirst <- .producePanelFirstS(
-                    dots[["panel.first"]],IC,eval(dots[["to.draw.arg"]]), TRUE,
-                    x.ticks = eval(dots[["x.ticks"]]),
-                    scaleX = eval(dots[["scaleX"]]),
-                    scaleX.fct = dots[["scaleX.fct"]],
-                    y.ticks = eval(dots[["y.ticks"]]),
-                    scaleY = eval(dots[["scaleY"]]),
-                    scaleY.fct = dots[["scaleY.fct"]])
-
-  ..panelLast <- dots[["panel.last"]]
   ###
   
   ###
@@ -143,6 +131,7 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
                      ,cex.inner = substitute(0.8)
                      ,bmar = substitute(par("mar")[1])
                      ,tmar = substitute(par("mar")[3])
+                     ,with.automatic.grid = substitute(TRUE)
                      ,with.legend = substitute(TRUE)
                      ,legend = substitute(NULL)
                      ,legend.bg = substitute("white")
@@ -169,8 +158,8 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
                      ,cex.lab = substitute(1.5)
                      ,cex = substitute(1.5)
                      ,bty = substitute("o")
-                     ,panel.first= ..panelFirst
-                     ,panel.last= ..panelLast
+                     ,panel.first= substitute(NULL)
+                     ,panel.last= substitute(NULL)
                      ,col = substitute("blue")
     ), scaleList)
 
@@ -288,19 +277,6 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
   if(is.null(mc$rescale)) mc$rescale <- FALSE
   if(is.null(mc$withCall)) mc$withCall <- TRUE
 
-  ##### plotting in grid
-  ..panelFirst <- .producePanelFirstS(
-                    dots[["panel.first"]],IC,eval(dots[["to.draw.arg"]]), FALSE,
-                    x.ticks = eval(dots[["x.ticks"]]),
-                    scaleX = eval(dots[["scaleX"]]),
-                    scaleX.fct = dots[["scaleX.fct"]],
-                    y.ticks = eval(dots[["y.ticks"]]),
-                    scaleY = eval(dots[["scaleY"]]),
-                    scaleY.fct = dots[["scaleY.fct"]])
-
-  ..panelLast <- dots[["panel.last"]]
-  ###
-
 
   ###
   ### 2. build up the argument list for the (powerful/fullfledged)
@@ -319,6 +295,7 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,cex.inner = substitute(0.8)
                      ,bmar = substitute(par("mar")[1])
                      ,tmar = substitute(par("mar")[3])
+                     ,with.automatic.grid = substitute(TRUE)
                      ,with.legend = substitute(FALSE)
                      ,legend = substitute(NULL)
                      ,legend.bg = substitute("white")
@@ -339,8 +316,8 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,cex = substitute(1.5)
                      ,bty = substitute("o")
                      ,col = substitute("blue")
-                     ,panel.first= ..panelFirst
-                     ,panel.last= ..panelLast
+                     ,panel.first= substitute(NULL)
+                     ,panel.last= substitute(NULL)
     ), scaleList)
   if(!missing(y)){c(argsList, y = substitute(y)
                      ,cex.pts = substitute(0.3)
@@ -485,17 +462,6 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
   if(is.null(mc$withCall)) mc$withCall <- TRUE
   iny <- if(missing(y)) TRUE else is.null(y)
 
-  ##### plotting in grid
-  ..panelFirst <- .producePanelFirstS(
-                    dots[["panel.first"]],IC1,eval(dots[["to.draw.arg"]]), FALSE,
-                    x.ticks = eval(dots[["x.ticks"]]),
-                    scaleX = eval(dots[["scaleX"]]),
-                    scaleX.fct = dots[["scaleX.fct"]],
-                    y.ticks = eval(dots[["y.ticks"]]),
-                    scaleY = eval(dots[["scaleY"]]),
-                    scaleY.fct = dots[["scaleY.fct"]])
-
-  ..panelLast <- dots[["panel.last"]]
   ###
 
 
@@ -521,6 +487,7 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
                      ,cex.inner = substitute(0.8)
                      ,bmar = substitute(par("mar")[1])
                      ,tmar = substitute(par("mar")[3])
+                     ,with.automatic.grid = substitute(TRUE)
                      ,with.legend = substitute(FALSE)
                      ,legend = substitute(NULL)
                      ,legend.bg = substitute("white")
@@ -560,8 +527,8 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
                      ,cex = substitute(1.5)
                      ,bty = substitute("o")
                      ,col = substitute("blue")
-                     ,panel.first= ..panelFirst
-                     ,panel.last= ..panelLast
+                     ,panel.first= substitute(NULL)
+                     ,panel.last= substitute(NULL)
     ), scaleList)
     
     if(!is.null(IC3)) argsList$obj3 <- substitute(IC3)
@@ -603,92 +570,3 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
 
 }
 
-.getDimsTD <- function(L2Fam,to.draw.arg){
-  trafO <- trafo(L2Fam@param)
-  dims  <- nrow(trafO)
-  dimnms  <- c(rownames(trafO))
-  if(is.null(dimnms))
-     dimnms <- paste("dim",1:dims,sep="")
-  to.draw <- 1:dims
-  if(! is.null(to.draw.arg)){
-       if(is.character(to.draw.arg))
-          to.draw <- pmatch(to.draw.arg, dimnms)
-       else if(is.numeric(to.draw.arg))
-               to.draw <- to.draw.arg
-  }
-  return(length(to.draw))
-}
-
-
-.producePanelFirstS <- function(panelFirst,IC,to.draw.arg,isInfoPlot=FALSE,
-                                x.ticks, scaleX, scaleX.fct,
-                                y.ticks, scaleY, scaleY.fct){
-
-
-  L2Fam <- eval(IC@CallL2Fam)
-  if(is.null(scaleX.fct)) scaleX.fct <- p(L2Fam)
-  ndim <- .getDimsTD(L2Fam,to.draw.arg)
-  if(is.null(scaleY.fct)){
-     scaleY.fct <- .fillList(pnorm,ndim)
-  }else{
-     scaleY.fct <- .fillList(scaleY.fct,ndim)
-  }
-  ..y.ticks <- .fillList(y.ticks,ndim)
-  .xticksS <- substitute({
-            .x.ticks <- x.ticks0
-            if(is.null(.x.ticks))
-               .x.ticks <- axTicks(1, axp=par("xaxp"), usr=par("usr"))
-            scaleX00 <- FALSE
-            if(!is.null(scaleX0)) scaleX00 <- scaleX0
-            if(scaleX00) .x.ticks <- scaleX.fct0(.x.ticks)
-            },
-            list(x.ticks0 = x.ticks, scaleX0 = scaleX, scaleX.fct0 = scaleX.fct)
-            )
-
-  getYI <- if(isInfoPlot){
-      substitute({
-             i0 <- if(exists("i")) get("i") else 1
-            .y.ticks <- if(.absInd) NULL else .y.ticksL[[i0]]
-      })
-  }else{
-      substitute({
-            .y.ticks <- .y.ticksL[[i]]
-      })
-
-  }
-  assYI <- if(isInfoPlot){
-      substitute({
-             i0 <- if(exists("i")) get("i") else 1
-             if(.absInd) .y.ticks <- scaleY.fct0[[i0]](.y.ticks)
-      })
-  }else{
-      substitute({
-            .y.ticks <- scaleY.fct0[[i]](.y.ticks)
-      }, list(scaleY.fct0 = scaleY.fct))
-
-  }
-
-  .yticksS <- substitute({
-            .y.ticksL <- y.ticks0
-            getYI0
-            if(is.null(.y.ticks))
-               .y.ticks <- axTicks(2, axp=par("yaxp"), usr=par("usr"))
-            scaleY00 <- FALSE
-            if(!is.null(scaleY0)) scaleY00 <- scaleY0
-            if(scaleY00) assYI0
-            },
-            list(y.ticks0 = y.ticks, scaleY0 = scaleY, scaleY.fct0 = scaleY.fct,
-                 getYI0 = getYI, assYI0 = assYI)
-            )
-
-  ..panelFirst <- substitute({
-     pF
-     .xticksS0
-     .yticksS0
-     abline(v=.x.ticks,col= "lightgray", lty = "dotted", lwd = par("lwd"))
-     abline(h=.y.ticks,col= "lightgray", lty = "dotted", lwd = par("lwd"))
-  },list(pF=if(is.null(panelFirst)) expression({}) else panelFirst,
-         .xticksS0 = .xticksS, .yticksS0 = .yticksS
-         ))
-   return(..panelFirst)
-}

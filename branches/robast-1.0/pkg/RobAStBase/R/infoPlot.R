@@ -6,6 +6,7 @@ setMethod("infoPlot", "IC",
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
+             with.automatic.grid = TRUE,
              with.legend = TRUE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
              x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
@@ -309,17 +310,46 @@ setMethod("infoPlot", "IC",
             }
 
             
-            pL.rel <- pL.abs <- pL <- expression({})
-            if(!is.null(dots$panel.last))
-               {pL.rel <- pL.abs <- pL <- dots$panel.last}
-            pF.rel <- pF.abs <-  expression({})
-            if(!is.null(dots$panel.first))
-               {pF.rel <- pF.abs <- dots$panel.first}
-            pF.rel <- substitute({.absInd <- FALSE
-                                   pF}, list(pF=pF.rel))
-            pF.abs <- substitute({.absInd <- TRUE
-                                   pF}, list(pF=pF.abs))
+            pL <- expression({})
+            if(!is.null(dots[["panel.last"]])){
+                pL <- .panel.mingle(dots,"panel.last")
+            }
+            pL <- .fillList(pL, length(to.draw))
+            if(in1to.draw){
+               pL.rel <- pL[[1]]
+               pL.abs <- pL[-1]
+            }else{ pL.abs <- pL }
+            
 
+            pF <- expression({})
+            if(!is.null(dots[["panel.first"]])){
+               pF <- .panel.mingle(dots,"panel.first")
+            }
+            ..panelFirst <- .fillList(pF, length(to.draw))
+            if(with.automatic.grid)
+                ..panelFirst <- .producePanelFirstS(
+                    ..panelFirst,object, to.draw.arg, TRUE,
+                    x.ticks = x.ticks, scaleX = scaleX, scaleX.fct = scaleX.fct,
+                    y.ticks = y.ticks, scaleY = scaleY, scaleY.fct = scaleY.fct)
+            gridS <- if(with.automatic.grid)
+                  substitute({grid <- function(...){}}) else expression({})
+            if(in1to.draw){
+               pF.rel <- substitute({ gridS0
+                                      .absInd <- FALSE
+                                      pF0 <- pF
+                                      pF0[[1+i]] }, list(pF=..panelFirst, gridS0=gridS))
+               pF.abs <- substitute({ gridS0
+                                      .absInd <- TRUE
+                                      pF
+                                      }, list(pF=..panelFirst[[1]], gridS0=gridS))
+            }else{
+               pF.abs <- NULL
+               pF.rel <- substitute({ gridS0
+                                      .absInd <- FALSE
+                                      pF0 <- pF
+                                      pF0[[i]]
+                                      }, list(pF=..panelFirst, gridS0=gridS))
+            }
             dotsP$panel.last <- dotsP$panel.first <- NULL
             
             if(!is.null(data)){

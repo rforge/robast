@@ -16,6 +16,7 @@ infoPlot(object,  ...)
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
+             with.automatic.grid = TRUE,
              with.legend = TRUE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
              x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
@@ -62,6 +63,9 @@ infoPlot(object,  ...)
           to the current setting of \code{cex}; as in 
           \code{\link[graphics]{par}}.}
   \item{col.inner}{character or integer code; color for the inner title}              
+  \item{with.automatic.grid}{logical; should a grid be plotted alongside
+      with the ticks of the axes, automatically? If \code{TRUE} a respective
+      call to \code{grid} in argument \code{panel.first} is ignored. }
   \item{with.legend}{logical; shall a legend be plotted?}
   \item{legend}{either \code{NULL} or a list of length (number of plotted panels)
                 of items which can be used as argument \code{legend} in
@@ -218,6 +222,13 @@ a common x-axis (see example below).
 The \code{\dots} argument may also contain an argument \code{withbox} which
 if \code{TRUE} warrants that even if \code{xaxt} and \code{yaxt} both are
 \code{FALSE}, a box is drawn around the respective panel.
+
+In addition, argument \code{\dots} may contain arguments \code{panel.first},
+\code{panel.last}, i.e., hook expressions to be evaluated at the very beginning
+and at the very end of each panel (within the then valid coordinates).
+To be able to use these hooks for each panel individually, they may also be
+lists of expressions (of the same length as the number of panels and
+run through in the same order as the panels).
 }
 %\value{}
 \references{

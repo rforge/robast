@@ -12,6 +12,10 @@ version 1.0
 #######################################
 
 user-visible CHANGES:
++ comparePlot, infoPlot, and the plot-Method for ICs gain an argument
+  with.automatic.grid; if TRUE a corresponding grid oriented at tickmarks
+  is produced; this also works for rescaled axes
++ arguments panel.first, panel.last for plot-methods can now be lists
 + infoPlot and comparePlot gain an argument cex.pts.fun to enable individual 
   scaling of the point sizes to be plotted onto each of the plotted curves
 + .ddPlot.MatNtNtCoCo, and also ddPlot, outlyingnessPlot gain an 

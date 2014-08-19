@@ -6,6 +6,7 @@ setMethod("comparePlot", signature("IC","IC"),
              col = par("col"), lwd = par("lwd"), lty,
              col.inner = par("col.main"), cex.inner = 0.8,
              bmar = par("mar")[1], tmar = par("mar")[3],
+             with.automatic.grid = TRUE,
              with.legend = FALSE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
              withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
@@ -253,7 +254,31 @@ setMethod("comparePlot", signature("IC","IC"),
 
         dotsT$main <- dotsT$cex.main <- dotsT$col.main <- dotsT$line <- NULL
 
-        pL <- if(!is.null(dotsP$panel.last)) dotsP$panel.last else expression({})
+        pF <- expression({})
+        if(!is.null(dots[["panel.first"]])){
+            pF <- .panel.mingle(dots,"panel.first")
+        }
+        ..panelFirst <- .fillList(pF,dims0)
+        if(with.automatic.grid)
+           ..panelFirst <- .producePanelFirstS(
+                ..panelFirst,obj1 , to.draw.arg, FALSE,
+                x.ticks = x.ticks, scaleX = scaleX, scaleX.fct = scaleX.fct,
+                y.ticks = y.ticks, scaleY = scaleY, scaleY.fct = scaleY.fct)
+        gridS <- if(with.automatic.grid)
+              substitute({grid <- function(...){}}) else expression({})
+        pF <- vector("list",dims0)
+        if(dims0>0)
+           for(i in 1:dims0){
+               pF[[i]] <- substitute({ gridS0
+                                        pF0},
+                          list(pF0=..panelFirst[[i]], gridS0=gridS))
+           }
+        dots$panel.first <- NULL
+        pL <- expression({})
+        if(!is.null(dots[["panel.last"]])){
+            pL <- .panel.mingle(dots,"panel.last")
+        }
+        pL <- .fillList(pL, dims0)
         dotsP$panel.last <- NULL
 
         sel1 <- sel2 <- sel3 <- sel4 <- NULL
@@ -370,7 +395,7 @@ setMethod("comparePlot", signature("IC","IC"),
             do.call(plot, args=c(list(x = resc1$X, y = y0,
                  type = "n", xlab = xlab, ylab = ylab,
                  lty = lty[1], col = addAlphTrsp2col(col[1],0),
-                 lwd = lwd[1]), dotsP, list(panel.last = pL)))
+                 lwd = lwd[1]), dotsP, list(panel.last = pL[[i]], panel.first=pF[[i]])))
             if(plty=="p")
                do.call(matpoints, args = c(list( x = resc1$X, y = matp,
                     col = col), dots.points))

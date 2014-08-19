@@ -17,6 +17,7 @@ if(packageVersion("distr")<"2.5"){
           {as.character(arg) %in% names(formals(fct))}
 
 .fillList <- function(list0, len = length(list0)){
+            if(is.null(list0)) return(vector("list",len))
             if(!is.list(list0)) list0 <- list(list0)
             if(len == length(list0))
                return(list0)
@@ -129,3 +130,18 @@ if(packageVersion("distrMod")<"2.5"){
 }
 
 
+.panel.mingle <- function(dots, element){
+  pF <- dots[[element]]
+  if(is.list(pF)) return(pF)
+  pFr <- if(typeof(pF)=="symbol") eval(pF) else{
+     pFc <- as.call(pF)
+     if(as.list(pFc)[[1]] == "list"){
+        lis <- vector("list",length(as.list(pFc))-1)
+        for(i in 1:length(lis)){
+            lis[[i]] <- pFc[[i+1]]
+        }
+        lis
+     }else pF
+  }
+  return(pFr)
+}
