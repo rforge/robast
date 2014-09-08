@@ -3,8 +3,8 @@ outlyingPlotIC <- function(data,
                            IC.y = IC.x,
                            dist.x = NormType(),
                            dist.y, 
-                           cutoff.y = cutoff.chisq(), 
-                           cutoff.x = cutoff.sememp(),
+                           cutoff.x = cutoff.sememp(0.95),
+                           cutoff.y = cutoff.chisq(0.95), 
                            ...,
                            cutoff.quantile.x = 0.95,
                            cutoff.quantile.y = cutoff.quantile.x,
@@ -34,11 +34,54 @@ outlyingPlotIC <- function(data,
      if(is.null(dots$ylim)) dots$ylim <- TRUE
      if(is.null(mc$cutoff.quantile.x)) mc$cutoff.quantile.x <- 0.95
      if(is.null(mc$cutoff.quantile.y)) mc$cutoff.quantile.y <- cutoff.quantile.x
-     if(is.null(mc$cutoff.x)) mc$cutoff.x <- cutoff.sememp()
-     if(is.null(mc$cutoff.y)) mc$cutoff.y <- cutoff.chisq()
+     if(is.null(mc$cutoff.x)) mc$cutoff.x <- cutoff.sememp(mc$cutoff.quantile.x)
+     if(is.null(mc$cutoff.y)) mc$cutoff.y <- cutoff.chisq(mc$cutoff.quantile.y)
      if(missing(IC.x)) stop("Argument 'IC.x' must be given as argument to 'outlyingPlot'")
      if(missing(data)) stop("Argument 'data' must be given as argument to 'outlyingPlot'")
   
+  if(missing(dist.x)){
+        #mc$dist.x <- NormType()
+    if(robCov.x){
+      evIC = evalIC(IC.x,as.matrix(data))
+      if(is.null(dim(evIC))){
+         asVar <- PosSemDefSymmMatrix(mad(evIC)^2)
+         if(asVar < 1e-8) asVar <- 1
+      }else{
+         dimevIC <- dim(evIC)[1]
+         devIC <- data.frame(t(evIC[1:dimevIC,,drop=FALSE]))
+         CMcd <- PosSemDefSymmMatrix(getCov(CovMcd(devIC,alpha=0.5)))
+         asVar <- CMcd
+#         asVar <- solve(CMcd)
+#         cat("\n", sep="", gettext("Robust asVar"), ":\n")
+#         print(asVar)
+      }
+      #cat("\nRobust asVar:") ;print("KKKKK")
+      #print(asVar)
+   }else{if("asCov" %in% names(Risks(IC.y)))
+      if(is.matrix(Risks(IC.x)$asCov) || length(Risks(IC.y)$asCov) == 1)
+               {asVar <- Risks(IC.x)$asCov
+                  cat("\n", sep="", gettext("asVar"));
+                  #print("KKKKK2");
+                  print(asVar)
+                  }
+         else
+               {asVar <- Risks(IC.x)$asCov$value 
+                  cat("\n", sep="", gettext("asVar"));
+                  # print("KKKKK3");
+                  print(asVar)
+                  }
+         else
+            {asVar <- getRiskIC(IC.x, risk = asCov())$asCov$value
+                   cat("\n", sep="", gettext("Classic asVar"));
+                   #print("KKKKK4");
+                   print(asVar)
+                   }
+       }
+    
+#       asVar <- PosSemDefSymmMatrix(solve(asVar))
+       mc$dist.x <- QFNorm(name = gettext("Mahalonobis-Norm"), QuadForm = PosSemDefSymmMatrix(solve(asVar)))
+      }
+
      if(missing(dist.y)){
        if(robCov.y){
           evIC <- evalIC(IC.y,as.matrix(data))
@@ -71,51 +114,10 @@ outlyingPlotIC <- function(data,
                    }
        }
      
-          asVar <- PosSemDefSymmMatrix(solve(asVar))
-          mc$dist.y <- QFNorm(name = gettext("Mahalonobis-Norm"), QuadForm = asVar)
+          mc$dist.y <- QFNorm(name = gettext("Mahalonobis-Norm"), 
+                              QuadForm =  PosSemDefSymmMatrix(solve(asVar)))
      }
 
-  if(missing(dist.x)){
-        #mc$dist.x <- NormType()
-    if(robCov.x){
-      evIC = evalIC(IC.x,as.matrix(data))
-      if(is.null(dim(evIC))){
-         asVar <- PosSemDefSymmMatrix(mad(evIC)^2)
-         if(asVar < 1e-8) asVar <- 1
-      }else{
-         dimevIC <- dim(evIC)[1]
-         devIC <- data.frame(t(evIC[1:dimevIC,,drop=FALSE]))
-         CMcd <- PosSemDefSymmMatrix(getCov(CovMcd(devIC,alpha=0.5)))
-         asVar <- solve(CMcd)
-#         cat("\n", sep="", gettext("Robust asVar"), ":\n")
-#         print(asVar)
-      }
-      #cat("\nRobust asVar:") ;print("KKKKK")
-      #print(asVar)
-   }else{if("asCov" %in% names(Risks(IC.y)))
-      if(is.matrix(Risks(IC.x)$asCov) || length(Risks(IC.y)$asCov) == 1)
-               {asVar <- Risks(IC.x)$asCov
-                  cat("\n", sep="", gettext("asVar"));
-                  #print("KKKKK2");
-                  print(asVar)
-                  }
-         else
-               {asVar <- Risks(IC.x)$asCov$value 
-                  cat("\n", sep="", gettext("asVar"));
-                  # print("KKKKK3");
-                  print(asVar)
-                  }
-         else
-            {asVar <- getRiskIC(IC.x, risk = asCov())$asCov$value
-                   cat("\n", sep="", gettext("Classic asVar"));
-                   #print("KKKKK4");
-                   print(asVar)
-                   }
-       }
-    
-       asVar <- PosSemDefSymmMatrix(solve(asVar))
-       mc$dist.x <- QFNorm(name = gettext("Mahalonobis-Norm"), QuadForm = asVar)
-      }
 
     if(missing(tf.x)){
      tf.x <- function(x) apply(x,2,function(xx) evalIC(IC.x,xx))

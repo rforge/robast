@@ -69,7 +69,7 @@ BUGFIXES:
 + bug in kStepEstimator: after evaluation of starting estimator, IC must be
   shifted to correct parameter value -> new arguments withPreModif, withPostModif
 + in comparePlot it should be resc.Dargs instead of rescD.args
-+ fixed errors detected by Matthias / Misha in comparePlot.R, cutoff-class.R,
++ fixed errors detected by Matthias / Misha, Bernhard in comparePlot.R, cutoff-class.R,
   ddPlot_utils.R, infoPlot.R, outlyingPlot.R
 + comparePlot now plots the whole range
 + ddPlots / outlyingPlot.R now have alpha transparency and jitter and cex.pts

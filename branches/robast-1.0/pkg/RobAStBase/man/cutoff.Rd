@@ -12,8 +12,8 @@
 cutoff(name = "empirical", body.fct0,
        cutoff.quantile  = 0.95,
        norm = NormType(), QF, nsim = 100000)
-cutoff.sememp()
-cutoff.chisq()
+cutoff.sememp(cutoff.quantile = 0.95)
+cutoff.chisq(cutoff.quantile = 0.95)
 cutoff.quant(qfct)
 }
 \arguments{

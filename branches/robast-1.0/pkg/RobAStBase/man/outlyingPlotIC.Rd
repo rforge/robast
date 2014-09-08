@@ -5,7 +5,7 @@
 to ICs}
 \usage{
 outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
-               dist.y, cutoff.y = cutoff.chisq(), cutoff.x = cutoff.sememp(),
+               dist.y, cutoff.x = cutoff.sememp(0.95), cutoff.y = cutoff.chisq(0.95), 
                ..., cutoff.quantile.x = 0.95,
                cutoff.quantile.y = cutoff.quantile.x,
                id.n, cex.pts = 1,lab.pts, jitt.pts = 0, alpha.trsp = NA,
