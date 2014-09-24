@@ -57,24 +57,15 @@ outlyingPlotIC <- function(data,
       }
       #cat("\nRobust asVar:") ;print("KKKKK")
       #print(asVar)
-   }else{if("asCov" %in% names(Risks(IC.y)))
-      if(is.matrix(Risks(IC.x)$asCov) || length(Risks(IC.y)$asCov) == 1)
+   }else{if("asCov" %in% names(Risks(IC.x)))
+      if(is.matrix(Risks(IC.x)$asCov) || length(Risks(IC.x)$asCov) == 1)
                {asVar <- Risks(IC.x)$asCov
-                  cat("\n", sep="", gettext("asVar"));
-                  #print("KKKKK2");
-                  print(asVar)
                   }
          else
                {asVar <- Risks(IC.x)$asCov$value 
-                  cat("\n", sep="", gettext("asVar"));
-                  # print("KKKKK3");
-                  print(asVar)
                   }
          else
             {asVar <- getRiskIC(IC.x, risk = asCov())$asCov$value
-                   cat("\n", sep="", gettext("Classic asVar"));
-                   #print("KKKKK4");
-                   print(asVar)
                    }
        }
     
@@ -93,25 +84,20 @@ outlyingPlotIC <- function(data,
             devIC <- data.frame(t(evIC[1:dimevIC,,drop=FALSE]))
             CMcd <- PosSemDefSymmMatrix(getCov(CovMcd(devIC,alpha=0.5)))
             asVar <- CMcd
- #           cat("\n", sep="", gettext("Robust asVar"), ":\n")
- #           print(asVar)
+            cat("Fall 1\n\n")
+            print(asVar)
           }
        }else{
             if("asCov" %in% names(Risks(IC.y)))
                if(is.matrix(Risks(IC.y)$asCov) || length(Risks(IC.y)$asCov) == 1)
                   {asVar <- Risks(IC.y)$asCov
-                    cat("\n", sep="", gettext("asVar"));# print("HHHH");
-                    print(asVar)
                    }
                 else{asVar <- Risks(IC.y)$asCov$value
-                     cat("\n", sep="", gettext("asVar"));#print("HHHH");
-                     print(asVar)
                    }
                 else{asVar <- getRiskIC(IC.y, risk = asCov())$asCov$value
-                     cat("\n", sep="", gettext("Classic asVar"));
-                    #  print("HHHH");
-                   print(asVar)
                    }
+            cat("Fall 2\n\n")
+            print(asVar)
        }
      
           mc$dist.y <- QFNorm(name = gettext("Mahalonobis-Norm"), 
