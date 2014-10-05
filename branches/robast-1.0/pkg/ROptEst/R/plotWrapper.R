@@ -64,8 +64,6 @@ CniperPointPlot <- function(fam,...
   dots <- mc$"..."
   if(is.null(mc$lower)) lower <- getdistrOption("DistrResolution")
   if(is.null(mc$upper)) upper <- 1-getdistrOption("DistrResolution")
-  if(is.null(mc$with.legend)) mc$with.legend <- TRUE
-  if(is.null(mc$withCall)) mc$withCall <- TRUE
   if(missing(fam)) stop("Argument 'fam' must be given as argument to 'CniperPointPlot'")
   ###
   ### 2. build up the argument list for the (powerful/fullfledged)
@@ -100,14 +98,14 @@ CniperPointPlot <- function(fam,...
                    ,adj = 0.5
                    ,cex.main = substitute(1.5)
                    ,cex.lab = substitute(1.5)
-                   ,main = ""#"Outlyingness Plot"
+                   ,main = "Cniperpointplot" 
                    ,xlab=substitute("Dirac point")
                    ,ylab=substitute("Asymptotic Risk difference (classic - robust)")
                    ,bty = substitute("o")
                    ), scaleList)
 #  print(argsList)
   ##parameter for plotting
-  if(mc$with.legend)
+  if(with.legend)
   {
     argsList$col.main <- "black"
     argsList$col.lab <- "black"
@@ -135,7 +133,7 @@ CniperPointPlot <- function(fam,...
   ###
   ### 5. return the call (if withCall==TRUE)
   ###
-  if(mc$withCall) print(mycall)
+  if(withCall) print(mycall)
 
 }
 #CniperPointPlot(fam=fam, main = "Gamma", lower = 0, upper = 5, withCall = FALSE)
