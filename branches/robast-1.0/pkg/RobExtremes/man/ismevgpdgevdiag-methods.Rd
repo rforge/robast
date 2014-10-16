@@ -29,9 +29,9 @@ as well as to profilers \code{gpd.prof}, \code{gpd.profxi} and \code{gev.prof},
  \code{gev.profxi}. }
 
 \usage{
-gpd.diag(z)
+gpd.diag(z,...)
 \S4method{gpd.diag}{gpd.fit}(z)
-\S4method{gpd.diag}{GPDEstimate}(z)
+\S4method{gpd.diag}{GPDEstimate}(z, npy = 365)
 gev.diag(z)
 \S4method{gev.diag}{gev.fit}(z)
 \S4method{gev.diag}{GEVEstimate}(z)
@@ -43,7 +43,7 @@ gev.prof(z,...)
 \S4method{gev.prof}{GEVEstimate}(z, m, xlow, xup, conf = 0.95, nint = 100)
 gpd.profxi(z,...)
 \S4method{gpd.profxi}{gpd.fit}(z,  xlow, xup, conf = 0.95, nint = 100)
-\S4method{gpd.profxi}{GPDEstimate}(z,  xlow, xup, conf = 0.95, nint = 100)
+\S4method{gpd.profxi}{GPDEstimate}(z,  xlow, xup, npy = 365, conf = 0.95, nint = 100)
 gev.profxi(z,...)
 \S4method{gev.profxi}{gev.fit}(z, xlow, xup, conf = 0.95, nint = 100)
 \S4method{gev.profxi}{GEVEstimate}(z, xlow, xup, conf = 0.95, nint = 100)
@@ -114,17 +114,29 @@ For \code{gpd.prof}, \code{gev.prof}
 if(require(ismev)){
   ## from ismev
   data(portpirie)
-  ppfit <- gev.fit(portpirie[,2])
+  data(rain)
+
+  detach(package:ismev)
+  ppfit <- ismev::gev.fit(portpirie[,2])
   gev.diag(ppfit)
   ##
   mlE <- MLEstimator(portpirie[,2], GEVFamilyMuUnknown(withPos=FALSE))
-  RobExtremes::gev.diag(mlE)
+  gev.diag(mlE)
   \dontrun{
-    RobExtremes::gev.prof(mlE)
-    RobExtremes::gev.profxi(mlE)
+    gev.prof(mlE, m = 10, 4.1, 5)
+    gev.profxi(mlE, -0.3, 0.3)
+  }
+
+  rnfit <- ismev::gpd.fit(rain,10)
+  gpd.diag(rnfit)
+  ##
+  mlE2 <- MLEstimator(rain[rain>10], GParetoFamily(loc=10))
+  gpd.diag(mlE2)
+  \dontrun{
+    gpd.prof(mlE, m = 10, 55, 77)
+    gpd.profxi(mlE, -0.02, 0.02)
   }
 }
-
 }
 
 \keyword{graphics}

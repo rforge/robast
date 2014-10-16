@@ -48,3 +48,6 @@ exportMethods("rescaleFunction")
 S3method(print, riskMeasure)
 exportMethods("gev.diag", "gpd.diag","gev.prof", "gpd.prof",
               "gev.profxi", "gpd.profxi")
+export("gev.diag", "gpd.diag","gev.prof", "gpd.prof",
+              "gev.profxi", "gpd.profxi")
+			  

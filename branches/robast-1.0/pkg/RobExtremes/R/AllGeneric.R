@@ -38,7 +38,7 @@ if(!isGeneric("gev.profxi")){
    setGeneric("gev.profxi", function(z, ...) standardGeneric("gev.profxi"))
 }
 if(!isGeneric("gpd.diag")){
-   setGeneric("gpd.diag", function(z) standardGeneric("gpd.diag"))
+   setGeneric("gpd.diag", function(z,...) standardGeneric("gpd.diag"))
 }
 if(!isGeneric("gpd.prof")){
    setGeneric("gpd.prof", function(z, ...) standardGeneric("gpd.prof"))
