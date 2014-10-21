@@ -1,22 +1,45 @@
 setMethod("gev.diag",  "gev.fit", function(z) ismev::gev.diag(z))
 setMethod("gpd.diag",  "gpd.fit", function(z) ismev::gpd.diag(z))
-setMethod("gev.diag",  "GEVEstimate", function(z)
-           ismev::gev.diag(..gevgpd.diag.fct(z)))
-setMethod("gpd.diag",  "GPDEstimate", function(z, npy=365) 
-           ismev::gpd.diag(..gevgpd.diag.fct(z, GPD=TRUE, npy=npy)))
+setMethod("gev.diag",  "GEVEstimate", function(z){
+           z0 <- ..gevgpd.diag.fct(z) 
+           oK <- ..checkIsNa.gevgpd.diag(z0)
+           if(!oK) stop(paste("Not all covariances / se's were specified.\n",
+                              "Try using 'returnlevelplot' / 'qqplot' instead.",
+                              sep=""))
+           ismev::gev.diag(z0)})
+setMethod("gpd.diag",  "GPDEstimate", function(z, npy=365){ 
+           z0 <- ..gevgpd.diag.fct(z, GPD=TRUE, npy=npy) 
+           oK <- ..checkIsNa.gevgpd.diag(z0)
+           if(!oK) stop(paste("Not all covariances / se's were specified.\n",
+                              "Try using 'returnlevelplot' / 'qqplot' instead.",
+                              sep=""))
+           ismev::gpd.diag(z0)
+           })
 setMethod("gev.prof",  "gev.fit", function(z, m, xlow, xup, conf = 0.95, nint = 100)
            ismev::gev.prof(z, m, xlow, xup, conf = conf, nint = nint))
 setMethod("gpd.prof",  "gpd.fit", function(z, m, xlow, xup, npy = 365, 
            conf = 0.95, nint = 100) ismev::gpd.prof(z, m, xlow, xup, npy = npy, 
                            conf = conf, nint = nint))
 setMethod("gev.prof",  "GEVEstimate", 
-           function(z, m, xlow, xup, conf = 0.95, nint = 100)
-           ismev::gev.prof(..gevgpd.diag.fct(z), m, xlow, xup, 
-                           conf = conf, nint = nint))
+           function(z, m, xlow, xup, conf = 0.95, nint = 100){
+           z0 <- ..gevgpd.diag.fct(z) 
+           oK <- ..checkIsNa.gevgpd.diag(z0)
+           if(!oK) stop(paste("Not all covariances / se's were specified.\n",
+                              "Profiling is not available for this estimator.",
+                              sep=""))           
+           ismev::gev.prof(z0, m, xlow, xup, 
+                           conf = conf, nint = nint)
+           })
 setMethod("gpd.prof",  "GPDEstimate", function(z, m, xlow, xup, npy = 365, 
-           conf = 0.95, nint = 100)
-           ismev::gpd.prof(..gevgpd.diag.fct(z, GPD=TRUE, npy = npy), m, 
-                  xlow, xup, npy = npy, conf = conf, nint = nint))
+           conf = 0.95, nint = 100){
+           z0 <- ..gevgpd.diag.fct(z, GPD=TRUE, npy = npy) 
+           oK <- ..checkIsNa.gevgpd.diag(z0)
+           if(!oK) stop(paste("Not all covariances / se's were specified.\n",
+                              "Profiling is not available for this estimator.",
+                              sep=""))           
+           ismev::gpd.prof(z0, m, xlow, xup, npy = npy, conf = conf, 
+                           nint = nint)
+           })
 setMethod("gev.profxi",  "gev.fit", function(z, xlow, xup, conf = 0.95, 
            nint = 100) ismev::gev.profxi(z, xlow, xup, conf = conf, 
                           nint = nint))
@@ -24,11 +47,23 @@ setMethod("gpd.profxi",  "gpd.fit", function(z,  xlow, xup, conf = 0.95,
            nint = 100) ismev::gpd.profxi(z,  xlow, xup, conf = conf, 
                           nint = nint))
 setMethod("gev.profxi",  "GEVEstimate", function(z, xlow, xup, conf = 0.95, 
-           nint = 100) ismev::gev.profxi(..gevgpd.diag.fct(z), xlow, xup, 
-                          conf = 0.95, nint = 100))
+           nint = 100){ 
+           z0 <- ..gevgpd.diag.fct(z) 
+           oK <- ..checkIsNa.gevgpd.diag(z0)
+           if(!oK) stop(paste("Not all covariances / se's were specified.\n",
+                              "Profiling is not available for this estimator.",
+                              sep=""))           
+           ismev::gev.profxi(z0, xlow, xup, conf = 0.95, nint = 100)
+           })
 setMethod("gpd.profxi",  "GPDEstimate", function(z,  xlow, xup, npy=365, 
-           conf = 0.95, nint = 100) ismev::gpd.profxi(..gevgpd.diag.fct(z, 
-           GPD=TRUE, npy),  xlow, xup, conf = 0.95, nint = 100))
+           conf = 0.95, nint = 100){ 
+           z0 <- ..gevgpd.diag.fct(z, GPD=TRUE, npy = npy) 
+           oK <- ..checkIsNa.gevgpd.diag(z0)
+           if(!oK) stop(paste("Not all covariances / se's were specified.\n",
+                              "Profiling is not available for this estimator.",
+                              sep=""))           
+           ismev::gpd.profxi(z0,  xlow, xup, conf = 0.95, nint = 100)
+           })
 
 ..gevgpd.diag.fct <- function(z, GPD=FALSE, npy=365){
             utfe <- untransformed.estimate(z)
@@ -44,7 +79,6 @@ setMethod("gpd.profxi",  "GPDEstimate", function(z,  xlow, xup, npy=365,
             if(is.null(PFam))
                stop("There is no object of class 'ProbFamily' in the call of 'z'")
             PFam0 <- modifyModel(PFam, param)
-            
             thresh <- if(GPD)  fixed(param) else NULL
             x <- eval(es.call$x)
             n0 <- length(x)
@@ -80,11 +114,16 @@ setMethod("gpd.profxi",  "GPDEstimate", function(z,  xlow, xup, npy=365,
                 z0$rate <- n/n0
             }else n <- n0
 
-            cova <- asvar(z)/n
+            cova <- asvar(z)
+            if(is.null(cova)){ 
+               cova <- matrix(NA,nrow=length(nam),ncol=length(nam))
+               se <- rep(NA,length(nam))
+            }else{
+               se <- diag(cova)^.5
+            }
             dimnames(cova) <- list(nam,nam)          
             z0$cov <- cova
             
-            se <- diag(z0$cov)^.5
             names(se) <- nam
             z0$se <- se
 
@@ -99,4 +138,11 @@ setMethod("gpd.profxi",  "GPDEstimate", function(z,  xlow, xup, npy=365,
             class(z0) <- if(GPD) "gpd.fit" else "gev.fit"
             return(z0)
             #ismev::gev.fit(z0)
+}
+
+..checkIsNa.gevgpd.diag <- function(x){
+  oK <- TRUE
+  if(any(is.na(x$se))) oK <- FALSE
+  if(any(is.na(x$cov))) oK <- FALSE
+  return(oK)
 }
