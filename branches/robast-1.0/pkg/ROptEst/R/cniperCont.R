@@ -270,6 +270,7 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                        expand.dots = TRUE)
         mcl <- as.list(mc[-1])
         dots <- as.list(mc0$"...")
+        if(is.null(mcl$risk)) mcl$risk <- asMSE()
 
         robMod <- InfRobModel(center = L2Fam, neighbor = neighbor)
 
