@@ -11,6 +11,7 @@ import("RobAStBase")
 import("ROptEst")
 import("actuar")
 import("evd")
+importFrom("startupmsg", "buildStartupMessage", "infoShow")
 
 exportClasses("GumbelParameter",
               "ParetoParameter",

@@ -31,7 +31,8 @@ under the hood:
   added Encoding due to warning about character 2292 in my locale
 + removed ::: internal dependencies (within distr&robast-Fam's of pkgs) by 
   copying respective routines
-
++ enhanced imports in DESCRIPTION by explicating second order imports
++ gev.diag, gpd.diag now check for existence of se's and ascov
 BUGFIXES:
 + fixed issue with updateStep in kStepEstimator when using interpol risks 
   (somehow modifyIC had not been attached in prior steps...)
@@ -58,6 +59,7 @@ BUGFIXES:
 + cleaned small buglet in modifyPar  
 + corrected link in Var.Rd
 + put code in \dontrun to reduce checking time
++ some issues fixed with  gev.diag gpd.diag S4 methods
  
   
 #######################################

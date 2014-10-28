@@ -122,7 +122,7 @@ setMethod("gpd.profxi",  "GPDEstimate", function(z,  xlow, xup, npy=365,
                se <- diag(cova)^.5
             }
             dimnames(cova) <- list(nam,nam)          
-            z0$cov <- cova
+            z0$cov <- cova/n
             
             names(se) <- nam
             z0$se <- se
