@@ -17,6 +17,7 @@ GENERAL ENHANCEMENTS:
 
 under the hood:
 + warning methods about not importing from methods ...
++ enhanced imports in DESCRIPTION by explicating second order imports
 
 BUGFIXES:
 

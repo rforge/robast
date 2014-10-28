@@ -4,6 +4,7 @@ import("distrEx")
 import("RandVar")
 import("distrMod")
 import("RobAStBase")
+importFrom("startupmsg", "buildStartupMessage", "infoShow")
 
 exportClasses("asAnscombe", "asL1", "asL4") 
 exportMethods("optIC", 

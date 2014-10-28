@@ -62,6 +62,7 @@ under the hood:
   objects of class "GEVkStepEstimate", i.e. which inherit from both 
   "kStepEstimate", so that a diag-method for "GEVEstimate" becomes 
   available for this class.
++ enhanced imports in DESCRIPTION by explicating second order imports
 
   
 BUGFIXES:

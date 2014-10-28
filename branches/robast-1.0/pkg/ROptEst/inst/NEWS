@@ -23,6 +23,7 @@ under the hood:
 + removed ::: internal dependencies (within distr&robast-Fam's of pkgs) by 
   copying respective routines
 + adjusted plot-Method for ICs to include the new argument x.vec
++ enhanced imports in DESCRIPTION by explicating second order imports
 
   
 BUGFIXES:
@@ -35,7 +36,9 @@ BUGFIXES:
 + fixed issue with points plotting in Cniperpoint-plots
 + in wrapper function CniperPointPlot, arguments 'data'  and 'alpha.trsp' had not 
   been passed on correctly
-
++ some changes in wrapper to cniperpointplot
++ fixed an error in cniperPointPlot() -- default for argument risk had not 
+  been passed on correctly to cniperCont()
 #######################################
 version 0.9
 #######################################

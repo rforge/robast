@@ -4,6 +4,7 @@ import("distr")
 import("distrEx")
 import("distrMod")
 import("RandVar")
+importFrom("startupmsg", "buildStartupMessage", "infoShow")
 
 exportClasses("Neighborhood", 
               "UncondNeighborhood", 

@@ -1,1 +1,2 @@
 import(methods)
+importFrom("startupmsg", "buildStartupMessage", "infoShow")

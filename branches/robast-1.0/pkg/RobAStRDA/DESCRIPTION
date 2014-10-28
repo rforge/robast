@@ -5,6 +5,7 @@ Title: sysdata.rda for packages of RobASt - Family of Pkgs
 Description: sysdata.rda for packages of RobASt - Family of Pkgs; is currently used by pkg
         RobExtremes only.
 Depends: R (>= 2.14.0), methods
+Imports: startupmsg
 Author: Peter Ruckdeschel, Matthias Kohl
 Maintainer: Peter Ruckdeschel <peter.ruckdeschel@itwm.fraunhofer.de>
 LazyData: yes
