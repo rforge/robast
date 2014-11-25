@@ -12,6 +12,7 @@ version 1.0
 #######################################
 
 user-visible CHANGES:
++ title changed to title style / capitalization
 + cniperPointPlot gains capacity to deal with "interpolRisk" - risks
 
 GENERAL ENHANCEMENTS:

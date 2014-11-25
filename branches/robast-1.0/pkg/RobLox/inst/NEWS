@@ -8,10 +8,15 @@
  information)
 
 #######################################
-version 0.9
+version 1.0
 #######################################
 
 user-visible CHANGES:
++ title changed to title style / capitalization
+
+#######################################
+version 0.9
+#######################################
 
 GENERAL ENHANCEMENTS:
 + cleaned DESCRIPTION and NAMESPACE file as to Imports/Depends

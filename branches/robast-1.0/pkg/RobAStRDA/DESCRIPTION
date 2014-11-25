@@ -1,7 +1,7 @@
 Package: RobAStRDA
 Version: 1.0
 Date: 2013-09-12
-Title: sysdata.rda for packages of RobASt - Family of Pkgs
+Title: sysdata.rda for Packages of RobASt - Family of Pkgs
 Description: sysdata.rda for packages of RobASt - Family of Pkgs; is currently used by pkg
         RobExtremes only.
 Depends: R (>= 2.14.0), methods

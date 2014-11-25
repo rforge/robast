@@ -12,6 +12,7 @@ version 1.0
 #######################################
 
 user-visible CHANGES:
++ title changed to title style / capitalization
 + GEV now has a robust starting estimator for mu unknown
 + GEVFamily and GEVFamilyMuUnknown now have changed default starting estimators
   realized in startEstGEV.R : a CvM-MDE with xi varying on a grid...

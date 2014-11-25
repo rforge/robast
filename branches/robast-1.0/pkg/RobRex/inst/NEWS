@@ -12,6 +12,7 @@ version 0.9
 #######################################
 
 user-visible CHANGES:
++ title changed to title style / capitalization
 
 GENERAL ENHANCEMENTS:
 + cleaned DESCRIPTION and NAMESPACE file as to Imports/Depends

@@ -1,7 +1,7 @@
 Package: RobRex
 Version: 1.0
 Date: 2013-09-12
-Title: Optimally robust influence curves for regression and scale
+Title: Optimally Robust Influence Curves for Regression and Scale
 Description: functions for the determination of optimally robust influence curves in case of
         linear regression with unknown scale and standard normal distributed errors where the
         regressor is random.
