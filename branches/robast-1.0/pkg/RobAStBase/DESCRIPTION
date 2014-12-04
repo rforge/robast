@@ -9,6 +9,9 @@ Suggests: ROptEst, RUnit (>= 0.4.26)
 Imports: startupmsg
 Authors@R: c(person("Matthias", "Kohl", role=c("cre", "cph"), email="Matthias.Kohl@stamats.de"), 
 		person("Peter", "Ruckdeschel", role=c("aut", "cph")), 
+		person("Mykhailo", "Pupashenko", role="ctb", comment="contributed wrapper functions for diagnostic plots"), 
+		person("Gerald", "Kroisandt", role="ctb", comment="contributed testing routines"), 
+		person("Peter", "Ruckdeschel", role=c("aut", "cph")), 
 		person("R Core Team", role = c("ctb", "cph"), 
 		comment="for source file 'format.perc'"))
 ByteCompile: yes

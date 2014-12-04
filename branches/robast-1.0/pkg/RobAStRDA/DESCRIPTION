@@ -7,6 +7,10 @@ Description: sysdata.rda file for packages of RobASt - Family of Pkgs; is curren
 Depends: R (>= 2.14.0), methods
 Imports: startupmsg
 Authors@R: c(person("Matthias", "Kohl", role=c("aut", "cph")), 
+		person("Bernhard", "Spangl", role="ctb", comment="helped with manual smoothing of the interpolators"), 
+		person("Mykhailo", "Pupashenko", role="ctb", comment="helped with manual smoothing of the interpolators"), 
+		person("Daria", "Pupashenko", role="ctb", comment="helped with manual smoothing of the interpolators"), 
+		person("Gerald", "Kroisandt", role="ctb", comment="helped with manual smoothing of the interpolators"), 
 		person("Peter", "Ruckdeschel", role=c("cre", "cph"), email="Peter.Ruckdeschel@itwm.fraunhofer.de"))
 LazyData: yes
 LazyLoad: yes
