@@ -1,13 +1,13 @@
 Package: RobAStRDA
 Version: 1.0
 Date: 2013-09-12
-Title: sysdata.rda for Packages of RobASt - Family of Pkgs
-Description: sysdata.rda for packages of RobASt - Family of Pkgs; is currently used by pkg
+Title: Interpolation Grids for Packages of RobASt - Family of Pkgs
+Description: sysdata.rda file for packages of RobASt - Family of Pkgs; is currently used by pkg
         RobExtremes only.
 Depends: R (>= 2.14.0), methods
 Imports: startupmsg
-Author: Peter Ruckdeschel, Matthias Kohl
-Maintainer: Peter Ruckdeschel <peter.ruckdeschel@itwm.fraunhofer.de>
+Authors@R: c(person("Matthias", "Kohl", role=c("aut", "cph")), 
+		person("Peter", "Ruckdeschel", role=c("cre", "cph"), email="Peter.Ruckdeschel@itwm.fraunhofer.de"))
 LazyData: yes
 LazyLoad: yes
 ByteCompile: yes
