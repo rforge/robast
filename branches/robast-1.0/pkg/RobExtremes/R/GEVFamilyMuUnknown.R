@@ -311,7 +311,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
         k1 <- k+1
         Lambda0 <- function(x) {
          y <- x*0
-         ind <- (x > tr-sc/k) # = [later] (x1>0)
+         ind <- if(k>0)(x > tr-sc/k) else (x<tr-sc/k)# = [later] (x1>0)
          x <- (x[ind]-tr)/sc
          x1 <- 1 + k * x
          t1 <- x1^(-1/k)
@@ -322,7 +322,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
 
         Lambda1 <- function(x) {
          y <- x*0
-         ind <- (x > tr-sc/k) # = [later] (x1>0)
+         ind <- if(k>0)(x > tr-sc/k) else (x<tr-sc/k)# = [later] (x1>0)
          x <- (x[ind]-tr)/sc
          x1 <- 1 + k * x
          y[ind] <- (x*(1-x1^(-1/k))-1)/x1/sc
@@ -331,7 +331,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
         }
         Lambda2 <- function(x) {
          y <- x*0
-         ind <- (x > tr-sc/k) # = [later] (x1>0)
+         ind <- if(k>0)(x > tr-sc/k) else (x<tr-sc/k)# = [later] (x1>0)
          x <- (x[ind]-tr)/sc
          x1 <- 1 + k * x
          x2 <- x / x1
