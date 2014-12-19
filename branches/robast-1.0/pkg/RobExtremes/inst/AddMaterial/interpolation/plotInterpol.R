@@ -7,6 +7,7 @@ plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
    ## Gridnam in (Sn,OMSE,RMXE,MBRE) ## uses partial matching!!
    ## Famnam in "Generalized Pareto Family", ## uses partial matching!!
    ##           "GEV Family",
+   ##           "GEVU Family",
    ##           "Gamma family",
    ##           "Weibull Family"
    ## whichLM  is ignored for Gridnam == Sn
@@ -54,14 +55,15 @@ plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
 #     with columnwise restrictions of \code{Y} (and \code{NULL} entries
 #     are interpreted as no restriction). }
 
-#   file <- file.path(baseDir, "branches/robast-0.9/pkg/RobExtremesBuffer/sysdata.rda")
-   file <- file.path(baseDir, "branches/robast-0.9/pkg/RobAStRDA/R/sysdata.rda")
+   file <- file.path(baseDir, "branches/robast-1.0/pkg/RobExtremesBuffer/sysdata.rda")
+#   file <- file.path(baseDir, "branches/robast-1.0/pkg/RobAStRDA/R/sysdata.rda")
    if(!file.exists(file)) stop("Fehler mit Checkout")
    nE <- new.env()
    load(file, envir=nE)
    Gnams <- c("Sn","OMSE","RMXE","MBRE")
    Fnams <- c("Generalized Pareto Family",
               "GEV Family",
+              "GEVU Family",
               "Gamma family",
               "Weibull Family")
    Gridnam <- Gnams[pmatch(Gridnam, Gnams)]
@@ -86,7 +88,8 @@ plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
    print(round((gr0[gr0[,1]>5,1]),3))
    print(round(summary(diff(gr0[,1])),3))
    print(c("n"=sum(!is.na(gr0[,1])),"NA"=sum(is.na(gr0[,1]))))
-   z <- if(whichLM=="all")  13 else 1
+   z0 <- if(Famnam=="GEVU Family") 25 else 13
+   z <- if(whichLM=="all")  z0 else 1
    if(is.null(plotGridRestriction)){
       plotGridRestriction <- list(rep(TRUE, nrow(gr)))
       pl<- vector("list",z)
@@ -101,7 +104,7 @@ plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
    namesLM <- c("b","a.a[sc]","a.a[sh]","z.i[sc]","z.i[sh]",
                 "A.a[sc,sc]","A.a[sc,sh]","A.a[sh,sc]","A.a[sh,sh]",
                 "A.i[sc,sc]","A.i[sc,sh]","A.i[sh,sc]","A.i[sh,sh]")
-   if(!isSn) if(whichLM!="all") if(whichLM<1 | whichLM>13) stop("Falsche Koordinate")
+   if(!isSn) if(whichLM!="all") if(whichLM<1 | whichLM>z0) stop("Falsche Koordinate")
    if(missing(ylab)||is.null(ylab)) ylab <- "LM"
    if(missing(xlab)||is.null(xlab)) xlab <- expression(xi)
    if(missing(main)||is.null(main)) main <- paste(Gridnam,gsub(" [F,f]amily","",Famnam),sep="-")
@@ -110,8 +113,9 @@ plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
    if(missing(col)||is.null(col)) col <- 1:3
    if(!isSn) if(whichLM=="all"){
       eval(prehook)
-      par(mfrow=c(4,4))
-      for(i in 2:14){
+      if(z0==25) par(mfrow=c(6,6)) else par(mfrow=c(4,4))    
+      if(z0==25) upP=26 else upP=14
+      for(i in 2:upP){
           pla <- plotGridRestriction[[i-1]]
           if(is.null(pla)) pla <- 1:nrow(gr)
           matplot(gr[pla,1], cbind(gr0[pla,i],gr[pla,i]), xlab=xlab, type="n",

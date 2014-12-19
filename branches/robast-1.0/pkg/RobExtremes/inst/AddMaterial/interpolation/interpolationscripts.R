@@ -5,7 +5,8 @@
 ### open R session
 require(RobExtremes)
 ### -> change this according to where you checked out the svn repo:
-.basepath <- "C:/rtest/RobASt/branches/robast-1.0./pkg"
+#.basepath <- "C:/rtest/RobASt/branches/robast-1.0./pkg"
+.basepath <- "/p/fm/PeterRuckdeschel/rtest/RobASt/branches/robast-1.0/pkg"
 .myFolderTo <- file.path(.basepath,"RobExtremesBuffer")
 ## <-
 oldwd <- getwd()
@@ -71,7 +72,7 @@ if(FALSE){
 if(FALSE){
   ## Block05::      interpol.RMXEnegGEVUFamily.csv
    PF <- GEVFamilyMuUnknown(withPos=FALSE, ..name="GEVU Family")
-  .svInt(.RMXE.th, PFam=PF, xiGrid = xiGridneg,namFzus="neg")
+  .svInt(.RMXE.th, PFam=PF, xiGrid = xiGridneg,namFzus="neg") ###Problem
 }
 if(FALSE){
   ## Block06::      interpol.OMSEpos1GEVUFamily.csv
@@ -86,7 +87,7 @@ if(FALSE){
 if(FALSE){
   ## Block08::      interpol.OMSEpos3GEVUFamily.csv
    PF <- GEVFamilyMuUnknown(withPos=FALSE, ..name="GEVU Family")
-  .svInt(.OMSE.th, PFam=PF, xiGrid = xiGridpos4,namFzus="pos3")
+  .svInt(.OMSE.th, PFam=PF, xiGrid = xiGridpos4,namFzus="pos3")  ### 16.12.14 erledigt...
 }
 if(FALSE){
   ## Block09::      interpol.OMSEpos4GEVUFamily.csv
@@ -96,7 +97,7 @@ if(FALSE){
 if(FALSE){
   ## Block10::      interpol.OMSEnegGEVUFamily.csv
    PF <- GEVFamilyMuUnknown(withPos=FALSE, ..name="GEVU Family")
-  .svInt(.OMSE.th, PFam=PF, xiGrid = xiGridneg,namFzus="neg")
+  .svInt(.OMSE.th, PFam=PF, xiGrid = xiGridneg,namFzus="neg") ## Problem
 }
 if(FALSE){
   ## Block11::      interpol.MBREpos1GEVUFamily.csv
@@ -121,13 +122,13 @@ if(FALSE){
 if(FALSE){
   ## Block15::      interpol.MBREnegGEVUFamily.csv
    PF <- GEVFamilyMuUnknown(withPos=FALSE, ..name="GEVU Family")
-  .svInt(.MBRE.th, PFam=PF, xiGrid = xiGridneg,namFzus="neg")
+  .svInt(.MBRE.th, PFam=PF, xiGrid = xiGridneg,namFzus="neg") ### Problem
 }
 if(FALSE){
   ## Block16::      interpol.RMXEnegGEVFamily.csv
    PF <- GEVFamily(withPos=FALSE)
-  .svInt(.RMXE.th, PFam=PF, xiGrid = xiGridneg, namFzus="neg")
-}
+  .svInt(.RMXE.th, PFam=PF, xiGrid = xiGridneg, namFzus="neg") ### Problem
+}                                                           ####erledigt 16.12.
 if(FALSE){
   ## Block17::      interpol.OMSEnegGEVFamily.csv
    PF <- GEVFamily(withPos=FALSE)
