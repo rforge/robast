@@ -102,6 +102,7 @@ CniperPointPlot <- function(fam,...
                    ,xlab=substitute("Dirac point")
                    ,ylab=substitute("Asymptotic Risk difference (classic - robust)")
                    ,bty = substitute("o")
+                   ,withSubst = TRUE
                    ), scaleList)
 #  print(argsList)
   ##parameter for plotting

@@ -118,14 +118,31 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
                            pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
                            lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
                            which.lbs = NULL, which.Order  = NULL,
-                           return.Order = FALSE){
+                           return.Order = FALSE, withSubst = TRUE){
 
         mcD <- match.call(expand.dots = FALSE)
         dots <- as.list(mcD$"...")
         mc <- match.call(#call = sys.call(sys.parent(1)),
                        expand.dots = TRUE)
         mcl <- as.list(mc[-1])
+        IC1c <- as.character(deparse(IC1))
+        IC2c <- as.character(deparse(IC2))
 
+       .mpresubs <- if(withSubst){
+                     function(inx) 
+                      .presubs(inx, c("%C1", "%A1", "%C2", "%A2", "%D" ),
+                          c(as.character(class(IC1)[1]), 
+                            IC1c,
+                            as.character(class(IC2)[1]), 
+                            IC2c,
+                            as.character(date())
+                            ))
+                     }else function(inx)inx
+
+        if(!is.null(dots$main)) dots$main <- .mpresubs(dots$main)
+        if(!is.null(dots$sub)) dots$sub <- .mpresubs(dots$sub)
+        if(!is.null(dots$xlab)) dots$xlab <- .mpresubs(dots$xlab)
+        if(!is.null(dots$ylab)) dots$ylab <- .mpresubs(dots$ylab)
 
         if(!is(IC1,"IC")) stop ("IC1 must be of class 'IC'")
         if(!is(IC2,"IC")) stop ("IC2 must be of class 'IC'")
@@ -262,7 +279,7 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                            pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
                            lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
                            which.lbs = NULL, which.Order  = NULL,
-                           return.Order = FALSE){
+                           return.Order = FALSE, withSubst = TRUE){
 
         mc0 <- match.call(#call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)
@@ -270,6 +287,21 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                        expand.dots = TRUE)
         mcl <- as.list(mc[-1])
         dots <- as.list(mc0$"...")
+        L2Famc <- as.character(deparse(L2Fam))
+
+       .mpresubs <- if(withSubst){
+                     function(inx) 
+                      .presubs(inx, c("%C", "%A", "%D" ),
+                          c(as.character(class(L2Fam)[1]), 
+                            L2Famc,
+                            as.character(date())
+                            ))
+                     }else function(inx)inx
+
+        if(!is.null(dots$main)) dots$main <- .mpresubs(dots$main)
+        if(!is.null(dots$sub)) dots$sub <- .mpresubs(dots$sub)
+        if(!is.null(dots$xlab)) dots$xlab <- .mpresubs(dots$xlab)
+        if(!is.null(dots$ylab)) dots$ylab <- .mpresubs(dots$ylab)
         if(is.null(mcl$risk)) mcl$risk <- asMSE()
 
         robMod <- InfRobModel(center = L2Fam, neighbor = neighbor)
@@ -286,6 +318,7 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
 
         if(withMaxRisk) mcl$fromCniperPlot <- TRUE
         mcl$withMaxRisk <- NULL
+        mcl$withSubst <- FALSE
         do.call(cniperCont, mcl)
 }
 

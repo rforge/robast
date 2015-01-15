@@ -10,7 +10,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
              x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
-             mfColRow = TRUE, to.draw.arg = NULL){
+             mfColRow = TRUE, to.draw.arg = NULL, withSubst = TRUE){
 
         mcl <- match.call(call = sys.call(sys.parent(1)), expand.dots = TRUE)
 

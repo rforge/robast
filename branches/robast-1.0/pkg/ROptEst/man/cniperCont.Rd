@@ -21,7 +21,7 @@ cniperCont(IC1, IC2, data = NULL, ...,
                pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
                lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
                which.lbs = NULL, which.Order  = NULL,
-               return.Order = FALSE)
+               return.Order = FALSE, withSubst = TRUE)
 
 
 cniperPoint(L2Fam, neighbor, risk, lower, upper)
@@ -37,7 +37,7 @@ cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                 pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
                 lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
                 which.lbs = NULL, which.Order  = NULL,
-                return.Order = FALSE)
+                return.Order = FALSE, withSubst = TRUE)
 
 }
 \arguments{
@@ -121,6 +121,8 @@ cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
     reduction by argument \code{which.lbs}, and ordering is according to the norm given by
            \code{normtype(object)});
    otherwise we return \code{invisible()} as usual.}
+  \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
+      titles and lables is used; otherwise no substitution is used. }
 }
 \details{
   In case of \code{cniperCont} the difference between the risks of two ICs 
@@ -139,6 +141,19 @@ cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
   curve, the second one for the balancing line. For argument \code{lty},
   a list can be used; its first component is then taken for the
   curve, the second one for the balancing line.
+
+  If argument \code{withSubst} is \code{TRUE}, in all title 
+  and axis lable arguments of \code{cniperCont} and \code{cniperPointPlot}, 
+  the following patterns are substituted:
+  \describe{
+  \item{\code{"\%C"}}{class of argument \code{L2Fam} (for  \code{cniperPointPlot})}
+  \item{\code{"\%A"}}{deparsed argument  \code{L2Fam} (for  \code{cniperPointPlot})}
+  \item{\code{"\%C1"}}{class of argument \code{IC1} (for  \code{cniperCont})}
+  \item{\code{"\%A1"}}{deparsed argument  \code{IC1} (for  \code{cniperCont})}
+  \item{\code{"\%C2"}}{class of argument \code{IC2} (for  \code{cniperCont})}
+  \item{\code{"\%A2"}}{deparsed argument  \code{IC2} (for  \code{cniperCont})}
+  \item{\code{"\%D"}}{time/date-string when the plot was generated}
+  }
 
   For more details about cniper contamination and cniper points we refer 
   to Section~3.5 of Kohl et al. (2008) as well as Ruckdeschel (2004) and 
