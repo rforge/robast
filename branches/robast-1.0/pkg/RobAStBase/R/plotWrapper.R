@@ -161,6 +161,7 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
                      ,panel.first= substitute(NULL)
                      ,panel.last= substitute(NULL)
                      ,col = substitute("blue")
+                     ,withSubst = substitute(TRUE)
     ), scaleList)
 
   ##parameter for plotting
@@ -318,6 +319,7 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,col = substitute("blue")
                      ,panel.first= substitute(NULL)
                      ,panel.last= substitute(NULL)
+                     ,withSubst = substitute(TRUE)
     ), scaleList)
   if(!missing(y)){c(argsList, y = substitute(y)
                      ,cex.pts = substitute(0.3)
@@ -529,6 +531,7 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
                      ,col = substitute("blue")
                      ,panel.first= substitute(NULL)
                      ,panel.last= substitute(NULL)
+                     ,withSubst = substitute(TRUE)
     ), scaleList)
     
     if(!is.null(IC3)) argsList$obj3 <- substitute(IC3)
