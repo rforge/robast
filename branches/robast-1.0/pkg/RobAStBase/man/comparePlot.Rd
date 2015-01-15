@@ -29,7 +29,8 @@ comparePlot(obj1, obj2, ... )
              cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
              lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
-             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE)
+             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
+             withSubst = TRUE)
 }
 \arguments{
   \item{obj1}{ object of class \code{"InfluenceCurve"} }
@@ -134,6 +135,8 @@ comparePlot(obj1, obj2, ... )
                          vector \code{"dim<dimnr>"}, \code{dimnr} running through 
                          the number of rows of the trafo matrix.
                          }
+  \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
+        titles and lables is used; otherwise no substitution is used. }
   \item{cex.pts}{size of the points of the \code{data} argument plotted}
   \item{cex.pts.fun}{rescaling function for the size of the points to be plotted;
         either \code{NULL} (default), then \code{log(1+abs(x))} is used for each of
@@ -191,7 +194,8 @@ class and (named) parameter slots of arguments in case of \code{inner},
 and a "generated on <data>"-tag in case of \code{sub}.
 Of course, if \code{main} / \code{inner} / \code{sub} are \code{character}, this
 is used for the title; in case of \code{inner} it is then checked whether it
-has correct length. In all title arguments, the following patterns are substituted:
+has correct length. If argument \code{withSubst} is \code{TRUE}, in all title 
+and axis lable arguments, the following patterns are substituted:
 \describe{
 \item{\code{"\%C1"},\code{"\%C2"},[\code{"\%C3"},][\code{"\%C4"}]}{class of argument 
       \code{obj<i>}, i=1,..4}

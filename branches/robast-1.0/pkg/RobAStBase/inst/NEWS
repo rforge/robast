@@ -15,6 +15,9 @@ user-visible CHANGES:
 + comparePlot, infoPlot, and the plot-Method for ICs gain an argument
   with.automatic.grid; if TRUE a corresponding grid oriented at tickmarks
   is produced; this also works for rescaled axes
++ comparePlot, infoPlot, and the plot-Method for ICs gain optional
+  pattern substitution (like plot) which can be switched off by 
+  argument withSubst
 + arguments panel.first, panel.last for plot-methods can now be lists
 + infoPlot and comparePlot gain an argument cex.pts.fun to enable individual 
   scaling of the point sizes to be plotted onto each of the plotted curves

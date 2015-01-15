@@ -28,7 +28,8 @@ infoPlot(object,  ...)
              lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
              ylab.abs = "absolute information", 
-             ylab.rel= "relative information")
+             ylab.rel= "relative information",
+             withSubst = TRUE)
 }
 \arguments{
   \item{object}{object of class \code{"InfluenceCurve"} }
@@ -130,6 +131,8 @@ infoPlot(object,  ...)
                          vector \code{"dim<dimnr>"}, \code{dimnr} running through 
                          the number of rows of the trafo matrix.
                          }
+  \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
+        titles and lables is used; otherwise no substitution is used. }
   \item{cex.pts}{size of the points of the \code{data} argument plotted}
   \item{cex.pts.fun}{rescaling function for the size of the points to be plotted;
         either \code{NULL} (default), then \code{log(1+abs(x))} is used for each of
@@ -197,7 +200,8 @@ class and (named) parameter slots of arguments in case of \code{inner},
 and a "generated on <data>"-tag in case of \code{sub}.
 Of course, if \code{main} / \code{inner} / \code{sub} are \code{character}, this
 is used for the title; in case of \code{inner} it is then checked whether it
-has correct length. In all title arguments, the following patterns are substituted:
+has correct length. If argument \code{withSubst} is \code{TRUE}, in all title 
+and axis lable arguments, the following patterns are substituted:
 \describe{
 \item{\code{"\%C"}}{class of argument \code{object}}
 \item{\code{"\%A"}}{deparsed argument  \code{object}}

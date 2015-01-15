@@ -18,7 +18,8 @@ setMethod("infoPlot", "IC",
              lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
              ylab.abs = "absolute information", 
-             ylab.rel= "relative information"){
+             ylab.rel= "relative information",
+             withSubst = TRUE){
 
         objectc <- match.call(call = sys.call(sys.parent(1)))$object
         dots <- match.call(call = sys.call(sys.parent(1)), 
@@ -164,11 +165,12 @@ setMethod("infoPlot", "IC",
             subL <- FALSE
             lineT <- NA
        
-           .mpresubs <- function(inx)
+           .mpresubs <- if(withSubst){function(inx)
                     .presubs(inx, c("%C", "%D", "%A"),
                           c(as.character(class(object)[1]),
                             as.character(date()),
                             as.character(deparse(objectc))))
+                    } else function(inx)inx
            
             if (hasArg(main)){
                  mainL <- TRUE
@@ -504,7 +506,7 @@ setMethod("infoPlot", "IC",
 
                do.call(plot, args=c(list(resc.C$X, resc.C$Y, type = plty,
                    lty = ltyI, col = colI, lwd = lwdI,
-                   xlab = xlab, ylab = ylab.abs, panel.last = pL.abs,
+                   xlab = .mpresubs(xlab), ylab = .mpresubs(ylab.abs), panel.last = pL.abs,
                    panel.first = pF.abs),
                    dotsP1))
                do.call(lines, args=c(list(resc$X, resc$Y, type = plty,
@@ -568,7 +570,7 @@ setMethod("infoPlot", "IC",
                     }else{do.call(par,args=parArgsL[[i+in1to.draw]])}
 
                     do.call(plot, args=c(list(resc$X, y.vec1, type = plty,
-                                  lty = lty, xlab = xlab, ylab = ylab.rel,
+                                  lty = lty, xlab = .mpresubs(xlab), ylab = .mpresubs(ylab.rel),
                                   col = col, lwd = lwd, panel.last = pL.rel,
                                   panel.first = pF.rel),  dotsP))
 

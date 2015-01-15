@@ -19,7 +19,8 @@
              x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
-             mfColRow = TRUE, to.draw.arg = NULL)
+             mfColRow = TRUE, to.draw.arg = NULL,
+             withSubst = TRUE)
 \S4method{plot}{IC,numeric}(x, y, ..., cex.pts = 1,
              col.pts = par("col"), pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
              lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
@@ -120,6 +121,8 @@
                          vector \code{"dim<dimnr>"}, \code{dimnr} running through 
                          the number of rows of the trafo matrix.
                          }
+  \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
+      titles and lables is used; otherwise no substitution is used. }
   \item{cex.pts}{size of the points of the second argument plotted}
   \item{col.pts}{color of the points of the second argument plotted}
   \item{pch.pts}{symbol of the points of the second argument plotted}
@@ -169,7 +172,8 @@ class and (named) parameter slots of arguments in case of \code{inner},
 and a "generated on <data>"-tag in case of \code{sub}.
 Of course, if \code{main} / \code{inner} / \code{sub} are \code{character}, this
 is used for the title; in case of \code{inner} it is then checked whether it
-has correct length. In all title arguments, the following patterns are substituted:
+has correct length. If argument \code{withSubst} is \code{TRUE}, in all title 
+and axis lable arguments, the following patterns are substituted:
 \describe{
 \item{\code{"\%C"}}{class of argument \code{object}}
 \item{\code{"\%A"}}{deparsed argument  \code{object}}

@@ -11,12 +11,21 @@ setMethod("plot", signature(x = "IC", y = "missing"),
              x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
-             mfColRow = TRUE, to.draw.arg = NULL){
+             mfColRow = TRUE, to.draw.arg = NULL, withSubst = TRUE){
 
         xc <- match.call(call = sys.call(sys.parent(1)))$x
+        xcc <- as.character(deparse(xc))
         dots <- match.call(call = sys.call(sys.parent(1)), 
                        expand.dots = FALSE)$"..."
         dotsLeg <- dotsT <- dotsL <- .makedotsLowLevel(dots)
+
+       .mpresubs <- if(withSubst){
+                     function(inx) 
+                      .presubs(inx, c("%C", "%A", "%D" ),
+                          c(as.character(class(x)[1]), 
+                            as.character(date()), 
+                            xcc))
+                     }else function(inx)inx
 
         if(!is.logical(inner)){
           if(!is.list(inner))
@@ -169,11 +178,6 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         subL <- FALSE
         lineT <- NA
 
-     .mpresubs <- function(inx)
-                    .presubs(inx, c("%C", "%D", "%A"),
-                          c(as.character(class(x)[1]),
-                            as.character(date()),
-                            as.character(deparse(xc))))
 
      if (hasArg(main)){
          mainL <- TRUE
@@ -307,7 +311,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
 
             do.call(plot, args=c(list(x=x.vec1, y=y.vec1, type = plty, lty = lty,
-                                      xlab = xlab, ylab = ylab,
+                                      xlab = .mpresubs(xlab), ylab = .mpresubs(ylab),
                                       panel.first = pF[[i]],
                                       panel.last = pL[[i]]), dots))
             .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,

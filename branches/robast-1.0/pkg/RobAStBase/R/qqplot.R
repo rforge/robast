@@ -23,7 +23,8 @@ setMethod("qqplot", signature(x = "ANY",
     n.adj = TRUE){
 
     mc <- match.call(call = sys.call(sys.parent(1)))
-    if(missing(xlab)) mc$xlab <- as.character(deparse(mc$x))
+    xcc <- as.character(deparse(mc$x))
+    if(missing(xlab)) mc$xlab <- xcc
     if(missing(ylab)) mc$ylab <- as.character(deparse(mc$y))
     mcl <- as.list(mc)[-1]
 

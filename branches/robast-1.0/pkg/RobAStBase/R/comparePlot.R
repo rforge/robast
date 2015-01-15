@@ -18,7 +18,8 @@ setMethod("comparePlot", signature("IC","IC"),
              cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
              lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
-             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE){
+             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
+             withSubst = TRUE){
 
         .mc <- match.call(call = sys.call(sys.parent(1)))
         .xc<- function(obj) as.character(deparse(.mc[[obj]]))
@@ -170,7 +171,8 @@ setMethod("comparePlot", signature("IC","IC"),
 
       lineT <- NA
 
-      .mpresubs <- function(inx)
+      
+      .mpresubs <- if(withSubst){function(inx)
             .presubs(inx, c(paste("%C",1:ncomp,sep=""),
                                      "%D",
                                     paste("%A",1:ncomp,sep="")),
@@ -179,7 +181,7 @@ setMethod("comparePlot", signature("IC","IC"),
                     if(is.null(obj3))NULL else as.character(class(obj3)[1]),
                     if(is.null(obj4))NULL else as.character(class(obj4)[1]),
                     as.character(date()),
-                    xc))
+                    xc))} else function(inx)inx
 
         mainL <- FALSE
         if (hasArg(main)){
@@ -393,7 +395,7 @@ setMethod("comparePlot", signature("IC","IC"),
             }
 
             do.call(plot, args=c(list(x = resc1$X, y = y0,
-                 type = "n", xlab = xlab, ylab = ylab,
+                 type = "n", xlab = .mpresubs(xlab), ylab = .mpresubs(ylab),
                  lty = lty[1], col = addAlphTrsp2col(col[1],0),
                  lwd = lwd[1]), dotsP, list(panel.last = pL[[i]], panel.first=pF[[i]])))
             if(plty=="p")
