@@ -3,7 +3,7 @@
 \alias{RobExtremes}
 \docType{package}
 \title{
-RobExtremes -- optimally robust estimation for extreme value distributions
+RobExtremes -- Optimally Robust Estimation for Extreme Value Distributions
 }
 \description{
 \pkg{RobExtremes} provides infrastructure for optimally robust estimation
@@ -30,15 +30,11 @@ robust estimators, with LDEstimators (in general, and with \code{medkMAD},
 \details{
 \tabular{ll}{
 Package: \tab RobExtremes \cr
-Version: \tab 0.9 \cr
-Date: \tab 2013-09-11 \cr
-Depends: \tab R (>= 2.14.0), methods, distr(>= 2.5), distrEx(>= 2.5), RandVar(>= 0.8), distrMod(>= 2.5),
-RobAStBase(>= 0.9), ROptEst(>= 0.9), robustbase(>= 0.8-0), evd, actuar \cr
-         \tab RandVar(>= 0.9), distrMod(>=2.5), RobAStBase(>=0.8-0),
-         ROptEst(>=0.9), \cr
-         \tab robustbase(>= 0.8-0), evd, actuar\cr
-Imports: \tab RobAStRDA \cr
-LazyLoad: \tab yes \cr
+Version: \tab 1.0 \cr
+Date: \tab 2015-05-03 \cr
+Depends: \tab R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 0.9), robustbase(>= 0.8-0), evd, actuar \cr
+Suggests: \tab RUnit (>= 0.4.26), ismev (>= 1.39)\cr
+Imports: \tab RobAStRDA, distr, distrEx, RandVar, RobAStBase, startupmsg \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr

@@ -1,6 +1,6 @@
 Package: RobExtremes
 Version: 1.0
-Date: 2013-09-11
+Date: 2015-05-03
 Title: Optimally Robust Estimation for Extreme Value Distributions
 Description: Optimally robust estimation for extreme value distributions using S4 classes and methods (based on
          packages distr, distrEx, distrMod, RobAStBase, and ROptEst).
@@ -12,7 +12,6 @@ Authors@R: c(person("Nataliya", "Horbenko", role=c("aut","cph")),
 		person("Gerald", "Kroisandt", role="ctb", comment="contributed testing routines"), 
         person("Matthias", "Kohl", role=c("aut", "cph")), 
 		person("Peter", "Ruckdeschel", role=c("cre", "cph"), email="Peter.Ruckdeschel@itwm.fraunhofer.de"))
-LazyLoad: yes
 ByteCompile: yes
 License: LGPL-3
 Encoding: latin1
