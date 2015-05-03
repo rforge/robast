@@ -1,7 +1,6 @@
 
-R Under development (unstable) (2013-03-13 r62247) -- "Unsuffered Consequences"
-Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R Under development (unstable) (2015-05-02 r68310) -- "Unsuffered Consequences"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -22,18 +21,19 @@ Type 'q()' to quit R.
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
 > library('ROptRegTS')
+Loading required package: ROptEstOld
 Loading required package: distr
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.8)
+:startupmsg>  Utilities for Start-Up Messages (version 0.9.1)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
 
 Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
-:SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version
-:SweaveListingUtils>  0.6.1)
+:SweaveListingUtils>  Utilities for Sweave Together with
+:SweaveListingUtils>  TeX 'listings' Package (version
+:SweaveListingUtils>  0.7)
 :SweaveListingUtils> 
 :SweaveListingUtils>  NOTE: Support for this package
 :SweaveListingUtils>  will stop soon.
@@ -61,12 +61,12 @@ Loading required package: SweaveListingUtils
 
 Attaching package: ‘SweaveListingUtils’
 
-The following object is masked from ‘package:base’:
+The following objects are masked from ‘package:base’:
 
     library, require
 
-:distr>  Object oriented implementation of distributions (version
-:distr>  2.4)
+:distr>  Object Oriented Implementation of Distributions (version
+:distr>  2.6)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -87,12 +87,12 @@ The following object is masked from ‘package:base’:
 
 Attaching package: ‘distr’
 
-The following object is masked from ‘package:stats’:
+The following objects are masked from ‘package:stats’:
 
     df, qqplot, sd
 
 Loading required package: distrEx
-:distrEx>  Extensions of package distr (version 2.4)
+:distrEx>  Extensions of Package 'distr' (version 2.6)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
 :distrEx>  attached /before/ package "distrEx". See
@@ -111,12 +111,12 @@ Loading required package: distrEx
 
 Attaching package: ‘distrEx’
 
-The following object is masked from ‘package:stats’:
+The following objects are masked from ‘package:stats’:
 
     IQR, mad, median, var
 
 Loading required package: RandVar
-:RandVar>  Implementation of random variables (version 0.9)
+:RandVar>  Implementation of Random Variables (version 1.0)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -124,7 +124,6 @@ Loading required package: RandVar
 :RandVar>  This package also includes a vignette; try
 :RandVar>  vignette("RandVar").
 
-Loading required package: ROptEstOld
 Loading required package: evd
 
 Attaching package: ‘ROptEstOld’
@@ -1205,7 +1204,7 @@ function (x)
 {
     as.vector(x[1:1L] * (x[1L + 1] - x[1:1L] %*% 0))
 }
-<environment: 0xa6549e0>
+<environment: 0xadbe4c8>
 
 > FisherInfo(LM1)
 An object of class "PosDefSymmMatrix"
@@ -1261,7 +1260,7 @@ function (x)
 {
     as.vector(x[1:1L] * (x[1L + 1] - x[1:1L] %*% 0 - 0))
 }
-<environment: 0xa4c53f8>
+<environment: 0xcd1a550>
 
 > FisherInfo(LM1)
 An object of class "PosDefSymmMatrix"
@@ -1319,7 +1318,7 @@ function (x)
 {
     as.vector(x[1:1L] * (x[1L + 1] - x[1:1L] %*% 0)/1^2)
 }
-<environment: 0xaa67150>
+<environment: 0xb960ea0>
 
 > FisherInfo(LM1)
 An object of class "PosDefSymmMatrix"
@@ -1405,8 +1404,9 @@ main:	 0
 > 
 > ### * <FOOTER>
 > ###
+> options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  21.925 0.108 22.113 0 0 
+Time elapsed:  6.764 0.048 6.807 0 0 
 > grDevices::dev.off()
 null device 
           1 
