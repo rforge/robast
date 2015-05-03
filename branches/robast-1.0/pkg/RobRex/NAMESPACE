@@ -1,3 +1,6 @@
+import(distr)
+import(RandVar)
+importFrom("RobAStBase", "IC", "ContNeighborhood")
 import(ROptRegTS)
 export(rgsOptIC.AL, 
        rgsOptIC.M, 
