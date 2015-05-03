@@ -1,6 +1,6 @@
 Package: RobAStBase
 Version: 1.0
-Date: 2013-09-12
+Date: 2015-05-03
 Title: Robust Asymptotic Statistics
 Description: Base S4-classes and functions for robust asymptotic statistics.
 Depends: R(>= 2.14.0), methods, rrcov, distr(>= 2.5.2), distrEx(>= 2.5), distrMod(>= 2.5.2),
@@ -15,7 +15,6 @@ Authors@R: c(person("Matthias", "Kohl", role=c("cre", "cph"), email="Matthias.Ko
 		person("R Core Team", role = c("ctb", "cph"), 
 		comment="for source file 'format.perc'"))
 ByteCompile: yes
-LazyLoad: yes
 License: LGPL-3
 Encoding: latin1
 URL: http://robast.r-forge.r-project.org/
