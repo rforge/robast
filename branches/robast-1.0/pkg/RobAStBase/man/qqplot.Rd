@@ -131,7 +131,6 @@ RobM <- InfRobModel(center = NormLocationFamily(mean=13,sd=sqrt(28)),
                     neighbor = ContNeighborhood(radius = 0.4))
 x <- rnorm(20, mean = 15, sd = sqrt(30))
 qqplot(x, RobM)
-## to reduce check time
 \donttest{
 qqplot(x, RobM, alpha.CI=0.9, add.points.CI=FALSE)
 }
