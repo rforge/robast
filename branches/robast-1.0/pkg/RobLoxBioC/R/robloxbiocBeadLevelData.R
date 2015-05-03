@@ -11,7 +11,7 @@ setMethod("robloxbioc", signature(x = "beadLevelData"),
                     cat("Could not determine sample factor from beadLevelData. Summarizing each section separately\n")
                     sList <- arraynms
                     sampleFac <- arraynms
-                    newNames <- sList
+                    newNames <- arraynms
                 }else{
                     sampleFac <- BLData@sectionData$SampleGroup[, 1]
                     sList <- unique(sampleFac)
