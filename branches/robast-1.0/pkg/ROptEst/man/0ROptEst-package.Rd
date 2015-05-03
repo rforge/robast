@@ -32,6 +32,9 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
 \references{
   M. Kohl (2005). Numerical Contributions to the Asymptotic Theory of Robustness.
   Dissertation. University of Bayreuth.
+
+  M. Kohl, P. Ruckdeschel, H. Rieder (2010). Infinitesimally Robust Estimation in 
+  General Smoothly Parametrized Models. Statistical Methods and Application 19(3):333–354. 
 }
 \seealso{
 \code{\link[distr:0distr-package]{distr-package}}, 
