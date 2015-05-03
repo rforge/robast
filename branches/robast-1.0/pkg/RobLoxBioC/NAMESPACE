@@ -7,7 +7,7 @@ importFrom("Biobase","assayDataNew")
 importClassesFrom("Biobase","ExpressionSet","AssayData","AnnotatedDataFrame")
 importMethodsFrom("Biobase", "rowMedians", "featureNames", "sampleNames", 
            "phenoData", "experimentData", "exprs", "exprs<-", "assayData","assayData<-")
-importFrom("affy","bg.correct.mas","getCdfInfo")
+importFrom("affy","bg.correct.mas","getCdfInfo", "tukey.biweight")
 importMethodsFrom("affy","intensity")
 import("beadarray")
 importFrom("RobLox", "rowRoblox", "finiteSampleCorrection")
