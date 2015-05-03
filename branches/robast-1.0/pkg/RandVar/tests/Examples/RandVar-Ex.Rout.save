@@ -1,6 +1,6 @@
 
-R version 3.0.3 Patched (2014-03-06 r65149) -- "Warm Puppy"
-Copyright (C) 2014 The R Foundation for Statistical Computing
+R Under development (unstable) (2015-05-02 r68310) -- "Unsuffered Consequences"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -20,31 +20,19 @@ Type 'q()' to quit R.
 > pkgname <- "RandVar"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
-> base::assign(".ExTimings", "RandVar-Ex.timings", pos = 'CheckExEnv')
-> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
-> base::assign(".format_ptime",
-+ function(x) {
-+   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
-+   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
-+   options(OutDec = '.')
-+   format(x[1L:3L], digits = 7L)
-+ },
-+ pos = 'CheckExEnv')
-> 
-> ### * </HEADER>
 > library('RandVar')
 Loading required package: distr
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.9)
+:startupmsg>  Utilities for Start-Up Messages (version 0.9.1)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
 
 Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
-:SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version
-:SweaveListingUtils>  0.6.1)
+:SweaveListingUtils>  Utilities for Sweave Together with
+:SweaveListingUtils>  TeX 'listings' Package (version
+:SweaveListingUtils>  0.7)
 :SweaveListingUtils> 
 :SweaveListingUtils>  NOTE: Support for this package
 :SweaveListingUtils>  will stop soon.
@@ -76,8 +64,8 @@ The following objects are masked from ‘package:base’:
 
     library, require
 
-:distr>  Object oriented implementation of distributions (version
-:distr>  2.5.2)
+:distr>  Object Oriented Implementation of Distributions (version
+:distr>  2.6)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -103,7 +91,7 @@ The following objects are masked from ‘package:stats’:
     df, qqplot, sd
 
 Loading required package: distrEx
-:distrEx>  Extensions of package distr (version 2.5)
+:distrEx>  Extensions of Package 'distr' (version 2.6)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
 :distrEx>  attached /before/ package "distrEx". See
@@ -126,7 +114,7 @@ The following objects are masked from ‘package:stats’:
 
     IQR, mad, median, var
 
-:RandVar>  Implementation of random variables (version 1.0)
+:RandVar>  Implementation of Random Variables (version 1.0)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -142,9 +130,8 @@ The following objects are masked from ‘package:stats’:
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RandVar-package
-> ### Title: Implementation of random variables
+> ### Title: Implementation of Random Variables
 > ### Aliases: RandVar-package RandVar
 > ### Keywords: package
 > 
@@ -155,15 +142,12 @@ The following objects are masked from ‘package:stats’:
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("0RandVar-package", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("EuclRandMatrix-class")
 > ### * EuclRandMatrix-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: EuclRandMatrix-class
 > ### Title: Euclidean random matrix
 > ### Aliases: EuclRandMatrix-class
@@ -230,7 +214,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x4f14828>
+<environment: 0x57297d8>
 
 > 
 > R2 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
@@ -259,7 +243,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x4d8d100>
+<environment: 0x3a75e10>
 
 [[2]]
 function (x) 
@@ -270,7 +254,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x4d8d100>
+<environment: 0x3a75e10>
 
 [[3]]
 function (x) 
@@ -281,7 +265,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x4d8d100>
+<environment: 0x3a75e10>
 
 [[4]]
 function (x) 
@@ -292,7 +276,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x4d8d100>
+<environment: 0x3a75e10>
 
 > 
 > ## "Arith" group
@@ -306,7 +290,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x4c8eef8>
+<environment: 0x39044a0>
 
 [[2]]
 function (x) 
@@ -317,7 +301,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x4c8eef8>
+<environment: 0x39044a0>
 
 [[3]]
 function (x) 
@@ -328,7 +312,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x4c8eef8>
+<environment: 0x39044a0>
 
 [[4]]
 function (x) 
@@ -339,7 +323,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x4c8eef8>
+<environment: 0x39044a0>
 
 [[5]]
 function (x) 
@@ -350,7 +334,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x4c8eef8>
+<environment: 0x39044a0>
 
 [[6]]
 function (x) 
@@ -361,7 +345,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x4c8eef8>
+<environment: 0x39044a0>
 
 > Map(R2 * R2)
 [[1]]
@@ -377,7 +361,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x51f00d8>
+<environment: 0x30af4f8>
 
 [[2]]
 function (x) 
@@ -392,7 +376,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x51f00d8>
+<environment: 0x30af4f8>
 
 [[3]]
 function (x) 
@@ -407,7 +391,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x51f00d8>
+<environment: 0x30af4f8>
 
 [[4]]
 function (x) 
@@ -422,20 +406,17 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x51f00d8>
+<environment: 0x30af4f8>
 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("EuclRandMatrix-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("EuclRandMatrix")
 > ### * EuclRandMatrix
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: EuclRandMatrix
 > ### Title: Generating function for EuclRandMatrix-class
 > ### Aliases: EuclRandMatrix
@@ -476,7 +457,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x5195fc8>
+<environment: 0x5854bc0>
 
 > 
 > R2 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
@@ -503,7 +484,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x4b74f28>
+<environment: 0x6010e48>
 
 [[2]]
 function (x) 
@@ -514,7 +495,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x4b74f28>
+<environment: 0x6010e48>
 
 [[3]]
 function (x) 
@@ -525,7 +506,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x4b74f28>
+<environment: 0x6010e48>
 
 [[4]]
 function (x) 
@@ -536,7 +517,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x4b74f28>
+<environment: 0x6010e48>
 
 > 
 > ## "Arith" group
@@ -550,7 +531,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x4685060>
+<environment: 0x5fde018>
 
 [[2]]
 function (x) 
@@ -561,7 +542,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x4685060>
+<environment: 0x5fde018>
 
 [[3]]
 function (x) 
@@ -572,7 +553,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x4685060>
+<environment: 0x5fde018>
 
 [[4]]
 function (x) 
@@ -583,7 +564,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x4685060>
+<environment: 0x5fde018>
 
 [[5]]
 function (x) 
@@ -594,7 +575,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x4685060>
+<environment: 0x5fde018>
 
 [[6]]
 function (x) 
@@ -605,7 +586,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x4685060>
+<environment: 0x5fde018>
 
 > Map(R2 * R2)
 [[1]]
@@ -621,7 +602,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x5224578>
+<environment: 0x5f86bb8>
 
 [[2]]
 function (x) 
@@ -636,7 +617,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x5224578>
+<environment: 0x5f86bb8>
 
 [[3]]
 function (x) 
@@ -651,7 +632,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x5224578>
+<environment: 0x5f86bb8>
 
 [[4]]
 function (x) 
@@ -666,7 +647,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x5224578>
+<environment: 0x5f86bb8>
 
 > 
 > 
@@ -704,15 +685,12 @@ function (Map = list(function(x) {
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("EuclRandMatrix", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("EuclRandVarList-class")
 > ### * EuclRandVarList-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: EuclRandVarList-class
 > ### Title: List of Euclidean random variables
 > ### Aliases: EuclRandVarList-class numberOfMaps
@@ -787,7 +765,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x5174bb8>
+<environment: 0x59a4bc0>
 
 [[2]]
 function (x) 
@@ -798,7 +776,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x5174bb8>
+<environment: 0x59a4bc0>
 
 [[3]]
 function (x) 
@@ -809,7 +787,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x5174bb8>
+<environment: 0x59a4bc0>
 
 [[4]]
 function (x) 
@@ -820,7 +798,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x5174bb8>
+<environment: 0x59a4bc0>
 
 > 
 > ## "Arith" group
@@ -834,7 +812,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x4c2f6d0>
+<environment: 0x570c1f0>
 
 [[2]]
 function (x) 
@@ -845,7 +823,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x4c2f6d0>
+<environment: 0x570c1f0>
 
 [[3]]
 function (x) 
@@ -856,7 +834,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x4c2f6d0>
+<environment: 0x570c1f0>
 
 [[4]]
 function (x) 
@@ -867,7 +845,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x4c2f6d0>
+<environment: 0x570c1f0>
 
 > Map((RL1 * 2)[[2]])
 [[1]]
@@ -879,7 +857,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x51c04d0>
+<environment: 0x52f40b8>
 
 [[2]]
 function (x) 
@@ -890,7 +868,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x51c04d0>
+<environment: 0x52f40b8>
 
 [[3]]
 function (x) 
@@ -901,7 +879,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x51c04d0>
+<environment: 0x52f40b8>
 
 [[4]]
 function (x) 
@@ -912,7 +890,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x51c04d0>
+<environment: 0x52f40b8>
 
 [[5]]
 function (x) 
@@ -923,7 +901,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x51c04d0>
+<environment: 0x52f40b8>
 
 [[6]]
 function (x) 
@@ -934,7 +912,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x51c04d0>
+<environment: 0x52f40b8>
 
 > Map((RL1 / RL1)[[3]])
 [[1]]
@@ -950,7 +928,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x4b267f8>
+<environment: 0x4bef158>
 
 [[2]]
 function (x) 
@@ -965,7 +943,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x4b267f8>
+<environment: 0x4bef158>
 
 [[3]]
 function (x) 
@@ -980,7 +958,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x4b267f8>
+<environment: 0x4bef158>
 
 [[4]]
 function (x) 
@@ -995,20 +973,17 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x4b267f8>
+<environment: 0x4bef158>
 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("EuclRandVarList-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("EuclRandVarList")
 > ### * EuclRandVarList
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: EuclRandVarList
 > ### Title: Generating function for EuclRandVarList-class
 > ### Aliases: EuclRandVarList
@@ -1064,7 +1039,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x5260230>
+<environment: 0x431ca18>
 
 [[2]]
 function (x) 
@@ -1075,7 +1050,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x5260230>
+<environment: 0x431ca18>
 
 [[3]]
 function (x) 
@@ -1086,7 +1061,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x5260230>
+<environment: 0x431ca18>
 
 [[4]]
 function (x) 
@@ -1097,7 +1072,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x5260230>
+<environment: 0x431ca18>
 
 > 
 > ## "Arith" group
@@ -1111,7 +1086,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x50dfa40>
+<environment: 0x4022010>
 
 [[2]]
 function (x) 
@@ -1122,7 +1097,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x50dfa40>
+<environment: 0x4022010>
 
 [[3]]
 function (x) 
@@ -1133,7 +1108,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x50dfa40>
+<environment: 0x4022010>
 
 [[4]]
 function (x) 
@@ -1144,7 +1119,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x50dfa40>
+<environment: 0x4022010>
 
 > Map((RL1 * 2)[[2]])
 [[1]]
@@ -1156,7 +1131,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x521eb18>
+<environment: 0x3d20608>
 
 [[2]]
 function (x) 
@@ -1167,7 +1142,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x521eb18>
+<environment: 0x3d20608>
 
 [[3]]
 function (x) 
@@ -1178,7 +1153,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x521eb18>
+<environment: 0x3d20608>
 
 [[4]]
 function (x) 
@@ -1189,7 +1164,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x521eb18>
+<environment: 0x3d20608>
 
 [[5]]
 function (x) 
@@ -1200,7 +1175,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x521eb18>
+<environment: 0x3d20608>
 
 [[6]]
 function (x) 
@@ -1211,7 +1186,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x521eb18>
+<environment: 0x3d20608>
 
 > Map((RL1 / RL1)[[3]])
 [[1]]
@@ -1227,7 +1202,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x4beba28>
+<environment: 0x39d66c8>
 
 [[2]]
 function (x) 
@@ -1242,7 +1217,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x4beba28>
+<environment: 0x39d66c8>
 
 [[3]]
 function (x) 
@@ -1257,7 +1232,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x4beba28>
+<environment: 0x39d66c8>
 
 [[4]]
 function (x) 
@@ -1272,7 +1247,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x4beba28>
+<environment: 0x39d66c8>
 
 > 
 > ## The function is currently defined as
@@ -1286,15 +1261,12 @@ function (...)
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("EuclRandVarList", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("EuclRandVariable-class")
 > ### * EuclRandVariable-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: EuclRandVariable-class
 > ### Title: Euclidean random variable
 > ### Aliases: EuclRandVariable-class
@@ -1476,7 +1448,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x525d420>
+<environment: 0x65d4cb8>
 
 [[2]]
 function (x) 
@@ -1491,7 +1463,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x525d420>
+<environment: 0x65d4cb8>
 
 [[3]]
 function (x) 
@@ -1506,7 +1478,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x525d420>
+<environment: 0x65d4cb8>
 
 [[4]]
 function (x) 
@@ -1521,7 +1493,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x525d420>
+<environment: 0x65d4cb8>
 
 > 
 > # "Arith" group generic
@@ -1535,7 +1507,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x521d3d8>
+<environment: 0x65c5bd0>
 
 [[2]]
 function (x) 
@@ -1546,7 +1518,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x521d3d8>
+<environment: 0x65c5bd0>
 
 [[3]]
 function (x) 
@@ -1557,7 +1529,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x521d3d8>
+<environment: 0x65c5bd0>
 
 [[4]]
 function (x) 
@@ -1568,7 +1540,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x521d3d8>
+<environment: 0x65c5bd0>
 
 > Map(c(1,3,5) * R1)
 Warning in c(1, 3, 5) * R1 :
@@ -1582,7 +1554,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x51b0bb0>
+<environment: 0x6596150>
 
 [[2]]
 function (x) 
@@ -1593,7 +1565,7 @@ function (x)
     }
     3 * f2(x)
 }
-<environment: 0x51b0bb0>
+<environment: 0x6596150>
 
 [[3]]
 function (x) 
@@ -1604,7 +1576,7 @@ function (x)
     }
     5 * f2(x)
 }
-<environment: 0x51b0bb0>
+<environment: 0x6596150>
 
 [[4]]
 function (x) 
@@ -1615,7 +1587,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x51b0bb0>
+<environment: 0x6596150>
 
 > try(1:5 * R1) # error
 Error in 1:5 * R1 : 
@@ -1630,7 +1602,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x5329108>
+<environment: 0x64fb500>
 
 [[2]]
 function (x) 
@@ -1641,7 +1613,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x5329108>
+<environment: 0x64fb500>
 
 [[3]]
 function (x) 
@@ -1652,7 +1624,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x5329108>
+<environment: 0x64fb500>
 
 [[4]]
 function (x) 
@@ -1663,7 +1635,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x5329108>
+<environment: 0x64fb500>
 
 > Map(R2 - 5)
 [[1]]
@@ -1675,7 +1647,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x524b000>
+<environment: 0x64b7730>
 
 [[2]]
 function (x) 
@@ -1686,7 +1658,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x524b000>
+<environment: 0x64b7730>
 
 [[3]]
 function (x) 
@@ -1697,7 +1669,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x524b000>
+<environment: 0x64b7730>
 
 [[4]]
 function (x) 
@@ -1708,7 +1680,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x524b000>
+<environment: 0x64b7730>
 
 > Map(R1 ^ R1)
 [[1]]
@@ -1724,7 +1696,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x51e6040>
+<environment: 0x645c198>
 
 [[2]]
 function (x) 
@@ -1739,7 +1711,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x51e6040>
+<environment: 0x645c198>
 
 [[3]]
 function (x) 
@@ -1754,7 +1726,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x51e6040>
+<environment: 0x645c198>
 
 [[4]]
 function (x) 
@@ -1769,21 +1741,18 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x51e6040>
+<environment: 0x645c198>
 
 > 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("EuclRandVariable-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("EuclRandVariable")
 > ### * EuclRandVariable
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: EuclRandVariable
 > ### Title: Generating function for EuclRandVariable-class
 > ### Aliases: EuclRandVariable
@@ -1932,7 +1901,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x51e2bf8>
+<environment: 0x5f32ab8>
 
 [[2]]
 function (x) 
@@ -1947,7 +1916,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x51e2bf8>
+<environment: 0x5f32ab8>
 
 [[3]]
 function (x) 
@@ -1962,7 +1931,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x51e2bf8>
+<environment: 0x5f32ab8>
 
 [[4]]
 function (x) 
@@ -1977,7 +1946,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x51e2bf8>
+<environment: 0x5f32ab8>
 
 > 
 > # "Arith" group generic
@@ -1991,7 +1960,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x531da50>
+<environment: 0x5f24040>
 
 [[2]]
 function (x) 
@@ -2002,7 +1971,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x531da50>
+<environment: 0x5f24040>
 
 [[3]]
 function (x) 
@@ -2013,7 +1982,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x531da50>
+<environment: 0x5f24040>
 
 [[4]]
 function (x) 
@@ -2024,7 +1993,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x531da50>
+<environment: 0x5f24040>
 
 > Map(c(1,3,5) * R1)
 Warning in c(1, 3, 5) * R1 :
@@ -2038,7 +2007,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x5287c30>
+<environment: 0x5f12668>
 
 [[2]]
 function (x) 
@@ -2049,7 +2018,7 @@ function (x)
     }
     3 * f2(x)
 }
-<environment: 0x5287c30>
+<environment: 0x5f12668>
 
 [[3]]
 function (x) 
@@ -2060,7 +2029,7 @@ function (x)
     }
     5 * f2(x)
 }
-<environment: 0x5287c30>
+<environment: 0x5f12668>
 
 [[4]]
 function (x) 
@@ -2071,7 +2040,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x5287c30>
+<environment: 0x5f12668>
 
 > try(1:5 * R1) # error
 Error in 1:5 * R1 : 
@@ -2086,7 +2055,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x51fb350>
+<environment: 0x5eedb38>
 
 [[2]]
 function (x) 
@@ -2097,7 +2066,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x51fb350>
+<environment: 0x5eedb38>
 
 [[3]]
 function (x) 
@@ -2108,7 +2077,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x51fb350>
+<environment: 0x5eedb38>
 
 [[4]]
 function (x) 
@@ -2119,7 +2088,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x51fb350>
+<environment: 0x5eedb38>
 
 > Map(R2 - 5)
 [[1]]
@@ -2131,7 +2100,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x51bdba8>
+<environment: 0x5edd620>
 
 [[2]]
 function (x) 
@@ -2142,7 +2111,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x51bdba8>
+<environment: 0x5edd620>
 
 [[3]]
 function (x) 
@@ -2153,7 +2122,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x51bdba8>
+<environment: 0x5edd620>
 
 [[4]]
 function (x) 
@@ -2164,7 +2133,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x51bdba8>
+<environment: 0x5edd620>
 
 > Map(R1 ^ R1)
 [[1]]
@@ -2180,7 +2149,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x531da50>
+<environment: 0x53e5dc0>
 
 [[2]]
 function (x) 
@@ -2195,7 +2164,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x531da50>
+<environment: 0x53e5dc0>
 
 [[3]]
 function (x) 
@@ -2210,7 +2179,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x531da50>
+<environment: 0x53e5dc0>
 
 [[4]]
 function (x) 
@@ -2225,7 +2194,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x531da50>
+<environment: 0x53e5dc0>
 
 > 
 > 
@@ -2251,15 +2220,12 @@ function (Map = list(function(x) {
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("EuclRandVariable", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("RandVariable-class")
 > ### * RandVariable-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RandVariable-class
 > ### Title: Random variable
 > ### Aliases: RandVariable-class Map Domain Range compatibleDomains
@@ -2283,7 +2249,7 @@ Range:	NULL
 function (x) 
 {
 }
-<bytecode: 0x462ef98>
+<bytecode: 0x2a9c1a0>
 <environment: namespace:RandVar>
 
 > Domain(R1)
@@ -2330,15 +2296,12 @@ function (x)
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("RandVariable-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("RandVariable")
 > ### * RandVariable
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RandVariable
 > ### Title: Generating function for RandVariable-class
 > ### Aliases: RandVariable
@@ -2356,7 +2319,7 @@ Range:	NULL
 function (x) 
 {
 }
-<environment: 0x51060e8>
+<environment: 0x5d77730>
 
 > Domain(R1)
 NULL
@@ -2412,15 +2375,12 @@ function (Map = list(function(x) {
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("RandVariable", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("RealRandVariable-class")
 > ### * RealRandVariable-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RealRandVariable-class
 > ### Title: Real random variable
 > ### Aliases: RealRandVariable-class Range<-,RealRandVariable-method
@@ -2436,15 +2396,12 @@ Range:	Real Space with dimension 1
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("RealRandVariable-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("RealRandVariable")
 > ### * RealRandVariable
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RealRandVariable
 > ### Title: Generating function for RealRandVariable-class
 > ### Aliases: RealRandVariable
@@ -2481,13 +2438,11 @@ function (Map = list(function(x) {
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("RealRandVariable", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > ### * <FOOTER>
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.964 0.08 6.066 0 0 
+Time elapsed:  2.198 0.028 2.225 0 0 
 > grDevices::dev.off()
 null device 
           1 
