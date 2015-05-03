@@ -20,21 +20,21 @@ showdown <- function(n, M, eps, contD, seed = 123, estfun, estMean, estSd,
     }
 
     set.seed(seed)
-    r <- rbinom(n*M, prob = eps, size = 1)
+    rad <- rbinom(n*M, prob = eps, size = 1)
     Mid <- rnorm(n*M)
     Mcont <- r(contD)(n*M)
-    Mre <- matrix((1-r)*Mid + r*Mcont, ncol = n)
-    ind <- rowSums(matrix(r, ncol = n)) >= n/2
+    Mre <- matrix((1-rad)*Mid + rad*Mcont, ncol = n)
+    ind <- rowSums(matrix(rad, ncol = n)) >= n/2
     while(any(ind)){
         M1 <- sum(ind)
         cat("Samples to re-simulate:\t", M1, "\n")
-        r <- rbinom(n*M1, prob = eps, size = 1)
+        rad <- rbinom(n*M1, prob = eps, size = 1)
         Mid <- rnorm(n*M1)
         Mcont <- r(contD)(n*M1)
-        Mre[ind,] <- (1-r)*Mid + r*Mcont
-        ind[ind] <- rowSums(matrix(r, ncol = n)) >= n/2
+        Mre[ind,] <- (1-rad)*Mid + rad*Mcont
+        ind[ind] <- rowSums(matrix(rad, ncol = n)) >= n/2
     }
-    rm(Mid, Mcont, r, ind)
+    rm(Mid, Mcont, rad, ind)
 
 
     if(plot2){
