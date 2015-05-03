@@ -1,11 +1,10 @@
 Package: RobAStRDA
 Version: 1.0
-Date: 2013-09-12
+Date: 2015-05-03
 Title: Interpolation Grids for Packages of RobASt - Family of Pkgs
-Description: sysdata.rda file for packages of RobASt - Family of Pkgs; is currently used by pkg
-        RobExtremes only.
-Depends: R (>= 2.14.0), methods
-Imports: startupmsg
+Description: Includes sysdata.rda file for packages of RobASt - family of packages; 
+             is currently used by package RobExtremes only.
+Depends: R (>= 2.14.0)
 Authors@R: c(person("Matthias", "Kohl", role=c("aut", "cph")), 
 		person("Bernhard", "Spangl", role="ctb", comment="helped with manual smoothing of the interpolators"), 
 		person("Mykhailo", "Pupashenko", role="ctb", comment="helped with manual smoothing of the interpolators"), 
@@ -13,7 +12,6 @@ Authors@R: c(person("Matthias", "Kohl", role=c("aut", "cph")),
 		person("Gerald", "Kroisandt", role="ctb", comment="helped with manual smoothing of the interpolators"), 
 		person("Peter", "Ruckdeschel", role=c("cre", "cph"), email="Peter.Ruckdeschel@itwm.fraunhofer.de"))
 LazyData: yes
-LazyLoad: yes
 ByteCompile: yes
 License: LGPL-3
 URL: http://robast.r-forge.r-project.org/
