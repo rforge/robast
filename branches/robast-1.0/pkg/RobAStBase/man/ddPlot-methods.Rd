@@ -13,7 +13,7 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        cutoff.x, cutoff.y, ...,
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, cex.pts = 1,lab.pts, jitt.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
+       id.n, cex.pts = 1,lab.pts, jit.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
        col.idn, lty.cutoff, lwd.cutoff, col.cutoff, text.abline = TRUE,
        text.abline.x = NULL, text.abline.y = NULL,
        cex.abline = par("cex"), col.abline = col.cutoff,
@@ -22,12 +22,12 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "\%7.2f", text.abline.x.fmt.qx = "\%4.2f\%\%",
        text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%", 
-	   jitt.fac, doplot = TRUE)
+	     jit.fac, jit.tol = .Machine$double.eps,doplot = TRUE)
 \S4method{ddPlot}{numeric}(data, dist.x = NormType(), dist.y  = NormType(),
        cutoff.x, cutoff.y, ...,
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, cex.pts = 1,lab.pts, jitt.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
+       id.n, cex.pts = 1,lab.pts, jit.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
        col.idn, lty.cutoff, lwd.cutoff, col.cutoff, text.abline = TRUE,
        text.abline.x = NULL, text.abline.y = NULL,
        cex.abline = par("cex"), col.abline = col.cutoff,
@@ -36,12 +36,12 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "\%7.2f", text.abline.x.fmt.qx = "\%4.2f\%\%",
        text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%",
-	   jitt.fac, doplot = TRUE)
+	   jit.fac, jit.tol=.Machine$double.eps, doplot = TRUE)
 \S4method{ddPlot}{data.frame}(data, dist.x = NormType(), dist.y  = NormType(),
        cutoff.x, cutoff.y, ...,
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, cex.pts = 1,lab.pts, jitt.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
+       id.n, cex.pts = 1,lab.pts, jit.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
        col.idn, lty.cutoff, lwd.cutoff, col.cutoff, text.abline = TRUE,
        text.abline.x = NULL, text.abline.y = NULL,
        cex.abline = par("cex"), col.abline = col.cutoff,
@@ -50,7 +50,7 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "\%7.2f", text.abline.x.fmt.qx = "\%4.2f\%\%",
        text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%",
-	   jitt.fac, doplot = TRUE)
+	   jit.fac, jit.tol=.Machine$double.eps, doplot = TRUE)
 }
 \arguments{
   \item{data}{data coercable to \code{matrix}; the data  at which to produce the \code{ddPlot}.}
@@ -71,7 +71,7 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
   of the data in argument \code{data}.}
   \item{cex.pts}{the corresponding \code{cex} argument for plotted points.}
   \item{lab.pts}{a vector of labels for the (unsubsetted) \code{data}.}
-  \item{jitt.pts}{the corresponding \code{jitter} argument for plotted points;
+  \item{jit.pts}{the corresponding \code{jitter} argument for plotted points;
     may be a vector of length 2 -- for separate factors for x- and y-coordinate.}
   \item{alpha.trsp}{alpha transparency to be added ex post to colors
         \code{col.pch} and \code{col.lbl}; if one-dim and NA all colors are
@@ -119,7 +119,9 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
   \item{text.abline.x.fmt.qx}{format string to format cutoff probability in label in x direction.}
   \item{text.abline.y.fmt.cy}{format string to format the cutoff value in label in y direction.}
   \item{text.abline.y.fmt.qy}{format string to format cutoff probability in label in y direction.}
-  \item{jitt.fac}{factor for jittering, see \code{jitter};}
+  \item{jit.fac}{factor for jittering, see \code{jitter};}
+  \item{jit.tol}{threshold for jittering: if distance between points is smaller
+               than \code{jit.tol}, points are considered replicates.}
   \item{doplot}{logical; shall a plot be produced? if \code{FALSE} only the return values are produced.}
   }
 \details{
@@ -148,7 +150,7 @@ a list (returned as \code{invisible()}) with items
 \item{cutoff.y.v}{the cutoff value in \code{y} direction}
 }
 \author{
-  Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}
+  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
   }
 
 \examples{

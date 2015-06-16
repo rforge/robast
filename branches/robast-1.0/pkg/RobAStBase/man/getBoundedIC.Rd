@@ -20,7 +20,7 @@ getBoundedIC(L2Fam, D=trafo(L2Fam@param))
 
 }
 \author{
-  Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}
+  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
   }
 %\note{}
 \concept{robust model}

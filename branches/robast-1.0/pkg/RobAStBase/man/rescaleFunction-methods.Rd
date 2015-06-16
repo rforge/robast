@@ -30,7 +30,7 @@ also items \code{scaleX.fct}, \code{scaleX.inv}, \code{scaleY.fct},
 \details{\code{rescaleFunction} is realized as an S4 method in order to be
 able to provide default rescalings for (new) particular L2 Families ex post
 to be used in the wrapper functions. }
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de},\cr
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},\cr
 Mykhailo Pupashenko \email{myhailo.pupashenko@gmail.com}}
 %\examples{}
 \keyword{internal}

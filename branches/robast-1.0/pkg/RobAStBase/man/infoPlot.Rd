@@ -24,9 +24,10 @@ infoPlot(object,  ...)
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-             pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
+             pch.pts = 1, jit.fac = 1, jit.tol = .Machine$double.eps, with.lab = FALSE,
              lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
+             draw.nonlbl = TRUE, cex.nonlbl=0.3, pch.nonlbl=".",
              ylab.abs = "absolute information", 
              ylab.rel= "relative information",
              withSubst = TRUE)
@@ -158,8 +159,10 @@ infoPlot(object,  ...)
         while for the remaining ones, the alpha channel in rgb space is set
         to the respective coordinate value of \code{alpha.trsp}. The non-NA
         entries must be integers in [0,255] (0 invisible, 255 opaque).}
-  \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
+  \item{jit.fac}{jittering factor used in case of a \code{DiscreteDistribution}
                     for plotting points of the \code{data} argument in a jittered fashion.}
+  \item{jit.tol}{threshold for jittering: if distance between points is smaller
+               than \code{jit.tol}, points are considered replicates.}
   \item{which.lbs}{either an integer vector with the indices of the observations
           to be plotted into graph or \code{NULL} --- then no observation is excluded}
   \item{which.Order}{we order the observations (descending) according to the norm given by
@@ -175,6 +178,9 @@ infoPlot(object,  ...)
     reduction by argument \code{which.lbs}, and ordering is according to the norm given by
            \code{normtype(object)});
    otherwise we return \code{invisible()} as usual.}
+  \item{draw.nonlbl}{logical; should non-labelled observations be drawn?}
+  \item{cex.nonlbl}{character expansion(s) for non-labelled observations}
+  \item{pch.nonlbl}{plotting symbol(s) for non-labelled observations}
   \item{ylab.abs}{character; label to be used for y-axis in absolute information panel} 
   \item{ylab.rel}{character; label to be used for y-axis in relative information panel} 
   \item{\dots}{further parameters for \code{plot}}

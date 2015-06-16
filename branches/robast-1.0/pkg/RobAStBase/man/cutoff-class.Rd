@@ -56,7 +56,7 @@
 
    }
 }
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
 \seealso{\code{\link{ddPlot}}, \code{\link{outlyingPlotIC}} \code{\link{cutoff}}}
 \examples{

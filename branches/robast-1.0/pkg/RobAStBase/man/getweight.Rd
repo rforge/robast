@@ -70,7 +70,7 @@ minbiasweight(Weight, neighbor, biastype, ...)
                        biastype = "BiasType")}: produces weight slot...}
 }}
 
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
 \seealso{\code{\link{BdStWeight-class}},
          \code{\link{HampelWeight-class}},

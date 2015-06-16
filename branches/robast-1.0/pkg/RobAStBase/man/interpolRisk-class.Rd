@@ -40,7 +40,7 @@ All these risks have an additional slot samplesize, defaulting to \code{100},
 and for which there is a replacement and an accessor method.
 }
 %\references{}
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 \examples{
 new("OMSRRisk")
 OMSRRisk()

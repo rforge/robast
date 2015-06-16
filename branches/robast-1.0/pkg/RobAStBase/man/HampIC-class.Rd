@@ -97,7 +97,7 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
   Kohl, M. (2005) \emph{Numerical Hampributions to the Asymptotic Theory of Robustness}.
   Bayreuth: Dissertation.
 }
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
 \seealso{\code{\link{IC-class}}}
 \examples{

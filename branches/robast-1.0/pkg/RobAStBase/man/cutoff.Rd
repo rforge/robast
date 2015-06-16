@@ -60,7 +60,7 @@ the function it is used to transfer the quantile (after its evaluation).
 }
 \value{Object of class \code{"cutoff"}.}
 \author{
-  Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}
+  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
   }
 %\note{}
 \seealso{\code{\link{cutoff-class}}, \code{\link{ddPlot}} }

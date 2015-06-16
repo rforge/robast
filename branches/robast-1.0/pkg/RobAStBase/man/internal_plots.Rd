@@ -124,7 +124,10 @@ placement of a legend.
 \code{data}, ie., the selected/thinned out data, \code{y}, ie., the
 values of  \code{fct(data)}, \code{ind}, ie., the indices of the selected data
 in the original data (after possibly two selections), and \code{ind1} the
-indices of the data selected by \code{which.lbs} in the original data.
+indices of the data selected by \code{which.lbs} in the original data; in 
+addition also the non selected data, \code{data.ns}, the respective
+y-values \code{y.ns} and the corresponding index elements \code{ind.ns} are
+returned as list items.
 
 \code{.makedotsP} and \code{.makedotsLowLevel} manipulate the \code{\dots}
 argument, deleting certain items and selecting items which can be digested by

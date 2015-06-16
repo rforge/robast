@@ -8,10 +8,10 @@ outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
                dist.y, cutoff.x = cutoff.sememp(0.95), cutoff.y = cutoff.chisq(0.95), 
                ..., cutoff.quantile.x = 0.95,
                cutoff.quantile.y = cutoff.quantile.x,
-               id.n, cex.pts = 1,lab.pts, jitt.pts = 0, alpha.trsp = NA,
+               id.n, cex.pts = 1,lab.pts, jit.pts = 0, alpha.trsp = NA,
                adj, cex.idn, col.idn, lty.cutoff, lwd.cutoff, col.cutoff,
                robCov.x = TRUE, robCov.y = TRUE, tf.x = data, tf.y = data,
-               jitt.fac = 10, doplot = TRUE,
+               jit.fac = 10, jit.tol = .Machine$double.eps, doplot = TRUE,
                main = gettext("Outlyingness \n by means of a distance-distance plot")
                          )
 }
@@ -34,7 +34,7 @@ outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
   of the data in argument \code{data}.}
   \item{cex.pts}{the corresponding \code{cex} argument for plotted points.}
   \item{lab.pts}{a vector of labels for the (unsubsetted) \code{data}.}
-  \item{jitt.pts}{the corresponding \code{jitter} argument for plotted points;
+  \item{jit.pts}{the corresponding \code{jitter} argument for plotted points;
     may be a vector of length 2 -- for separate factors for x- and y-coordinate.}
   \item{alpha.trsp}{alpha transparency to be added ex post to colors
         \code{col.pch} and \code{col.lbl}; if one-dim and NA all colors are
@@ -66,7 +66,9 @@ outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
   \item{tf.y}{transformation for y axis: a function returning the
           transformed y-coordinates when applied to the data;
               by default identity.}
-  \item{jitt.fac}{factor for jittering, see \code{\link{jitter}};}
+  \item{jit.fac}{factor for jittering, see \code{\link{jitter}};}
+  \item{jit.tol}{threshold for jittering: if distance between points is smaller
+               than \code{jit.tol}, points are considered replicates.}
   \item{doplot}{logical; shall a plot be produced? if \code{FALSE} only the return values are produced.}
   \item{main}{the main title.}
 }
@@ -74,7 +76,7 @@ outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
 calls a corresponding \code{\link{ddPlot}} method to produce the plot.
 }
 \author{
-  Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}
+  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
   }
 
 \value{
