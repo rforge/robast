@@ -28,7 +28,7 @@ corresponding S4-methods.
 see \code{\link[stats]{start}}, \code{\link[graphics]{clip}}
 }
 \author{
-  Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}
+  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
   }
 
 \keyword{methods}

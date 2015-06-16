@@ -113,7 +113,7 @@ a list with items
 
 
 \author{
-  Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}
+  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
   }
 \seealso{\code{\link[graphics]{plot.default}}, \code{\link[graphics]{par}},
           \code{\link{ddPlot}}, \code{\link{outlyingPlotIC}}}

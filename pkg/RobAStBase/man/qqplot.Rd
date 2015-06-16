@@ -84,7 +84,7 @@ exponent for the weights of this [p]IC used to find out-fading colors.}
   Wadsworth & Brooks/Cole.
 }
 \author{
-  Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}
+  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
 }
 \seealso{
   \code{\link[stats:qqnorm]{qqplot}} from package \pkg{stats} -- the standard QQ plot

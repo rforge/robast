@@ -61,7 +61,7 @@ outlyingPlotIC(data, IC.x, IC.y = IC.x, dist.x = NormType(),
 calls a corresponding \code{\link{ddPlot}} method to produce the plot.
 }
 \author{
-  Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}
+  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
   }
 
 \value{

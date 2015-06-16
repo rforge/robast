@@ -114,7 +114,7 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
   of M-estimators on Neighborhoods.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}\cr
-        Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+        Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 \note{This generic function is still under construction.}
 \seealso{\code{\link[ROptEst]{getRiskIC}}, \code{\link{InfRobModel-class}}}
 %\examples{}
