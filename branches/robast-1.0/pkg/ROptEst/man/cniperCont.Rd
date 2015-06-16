@@ -21,7 +21,9 @@ cniperCont(IC1, IC2, data = NULL, ...,
                pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
                lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
                which.lbs = NULL, which.Order  = NULL,
-               return.Order = FALSE, withSubst = TRUE)
+               return.Order = FALSE, 
+               draw.nonlbl = TRUE, cex.nonlbl=0.3, pch.nonlbl=".",
+               withSubst = TRUE)
 
 
 cniperPoint(L2Fam, neighbor, risk, lower, upper)
@@ -37,7 +39,9 @@ cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                 pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
                 lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
                 which.lbs = NULL, which.Order  = NULL,
-                return.Order = FALSE, withSubst = TRUE)
+                return.Order = FALSE, 
+                draw.nonlbl = TRUE, cex.nonlbl=0.3, pch.nonlbl=".",
+                withSubst = TRUE)
 
 }
 \arguments{
@@ -121,6 +125,9 @@ cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
     reduction by argument \code{which.lbs}, and ordering is according to the norm given by
            \code{normtype(object)});
    otherwise we return \code{invisible()} as usual.}
+  \item{draw.nonlbl}{logical; should non-labelled observations be drawn?}
+  \item{cex.nonlbl}{character expansion(s) for non-labelled observations}
+  \item{pch.nonlbl}{plotting symbol(s) for non-labelled observations}
   \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
       titles and lables is used; otherwise no substitution is used. }
 }

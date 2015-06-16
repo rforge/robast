@@ -227,7 +227,7 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
   Bayreuth: Dissertation.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de},\cr
-        Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+        Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
 \seealso{\code{\link[RobAStBase]{InfRobModel-class}}}
 %\examples{}

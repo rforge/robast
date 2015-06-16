@@ -17,7 +17,7 @@
   Ruckdeschel, P. and Rieder, H. (2004) Optimal Influence Curves for
   General Loss Functions. Statistics & Decisions \emph{22}, 201-223.
 }
-\author{Peter Ruckdeschel \email{peter.ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
 \seealso{\code{\link{asL1-class}}, \code{\link{asMSE}}, \code{\link{asL4}}}
 \examples{

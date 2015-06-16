@@ -85,7 +85,7 @@ getLagrangeMultByOptim(b, L2deriv, risk, FI, trafo,
   Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}.
   Bayreuth: Dissertation.
 }
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
 \seealso{\code{\link[RobAStBase]{InfRobModel-class}}}
 %\examples{}

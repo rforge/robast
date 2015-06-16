@@ -75,7 +75,7 @@ gennbCtrl(neighbor = ContNeighborhood(), eps, eps.lower, eps.upper)
   For details, see this function.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de},\cr
-        Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+        Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
 \seealso{ \code{\link[RobLox]{roblox}},
           \code{\link[distrMod]{L2ParamFamily-class}}

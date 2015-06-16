@@ -33,7 +33,7 @@ with this bias and variance at the respective radius.
 
 \details{\code{get.asGRisk.fct} is used internally in functions \code{\link{getAsRisk}}
 and \code{\link{getReq}}.}
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\examples{}
 \concept{asymptotic risk}
 \concept{risk}
