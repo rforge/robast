@@ -65,7 +65,7 @@ Class \code{"Estimate"}, directly.
 
 %\references{}
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de},\cr
-Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
 \seealso{\code{\link{Estimate-class}}, \code{\link{LDEstimator}},
          \code{\link{MCEstimator}}}

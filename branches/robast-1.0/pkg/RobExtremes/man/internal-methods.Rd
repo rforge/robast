@@ -55,7 +55,7 @@ the \code{GEVFamilyMuUnknown,MCEstimate}-method to \code{GEVMCEstimate},
 the \code{GEVFamilyMuUnknown,kStepEstimate}-method to \code{GEVkStepstimate}.
 }
 \author{
-  Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}
+  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
   }
 
 \keyword{methods}

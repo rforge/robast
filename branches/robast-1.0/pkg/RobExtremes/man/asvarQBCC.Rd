@@ -22,7 +22,7 @@ All terms are analytic.
 
 
 %\references{  }
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
 \seealso{\code{\link{QuantileBCCEstimator}} }
 \examples{

@@ -97,7 +97,7 @@ For \code{gpd.prof}, \code{gev.prof}
 
 }
 \author{
-  Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}
+  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
   }
 
 \references{

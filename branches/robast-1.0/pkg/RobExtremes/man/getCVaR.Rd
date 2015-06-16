@@ -42,7 +42,7 @@ Pareto Models. Statistics 47(4), 762--791.
 N. Horbenko, P. Ruckdeschel, T. Bae (2011): Robust Estimation of Operational Risk.
 Journal of Operational Risk 6(2), 3--30.
 }
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 \seealso{\code{\link{GParetoFamily}}, \code{\link{GEVFamily}}, \code{\link{WeibullFamily}}, \code{\link{GammaFamily}}}
 \examples{
   set.seed(123)
