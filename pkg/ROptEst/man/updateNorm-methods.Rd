@@ -37,7 +37,7 @@
 \details{\code{updateNorm} is used internally in the opt-IC-algorithm to be
  able to work with a norm that depends on the current covariance 
  (\code{SelfNorm})}
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 \seealso{\code{\link[distrMod]{NormType-class}}}
 %\examples{}
 \concept{asymptotic risk}

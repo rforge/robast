@@ -103,7 +103,7 @@ getInfGamma(L2deriv, risk, neighbor, biastype, ...)
   Bayreuth: Dissertation.
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de},
-        Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+        Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
 \seealso{\code{\link[distrMod]{asGRisk-class}}, \code{\link[distrMod]{asMSE-class}},
         \code{\link[distrMod]{asUnOvShoot-class}}, \code{\link[RobAStBase]{ContIC-class}}, 

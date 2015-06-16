@@ -181,7 +181,7 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   \url{www.uni-bayreuth.de/departments/math/org/mathe7/RIEDER/pubs/RR.pdf}
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de},\cr
-        Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+        Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
 \seealso{ \code{\link[RobLox]{roblox}}, 
           \code{\link[distrMod]{L2ParamFamily-class}}

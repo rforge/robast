@@ -55,7 +55,7 @@ An IC of type \code{HampIC}.
 \details{\code{getStartIC} is used internally in functions \code{robest}
 and \code{roptest} to compute the optimally robust influence function
 according to the arguments given to them.}
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 \seealso{\code{\link{robest}},\code{\link{optIC}}, \code{\link{radiusMinimaxIC}}}
 %\examples{}
 \concept{asymptotic risk}

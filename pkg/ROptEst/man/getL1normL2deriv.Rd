@@ -26,7 +26,7 @@
 }
 
 \value{L1 norm of the L2derivative}
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
 \examples{
 ##
