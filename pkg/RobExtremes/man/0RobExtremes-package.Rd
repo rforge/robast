@@ -186,11 +186,11 @@ Note: The first two numbers of package versions do not necessarily reflect
 }
 
 \author{
-Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de},\cr
+Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},\cr
 Matthias Kohl \email{Matthias.Kohl@stamats.de}, and \cr
 Nataliya Horbenko \email{Nataliya.Horbenko@itwm.fraunhofer.de},\cr
 
-\emph{Maintainer:}  Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}
+\emph{Maintainer:}  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
 }
 \references{
 M. Kohl (2005): \emph{Numerical Contributions to the Asymptotic

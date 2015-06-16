@@ -69,7 +69,7 @@ getSnGrid(xiGrid = getShapeGrid(), PFam=GParetoFamily(), low=0,
  \item{getSnGrid}{a grid, i.e.; a matrix with columns
   \code{xi} and \code{Sn}--the respective interpolation grid). }
 }
-\author{Peter Ruckdeschel \email{Peter.Ruckdeschel@itwm.fraunhofer.de}}
+\author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 \examples{
 ## (empirical) Data
 getShapeGrid(50)

@@ -49,7 +49,7 @@ EFSBP --illustrated at scale-shape models. \emph{Metrika}, \bold{75}(8),
   }
 
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de}\cr
-        Peter Ruckdeschel \email{peter.ruckdeschel@itwm.fraunhofer.de}\cr
+        Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}\cr
         Nataliya Horbenko \email{nataliya.horbenko@itwm.fraunhofer.de}}
 %\note{}
 \seealso{\code{\link[distrMod]{L2ParamFamily-class}}, \code{\linkS4class{GPareto}}}
