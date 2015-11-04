@@ -23,19 +23,19 @@ Vorbereitung:
 Aufteilung LM Glättung
 -----------------------------------------------
 
-PR       GPareto [OMSE/MBRE/RMXE] LM 1-11
+PR       GPareto [OMSE/MBRE/RMXE] 
 
-PR-Hiwi  GPareto [OMSE/MBRE/RMXE] LM 12-13 und GEV [OMSE/MBRE/RMXE] LM 1-9   
+PR-Hiwi  GEV [OMSE/MBRE]   
 
-MK       GEV [OMSE/MBRE/RMXE] LM 10-13 und GEVU [OMSE/MBRE/RMXE] LM 1-7
+MK       GEV [RMXE] GEVU-OMSE 
 
-MK-Hiwi  GEVU [OMSE/MBRE/RMXE] LM 8-18 
+MK-Hiwi  GEVU MBRE/RMXE 
 
-SD       GEVU [OMSE/MBRE/RMXE] LM 19-25 und GammaFamily [OMSE/MBRE/RMXE] LM 1-4
+SD       Gamma[OMSE/MBRE] 
 
-EM       GammaFamily [OMSE/MBRE/RMXE] LM 5-13 WeibullFamily [OMSE/MBRE/RMXE] LM 1-2
+EM       Gamma RMXE  WeibullFamily OMSE
 
-BS       WeibullFamily [OMSE/MBRE/RMXE] LM 3-13
+BS       WeibullFamily MBRE/RMXE
 
 Rückruf bei Fragen 
     Shiny/UI: Eugen +49-631-31600-4769
