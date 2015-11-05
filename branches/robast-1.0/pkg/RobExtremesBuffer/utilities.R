@@ -198,8 +198,11 @@ load.grids.env <- function(env, gridName, familyName){
   # according to Sec. 5, WriteUp-Interpolators.txt 
   # grid - original interpolation grids
   # gridS - smoothed grids
-  lookup <- get0(grid.lookup, envir=env, ifnotfound = quote(warning(paste0("Grid '", grid.lookup, "' does not exists."))))
-  
+if (exists(grid.lookup, envir=env)) {
+  lookup <- get(grid.lookup, envir=env)
+} else {
+  warning(paste0("Grid '", grid.lookup, "' does not exists."))
+}
   lookup.family <- lookup[[family.lookup]]
   if (is.null(lookup.family))
     warning(paste0("Family '", familyName, "' does not exists for grid '", gridName, "'"))
