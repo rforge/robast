@@ -176,33 +176,33 @@ load.grids <- function(gridName, familyName, baseDir){
   dataEnviron <- load.file.to("sysdata.rda")
   # dataEnviron <- load.file.to(file.path(baseDir, "branches/robast-1.0/pkg/RobAStRDA/R/sysdata.rda"))
   
-  return(load.grids.env(dataEnviron, gridName, familyName))
+  return(loadGridsIntoEnv(dataEnviron, gridName, familyName))
 }
 
 expr.str <- function(expr){
   q.expr <- deparse(substitute(expr))
 }
 
-get.grid.lookup <- function(gridName){
+getGridLookupName <- function(gridName){
   return(paste0(".", gridName))
 }
 
-get.family.lookup <- function(familyName){
+getFamilyLookupName <- function(familyName){
   return(gsub(" ", "", familyName))
 }
 
-load.grids.env <- function(env, gridName, familyName){
-  grid.lookup <- get.grid.lookup(gridName)
-  family.lookup <- get.family.lookup(familyName)
+loadGridsIntoEnv <- function(env, gridName, familyName){
+  grid.lookup <- getGridLookupName(gridName)
+  family.lookup <- getFamilyLookupName(familyName)
   
   # according to Sec. 5, WriteUp-Interpolators.txt 
   # grid - original interpolation grids
   # gridS - smoothed grids
-if (exists(grid.lookup, envir=env)) {
-  lookup <- get(grid.lookup, envir=env)
-} else {
-  warning(paste0("Grid '", grid.lookup, "' does not exists."))
-}
+  if (exists(grid.lookup, envir=env)) {
+    lookup <- get(grid.lookup, envir=env)
+  } else {
+    warning(paste0("Grid '", grid.lookup, "' does not exists."))
+  }
   lookup.family <- lookup[[family.lookup]]
   if (is.null(lookup.family))
     warning(paste0("Family '", familyName, "' does not exists for grid '", gridName, "'"))
@@ -214,7 +214,6 @@ if (exists(grid.lookup, envir=env)) {
   grid.smoothed <- lookup.family[["gridS"]]  
   if (is.null(grid.smoothed))
       warning(paste0("original grid does not exists for family '", familyName, "' and grid '", gridName, "'"))
-  
   
   res <- list(orig=grid.orig, smoothed=grid.smoothed)
   return(res)
@@ -324,4 +323,180 @@ log.value <- function(x){
     lmgrid[, i] <- predict(SmoothSpline, thGrid)$y   
   }
   return(cbind(xi=thGrid,LM=lmgrid))
+}
+
+
+createStorableGrid <- function(familyName, gridName, editingGrid, origSmoothedGrid, useExisting, dfs, ranges){
+  numLMs <- getNumMultiplicators(gridName, familyName)
+  xiValues <- editingGrid[,1]
+  
+  
+  storeGridComponent <- function(comp){
+    if(useExisting[[comp]]) {
+      return(origSmoothedGrid[,comp+1])
+    } else {
+      restrictions <- get.restrictions.for.smooth(comp, ranges, xiValues)
+      smoothed <- applySmoothing(editingGrid, dfs[[comp]], restrictions)
+      return(smoothed[,comp+1])
+    }
+  }
+  
+  totalGrid <- sapply(1:numLMs, storeGridComponent)
+  totalGrid <- cbind(xiValues, totalGrid)
+  
+  if(TEST.save.grid)
+    smoothed.totalgrid <<- totalGrid
+  
+  return(totalGrid)
+}
+
+saveGridToCsv <- function(familyName, gridName, editingGrid, origSmoothedGrid, useExisting, dfs, ranges){
+  require(ROptEst)
+  totalGrid <- createStorableGrid(familyName, gridName, editingGrid, origSmoothedGrid, useExisting, dfs, ranges)
+  
+  destFileName <- paste0("interpol", familyName, gridName, ".csv")
+  .saveGridToCSV(totalGrid, destFileName, gridName, paste0(".", familyName))
+}
+
+getMainTitle <- function(gridName, familyName){
+  familyName1 <- gsub(" [F,f]amily","", familyName)
+  
+  return(paste(gridName, familyName1, sep="-"))
+}
+
+getNumMultiplicators <- function(gridName, family){
+  if(gridName=="Sn")
+    return(1)
+  return(if(family == "GEVU Family") 25 else 13)
+}
+
+
+isSnGridWithInvalidLM <- function(gridName, lm) {
+  return((gridName == "Sn") && lm != 1)
+}
+
+
+## Create smooth grid
+applySmoothing <- function(grid, df, grid.restrictions){
+  # grid[,1] - The grid positions
+  # grid[,2:end] - the Lagrange multiplier values
+  result <- .MakeSmoothGridList(grid[,1], grid[,-1], df=df, gridRestrForSmooth=grid.restrictions)
+  return(result)
+}
+
+## Uses the list of all ranges and deletes the required one
+## 
+## For deletion is the string value of input$ranges used,
+## i.e. one assumes the index of the entry is in the string which.to.delete. 
+## The format of the string should be "Index : somevalues"
+##
+## If the index is invalid or null the full range is returned
+update.ranges.after.delete <- function(allRanges, which.to.delete){
+  result <- allRanges
+  if (!is.null(which.to.delete)){
+    idx.to.delete <- as.numeric(gsub(" : .*$", "", which.to.delete))
+    if (!is.na(idx.to.delete)){
+      result[[idx.to.delete]] <- NULL
+    }
+  }
+  return(result)
+}
+
+## Create the list of range as strings for the list output
+update.ranges.output <- function(ranges){
+  if(is.null(ranges))
+    return(NULL)
+  
+  rangeNums <- sapply(ranges, function(x)paste(round(x, digits=3), collapse=", "))
+  result <- sapply(seq_along(rangeNums), function(i)paste(i, ':', rangeNums[[i]]))
+  return(result)
+}
+
+zoomIn <- function(brush, zoomList, zoomHistory){
+  # Unfortunately this method is called twice (probably for each coordinate)
+  # Hence we need to do the if check for not adding an element twice
+  # It uses the heuristics that two distinguishing boxes will differ in both, xlim and ylim values
+  if (is.null(brush))
+    return(NULL)
+  
+  # store to history if the last differs from current
+  if (can.push(zoomHistory, zoomList)){
+    last.idx <- length(zoomHistory)
+    zoomHistory[[last.idx + 1]] <<- zoomList
+    
+    # set new values
+    res <- list (xlim=c(brush$xmin, brush$xmax), ylim=c(brush$ymin, brush$ymax))
+    return(res)
+  }
+  
+  return(NULL)
+}
+
+zoom.out <- function(){
+  idx.last <- length(zoom.history)
+  if(idx.last > 0){
+    last <- zoomHistory[[idx.last]]
+    zoomHistory <<- zoomHistory[1:(idx.last-1)]
+    
+    res <-list(xlim=c(last$xlim[1], last$xlim[2]), ylim=c(last$ylim[1], last$ylim[2]))
+    return(res)
+  }
+  return(NULL)
+}
+delete.ranges <- function(whichLM, state.ranges, input.ranges){
+  if(!is.null(input.ranges) && (prev.deleted != input.ranges)){
+    res <- update.ranges.after.delete(allRanges=state.ranges[[whichLM]], which.to.delete=input.ranges)
+    prev.deleted <<- input.ranges
+    return(res)
+  }else{
+    prev.deleted <<- ""
+    return(NULL)
+  }
+}
+
+get.restrictions.for.smooth <- function(which, from, grid.param){
+  if (length(from)==0)
+    return(NULL)
+  ranges <- from[[which]]
+  if (!is.null(ranges) && length(ranges) > 0){
+    return(ranges.to.grid(ranges, grid.param))
+  }
+  
+  return(NULL)
+}
+
+###########################################################################
+# history local grid save intermediate will be saved in history Rdata 
+# (analogue as in sysdata.rda, see Sec. 5 WriteUp-Interpolators.txt)
+# [OptCrit],
+# > [model1],
+# >> [timestamp]
+# >>> [ranges]
+# >>> [dfs]
+###########################################################################
+local.commit.grid <- function(familyName, gridName, dfs, ranges){
+  commits.env <- load.file.to(HISTORY_COMMITS_FILE, on.not.exist=function(x)new.env())
+  
+  # Get entry
+  gridLookupName <- getGridLookupName(gridName)
+  familyLookup <- getFamilyLookupName(familyName)
+  
+  if(exists(gridLookupName, envir=commits.env)){
+    models <- get(gridLookupName, envir=commits.env)
+  }else{
+    models <- list()
+  }
+  
+  # append
+  if(is.null(models[[familyLookup]])){
+    models[[familyLookup]] <- list()
+  }
+  
+  timestamp = format(Sys.time())
+  models[[familyLookup]][[timestamp]] <- list(dfs=dfs, ranges=ranges)
+  
+  assign(gridLookupName, value=models, envir=commits.env)
+  
+  names <- ls(commits.env, all.names=TRUE)
+  save(list=names, file=HISTORY_COMMITS_FILE, envir=commits.env)
 }

@@ -13,241 +13,63 @@ NAMES_LM <- c("b","a.a[sc]","a.a[sh]","z.i[sc]","z.i[sh]",
               "A.i[sc,sc]","A.i[sc,sh]","A.i[sh,sc]","A.i[sh,sh]")
 
 HISTORY_COMMITS_FILE = "history.rda"
+RESET_NOTE_TEXT <- "<strong>Durch aendern der Grid & Familie, gehen alle nicht-gespeicherte Intervalle verloren.</strong>"
+DEFAULT_DEGREE_OF_FREEDOM <- 10
 
-dataEnviron <- load.file.to("sysdata.rda")
-
-
-main.title <- function(gridName, familyName){
-  familyName1 <- gsub(" [F,f]amily","", familyName)
-  
-  return(paste(gridName, familyName1, sep="-"))
-}
-
-get.num.multiplicators <- function(gridName, family){
-  if(gridName=="Sn")
-    return(1)
-  return(if(family == "GEVU Family") 25 else 13)
-}
-
-## Uses the list of all ranges and deletes the required one
-## 
-## For deletion is the string value of input$ranges used,
-## i.e. one assumes the index of the entry is in the string which.to.delete. 
-## The format of the string should be "Index : somevalues"
-##
-## If the index is invalid or null the full range is returned
-update.ranges.after.delete <- function(allRanges, which.to.delete){
-  result <- allRanges
-  if (!is.null(which.to.delete)){
-    idx.to.delete <- as.numeric(gsub(" : .*$", "", which.to.delete))
-    if (!is.na(idx.to.delete)){
-      result[[idx.to.delete]] <- NULL
-    }
-  }
-  return(result)
-}
-
-# print.ranges <- function(ranges){
-#   print(paste(sapply(1:length(ranges), function(i)paste(i, length(ranges)))))
-# }
-
-
-## Create the list of range as strings for the list output
-update.ranges.output <- function(ranges){
-  if(is.null(ranges))
-    return(NULL)
-  
-  rangeNums <- sapply(ranges, function(x)paste(round(x, digits=3), collapse=", "))
-  result <- sapply(seq_along(rangeNums), function(i)paste(i, ':', rangeNums[[i]]))
-  return(result)
-}
-
-## Create smooth grid
-calc.smooth.grid <- function(grid, df, grid.restrictions){
-  # grid[,1] - The grid positions
-  # grid[,2:end] - the Lagrange multiplier values
-  result <- .MakeSmoothGridList(grid[,1], grid[,-1], df=df, gridRestrForSmooth=grid.restrictions)
-  return(result)
-}
-
-zoom.history <<- NULL
-
-zoom.in <- function(brush, zoom.list){
-  # Unfortunately this method is called twice (probably for each coordinate)
-  # Hence we need to do the if check for not adding an element twice
-  # It uses the heuristics that two distinguishing boxes will differ in both, xlim and ylim values
-  if (is.null(brush))
-    return(NULL)
-  
-  # store to history if the last differs from current
-  if (can.push(zoom.history, zoom.list)){
-    last.idx <- length(zoom.history)
-    zoom.history[[last.idx + 1]] <<- zoom.list
-  
-    # set new values
-    res <- list (xlim=c(brush$xmin, brush$xmax), ylim=c(brush$ymin, brush$ymax))
-    return(res)
-  }
-
-  return(NULL)
-}
-
-zoom.out <- function(){
-  idx.last <- length(zoom.history)
-  if(idx.last > 0){
-    last <- zoom.history[[idx.last]]
-    zoom.history <<- zoom.history[1:(idx.last-1)]
-    
-    res <-list(xlim=c(last$xlim[1], last$xlim[2]), ylim=c(last$ylim[1], last$ylim[2]))
-    return(res)
-  }
-  return(NULL)
-}
-
+loadedData <- load.file.to("sysdata.rda")
+zoomHistory <<- NULL
 prev.deleted <<- ""
-
-delete.ranges <- function(whichLM, state.ranges, input.ranges){
-  if(!is.null(input.ranges) && (prev.deleted != input.ranges)){
-    res <- update.ranges.after.delete(allRanges=state.ranges[[whichLM]], which.to.delete=input.ranges)
-    prev.deleted <<- input.ranges
-    return(res)
-  }else{
-    prev.deleted <<- ""
-    return(NULL)
-  }
-}
-
-get.restrictions.for.smooth <- function(which, from, grid.param){
-  if (length(from)==0)
-    return(NULL)
-  ranges <- from[[which]]
-  if (!is.null(ranges) && length(ranges) > 0){
-    return(ranges.to.grid(ranges, grid.param))
-  }
-  
-  return(NULL)
-}
-
 # We have grid as global, since we want to do testing.
 smoothed.totalgrid <<- NULL
-
-gen.grid.for.save <- function(familyName, gridName, selected.grid, dfs, ranges){
-  num.LMs <- get.num.multiplicators(gridName, familyName)
-  grid.params <- selected.grid[,1] 
-  
-  total.grid <- sapply(1:num.LMs, function(i){
-    restrictions <- get.restrictions.for.smooth(i, ranges, grid.params)
-    smoothed <- calc.smooth.grid(selected.grid, dfs[[i]], restrictions)
-    return(smoothed[,i+1])
-  })
-  
-  total.grid <- cbind(grid.params, total.grid)
-  
-  if(TEST.save.grid)
-    smoothed.totalgrid <<- total.grid
-  
-  return(total.grid)
-}
-
-###########################################################################
-# history local grid save intermediate will be saved in history Rdata 
-# (analogue as in sysdata.rda, see Sec. 5 WriteUp-Interpolators.txt)
-# [OptCrit],
-# > [model1],
-# >> [timestamp]
-# >>> [ranges]
-# >>> [dfs]
-###########################################################################
-local.commit.grid <- function(familyName, gridName, dfs, ranges){
-  commits.env <- load.file.to(HISTORY_COMMITS_FILE, on.not.exist=function(x)new.env())
-  
-  # Get entry
-  grid.lookup <- get.grid.lookup(gridName)
-  family.lookup <- get.family.lookup(familyName)
-  
-  if(exists(grid.lookup, envir=commits.env)){
-    models <- get(grid.lookup, envir=commits.env)
-  }else{
-    models <- list()
-  }
-
-  # append
-  if(is.null(models[[family.lookup]])){
-    models[[family.lookup]] <- list()
-  }
-  
-  timestamp = format(Sys.time())
-  models[[family.lookup]][[timestamp]] <- list(dfs=dfs, ranges=ranges)
-  
-  assign(grid.lookup, value=models, envir=commits.env)
-  
-  names <- ls(commits.env, all.names=TRUE)
-  save(list=names, file=HISTORY_COMMITS_FILE, envir=commits.env)
-}
-
-
-save.grid.to.csv <- function(familyName, gridName, selected.grid, dfs, ranges){
-  require(ROptEst)
-  total.grid <- gen.grid.for.save(familyName, gridName, selected.grid, dfs, ranges)
-  
-  dest.file.name <- paste0("interpol", familyName, gridName, ".csv")
-  .saveGridToCSV(total.grid, dest.file.name, gridName, paste0(".", familyName))
-}
 
 
 shinyServer(function(input, output, session){
 ######################################################################################
 ## Set parameters
-  
-  output$resetNote <- renderText("<strong>Durch aendern der Grid & Familie, gehen alle nicht-gespeicherte Intervalle verloren.</strong>")
+  output$resetNote <- renderText(RESET_NOTE_TEXT)
   
   ## prepare data
-  grids <- reactive({ # Depends on input${gridName, familyName}
-    load.grids.env(dataEnviron, gridName=input$gridName, familyName=input$familyName)
+  loadGrids <- reactive({ # Depends on input${gridName, familyName}
+    loadGridsIntoEnv(loadedData, gridName=getCurrentGridName(), familyName=getCurrentFamilyName())
+  })
+
+######################################################################################
+## get current configuration
+  getCurrentLM <- reactive({
+    lm = input$whichLM
+    
+    if (isSnGridWithInvalidLM(getCurrentGridName(), lm)){
+      updateSliderInput(session, inputId="whichLM", value=1)
+      return(1)
+    }else{
+      return(lm)
+    }
   })
   
+  getCurrentGridName <- reactive({return(input$gridName)})
+  getCurrentFamilyName <- reactive({return(input$familyName)})
+
 ######################################################################################
 ## Construct plot parameters
-  observe({ # Depends on input${familyName}. Sets input$whichLM
-    updateSliderInput(session, inputId="whichLM", max=get.num.multiplicators(input$gridName, input$familyName))
+  observe({ # Depends on getCurrentGridName(), getCurrentFamilyName(). Sets input$whichLM
+    maxNumMultiplicators <- getNumMultiplicators(getCurrentGridName(), getCurrentFamilyName())
+    updateSliderInput(session, inputId="whichLM", max=maxNumMultiplicators)
   }, label="set number of multiplicatorsd value")
   
-  observe({ # Depends on input${gridName, whichLM}. Set input$whichLM
-    if ((input$gridName == "Sn") && input$whichLM != 1){
-      updateSliderInput(session, inputId="whichLM", value=1)
-    }
-  }, label="whichLM value for SnGrid")
+  getOriginalGrid <- reactive({loadGrids()[["orig"]]}) # Depends on loadGrids()
+  getOriginalSmoothedGrid <- reactive({loadGrids()[["smoothed"]]}) # Depends on loadGrids()
   
-  observe({ # Depends on input$df. Outputs output$df, restrictionState$df
-    if(input$df > 0){
-      whichLM <- isolate(input$whichLM)
-      restrictionState$df[[whichLM]] <- input$df
-    }else{
-      updateNumericInput(session, "df", value=1)
-    }
-  }, label="update df")
-
-  grid.orig <- reactive({grids()[["orig"]]}) # Depends on grids()
-  grid.smoothed <- reactive({grids()[["smoothed"]]}) # Depends on grids()
-  # grid.selected <- reactive({ if(input$withSmooth) grid.smoothed() else grid.orig() }) # Depends on input$withSmooth, grid.smoothed(), grid.orig()
-  grid.selected <- reactive({grid.orig()})
+  getEditingGrid <- reactive({return(getOriginalGrid())})
   
-  getDf <- reactive({ # Depends on restrictionState$df, input$whichLM
-    return(restrictionState$df[[input$whichLM]])
-  }, label="Returns the degree of freedom for selected LM")
-  
-  gridRestrictionForSmooth <- reactive({  # Depends on restrictionState$ranges, grid.selected(), input$whichLM
-    res <- get.restrictions.for.smooth(input$whichLM, restrictionState$ranges, grid.selected()[,1])
-    return(res)
-  }, label="Returns smoothing grid restrictions.")
-  
-  grid <- reactive({ # Depends on grid.selected(), gridRestrictionForSmooth(), getDf()
-    grid=grid.selected()
-    result <- calc.smooth.grid(grid=grid, df=getDf(), grid.restrictions=gridRestrictionForSmooth())
+  getPostSmoothedEditingGrid <- reactive({ # Depends on getEditingGrid(), getCurrentSmoothRestrictions(), getCurrentDf()
+    grid <- getEditingGrid()
+    result <- applySmoothing(grid=grid, df=getCurrentDf(), grid.restrictions=getCurrentSmoothRestrictions())
     return(result)
-  }, label="Select current grid")
+  })
   
-  plotGridRestriction <- reactive({return(list(rep(TRUE, nrow(grid()))))}) # Depends on grid()
+  plotGridRestriction <- reactive({
+    return(list(rep(TRUE, nrow(getPostSmoothedEditingGrid()))))
+  }) # Depends on getPostSmoothedEditingGrid()
   
   
 ######################################################################################
@@ -265,87 +87,134 @@ shinyServer(function(input, output, session){
   #
   # So the automata look like: (-1) -> (1) <-> (2)
   #                                     \--<<--/
-  restrictions.init <<- NULL # We do not want them as responsive events.
-  restrictionState <- reactiveValues(state=NULL, ranges=NULL, df=NULL)
+  beginRestrictionInterval <<- NULL # We do not want them as responsive events.
+  restrictionState <- reactiveValues(state=NULL)
+  configuration <- reactiveValues(ranges=NULL, df=NULL, useExisting=NULL)
   
-  reset.restrictions <- function(){
-    num.multiplicators <- get.num.multiplicators(isolate(input$gridName), isolate(input$familyName))
+  getCurrentDf <- reactive({ # Depends on configuration$df, getCurrentLM()
+    return(configuration$df[[getCurrentLM()]])
+  })
+  
+  getCurrentUseExisting <- reactive({ # Depends on configuration${useExisting, df}
+    return(configuration$useExisting[[getCurrentLM()]])
+  })
+  
+  getCurrentSmoothRestrictions <- reactive({  # Depends on configuration$ranges, getEditingGrid(), getCurrentLM()
+    result <- get.restrictions.for.smooth(getCurrentLM(), configuration$ranges, getEditingGrid()[,1])
+    return(result)
+  })
+  
+  resetConfiguration <- function(){
+    numMultiplicators <- getNumMultiplicators(isolate(getCurrentGridName()), isolate(getCurrentFamilyName()))
     
-    restrictions.init <<- NULL
-    restrictionState$ranges <- create.list.of.empty.lists(num.multiplicators)
-    restrictionState$df <- as.list(rep(10, num.multiplicators))
+    beginRestrictionInterval <<- NULL
+    
+    configuration$ranges <- create.list.of.empty.lists(numMultiplicators)
+    configuration$df <- as.list(rep(DEFAULT_DEGREE_OF_FREEDOM, numMultiplicators))
+    configuration$useExisting <- as.list(rep(FALSE, numMultiplicators))
   }
   
-  get.restrictions.state <- reactive({ # depends on input$plot_dblclick
+  observe({ # Depends on input$df. Outputs output$df, configuration$df
+    if(input$df > 0) {
+      whichLM <- isolate(getCurrentLM())
+      configuration$df[[whichLM]] <- input$df
+    } else {
+      updateNumericInput(session, "df", value=1)
+    }
+  }, label="update df")
+  
+  observe({ # input$takeUsed, getCurrentLM()
+    COMPONENTS <- c('df', 'ranges', 'deleteRange')
+    whichLM <- isolate(getCurrentLM())
+    
+    configuration$useExisting[[whichLM]] <- input$takeUsed
+    
+    if(input$takeUsed){
+      sapply(COMPONENTS, function(x)shinyjs::disable(x))
+    } else {
+      sapply(COMPONENTS, function(x)shinyjs::enable(x))
+    }
+  }, label="Use saved grid checkbox")
+  
+  observe({ # depends on: configuration$ranges. Sets: output$ranges, getCurrentLM()
+    lm <- getCurrentLM()
+    df <- getCurrentDf()
+    useExisting <- getCurrentUseExisting()
+    
+    ranges <- configuration$ranges[[lm]] # TODO: Create getCurrentRanges() function
+    
+    if(df != isolate(input$df)){
+      updateNumericInput(session, "df", value=df)
+    }
+    
+    if(useExisting != isolate(input$takeUsed)) {
+      updateCheckboxInput(session, 'takeUsed', value=useExisting)
+    }
+    
+    updateSelectInput(session, "ranges", choices=update.ranges.output(ranges))
+  }, label="Set configuration for current LM")
+  
+  getCurrentStateForRestrictions <- reactive({ # depends on input$plot_dblclick
     click <- input$plot_dblclick
     result <- list(click=isolate(click), state=-1)
     
     if(!is.null(click)){
-      result$state <- if(is.null(restrictions.init)) 1 else 2
+      result$state <- if(is.null(beginRestrictionInterval)) 1 else 2
     }
     
     return(result)
   }, label="get restrictions state")
   
-  observe({ # depends on get.restrictions.state(), restrictionState${ranges, state}, input$whichLM
-    whichLM <- isolate(input$whichLM)
-    state <- get.restrictions.state()
+  observe({ # depends on getCurrentStateForRestrictions(), restrictionState${ranges, state}, getCurrentLM()
+    whichLM <- isolate(getCurrentLM())
+    state <- getCurrentStateForRestrictions()
     click <- state$click
     
     if(state$state == 1){ # (1)=>(2)
-      restrictions.init <<- list(x=click$x, y=click$y)
+      beginRestrictionInterval <<- list(x=click$x, y=click$y)
       restrictionState$state <- 2
-    }else if((state$state == 2) && (!is.null(restrictions.init$x))){ # (2)=> (1)
+    }else if((state$state == 2) && (!is.null(beginRestrictionInterval$x))){ # (2)=> (1)
       # If we click close to the first point, the first point is removed and we are in the state 1 again...
-      close.to.frist.Pts <- nearPoints(as.data.frame(restrictions.init), click, xvar="x", yvar="y")
+      close.to.frist.Pts <- nearPoints(as.data.frame(beginRestrictionInterval), click, xvar="x", yvar="y")
       if(dim(close.to.frist.Pts)[1] == 0){ # Otherwise: we add the the point to our ranges
-        ranges <- isolate(restrictionState$ranges[[whichLM]])
-        ranges <- updateRanges(ranges, c(restrictions.init$x, click$x))
-        restrictionState$ranges[[whichLM]] <- ranges
+        ranges <- isolate(configuration$ranges[[whichLM]])
+        ranges <- updateRanges(ranges, c(beginRestrictionInterval$x, click$x))
+        configuration$ranges[[whichLM]] <- ranges
       } 
       restrictionState$state <- 1
-      restrictions.init <<- NULL
+      beginRestrictionInterval <<- NULL
     }
   }, label="restrictions state changer")
   
-  observe({ # depends on: restrictionState$ranges. Sets: output$ranges, input$whichLM
-    df <- getDf()
-    if(df != isolate(input$df)){
-      updateNumericInput(session, "df", value=df)
-    }
-    updateSelectInput(session, "ranges", choices=update.ranges.output(restrictionState$ranges[[input$whichLM]]))
-  }, label="update ranges and df on whichLM-Change")
   
   prev.deleted <<- "" # Somehow the deleteRange is multiple times not null. So we need to store a value to distinguish them.
-  observe({ # depends on input${deleteRange. ranges, whichLM}. Sets restrictionState$ranges
+  observe({ # depends on input${deleteRange. ranges, whichLM}. Sets configuration$ranges
     if(!is.null(input$deleteRange)){
-      whichLM <- isolate(input$whichLM)
-      res <- delete.ranges(whichLM, isolate(restrictionState$ranges), isolate(input$ranges))
+      whichLM <- isolate(getCurrentLM())
+      res <- delete.ranges(whichLM, isolate(configuration$ranges), isolate(input$ranges))
       if (!is.null(res))
-        restrictionState$ranges[[whichLM]] <- res
+        configuration$ranges[[whichLM]] <- res
     }
   }, label="delete ranges")
   
   
   observe({
     if(input$addToHistory){
-      local.commit.grid(isolate(input$familyName), 
-                        isolate(input$gridName), 
-                        isolate(restrictionState$df), 
-                        isolate(restrictionState$ranges))
+      local.commit.grid(isolate(getCurrentFamilyName()), isolate(getCurrentGridName()), 
+                        isolate(configuration$df), isolate(configuration$ranges))
     }
   }, label="save local grid")
 ######################################################################################
   # zoom
   zoom <- reactiveValues(xlim=NULL, ylim=NULL)
   reset.zoom <- function(){
-    zoom.history <<- list() # HACK: only global variables can be used to pass states between reactives
+    zoomHistory <<- list() # HACK: only global variables can be used to pass states between reactives
     zoom$xlim <- NULL
     zoom$ylim <- NULL
   }
     
   observe({ # depends on input${plot_brush}, zoom, 
-    res <- zoom.in(input$plot_brush, isolate(reactiveValuesToList(zoom)))
+    res <- zoomIn(input$plot_brush, isolate(reactiveValuesToList(zoom)), zoomHistory)
     if(!is.null(res)){
       zoom$xlim <- res$xlim
       zoom$ylim <- res$ylim
@@ -367,27 +236,33 @@ shinyServer(function(input, output, session){
 ######################################################################################
   ## Reset function
   observe({ # depends on zoom, input${whichLM, familyName, gridName}
-    reset <- function(){reset.zoom(); reset.restrictions() }
-    if(!is.null(input$familyName)) reset()
-    if(!is.null(input$gridName)) reset()
+    reset <- function(){ 
+      reset.zoom(); 
+      resetConfiguration()
+    }
+    
+    if(!is.null(getCurrentFamilyName())) reset()
+    if(!is.null(getCurrentGridName())) reset()
   }, label="reset")
   
 ######################################################################################
   ## Save to grid
-  observe({ # Depends: input${saveGrid, familyName, gridName}, restrictionState$df, grid.selected()
+  observe({ # Depends: input${saveGrid, familyName, gridName, editingGrid}, configuration$df, getEditingGrid()
     if(input$saveGrid){
-      save.grid.to.csv(familyName=isolate(input$familyName),
-                       gridName=isolate(input$gridName),
-                       selected.grid=isolate(grid.selected()),
-                       dfs=isolate(restrictionState$df),
-                       ranges=isolate(restrictionState$ranges))
+      saveGridToCsv(familyName=isolate(getCurrentFamilyName()),
+                       gridName=isolate(getCurrentGridName()),
+                       editingGrid=isolate(getEditingGrid()),
+                       origSmoothedGrid=isolate(getOriginalSmoothedGrid()),
+                       useExisting=isolate(configuration$useExisting),
+                       dfs=isolate(configuration$df),
+                       ranges=isolate(configuration$ranges))
       
       ####################################################
-      # TEST of save.grid.to.csv
+      # TEST of saveGridToCsv
       ####################################################
       if(TEST.save.grid){
-        whichLM <- input$whichLM
-        grid <- isolate(grid())
+        whichLM <- getCurrentLM()
+        grid <- isolate(getPostSmoothedEditingGrid())
         if(!is.null(smoothed.totalgrid) && whichLM >= 1 && whichLM <= (ncol(smoothed.totalgrid)+1)){
           
           # Test dims
@@ -409,7 +284,7 @@ shinyServer(function(input, output, session){
           }
           
           # test cur lm column
-          whichLM <- isolate(input$whichLM)+1
+          whichLM <- isolate(getCurrentLM())+1
           diff.lm.grid <- abs(grid[,whichLM] - smoothed.totalgrid[,whichLM])
           if (! all(diff.lm.grid <= 10^-7)){
             print(paste("invalid lm grid:", whichLM))
@@ -428,19 +303,18 @@ shinyServer(function(input, output, session){
   ######################################################################################
   ## plot
   output$out <- renderPlot({
-    args <- list(grid          = grid(),
-                 grid.orig     = grid.orig(),
-                 grid.smoothed = grid.smoothed(),
-                 idxCol        = input$whichLM + 1, # +1 because 1. col are the points of xi
+    args <- list(grid          = getPostSmoothedEditingGrid(),
+                 grid.orig     = getOriginalGrid(),
+                 grid.smoothed = getOriginalSmoothedGrid(),
+                 idxCol        = getCurrentLM() + 1, # +1 because 1. col are the points of xi
                  xlab          = expression(xi),
                  lty           = c(2, 3, 1),
                  lwd           = c(0.8, 0.8, 1.8),
                  col           = 1:3,
-                 main          = main.title(input$gridName, input$familyName),
-                 ylab          = paste("LM", NAMES_LM[input$whichLM]),
+                 main          = getMainTitle(getCurrentGridName(), getCurrentFamilyName()),
+                 ylab          = paste("LM", NAMES_LM[getCurrentLM()]),
                  restriction   = plotGridRestriction()[[1]],
                  withLegend    = input$withLegend)
-  
     # Zoom
     args[["xlim"]] <- zoom$xlim
     args[["ylim"]] <- zoom$ylim
@@ -448,15 +322,15 @@ shinyServer(function(input, output, session){
     ## plot
     
     do.call(matlines.internal, args)
-
     ## smooth restricton selector
     # (1) => plot first.
     # (2) => plot first.
     # (3) => nothing.
+    
     if(!is.null(restrictionState$state)){
       state <- isolate(restrictionState$state)
       if(state == 2){
-        click <- restrictions.init
+        click <- beginRestrictionInterval
         points(click$x, click$y, pch=4, col="red", lwd=3)
       }
     }

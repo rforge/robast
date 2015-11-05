@@ -1,15 +1,16 @@
 shinyUI(fluidPage(
+  shinyjs::useShinyjs(),
   titlePanel("Smoother"),
   
   fluidRow(
     column(1, 
       radioButtons("gridName", 
-                  label = "Grid auswählen",
+                  label = "Grid auswÃ¤hlen",
                   choices = c("Sn", "OMSE", "RMXE", "MBRE")
                   ),
       
       radioButtons("familyName", 
-                   label = "Familie auswählen",
+                   label = "Familie auswÃ¤hlen",
                    choices = c("Generalized Pareto Family", 
                                "GEV Family",
                                "GEVU Family",
@@ -23,13 +24,14 @@ shinyUI(fluidPage(
       # checkboxInput("withSmooth", label="Plot with Smooth"),
       sliderInput("whichLM", label="L-Multiplikator auswählen", min=1, max=10, value=1),
       
+      checkboxInput("takeUsed", label="Gespeicherten Spline verwenden."),
       numericInput("df", "DF", 10),
       selectInput("ranges", label="Glättung-Ausschluss-Intervalle", choices=NULL, size=10, selectize=FALSE),
       actionButton("deleteRange", label="Interval löschen"),
       
       fluidRow( 
         column(6, actionButton("saveGrid", label="Speichere Grid (CSV)")),
-        column(6, actionButton("addToHistory", label="Zu History hinzufügen"))
+        column(6, actionButton("addToHistory", label="Zu History hinzufÃ¼gen"))
       )
     ), # column
   
