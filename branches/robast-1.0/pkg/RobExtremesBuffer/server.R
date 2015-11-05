@@ -199,7 +199,7 @@ shinyServer(function(input, output, session){
 ######################################################################################
 ## Set parameters
   
-  output$resetNote <- renderText("<strong>Durch Ändern der Grid & Familie, gehen alle nicht-gespeicherte Intervalle verloren.</strong>")
+  output$resetNote <- renderText("<strong>Durch aendern der Grid & Familie, gehen alle nicht-gespeicherte Intervalle verloren.</strong>")
   
   ## prepare data
   grids <- reactive({ # Depends on input${gridName, familyName}
