@@ -102,6 +102,13 @@ shinyServer(function(input, output, session){
     return(result)
   })
   
+  getInputDf <- reactive({
+    if(is.na(input$df))
+      return(1)
+    
+    return(input$df)
+    })
+  
   resetConfiguration <- function(){
     numMultiplicators <- getNumMultiplicators(isolate(getCurrentGridName()), isolate(getCurrentFamilyName()))
     
@@ -112,10 +119,10 @@ shinyServer(function(input, output, session){
     configuration$useExisting <- as.list(rep(FALSE, numMultiplicators))
   }
   
-  observe({ # Depends on input$df. Outputs output$df, configuration$df
-    if(input$df > 0) {
+  observe({ # Depends on getInputDf(). Outputs output$df, configuration$df
+    if(getInputDf() > 0) {
       whichLM <- isolate(getCurrentLM())
-      configuration$df[[whichLM]] <- input$df
+      configuration$df[[whichLM]] <- getInputDf()
     } else {
       updateNumericInput(session, "df", value=1)
     }
@@ -141,7 +148,7 @@ shinyServer(function(input, output, session){
     
     ranges <- configuration$ranges[[lm]] # TODO: Create getCurrentRanges() function
     
-    if(df != isolate(input$df)){
+    if(df != isolate(getInputDf())){
       updateNumericInput(session, "df", value=df)
     }
     
