@@ -1,12 +1,11 @@
-if(!require(shiny)) install.packages("shiny", dep=TRUE)
-#library(shiny)
+source("config.R")
 
 options(shiny.error=NULL)
 options(shiny.trace=F)
 
 
 source("utilities.R")
-source("config.R")
+checkRequiredPackages()
 
 RESET_NOTE_TEXT <- "<strong>Durch aendern der Grid & Familie, gehen alle nicht-gespeicherte Intervalle verloren.</strong>"
 DEFAULT_DEGREE_OF_FREEDOM <- 10
@@ -16,7 +15,6 @@ zoomHistory <<- NULL
 prev.deleted <<- ""
 # We have grid as global, since we want to do testing.
 smoothed.totalgrid <<- NULL
-
 
 
 
@@ -248,6 +246,7 @@ shinyServer(function(input, output, session){
 ######################################################################################
   ## Save to grid
   observe({ # Depends: input${saveGrid, familyName, gridName, editingGrid}, configuration$df, getEditingGrid()
+    
     if(input$saveGrid){
       saveGridToCsv(familyName=isolate(getCurrentFamilyName()),
                        gridName=isolate(getCurrentGridName()),
@@ -256,6 +255,7 @@ shinyServer(function(input, output, session){
                        useExisting=isolate(configuration$useExisting),
                        dfs=isolate(configuration$df),
                        ranges=isolate(configuration$ranges))
+      
       
       ####################################################
       # TEST of saveGridToCsv

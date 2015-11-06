@@ -515,3 +515,21 @@ local.commit.grid <- function(familyName, gridName, dfs, ranges){
   names <- ls(commits.env, all.names=TRUE)
   save(list=names, file=HISTORY_COMMITS_FILE, envir=commits.env)
 }
+
+
+
+checkRequiredPackages <- function(packages=REQUIRED_PACKAGES) {
+  inQuotes <- function(x) paste("\"", x, "\"", sep="")
+  
+  notInstalled <- ! (packages %in% installed.packages())
+  notInstalledPackages <- packages[notInstalled]
+    
+  if(length(notInstalledPackages) > 0) {
+    packagesToInstall <- paste(inQuotes(notInstalledPackages), collapse=", ")
+    cat("------------------------------------------------------------------\n")
+    cat(paste("Please run> install.packages(", packagesToInstall, ")\n", sep=""))
+    cat("------------------------------------------------------------------\n")
+    
+    stopApp()
+  }
+}

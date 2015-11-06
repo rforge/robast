@@ -16,3 +16,5 @@
 
 
 TEST.save.grid <- TRUE
+
+REQUIRED_PACKAGES <- c("shiny", "shinyjs", "ROptEst")
