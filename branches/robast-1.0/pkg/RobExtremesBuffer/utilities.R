@@ -191,6 +191,17 @@ getFamilyLookupName <- function(familyName){
   return(gsub(" ", "", familyName))
 }
 
+getLMName <- function(lm) {
+  NAMES_LM <- c("b", "a.a[sc]", "a.a[sh]", "z.i[sc]", "z.i[sh]",
+                "A.a[sc,sc]", "A.a[sc,sh]", "A.a[sh,sc]", "A.a[sh,sh]",
+                "A.i[sc,sc]", "A.i[sc,sh]", "A.i[sh,sc]", "A.i[sh,sh]")
+  
+  name <- NAMES_LM[lm]
+  name <- paste("LM", name)
+  
+  return(name) 
+}
+
 loadGridsIntoEnv <- function(env, gridName, familyName){
   grid.lookup <- getGridLookupName(gridName)
   family.lookup <- getFamilyLookupName(familyName)
@@ -254,6 +265,7 @@ log.value <- function(x){
 #  result <- grids()[["smoothed"]] OR grids()[["orig"]]
 .MakeSmoothGridList <- function(thGrid, Y, df = NULL,
                                 gridRestrForSmooth = NULL){
+  
   ############################################
   ### create internal lm-grid: lmgrid
   if(length(dim(Y))==3)
@@ -377,12 +389,13 @@ isSnGridWithInvalidLM <- function(gridName, lm) {
 
 
 ## Create smooth grid
-applySmoothing <- function(grid, df, grid.restrictions){
+applySmoothing <- function(grid, df, gridRestrictions){
   # grid[,1] - The grid positions
   # grid[,2:end] - the Lagrange multiplier values
-  result <- .MakeSmoothGridList(grid[,1], grid[,-1], df=df, gridRestrForSmooth=grid.restrictions)
+  result <- .MakeSmoothGridList(grid[,1], grid[,-1], df=df, gridRestrForSmooth=gridRestrictions)
   return(result)
 }
+
 
 ## Uses the list of all ranges and deletes the required one
 ## 
@@ -433,7 +446,7 @@ zoomIn <- function(brush, zoomList, zoomHistory){
 }
 
 zoom.out <- function(){
-  idx.last <- length(zoom.history)
+  idx.last <- length(zoomHistory)
   if(idx.last > 0){
     last <- zoomHistory[[idx.last]]
     zoomHistory <<- zoomHistory[1:(idx.last-1)]
@@ -475,6 +488,8 @@ get.restrictions.for.smooth <- function(which, from, grid.param){
 # >>> [dfs]
 ###########################################################################
 local.commit.grid <- function(familyName, gridName, dfs, ranges){
+  HISTORY_COMMITS_FILE <- "history.rda"
+  
   commits.env <- load.file.to(HISTORY_COMMITS_FILE, on.not.exist=function(x)new.env())
   
   # Get entry

@@ -8,11 +8,6 @@ options(shiny.trace=F)
 source("utilities.R")
 source("config.R")
 
-NAMES_LM <- c("b","a.a[sc]","a.a[sh]","z.i[sc]","z.i[sh]",
-              "A.a[sc,sc]","A.a[sc,sh]","A.a[sh,sc]","A.a[sh,sh]",
-              "A.i[sc,sc]","A.i[sc,sh]","A.i[sh,sc]","A.i[sh,sh]")
-
-HISTORY_COMMITS_FILE = "history.rda"
 RESET_NOTE_TEXT <- "<strong>Durch aendern der Grid & Familie, gehen alle nicht-gespeicherte Intervalle verloren.</strong>"
 DEFAULT_DEGREE_OF_FREEDOM <- 10
 
@@ -21,6 +16,8 @@ zoomHistory <<- NULL
 prev.deleted <<- ""
 # We have grid as global, since we want to do testing.
 smoothed.totalgrid <<- NULL
+
+
 
 
 shinyServer(function(input, output, session){
@@ -56,14 +53,17 @@ shinyServer(function(input, output, session){
     updateSliderInput(session, inputId="whichLM", max=maxNumMultiplicators)
   }, label="set number of multiplicatorsd value")
   
-  getOriginalGrid <- reactive({loadGrids()[["orig"]]}) # Depends on loadGrids()
+  getOriginalGrid <- reactive({
+    res <- loadGrids()[["orig"]]
+    return(res)
+    }) # Depends on loadGrids()
   getOriginalSmoothedGrid <- reactive({loadGrids()[["smoothed"]]}) # Depends on loadGrids()
   
   getEditingGrid <- reactive({return(getOriginalGrid())})
   
   getPostSmoothedEditingGrid <- reactive({ # Depends on getEditingGrid(), getCurrentSmoothRestrictions(), getCurrentDf()
     grid <- getEditingGrid()
-    result <- applySmoothing(grid=grid, df=getCurrentDf(), grid.restrictions=getCurrentSmoothRestrictions())
+    result <- applySmoothing(grid=grid, df=getCurrentDf(), gridRestrictions=getCurrentSmoothRestrictions())
     return(result)
   })
   
@@ -312,7 +312,7 @@ shinyServer(function(input, output, session){
                  lwd           = c(0.8, 0.8, 1.8),
                  col           = 1:3,
                  main          = getMainTitle(getCurrentGridName(), getCurrentFamilyName()),
-                 ylab          = paste("LM", NAMES_LM[getCurrentLM()]),
+                 ylab          = getLMName(getCurrentLM()),
                  restriction   = plotGridRestriction()[[1]],
                  withLegend    = input$withLegend)
     # Zoom
@@ -320,14 +320,13 @@ shinyServer(function(input, output, session){
     args[["ylim"]] <- zoom$ylim
     
     ## plot
-    
     do.call(matlines.internal, args)
     ## smooth restricton selector
     # (1) => plot first.
     # (2) => plot first.
     # (3) => nothing.
     
-    if(!is.null(restrictionState$state)){
+    if(!is.null(restrictionState$state)) {
       state <- isolate(restrictionState$state)
       if(state == 2){
         click <- beginRestrictionInterval
