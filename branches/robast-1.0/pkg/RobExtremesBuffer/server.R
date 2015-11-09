@@ -10,7 +10,7 @@ checkRequiredPackages()
 RESET_NOTE_TEXT <- "<strong>Durch aendern der Grid & Familie, gehen alle nicht-gespeicherte Intervalle verloren.</strong>"
 DEFAULT_DEGREE_OF_FREEDOM <- 10
 
-loadedData <- load.file.to("sysdata.rda")
+loadedData <- loadRDataFileToEnv("sysdata.rda")
 zoomHistory <<- NULL
 prev.deleted <<- ""
 # We have grid as global, since we want to do testing.
@@ -49,7 +49,9 @@ shinyServer(function(input, output, session){
   observe({ # Depends on getCurrentGridName(), getCurrentFamilyName(). Sets input$whichLM
     maxNumMultiplicators <- getNumMultiplicators(getCurrentGridName(), getCurrentFamilyName())
     updateSliderInput(session, inputId="whichLM", max=maxNumMultiplicators)
-  }, label="set number of multiplicatorsd value")
+    isLoadFromHistoryEnabled <- hasHistory(getCurrentFamilyName(), getCurrentGridName())
+    toogleAvailabilityComponents("loadFromHistory", isLoadFromHistoryEnabled)
+  }, label="form components setting on grid & family")
   
   getOriginalGrid <- reactive({
     res <- loadGrids()[["orig"]]
@@ -119,6 +121,7 @@ shinyServer(function(input, output, session){
     configuration$useExisting <- as.list(rep(FALSE, numMultiplicators))
   }
   
+  
   observe({ # Depends on getInputDf(). Outputs output$df, configuration$df
     if(getInputDf() > 0) {
       whichLM <- isolate(getCurrentLM())
@@ -128,18 +131,16 @@ shinyServer(function(input, output, session){
     }
   }, label="update df")
   
+  
   observe({ # input$takeUsed, getCurrentLM()
     COMPONENTS <- c('df', 'ranges', 'deleteRange')
     whichLM <- isolate(getCurrentLM())
     
     configuration$useExisting[[whichLM]] <- input$takeUsed
     
-    if(input$takeUsed){
-      sapply(COMPONENTS, function(x)shinyjs::disable(x))
-    } else {
-      sapply(COMPONENTS, function(x)shinyjs::enable(x))
-    }
+    toogleAvailabilityComponents(COMPONENTS, !input$takeUsed)
   }, label="Use saved grid checkbox")
+  
   
   observe({ # depends on: configuration$ranges. Sets: output$ranges, getCurrentLM()
     lm <- getCurrentLM()
@@ -158,6 +159,7 @@ shinyServer(function(input, output, session){
     
     updateSelectInput(session, "ranges", choices=update.ranges.output(ranges))
   }, label="Set configuration for current LM")
+  
   
   getCurrentStateForRestrictions <- reactive({ # depends on input$plot_dblclick
     click <- input$plot_dblclick
@@ -205,10 +207,21 @@ shinyServer(function(input, output, session){
   
   observe({
     if(input$addToHistory){
-      local.commit.grid(isolate(getCurrentFamilyName()), isolate(getCurrentGridName()), 
-                        isolate(configuration$df), isolate(configuration$ranges))
+      addToHistory(isolate(getCurrentFamilyName()), isolate(getCurrentGridName()), 
+                   isolate(configuration$df), isolate(configuration$ranges),
+                   isolate(configuration$useExisting))
     }
   }, label="save local grid")
+  
+  observe({
+    if(input$loadFromHistory){
+      ##1
+      values <- loadFromHistory(getCurrentFamilyName(), getCurrentGridName())
+      configuration$df <- values$df
+      configuration$ranges <- values$ranges
+      configuration$useExisting <- values$useExisting
+    }
+  }, label="load from grid")
 ######################################################################################
   # zoom
   zoom <- reactiveValues(xlim=NULL, ylim=NULL)
@@ -223,20 +236,36 @@ shinyServer(function(input, output, session){
     if(!is.null(res)){
       zoom$xlim <- res$xlim
       zoom$ylim <- res$ylim
+      
+      updateNumericInput(session, "zoomYlimMin", value=res$ylim[1])
+      updateNumericInput(session, "zoomYlimMax", value=res$ylim[2])
     }
   }, label="Zoom in")
   
   # zoom out
   observe({ # depends on input${zoomOut}, modifies zoom
     if (input$zoomOut){
-      res <- zoom.out()
+      res <- zoomOut()
       if(!is.null(res)){
         zoom$xlim <- res$xlim
         zoom$ylim <- res$ylim
+        
+        updateNumericInput(session, "zoomYlimMin", value=res$ylim[1])
+        updateNumericInput(session, "zoomYlimMax", value=res$ylim[2])
         # The event for replotting should be fired now
       }
     }
   }, label="Zoom Out")
+  
+  # zoom by numeric input fields
+  observe({
+#     if(input$zoomYlimMin){
+#       zoom$ylim[1] <- isolate(input$zoomYlimMin)
+#     }
+#     if(input$zoomYlimMax){
+#       zoom$ylim[2] <- isolate(input$zoomYlimMax)
+#     }
+  }, label="zoom by numeric input fields")
   
 ######################################################################################
   ## Reset function

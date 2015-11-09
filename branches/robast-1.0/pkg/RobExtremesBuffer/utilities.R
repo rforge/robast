@@ -1,4 +1,4 @@
-
+source("config.R")
 
 ranges.to.indicies <- function(ranges, values){
   if (is.null(ranges))
@@ -143,14 +143,14 @@ parent.path <- function(){
 }
 
 
-load.file.to <- function(filePath, destEnvironment=new.env(), 
-                         on.not.exist=function(filePath)stop("Fehler mit checkout"))
+loadRDataFileToEnv <- function(filePath, destEnvironment=new.env(), 
+                         onError=function(filePath)stop("Fehler mit checkout"))
 {
   ## Loads an R data file into new environment
   ##
   ## Returns the environment with the data
   if(!file.exists(filePath)) 
-    return(on.not.exist(filePath))
+    return(onError(filePath))
   
   # destEnvironment <- new.env()
   load(filePath, envir=destEnvironment)
@@ -172,9 +172,9 @@ get.partial.matched <- function(entry, list, errormsg=""){
 
 
 load.grids <- function(gridName, familyName, baseDir){
-  # dataEnviron <- load.file.to(file.path(baseDir, "branches/robast-1.0/pkg/RobExtremesBuffer/sysdata.rda"))
-  dataEnviron <- load.file.to("sysdata.rda")
-  # dataEnviron <- load.file.to(file.path(baseDir, "branches/robast-1.0/pkg/RobAStRDA/R/sysdata.rda"))
+  # dataEnviron <- loadRDataFileToEnv(file.path(baseDir, "branches/robast-1.0/pkg/RobExtremesBuffer/sysdata.rda"))
+  dataEnviron <- loadRDataFileToEnv("sysdata.rda")
+  # dataEnviron <- loadRDataFileToEnv(file.path(baseDir, "branches/robast-1.0/pkg/RobAStRDA/R/sysdata.rda"))
   
   return(loadGridsIntoEnv(dataEnviron, gridName, familyName))
 }
@@ -433,29 +433,33 @@ zoomIn <- function(brush, zoomList, zoomHistory){
     return(NULL)
   
   # store to history if the last differs from current
-  if (can.push(zoomHistory, zoomList)){
-    last.idx <- length(zoomHistory)
-    zoomHistory[[last.idx + 1]] <<- zoomList
-    
-    # set new values
-    res <- list (xlim=c(brush$xmin, brush$xmax), ylim=c(brush$ymin, brush$ymax))
-    return(res)
-  }
+  if (!can.push(zoomHistory, zoomList))
+    return(NULL)
   
-  return(NULL)
+  idxOfLastEntry <- length(zoomHistory)
+  zoomHistory[[idxOfLastEntry + 1]] <<- zoomList
+  
+  # set new values
+  res <- list(xlim=c(brush$xmin, brush$xmax), ylim=c(brush$ymin, brush$ymax))
+  return(res)
 }
 
-zoom.out <- function(){
-  idx.last <- length(zoomHistory)
-  if(idx.last > 0){
-    last <- zoomHistory[[idx.last]]
-    zoomHistory <<- zoomHistory[1:(idx.last-1)]
-    
-    res <-list(xlim=c(last$xlim[1], last$xlim[2]), ylim=c(last$ylim[1], last$ylim[2]))
-    return(res)
-  }
-  return(NULL)
+
+zoomOut <- function() {
+  idxOfLastEntry <- length(zoomHistory)
+  isHistoryEmpty <- idxOfLastEntry == 0
+  
+  if(isHistoryNotEmpty)
+    return(NULL)
+  
+  last <- zoomHistory[[idxOfLastEntry]]
+  zoomHistory <<- zoomHistory[1:(idxOfLastEntry-1)]
+  
+  lims <- list(xlim=c(last$xlim[1], last$xlim[2]), ylim=c(last$ylim[1], last$ylim[2]))
+  return(lims)
 }
+
+
 delete.ranges <- function(whichLM, state.ranges, input.ranges){
   if(!is.null(input.ranges) && (prev.deleted != input.ranges)){
     res <- update.ranges.after.delete(allRanges=state.ranges[[whichLM]], which.to.delete=input.ranges)
@@ -487,17 +491,15 @@ get.restrictions.for.smooth <- function(which, from, grid.param){
 # >>> [ranges]
 # >>> [dfs]
 ###########################################################################
-local.commit.grid <- function(familyName, gridName, dfs, ranges){
-  HISTORY_COMMITS_FILE <- "history.rda"
-  
-  commits.env <- load.file.to(HISTORY_COMMITS_FILE, on.not.exist=function(x)new.env())
+addToHistory <- function(familyName, gridName, dfs, ranges, useExisting){
+  commitsEnv <- loadRDataFileToEnv(HISTORY_COMMITS_FILE, onError=function(x)new.env())
   
   # Get entry
   gridLookupName <- getGridLookupName(gridName)
   familyLookup <- getFamilyLookupName(familyName)
   
-  if(exists(gridLookupName, envir=commits.env)){
-    models <- get(gridLookupName, envir=commits.env)
+  if(exists(gridLookupName, envir=commitsEnv)){
+    models <- get(gridLookupName, envir=commitsEnv)
   }else{
     models <- list()
   }
@@ -508,14 +510,57 @@ local.commit.grid <- function(familyName, gridName, dfs, ranges){
   }
   
   timestamp = format(Sys.time())
-  models[[familyLookup]][[timestamp]] <- list(dfs=dfs, ranges=ranges)
+  models[[familyLookup]][[timestamp]] <- list(dfs=dfs, ranges=ranges, useExisting=useExisting)
   
-  assign(gridLookupName, value=models, envir=commits.env)
+  assign(gridLookupName, value=models, envir=commitsEnv)
   
-  names <- ls(commits.env, all.names=TRUE)
-  save(list=names, file=HISTORY_COMMITS_FILE, envir=commits.env)
+  names <- ls(commitsEnv, all.names=TRUE)
+  save(list=names, file=HISTORY_COMMITS_FILE, envir=commitsEnv)
 }
 
+
+
+loadDataFromHistory <- function(familyName, gridName) {
+  commitsEnv <- loadRDataFileToEnv(HISTORY_COMMITS_FILE, onError=function(x)new.env())
+  
+  # Get entry
+  gridLookupName <- getGridLookupName(gridName)
+  familyLookup <- getFamilyLookupName(familyName)
+  
+  if(exists(gridLookupName, envir=commitsEnv)){
+    models <- get(gridLookupName, envir=commitsEnv)
+    return(models[[familyLookup]])
+  }else{
+    return(NULL)
+  }
+  
+  # append
+  if(is.null(models[[familyLookup]])){
+    return(NULL)
+  }
+
+}
+
+
+loadFromHistory <- function(familyName, gridName) {
+  data <- loadDataFromHistory(familyName, gridName)
+  
+  timestamps <- names(data)
+  timestamps <- as.POSIXlt(timestamps)
+  
+  latestTimestamp <- max(timestamps)
+  
+  # Need again a string to be able to access the data  
+  latestTimestamp <- as.character(latestTimestamp)
+  result <- data[[latestTimestamp]]
+  return(result)
+}
+
+
+hasHistory <- function(familyName, gridName) {
+  loadedHistory <- loadDataFromHistory(familyName, gridName)
+  return(!is.null(loadedHistory))
+}
 
 
 checkRequiredPackages <- function(packages=REQUIRED_PACKAGES) {
@@ -532,4 +577,13 @@ checkRequiredPackages <- function(packages=REQUIRED_PACKAGES) {
     
     stopApp()
   }
+}
+
+toogleAvailabilityComponents <- function(components, enable) {
+  if(enable){
+    sapply(components, function(x)shinyjs::enable(x))
+  } else {
+    sapply(components, function(x)shinyjs::disable(x))
+  }
+  
 }

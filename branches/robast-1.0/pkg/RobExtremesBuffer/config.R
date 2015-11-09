@@ -18,3 +18,5 @@
 TEST.save.grid <- TRUE
 
 REQUIRED_PACKAGES <- c("shiny", "shinyjs", "ROptEst")
+
+HISTORY_COMMITS_FILE <- "history.rda"
