@@ -236,36 +236,20 @@ shinyServer(function(input, output, session){
     if(!is.null(res)){
       zoom$xlim <- res$xlim
       zoom$ylim <- res$ylim
-      
-      updateNumericInput(session, "zoomYlimMin", value=res$ylim[1])
-      updateNumericInput(session, "zoomYlimMax", value=res$ylim[2])
     }
   }, label="Zoom in")
   
   # zoom out
   observe({ # depends on input${zoomOut}, modifies zoom
     if (input$zoomOut){
-      res <- zoomOut()
+      res <- zoom.out()
       if(!is.null(res)){
         zoom$xlim <- res$xlim
         zoom$ylim <- res$ylim
-        
-        updateNumericInput(session, "zoomYlimMin", value=res$ylim[1])
-        updateNumericInput(session, "zoomYlimMax", value=res$ylim[2])
         # The event for replotting should be fired now
       }
     }
   }, label="Zoom Out")
-  
-  # zoom by numeric input fields
-  observe({
-#     if(input$zoomYlimMin){
-#       zoom$ylim[1] <- isolate(input$zoomYlimMin)
-#     }
-#     if(input$zoomYlimMax){
-#       zoom$ylim[2] <- isolate(input$zoomYlimMax)
-#     }
-  }, label="zoom by numeric input fields")
   
 ######################################################################################
   ## Reset function

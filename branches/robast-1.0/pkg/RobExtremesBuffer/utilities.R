@@ -433,30 +433,28 @@ zoomIn <- function(brush, zoomList, zoomHistory){
     return(NULL)
   
   # store to history if the last differs from current
-  if (!can.push(zoomHistory, zoomList))
-    return(NULL)
+  if (can.push(zoomHistory, zoomList)){
+    last.idx <- length(zoomHistory)
+    zoomHistory[[last.idx + 1]] <<- zoomList
+    
+    # set new values
+    res <- list (xlim=c(brush$xmin, brush$xmax), ylim=c(brush$ymin, brush$ymax))
+    return(res)
+  }
   
-  idxOfLastEntry <- length(zoomHistory)
-  zoomHistory[[idxOfLastEntry + 1]] <<- zoomList
-  
-  # set new values
-  res <- list(xlim=c(brush$xmin, brush$xmax), ylim=c(brush$ymin, brush$ymax))
-  return(res)
+  return(NULL)
 }
 
-
-zoomOut <- function() {
-  idxOfLastEntry <- length(zoomHistory)
-  isHistoryEmpty <- idxOfLastEntry == 0
-  
-  if(isHistoryNotEmpty)
-    return(NULL)
-  
-  last <- zoomHistory[[idxOfLastEntry]]
-  zoomHistory <<- zoomHistory[1:(idxOfLastEntry-1)]
-  
-  lims <- list(xlim=c(last$xlim[1], last$xlim[2]), ylim=c(last$ylim[1], last$ylim[2]))
-  return(lims)
+zoom.out <- function(){
+  idx.last <- length(zoomHistory)
+  if(idx.last > 0){
+    last <- zoomHistory[[idx.last]]
+    zoomHistory <<- zoomHistory[1:(idx.last-1)]
+    
+    res <-list(xlim=c(last$xlim[1], last$xlim[2]), ylim=c(last$ylim[1], last$ylim[2]))
+    return(res)
+  }
+  return(NULL)
 }
 
 

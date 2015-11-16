@@ -24,7 +24,7 @@ shinyUI(fluidPage(
       sliderInput("whichLM", label="L-Multiplikator auswählen", min=1, max=10, value=1),
       
       checkboxInput("takeUsed", label="Gespeicherten Spline verwenden."),
-      numericInput("df", "DF", value=10, step=1),
+      numericInput("df", "DF", 10),
       selectInput("ranges", label="Glättung-Ausschluss-Intervalle", choices=NULL, size=10, selectize=FALSE),
       
       fluidRow(
@@ -48,9 +48,7 @@ shinyUI(fluidPage(
                  ), 
       fluidRow(
         column(1, actionButton("zoomOut", label="Zoom Out", icon=icon("zoom-out", lib="glyphicon"))),
-        column(2, offset=1, checkboxInput("withLegend", label="Legende anzeigen", value=TRUE)),
-        column(3, numericInput("zoomYlimMin", "Zoom ylim min", value=0.1)),
-        column(3, numericInput("zoomYlimMax", "Zoom ylim max", value=1.1))
+        column(2, offset=1, checkboxInput("withLegend", label="Legende anzeigen", value=TRUE))
       )
     ) # column
   ) # fluidRow
