@@ -1,6 +1,7 @@
 import("methods")
 import("distr")
 import("distrEx")
+importFrom("startupmsg", "buildStartupMessage")
 
 exportClasses("OptionalrSpace") 
 exportClasses("RandVariable", 
