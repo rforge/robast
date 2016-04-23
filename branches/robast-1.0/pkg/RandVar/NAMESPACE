@@ -1,7 +1,7 @@
 import("methods")
 import("distr")
 import("distrEx")
-importFrom("startupmsg", "buildStartupMessage", "infoShow")
+importFrom("startupmsg", "buildStartupMessage")
 
 exportClasses("OptionalrSpace") 
 exportClasses("RandVariable", 
