@@ -3,7 +3,7 @@
 \alias{RobRDA}
 \docType{package}
 \title{
-RobRDA a sysdata.rda only package
+Interpolation Grids for Packages of RobASt - Family of Pkgs
 }
 \description{
 This package only contains sysdata.rda (with corresponding interpolation grids
@@ -31,16 +31,14 @@ See also mail exchange P.Ruckdeschel - U.Ligges on R-devel---
 \details{
 \tabular{ll}{
 Package: \tab RobAStRDA \cr
-Version: \tab 0.9 \cr
-Date: \tab 2013-09-11 \cr
-Depends: \tab R (>= 2.14.0), methods \cr
-Imports: ROptEst (>= 0.9)
+Version: \tab 1.0 \cr
+Date: \tab 2016-04-23 \cr
+Depends: \tab R (>= 2.14.0) \cr
 LazyData: \tab yes \cr
-LazyLoad: \tab yes \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 694 \cr
+SVNRevision: \tab 869 \cr
 }
 }
 
