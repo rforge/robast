@@ -8,6 +8,16 @@
  information)
 
 #######################################
+version 1.0
+#######################################
+
+user-visible CHANGES:
++ title changed to title style / capitalization
+
+under the hood:
++ enhanced imports in DESCRIPTION by explicating second order imports
+
+#######################################
 version 0.9
 #######################################
 

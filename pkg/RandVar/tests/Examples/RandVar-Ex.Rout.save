@@ -115,7 +115,7 @@ The following objects are masked from 'package:stats':
 
     IQR, mad, median, var
 
-:RandVar>  Implementation of random variables (version 0.9.4)
+:RandVar>  Implementation of Random Variables (version 1.0)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -132,7 +132,7 @@ The following objects are masked from 'package:stats':
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: RandVar-package
-> ### Title: Implementation of random variables
+> ### Title: Implementation of Random Variables
 > ### Aliases: RandVar-package RandVar
 > ### Keywords: package
 > 
@@ -215,7 +215,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x0a02258c>
+<environment: 0x06622d4c>
 
 > 
 > R2 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
@@ -244,7 +244,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0a1627dc>
+<environment: 0x09941248>
 
 [[2]]
 function (x) 
@@ -255,7 +255,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0a1627dc>
+<environment: 0x09941248>
 
 [[3]]
 function (x) 
@@ -266,7 +266,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0a1627dc>
+<environment: 0x09941248>
 
 [[4]]
 function (x) 
@@ -277,7 +277,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0a1627dc>
+<environment: 0x09941248>
 
 > 
 > ## "Arith" group
@@ -291,7 +291,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a196df0>
+<environment: 0x0997564c>
 
 [[2]]
 function (x) 
@@ -302,7 +302,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a196df0>
+<environment: 0x0997564c>
 
 [[3]]
 function (x) 
@@ -313,7 +313,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a196df0>
+<environment: 0x0997564c>
 
 [[4]]
 function (x) 
@@ -324,7 +324,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a196df0>
+<environment: 0x0997564c>
 
 [[5]]
 function (x) 
@@ -335,7 +335,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a196df0>
+<environment: 0x0997564c>
 
 [[6]]
 function (x) 
@@ -346,7 +346,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a196df0>
+<environment: 0x0997564c>
 
 > Map(R2 * R2)
 [[1]]
@@ -362,7 +362,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0a1d336c>
+<environment: 0x099b1bc8>
 
 [[2]]
 function (x) 
@@ -377,7 +377,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0a1d336c>
+<environment: 0x099b1bc8>
 
 [[3]]
 function (x) 
@@ -392,7 +392,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0a1d336c>
+<environment: 0x099b1bc8>
 
 [[4]]
 function (x) 
@@ -407,7 +407,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0a1d336c>
+<environment: 0x099b1bc8>
 
 > 
 > 
@@ -458,7 +458,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x0a22c3e0>
+<environment: 0x09a0ac3c>
 
 > 
 > R2 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
@@ -485,7 +485,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0a170ebc>
+<environment: 0x0994fa94>
 
 [[2]]
 function (x) 
@@ -496,7 +496,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0a170ebc>
+<environment: 0x0994fa94>
 
 [[3]]
 function (x) 
@@ -507,7 +507,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0a170ebc>
+<environment: 0x0994fa94>
 
 [[4]]
 function (x) 
@@ -518,7 +518,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0a170ebc>
+<environment: 0x0994fa94>
 
 > 
 > ## "Arith" group
@@ -532,7 +532,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a15a858>
+<environment: 0x09939430>
 
 [[2]]
 function (x) 
@@ -543,7 +543,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a15a858>
+<environment: 0x09939430>
 
 [[3]]
 function (x) 
@@ -554,7 +554,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a15a858>
+<environment: 0x09939430>
 
 [[4]]
 function (x) 
@@ -565,7 +565,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a15a858>
+<environment: 0x09939430>
 
 [[5]]
 function (x) 
@@ -576,7 +576,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a15a858>
+<environment: 0x09939430>
 
 [[6]]
 function (x) 
@@ -587,7 +587,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a15a858>
+<environment: 0x09939430>
 
 > Map(R2 * R2)
 [[1]]
@@ -603,7 +603,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0a132ccc>
+<environment: 0x099118a4>
 
 [[2]]
 function (x) 
@@ -618,7 +618,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0a132ccc>
+<environment: 0x099118a4>
 
 [[3]]
 function (x) 
@@ -633,7 +633,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0a132ccc>
+<environment: 0x099118a4>
 
 [[4]]
 function (x) 
@@ -648,7 +648,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0a132ccc>
+<environment: 0x099118a4>
 
 > 
 > 
@@ -766,7 +766,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x09c88538>
+<environment: 0x062a02a8>
 
 [[2]]
 function (x) 
@@ -777,7 +777,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x09c88538>
+<environment: 0x062a02a8>
 
 [[3]]
 function (x) 
@@ -788,7 +788,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x09c88538>
+<environment: 0x062a02a8>
 
 [[4]]
 function (x) 
@@ -799,7 +799,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x09c88538>
+<environment: 0x062a02a8>
 
 > 
 > ## "Arith" group
@@ -813,7 +813,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x0a02bbf0>
+<environment: 0x0662c260>
 
 [[2]]
 function (x) 
@@ -824,7 +824,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x0a02bbf0>
+<environment: 0x0662c260>
 
 [[3]]
 function (x) 
@@ -835,7 +835,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x0a02bbf0>
+<environment: 0x0662c260>
 
 [[4]]
 function (x) 
@@ -846,7 +846,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x0a02bbf0>
+<environment: 0x0662c260>
 
 > Map((RL1 * 2)[[2]])
 [[1]]
@@ -858,7 +858,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x09f0d900>
+<environment: 0x0650df70>
 
 [[2]]
 function (x) 
@@ -869,7 +869,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x09f0d900>
+<environment: 0x0650df70>
 
 [[3]]
 function (x) 
@@ -880,7 +880,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x09f0d900>
+<environment: 0x0650df70>
 
 [[4]]
 function (x) 
@@ -891,7 +891,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x09f0d900>
+<environment: 0x0650df70>
 
 [[5]]
 function (x) 
@@ -902,7 +902,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x09f0d900>
+<environment: 0x0650df70>
 
 [[6]]
 function (x) 
@@ -913,7 +913,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x09f0d900>
+<environment: 0x0650df70>
 
 > Map((RL1 / RL1)[[3]])
 [[1]]
@@ -929,7 +929,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x09b0ac2c>
+<environment: 0x0610b264>
 
 [[2]]
 function (x) 
@@ -944,7 +944,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x09b0ac2c>
+<environment: 0x0610b264>
 
 [[3]]
 function (x) 
@@ -959,7 +959,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x09b0ac2c>
+<environment: 0x0610b264>
 
 [[4]]
 function (x) 
@@ -974,7 +974,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x09b0ac2c>
+<environment: 0x0610b264>
 
 > 
 > 
@@ -1040,7 +1040,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x09143204>
+<environment: 0x09121c84>
 
 [[2]]
 function (x) 
@@ -1051,7 +1051,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x09143204>
+<environment: 0x09121c84>
 
 [[3]]
 function (x) 
@@ -1062,7 +1062,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x09143204>
+<environment: 0x09121c84>
 
 [[4]]
 function (x) 
@@ -1073,7 +1073,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x09143204>
+<environment: 0x09121c84>
 
 > 
 > ## "Arith" group
@@ -1087,7 +1087,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x08f7b4ec>
+<environment: 0x08f59efc>
 
 [[2]]
 function (x) 
@@ -1098,7 +1098,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x08f7b4ec>
+<environment: 0x08f59efc>
 
 [[3]]
 function (x) 
@@ -1109,7 +1109,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x08f7b4ec>
+<environment: 0x08f59efc>
 
 [[4]]
 function (x) 
@@ -1120,7 +1120,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x08f7b4ec>
+<environment: 0x08f59efc>
 
 > Map((RL1 * 2)[[2]])
 [[1]]
@@ -1132,7 +1132,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x08c6f520>
+<environment: 0x08c4eadc>
 
 [[2]]
 function (x) 
@@ -1143,7 +1143,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x08c6f520>
+<environment: 0x08c4eadc>
 
 [[3]]
 function (x) 
@@ -1154,7 +1154,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x08c6f520>
+<environment: 0x08c4eadc>
 
 [[4]]
 function (x) 
@@ -1165,7 +1165,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x08c6f520>
+<environment: 0x08c4eadc>
 
 [[5]]
 function (x) 
@@ -1176,7 +1176,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x08c6f520>
+<environment: 0x08c4eadc>
 
 [[6]]
 function (x) 
@@ -1187,7 +1187,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x08c6f520>
+<environment: 0x08c4eadc>
 
 > Map((RL1 / RL1)[[3]])
 [[1]]
@@ -1203,7 +1203,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x085a68c4>
+<environment: 0x0857eeb8>
 
 [[2]]
 function (x) 
@@ -1218,7 +1218,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x085a68c4>
+<environment: 0x0857eeb8>
 
 [[3]]
 function (x) 
@@ -1233,7 +1233,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x085a68c4>
+<environment: 0x0857eeb8>
 
 [[4]]
 function (x) 
@@ -1248,7 +1248,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x085a68c4>
+<environment: 0x0857eeb8>
 
 > 
 > ## The function is currently defined as
@@ -1449,7 +1449,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x0a2140a0>
+<environment: 0x099f2a68>
 
 [[2]]
 function (x) 
@@ -1464,7 +1464,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x0a2140a0>
+<environment: 0x099f2a68>
 
 [[3]]
 function (x) 
@@ -1479,7 +1479,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x0a2140a0>
+<environment: 0x099f2a68>
 
 [[4]]
 function (x) 
@@ -1494,7 +1494,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x0a2140a0>
+<environment: 0x099f2a68>
 
 > 
 > # "Arith" group generic
@@ -1508,7 +1508,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x0a20d6a4>
+<environment: 0x099ec06c>
 
 [[2]]
 function (x) 
@@ -1519,7 +1519,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x0a20d6a4>
+<environment: 0x099ec06c>
 
 [[3]]
 function (x) 
@@ -1530,7 +1530,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x0a20d6a4>
+<environment: 0x099ec06c>
 
 [[4]]
 function (x) 
@@ -1541,7 +1541,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x0a20d6a4>
+<environment: 0x099ec06c>
 
 > Map(c(1,3,5) * R1)
 Warning in c(1, 3, 5) * R1 :
@@ -1555,7 +1555,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x0a1fa648>
+<environment: 0x099d9010>
 
 [[2]]
 function (x) 
@@ -1566,7 +1566,7 @@ function (x)
     }
     3 * f2(x)
 }
-<environment: 0x0a1fa648>
+<environment: 0x099d9010>
 
 [[3]]
 function (x) 
@@ -1577,7 +1577,7 @@ function (x)
     }
     5 * f2(x)
 }
-<environment: 0x0a1fa648>
+<environment: 0x099d9010>
 
 [[4]]
 function (x) 
@@ -1588,7 +1588,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x0a1fa648>
+<environment: 0x099d9010>
 
 > try(1:5 * R1) # error
 Error in 1:5 * R1 : 
@@ -1603,7 +1603,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x0a1cb810>
+<environment: 0x099aa1d8>
 
 [[2]]
 function (x) 
@@ -1614,7 +1614,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x0a1cb810>
+<environment: 0x099aa1d8>
 
 [[3]]
 function (x) 
@@ -1625,7 +1625,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x0a1cb810>
+<environment: 0x099aa1d8>
 
 [[4]]
 function (x) 
@@ -1636,7 +1636,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x0a1cb810>
+<environment: 0x099aa1d8>
 
 > Map(R2 - 5)
 [[1]]
@@ -1648,7 +1648,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x0a1b82fc>
+<environment: 0x09996cc4>
 
 [[2]]
 function (x) 
@@ -1659,7 +1659,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x0a1b82fc>
+<environment: 0x09996cc4>
 
 [[3]]
 function (x) 
@@ -1670,7 +1670,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x0a1b82fc>
+<environment: 0x09996cc4>
 
 [[4]]
 function (x) 
@@ -1681,7 +1681,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x0a1b82fc>
+<environment: 0x09996cc4>
 
 > Map(R1 ^ R1)
 [[1]]
@@ -1697,7 +1697,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x0a1a5894>
+<environment: 0x0998425c>
 
 [[2]]
 function (x) 
@@ -1712,7 +1712,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x0a1a5894>
+<environment: 0x0998425c>
 
 [[3]]
 function (x) 
@@ -1727,7 +1727,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x0a1a5894>
+<environment: 0x0998425c>
 
 [[4]]
 function (x) 
@@ -1742,7 +1742,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x0a1a5894>
+<environment: 0x0998425c>
 
 > 
 > 
@@ -1902,7 +1902,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x0a1f4620>
+<environment: 0x099d2fe8>
 
 [[2]]
 function (x) 
@@ -1917,7 +1917,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x0a1f4620>
+<environment: 0x099d2fe8>
 
 [[3]]
 function (x) 
@@ -1932,7 +1932,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x0a1f4620>
+<environment: 0x099d2fe8>
 
 [[4]]
 function (x) 
@@ -1947,7 +1947,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x0a1f4620>
+<environment: 0x099d2fe8>
 
 > 
 > # "Arith" group generic
@@ -1961,7 +1961,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x0a1ec4dc>
+<environment: 0x099caea4>
 
 [[2]]
 function (x) 
@@ -1972,7 +1972,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x0a1ec4dc>
+<environment: 0x099caea4>
 
 [[3]]
 function (x) 
@@ -1983,7 +1983,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x0a1ec4dc>
+<environment: 0x099caea4>
 
 [[4]]
 function (x) 
@@ -1994,7 +1994,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x0a1ec4dc>
+<environment: 0x099caea4>
 
 > Map(c(1,3,5) * R1)
 Warning in c(1, 3, 5) * R1 :
@@ -2008,7 +2008,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x0a1e4a7c>
+<environment: 0x099c3444>
 
 [[2]]
 function (x) 
@@ -2019,7 +2019,7 @@ function (x)
     }
     3 * f2(x)
 }
-<environment: 0x0a1e4a7c>
+<environment: 0x099c3444>
 
 [[3]]
 function (x) 
@@ -2030,7 +2030,7 @@ function (x)
     }
     5 * f2(x)
 }
-<environment: 0x0a1e4a7c>
+<environment: 0x099c3444>
 
 [[4]]
 function (x) 
@@ -2041,7 +2041,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x0a1e4a7c>
+<environment: 0x099c3444>
 
 > try(1:5 * R1) # error
 Error in 1:5 * R1 : 
@@ -2056,7 +2056,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x0a1d2854>
+<environment: 0x099b121c>
 
 [[2]]
 function (x) 
@@ -2067,7 +2067,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x0a1d2854>
+<environment: 0x099b121c>
 
 [[3]]
 function (x) 
@@ -2078,7 +2078,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x0a1d2854>
+<environment: 0x099b121c>
 
 [[4]]
 function (x) 
@@ -2089,7 +2089,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x0a1d2854>
+<environment: 0x099b121c>
 
 > Map(R2 - 5)
 [[1]]
@@ -2101,7 +2101,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x0a1c9b60>
+<environment: 0x099a8528>
 
 [[2]]
 function (x) 
@@ -2112,7 +2112,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x0a1c9b60>
+<environment: 0x099a8528>
 
 [[3]]
 function (x) 
@@ -2123,7 +2123,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x0a1c9b60>
+<environment: 0x099a8528>
 
 [[4]]
 function (x) 
@@ -2134,7 +2134,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x0a1c9b60>
+<environment: 0x099a8528>
 
 > Map(R1 ^ R1)
 [[1]]
@@ -2150,7 +2150,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x0a1c16f8>
+<environment: 0x099a00c0>
 
 [[2]]
 function (x) 
@@ -2165,7 +2165,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x0a1c16f8>
+<environment: 0x099a00c0>
 
 [[3]]
 function (x) 
@@ -2180,7 +2180,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x0a1c16f8>
+<environment: 0x099a00c0>
 
 [[4]]
 function (x) 
@@ -2195,7 +2195,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x0a1c16f8>
+<environment: 0x099a00c0>
 
 > 
 > 
@@ -2250,7 +2250,7 @@ Range:	NULL
 function (x) 
 {
 }
-<bytecode: 0x08e1c464>
+<bytecode: 0x08dfb580>
 <environment: namespace:RandVar>
 
 > Domain(R1)
@@ -2320,7 +2320,7 @@ Range:	NULL
 function (x) 
 {
 }
-<environment: 0x0a15e0ac>
+<environment: 0x0993c4b4>
 
 > Domain(R1)
 NULL
@@ -2443,7 +2443,7 @@ function (Map = list(function(x) {
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.46 0.27 2.74 NA NA 
+Time elapsed:  2.67 0.13 2.81 NA NA 
 > grDevices::dev.off()
 null device 
           1 
