@@ -28,3 +28,13 @@ drat type repo with infrastructure of Dirk Eddelbuettel's) if we may
 link to non CRAN-repos in a suggests/depends field of another package.
 
 Any help appreciated, best, Peter
+
+argh: sorry been a long day...
+
+The package version 
+  just sent was using the wrong data base; I have fixed 
+  this; the effect though is still the same as in the 
+  previous submission, but now, due to some more grids 
+  my colleagues have produced by now, the package has 
+  even grown a bit larger = 4.5 MB xz compressed, 10 MB 
+  during R CMD check... 

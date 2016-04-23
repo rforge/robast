@@ -67,6 +67,7 @@
 
 .readGridFromCSV <- function(fromFileCSV){
   rg <- read.table(fromFileCSV, colClasses=rep("character",2), sep=" ", header=FALSE)
+  print(head(rg))
   nrg <- nrow(rg)
   Grid <- matrix(as.numeric(as.matrix(rg)),nrow=nrg)
 
@@ -158,9 +159,10 @@
   le <- length(fromFileCSV)
   CSVlist <- vector("list",le)
   if(le>0) for(i in 1:le){
+      print(fromFileCSV[i])
       CSVlist[[i]] <- .readGridFromCSV(fromFileCSV[i])
-      nameInSysdata <- CSVlist[[i]]$namInSysdata
-      namPFam <- CSVlist[[i]]$namPFam
+      nameInSysdata <- CSVlist[[i]][["namInSysdata"]]
+      namPFam <- CSVlist[[i]][["namPFam"]]
       Grid <- CSVlist[[i]]$Grid
       ### check whether object nameInSysdata already exists (ie. some
       ##   grids for this family already exist) or not
