@@ -8,6 +8,85 @@
  information)
 
 #######################################
+version 1.0
+#######################################
+
+user-visible CHANGES:
++ comparePlot, infoPlot, and the plot-Method for ICs gain an argument
+  with.automatic.grid; if TRUE a corresponding grid oriented at tickmarks
+  is produced; this also works for rescaled axes
++ comparePlot, infoPlot, and the plot-Method for ICs gain optional
+  pattern substitution (like plot) which can be switched off by 
+  argument withSubst
++ arguments panel.first, panel.last for plot-methods can now be lists
++ infoPlot and comparePlot gain an argument cex.pts.fun to enable individual 
+  scaling of the point sizes to be plotted onto each of the plotted curves
++ .ddPlot.MatNtNtCoCo, and also ddPlot, outlyingnessPlot gain an 
+   additional argument 'doplot' defaulting to TRUE; if FALSE, no plot
+   is produced and only the return value is calculated.
++ arguments scaleY.fct and scaleY.inv in the plot-method for ICs, 
+  and in comparePlot und infoPlot now also may be lists of functions,
+  one for each of the panels to be plot; hence scaling of the y-axis
+  can now be done individually for each panel.
++ introduce jitter for points in ddPlot for DiscreteDistributions
++ comparePlot, infoPlot, and the plot-Method for ICs gain an argument x.vec; 
+  if given it is the x-grid on which to evaluate the ICs; by default this 
+  argument is NULL; then (as before) the grid is selected automatically 
+  according to the distribution of the IC. This can be useful for usage with a 
+  rescaling of the x-Axis to avoid that the evaluation points be selected too 
+  unevenly (i.e. on an equally spaced grid in the original scale, but then, after 
+  rescaling non-equally... The grid has to be specified in original scale; i.e.; 
+  when used with rescaling, should be chosen non-equally spaced...
++ wrapper functions ICPlot, InfoPlot, and ComparePlot use refined grids, i.e.,
+  the grids are plotted on user given coordinates (or rescaled coordinates)
++ comparePlot, infoPlot, and the plot-Method for ICs now if scaleX is TRUE by 
+  default use an equidistant grid on the rescaled x-Axis.
++ qqplot-method for c("ANY","InfRobModel") gains argument 
+ 'cex.pts.fun' to better control the scaling of points-sizes
++ new helper function cutoff.quant() to produce cutoff from model quantiles
+ 
+GENERAL ENHANCEMENTS:
+  
+under the hood:
++ introduced automatic scaling of points in comparePlot.R and infoPlot.R
++ .cexscale is now documented
++ the argument of .fillList is now automatically cast to list (if necessary).
++ interpolRisks gain biastype and normtype methods, as well as getRiskFctBV
+  => now cniperPointPlot should work for GPD-type data 
++ added reference for copied routine stats:::format.perc  
++ in the axis annotation (after rescaling) there are checks now
+ whether values +-infinity are taken at all. (This was a bug
+ before for distributions passed on as cdf and quantile function
+ with finite left or right endpoint.)
++ output in kStepEstimator() and oneStepEstimator() is filtered
+  by  .checkEstClassForParamFamily(); this allows to return an
+  object of S4 class specific to the resp. parametric family (by means of
+  S4 method dispatch); this is used in pkg 'RobExtremes' to produce, e.g., 
+  objects of class "GEVkStepEstimate", i.e. which inherit from both 
+  "kStepEstimate", so that a diag-method for "GEVEstimate" becomes 
+  available for this class.
++ enhanced imports in DESCRIPTION by explicating second order imports
+
+  
+BUGFIXES:
++ two bugs in plotWrapper.R in pkgs RobAStBase and ROptEst detected by Misha
++ bug in kStepEstimator: after evaluation of starting estimator, IC must be
+  shifted to correct parameter value -> new arguments withPreModif, withPostModif
++ in comparePlot it should be resc.Dargs instead of rescD.args
++ fixed errors detected by Matthias / Misha, Bernhard in comparePlot.R, cutoff-class.R,
+  ddPlot_utils.R, infoPlot.R, outlyingPlot.R
++ comparePlot now plots the whole range
++ ddPlots / outlyingPlot.R now have alpha transparency and jitter and cex.pts
++ infoPlot plots the correct y-axis (no overplotting)
++ minor fixes in InfoPlotWrapper.Rd, outlyingPlotIC.Rd
++ fixed NA-buglet in plotWrapper.R (detected by Dasha Pupashenko)
++ fixed a little bug with the use of .cexscale (with list of functions)
++ bugfix in outlyingnessPlot: for robCov.y ==TRUE (default) the
+  inverse covariance matrix was used for standardization instead
+  of the original one
+ 
+
+#######################################
 version 0.9
 #######################################
 
@@ -78,9 +157,6 @@ BUGFIXES:
 + Removed "..." in definition of generic for "samplesize<-", this had led to a warning in R CMD check.
 + .evalListRec was not prepared for length 0
 + some substitute functions have not been passed as arguments...
-
-
-
 
 
 
