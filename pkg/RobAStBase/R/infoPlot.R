@@ -6,18 +6,20 @@ setMethod("infoPlot", "IC",
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3], 
+             with.automatic.grid = TRUE,
              with.legend = TRUE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
-             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
-             cex.pts = 1, col.pts = par("col"),
+             cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
              lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
              ylab.abs = "absolute information", 
-             ylab.rel= "relative information"){
+             ylab.rel= "relative information",
+             withSubst = TRUE){
 
         objectc <- match.call(call = sys.call(sys.parent(1)))$object
         dots <- match.call(call = sys.call(sys.parent(1)), 
@@ -59,19 +61,26 @@ setMethod("infoPlot", "IC",
         ncols <- ceiling(dims0/nrows)
         in1to.draw <- (1%in%to.draw)
 
+        if(!is.null(cex.pts.fun)){
+           cex.pts.fun <- .fillList(cex.pts.fun, (dims0+in1to.draw)*2)
+        }
+
+        scaleY.fct <- .fillList(scaleY.fct, length(to.draw1))
+        scaleY.inv <- .fillList(scaleY.inv, length(to.draw1))
+
         if(!is.null(x.ticks)) dots$xaxt <- "n"
         if(!is.null(y.ticks)){
-           y.ticks <- .fillList(list(y.ticks), dims0+in1to.draw)
+           y.ticks <- .fillList(y.ticks, dims0+in1to.draw)
            dots$yaxt <- "n"
         }
 
         if(with.legend){
           if(missing(legend.location)){
-             legend.location <- .fillList(list("topright"), dims0+in1to.draw   )
+             legend.location <- .fillList("topright", dims0+in1to.draw   )
              if (in1to.draw) legend.location[[1]] <-  "bottomright"
           }else{
              legend.location <- as.list(legend.location)
-             legend.location <- .fillList(legend.location, dims0+in1to.draw   )
+             legend.location <- .fillList(legend.location, dims0+in1to.draw  )
           }
           if(is.null(legend)){
              legend <- vector("list",dims0+in1to.draw)
@@ -103,14 +112,28 @@ setMethod("infoPlot", "IC",
                   upper <- max(upper,xM)
                 }
                 h <- upper - lower
-                x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
+                if(is.null(x.vec)){
+                   if(scaleX){
+                      xpl <- scaleX.fct(lower - 0.1*h)
+                      xpu <- scaleX.fct(upper + 0.1*h)
+                      xp.vec <- seq(from = xpl, to = xpu, length = 1000)
+                      x.vec <- scaleX.inv(xp.vec)
+                   }else{
+                      x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
+                   }
+                }
                 plty <- "l"
                 if(missing(lty)) lty <- "solid"
             }else{
-                if(is(distr, "DiscreteDistribution")) x.vec <- support(distr)
-                else{
-                   x.vec <- r(distr)(1000)
-                   x.vec <- sort(unique(x.vec))
+                if(!is.null(x.vec)){
+                   if(is(distr, "DiscreteDistribution"))
+                      x.vec <- intersect(x.vec,support(distr))
+                }else{
+                   if(is(e1, "DiscreteDistribution")) x.vec <- support(distr)
+                   else{
+                      x.vec <- r(e1)(1000)
+                      x.vec <- sort(unique(x.vec))
+                   }
                 }
                 plty <- "p"
                 if(missing(lty)) lty <- "dotted"
@@ -142,11 +165,12 @@ setMethod("infoPlot", "IC",
             subL <- FALSE
             lineT <- NA
        
-           .mpresubs <- function(inx)
+           .mpresubs <- if(withSubst){function(inx)
                     .presubs(inx, c("%C", "%D", "%A"),
                           c(as.character(class(object)[1]),
                             as.character(date()),
                             as.character(deparse(objectc))))
+                    } else function(inx)inx
            
             if (hasArg(main)){
                  mainL <- TRUE
@@ -288,10 +312,48 @@ setMethod("infoPlot", "IC",
             }
 
             
-            pL.rel <- pL.abs <- pL <- expression({})
-            if(!is.null(dots$panel.last))
-               {pL.rel <- pL.abs <- pL <- dots$panel.last}
+            pL <- expression({})
+            if(!is.null(dots[["panel.last"]])){
+                pL <- .panel.mingle(dots,"panel.last")
+            }
+            pL <- .fillList(pL, length(to.draw))
+            if(in1to.draw){
+               pL.rel <- pL[[1]]
+               pL.abs <- pL[-1]
+            }else{ pL.abs <- pL }
+            
 
+            pF <- expression({})
+            if(!is.null(dots[["panel.first"]])){
+               pF <- .panel.mingle(dots,"panel.first")
+            }
+            ..panelFirst <- .fillList(pF, length(to.draw))
+            if(with.automatic.grid)
+                ..panelFirst <- .producePanelFirstS(
+                    ..panelFirst,object, to.draw.arg, TRUE,
+                    x.ticks = x.ticks, scaleX = scaleX, scaleX.fct = scaleX.fct,
+                    y.ticks = y.ticks, scaleY = scaleY, scaleY.fct = scaleY.fct)
+            gridS <- if(with.automatic.grid)
+                  substitute({grid <- function(...){}}) else expression({})
+            if(in1to.draw){
+               pF.rel <- substitute({ gridS0
+                                      .absInd <- FALSE
+                                      pF0 <- pF
+                                      pF0[[1+i]] }, list(pF=..panelFirst, gridS0=gridS))
+               pF.abs <- substitute({ gridS0
+                                      .absInd <- TRUE
+                                      pF
+                                      }, list(pF=..panelFirst[[1]], gridS0=gridS))
+            }else{
+               pF.abs <- NULL
+               pF.rel <- substitute({ gridS0
+                                      .absInd <- FALSE
+                                      pF0 <- pF
+                                      pF0[[i]]
+                                      }, list(pF=..panelFirst, gridS0=gridS))
+            }
+            dotsP$panel.last <- dotsP$panel.first <- NULL
+            
             if(!is.null(data)){
 
                n <- if(!is.null(dim(data))) nrow(data) else length(data)
@@ -315,6 +377,7 @@ setMethod("infoPlot", "IC",
                if(missing(col.pts)) col.pts <- c(col, colI)
                col.pts <- rep(col.pts, length.out=2)
                pch.pts <- matrix(rep(pch.pts, length.out=2*n),n,2)
+               cex.pts <- rep(cex.pts,length.out=2)
                jitter.fac <- rep(jitter.fac, length.out=2)
                with.lab <- rep(with.lab, length.out=2)
                lab.font <- rep(lab.font, length.out=2)
@@ -349,30 +412,36 @@ setMethod("infoPlot", "IC",
 
 
                pL.abs <- substitute({
+                   ICy0r1 <- ICy0r
+                   ICy0cr1 <- ICy0cr
                    if(is(distr, "DiscreteDistribution")){
-                      ICy0 <- jitter(ICy0, factor = jitter.fac0[1])
-                      ICy0c <- jitter(ICy0c, factor = jitter.fac0[2])
+                      ICy0r1 <- jitter(ICy0r1, factor = jitter.fac0[1])
+                      ICy0cr1 <- jitter(ICy0cr1, factor = jitter.fac0[2])
                    }
-                   f1 <- log(ICy0+1)*3*cex0[1]
-                   f1c <- log(ICy0c+1)*3*cex0[2]
+
+                   c1fun <- if(is.null(cexfun)) NULL else cexfun[[1]]
+                   c2fun <- if(is.null(cexfun)) NULL else cexfun[[2]]
+                   f1 <- .cexscale(ICy0,ICy0c,cex=cex0[1], fun = c1fun)
+                   f1c <- .cexscale(ICy0c,ICy0,cex=cex0[2], fun = c2fun)
 
                    col.pts <- if(!is.na(al0)) sapply(col0,
                               addAlphTrsp2col, alpha=al0) else col0
 
-                   do.pts(y0, ICy0r, f1,col.pts[1],pch0[,1])
-                   do.pts(y0c, ICy0cr, f1c,col.pts[2],pch0[,2])
+                   do.pts(y0, ICy0r1, f1,col.pts[1],pch0[,1])
+                   do.pts(y0c, ICy0cr1, f1c,col.pts[2],pch0[,2])
                    if(with.lab0){
-                      tx(y0, ICy0r, lab.pts0, f1/2, col0[1])
-                      tx(y0c, ICy0cr, lab.pts0C, f1c/2, col0[2])
+                      tx(y0, ICy0r1, lab.pts0, f1/2, col0[1])
+                      tx(y0c, ICy0cr1, lab.pts0C, f1c/2, col0[2])
                    }
                    pL0
                    }, list(ICy0c = y.dC, ICy0 = y.d,
                            ICy0r = y.dr, ICy0cr = y.dCr,
                            pL0 = pL, y0 = x.dr, y0c = x.dCr,
-                           cex0 = cex.pts, pch0 = pch.pts, al0 = alp.v[1],
+                           cex0 = cex.pts,
+                           pch0 = pch.pts, al0 = alp.v[1],
                            col0 = col.pts, with.lab0 = with.lab, n0 = n,
                            lab.pts0 = lab.pts[i.d], lab.pts0C = lab.pts[i.dC],
-                           jitter.fac0 = jitter.fac)
+                           jitter.fac0 = jitter.fac, cexfun = cex.pts.fun)
                            )
 
                pL.rel <- substitute({
@@ -388,13 +457,16 @@ setMethod("infoPlot", "IC",
                    dotsP0 <- dotsP
                    resc.rel <- .rescalefct(y0, cbind(y0.vec,ICy0),
                               scaleX, scaleX.fct, scaleX.inv,
-                              FALSE, scaleY.fct, dots$xlim, dots$ylim, dotsP0)
+                              FALSE, scaleY.fct[[i]], dots$xlim, dots$ylim, dotsP0)
                    resc.rel.c <- .rescalefct(y0c, cbind(y0c.vec,ICy0c),
                               scaleX, scaleX.fct, scaleX.inv,
-                              FALSE, scaleY.fct, dots$xlim, dots$ylim, dotsP0)
+                              FALSE, scaleY.fct[[i]], dots$xlim, dots$ylim, dotsP0)
 
-                   f1 <- resc.rel$scy*0.3*cex0[1]
-                   f1c <- resc.rel.c$scy*0.3*cex0[2]
+                   c1fun <- if(is.null(cexfun)) NULL else cexfun[[(i1-1)*2+1]]
+                   c2fun <- if(is.null(cexfun)) NULL else cexfun[[(i1-1)*2+2]]
+
+                   f1 <- .cexscale(resc.rel$scy,resc.rel.c$scy,cex=cex0[1], fun=c1fun)
+                   f1c <- .cexscale(resc.rel.c$scy,resc.rel$scy,cex=cex0[2], fun=c2fun)
 
                    do.pts(resc.rel$X, resc.rel$Y, f1,col.pts[1],pch0[,1])
                    do.pts(resc.rel.c$X, resc.rel.c$Y, f1c,col.pts[2],pch0[,2])
@@ -409,7 +481,7 @@ setMethod("infoPlot", "IC",
                            cex0 = cex.pts, pch0 = pch.pts, al0 = alp.v,
                            col0 = col.pts, with.lab0 = with.lab,n0 = n,
                            lab.pts0 = lab.pts[i.d], lab.pts0C = lab.pts[i.dC],
-                           jitter.fac0 = jitter.fac
+                           jitter.fac0 = jitter.fac, cexfun = cex.pts.fun
                            ))
             }
 
@@ -434,14 +506,26 @@ setMethod("infoPlot", "IC",
 
                do.call(plot, args=c(list(resc.C$X, resc.C$Y, type = plty,
                    lty = ltyI, col = colI, lwd = lwdI,
-                   xlab = xlab, ylab = ylab.abs, panel.last = pL.abs),
+                   xlab = .mpresubs(xlab), ylab = .mpresubs(ylab.abs), panel.last = pL.abs,
+                   panel.first = pF.abs),
                    dotsP1))
                do.call(lines, args=c(list(resc$X, resc$Y, type = plty,
                        lty = lty, lwd = lwd, col = col), dotsL))
-               scaleX0 <- (xaxt0[1]!="n")
-               scaleY0 <- (yaxt0[1]!="n")
+               scaleX0 <- scaleX & (xaxt0[1]!="n")
+               scaleY0 <- scaleY & (yaxt0[1]!="n")
                x.ticks0 <- if(xaxt0[1]!="n") x.ticks else NULL
                y.ticks0 <- if(yaxt0[1]!="n") y.ticks[[1]] else NULL
+
+               finiteEndpoints <- rep(FALSE,4)
+               if(scaleX){
+                  finiteEndpoints[1] <- is.finite(scaleX.inv(min(resc.C$X, xlim[1],na.rm=TRUE)))
+                  finiteEndpoints[2] <- is.finite(scaleX.inv(max(resc.C$X, xlim[2],na.rm=TRUE)))
+               }
+               if(scaleY){
+                  finiteEndpoints[3] <- is.finite(scaleY.inv[[1]](min(resc.C$Y, ylim[1,1],na.rm=TRUE)))
+                  finiteEndpoints[4] <- is.finite(scaleY.inv[[1]](max(resc.C$Y, ylim[2,1],na.rm=TRUE)))
+               }
+
                .plotRescaledAxis(scaleX0, scaleX.fct, scaleX.inv,
                               scaleY0,scaleY.fct, scaleY.inv,
                               dots$xlim, dots$ylim, resc$X, ypts = 400,
@@ -486,24 +570,37 @@ setMethod("infoPlot", "IC",
                     }else{do.call(par,args=parArgsL[[i+in1to.draw]])}
 
                     do.call(plot, args=c(list(resc$X, y.vec1, type = plty,
-                                  lty = lty, xlab = xlab, ylab = ylab.rel,
-                                  col = col, lwd = lwd, panel.last = pL.rel),
-                                  dotsP))
+                                  lty = lty, xlab = .mpresubs(xlab), ylab = .mpresubs(ylab.rel),
+                                  col = col, lwd = lwd, panel.last = pL.rel,
+                                  panel.first = pF.rel),  dotsP))
 
                     do.call(lines, args = c(list(resc.C$X, y.vec1C, type = plty,
                             lty = ltyI, col = colI, lwd = lwdI), dotsL))
-                    scaleX0 <- (xaxt0[i+in1to.draw]!="n")
-                    scaleY0 <- (yaxt0[i+in1to.draw]!="n")
+                    scaleX0 <- scaleX & (xaxt0[i+in1to.draw]!="n")
+                    scaleY0 <- scaleY & (yaxt0[i+in1to.draw]!="n")
                     x.ticks0 <- if(xaxt0[i+in1to.draw]!="n") x.ticks else NULL
                     y.ticks0 <- if(yaxt0[i+in1to.draw]!="n") y.ticks[[i+in1to.draw]] else NULL
+
+                    finiteEndpoints <- rep(FALSE,4)
+                    if(scaleX){
+                      finiteEndpoints[1] <- is.finite(scaleX.inv(min(resc$X, xlim[1],na.rm=TRUE)))
+                      finiteEndpoints[2] <- is.finite(scaleX.inv(max(resc$X, xlim[2],na.rm=TRUE)))
+                    }
+                    if(scaleY){
+                       finiteEndpoints[3] <- is.finite(scaleY.inv[[i+in1to.draw]](min(yvec1, ylim[1,i+in1to.draw],na.rm=TRUE)))
+                       finiteEndpoints[4] <- is.finite(scaleY.inv[[i+in1to.draw]](max(yvec1, ylim[2,i+in1to.draw],na.rm=TRUE)))
+                    }
+
                     .plotRescaledAxis(scaleX0, scaleX.fct, scaleX.inv,
-                              FALSE,scaleY.fct, scaleY.inv, dots$xlim,
+                              FALSE,scaleY.fct[[i+in1to.draw]],
+                              scaleY.inv[[i+in1to.draw]], dots$xlim,
                               dots$ylim, resc$X, ypts = 400, n = scaleN,
+                              finiteEndpoints = finiteEndpoints,
                               x.ticks = x.ticks0,
                               y.ticks = y.ticks0, withbox = withbox)
                     if(with.legend)
                       legend(.legendCoord(legend.location[[i1]],
-                                 scaleX, scaleX.fct, scaleY, scaleY.fct),
+                                 scaleX, scaleX.fct, scaleY, scaleY.fct[[i]]),
                            bg = legend.bg, legend = legend[[i1]],
                            col = c(colI, col), lwd = c(lwdI, lwd),
                            lty = c(ltyI, lty), cex = legend.cex*fac.leg)

@@ -55,13 +55,16 @@ oneStepEstimator <- function(x, IC, start = NULL,
         nuis.idx <- if(is(start,"Estimate")) start@nuis.idx else NULL
         fixed <- if(is(start,"Estimate")) start@fixed else NULL
 
-        new("kStepEstimate", name = "1-step estimate", estimate = res,
+        estres <- new("kStepEstimate", name = "1-step estimate", estimate = res,
             untransformed.estimate = res, untransformed.asvar = NULL,
              fixed = fixed, nuis.idx = nuis.idx,
              completecases = completecases,
             estimate.call = es.call, samplesize = nrow(x0), asvar = asVar,
             asbias = asBias, pIC = IC, steps = 1L, Infos = Infos,
             start = start, startval = start.val, ustartval = start.val)
+        L2Fam <- eval(CallL2Fam(IC))
+
+        return(.checkEstClassForParamFamily(L2Fam,estres))
     }
 
 

@@ -36,17 +36,38 @@ cutoff <- function(name = "empirical",
    new("cutoff", fct = fct0, name = name, cutoff.quantile = cutoff.quantile)
 }
 
-cutoff.sememp <- function(){cutoff(name = "semi-empirical",
+cutoff.sememp <- function(cutoff.quantile  = 0.95){cutoff(name = "semi-empirical",
                    body.fct0 = substitute({n.05 <- chol(QF)
 #                                  print(QF)
                                   N0 <- matrix(rnorm(nsim*nrow(QF)),ncol=ncol(QF))
                                   N0 <- N0 %*% n.05
-                                  quantile((rowSums(N0^2))^.5,cutoff.quantile)
-                                  }),
-                   cutoff.quantile  = 0.95)}
+                                  quantile((rowSums(N0^2))^.5,cutoff.quantile0)
+                                  }, list(cutoff.quantile0  = cutoff.quantile))
+                                  )}
 
-cutoff.chisq <- function(){cutoff(name = "chisq",
-                   body.fct0 = substitute({dim = nrow(data)
-                                  qchisq(df=dim,cutoff.quantile)^.5
-                                  }),
+cutoff.chisq <- function(cutoff.quantile  = 0.95){cutoff(name = "chisq",
+                   body.fct0 = substitute({dim = nrow(as.matrix(data))
+                                  qchisq(df = dim, cutoff.quantile0)^.5
+                                  }, list(cutoff.quantile0  = cutoff.quantile)))}
+
+cutoff.quant <- function(qfct){
+                   if(missing(qfct)) qfct <- NULL
+                   cutoff(name = "quantile",
+                   body.fct0 = substitute({
+                                  if(is.null(qfctA)){
+                                     if(exists("..ICloc")){
+                                        L2m <- eval(CallL2Fam(get("..ICloc")))
+                                        qfct0 <- q(L2m)
+                                     }else{
+                                        qfct0 <- qnorm
+                                     }
+                                  }else{
+                                     qfct0 <- qfctA
+                                  }
+                                  q0 <- qfct0(cutoff.quantile)
+                                  if(exists("..trf")){
+                                     q0 <- get("..trf")(q0)
+                                  }
+                                  return(q0)
+                                }, list(qfctA=qfct)),
                    cutoff.quantile  = 0.95)}

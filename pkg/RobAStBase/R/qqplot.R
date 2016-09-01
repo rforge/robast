@@ -23,7 +23,8 @@ setMethod("qqplot", signature(x = "ANY",
     n.adj = TRUE){
 
     mc <- match.call(call = sys.call(sys.parent(1)))
-    if(missing(xlab)) mc$xlab <- as.character(deparse(mc$x))
+    xcc <- as.character(deparse(mc$x))
+    if(missing(xlab)) mc$xlab <- xcc
     if(missing(ylab)) mc$ylab <- as.character(deparse(mc$y))
     mcl <- as.list(mc)[-1]
 
@@ -48,8 +49,8 @@ setMethod("qqplot", signature(x = "ANY",
     x.cex <- 3/(1+log(1+xD))
     mcl$cex.pch <- x.cex
 
-    return(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
-            args=mcl))
+    return(invisible(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
+            args=mcl)))
     })
 
 
@@ -58,7 +59,7 @@ setMethod("qqplot", signature(x = "ANY", y = "InfRobModel"),
       function(x, y, n = length(x), withIdLine = TRUE, withConf = TRUE,
                withConf.pw  = withConf,  withConf.sim = withConf,
                plot.it = TRUE, xlab = deparse(substitute(x)),
-               ylab = deparse(substitute(y)), ..., n.adj = TRUE){
+               ylab = deparse(substitute(y)), ..., cex.pts.fun = NULL, n.adj = TRUE){
 
     mc <- match.call(call = sys.call(sys.parent(1)))
     if(missing(xlab)) mc$xlab <- as.character(deparse(mc$x))
@@ -88,11 +89,21 @@ setMethod("qqplot", signature(x = "ANY", y = "InfRobModel"),
     L2Dx <- evalRandVar(L2D,matrix(x))[,,1]
     scx <-  solve(sqrt(FI),L2Dx)
     xD <- fct(distance)(scx)
-    x.cex <- 3/(1+log(1+xD))
+    cex.pts <- if(is.null(mcl[["cex.pts"]])){
+                  if(is.null(mcl[["cex"]])){
+                     par("cex")
+                  }else{
+                     eval(mcl$cex)}
+               }else{
+                  eval(mcl$cex.pts)
+               }
+
+    x.cex <- 3/(1+.cexscale(xD,xD,cex=cex.pts, fun = cex.pts.fun))
+
     mcl$cex.pch <- x.cex
 
-    return(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
-            args=mcl))
+    return(invisible(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
+            args=mcl)))
     })
 
 ## into RobAStBase
@@ -119,8 +130,10 @@ setMethod("qqplot", signature(x = "ANY",
        stop("IC of the kStepEstimator needs to be of class 'IC'")
 
     L2Fam <- eval(IC@CallL2Fam)
-
-    mcl$y <- L2Fam
+    param <- ParamFamParameter(main=untransformed.estimate(y), nuisance=nuisance(y),
+                               fixed=fixed(y))
+    L2Fam0 <- modifyModel(L2Fam,param)
+    mcl$y <- L2Fam0
 
     if(is(IC,"HampIC")){
       dim0 <- nrow(FisherInfo(L2Fam))
@@ -144,6 +157,6 @@ setMethod("qqplot", signature(x = "ANY",
       mcl$col.pch <- .fadeColor(col.pch,wx^exp.fadcol.pch, bg = bg)
     }
 
-    return(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
-            args=mcl))
+    return(invisible(do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
+            args=mcl)))
     })

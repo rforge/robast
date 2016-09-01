@@ -104,6 +104,10 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
   if(is.null(mc$with.legend)) mc$with.legend <- TRUE
   if(is.null(mc$rescale)) mc$rescale <- FALSE
   if(is.null(mc$withCall)) mc$withCall <- TRUE
+
+
+  ###
+  
   ###
   ### 2. build up the argument list for the (powerful/fullfledged)
   ### graphics/diagnostics function;
@@ -127,6 +131,7 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
                      ,cex.inner = substitute(0.8)
                      ,bmar = substitute(par("mar")[1])
                      ,tmar = substitute(par("mar")[3])
+                     ,with.automatic.grid = substitute(TRUE)
                      ,with.legend = substitute(TRUE)
                      ,legend = substitute(NULL)
                      ,legend.bg = substitute("white")
@@ -142,7 +147,7 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
                      ,with.lab = substitute(FALSE)
                      ,lab.pts = substitute(NULL)
                      ,lab.font = substitute(NULL)
-                     ,alpha.trsp = substitute(NA)
+                     ,alpha.trsp = substitute(alpha.trsp)
                      ,which.lbs = substitute(NULL)
                      ,which.Order  = substitute(NULL)
                      ,return.Order = substitute(FALSE)
@@ -153,8 +158,10 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
                      ,cex.lab = substitute(1.5)
                      ,cex = substitute(1.5)
                      ,bty = substitute("o")
-                     ,panel.first= substitute(grid())
+                     ,panel.first= substitute(NULL)
+                     ,panel.last= substitute(NULL)
                      ,col = substitute("blue")
+                     ,withSubst = substitute(TRUE)
     ), scaleList)
 
   ##parameter for plotting
@@ -170,6 +177,7 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
   }
 
   args <- .merge.lists(argsList, dots)
+
   ###
   ### 3. build up the call but grab it and write it into an object
   ###
@@ -269,6 +277,8 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
   if(is.null(mc$with.legend)) mc$with.legend <- TRUE
   if(is.null(mc$rescale)) mc$rescale <- FALSE
   if(is.null(mc$withCall)) mc$withCall <- TRUE
+
+
   ###
   ### 2. build up the argument list for the (powerful/fullfledged)
   ### graphics/diagnostics function;
@@ -286,6 +296,7 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,cex.inner = substitute(0.8)
                      ,bmar = substitute(par("mar")[1])
                      ,tmar = substitute(par("mar")[3])
+                     ,with.automatic.grid = substitute(TRUE)
                      ,with.legend = substitute(FALSE)
                      ,legend = substitute(NULL)
                      ,legend.bg = substitute("white")
@@ -305,8 +316,10 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,cex.lab = substitute(1.5)
                      ,cex = substitute(1.5)
                      ,bty = substitute("o")
-                     ,panel.first= substitute(grid())
                      ,col = substitute("blue")
+                     ,panel.first= substitute(NULL)
+                     ,panel.last= substitute(NULL)
+                     ,withSubst = substitute(TRUE)
     ), scaleList)
   if(!missing(y)){c(argsList, y = substitute(y)
                      ,cex.pts = substitute(0.3)
@@ -316,7 +329,7 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,with.lab = substitute(FALSE)
                      ,lab.pts = substitute(NULL)
                      ,lab.font = substitute(NULL)
-                     ,alpha.trsp = substitute(NA)
+                     ,alpha.trsp = substitute(alpha.trsp)
                      ,which.lbs = substitute(NULL)
                      ,which.Order  = substitute(NULL)
                      ,return.Order = substitute(FALSE)
@@ -325,9 +338,7 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,cex.main = substitute(1.5)
                      ,cex.lab = substitute(1.5)
                      ,cex = substitute(1.5)
-                     ,bty = substitute("o")
-                     ,panel.first= substitute(grid())
-                     ,col = substitute("blue"))
+                     ,bty = substitute("o"))
   }
 
   ##parameter for plotting
@@ -452,6 +463,10 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
   if(is.null(mc$rescale)) mc$rescale <- FALSE
   if(is.null(mc$withCall)) mc$withCall <- TRUE
   iny <- if(missing(y)) TRUE else is.null(y)
+
+  ###
+
+
   ###
   ### 2. build up the argument list for the (powerful/fullfledged)
   ### graphics/diagnostics function;
@@ -474,6 +489,7 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
                      ,cex.inner = substitute(0.8)
                      ,bmar = substitute(par("mar")[1])
                      ,tmar = substitute(par("mar")[3])
+                     ,with.automatic.grid = substitute(TRUE)
                      ,with.legend = substitute(FALSE)
                      ,legend = substitute(NULL)
                      ,legend.bg = substitute("white")
@@ -512,8 +528,10 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
                      ,cex.lab = substitute(1.5)
                      ,cex = substitute(1.5)
                      ,bty = substitute("o")
-                     ,panel.first= substitute(grid())
                      ,col = substitute("blue")
+                     ,panel.first= substitute(NULL)
+                     ,panel.last= substitute(NULL)
+                     ,withSubst = substitute(TRUE)
     ), scaleList)
     
     if(!is.null(IC3)) argsList$obj3 <- substitute(IC3)

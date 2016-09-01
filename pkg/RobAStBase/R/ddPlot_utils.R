@@ -8,7 +8,10 @@
                                 transform.x,
                                 transform.y = transform.x,
                                 id.n,
+                                cex.pts = 1,
                                 lab.pts,
+                                jitt.pts = 0,
+                                alpha.trsp = NA,
                                 adj =0,
                                 cex.idn = 1,
                                 col.idn = par("col"),
@@ -25,9 +28,16 @@
                                 text.abline.x.fmt.qx = "%4.2f%%",
                                 text.abline.y.fmt.cy = "%7.2f",
                                 text.abline.y.fmt.qy = "%4.2f%%",
-                                jitt.fac = 10){
+                                jitt.fac = 10,
+                                doplot = TRUE){
 
        dots <- match.call(expand.dots = FALSE)$"..."
+
+       jitt.pts <- rep(jitt.pts,length.out=2)
+
+       col <- if(is.null(dots$col)) par("col") else dots$col
+       if(!is.na(alpha.trsp)) col <- addAlphTrsp2col(col, alpha.trsp)
+
 
        id.n1 <- 1:ncol(data)
 
@@ -76,13 +86,17 @@
 
       if(is.null(cutoff.x))
          cutoff.x <- cutoff(norm = dist.x, cutoff.quantile  = cutoff.quantile.x)
-      else {assign("norm", dist.x, environment(fct(cutoff.x)))
-            assign("cutoff.quantile", cutoff.quantile.x, environment(fct(cutoff.x)))}
+      else {assign("norm", dist.x, envir=environment(fct(cutoff.x)))
+            assign("cutoff.quantile", cutoff.quantile.x, envir=environment(fct(cutoff.x)))
+            assign("..trf", if(missing(transform.x)||is.null(transform.x)) function(x)x else transform.x,
+                   envir=environment(fct(cutoff.x)))}
 
       if(is.null(cutoff.y))
          cutoff.y <- cutoff(norm = dist.y, cutoff.quantile  = cutoff.quantile.y)
-      else {assign("norm", dist.y, environment(fct(cutoff.y)))
-            assign("cutoff.quantile", cutoff.quantile.y, environment(fct(cutoff.y)))}
+      else {assign("norm", dist.y, envir=environment(fct(cutoff.y)))
+            assign("cutoff.quantile", cutoff.quantile.y, envir=environment(fct(cutoff.y)))
+            assign("..trf", if(missing(transform.y)||is.null(transform.y)) function(x)x else transform.y,
+                   envir=environment(fct(cutoff.y)))}
 
       if(!is(dist.x, "NormType")) stop("Argument 'dist.x' of 'ddPlot' must be of class 'NormType'")
       if(!is(dist.y, "NormType")) stop("Argument 'dist.y' of 'ddPlot' must be of class 'NormType'")
@@ -107,6 +121,7 @@
       if(is.null(dots$lwd)) dots$lwd <- par("lwd")
       if(is.null(dots$lty)) dots$lty <- par("lty")
 
+      if(is.null(col.cutoff)) col.cutoff <- "red"
       col.cutoff <- rep(col.cutoff,length.out=2)
       if(missing(lty.cutoff) && !is.null(dots$lty)) lty.cutoff <- dots$lty
       if(missing(lwd.cutoff) && !is.null(dots$lwd)) lwd.cutoff <- dots$lwd
@@ -115,6 +130,8 @@
       if(missing(font.abline) && !is.null(dots$font)) font.abline <- dots$font
 
       pdots <- .makedotsLowLevel(dots)
+      pdots$pch <- if(is.null(dots$pch)) "." else dots$pch
+      pdots$cex <- cex.pts
       pdots$xlab <- dots$xlab
       pdots$ylab <- dots$ylab
       pdots$nsim <- NULL
@@ -230,34 +247,45 @@
       id0.xy <- id.n1[id.xy]
       id0.x <- id.n1[id.x]
       id0.y <- id.n1[id.y]
-      do.call(plot, args = c(list(x = ndata.x, y=ndata.y, type = "p"), pdots))
-      do.call(box,args=c(adots))
 
-      pusr <- par("usr")
-      mid.x <- mean(pusr[c(1,2)])
-      mid.y <- mean(pusr[c(3,4)])
-      abtdots.y$x <- if(is.null(text.abline.y.x)) mid.x else text.abline.y.x
-      abtdots.x$y <- if(is.null(text.abline.x.y)) mid.y else text.abline.x.y
+      ndata.x0 <- ndata.x
+      ndata.y0 <- ndata.y
+      isna <- is.na(ndata.x0)|is.na(ndata.y0)
+      if(any(duplicated(ndata.x0[!isna])))
+          ndata.x0[!isna] <- jitter(ndata.x0[!isna], factor=jitt.pts[1])
+      if(any(duplicated(ndata.y0[!isna])))
+          ndata.y0[!isna] <- jitter(ndata.y0[!isna], factor=jitt.pts[2])
 
-      do.call(abline, args = c(list(v=co.x), abdots[[1]]))
-	    do.call(abline, args = c(list(h=co.y), abdots[[2]]))
+      pdots$col <- col
+      if(doplot){
+        do.call(plot, args = c(list(x = ndata.x0, y=ndata.y0, type = "p"), pdots))
+        do.call(box,args=c(adots))
 
-      if(ab.textL[1])
-         do.call(text, args = c(list(y=co.y*1.03), abtdots.y))
+        pusr <- par("usr")
+        mid.x <- mean(pusr[c(1,2)])
+        mid.y <- mean(pusr[c(3,4)])
+        abtdots.y$x <- if(is.null(text.abline.y.x)) mid.x else text.abline.y.x
+        abtdots.x$y <- if(is.null(text.abline.x.y)) mid.y else text.abline.x.y
+
+        do.call(abline, args = c(list(v=co.x), abdots[[1]]))
+	      do.call(abline, args = c(list(h=co.y), abdots[[2]]))
+
+        if(ab.textL[1])
+           do.call(text, args = c(list(y=co.y*1.03), abtdots.y))
 #         do.call(text, args = c(list(co.x-5,mid.y,paste(cutoff.quantile.y*100,"%-cutoff = ",round(co.x,digits=2)),srt=90)))
-      if(ab.textL[2])
-         do.call(text, args = c(list(x=co.x*1.03), abtdots.x,srt=90))
+        if(ab.textL[2])
+           do.call(text, args = c(list(x=co.x*1.03), abtdots.x,srt=90))
 #      do.call(text, args = c(list(mid.x,co.y+5,paste(cutoff.quantile.x*100," %-cutoff = ",round(co.y,digits=2)))))
 
-      if(length(id.xy))
-         do.call(text, args = c(list(jitter(ndata.x[id.xy],factor=jitt.fac),
+        if(length(id.xy))
+           do.call(text, args = c(list(jitter(ndata.x[id.xy],factor=jitt.fac),
                                      jitter(ndata.y[id.xy],factor=jitt.fac),
                                 labels=lab.pts[id.xy]), tdots))
           #axis(side=4)
 #      axis(side=1)
-
-      return(list(id.x=id0.x, id.y= id0.y, id.xy = id0.xy,
+      }
+      return(invisible(list(id.x=id0.x, id.y= id0.y, id.xy = id0.xy,
              qtx = quantile(ndata.x), qty = quantile(ndata.y),
              cutoff.x.v = co.x, cutoff.y.v = co.y
-             ))
+             )))
 }

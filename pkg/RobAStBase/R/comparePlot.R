@@ -6,30 +6,32 @@ setMethod("comparePlot", signature("IC","IC"),
              col = par("col"), lwd = par("lwd"), lty,
              col.inner = par("col.main"), cex.inner = 0.8,
              bmar = par("mar")[1], tmar = par("mar")[3],
+             with.automatic.grid = TRUE,
              with.legend = FALSE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
              withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
              lty.MBR = "dashed", lwd.MBR = 0.8,
-             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
-             cex.pts = 1, col.pts = par("col"),
+             cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
              lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
-             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE){
+             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
+             withSubst = TRUE){
 
         .mc <- match.call(call = sys.call(sys.parent(1)))
         .xc<- function(obj) as.character(deparse(.mc[[obj]]))
         xc <- c(.xc("obj1"), .xc("obj2"))
         if(!is.null(obj3)) xc <- c(xc, .xc("obj3"))
         if(!is.null(obj4)) xc <- c(xc, .xc("obj4"))
-
         dots <- match.call(call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)$"..."
         dotsP <- dots
         dotsLeg <- dotsT <- dotsL <- .makedotsLowLevel(dots)
-
+        dots.points <-   .makedotsPt(dots)
+        
         ncomp <- 2+ (!missing(obj3)|!is.null(obj3)) +
                     (!missing(obj4)|!is.null(obj4))
 
@@ -78,9 +80,17 @@ setMethod("comparePlot", signature("IC","IC"),
 
         if(!is.null(x.ticks)) dotsP$xaxt <- "n"
         if(!is.null(y.ticks)){
-           y.ticks <- .fillList(list(y.ticks), dims0)
+           y.ticks <- .fillList(y.ticks, dims0)
            dotsP$yaxt <- "n"
         }
+
+        if(!is.null(cex.pts.fun)){
+           cex.pts.fun <- .fillList(cex.pts.fun, dims0*ncomp)
+        }
+
+
+        scaleY.fct <- .fillList(scaleY.fct, dims0)
+        scaleY.inv <- .fillList(scaleY.inv, dims0)
 
         MBRB <- matrix(rep(t(MBRB), length.out=dims0*2),ncol=2, byrow=T)
         MBRB <- MBRB * MBR.fac
@@ -107,13 +117,27 @@ setMethod("comparePlot", signature("IC","IC"),
                upper <- max(upper,xM)
             }
             h <- upper - lower
-            x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
+            if(is.null(x.vec)){
+               if(scaleX){
+                  xpl <- scaleX.fct(lower - 0.1*h)
+                  xpu <- scaleX.fct(upper + 0.1*h)
+                  xp.vec <- seq(from = xpl, to = xpu, length = 1000)
+                  x.vec <- scaleX.inv(xp.vec)
+               }else{
+                  x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
+               }
+            }
             plty <- "l"
             if(missing(lty)) lty <- "solid"
         }else{
-            if(is(distr, "DiscreteDistribution")) x.vec <- support(distr) else{
-                x.vec <- r(distr)(1000)
-                x.vec <- sort(unique(x.vec))
+            if(!is.null(x.vec)){
+               if(is(distr, "DiscreteDistribution"))
+                   x.vec <- intersect(x.vec,support(distr))
+            }else{
+               if(is(distr, "DiscreteDistribution")) x.vec <- support(distr) else{
+                   x.vec <- r(distr)(1000)
+                   x.vec <- sort(unique(x.vec))
+               }
             }
             plty <- "p"
             if(missing(lty)) lty <- "dotted"
@@ -147,7 +171,8 @@ setMethod("comparePlot", signature("IC","IC"),
 
       lineT <- NA
 
-      .mpresubs <- function(inx)
+      
+      .mpresubs <- if(withSubst){function(inx)
             .presubs(inx, c(paste("%C",1:ncomp,sep=""),
                                      "%D",
                                     paste("%A",1:ncomp,sep="")),
@@ -156,7 +181,7 @@ setMethod("comparePlot", signature("IC","IC"),
                     if(is.null(obj3))NULL else as.character(class(obj3)[1]),
                     if(is.null(obj4))NULL else as.character(class(obj4)[1]),
                     as.character(date()),
-                    xc))
+                    xc))} else function(inx)inx
 
         mainL <- FALSE
         if (hasArg(main)){
@@ -231,7 +256,31 @@ setMethod("comparePlot", signature("IC","IC"),
 
         dotsT$main <- dotsT$cex.main <- dotsT$col.main <- dotsT$line <- NULL
 
-        pL <- if(!is.null(dotsP$panel.last)) dotsP$panel.last else expression({})
+        pF <- expression({})
+        if(!is.null(dots[["panel.first"]])){
+            pF <- .panel.mingle(dots,"panel.first")
+        }
+        ..panelFirst <- .fillList(pF,dims0)
+        if(with.automatic.grid)
+           ..panelFirst <- .producePanelFirstS(
+                ..panelFirst,obj1 , to.draw.arg, FALSE,
+                x.ticks = x.ticks, scaleX = scaleX, scaleX.fct = scaleX.fct,
+                y.ticks = y.ticks, scaleY = scaleY, scaleY.fct = scaleY.fct)
+        gridS <- if(with.automatic.grid)
+              substitute({grid <- function(...){}}) else expression({})
+        pF <- vector("list",dims0)
+        if(dims0>0)
+           for(i in 1:dims0){
+               pF[[i]] <- substitute({ gridS0
+                                        pF0},
+                          list(pF0=..panelFirst[[i]], gridS0=gridS))
+           }
+        dots$panel.first <- NULL
+        pL <- expression({})
+        if(!is.null(dots[["panel.last"]])){
+            pL <- .panel.mingle(dots,"panel.last")
+        }
+        pL <- .fillList(pL, dims0)
         dotsP$panel.last <- NULL
 
         sel1 <- sel2 <- sel3 <- sel4 <- NULL
@@ -253,9 +302,14 @@ setMethod("comparePlot", signature("IC","IC"),
                  return(.SelectOrderData(data, fct.aI, which.lbs, which.Order))}
                  
             sel1 <- def.sel(IC1); sel2 <- def.sel(IC2)
+            selAlly <- c(sel1$y,sel2$y)
 
-            if(is(obj3, "IC")) sel3 <- def.sel(IC3)
-            if(is(obj4, "IC")) sel4 <- def.sel(IC4)
+            if(is(obj3, "IC")){ sel3 <- def.sel(IC3)
+                                selAlly <- c(selAlly,sel3$y)
+                              }
+            if(is(obj4, "IC")){ sel4 <- def.sel(IC4)
+                                selAlly <- c(selAlly,sel4$y)
+                              }
 
             dots.points <- .makedotsLowLevel(dots)
             dots.points$col <- dots.points$cex <- dots.points$pch <- NULL
@@ -264,7 +318,7 @@ setMethod("comparePlot", signature("IC","IC"),
             pL <- substitute({
                  doIt <- function(sel.l,fct.l,j.l){
                      rescd <- .rescalefct(sel.l$data, fct.l, scaleX, scaleX.fct,
-                                   scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                                   scaleX.inv, scaleY, scaleY.fct[[i]], xlim[,i],
                                    ylim[,i], dotsP)
                      if(is(distr, "DiscreteDistribution"))
                         rescd$Y <- jitter(rescd$Y, factor = jitter.fac0[j.l])
@@ -275,7 +329,10 @@ setMethod("comparePlot", signature("IC","IC"),
 
                      col.l <- if(is.na(al0[j.l])) col0[j.l] else
                                  addAlphTrsp2col(col0[j.l], al0[j.l])
-                     cex.l <- log(sel.l$y+1)*3*cex0[j.l]
+
+                     cfun <- if(is.null(cexfun)) NULL else cexfun[[(i-1)*ncomp+j.l]]
+
+                     cex.l <- .cexscale(sel.l$y,selAlly,cex=cex0[j.l], fun = cfun)   ##.cexscale in infoPlot.R
                      do.call(points, args=c(list(rescd$X, rescd$Y, cex = cex.l,
                              col = col.l, pch = pch.pts.l), dwo0))
                      if(with.lab0)
@@ -288,7 +345,7 @@ setMethod("comparePlot", signature("IC","IC"),
                  pL0
               }, list(pL0 = pL, cex0 = cex.pts, pch0 = pch.pts, col0 = col.pts,
                       jitter.fac0 = jitter.fac, dwo0 = dots.points, al0 = alp.v,
-                      with.lab0 = with.lab, lab0 = lab.pts)
+                      with.lab0 = with.lab, lab0 = lab.pts, cexfun=cex.pts.fun)
             )
         }
 
@@ -302,7 +359,7 @@ setMethod("comparePlot", signature("IC","IC"),
             fct1 <- function(x) sapply(x, IC1@Map[[indi]])
 
             resc.args <- c(list(x.vec, "fc"=fct1, scaleX, scaleX.fct,
-                                scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                                scaleX.inv, scaleY, scaleY.fct[[i]], xlim[,i],
                                 ylim[,i], dotsP))
             resc1 <- do.call(.rescalefct, resc.args)
             resc.args$fc <- fct2 <- function(x) sapply(x, IC2@Map[[indi]])
@@ -322,33 +379,54 @@ setMethod("comparePlot", signature("IC","IC"),
                 matp  <- cbind(matp,resc4$Y)
             }
 
-            do.call(plot, args=c(list(x = resc1$X, y = matp[,1],
-                 type = plty, lty = lty, col = col[1], lwd = lwd,
-                 xlab = xlab, ylab = ylab), dotsP, list(panel.last = pL)))
-                 
-            do.call(matlines, args = c(list( x = resc1$X, y = matp[,-1],
-                    lty = lty, col = col[-1], lwd = lwd), dotsL))
+            ym <- min(matp,na.rm=T)
+            yM <- max(matp,na.rm=T)
+            y0 <- matp[,1]
+            y0[1:2] <- c(ym,yM)
+
+            finiteEndpoints <- rep(FALSE,4)
+            if(scaleX){
+               finiteEndpoints[1] <- is.finite(scaleX.inv(min(x.vec1, xlim[1],na.rm=TRUE)))
+               finiteEndpoints[2] <- is.finite(scaleX.inv(max(x.vec1, xlim[2],na.rm=TRUE)))
+            }
+            if(scaleY){
+               finiteEndpoints[3] <- is.finite(scaleY.inv[[i]](min(ym, ylim[1,i],na.rm=TRUE)))
+               finiteEndpoints[4] <- is.finite(scaleY.inv[[i]](max(yM, ylim[2,i],na.rm=TRUE)))
+            }
+
+            do.call(plot, args=c(list(x = resc1$X, y = y0,
+                 type = "n", xlab = .mpresubs(xlab), ylab = .mpresubs(ylab),
+                 lty = lty[1], col = addAlphTrsp2col(col[1],0),
+                 lwd = lwd[1]), dotsP, list(panel.last = pL[[i]], panel.first=pF[[i]])))
+            if(plty=="p")
+               do.call(matpoints, args = c(list( x = resc1$X, y = matp,
+                    col = col), dots.points))
+
+            do.call(matlines, args = c(list( x = resc1$X, y = matp,
+                    lty = lty, col = col, lwd = lwd), dotsL))
+
 
             .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
-                              scaleY,scaleY.fct, scaleY.inv, xlim[,i],
+                              scaleY,scaleY.fct[[i]], scaleY.inv[[i]], xlim[,i],
                               ylim[,i], resc1$X, ypts = 400, n = scaleN,
+                              finiteEndpoints = finiteEndpoints,
                               x.ticks = x.ticks, y.ticks = y.ticks[[i]])
             if(withMBR){
                 MBR.i <- MBRB[i,]
-                if(scaleY) MBR.i <- scaleY.fct(MBR.i)
+                if(scaleY) MBR.i <- scaleY.fct[[i]](MBR.i)
                 abline(h=MBR.i, col=col.MBR, lty=lty.MBR, lwd = lwd.MBR)
             }
 
             if(is(distr, "DiscreteDistribution")){
                  rescD.args <- c(list(x.vecD, "fc"=fct1, scaleX, scaleX.fct,
-                                scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                                scaleX.inv, scaleY, scaleY.fct[[i]], xlim[,i],
                                 ylim[,i], dotsP))
                  resc1D <- do.call(.rescalefct, rescD.args)
                  rescD.args$fc <- fct2
                  resc2D <- do.call(.rescalefct, rescD.args)
                  matpD  <- cbind(resc1D$Y, resc2D$Y)
                  if(is(obj3, "IC")){
-                    resc.Dargs$fc <- fct3
+                    rescD.args$fc <- fct3
                     resc3D <- do.call(.rescalefct, rescD.args)
                     matpD  <- cbind(matpD, resc3D$Y)
                  }
@@ -369,7 +447,7 @@ setMethod("comparePlot", signature("IC","IC"),
         if(with.legend){
            if(is.null(legend)) legend <- xc
            legend(.legendCoord(legend.location, scaleX, scaleX.fct,
-                        scaleY, scaleY.fct), col = col, bg = legend.bg,
+                        scaleY, scaleY.fct[[i]]), col = col, bg = legend.bg,
                       legend = legend, dotsLeg, cex = legend.cex)
         }
 
@@ -389,3 +467,4 @@ setMethod("comparePlot", signature("IC","IC"),
                                      obj3=sel3$ind1, obj4=sel4$ind1))
         invisible()
     })
+

@@ -136,7 +136,7 @@ setMethod("show", "pICList", function(object){
 
     if(is(oI,"IC"))
        show(oI)
-    else{oIC <- object[[i]]@Curve
+    else{oIC <- oI@Curve
          for(j in 1:length(oIC))
              show(oIC[[j]]@Map)
     }

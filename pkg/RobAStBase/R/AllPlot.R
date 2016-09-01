@@ -3,19 +3,29 @@ setMethod("plot", signature(x = "IC", y = "missing"),
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
+             with.automatic.grid = TRUE,
              with.legend = FALSE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
              withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
              lty.MBR = "dashed", lwd.MBR = 0.8,
-             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
-             mfColRow = TRUE, to.draw.arg = NULL){
+             mfColRow = TRUE, to.draw.arg = NULL, withSubst = TRUE){
 
         xc <- match.call(call = sys.call(sys.parent(1)))$x
+        xcc <- as.character(deparse(xc))
         dots <- match.call(call = sys.call(sys.parent(1)), 
                        expand.dots = FALSE)$"..."
         dotsLeg <- dotsT <- dotsL <- .makedotsLowLevel(dots)
+
+       .mpresubs <- if(withSubst){
+                     function(inx) 
+                      .presubs(inx, c("%C", "%A", "%D" ),
+                          c(as.character(class(x)[1]), 
+                            as.character(date()), 
+                            xcc))
+                     }else function(inx)inx
 
         if(!is.logical(inner)){
           if(!is.list(inner))
@@ -52,9 +62,44 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
         if(!is.null(x.ticks)) dots$xaxt <- "n"
         if(!is.null(y.ticks)){
-           y.ticks <- .fillList(list(y.ticks), dims0)
+           y.ticks <- .fillList(y.ticks, dims0)
            dots$yaxt <- "n"
         }
+
+        scaleY.fct <- .fillList(scaleY.fct, dims0)
+        scaleY.inv <- .fillList(scaleY.inv, dims0)
+
+        pF <- expression({})
+        if(!is.null(dots[["panel.first"]])){
+            pF <- .panel.mingle(dots,"panel.first")
+        }
+        ..panelFirst <- .fillList(pF,dims0)
+        if(with.automatic.grid)
+            ..panelFirst <- .producePanelFirstS(
+                  ..panelFirst,x, to.draw.arg, FALSE,
+                  x.ticks = x.ticks, scaleX = scaleX, scaleX.fct = scaleX.fct,
+                  y.ticks = y.ticks, scaleY = scaleY, scaleY.fct = scaleY.fct)
+        gridS <- if(with.automatic.grid)
+                 substitute({grid <- function(...){}}) else expression({})
+        pF <- vector("list",dims0)
+        if(dims0>0)
+           for(i in 1:dims0){
+               pF[[i]] <- substitute({ gridS0
+                                        pF0},
+                          list(pF0=..panelFirst[[i]], gridS0=gridS))
+           }
+
+        pL <- expression({})
+        if(!is.null(dots[["panel.last"]])){
+            pL <- .panel.mingle(dots,"panel.last")
+        }
+        ..panelLast <- .fillList(pL,dims0)
+        pL <- vector("list",dims0)
+        if(dims0>0)
+           for(i in 1:dims0)
+               pL[[i]] <- if(is.null(..panelLast[[i]])) expression({}) else ..panelLast[[i]]
+
+        dots$panel.last <- dots$panel.first <- NULL
 
         MBRB <- matrix(rep(t(MBRB), length.out=dims0*2),ncol=2, byrow=T)
         MBRB <- MBRB * MBR.fac
@@ -84,14 +129,28 @@ setMethod("plot", signature(x = "IC", y = "missing"),
                   upper <- max(upper,xM)
                 }
                 h <- upper - lower
-                x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
+                if(is.null(x.vec)){
+                   if(scaleX){
+                      xpl <- scaleX.fct(lower - 0.1*h)
+                      xpu <- scaleX.fct(upper + 0.1*h)
+                      xp.vec <- seq(from = xpl, to = xpu, length = 1000)
+                      x.vec <- scaleX.inv(xp.vec)
+                   }else{
+                      x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
+                   }
+                }
                 plty <- "l"
                 lty <- "solid"
             }else{
-                if(is(e1, "DiscreteDistribution")) x.vec <- support(e1)
-                else{
-                   x.vec <- r(e1)(1000)
-                   x.vec <- sort(unique(x.vec))
+                if(!is.null(x.vec)){
+                   if(is(distr, "DiscreteDistribution"))
+                      x.vec <- intersect(x.vec,support(e1))
+                }else{
+                   if(is(e1, "DiscreteDistribution")) x.vec <- support(e1)
+                   else{
+                      x.vec <- r(e1)(1000)
+                      x.vec <- sort(unique(x.vec))
+                   }
                 }
                 plty <- "p"
                 lty <- "dotted"
@@ -119,11 +178,6 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         subL <- FALSE
         lineT <- NA
 
-     .mpresubs <- function(inx)
-                    .presubs(inx, c("%C", "%D", "%A"),
-                          c(as.character(class(x)[1]),
-                            as.character(date()),
-                            as.character(deparse(xc))))
 
      if (hasArg(main)){
          mainL <- TRUE
@@ -195,7 +249,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         if(with.legend){
           fac.leg <- if(dims0>1) 3/4 else .75/.8
           if(missing(legend.location)){
-             legend.location <- .fillList(list("bottomright"), dims0)
+             legend.location <- .fillList("bottomright", dims0)
           }else{
              legend.location <- as.list(legend.location)
              legend.location <- .fillList(legend.location, dims0)
@@ -237,18 +291,33 @@ setMethod("plot", signature(x = "IC", y = "missing"),
             fct <- function(x) sapply(x, IC1@Map[[indi]])
             print(xlim[,i])
             resc <-.rescalefct(x.vec, fct, scaleX, scaleX.fct,
-                              scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                              scaleX.inv, scaleY, scaleY.fct[[i]], xlim[,i],
                               ylim[,i], dots)
             dots <- resc$dots
             dots$xlim <- xlim[,i]
             dots$ylim <- ylim[,i]
             x.vec1 <- resc$X
             y.vec1 <- resc$Y
+
+            finiteEndpoints <- rep(FALSE,4)
+            if(scaleX){
+               finiteEndpoints[1] <- is.finite(scaleX.inv(min(x.vec1, xlim[1,i])))
+               finiteEndpoints[2] <- is.finite(scaleX.inv(max(x.vec1, xlim[2,i])))
+            }
+            if(scaleY){
+               finiteEndpoints[3] <- is.finite(scaleY.inv[[i]](min(y.vec1, ylim[1,i])))
+               finiteEndpoints[4] <- is.finite(scaleY.inv[[i]](max(y.vec1, ylim[2,i])))
+            }
+
+
             do.call(plot, args=c(list(x=x.vec1, y=y.vec1, type = plty, lty = lty,
-                                      xlab = xlab, ylab = ylab), dots))
+                                      xlab = .mpresubs(xlab), ylab = .mpresubs(ylab),
+                                      panel.first = pF[[i]],
+                                      panel.last = pL[[i]]), dots))
             .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv,
-                              scaleY,scaleY.fct, scaleY.inv,
+                              scaleY,scaleY.fct[[i]], scaleY.inv[[i]],
                               xlim[,i], ylim[,i], x.vec1, ypts = 400, n = scaleN,
+                              finiteEndpoints = finiteEndpoints,
                               x.ticks = x.ticks, y.ticks = y.ticks[[i]])
             if(withMBR){
                 MBR.i <- MBRB[i,]
@@ -258,7 +327,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
             if(is(e1, "DiscreteDistribution")){
                 x.vec1D <- seq(from = min(x.vec), to = max(x.vec), length = 1000)
                 rescD <-.rescalefct(x.vec1D, fct, scaleX, scaleX.fct,
-                                scaleX.inv, scaleY, scaleY.fct, xlim[,i],
+                                scaleX.inv, scaleY, scaleY.fct[[i]], xlim[,i],
                                 ylim[,i], dots)
                 x.vecD <- rescD$X
                 y.vecD <- rescD$Y
@@ -327,19 +396,25 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
     dots.without <- dots
     dots.without$col <- dots.without$cex <- dots.without$pch <- NULL
 
+    dims0 <- .getDimsTD(L2Fam,dots[["to.draw.arg"]])
 
     pL <- expression({})
     if(!is.null(dots$panel.last))
-        pL <- dots$panel.last
+        pL <- .panel.mingle(dots,"panel.last")
+    pL <- .fillList(pL, dims0)
+    if(dims0) for(i in 1:dims0){
+       if(is.null(pL[[i]])) pL[[i]] <- expression({})
+    }
     dots$panel.last <- NULL
+
 
     pL <- substitute({
         y1 <- y0s
         ICy <- sapply(y0s,ICMap0[[indi]])
-        print(xlim[,i])
+        #print(xlim[,i])
         resc.dat <-.rescalefct(y0s, function(x) sapply(x,ICMap0[[indi]]),
                               scaleX, scaleX.fct, scaleX.inv,
-                              scaleY, scaleY.fct, xlim[,i], ylim[,i],
+                              scaleY, scaleY.fct[[i]], xlim[,i], ylim[,i],
                               dwo0)
         y1 <- resc.dat$X
         ICy <- resc.dat$Y

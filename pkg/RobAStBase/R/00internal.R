@@ -6,6 +6,52 @@
     paste(format(100 * probs, trim = TRUE, scientific = FALSE, digits = digits),
     "%")
 
+.DistrCollapse <- function(support, prob,
+                              eps = getdistrOption("DistrResolution")){
+    supp <- support
+    prob <- as.vector(prob)
+    suppIncr <- diff(c(supp[1]-2*eps,supp)) < eps
+    groups <- cumsum(!suppIncr)
+    prob <- as.vector(tapply(prob, groups, sum))
+    supp0 <- as.vector(tapply(supp, groups, quantile, probs = 0.5, type = 1))
+    reps <- .getRefIdx(supp,supp0,eps)   
+#     cat("III\n")
+#     print(length(reps))
+#     print(length(supp0)) 
+#     cat("III\n")
+           ### in order to get a "support member" take the leftmost median
+    return(list(supp = supp0, prob = prob, groups=groups, reps = reps))
+#    newDistribution <- DiscreteDistribution(supp=supp,prob=prob)
+#    return(newDistribution)
+}
+
+.getRefIdx <- function(x,y, eps = getdistrOption("DistrResolution")){
+    ## x and y are sorted; y=unique(x) (modulo rounding)
+    ## wI gives the first index in x such that x is representing the group 
+    wI <- y*0
+    j <- 1
+    rmin <- Inf
+    for(i in 1:length(wI)){
+        again <- TRUE
+        while(again&&j<=length(x)){
+          rmina <- abs(x[j]-y[i])
+          if(rmina< rmin-eps){
+             rmin <- rmina
+             wI[i] <- j
+          }else{
+             if(rmina>rmin+eps){
+                rmin <-  Inf
+                again <- FALSE
+                j <- j-1
+             }   
+          }
+        j <- j + 1
+        }     
+    }
+    if(wI[i] == 0) wI[i] <- length(x)    
+    return(wI)
+}
+
 #------------------------------------------------------------------------------
 ### for distrXXX pre 2.5
 #------------------------------------------------------------------------------
@@ -17,6 +63,8 @@ if(packageVersion("distr")<"2.5"){
           {as.character(arg) %in% names(formals(fct))}
 
 .fillList <- function(list0, len = length(list0)){
+            if(is.null(list0)) return(vector("list",len))
+            if(!is.list(list0)) list0 <- list(list0)
             if(len == length(list0))
                return(list0)
             i <- 0
@@ -128,3 +176,18 @@ if(packageVersion("distrMod")<"2.5"){
 }
 
 
+.panel.mingle <- function(dots, element){
+  pF <- dots[[element]]
+  if(is.list(pF)) return(pF)
+  pFr <- if(typeof(pF)=="symbol") eval(pF) else{
+     pFc <- as.call(pF)
+     if(as.list(pFc)[[1]] == "list"){
+        lis <- vector("list",length(as.list(pFc))-1)
+        for(i in 1:length(lis)){
+            lis[[i]] <- pFc[[i+1]]
+        }
+        lis
+     }else pF
+  }
+  return(pFr)
+}
