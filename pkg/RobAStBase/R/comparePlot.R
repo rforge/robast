@@ -291,8 +291,8 @@ setMethod("comparePlot", signature("IC","IC"),
             absInfoEval <- function(x,IC){
                   QF <- ID
                   if(is(IC,"ContIC") & dims>1 ){
-                     if (is(normtype(object),"QFNorm"))
-                          QF <- QuadForm(normtype(object))
+                     if (is(normtype(IC),"QFNorm"))
+                          QF <- QuadForm(normtype(IC))
                   }
                   absInfo.f <- t(IC) %*% QF %*% IC
                   return(sapply(x, absInfo.f@Map[[1]]))
@@ -386,8 +386,8 @@ setMethod("comparePlot", signature("IC","IC"),
 
             finiteEndpoints <- rep(FALSE,4)
             if(scaleX){
-               finiteEndpoints[1] <- is.finite(scaleX.inv(min(x.vec1, xlim[1],na.rm=TRUE)))
-               finiteEndpoints[2] <- is.finite(scaleX.inv(max(x.vec1, xlim[2],na.rm=TRUE)))
+               finiteEndpoints[1] <- is.finite(scaleX.inv(min(x.vec, xlim[1],na.rm=TRUE)))
+               finiteEndpoints[2] <- is.finite(scaleX.inv(max(x.vec, xlim[2],na.rm=TRUE)))
             }
             if(scaleY){
                finiteEndpoints[3] <- is.finite(scaleY.inv[[i]](min(ym, ylim[1,i],na.rm=TRUE)))

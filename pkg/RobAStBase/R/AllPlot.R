@@ -143,7 +143,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
                 lty <- "solid"
             }else{
                 if(!is.null(x.vec)){
-                   if(is(distr, "DiscreteDistribution"))
+                   if(is(e1, "DiscreteDistribution"))
                       x.vec <- intersect(x.vec,support(e1))
                 }else{
                    if(is(e1, "DiscreteDistribution")) x.vec <- support(e1)

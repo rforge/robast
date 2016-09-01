@@ -10,28 +10,25 @@
 }
 \usage{
 comparePlot(obj1, obj2, ... )
-\S4method{comparePlot}{IC,IC}(obj1, obj2, obj3 = NULL, obj4 = NULL, 
-             data = NULL, ..., withSweave = getdistrOption("withSweave"),
-             forceSameModel = FALSE,
-             main = FALSE, inner = TRUE, sub = FALSE, 
-             col = par("col"), lwd = par("lwd"), lty, 
-             col.inner = par("col.main"), cex.inner = 0.8, 
-             bmar = par("mar")[1], tmar = par("mar")[3],
-             with.automatic.grid = TRUE,
-             with.legend = FALSE, legend = NULL, legend.bg = "white",
-             legend.location = "bottomright", legend.cex = 0.8,
-             withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
-             lty.MBR = "dashed", lwd.MBR = 0.8,
-             x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
-             scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
-             scaleN = 9, x.ticks = NULL, y.ticks = NULL,
-             mfColRow = TRUE, to.draw.arg = NULL,
-             cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-             pch.pts = 1, jit.fac = 1, jit.tol = .Machine$double.eps, with.lab = FALSE,
-             lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
-             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
-             draw.nonlbl = TRUE, cex.nonlbl=0.3, pch.nonlbl=".",
-             withSubst = TRUE)
+\S4method{comparePlot}{IC,IC}(obj1, obj2, obj3 = NULL, obj4 = NULL, data = NULL,
+                 ..., withSweave = getdistrOption("withSweave"),
+                 forceSameModel = FALSE, main = FALSE, inner = TRUE,
+                 sub = FALSE, col = par("col"), lwd = par("lwd"), lty,
+                 col.inner = par("col.main"), cex.inner = 0.8, bmar =
+                 par("mar")[1], tmar = par("mar")[3],
+                 with.automatic.grid = TRUE, with.legend = FALSE,
+                 legend = NULL, legend.bg = "white", legend.location =
+                 "bottomright", legend.cex = 0.8, withMBR = FALSE, MBRB
+                 = NA, MBR.fac = 2, col.MBR = par("col"), lty.MBR =
+                 "dashed", lwd.MBR = 0.8, x.vec = NULL, scaleX = FALSE,
+                 scaleX.fct, scaleX.inv, scaleY = FALSE, scaleY.fct =
+                 pnorm, scaleY.inv = qnorm, scaleN = 9, x.ticks = NULL,
+                 y.ticks = NULL, mfColRow = TRUE, to.draw.arg = NULL,
+                 cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
+                 pch.pts = 1, jitter.fac = 1, with.lab = FALSE, lab.pts
+                 = NULL, lab.font = NULL, alpha.trsp = NA, which.lbs =
+                 NULL, which.Order = NULL, return.Order = FALSE,
+                 withSubst = TRUE)
 }
 \arguments{
   \item{obj1}{ object of class \code{"InfluenceCurve"} }
@@ -138,21 +135,37 @@ comparePlot(obj1, obj2, ... )
                          }
   \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
         titles and lables is used; otherwise no substitution is used. }
-  \item{cex.pts}{size of the points of the \code{data} argument plotted}
+  \item{col.pts}{color of the points of the \code{data} argument plotted; (may 
+     be a vector of length \code{nIC}, \code{nIC} the number of plotted pICs, 
+     i.e., one value for each pIC in arguments \code{obj1}, \code{obj2}, and, 
+     if available, \code{obj3} and \code{obj4}, or it can be a matrix 
+     \code{n} by \code{nIC}, \code{n} the number of observations prior to any 
+     selection, in which case it assigns observation-specific colors to the 
+     observations; in this case this  overrides settings in the respective 
+     \code{col.nonlbl} argument.}
+  \item{pch.pts}{symbol of the points of the \code{data} argument plotted
+                 (may be a vector of length \code{nIC} or a matrix, see \code{col.pts}).}
+  \item{cex.pts}{size of the points of the \code{data} argument plotted
+                 (may be a vector of length \code{nIC} or a matrix, see \code{col.pts}).}
   \item{cex.pts.fun}{rescaling function for the size of the points to be plotted;
         either \code{NULL} (default), then \code{log(1+abs(x))} is used for each of
         the rescalings, or a function which is then used for each of the
         rescalings, or a list of functions; if it is a function or a list of
         functions, if necessary it is recylced to length \code{nIC * dim}
-        where \code{nIC} is the number of pICs and \code{dim} is the number of
-        dimensions of the pICs to be plotted; in the index of this list,
-        \code{nIC} is incremented first; then \code{dim}.}
-  \item{col.pts}{color of the points of the \code{data} argument plotted}
-  \item{pch.pts}{symbol of the points of the \code{data} argument plotted}
-  \item{with.lab}{logical; shall labels be plotted to the observations?}
-  \item{lab.pts}{character or NULL; labels to be plotted to the observations; if \code{NULL}
-                 observation indices;}
-  \item{lab.font}{font to be used for labels}
+        where \code{dim} is the number of dimensions of the pICs to be plotted; 
+        in the index of this list, \code{nIC} is incremented first; 
+        then \code{dim}.}
+
+  \item{with.lab}{logical; shall labels be plotted to the observations?
+                 (May be a vector of length \code{nIC}, see \code{col.pts}
+                 -- but not a matrix).}
+  \item{lab.pts}{character or NULL; labels to be plotted to the observations; 
+                 can be a vector of length \code{n}, \code{n} the number of 
+                 all observations prior to any selection with \code{which.lbs},
+                 \code{which.Order}; if \code{lab.pts} is \code{NULL}, 
+                 observation indices are used.}
+  \item{lab.font}{font to be used for labels (may be a vector of length 
+                  \code{nIC}, see \code{with.lab}).}
   \item{alpha.trsp}{alpha transparency to be added ex post to colors
         \code{col.pch} and \code{col.lbl}; if one-dim and NA all colors are
         left unchanged. Otherwise, with usual recycling rules \code{alpha.trsp}
@@ -161,12 +174,11 @@ comparePlot(obj1, obj2, ... )
         while for the remaining ones, the alpha channel in rgb space is set
         to the respective coordinate value of \code{alpha.trsp}. The non-NA
         entries must be integers in [0,255] (0 invisible, 255 opaque).}
-  \item{jit.fac}{jittering factor used in case of a \code{DiscreteDistribution}
-                    for plotting points of the \code{data} argument in a jittered fashion.}
-  \item{jit.tol}{threshold for jittering: if distance between points is smaller
-               than \code{jit.tol}, points are considered replicates.}
+  \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
+                    for plotting points of the \code{data} argument in a jittered 
+                    fashion (may be a vector of length 2, see \code{with.lab}).}
   \item{which.lbs}{either an integer vector with the indices of the observations
-          to be plotted into graph or \code{NULL} --- then no observation is excluded}
+          to be plotted into graph or \code{NULL} --- then no observation is excluded.}
   \item{which.Order}{for each of the given ICs, we order the observations (descending)
            according to the norm given by the corresponding \code{normtype(object)};
            then \code{which.Order} either is an integer vector with the indices of the \emph{ordered}
@@ -180,10 +192,13 @@ comparePlot(obj1, obj2, ... )
     reduction by argument \code{which.lbs}, and ordering is according to the norm given by
            \code{normtype(object)});
    othervise we return \code{invisible()} as usual.}
-  \item{draw.nonlbl}{logical; should non-labelled observations be drawn?}
-  \item{cex.nonlbl}{character expansion(s) for non-labelled observations}
-  \item{pch.nonlbl}{plotting symbol(s) for non-labelled observations}
   \item{\dots}{further arguments to be passed to \code{plot}}
+}
+\value{
+  The function returns invisibly a list of elements containing the information 
+  needed to compute the respective diagnostic plot.
+   The return value allows to recover all information used to produce the plot
+   for later use in enhanced graphics (e.g. with ggplot).   
 }
 \details{
 Any parameters of \code{plot.default} may be passed on to this particular

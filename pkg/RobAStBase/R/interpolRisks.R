@@ -5,3 +5,5 @@ RMXRRisk <- function(samplesize = 100)  new("RMXRRisk",type=".RMXE", samplesize 
 setMethod("samplesize","interpolRisk", function(object)object@samplesize)
 setReplaceMethod("samplesize","interpolRisk", function(object, value){
        object@samplesize <- value; object})
+setMethod("biastype","interpolRisk", function(object) symmetricBias())
+setMethod("normtype","interpolRisk", function(object) NormType())

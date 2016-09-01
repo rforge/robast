@@ -129,9 +129,9 @@ setMethod("infoPlot", "IC",
                    if(is(distr, "DiscreteDistribution"))
                       x.vec <- intersect(x.vec,support(distr))
                 }else{
-                   if(is(e1, "DiscreteDistribution")) x.vec <- support(distr)
+                   if(is(distr, "DiscreteDistribution")) x.vec <- support(distr)
                    else{
-                      x.vec <- r(e1)(1000)
+                      x.vec <- r(distr)(1000)
                       x.vec <- sort(unique(x.vec))
                    }
                 }
@@ -587,8 +587,8 @@ setMethod("infoPlot", "IC",
                       finiteEndpoints[2] <- is.finite(scaleX.inv(max(resc$X, xlim[2],na.rm=TRUE)))
                     }
                     if(scaleY){
-                       finiteEndpoints[3] <- is.finite(scaleY.inv[[i+in1to.draw]](min(yvec1, ylim[1,i+in1to.draw],na.rm=TRUE)))
-                       finiteEndpoints[4] <- is.finite(scaleY.inv[[i+in1to.draw]](max(yvec1, ylim[2,i+in1to.draw],na.rm=TRUE)))
+                       finiteEndpoints[3] <- is.finite(scaleY.inv[[i+in1to.draw]](min(y.vec1, ylim[1,i+in1to.draw],na.rm=TRUE)))
+                       finiteEndpoints[4] <- is.finite(scaleY.inv[[i+in1to.draw]](max(y.vec1, ylim[2,i+in1to.draw],na.rm=TRUE)))
                     }
 
                     .plotRescaledAxis(scaleX0, scaleX.fct, scaleX.inv,

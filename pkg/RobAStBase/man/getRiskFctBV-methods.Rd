@@ -4,6 +4,7 @@
 \alias{getRiskFctBV-methods}
 \alias{getRiskFctBV,asGRisk,ANY-method}
 \alias{getRiskFctBV,asMSE,ANY-method}
+\alias{getRiskFctBV,interpolRisk,ANY-method}
 \alias{getRiskFctBV,asSemivar,onesidedBias-method}
 \alias{getRiskFctBV,asSemivar,asymmetricBias-method}
 \title{Methods for Function getRiskFctBV  in Package `RobAStBase'}

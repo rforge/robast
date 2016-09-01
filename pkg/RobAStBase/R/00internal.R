@@ -52,6 +52,15 @@
     return(wI)
 }
 
+if(!isGeneric(".checkEstClassForParamFamily")){
+   setGeneric(".checkEstClassForParamFamily", function(PFam, estimator)
+               standardGeneric(".checkEstClassForParamFamily"))
+}
+setMethod(".checkEstClassForParamFamily",
+              signature=signature(PFam="ANY",estimator="ANY"),
+              function(PFam, estimator) estimator)
+
+
 #------------------------------------------------------------------------------
 ### for distrXXX pre 2.5
 #------------------------------------------------------------------------------
