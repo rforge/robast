@@ -11,18 +11,21 @@
              main = FALSE, inner = TRUE, sub = FALSE,
              col.inner = par("col.main"), cex.inner = 0.8,
              bmar = par("mar")[1], tmar = par("mar")[3],
+             with.automatic.grid = TRUE,
              with.legend = FALSE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
              withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
              lty.MBR = "dashed", lwd.MBR = 0.8,
-             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
-             mfColRow = TRUE, to.draw.arg = NULL)
+             mfColRow = TRUE, to.draw.arg = NULL,
+             withSubst = TRUE)
 \S4method{plot}{IC,numeric}(x, y, ..., cex.pts = 1,
-             col.pts = par("col"), pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
+             col.pts = par("col"), pch.pts = 1, jit.fac = 1, jit.tol = .Machine$double.eps, with.lab = FALSE,
              lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
-             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE)
+             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
+             draw.nonlbl = TRUE, cex.nonlbl=0.3, pch.nonlbl=".")
 }
 \arguments{
   \item{x}{object of class \code{"IC"}: IC to be plotted }
@@ -46,6 +49,9 @@
           to the current setting of \code{cex}; as in
           \code{\link[graphics]{par}}}
   \item{col.inner}{character or integer code; color for the inner title}
+  \item{with.automatic.grid}{logical; should a grid be plotted alongside
+      with the ticks of the axes, automatically? If \code{TRUE} a respective
+      call to \code{grid} in argument \code{panel.first} is ignored. }
   \item{with.legend}{logical; shall a legend be plotted?}
   \item{legend}{either \code{NULL} or a list of length (number of plotted panels)
                 of items which can be used as argument \code{legend} in
@@ -66,18 +72,31 @@
   \item{col.MBR}{color for the MBR lines; as usual \code{col}-argument;}
   \item{lty.MBR}{line type for the MBR lines; as usual \code{lty}-argument;}
   \item{lwd.MBR}{line width for the MBR lines; as usual \code{lwd}-argument;}
+  \item{x.vec}{a numeric vector of grid points to evaluate the influence curve;
+               by default, \code{x.vec} is \code{NULL}; then the grid is
+               produced automatically according to the distribution of the IC.
+               \code{x.vec} can be useful for usage with a rescaling of the
+               x-axis to avoid that the evaluation points be selected too
+               unevenly (i.e. on an equally spaced grid in the original scale,
+               but then, after rescaling non-equally).
+               The grid has to be specified in original scale; i.e.; when used
+               with rescaling, it should be chosen non-equally spaced. }
   \item{scaleX}{logical; shall X-axis be rescaled (by default according to the cdf of
           the underlying distribution)?}
   \item{scaleY}{logical; shall Y-axis be rescaled (by default according to a probit scale)?}
   \item{scaleX.fct}{an isotone, vectorized function mapping the domain of the IC
             to [0,1]; if \code{scaleX} is \code{TRUE} and \code{scaleX.fct} is
-            missing, the cdf of the underlying observation distribution.}
+            missing, the cdf of the underlying observation distribution;
+            can also be a list of functions with one list element for each
+            of the panels to be plot.}
   \item{scaleX.inv}{the inverse function to \code{scale.fct}, i.e., an isotone,
             vectorized function mapping [0,1] to the domain of the IC
             such that for any \code{x} in the domain,
             \code{scaleX.inv(scaleX.fct(x))==x}; if \code{scaleX} is \code{TRUE}
             and \code{scaleX.inv} is
-            missing, the quantile function of the underlying observation distribution.}
+            missing, the quantile function of the underlying observation distribution;
+            can also be a list of functions with one list element for each
+            of the panels to be plot.}
   \item{scaleY.fct}{an isotone, vectorized function mapping for each coordinate the
             range of the respective coordinate of the IC
             to [0,1]; defaulting to the cdf of \eqn{{\cal N}(0,1)}{N(0,1)}.}
@@ -103,6 +122,8 @@
                          vector \code{"dim<dimnr>"}, \code{dimnr} running through 
                          the number of rows of the trafo matrix.
                          }
+  \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
+      titles and lables is used; otherwise no substitution is used. }
   \item{cex.pts}{size of the points of the second argument plotted}
   \item{col.pts}{color of the points of the second argument plotted}
   \item{pch.pts}{symbol of the points of the second argument plotted}
@@ -118,8 +139,10 @@
         while for the remaining ones, the alpha channel in rgb space is set
         to the respective coordinate value of \code{alpha.trsp}. The non-NA
         entries must be integers in [0,255] (0 invisible, 255 opaque).}
-  \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
+  \item{jit.fac}{jittering factor used in case of a \code{DiscreteDistribution}
                     for plotting points of the second argument in a jittered fashion.}
+  \item{jit.tol}{threshold for jittering: if distance between points is smaller
+               than \code{jit.tol}, points are considered replicates.}
   \item{which.lbs}{either an integer vector with the indices of the observations
           to be plotted into graph or \code{NULL} --- then no observation is excluded}
   \item{which.Order}{we order the observations (descending) according to the norm given by
@@ -134,6 +157,9 @@
     reduction by argument \code{which.lbs}, and ordering is according to the norm given by
            \code{normtype(object)});
    otherwise we return \code{invisible()} as usual.}
+  \item{draw.nonlbl}{logical; should non-labelled observations be drawn?}
+  \item{cex.nonlbl}{character expansion(s) for non-labelled observations}
+  \item{pch.nonlbl}{plotting symbol(s) for non-labelled observations}
   \item{\dots}{further parameters for \code{plot}}
 }
 \details{
@@ -152,7 +178,8 @@ class and (named) parameter slots of arguments in case of \code{inner},
 and a "generated on <data>"-tag in case of \code{sub}.
 Of course, if \code{main} / \code{inner} / \code{sub} are \code{character}, this
 is used for the title; in case of \code{inner} it is then checked whether it
-has correct length. In all title arguments, the following patterns are substituted:
+has correct length. If argument \code{withSubst} is \code{TRUE}, in all title 
+and axis lable arguments, the following patterns are substituted:
 \describe{
 \item{\code{"\%C"}}{class of argument \code{object}}
 \item{\code{"\%A"}}{deparsed argument  \code{object}}
@@ -171,6 +198,12 @@ one pair for each dimension.
 The \code{IC,numeric}-method calls the \code{IC,missing}-method but in
 addition plots the values of a dataset into the IC.
 
+In addition, argument \code{\dots} may contain arguments \code{panel.first},
+\code{panel.last}, i.e., hook expressions to be evaluated at the very beginning
+and at the very end of each panel (within the then valid coordinates).
+To be able to use these hooks for each panel individually, they may also be
+lists of expressions (of the same length as the number of panels and
+run through in the same order as the panels).
 }
 \examples{
 IC1 <- new("IC")

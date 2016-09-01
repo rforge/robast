@@ -43,7 +43,7 @@
 fam  <-  GammaFamily()
 IC <- optIC(model = fam, risk = asCov())
 Y <- distribution(fam)
-data  <-  r(Y)(1000)
+data  <-  r(Y)(500)
 InfoPlot(IC, data, withCall = FALSE)
 }
 

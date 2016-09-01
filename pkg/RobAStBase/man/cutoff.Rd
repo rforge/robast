@@ -2,6 +2,7 @@
 \alias{cutoff}
 \alias{cutoff.sememp}
 \alias{cutoff.chisq}
+\alias{cutoff.quant}
 
 \title{Generating function(s) for class 'cutoff'}
 \description{
@@ -11,8 +12,9 @@
 cutoff(name = "empirical", body.fct0,
        cutoff.quantile  = 0.95,
        norm = NormType(), QF, nsim = 100000)
-cutoff.sememp()
-cutoff.chisq()
+cutoff.sememp(cutoff.quantile = 0.95)
+cutoff.chisq(cutoff.quantile = 0.95)
+cutoff.quant(qfct)
 }
 \arguments{
   \item{name}{argument for name slot of \code{cutoff} object}
@@ -26,6 +28,7 @@ cutoff.chisq()
   normal and \eqn{Q} a corresponding quadratic form}
   \item{QF}{ a quadratic (positive semidefinite, symmetric) matrix used
              as quadratic form }
+  \item{qfct}{ a (nominal) quantile function }
 }
 \details{
 \code{cutoff} generates a valid object of class \code{"cutoff"}.
@@ -47,6 +50,13 @@ normality; to determine this quantile \code{nsim} simulations are used.\cr
 \code{cutoff.chisq()} is a helper function generating the theoretical (asymptotic)
 quantile of (the square root of) a (self-standardized) quadratic form, assuming multivariate
 normality; i.e.; a corresponding quantile of a Chi-Square distribution.
+
+\code{cutoff.quant()} is a helper function generating the theoretical quantile
+corresponding to the quantile function \code{qfct}; if \code{qfct} is missing,
+it searches the caller environment for an object \code{..ICloc}, and if this
+exists it uses the respective model quantile function; the fallback is
+\code{qnorm}. At any rate, if there is an object \code{..trf} in the scope of
+the function it is used to transfer the quantile (after its evaluation).
 }
 \value{Object of class \code{"cutoff"}.}
 \author{

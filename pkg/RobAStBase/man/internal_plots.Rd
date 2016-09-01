@@ -6,6 +6,7 @@
 \alias{.SelectOrderData}
 \alias{.makedotsP}
 \alias{.makedotsLowLevel}
+\alias{.cexscale}
 
 \title{Internal / Helper functions of package RobAStBase for plot functions}
 
@@ -19,11 +20,13 @@ These functions are internally used helper functions for \code{\link{plot}},
          xlim, ylim, dots)
 .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv, scaleY,scaleY.fct,
                   scaleY.inv, xlim, ylim, X, ypts = 400, n = 11,
+                  finiteEndpoints = rep(FALSE,4),
                   x.ticks = NULL, y.ticks = NULL, withbox = TRUE)
 .legendCoord(x, scaleX, scaleX.fct, scaleY, scaleY.fct)
 .SelectOrderData(data, fct, which.lbs, which.Order)
 .makedotsP(dots)
 .makedotsLowLevel(dots)
+.cexscale(y, y1=y, maxcex=4,mincex=0.05,cex, fun=NULL)
 }
 \arguments{
   \item{scaleX}{logical; shall X-axis be rescaled (by default according to the cdf of
@@ -51,6 +54,8 @@ These functions are internally used helper functions for \code{\link{plot}},
               scale).}
   \item{ylim}{numeric vector of length 2: limits of the plotted y region (in original
               scale).}
+  \item{finiteEndpoints}{a logical of length 4: are the  unscaled \code{xlim[1]},
+                         \code{xlim[2]}, \code{ylim[1]}, \code{ylim[2]} finite? }
   \item{x.ticks}{numeric: coordinates in original scale of user-given ticks on x-axis.}
   \item{y.ticks}{numeric: coordinates in original scale of user-given ticks on y-axis.}
   \item{n}{integer: number of default ticks in x and y axis.}
@@ -75,6 +80,12 @@ These functions are internally used helper functions for \code{\link{plot}},
    \code{y.ticks} are both \code{NULL}, a respective box is drawn around the
    panel; otherwise no box is drawn in this case. }
   \item{dots}{a list; intended to be the \code{\dots} argument of \code{plot}. }
+  \item{y}{}
+  \item{y1}{}
+  \item{maxcex}{}
+  \item{mincex}{}
+  \item{cex}{}
+  \item{fun}{}
 }
 \details{
 \code{.rescalefct} rescales, if necessary, x and y axis for use in plot
@@ -113,11 +124,26 @@ placement of a legend.
 \code{data}, ie., the selected/thinned out data, \code{y}, ie., the
 values of  \code{fct(data)}, \code{ind}, ie., the indices of the selected data
 in the original data (after possibly two selections), and \code{ind1} the
-indices of the data selected by \code{which.lbs} in the original data.
+indices of the data selected by \code{which.lbs} in the original data; in 
+addition also the non selected data, \code{data.ns}, the respective
+y-values \code{y.ns} and the corresponding index elements \code{ind.ns} are
+returned as list items.
 
 \code{.makedotsP} and \code{.makedotsLowLevel} manipulate the \code{\dots}
 argument, deleting certain items and selecting items which can be digested by
 \code{plot}, returning the manipulated list.
+
+\code{.cexscale}{rescales the point sizes of the points to be plotted;
+     the unscaled sizes are given in argument \code{y}, \code{y1} in
+     case of several lines of points to be plotted may contain the
+     vector of the sizes of all points to be plotted in (e.g., including
+     those of the other lines of points). \code{maxcex} and \code{mincex}
+     are maximum and minimum of the raw rescaled sizes; \code{cex} is
+     a factor drawn from argument \code{cex.pts} by which the raw sizes
+     are rescaled before being returned. \code{fun} is the function
+     by which the rescaling is done; by default this argument is \code{NULL}
+     and in this case the function \code{log(1+abs(x))} is used.
+}
 }
 
 

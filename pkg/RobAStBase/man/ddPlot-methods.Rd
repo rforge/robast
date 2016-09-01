@@ -13,7 +13,7 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        cutoff.x, cutoff.y, ...,
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, lab.pts, adj, cex.idn,
+       id.n, cex.pts = 1,lab.pts, jit.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
        col.idn, lty.cutoff, lwd.cutoff, col.cutoff, text.abline = TRUE,
        text.abline.x = NULL, text.abline.y = NULL,
        cex.abline = par("cex"), col.abline = col.cutoff,
@@ -22,12 +22,12 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "\%7.2f", text.abline.x.fmt.qx = "\%4.2f\%\%",
        text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%", 
-	   jitt.fac)
+	     jit.fac, jit.tol = .Machine$double.eps,doplot = TRUE)
 \S4method{ddPlot}{numeric}(data, dist.x = NormType(), dist.y  = NormType(),
        cutoff.x, cutoff.y, ...,
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, lab.pts, adj, cex.idn,
+       id.n, cex.pts = 1,lab.pts, jit.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
        col.idn, lty.cutoff, lwd.cutoff, col.cutoff, text.abline = TRUE,
        text.abline.x = NULL, text.abline.y = NULL,
        cex.abline = par("cex"), col.abline = col.cutoff,
@@ -36,12 +36,12 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "\%7.2f", text.abline.x.fmt.qx = "\%4.2f\%\%",
        text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%",
-	   jitt.fac)
+	   jit.fac, jit.tol=.Machine$double.eps, doplot = TRUE)
 \S4method{ddPlot}{data.frame}(data, dist.x = NormType(), dist.y  = NormType(),
        cutoff.x, cutoff.y, ...,
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, lab.pts, adj, cex.idn,
+       id.n, cex.pts = 1,lab.pts, jit.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
        col.idn, lty.cutoff, lwd.cutoff, col.cutoff, text.abline = TRUE,
        text.abline.x = NULL, text.abline.y = NULL,
        cex.abline = par("cex"), col.abline = col.cutoff,
@@ -50,7 +50,7 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "\%7.2f", text.abline.x.fmt.qx = "\%4.2f\%\%",
        text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%",
-	   jitt.fac)
+	   jit.fac, jit.tol=.Machine$double.eps, doplot = TRUE)
 }
 \arguments{
   \item{data}{data coercable to \code{matrix}; the data  at which to produce the \code{ddPlot}.}
@@ -69,7 +69,18 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
   distances of the \code{y} axis.}
   \item{id.n}{a set of indices (or a corresponding logical vector); to select a subset
   of the data in argument \code{data}.}
+  \item{cex.pts}{the corresponding \code{cex} argument for plotted points.}
   \item{lab.pts}{a vector of labels for the (unsubsetted) \code{data}.}
+  \item{jit.pts}{the corresponding \code{jitter} argument for plotted points;
+    may be a vector of length 2 -- for separate factors for x- and y-coordinate.}
+  \item{alpha.trsp}{alpha transparency to be added ex post to colors
+        \code{col.pch} and \code{col.lbl}; if one-dim and NA all colors are
+        left unchanged. Otherwise, with usual recycling rules \code{alpha.trsp}
+        gets shorted/prolongated to length the data-symbols to be plotted.
+        Coordinates of this vector \code{alpha.trsp} with NA are left unchanged,
+        while for the remaining ones, the alpha channel in rgb space is set
+        to the respective coordinate value of \code{alpha.trsp}. The non-NA
+        entries must be integers in [0,255] (0 invisible, 255 opaque).}
   \item{adj}{the corresponding argument for \code{\link[graphics]{text}} for
              labelling the outliers.}
   \item{cex.idn}{the corresponding \code{cex} argument for
@@ -108,7 +119,10 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
   \item{text.abline.x.fmt.qx}{format string to format cutoff probability in label in x direction.}
   \item{text.abline.y.fmt.cy}{format string to format the cutoff value in label in y direction.}
   \item{text.abline.y.fmt.qy}{format string to format cutoff probability in label in y direction.}
-  \item{jitt.fac}{factor for jittering, see \code{jitter};}
+  \item{jit.fac}{factor for jittering, see \code{jitter};}
+  \item{jit.tol}{threshold for jittering: if distance between points is smaller
+               than \code{jit.tol}, points are considered replicates.}
+  \item{doplot}{logical; shall a plot be produced? if \code{FALSE} only the return values are produced.}
   }
 \details{
 The \code{matrix}-method calls \code{.ddPlot.MatNtNtCoCo},
@@ -126,7 +140,7 @@ patterns are substituted:
 }
 }
 \value{
-a list with items
+a list (returned as \code{invisible()}) with items
 \item{id.x}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{x}-cutoff}
 \item{id.y}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{y}-cutoff}
 \item{id.xy}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{x}-cutoff and the \code{y}-cutoff}
