@@ -1,0 +1,44 @@
+-----------------------------------------------
+Vorbereitung: 
+-----------------------------------------------
+
++ bitte von r-forge RobASt auschecken / updaten
++ dort liegen alle Routinen in \branches\robast-1.0\pkg\RobExtremesBuffer
++ Ihr braucht R-Studio
++ von R-Studio shiny mit depends installieren
++ dann in R-Studio in Euren Checkout-Ordner mit 
+  \branches\robast-1.0\pkg\RobExtremesBuffer gehen und die beiden
+  Files ui.R und utilities.R einladen und dann "run app aufrufen" 
++ es sind 77 x 3 Glättungen vorzunehmen = 
+
+ 13 LM für [OMSE/MBRE/RMXE] für GParetoFamily
+ 13 LM für [OMSE/MBRE/RMXE] für GEVFamily
+ 25 LM für [OMSE/MBRE/RMXE] für GEVUFamily
+ 13 LM für [OMSE/MBRE/RMXE] für GammaFamily
+ 13 LM für [OMSE/MBRE/RMXE] für WeibullFamily
+  
+=> 7 "Helfer" = jeder Helfer macht 11 x 3 Glättungen
+  
+-----------------------------------------------
+Aufteilung LM Glättung
+-----------------------------------------------
+
+PR       GPareto [OMSE/MBRE/RMXE] 
+
+PR-Hiwi  GEV [OMSE/MBRE]   
+
+MK       GEV [RMXE] GEVU-OMSE 
+
+MK-Hiwi  GEVU MBRE/RMXE 
+
+SD       Gamma[OMSE/MBRE] 
+
+EM       Gamma RMXE  WeibullFamily OMSE
+
+BS       WeibullFamily MBRE/RMXE
+
+Rückruf bei Fragen 
+    Shiny/UI: Eugen +49-631-31600-4769
+	Glättung: Peter +49-441-798-3240
+	
+	

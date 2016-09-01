@@ -1,0 +1,41 @@
+###############################################################################
+##  News: to package RobAStRDA
+###############################################################################
+
+(first two numbers of package versions do not necessarily reflect 
+ package-individual development, but rather are chosen for the 
+ RobAStXXX family as a whole in order to ease updating "depends" 
+ information)
+
+#######################################
+version 1.0
+#######################################
+
+user-visible CHANGES:
++ title changed to title style / capitalization
+
+GENERAL ENHANCEMENTS:
+
+under the hood:
++ warning methods about not importing from methods ...
++ enhanced imports in DESCRIPTION by explicating second order imports
+
+BUGFIXES:
+
+
+#######################################
+version 0.9
+#######################################
+
++ created anew as a new rda-data-only package;
++ the reason to separate the rda file from the actual R packages is to
+  keep the latter small while we expect the present package to only 
+  need seldom updates.
++ See also mail exchange P.Ruckdeschel - U.Ligges on R-devel---
+  \url{https://stat.ethz.ch/pipermail/r-devel/2013-February/065794.html}.
++ explained purpose of package RobAStRDA in man/0RobRDA-package.Rd and
+  in R/Comment.R
+
+
+under the hood:
+

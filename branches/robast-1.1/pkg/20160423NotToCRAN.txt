@@ -1,0 +1,40 @@
+                RobAStRDA once again ... 
+
+sorry to bother you with this again, we have been here before,
+and there is an extensive mail exchange on this on CRAN archives
+(last time 19.09.2013 13:43 "Re: CRAN submission RobAStRDA 0.9")
+and some offline exchange with Uwe on this afterwards.
+
+To cut it short: Our package fails by size. We do not see how
+to fix this; it is a database with interpolators; i.e., grids
+for speed up of computations, but in addition also many interpolating
+R-functions (with their environment) -- the results of approxfun (to 
+produce the interpolating function only once and not each time on the 
+fly on call). One clue might be that we simultaneously store pre R-3.0
+and post R-3.0 environments (and at run-time decide which branch to
+take according to version information), and that the compression does
+not work well in post R-3.0 for pre R-3.0-environments ...
+
+Anyway: Our sysdata.rda data set is xz compressed already but during 
+check gets extracted, throwing the note that our package is too large; 
+lazyload and putting the data somewhere else does not help either (and 
+even gets worse as to size).
+
+Uwe was so nice to offer some of his time to look at it, so maybe you
+find some trick? 
+
+Another way out would be to host the package somewhere else (in some
+drat type repo with infrastructure of Dirk Eddelbuettel's) if we may
+link to non CRAN-repos in a suggests/depends field of another package.
+
+Any help appreciated, best, Peter
+
+argh: sorry been a long day...
+
+The package version 
+  just sent was using the wrong data base; I have fixed 
+  this; the effect though is still the same as in the 
+  previous submission, but now, due to some more grids 
+  my colleagues have produced by now, the package has 
+  even grown a bit larger = 4.5 MB xz compressed, 10 MB 
+  during R CMD check... 

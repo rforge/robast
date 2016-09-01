@@ -1,0 +1,41 @@
+importFrom("Biobase", "rowMedians")
+importFrom("lattice","stripplot")
+importFrom("RColorBrewer","brewer.pal")
+importFrom("distr", "p", "q", "r", "Reals")
+importClassesFrom("distr","Reals")
+importFrom("RandVar", "EuclRandVarList", "RealRandVariable")		 
+importClassesFrom("RandVar", "EuclRandVarList", "RealRandVariable")		 
+importFrom("distrMod", "NormLocationFamily", "NormLocationScaleFamily", "symmetricBias", "NormType")
+importClassesFrom("distrMod", "L2LocationFamily", "NormLocationFamily", "NormLocationScaleFamily")
+importMethodsFrom("distrMod", "distribution", "main", "addInfo<-", "Infos", "Infos<-",
+                  "normtype", "biastype","normtype<-","biastype<-", "estimate")
+importFrom("RobAStBase","generateIC","ContNeighborhood", "IC")
+importClassesFrom("RobAStBase", "HampelWeight", "ALEstimate", "kStepEstimate", "ContNeighborhood")
+importMethodsFrom("RobAStBase", "clip", "cent", "stand", "weight", "clip<-", "cent<-", "stand<-", "weight<-", 
+         "getweight", "makeIC", "CallL2Fam", "CallL2Fam<-", "neighborRadius", "modifyIC", "addInfo<-")
+
+export(finiteSampleCorrection,
+       rlsOptIC.AL, 
+       rlsOptIC.M, 
+       rlsOptIC.BM,
+       rlsOptIC.Hu1, 
+       rlsOptIC.Hu2a, 
+       rlsOptIC.Hu2, 
+       rlsOptIC.Hu3, 
+       rlsOptIC.HuMad, 
+       rlsOptIC.Ha3,
+       rlsOptIC.Ha4, 
+       rlsOptIC.HaMad, 
+       rlsOptIC.An1,
+       rlsOptIC.An2, 
+       rlsOptIC.AnMad, 
+       rlsOptIC.Tu1,
+       rlsOptIC.Tu2, 
+       rlsOptIC.TuMad, 
+       rlsOptIC.MM2,
+       rlOptIC,
+       rsOptIC,
+       roblox,
+       rowRoblox,
+       colRoblox,
+       showdown)

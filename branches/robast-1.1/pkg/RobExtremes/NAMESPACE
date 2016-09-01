@@ -1,0 +1,54 @@
+useDynLib("RobExtremes")
+
+import("methods")
+import("RobAStRDA")
+import("distr")
+import("distrEx")
+import("RandVar")
+import("distrMod")
+import("robustbase")
+import("RobAStBase")
+import("ROptEst")
+import("actuar")
+import("evd")
+importFrom("startupmsg", "buildStartupMessage", "infoShow")
+
+exportClasses("GumbelParameter",
+              "ParetoParameter",
+			  "GParetoParameter",
+			  "GEVParameter",
+			  "LDEstimate")
+exportClasses("Gumbel", "Pareto", "GPareto", "GEV")
+exportClasses("GParetoFamily", "GumbelLocationFamily", "WeibullFamily",
+              "ParetoFamily", "GEVFamily", "GEVFamilyMuUnknown")
+exportClasses("DistributionsIntegratingByQuantiles")
+exportMethods("initialize", "show", "rescaleFunction") 
+exportMethods("loc", "loc<-", "kMAD", "Sn", "Qn")
+exportMethods("validParameter",
+              "location", "location<-", 
+              "scale", "scale<-",
+              "shape", "shape<-",
+              "+", "*",
+              "Min", "Min<-",
+              "E", "var", "IQR", "skewness", "kurtosis", "median", "dispersion")
+exportMethods("modifyModel", "getStartIC")
+exportMethods("moveL2Fam2RefParam",
+			  "moveICBackFromRefParam")			  
+
+export("EULERMASCHERONICONSTANT","APERYCONSTANT")
+export("getCVaR", "getVaR", "getEL")
+export("Gumbel", "Pareto", "GPareto", "GEV")
+export("GParetoFamily", "GumbelLocationFamily", "WeibullFamily", "GEVFamily",
+       "ParetoFamily", "GEVFamilyMuUnknown")
+export("LDEstimator", "medkMAD", "medSn", "medQn", "medkMADhybr")
+export("getShapeGrid", "getSnGrid", 
+       "PickandsEstimator","QuantileBCCEstimator")
+export("loc", "loc<-", "kMAD", "Sn", "Qn", 
+       "asvarMedkMAD","asvarPickands", "asvarQBCC")
+exportMethods("rescaleFunction")			  
+S3method(print, riskMeasure)
+exportMethods("gev.diag", "gpd.diag","gev.prof", "gpd.prof",
+              "gev.profxi", "gpd.profxi")
+export("gev.diag", "gpd.diag","gev.prof", "gpd.prof",
+              "gev.profxi", "gpd.profxi")
+			  

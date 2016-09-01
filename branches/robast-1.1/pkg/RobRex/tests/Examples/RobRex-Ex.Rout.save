@@ -1,0 +1,370 @@
+
+R Under development (unstable) (2015-05-02 r68310) -- "Unsuffered Consequences"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "RobRex"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('RobRex')
+Loading required package: ROptRegTS
+Loading required package: ROptEstOld
+Loading required package: distr
+Loading required package: startupmsg
+:startupmsg>  Utilities for Start-Up Messages (version 0.9.1)
+:startupmsg> 
+:startupmsg>  For more information see ?"startupmsg",
+:startupmsg>  NEWS("startupmsg")
+
+Loading required package: sfsmisc
+Loading required package: SweaveListingUtils
+:SweaveListingUtils>  Utilities for Sweave Together with
+:SweaveListingUtils>  TeX 'listings' Package (version
+:SweaveListingUtils>  0.7)
+:SweaveListingUtils> 
+:SweaveListingUtils>  NOTE: Support for this package
+:SweaveListingUtils>  will stop soon.
+:SweaveListingUtils> 
+:SweaveListingUtils>  Package 'knitr' is providing the
+:SweaveListingUtils>  same functionality in a better
+:SweaveListingUtils>  way.
+:SweaveListingUtils> 
+:SweaveListingUtils>  Some functions from package 'base'
+:SweaveListingUtils>  are intentionally masked ---see
+:SweaveListingUtils>  SweaveListingMASK().
+:SweaveListingUtils> 
+:SweaveListingUtils>  Note that global options are
+:SweaveListingUtils>  controlled by
+:SweaveListingUtils>  SweaveListingoptions() ---c.f.
+:SweaveListingUtils>  ?"SweaveListingoptions".
+:SweaveListingUtils> 
+:SweaveListingUtils>  For more information see
+:SweaveListingUtils>  ?"SweaveListingUtils",
+:SweaveListingUtils>  NEWS("SweaveListingUtils")
+:SweaveListingUtils>  There is a vignette to this
+:SweaveListingUtils>  package; try
+:SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
+
+
+Attaching package: ‘SweaveListingUtils’
+
+The following objects are masked from ‘package:base’:
+
+    library, require
+
+:distr>  Object Oriented Implementation of Distributions (version
+:distr>  2.6)
+:distr> 
+:distr>  Attention: Arithmetics on distribution objects are
+:distr>  understood as operations on corresponding random variables
+:distr>  (r.v.s); see distrARITH().
+:distr> 
+:distr>  Some functions from package 'stats' are intentionally masked
+:distr>  ---see distrMASK().
+:distr> 
+:distr>  Note that global options are controlled by distroptions()
+:distr>  ---c.f. ?"distroptions".
+:distr> 
+:distr>  For more information see ?"distr", NEWS("distr"), as well as
+:distr>    http://distr.r-forge.r-project.org/
+:distr>  Package "distrDoc" provides a vignette to this package as
+:distr>  well as to several extension packages; try
+:distr>  vignette("distr").
+
+
+Attaching package: ‘distr’
+
+The following objects are masked from ‘package:stats’:
+
+    df, qqplot, sd
+
+Loading required package: distrEx
+:distrEx>  Extensions of Package 'distr' (version 2.6)
+:distrEx> 
+:distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
+:distrEx>  attached /before/ package "distrEx". See
+:distrEx>  distrExMASK().Note: Extreme value distribution
+:distrEx>  functionality has been moved to
+:distrEx> 
+:distrEx>        package "RobExtremes". See distrExMOVED().
+:distrEx> 
+:distrEx>  For more information see ?"distrEx", NEWS("distrEx"), as
+:distrEx>  well as
+:distrEx>    http://distr.r-forge.r-project.org/
+:distrEx>  Package "distrDoc" provides a vignette to this package
+:distrEx>  as well as to several related packages; try
+:distrEx>  vignette("distr").
+
+
+Attaching package: ‘distrEx’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, median, var
+
+Loading required package: RandVar
+:RandVar>  Implementation of Random Variables (version 1.0)
+:RandVar> 
+:RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
+:RandVar>  well as
+:RandVar>    http://robast.r-forge.r-project.org/
+:RandVar>  This package also includes a vignette; try
+:RandVar>  vignette("RandVar").
+
+Loading required package: evd
+
+Attaching package: ‘ROptEstOld’
+
+The following object is masked from ‘package:graphics’:
+
+    clip
+
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("rgsOptIC.AL")
+> ### * rgsOptIC.AL
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.AL
+> ### Title: Computation of the optimally robust IC for AL estimators
+> ### Aliases: rgsOptIC.AL
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> IC1 <- rgsOptIC.AL(r = 0.1, K = K)
+> checkIC(IC1)
+precision of centering:	 0 -4.83286e-07 
+precision of Fisher consistency:
+              [,1]          [,2]
+[1,] -1.083822e-06  0.000000e+00
+[2,]  0.000000e+00 -1.488624e-05
+maximum deviation 
+     1.488624e-05 
+> Risks(IC1)
+$asMSE
+[1] 0.6923324
+
+$asBias
+[1] 2.562417
+
+$trAsCov
+[1] 0.6266726
+
+> cent(IC1)
+[1]  0.00000000 -0.02502798
+> clip(IC1)
+[1] 2.562417
+> stand(IC1)
+           [,1]      [,2]
+[1,] 0.09566834 0.0000000
+[2,] 0.00000000 0.5966641
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rgsOptIC.ALc")
+> ### * rgsOptIC.ALc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.ALc
+> ### Title: Computation of the optimally robust IC for AL estimators
+> ### Aliases: rgsOptIC.ALc
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> IC1 <- rgsOptIC.ALc(r = 0.1, K = K)
+> checkIC(IC1)
+precision of conditional centering:	 9.851877e-07 
+precision of Fisher consistency:
+              [,1]          [,2]
+[1,] -1.061903e-06  0.000000e+00
+[2,]  0.000000e+00 -5.374509e-05
+maximum deviation 
+     5.374509e-05 
+> Risks(IC1)
+$asMSE
+[1] 0.6923343
+
+$asBias
+[1] 2.562466
+
+$trAsCov
+[1] 0.626672
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rgsOptIC.ALs")
+> ### * rgsOptIC.ALs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.ALs
+> ### Title: Computation of the optimally robust IC for ALs estimators
+> ### Aliases: rgsOptIC.ALs
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## code takes some time
+> ## Not run: 
+> ##D K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> ##D IC1 <- rgsOptIC.ALs(r = 0.1, K = K)
+> ##D checkIC(IC1)
+> ##D Risks(IC1)
+> ##D Infos(IC1)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rgsOptIC.BM")
+> ### * rgsOptIC.BM
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.BM
+> ### Title: Computation of the optimally robust IC for BM estimators
+> ### Aliases: rgsOptIC.BM
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## code takes some time
+> ## Not run: 
+> ##D K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> ##D IC1 <- rgsOptIC.BM(r = 0.1, K = K)
+> ##D checkIC(IC1)
+> ##D Risks(IC1)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rgsOptIC.M")
+> ### * rgsOptIC.M
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.M
+> ### Title: Computation of the optimally robust IC for M estimators
+> ### Aliases: rgsOptIC.M
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## code takes some time
+> ## Not run: 
+> ##D K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> ##D IC1 <- rgsOptIC.M(r = 0.1, K = K)
+> ##D checkIC(IC1)
+> ##D Risks(IC1)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rgsOptIC.MK")
+> ### * rgsOptIC.MK
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.MK
+> ### Title: Computation of the optimally robust IC for MK estimators
+> ### Aliases: rgsOptIC.MK
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## code takes some time
+> ## Not run: 
+> ##D K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> ##D IC1 <- rgsOptIC.MK(r = 0.1, K = K)
+> ##D checkIC(IC1)
+> ##D Risks(IC1)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rgsOptIC.Mc")
+> ### * rgsOptIC.Mc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.Mc
+> ### Title: Computation of the optimally robust IC for Mc estimators
+> ### Aliases: rgsOptIC.Mc
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## code takes some time
+> ## Not run: 
+> ##D K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> ##D IC1 <- rgsOptIC.Mc(r = 0.1, K = K)
+> ##D checkIC(IC1)
+> ##D Risks(IC1)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rgsOptIC.Ms")
+> ### * rgsOptIC.Ms
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rgsOptIC.Ms
+> ### Title: Computation of the optimally robust IC for Ms estimators
+> ### Aliases: rgsOptIC.Ms
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> ## code takes some time
+> ## Not run: 
+> ##D K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
+> ##D IC1 <- rgsOptIC.Ms(r = 0.1, K = K)
+> ##D checkIC(IC1)
+> ##D Risks(IC1)
+> ## End(Not run)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  6.473 0.068 6.537 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

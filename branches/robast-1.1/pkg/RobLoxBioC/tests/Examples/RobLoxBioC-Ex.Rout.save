@@ -1,0 +1,286 @@
+
+R Under development (unstable) (2015-05-02 r68310) -- "Unsuffered Consequences"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "RobLoxBioC"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('RobLoxBioC')
+Loading required package: distr
+Loading required package: startupmsg
+:startupmsg>  Utilities for Start-Up Messages (version 0.9.1)
+:startupmsg> 
+:startupmsg>  For more information see ?"startupmsg",
+:startupmsg>  NEWS("startupmsg")
+
+Loading required package: sfsmisc
+Loading required package: SweaveListingUtils
+:SweaveListingUtils>  Utilities for Sweave Together with
+:SweaveListingUtils>  TeX 'listings' Package (version
+:SweaveListingUtils>  0.7)
+:SweaveListingUtils> 
+:SweaveListingUtils>  NOTE: Support for this package
+:SweaveListingUtils>  will stop soon.
+:SweaveListingUtils> 
+:SweaveListingUtils>  Package 'knitr' is providing the
+:SweaveListingUtils>  same functionality in a better
+:SweaveListingUtils>  way.
+:SweaveListingUtils> 
+:SweaveListingUtils>  Some functions from package 'base'
+:SweaveListingUtils>  are intentionally masked ---see
+:SweaveListingUtils>  SweaveListingMASK().
+:SweaveListingUtils> 
+:SweaveListingUtils>  Note that global options are
+:SweaveListingUtils>  controlled by
+:SweaveListingUtils>  SweaveListingoptions() ---c.f.
+:SweaveListingUtils>  ?"SweaveListingoptions".
+:SweaveListingUtils> 
+:SweaveListingUtils>  For more information see
+:SweaveListingUtils>  ?"SweaveListingUtils",
+:SweaveListingUtils>  NEWS("SweaveListingUtils")
+:SweaveListingUtils>  There is a vignette to this
+:SweaveListingUtils>  package; try
+:SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
+
+
+Attaching package: ‘SweaveListingUtils’
+
+The following objects are masked from ‘package:base’:
+
+    library, require
+
+:distr>  Object Oriented Implementation of Distributions (version
+:distr>  2.6)
+:distr> 
+:distr>  Attention: Arithmetics on distribution objects are
+:distr>  understood as operations on corresponding random variables
+:distr>  (r.v.s); see distrARITH().
+:distr> 
+:distr>  Some functions from package 'stats' are intentionally masked
+:distr>  ---see distrMASK().
+:distr> 
+:distr>  Note that global options are controlled by distroptions()
+:distr>  ---c.f. ?"distroptions".
+:distr> 
+:distr>  For more information see ?"distr", NEWS("distr"), as well as
+:distr>    http://distr.r-forge.r-project.org/
+:distr>  Package "distrDoc" provides a vignette to this package as
+:distr>  well as to several extension packages; try
+:distr>  vignette("distr").
+
+
+Attaching package: ‘distr’
+
+The following objects are masked from ‘package:stats’:
+
+    df, qqplot, sd
+
+Loading required package: affy
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:distr’:
+
+    width, width<-
+
+The following object is masked from ‘package:stats’:
+
+    xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, as.vector, cbind, colnames, do.call, duplicated,
+    eval, evalq, get, intersect, is.unsorted, lapply, mapply, match,
+    mget, order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rep.int, rownames, sapply, setdiff, sort, table, tapply, union,
+    unique, unlist, unsplit
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("0RobLoxBioC-package")
+> ### * 0RobLoxBioC-package
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: RobLoxBioC-package
+> ### Title: Infinitesimally robust estimators for preprocessing omics data
+> ### Aliases: RobLoxBioC-package RobLoxBioC
+> ### Keywords: package
+> 
+> ### ** Examples
+> 
+> library(RobLoxBioC)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("KolmogorovMinDist")
+> ### * KolmogorovMinDist
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: KolmogorovMinDist
+> ### Title: Generic Function for Computing Minimum Kolmogorov Distance for
+> ###   Biological Data
+> ### Aliases: KolmogorovMinDist KolmogorovMinDist-methods
+> ###   KolmogorovMinDist,matrix,Norm-method
+> ###   KolmogorovMinDist,AffyBatch,AbscontDistribution-method
+> ###   KolmogorovMinDist,beadLevelData,AbscontDistribution-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> set.seed(123) # to have reproducible results for package checking
+> 
+> ## matrix method for KolmogorovMinDist
+> ind <- rbinom(200, size=1, prob=0.05) 
+> X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
+> KolmogorovMinDist(X, D = Norm())
+$dist
+[1] 0.06544843 0.04356402
+
+$n
+[1] 100 100
+
+> 
+> ## using Affymetrix data
+> data(SpikeIn)
+> probes <- log2(pm(SpikeIn))
+> (res <- KolmogorovMinDist(probes, Norm()))
+$dist
+ [1] 0.1755693 0.1567648 0.1571403 0.1609188 0.1617499 0.1607157 0.1382646
+ [8] 0.1471997 0.1693088 0.1836652 0.1787724 0.1601283 0.1729001 0.1519412
+[15] 0.1682097 0.1662173 0.1547481 0.1716497 0.1751219 0.1671566
+
+$n
+ [1] 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12
+
+> boxplot(res$dist)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("SimStudies")
+> ### * SimStudies
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: SimStudies
+> ### Title: Perform Monte-Carlo Study.
+> ### Aliases: AffySimStudy IlluminaSimStudy
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> set.seed(123) # to have reproducible results for package checking
+> 
+> AffySimStudy(n = 11, M = 100, eps = 0.02, contD = Norm(mean = 0, sd = 3), 
++              plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
+dev.new(): using pdf(file="Rplots1.pdf")
+                                ML      Med    Tukey       rmx
+n x empMSE (loc)         1.2837045 1.826711 1.698428 1.3992302
+relMSE (loc)             0.9174362 1.305512 1.213830 1.0000000
+n x empMSE (scale)       0.6072430 1.573206 1.573206 0.7236061
+relMSE (scale)           0.8391900 2.174119 2.174119 1.0000000
+n x empMSE (loc + scale) 1.8909475 3.399917 3.271634 2.1228363
+relMSE (loc + scale)     0.8907646 1.601592 1.541162 1.0000000
+> IlluminaSimStudy(n = 30, M = 100, eps = 0.02, contD = Norm(mean = 0, sd = 3), 
++                  plot1 = TRUE, plot2 = TRUE, plot3 = TRUE)
+dev.new(): using pdf(file="Rplots2.pdf")
+dev.new(): using pdf(file="Rplots3.pdf")
+                               ML      Med  Illumina       rmx
+n x empMSE (loc)         1.172077 1.591148 1.2059413 1.1132052
+relMSE (loc)             1.052885 1.429339 1.0833055 1.0000000
+n x empMSE (scale)       1.084569 1.331247 0.8164451 0.5927791
+relMSE (scale)           1.829635 2.245773 1.3773176 1.0000000
+n x empMSE (loc + scale) 2.256646 2.922395 2.0223864 1.7059843
+relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
+> 
+> 
+> 
+> cleanEx()
+> nameEx("robloxbioc")
+> ### * robloxbioc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: robloxbioc
+> ### Title: Generic Function for Preprocessing Biological Data
+> ### Aliases: robloxbioc robloxbioc-methods robloxbioc,matrix-method
+> ###   robloxbioc,AffyBatch-method robloxbioc,beadLevelData-method
+> ### Keywords: robust
+> 
+> ### ** Examples
+> 
+> set.seed(123) # to have reproducible results for package checking
+> 
+> ## similar to rowRoblox of package RobLox
+> ind <- rbinom(200, size=1, prob=0.05)
+> X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
+> robloxbioc(X)
+            mean       sd
+[1,]  0.01361094 1.103944
+[2,] -0.13024109 1.023868
+> robloxbioc(X, steps = 5)
+            mean       sd
+[1,]  0.01454172 1.105150
+[2,] -0.13018096 1.023832
+> robloxbioc(X, eps = 0.05)
+            mean       sd
+[1,] -0.02555103 1.042593
+[2,] -0.16758006 1.004678
+> robloxbioc(X, eps = 0.05, steps = 5)
+            mean       sd
+[1,] -0.02545634 1.042738
+[2,] -0.16757528 1.004658
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  4.889 0.08 4.966 0 0 
+> grDevices::dev.off()
+pdf 
+  2 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

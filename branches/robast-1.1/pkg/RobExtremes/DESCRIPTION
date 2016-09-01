@@ -1,0 +1,22 @@
+Package: RobExtremes
+Version: 1.0
+Date: 2015-05-03
+Title: Optimally Robust Estimation for Extreme Value Distributions
+Description: Optimally robust estimation for extreme value distributions using S4 classes and methods (based on
+         packages distr, distrEx, distrMod, RobAStBase, and ROptEst).
+Depends: R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 0.9), robustbase(>= 0.8-0), evd, actuar
+Suggests: RUnit (>= 0.4.26), ismev (>= 1.39)
+Imports: RobAStRDA, distr, distrEx, RandVar, RobAStBase, startupmsg
+Authors@R: c(person("Nataliya", "Horbenko", role=c("aut","cph")),
+		person("Daria", "Pupashenko", role="ctb", comment="contributed MDE-estimation for GEV distribution in the framework of her PhD thesis 2011--14"), 
+		person("Gerald", "Kroisandt", role="ctb", comment="contributed testing routines"), 
+        person("Matthias", "Kohl", role=c("aut", "cph")), 
+		person("Peter", "Ruckdeschel", role=c("cre", "cph"), email="Peter.Ruckdeschel@itwm.fraunhofer.de"))
+ByteCompile: yes
+License: LGPL-3
+Encoding: latin1
+Additional_repositories: http://stamats.github.io/robast/
+URL: http://robast.r-forge.r-project.org/
+LastChangedDate: {$LastChangedDate: 2011-09-30 11:10:33 +0200 (Fr, 30 Sep 2011) $}
+LastChangedRevision: {$LastChangedRevision: 453 $}
+SVNRevision: 694

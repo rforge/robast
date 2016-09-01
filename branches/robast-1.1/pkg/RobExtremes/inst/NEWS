@@ -1,0 +1,205 @@
+###############################################################################
+##  News: to package RobExtremes
+###############################################################################
+
+(first two numbers of package versions do not necessarily reflect 
+ package-individual development, but rather are chosen for the 
+ RobAStXXX family as a whole in order to ease updating "depends" 
+ information) 
+
+#######################################
+version 1.0
+#######################################
+
+user-visible CHANGES:
++ title changed to title style / capitalization
++ GEV now has a robust starting estimator for mu unknown
++ GEVFamily and GEVFamilyMuUnknown now have changed default starting estimators
+  realized in startEstGEV.R : a CvM-MDE with xi varying on a grid...
++ provide wrapper for ismev-diagnostics ie gev.diag, gev.prof, gev.profxi, 
+  gpd.diag, gpd.prof, gpd.profxi
+
+GENERAL ENHANCEMENTS:
+
+under the hood:
++ deleted some .bak file from R folder
++ risk measures VaR, CVaR, and EL for GPD, Weibull, Gamma, ... (ScaleShapeModels)
++ packed startEstGEV.R into a try-catch...
++ checking script to check GEV in scripts folder
++ prepared code for evaluation of LMs on xi grid for GEVFamilyMuUnknown family; 
++ .pretreat.of.interest and .define.tau.Dtau are more accurate now; 
++ moved some packages to Imports to avoid note on many packages in Depends, 
+  added Encoding due to warning about character 2292 in my locale
++ removed ::: internal dependencies (within distr&robast-Fam's of pkgs) by 
+  copying respective routines
++ enhanced imports in DESCRIPTION by explicating second order imports
++ gev.diag, gpd.diag now check for existence of se's and ascov
+BUGFIXES:
++ fixed issue with updateStep in kStepEstimator when using interpol risks 
+  (somehow modifyIC had not been attached in prior steps...)
++ added \value tag in getCVaR.Rd
++ fixed some issues with help of getVaR, getCVaR, ...
++ new print method for the results of these functions (and a corresponding S3class)
++ GParetoFamily now handles left endpoint correctly and catches xi < -1/2
++ GEVFamily[MuUnknown] for xi>0 now handles left endpoint correctly and catches xi < -1/2
++ warning for large xi is switched off in GEVFamily[MuUnknown] if called internally
++ double definition of ddigamma eliminated
++ bugfix in bounds / must be right for shape < 0
++ eliminated some erroneous prints
++ in startEstGEV.R, the sigma search range could include negative values, 
+  now only let pass admissible starting estimators
++ bug in (population) variance of GEV xi=0 discovered
++ fixed the problem with inadmissible return values of MLE in startEstGEV.R
++ startEstGEV.R now works with soft bound 1+ xi (x-mu)/sigma > 0 (only to hold 
+  for lower quantile...) controlled by argument secLevel
++ fixed issue with check.validity as notified by B. Spangl, and extended 
+  starting estimator in GParetoFamily
++ fixed Matthias' error-issue in TeaserExample.R in cniperCont.R /plotWrapper.R
+  --  used the wrong variance
++ fixed buglets in GEVFamilyMuUnknown which hindered evaluation of LagrangeMults, 
++ cleaned small buglet in modifyPar  
++ corrected link in Var.Rd
++ put code in \dontrun to reduce checking time
++ some issues fixed with  gev.diag gpd.diag S4 methods
+ 
+  
+#######################################
+version 0.9
+#######################################
+
+Creation of this new package 
+
++ moved Extreme value / scale shape infrastructure from distrEx and distrMod
+  (i.e. Pareto, GPareto, GEV, Weibull, Gumbel)
++ Moved script GumbelLocationModel.R from pkg ROptEst
+
++ created generating functions for GEV, Weibull, Pareto families  
++ PickandsEstimator (incl. as.var)
+
++ new L2ParamFamily GEVFamilyMuUnkown (with corresponding ES, EL, VaR)
+
+under the hood:
+
++ cleaned DESCRIPTION and NAMESPACE file as to Imports/Depends
++ RobASt-Pkgs: DESCRIPTION depends become stricter (requiring distrMod, distrEx, distr >=2.4 to be on the safe side)
+
++ added .Rbuildignore
+
+++ kMad:
++ kMad.c now has Unix ending (LF instead of CR, CRLF
++ removed lazyload tag in DESCRIPTION
++ deleted occurrences of ll and lr in kMad.c (as proposed by Matthias)
++ deleted dll's and .d files from distrEx src folder
+
++ deleted stuff from "simple" estimators (LDE, Pickands, QuantileBCC) which 
+  is delegated to Estimator in distrMod() (i.e., asVar-calculations)
+
++ created methods for Sn and Weibull, Gammad and GEV
++ moved definition of S4 method for Sn and GPareto  from interpolSn.R to SnQn.R
+
++ PickandsEstimator got a corrected asVar (due to the new computation for beta, increasing the bdp;
++ mentioned the increase of BDP in the Rd file. 
++ bdpPickands committed
++ updated Metrika reference. 
+
++ MedkMAD now has as.var information
++ interchanged order of ParamFamily and k (medkMAD) and alpha (PickandsEstimator); 
+
++ implemented the Quantile estimator of Boudt Caliskan Croux for Weibull family 
+  as starting estimator (together with asvarQBCC..)
+
++ new LDEstimate class
++ LDEstimator now uses asvar 
++ LDEstimators now may delay evaluation of variances and skip or delay
+  evaluation of L2derivDistr
++ in LDEstimator.R changed ... any(is.na(es))... into
+   ...any(is.na(estimate(es)))...
++ new S4-method .loc to center GParetoFamily and GEVFamily objects in LDEstimators
++ fixed an error in .LDMatch (forgot to substract loc0)
+
++ modularized generating functions GEVFamily, GParetoFamily, and WeibullFamily 
+  [ as to defining trafo, tau, Dtau ]
++ checked and computed FI in GEV model 
++ explicit terms for the FI in the Weibull model
++ GEVFamily, ParetoFamily, WeibullFamily, GParetoFamily now have optional
+  arguments
+  * withCentL2 = FALSE (should L2deriv be numerically centered?
+        -> formerly this was done automatically, and there was an error as
+           the distribution under which centering was done was not the same
+           (parameter) as the one to which L2deriv was calculated
+  * withL2derivDistr: for GEVFamily, WeibullFamily, GParetoFamily this involves
+       calls to imageDistr (hence random samples and calls to density()...)
+       which was very costly now by default is skipped in slot call but not
+       in direct calls
+  * throw an error if argument startPar is no function.	   
++ GEVFamily, GParetoFamily, WeibullFamily 
+   * now set new slot .withMDE to FALSE (to avoid calling CvM-MDE); 
+   * .withEvalAsVar, .withEvalL2derivDistr equal to FALSE
+
++ getStartIC - method for interpolRisks (and hence internal-getpsi, too) moved
+  from ROptEst to RobExtremes
++ getStartIC-method for interpolRisks and Sn methods now load grids from
+  RobAStRDA namespace
+
++ added particular moveL2Fam2RefParam, moveICBackFromRefParam methods for
+  scale shape models
+
++ considerably improved grid for Sn method for GPareto
++ finished interpolation grids (corrected a.o. Sn for GEV), 
++ produced Weibull and GEV grids (in part; RMXE still missing; MBRE-GEV gave problems)
+
++ non-RobExtremes-specific interpolation infrastructure gets "imported" 
+  by something like .recomputeInterpolators <- ROptEst:::.recomputeInterpolators
++ minor changes in interpolation scripts
++ .mergeF and .recomputeInterpolators gain functionality to skip grids when
+   merging/recomputing
++ write up to interpolation strategies
++ extract from rd file on internal interpolation infrastructure inserted 
+  into interpolation/WriteUp-Interpolators.txt
++ gave more detailed comments in interpolation/interpolationscripts.R 
++ inserted scripts for generating interpol grids for GEVD Weibull Gamma
++ some diagnostic tools for interpolation grids (accessible through R-code) 
+      Rdir <-  system.file("AddMaterial/interpolation", package= "RobExtremes")
+      dir(Rdir)
+      file.show(file.path(Rdir,"plotInterpol.R"))
++ forgot a "recursive = TRUE" in dir.create in interpolation script
+
++ shifted comments with auxiliary calculations to inst folder
+ 
+
++ TestInfrastructure for RobExtremes
+  Tests for RobExtremes
++  to share some ideas: some test files in connection with RobExtremes
++ use of unit tests
+
++ wrapper functions use default rescaling controlled by S4-method rescaleFct
+  dispatching on the respective model; particular methods for GEV, GPareto, 
+  GEVMuUnknown
+
+bugfixes:
+
++ forgot to initialize correctly slots L2derivSymm and 
+  L2derivDistrSymm in GParetoFamily.R;
++ minor error in CITATION file corrected
++ removed withPos relics in GParetoFamily
++ fixed error in initialize for Pareto-distribution 
+     (no lower endpoint was set)
++ some corrections in interpolation routines for GPD
++ some fixes in generating function to GParetoFamily
++ added class definition for Weibull family
++ minor correction in generating function for Weibull family
++ adapted title of the package to other RobASt-packages
++ fixed bugs in GEV-, GPareto-, and WeibullFamily
++ re-did the interpolation grids (for GPareto, so far)
++ functions where identical in grid..!
++ Corrected some errors in the scores function for the Weibull family; 
++ fixed a minor issue in GEVFamily.R and suppressed warnings in call to imageDistr
++ bug in new S4 methods for Sn / fixed
++ found reason why GEV caused problems in finding optIC s for interpoloation:
+   L2Fam call called GEV instead of GEVFamily ...
++ example to medSn had to be changed / lower upper bounds to be given; otherwise there was an error.
++ argh: forgot assignment of nE in getSnGrid...
++ .LDMatch produced names like scale.scale...
+
+
+   
