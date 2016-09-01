@@ -12,6 +12,17 @@ version 1.0
 #######################################
 
 user-visible CHANGES:
++ comparePlot, infoPlot, and the plot-Method for ICs now return a list containing
+  all information to reproduce the plot, e.g. in another graphics engine like ggplot
++ the subset selection mechanism used to determine which observations to show
+  with labels in comparePlot, infoPlot, and the plot-Method for ICs has been
+  revised and now also allows a second subset (nonlbl) to be plotted as well
+  (unlabelled)
++ the data plotting mechanism in comparePlot, infoPlot, and the plot-Method for 
+  ICs has been revised and now allows vectorized input for col.pts, cex.pts,
+  pch.pts, cex.pts.fun (and, similarly, for the nonlbl counterparts)
+  as well as for lab.col, lab.pts, lab.adj, and alpha.trsp, so that this
+  can even be tuned observation-wise. 
 + comparePlot, infoPlot, and the plot-Method for ICs gain an argument
   with.automatic.grid; if TRUE a corresponding grid oriented at tickmarks
   is produced; this also works for rescaled axes
