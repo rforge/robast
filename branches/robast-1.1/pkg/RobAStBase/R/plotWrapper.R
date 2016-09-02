@@ -143,7 +143,8 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
                      ,cex.pts = substitute(1)
                      ,col.pts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), substitute(alpha.trsp)))
                      ,pch.pts = substitute(19)
-                     ,jitter.fac = substitute(1)
+                     ,jit.fac = substitute(1)
+                     ,jit.tol = .Machine$double.eps
                      ,with.lab = substitute(FALSE)
                      ,lab.pts = substitute(NULL)
                      ,lab.font = substitute(NULL)
@@ -151,6 +152,9 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
                      ,which.lbs = substitute(NULL)
                      ,which.Order  = substitute(NULL)
                      ,return.Order = substitute(FALSE)
+                     ,draw.nonlbl = TRUE  ## should non-labelled observations also be drawn?
+                     ,cex.nonlbl = 0.3    ## character expansion(s) for non-labelled observations
+                     ,pch.nonlbl = "."    ## plotting symbol(s) for non-labelled observations
                      ,ylab.abs = substitute("absolute information")
                      ,ylab.rel= substitute("relative information")
                      ,adj = substitute(0.5)
@@ -325,7 +329,8 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,cex.pts = substitute(0.3)
                      ,col.pts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), substitute(alpha.trsp)))
                      ,pch.pts = substitute(19)
-                     ,jitter.fac = substitute(1)
+                     ,jit.fac = substitute(1)
+                     ,jit.tol = .Machine$double.eps
                      ,with.lab = substitute(FALSE)
                      ,lab.pts = substitute(NULL)
                      ,lab.font = substitute(NULL)
@@ -333,6 +338,9 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,which.lbs = substitute(NULL)
                      ,which.Order  = substitute(NULL)
                      ,return.Order = substitute(FALSE)
+                     ,draw.nonlbl = TRUE  ## should non-labelled observations also be drawn?
+                     ,cex.nonlbl = 0.3    ## character expansion(s) for non-labelled observations
+                     ,pch.nonlbl = "."    ## plotting symbol(s) for non-labelled observations
                      ,scaleN = substitute(9)
                      ,adj = substitute(0.5)
                      ,cex.main = substitute(1.5)
@@ -515,7 +523,8 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
                      ,cex.pts = substitute(1)
                      ,col.pts = substitute(c(1,2,3,4))
                      ,pch.pts = substitute(19)
-                     ,jitter.fac = substitute(1)
+                     ,jit.fac = substitute(1)
+                     ,jit.tol = .Machine$double.eps
                      ,with.lab = substitute(FALSE)
                      ,lab.pts = substitute(NULL)
                      ,lab.font = substitute(NULL)
@@ -523,6 +532,9 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
                      ,which.lbs = substitute(NULL)
                      ,which.Order  = substitute(NULL)
                      ,return.Order = substitute(FALSE)
+                     ,draw.nonlbl = TRUE  ## should non-labelled observations also be drawn?
+                     ,cex.nonlbl = 0.3    ## character expansion(s) for non-labelled observations
+                     ,pch.nonlbl = "."    ## plotting symbol(s) for non-labelled observations
                      ,adj = substitute(0.5)
                      ,cex.main = substitute(1.5)
                      ,cex.lab = substitute(1.5)

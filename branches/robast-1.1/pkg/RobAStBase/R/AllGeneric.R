@@ -240,3 +240,7 @@ if(!isGeneric("rescaleFunction")){
     setGeneric("rescaleFunction", function(L2Fam, ...)
                standardGeneric("rescaleFunction"))
 }
+if(!isGeneric("getFiRisk")){
+    setGeneric("getFiRisk", 
+        function(risk, Distr, neighbor, ...) standardGeneric("getFiRisk"))
+}
