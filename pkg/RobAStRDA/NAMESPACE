@@ -1,5 +1,3 @@
-  importFrom("stats", "approxfun", "predict", "smooth.spline",
-             "splinefun")
-  importFrom("utils", "head", "read.csv", "read.table")
-
-
+importFrom("stats", "splinefun", "approxfun")
+importFrom("stats", "predict", "smooth.spline")
+importFrom("utils", "head", "read.csv", "read.table")
