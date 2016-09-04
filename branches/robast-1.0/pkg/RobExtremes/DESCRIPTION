@@ -8,10 +8,14 @@ Depends: R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 0.9), robustbase
 Suggests: RUnit (>= 0.4.26), ismev (>= 1.39)
 Imports: RobAStRDA, distr, distrEx, RandVar, RobAStBase, startupmsg
 Authors@R: c(person("Nataliya", "Horbenko", role=c("aut","cph")),
+		person("Bernhard", "Spangl", role="ctb", comment="contributed smoothed grid values of the Lagrange multipliers"), 
+		person("Sascha", "Desmettre", role="ctb", comment="contributed smoothed grid values of the Lagrange multipliers"), 
+		person("Eugen", "Massini", role="ctb", comment="contributed an interactive smoothing routine for smoothing the Lagrange multipliers 
+		      and smoothed grid values of the Lagrange multipliers"), 
 		person("Daria", "Pupashenko", role="ctb", comment="contributed MDE-estimation for GEV distribution in the framework of her PhD thesis 2011--14"), 
 		person("Gerald", "Kroisandt", role="ctb", comment="contributed testing routines"), 
         person("Matthias", "Kohl", role=c("aut", "cph")), 
-		person("Peter", "Ruckdeschel", role=c("cre", "cph"), email="Peter.Ruckdeschel@itwm.fraunhofer.de"))
+		person("Peter", "Ruckdeschel", role=c("cre", "cph"), email="peter.ruckdeschel@uni-oldenburg.de"))
 ByteCompile: yes
 License: LGPL-3
 Encoding: latin1

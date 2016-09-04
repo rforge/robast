@@ -120,9 +120,9 @@ if(require(ismev)){
   ppfit <- ismev::gev.fit(portpirie[,2])
   gev.diag(ppfit)
   ##
+  \dontrun{
   mlE <- MLEstimator(portpirie[,2], GEVFamilyMuUnknown(withPos=FALSE))
   gev.diag(mlE)
-  \dontrun{
     gev.prof(mlE, m = 10, 4.1, 5)
     gev.profxi(mlE, -0.3, 0.3)
   }
@@ -133,8 +133,8 @@ if(require(ismev)){
   mlE2 <- MLEstimator(rain[rain>10], GParetoFamily(loc=10))
   gpd.diag(mlE2)
   \dontrun{
-    gpd.prof(mlE, m = 10, 55, 77)
-    gpd.profxi(mlE, -0.02, 0.02)
+    gpd.prof(mlE2, m = 10, 55, 77)
+    gpd.profxi(mlE2, -0.02, 0.02)
   }
 }
 }
