@@ -31,10 +31,9 @@
   invisible(NULL)
 }
 \description{
-  The wrapper takes most of arguments to the
-  cniperPointPlot function by default and gives a user
-  possibility to run the function with low number of
-  arguments
+  The wrapper \code{CniperPointPlot} (capital C!) takes most of arguments 
+  to the \code{cniperPointPlot} (lower case c!) function by default and gives 
+  a user possibility to run the function with low number of arguments.
 }
 \section{Details}{
   Calls \code{cniperPointPlot} with suitably chosen

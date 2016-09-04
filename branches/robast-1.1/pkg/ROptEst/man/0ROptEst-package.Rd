@@ -15,7 +15,7 @@ Package: \tab ROptEst \cr
 Version: \tab 1.0 \cr
 Date: \tab 2015-05-03 \cr
 Depends: \tab R(>= 2.14.0), methods, distr(>= 2.5.2), distrEx(>= 2.5), distrMod(>= 2.5.2), 
-RandVar(>= 0.9.2), RobAStBase(>= 0.9) \cr
+RandVar(>= 0.9.2), RobAStBase(>= 1.0) \cr
 Suggests: \tab RobLox, MASS \cr
 Imports: \tab startupmsg \cr
 ByteCompile: \tab yes \cr
@@ -34,7 +34,7 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
   Dissertation. University of Bayreuth.
 
   M. Kohl, P. Ruckdeschel, H. Rieder (2010). Infinitesimally Robust Estimation in 
-  General Smoothly Parametrized Models. Statistical Methods and Application 19(3):333–354. 
+  General Smoothly Parametrized Models. Statistical Methods and Application 19(3):333-354. 
 }
 \seealso{
 \code{\link[distr:0distr-package]{distr-package}}, 

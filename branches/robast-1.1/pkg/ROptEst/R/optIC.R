@@ -80,7 +80,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
 ###############################################################################
 setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
     function(model, risk, upper = 1e4, lower = 1e-4, maxiter = 50,
-             tol = .Machine$double.eps^0.4, warn = TRUE){
+             tol = .Machine$double.eps^0.4, warn = TRUE, verbose = NULL){
         L2derivDistr <- model@center@L2derivDistr[[1]]
         ow <- options("warn")
         on.exit(options(ow))

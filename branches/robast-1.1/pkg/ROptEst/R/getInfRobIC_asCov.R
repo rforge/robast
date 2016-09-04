@@ -117,7 +117,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                stand(w) <- A
             }else{
                w <- new("BdStWeight")
-               clip(w) <- c(0,b)+as.numeric(A%*%z)
+               clip(w) <- c(0,b) # +as.numeric(A%*%z)
                stand(w) <- A
             }
             weight(w) <- getweight(w, neighbor = neighbor, biastype = symmetricBias(),

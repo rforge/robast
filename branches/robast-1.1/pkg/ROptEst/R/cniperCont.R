@@ -1,3 +1,8 @@
+.isReplicated <- function(x, tol=.Machine$double.eps){
+  tx <- table(x)
+  rx <- as.numeric(names(tx[tx>1]))
+  sapply(x, function(y) any(abs(y-rx)<tol))
+}
 
 .plotData <- function(
   ## helper function for cniper-type plots to plot in data
@@ -5,7 +10,9 @@
    dots, # dots from the calling function
    fun, # function to determine risk difference
    L2Fam, # L2Family
-   IC # IC1 in cniperContPlot and eta in cniperPointPlot
+   IC, # IC1 in cniperContPlot and eta in cniperPointPlot
+   jit.fac,
+   jit.tol
 ){
                dotsP <- .makedotsP(dots)
 
@@ -32,11 +39,16 @@
                               dots$scaleY, dots$scaleY.fct,
                               dots$xlim, dots$ylim, dots)
 
+               if(any(.isReplicated(resc.dat$X, jit.tol))&&jit.fac>0)
+                       resc.dat$X <- jitter(resc.dat$X, factor = jit.fac)
+               if(any(.isReplicated(resc.dat$Y, jit.tol))&&jit.fac>0)
+                       resc.dat$Y <- jitter(resc.dat$Y, factor = jit.fac)
+
                dotsP$scaleX <- dotsP$scaleY <- dotsP$scaleN <-NULL
                dotsP$scaleX.fct <- dotsP$scaleY.fct <- NULL
                dotsP$scaleX.inv <- dotsP$scaleY.inv <- NULL
                dotsP$cex.pts <- dotsP$col.pts <- dotsP$lab.pts <- dotsP$pch.pts <- NULL
-               dotsP$jitter.fac <- dotsP$with.lab <- dotsP$alpha.trsp <- NULL
+               dotsP$jit.fac <- dotsP$with.lab <- dotsP$alpha.trsp <- NULL
                dotsP$return.Order <- dotsP$cex.pts.fun <- NULL
                dotsP$x.ticks <- dotsP$y.ticks <- NULL
                dotsP$lab.font <- dotsP$which.lbs <- dotsP$which.lbs <- NULL
@@ -115,10 +127,14 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
                            scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
                            scaleN = 9, x.ticks = NULL, y.ticks = NULL,
                            cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-                           pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
+                           pch.pts = 19, jit.fac = 1, jit.tol = .Machine$double.eps, with.lab = FALSE,
                            lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
                            which.lbs = NULL, which.Order  = NULL,
-                           return.Order = FALSE, withSubst = TRUE){
+                           return.Order = FALSE, 
+             draw.nonlbl = TRUE,  ## should non-labelled observations also be drawn?
+             cex.nonlbl = 0.3,    ## character expansion(s) for non-labelled observations
+             pch.nonlbl = ".",    ## plotting symbol(s) for non-labelled observations
+                           withSubst = TRUE){
 
         mcD <- match.call(expand.dots = FALSE)
         dots <- as.list(mcD$"...")
@@ -231,7 +247,8 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
            dots$cex.pts.fun <- cex.pts.fun
            dots$col.pts <- col.pts
            dots$pch.pts <- pch.pts
-           dots$jitter.fac <- jitter.fac
+           dots$jit.fac <- jit.fac
+           dots$jit.tol <- jit.tol
            dots$with.lab <- with.lab
            dots$lab.pts <- lab.pts
            dots$lab.font <- lab.font
@@ -240,7 +257,7 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
            dots$which.Order  <- which.Order
            dots$return.Order <- return.Order
 
-           return(.plotData(data=data, dots=dots, fun=fun, L2Fam=L2Fam, IC=IC1))
+           return(.plotData(data=data, dots=dots, fun=fun, L2Fam=L2Fam, IC=IC1, jit.fac=jit.fac, jit.tol=jit.tol))
         }
         invisible(NULL)
 }
@@ -276,10 +293,15 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                            scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
                            scaleN = 9, x.ticks = NULL, y.ticks = NULL,
                            cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-                           pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
+                           pch.pts = 19, jit.fac = 1, jit.tol = .Machine$double.eps, 
+                           with.lab = FALSE,
                            lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
                            which.lbs = NULL, which.Order  = NULL,
-                           return.Order = FALSE, withSubst = TRUE){
+                           return.Order = FALSE, 
+             draw.nonlbl = TRUE,  ## should non-labelled observations also be drawn?
+             cex.nonlbl = 0.3,    ## character expansion(s) for non-labelled observations
+             pch.nonlbl = ".",    ## plotting symbol(s) for non-labelled observations
+                           withSubst = TRUE){
 
         mc0 <- match.call(#call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)

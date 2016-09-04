@@ -11,38 +11,34 @@
   other procedure.
 }
 \usage{
-cniperCont(IC1, IC2, data = NULL, ...,
-               neighbor, risk, lower = getdistrOption("DistrResolution"),
-               upper = 1-getdistrOption("DistrResolution"), n = 101,
-               scaleX = FALSE, scaleX.fct, scaleX.inv,
-               scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
-               scaleN = 9, x.ticks = NULL, y.ticks = NULL,
-               cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-               pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
-               lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
-               which.lbs = NULL, which.Order  = NULL,
-               return.Order = FALSE, 
-               draw.nonlbl = TRUE, cex.nonlbl=0.3, pch.nonlbl=".",
-               withSubst = TRUE)
-
+cniperCont(IC1, IC2, data = NULL, ..., neighbor, risk, lower =
+                 getdistrOption("DistrResolution"), upper = 1 -
+                 getdistrOption("DistrResolution"), n = 101, scaleX =
+                 FALSE, scaleX.fct, scaleX.inv, scaleY = FALSE,
+                 scaleY.fct = pnorm, scaleY.inv = qnorm, scaleN = 9,
+                 x.ticks = NULL, y.ticks = NULL, cex.pts = 1,
+                 cex.pts.fun = NULL, col.pts = par("col"), pch.pts =
+                 19, jit.fac = 1, jit.tol = .Machine$double.eps,
+                 with.lab = FALSE, lab.pts = NULL, lab.font = NULL,
+                 alpha.trsp = NA, which.lbs = NULL, which.Order = NULL,
+                 return.Order = FALSE, draw.nonlbl = TRUE, cex.nonlbl =
+                 0.3, pch.nonlbl = ".", withSubst = TRUE)
 
 cniperPoint(L2Fam, neighbor, risk, lower, upper)
 
-cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
-                lower=getdistrOption("DistrResolution"),
-                upper=1-getdistrOption("DistrResolution"), n = 101,
-                withMaxRisk = TRUE,
-                scaleX = FALSE, scaleX.fct, scaleX.inv,
-                scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
-                scaleN = 9, x.ticks = NULL, y.ticks = NULL,
-                cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-                pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
-                lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
-                which.lbs = NULL, which.Order  = NULL,
-                return.Order = FALSE, 
-                draw.nonlbl = TRUE, cex.nonlbl=0.3, pch.nonlbl=".",
-                withSubst = TRUE)
-
+cniperPointPlot(L2Fam, data = NULL, ..., neighbor, risk = asMSE(),
+                 lower = getdistrOption("DistrResolution"), upper = 1 -
+                 getdistrOption("DistrResolution"), n = 101,
+                 withMaxRisk = TRUE, scaleX = FALSE, scaleX.fct,
+                 scaleX.inv, scaleY = FALSE, scaleY.fct = pnorm,
+                 scaleY.inv = qnorm, scaleN = 9, x.ticks = NULL,
+                 y.ticks = NULL, cex.pts = 1, cex.pts.fun = NULL,
+                 col.pts = par("col"), pch.pts = 19, jit.fac = 1,
+                 jit.tol = .Machine$double.eps, with.lab = FALSE,
+                 lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
+                 which.lbs = NULL, which.Order = NULL, return.Order =
+                 FALSE, draw.nonlbl = TRUE, cex.nonlbl = 0.3,
+                 pch.nonlbl = ".", withSubst = TRUE)
 }
 \arguments{
   \item{IC1}{ object of class \code{IC} }
@@ -109,7 +105,9 @@ cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
         while for the remaining ones, the alpha channel in rgb space is set
         to the respective coordinate value of \code{alpha.trsp}. The non-NA
         entries must be integers in [0,255] (0 invisible, 255 opaque).}
-  \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
+  \item{jit.fac}{jittering factor used in case of a \code{DiscreteDistribution}
+                    for plotting points of the second argument in a jittered fashion.}
+  \item{jit.tol}{jittering tolerance used in case of a \code{DiscreteDistribution}
                     for plotting points of the second argument in a jittered fashion.}
   \item{which.lbs}{either an integer vector with the indices of the observations
           to be plotted into graph or \code{NULL} --- then no observation is excluded}
