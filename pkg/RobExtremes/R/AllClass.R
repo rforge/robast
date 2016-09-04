@@ -277,3 +277,14 @@ setClass("LDEstimate",
                                 mat = matrix(1))
                    ),
          contains = "Estimate")
+
+setOldClass("gev.fit")
+setOldClass("gpd.fit")
+setClass("GPDEstimate", contains="Estimate")
+setClass("GPDMCEstimate", contains=c("MCEstimate", "GPDEstimate"))
+setClass("GPDLDEstimate", contains=c("LDEstimate", "GPDEstimate"))
+setClass("GPDkStepEstimate", contains=c("kStepEstimate", "GPDEstimate"))
+setClass("GEVEstimate", contains="Estimate")
+setClass("GEVLDEstimate", contains=c("LDEstimate", "GEVEstimate"))
+setClass("GEVkStepEstimate", contains=c("kStepEstimate", "GEVEstimate"))
+setClass("GEVMCEstimate", contains=c("MCEstimate", "GEVEstimate"))

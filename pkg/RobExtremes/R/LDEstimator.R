@@ -143,7 +143,7 @@ LDEstimator <- function(x, loc.est, disp.est,
     estim@dispersion <- LDMval["disp"]
     estim@location <- LDMval["loc"]
 
-    return(estim)
+    return(.checkEstClassForParamFamily(ParamFamily,estim))
 }
 
 
@@ -170,7 +170,7 @@ medkMAD <- function(x, ParamFamily, k=1, q.lo =1e-3, q.up=15, nuis.idx = NULL,
                       .withEvalAsVar = .withEvalAsVar, vdbg = vdbg)
       es@estimate.call <- es.call
      
-      return(es)
+      return(.checkEstClassForParamFamily(ParamFamily,es))
                      }
                         
 medQn <- function(x,  ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
@@ -189,7 +189,7 @@ medQn <- function(x,  ParamFamily, q.lo =1e-3, q.up=15, nuis.idx = NULL,
                      asvar.fct = asvar.fct, na.rm = na.rm, ...,
                       .withEvalAsVar = .withEvalAsVar)
       es@estimate.call <- es.call
-      return(es)
+      return(.checkEstClassForParamFamily(ParamFamily,es))
                      }
 
 medSn <- function(x, ParamFamily, q.lo =1e-3, q.up=10, nuis.idx  = NULL,
@@ -208,7 +208,7 @@ medSn <- function(x, ParamFamily, q.lo =1e-3, q.up=10, nuis.idx  = NULL,
                      asvar.fct = asvar.fct, na.rm = na.rm, ...,
                       .withEvalAsVar = .withEvalAsVar)
       es@estimate.call <- es.call
-      return(es)
+      return(.checkEstClassForParamFamily(ParamFamily,es))
       }
 
 medkMADhybr <- function(x, ParamFamily, k=1, q.lo =1e-3, q.up=15,
@@ -223,7 +223,7 @@ medkMADhybr <- function(x, ParamFamily, k=1, q.lo =1e-3, q.up=15,
                              ..., .withEvalAsVar = FALSE),
                              silent=TRUE)
  if(! any(is.na(estimate(es))) && !is(es,"try-error"))
-   {return(es)}
+   {return(.checkEstClassForParamFamily(ParamFamily,es))}
 
  k1 <- 3.23
  while(i<KK){
@@ -240,10 +240,11 @@ medkMADhybr <- function(x, ParamFamily, k=1, q.lo =1e-3, q.up=15,
              if(is.call(es@untransformed.asvar))
                 es@untransformed.asvar <- eval(es@untransformed.asvar)
              }
-          return(es)}
+          return(.checkEstClassForParamFamily(ParamFamily,es))}
       }
  return(c("scale"=NA,"shape"=NA))
 }
 
 setMethod("location", "LDEstimate", function(object) object@location)
 setMethod("dispersion", "LDEstimate", function(object) object@dispersion)
+

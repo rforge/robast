@@ -28,3 +28,21 @@ if(!isGeneric("dispersion")){
 if(!isGeneric(".loc")){
    setGeneric(".loc", function(L2Fam, ...) standardGeneric(".loc"))
 }
+if(!isGeneric("gev.diag")){
+   setGeneric("gev.diag", function(z) standardGeneric("gev.diag"))
+}
+if(!isGeneric("gev.prof")){
+   setGeneric("gev.prof", function(z, ...) standardGeneric("gev.prof"))
+}
+if(!isGeneric("gev.profxi")){
+   setGeneric("gev.profxi", function(z, ...) standardGeneric("gev.profxi"))
+}
+if(!isGeneric("gpd.diag")){
+   setGeneric("gpd.diag", function(z,...) standardGeneric("gpd.diag"))
+}
+if(!isGeneric("gpd.prof")){
+   setGeneric("gpd.prof", function(z, ...) standardGeneric("gpd.prof"))
+}
+if(!isGeneric("gpd.profxi")){
+   setGeneric("gpd.profxi", function(z, ...) standardGeneric("gpd.profxi"))
+}

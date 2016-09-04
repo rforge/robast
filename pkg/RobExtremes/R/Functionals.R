@@ -55,7 +55,7 @@ setMethod("var", signature(x = "GEV"),
         return(var(as(x,"AbscontDistribution"),...))
     else{ xi <- shape(x); sigma <- scale(x)
         if(xi>=1/2) return(NA)
-        if(xi==0) return(pi^2/6)
+        if(xi==0) return(sigma^2*pi^2/6)
         if((xi!=0)&&(xi<1/2))return(sigma^2*(gamma(1-2*xi)-gamma(1-xi)^2)/xi^2)
     }})
 ### http://en.wikipedia.org/wiki/Generalized_extreme_value_distribution

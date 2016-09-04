@@ -226,7 +226,7 @@ Sn(GPareto(shape=0.5,scale=2))
 Sn(as(GPareto(shape=0.5,scale=2),"AbscontDistribution"))
 
 }
-\seealso{\code{\link[distrEx]{var}},\cr
+\seealso{\code{\link[distrEx]{Var}},\cr
  \code{\link[stats]{sd}}, \code{\link[stats:cor]{var}}, \code{\link[stats]{IQR}},\cr
  \code{\link[stats]{median}}, \code{\link[stats]{mad}},  \code{\link[distr:sd-methods]{sd}},\cr
  \code{\link[robustbase]{Sn}},  \code{\link[robustbase]{Qn}}}

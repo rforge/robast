@@ -30,13 +30,14 @@ to be stored in the respective \file{sysdata.rda} file. }
 .OMSE.xi(xi, PFam)
 
 .getLMGrid(xiGrid = getShapeGrid(), PFam = GParetoFamily(scale=1,shape=2),
-           optFct = .RMXE.xi, GridFileName="LMGrid.Rdata", withPrint = FALSE)
+           optFct = .RMXE.xi, GridFileName="LMGrid.Rdata", withPrint = FALSE,
+           len = 13)
 
 .svInt(optF = .RMXE.th, xiGrid = getShapeGrid(700, cutoff.at.0=0.005),
        PFam = GParetoFamily(shape=1,scale=2), radius = 0.5, upper = 1e4,
        lower = 1e-4, OptOrIter = "iterate",  maxiter = 150,
        tol = .Machine$double.eps^0.5, loRad = 0, upRad = Inf, loRad0 = 1e-3,
-       loRad.s = 0.2, up.Rad.s = 1, withStartLM = TRUE)
+       loRad.s = 0.2, up.Rad.s = 1, withStartLM = TRUE, len = 13, namFzus = "")
 
 .generateInterpGridSn(xiGrid = getShapeGrid(500, cutoff.at.0=0.005),
                       PFam = GParetoFamily(), withPrint = TRUE)
@@ -94,6 +95,10 @@ to be stored in the respective \file{sysdata.rda} file. }
    internally set to \code{max(loRad,loRad0)}. }
   \item{withStartLM}{ logical of length 1: shall the LM's of the preceding grid
     value serve as starting value for the next grid value? }
+  \item{len}{integer; number of Lagrange multipliers to be calibrated. }
+  \item{namFzus}{character; infix for the name of the \file{.csv}-File
+                 to which the results are written; used to split the
+                 work on xi-grids into chunks.}
 }
 \details{
    \code{.getpsi} reads the respective interpolating function

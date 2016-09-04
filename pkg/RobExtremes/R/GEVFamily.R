@@ -15,34 +15,46 @@
     }
 
 ### pretreatment of of.interest
-.pretreat.of.interest <- function(of.interest,trafo){
+.pretreat.of.interest <- function(of.interest,trafo,withMu=FALSE){
     if(is.null(trafo)){
         of.interest <- unique(of.interest)
-        if(length(of.interest) > 2)
+        if(!withMu && length(of.interest) > 2)
             stop("A maximum number of two parameters resp. parameter transformations may be selected.")
-        if(!all(of.interest %in% c("scale", "shape", "quantile", "expected loss", "expected shortfall")))
+        if(withMu && length(of.interest) > 3)
+            stop("A maximum number of three parameters resp. parameter transformations may be selected.")
+        if(!withMu && !all(of.interest %in% c("scale", "shape", "quantile", "expected loss", "expected shortfall")))
             stop("Parameters resp. transformations of interest have to be selected from: ",
                 "'scale', 'shape', 'quantile', 'expected loss', 'expected shortfall'.")
+        if(withMu && !all(of.interest %in% c("loc", "scale", "shape", "quantile", "expected loss", "expected shortfall")))
+            stop("Parameters resp. transformations of interest have to be selected from: ",
+                "'loc', 'scale', 'shape', 'quantile', 'expected loss', 'expected shortfall'.")
 
         ## reordering of of.interest
-        if(("scale" %in% of.interest) && ("scale" != of.interest[1])){
-            of.interest[2] <- of.interest[1]
-            of.interest[1] <- "scale"
+        muAdd <- 0
+        if(withMu & "loc" %in% of.interest){
+           muAdd <- 1
+           muWhich <- which(of.interest=="loc")
+           notmuWhich <- which(!of.interest %in% "loc")
+           of.interest <- of.interest[c(muWhich,notmuWhich)]
         }
-        if(!("scale" %in% of.interest) && ("shape" %in% of.interest) && ("shape" != of.interest[1])){
-            of.interest[2] <- of.interest[1]
-            of.interest[1] <- "shape"
+        if(("scale" %in% of.interest) && ("scale" != of.interest[1+muAdd])){
+            of.interest[2+muAdd] <- of.interest[1+muAdd]
+            of.interest[1+muAdd] <- "scale"
+        }
+        if(!("scale" %in% of.interest) && ("shape" %in% of.interest) && ("shape" != of.interest[1+muAdd])){
+            of.interest[2+muAdd] <- of.interest[1+muAdd]
+            of.interest[1+muAdd] <- "shape"
         }
         if(!any(c("scale", "shape") %in% of.interest) && ("quantile" %in% of.interest)
-          && ("quantile" != of.interest[1])){
-            of.interest[2] <- of.interest[1]
-            of.interest[1] <- "quantile"
+          && ("quantile" != of.interest[1+muAdd])){
+            of.interest[2+muAdd] <- of.interest[1+muAdd]
+            of.interest[1+muAdd] <- "quantile"
         }
         if(!any(c("scale", "shape", "quantile") %in% of.interest)
           && ("expected shortfall" %in% of.interest)
-          && ("expected shortfall" != of.interest[1])){
-            of.interest[2] <- of.interest[1]
-            of.interest[1] <- "expected shortfall"
+          && ("expected shortfall" != of.interest[1+muAdd])){
+            of.interest[2+muAdd] <- of.interest[1+muAdd]
+            of.interest[1+muAdd] <- "expected shortfall"
         }
     }
   return(of.interest)
@@ -74,12 +86,20 @@
             }else{
                 tau1 <- tau
                 tau <- function(theta){ }
-                body(tau) <- substitute({ btq0; c(tau0(theta), q) },
-                                        list(btq0=btq, tau0 = tau1))
+                body(tau) <- substitute({ btq0
+                                          th0 <- tau0(theta)
+                                          th <- c(th0, q)
+                                          names(th) <- c(names(th0),"quantile")
+                                          th
+                                         }, list(btq0=btq, tau0 = tau1))
                 Dtau1 <- Dtau
                 Dtau <- function(theta){}
-                body(Dtau) <- substitute({ bDq0; rbind(Dtau0(theta), D) },
-                                         list(Dtau0 = Dtau1, bDq0 = bDq))
+                body(Dtau) <- substitute({ bDq0
+                                           D0 <- Dtau0(theta)
+                                           D1 <- rbind(D0, D)
+                                           rownames(D1) <- c(rownames(D0),"quantile")
+                                           D1
+                                           }, list(Dtau0 = Dtau1, bDq0 = bDq))
             }
         }
         if("expected shortfall" %in% of.interest){
@@ -90,12 +110,18 @@
             }else{
                 tau1 <- tau
                 tau <- function(theta){ }
-                body(tau) <- substitute({ btes0; c(tau0(theta), es) },
-                                        list(tau0 = tau1, btes0=btes))
+                body(tau) <- substitute({ btes0
+                                          th0 <- tau0(theta)
+                                          th <- c(th0, es)
+                                          names(th) <- c(names(th0),"expected shortfall")
+                                          th}, list(tau0 = tau1, btes0=btes))
                 Dtau1 <- Dtau
                 Dtau <- function(theta){}
-                body(Dtau) <- substitute({ bDes0; rbind(Dtau0(theta), D) },
-                                         list(Dtau0 = Dtau1, bDes0=bDes))
+                body(Dtau) <- substitute({ bDes0
+                                           D0 <- Dtau0(theta)
+                                           D1 <- rbind(D0, D)
+                                           rownames(D1) <- c(rownames(D0),"expected shortfall")
+                                           D1}, list(Dtau0 = Dtau1, bDes0=bDes))
             }
         }
         if("expected loss" %in% of.interest){
@@ -106,12 +132,18 @@
             }else{
                 tau1 <- tau
                 tau <- function(theta){ }
-                body(tau) <- substitute({ btel0; c(tau0(theta), el) },
-                                        list(tau0 = tau1, btel0=btel))
+                body(tau) <- substitute({ btel0
+                                          th0 <- tau0(theta)
+                                          th <- c(th0, el)
+                                          names(th) <- c(names(th0),"expected los")
+                                          th}, list(tau0 = tau1, btel0=btel))
                 Dtau1 <- Dtau
                 Dtau <- function(theta){}
-                body(Dtau) <- substitute({ bDel0; rbind(Dtau0(theta), D) },
-                                         list(Dtau0 = Dtau1, bDel0=bDel))
+                body(Dtau) <- substitute({ bDel0
+                                           D0 <- Dtau0(theta)
+                                           D1 <- rbind(D0, D)
+                                           rownames(D1) <- c(rownames(D0),"expected loss")
+                                           D1}, list(Dtau0 = Dtau1, bDel0=bDel))
             }
         }
         trafo <- function(x){ list(fval = tau(x), mat = Dtau(x)) }
@@ -127,7 +159,9 @@ setMethod("validParameter",signature(object="GEVFamily"),
                  return(FALSE)
              if (any(param[1] <= tol)) 
                  return(FALSE)
-             if (any(param[2] <= tol))
+             if(object@param@withPosRestr) if (any(param[2] <= tol))
+                 return(FALSE)
+             if (any(param[2] <= -1/2))
                  return(FALSE)
              return(TRUE)
            })
@@ -144,11 +178,13 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                           of.interest = c("scale", "shape"),
                           p = NULL, N = NULL, trafo = NULL,
                           start0Est = NULL, withPos = TRUE,
+                          secLevel = 0.7,
                           withCentL2 = FALSE,
                           withL2derivDistr  = FALSE,
-                          ..ignoreTrafo = FALSE){
+                          ..ignoreTrafo = FALSE,
+                          ..withWarningGEV = TRUE){
     theta <- c(loc, scale, shape)
-    .warningGEVShapeLarge(shape)
+    if(..withWarningGEV).warningGEVShapeLarge(shape)
     
     of.interest <- .pretreat.of.interest(of.interest,trafo)
 
@@ -234,13 +270,18 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     ## starting parameters
     startPar <- function(x,...){
         mu <- theta[1]
-        
+        n <- length(x)
+        epsn <- min(floor(secLevel*sqrt(n))+1,n)
+
         ## Pickand estimator
         if(is.null(start0Est)){
+        ### replaced 20140402: CvMMDE-with xi on Grid
         #source("kMedMad_Qn_Estimators.R")
-           PF <- GEVFamily(loc = theta[1], scale = theta[2], shape = theta[3])
-           e1 <- PickandsEstimator(x,ParamFamily=PF)
-           e0 <- estimate(e1)
+        ### replaced 20140402:
+        #   PF <- GEVFamily(loc = theta[1], scale = theta[2], shape = theta[3])
+        #   e1 <- PickandsEstimator(x,ParamFamily=PF)
+        #   e0 <- estimate(e1)
+           e0 <- .getBetaXiGEV(x=x, mu=mu, xiGrid=.getXiGrid(), withPos=withPos)
         }else{
            if(is(start0Est,"function")){
               e1 <- start0Est(x, ...)
@@ -250,9 +291,12 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                e0 <- e0[c("scale", "shape")]
         }
 #        print(e0); print(str(x)); print(head(summary(x))); print(mu)
-        if(any(x < mu-e0["scale"]/e0["shape"]))
-               stop("some data smaller than 'loc-scale/shape' ")
-
+        if(quantile(e0[2]/e0[1]*(x-mu), epsn/n)< (-1)){
+           if(e0[2]>0)
+               stop("shape is positive and some data smaller than 'loc-scale/shape' ")
+           else
+               stop("shape is negative and some data larger than 'loc-scale/shape' ")
+        }
         names(e0) <- NULL
         return(e0)
     }
@@ -263,9 +307,11 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
            theta <- abs(theta)
         }else{
            if(!is.null(names(theta))){
+              if(theta["shape"]< (-1/2)) theta["shape"] <- -1/2+1e-4
               theta["scale"] <- abs(theta["scale"])
            }else{
               theta[1] <- abs(theta[1])
+              if(theta[2]< (-1/2)) theta[2] <- -1/2+1e-4
            }
         }
         return(theta)
@@ -273,12 +319,13 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
 
     modifyPar <- function(theta){
         theta <- makeOKPar(theta)
-        .warningGEVShapeLarge(theta["shape"])
+        sh <- if(!is.null(names(theta))) theta["shape"] else theta[2]
+        if(..withWarningGEV).warningGEVShapeLarge(sh)
         if(!is.null(names(theta))){
             sc <- theta["scale"]
             sh <- theta["shape"]
         }else{
-            theta <- abs(theta)
+            # changed 20140402: theta <- abs(theta)
             sc <- theta[1]
             sh <- theta[2]
         }
@@ -291,11 +338,11 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
         sc <- force(main(param)[1])
         k <- force(main(param)[2])
         tr <- fixed(param)[1]
-        .warningGEVShapeLarge(k)
+        if(..withWarningGEV).warningGEVShapeLarge(k)
 
         Lambda1 <- function(x) {
          y <- x*0
-         ind <- (x > tr-sc/k) # = [later] (x1>0)
+         ind <- if(k>0)(x > tr-sc/k) else (x<tr-sc/k)# = [later] (x1>0)
          x <- (x[ind]-tr)/sc
          x1 <- 1 + k * x
          y[ind] <- (x*(1-x1^(-1/k))-1)/x1/sc
@@ -304,7 +351,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
         }
         Lambda2 <- function(x) {
          y <- x*0
-         ind <- (x > tr-sc/k) # = [later] (x1>0)
+         ind <- if(k>0)(x > tr-sc/k) else (x<tr-sc/k)# = [later] (x1>0)
          x <- (x[ind]-tr)/sc
          x1 <- 1 + k * x
          x2 <- x / x1
@@ -327,7 +374,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     FisherInfo.fct <- function(param) {
         sc <- force(main(param)[1])
         k <- force(main(param)[2])
-        .warningGEVShapeLarge(k)
+        if(..withWarningGEV).warningGEVShapeLarge(k)
         G20 <- gamma(2*k)
         G10 <- gamma(k)
         G11 <- digamma(k)*gamma(k)

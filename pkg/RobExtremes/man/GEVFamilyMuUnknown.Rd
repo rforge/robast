@@ -7,9 +7,11 @@
   represents a Generalized EV family with unknown location parameter \code{mu}.
 }
 \usage{
-GEVFamilyMuUnknown(loc = 0, scale = 1, shape = 0.5, of.interest = c("scale", "shape"),
-              p = NULL, N = NULL, trafo = NULL, start0Est = NULL, withPos = TRUE,
-              withCentL2 = FALSE, withL2derivDistr  = FALSE, ..ignoreTrafo = FALSE)
+GEVFamilyMuUnknown(loc = 0, scale = 1, shape = 0.5, of.interest = c("loc",
+              "scale", "shape"), p = NULL, N = NULL, trafo = NULL,
+              start0Est = NULL, withPos = TRUE, secLevel = 0.7,
+              withCentL2 = FALSE, withL2derivDistr  = FALSE,
+              ..ignoreTrafo = FALSE, ..withWarningGEV = TRUE, ..name = "")
 }
 \arguments{
   \item{loc}{ real: known/fixed threshold/location parameter }
@@ -23,12 +25,22 @@ GEVFamilyMuUnknown(loc = 0, scale = 1, shape = 0.5, of.interest = c("scale", "sh
   \item{trafo}{ matrix or NULL: transformation of the parameter }
   \item{start0Est}{ startEstimator --- if \code{NULL} \code{\link{PickandsEstimator}} is used }
   \item{withPos}{ logical of length 1: Is shape restricted to positive values? }
+  \item{secLevel}{ a numeric of length 1:
+       In the ideal GEV model, for each observastion \eqn{X_i}{Xi}, the expression
+       \eqn{1+\frac{{\rm shape}(X_i-{\rm loc})}{{\rm scale}}}{1+shape(Xi-loc)/scale}
+       must be positive, which in principle could be attacked by a single outlier.
+       Hence for sample size \eqn{n} we allow for \eqn{\varepsilon n}{eps n}
+       violations, interpreting the violations as outliers. Here
+       \eqn{\varepsilon = {\tt secLevel}/\sqrt{n}}{eps = secLevel/sqrt(n)}. }
   \item{withCentL2}{logical: shall L2 derivative be centered by substracting
        the E()? Defaults to \code{FALSE}, but higher accuracy can be achieved
        when set to \code{TRUE}.}
   \item{withL2derivDistr}{logical: shall the distribution of the L2 derivative
       be computed? Defaults to \code{FALSE} (to speeds up computations).}
   \item{..ignoreTrafo}{logical: only used internally in \code{kStepEstimator}; do not change this.}
+  \item{..withWarningGEV}{logical: shall warnings be issued if shape is large?}
+  \item{..name}{character: optional alternative name for the parametric family;
+                used in generating interpolating grids. }
 }
 \details{
   The slots of the corresponding L2 differentiable 

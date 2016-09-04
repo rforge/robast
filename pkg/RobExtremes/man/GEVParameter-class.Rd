@@ -19,11 +19,11 @@ Objects can be created by calls of the form \code{new("GEVParameter", ...)}.
 \section{Slots}{
   \describe{
     \item{\code{loc}}{ real number: location parameter of 
-      a generalized Pareto distribution. }
+      a GEV distribution. }
     \item{\code{scale}}{ real number: scale parameter of 
-      a generalized Pareto distribution. }
+      a GEV distribution. }
     \item{\code{shape}}{ real number: shape parameter of 
-      a generalized Pareto distribution. }
+      a GEV distribution. }
     \item{\code{name}}{ default name is 
       \dQuote{parameter of a GEV distribution}. }
   }

@@ -9,7 +9,8 @@
 \usage{
 GParetoFamily(loc = 0, scale = 1, shape = 0.5, of.interest = c("scale", "shape"),
               p = NULL, N = NULL, trafo = NULL, start0Est = NULL, withPos = TRUE,
-              withCentL2 = FALSE, withL2derivDistr  = FALSE, ..ignoreTrafo = FALSE)
+              secLevel = 0.7,  withCentL2 = FALSE, withL2derivDistr  = FALSE,
+              ..ignoreTrafo = FALSE)
 }
 \arguments{
   \item{loc}{ real: known/fixed threshold/location parameter }
@@ -23,6 +24,13 @@ GParetoFamily(loc = 0, scale = 1, shape = 0.5, of.interest = c("scale", "shape")
   \item{trafo}{ matrix or NULL: transformation of the parameter }
   \item{start0Est}{ startEstimator --- if \code{NULL} \code{\link{medkMADhybr}} is used }
   \item{withPos}{ logical of length 1: Is shape restricted to positive values? }
+  \item{secLevel}{ a numeric of length 1:
+       In the ideal GEV model, for each observastion \eqn{X_i}{Xi}, the expression
+       \eqn{1+\frac{{\rm shape}(X_i-{\rm loc})}{{\rm scale}}}{1+shape(Xi-loc)/scale}
+       must be positive, which in principle could be attacked by a single outlier.
+       Hence for sample size \eqn{n} we allow for \eqn{\varepsilon n}{eps n}
+       violations, interpreting the violations as outliers. Here
+       \eqn{\varepsilon = {\tt secLevel}/\sqrt{n}}{eps = secLevel/sqrt(n)}. }
   \item{withCentL2}{logical: shall L2 derivative be centered by substracting
        the E()? Defaults to \code{FALSE}, but higher accuracy can be achieved
        when set to \code{TRUE}.}
