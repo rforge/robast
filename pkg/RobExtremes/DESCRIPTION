@@ -15,7 +15,7 @@ Authors@R: c(person("Nataliya", "Horbenko", role=c("aut","cph")),
 		person("Daria", "Pupashenko", role="ctb", comment="contributed MDE-estimation for GEV distribution in the framework of her PhD thesis 2011--14"), 
 		person("Gerald", "Kroisandt", role="ctb", comment="contributed testing routines"), 
         person("Matthias", "Kohl", role=c("aut", "cph")), 
-		person("Peter", "Ruckdeschel", role=c("cre", "cph"), email="peter.ruckdeschel@uni-oldenburg.de"))
+		person("Peter", "Ruckdeschel", role=c("cre", "aut", "cph"), email="peter.ruckdeschel@uni-oldenburg.de"))
 ByteCompile: yes
 LazyLoad: yes
 License: LGPL-3
