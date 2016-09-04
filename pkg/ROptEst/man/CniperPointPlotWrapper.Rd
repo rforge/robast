@@ -41,7 +41,8 @@
   \code{cniperPointPlot} is returned.
 }
 \examples{
-L2fam <- GammaFamily()
-CniperPointPlot(fam=L2fam, main = "Gamma", lower = 0, upper = 5, withCall = FALSE)
+L2fam <- NormLocationScaleFamily()
+CniperPointPlot(fam=L2fam, main = "Normal location and scale", 
+                lower = 0, upper = 2.5, withCall = FALSE)
 }
 

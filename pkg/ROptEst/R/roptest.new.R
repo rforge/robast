@@ -136,6 +136,12 @@ robest <- function(x, L2Fam,  fsCor = 1,
                     na.rm = TRUE, ..., debug = FALSE,
                     withTimings = FALSE){
 
+
+#### TOBEDONE: set default for risk depending on L2Fam,
+###            or even better: dispatch acc. to L2Fam, risk
+###                      -> optimal selection of corresponding interpolrisks
+
+
     es.call <- match.call()
     es.call0 <- match.call(expand.dots=FALSE)
     mwt <- !is.null(es.call$withTimings)

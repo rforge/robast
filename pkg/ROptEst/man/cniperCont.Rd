@@ -11,34 +11,34 @@
   other procedure.
 }
 \usage{
-cniperCont(IC1, IC2, data = NULL, ...,
-               neighbor, risk, lower = getdistrOption("DistrResolution"),
-               upper = 1-getdistrOption("DistrResolution"), n = 101,
-               scaleX = FALSE, scaleX.fct, scaleX.inv,
-               scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
-               scaleN = 9, x.ticks = NULL, y.ticks = NULL,
-               cex.pts = 1, col.pts = par("col"),
-               pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
-               lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
-               which.lbs = NULL, which.Order  = NULL,
-               return.Order = FALSE)
-
+cniperCont(IC1, IC2, data = NULL, ..., neighbor, risk, lower =
+                 getdistrOption("DistrResolution"), upper = 1 -
+                 getdistrOption("DistrResolution"), n = 101, scaleX =
+                 FALSE, scaleX.fct, scaleX.inv, scaleY = FALSE,
+                 scaleY.fct = pnorm, scaleY.inv = qnorm, scaleN = 9,
+                 x.ticks = NULL, y.ticks = NULL, cex.pts = 1,
+                 cex.pts.fun = NULL, col.pts = par("col"), pch.pts =
+                 19, jit.fac = 1, jit.tol = .Machine$double.eps,
+                 with.lab = FALSE, lab.pts = NULL, lab.font = NULL,
+                 alpha.trsp = NA, which.lbs = NULL, which.Order = NULL,
+                 return.Order = FALSE, draw.nonlbl = TRUE, cex.nonlbl =
+                 0.3, pch.nonlbl = ".", withSubst = TRUE)
 
 cniperPoint(L2Fam, neighbor, risk, lower, upper)
 
-cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
-                lower=getdistrOption("DistrResolution"),
-                upper=1-getdistrOption("DistrResolution"), n = 101,
-                withMaxRisk = TRUE,
-                scaleX = FALSE, scaleX.fct, scaleX.inv,
-                scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
-                scaleN = 9, x.ticks = NULL, y.ticks = NULL,
-                cex.pts = 1, col.pts = par("col"),
-                pch.pts = 19, jitter.fac = 1, with.lab = FALSE,
-                lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
-                which.lbs = NULL, which.Order  = NULL,
-                return.Order = FALSE)
-
+cniperPointPlot(L2Fam, data = NULL, ..., neighbor, risk = asMSE(),
+                 lower = getdistrOption("DistrResolution"), upper = 1 -
+                 getdistrOption("DistrResolution"), n = 101,
+                 withMaxRisk = TRUE, scaleX = FALSE, scaleX.fct,
+                 scaleX.inv, scaleY = FALSE, scaleY.fct = pnorm,
+                 scaleY.inv = qnorm, scaleN = 9, x.ticks = NULL,
+                 y.ticks = NULL, cex.pts = 1, cex.pts.fun = NULL,
+                 col.pts = par("col"), pch.pts = 19, jit.fac = 1,
+                 jit.tol = .Machine$double.eps, with.lab = FALSE,
+                 lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
+                 which.lbs = NULL, which.Order = NULL, return.Order =
+                 FALSE, draw.nonlbl = TRUE, cex.nonlbl = 0.3,
+                 pch.nonlbl = ".", withSubst = TRUE)
 }
 \arguments{
   \item{IC1}{ object of class \code{IC} }
@@ -87,6 +87,10 @@ cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
   \item{y.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
                  if non-NULL, user-given y-ticks (on original scale);}
   \item{cex.pts}{size of the points of the second argument plotted}
+  \item{cex.pts.fun}{rescaling function for the size of the points to be plotted;
+        either \code{NULL} (default), then \code{log(1+abs(x))} is used for
+        the rescaling, or a function which is then used for the
+        rescaling.}
   \item{col.pts}{color of the points of the second argument plotted}
   \item{pch.pts}{symbol of the points of the second argument plotted}
   \item{with.lab}{logical; shall labels be plotted to the observations?}
@@ -101,7 +105,9 @@ cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
         while for the remaining ones, the alpha channel in rgb space is set
         to the respective coordinate value of \code{alpha.trsp}. The non-NA
         entries must be integers in [0,255] (0 invisible, 255 opaque).}
-  \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
+  \item{jit.fac}{jittering factor used in case of a \code{DiscreteDistribution}
+                    for plotting points of the second argument in a jittered fashion.}
+  \item{jit.tol}{jittering tolerance used in case of a \code{DiscreteDistribution}
                     for plotting points of the second argument in a jittered fashion.}
   \item{which.lbs}{either an integer vector with the indices of the observations
           to be plotted into graph or \code{NULL} --- then no observation is excluded}
@@ -117,6 +123,11 @@ cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
     reduction by argument \code{which.lbs}, and ordering is according to the norm given by
            \code{normtype(object)});
    otherwise we return \code{invisible()} as usual.}
+  \item{draw.nonlbl}{logical; should non-labelled observations be drawn?}
+  \item{cex.nonlbl}{character expansion(s) for non-labelled observations}
+  \item{pch.nonlbl}{plotting symbol(s) for non-labelled observations}
+  \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
+      titles and lables is used; otherwise no substitution is used. }
 }
 \details{
   In case of \code{cniperCont} the difference between the risks of two ICs 
@@ -135,6 +146,19 @@ cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
   curve, the second one for the balancing line. For argument \code{lty},
   a list can be used; its first component is then taken for the
   curve, the second one for the balancing line.
+
+  If argument \code{withSubst} is \code{TRUE}, in all title 
+  and axis lable arguments of \code{cniperCont} and \code{cniperPointPlot}, 
+  the following patterns are substituted:
+  \describe{
+  \item{\code{"\%C"}}{class of argument \code{L2Fam} (for  \code{cniperPointPlot})}
+  \item{\code{"\%A"}}{deparsed argument  \code{L2Fam} (for  \code{cniperPointPlot})}
+  \item{\code{"\%C1"}}{class of argument \code{IC1} (for  \code{cniperCont})}
+  \item{\code{"\%A1"}}{deparsed argument  \code{IC1} (for  \code{cniperCont})}
+  \item{\code{"\%C2"}}{class of argument \code{IC2} (for  \code{cniperCont})}
+  \item{\code{"\%A2"}}{deparsed argument  \code{IC2} (for  \code{cniperCont})}
+  \item{\code{"\%D"}}{time/date-string when the plot was generated}
+  }
 
   For more details about cniper contamination and cniper points we refer 
   to Section~3.5 of Kohl et al. (2008) as well as Ruckdeschel (2004) and 

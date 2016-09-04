@@ -7,10 +7,10 @@ setMethod("plot", signature(x = "IC", y = "missing"),
              legend.location = "bottomright", legend.cex = 0.8,
              withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
              lty.MBR = "dashed", lwd.MBR = 0.8,  n.MBR = 10000,
-             scaleX = FALSE, scaleX.fct, scaleX.inv,
+             x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
-             mfColRow = TRUE, to.draw.arg = NULL){
+             mfColRow = TRUE, to.draw.arg = NULL, withSubst = TRUE){
 
         mcl <- match.call(call = sys.call(sys.parent(1)), expand.dots = TRUE)
 
@@ -47,6 +47,6 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
 .getExtremeCoordIC <- function(IC, D, indi, n = 10000){
     x <- q(D)(seq(1/2/n,1-1/2/n, length=n))
-    y <- (matrix(evalIC(IC,matrix(x,ncol=1)),ncol=n))[indi,]
+    y <- (matrix(evalIC(IC,matrix(x,ncol=1)),ncol=n))[indi,,drop=FALSE]
     return(cbind(min=apply(y,1,min),max=apply(y,1,max)))
 }

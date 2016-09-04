@@ -64,21 +64,19 @@ CniperPointPlot <- function(fam,...
   dots <- mc$"..."
   if(is.null(mc$lower)) lower <- getdistrOption("DistrResolution")
   if(is.null(mc$upper)) upper <- 1-getdistrOption("DistrResolution")
-  if(is.null(mc$with.legend)) mc$with.legend <- TRUE
-  if(is.null(mc$withCall)) mc$withCall <- TRUE
   if(missing(fam)) stop("Argument 'fam' must be given as argument to 'CniperPointPlot'")
   ###
   ### 2. build up the argument list for the (powerful/fullfledged)
   ### graphics/diagnostics function;
   ##
+  data <- dots$data
+  alpha.trsp <- eval(dots$alpha.trsp); if(is.null(alpha.trsp)) alpha.trsp <- NA
 
   ## Scaling of the axes
-  print(fam)
   scaleList <- rescaleFunction(fam, FALSE, rescale)
-  print(scaleList)
 
   argsList <- c(list(L2Fam = substitute(fam)
-                   ,data = substitute(NULL)
+                   ,data = data
                    ,neighbor = substitute(ContNeighborhood(radius = 0.5))
                    ,risk = substitute(asMSE())
                    ,lower = substitute(lower)
@@ -93,21 +91,22 @@ CniperPointPlot <- function(fam,...
                    ,with.lab = substitute(FALSE)
                    ,lab.pts = substitute(NULL)
                    ,lab.font = substitute(NULL)
-                   ,alpha.trsp = substitute(NA)
+                   ,alpha.trsp = alpha.trsp
                    ,which.lbs = substitute(NULL)
                    ,which.Order  = substitute(NULL)
                    ,return.Order = substitute(FALSE)
                    ,adj = 0.5
                    ,cex.main = substitute(1.5)
                    ,cex.lab = substitute(1.5)
-                   ,main = ""#"Outlyingness Plot"
+                   ,main = "Cniperpointplot" 
                    ,xlab=substitute("Dirac point")
                    ,ylab=substitute("Asymptotic Risk difference (classic - robust)")
                    ,bty = substitute("o")
+                   ,withSubst = TRUE
                    ), scaleList)
 #  print(argsList)
   ##parameter for plotting
-  if(mc$with.legend)
+  if(with.legend)
   {
     argsList$col.main <- "black"
     argsList$col.lab <- "black"
@@ -135,7 +134,7 @@ CniperPointPlot <- function(fam,...
   ###
   ### 5. return the call (if withCall==TRUE)
   ###
-  if(mc$withCall) print(mycall)
+  if(withCall) print(mycall)
 
 }
 #CniperPointPlot(fam=fam, main = "Gamma", lower = 0, upper = 5, withCall = FALSE)

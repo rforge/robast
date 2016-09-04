@@ -8,6 +8,41 @@
  information)
 
 #######################################
+version 1.0
+#######################################
+
+user-visible CHANGES:
++ title changed to title style / capitalization
++ cniperPointPlot gains capacity to deal with "interpolRisk" - risks
++ cniperPointPlot gains optional pattern substitution (like plot) 
+  which can be switched off by argument withSubst
+
+GENERAL ENHANCEMENTS:
+
+under the hood:
++ preparations for evalation of LMs on xi grid for GEVFamilyMuUnknown. 
++ new methods for normtype and biastype for interpolRisk, as well as getRiskFctBV
+  => now cniperPointPlot should work for GPD-type data 
++ removed ::: internal dependencies (within distr&robast-Fam's of pkgs) by 
+  copying respective routines
++ adjusted plot-Method for ICs to include the new argument x.vec
++ enhanced imports in DESCRIPTION by explicating second order imports
+
+  
+BUGFIXES:
++ two bugs in plotWrapper.R in pkgs RobAStBase and ROptEst detected by Misha
++ needed version of RandVar was wrongly specified in ROptEst in the branch 1.0
++ fixed errors detected by Matthias / Misha in AllPlot.R, comparePlot.R, getReq.R
++ fixed issue with updateStep in kStepEstimator when using interpol risks 
+  (somehow modifyIC had not been attached in prior steps...)
++ labels did not work correctly, warnings due to calling plot with "withMaxRisk"
++ fixed issue with points plotting in Cniperpoint-plots
++ in wrapper function CniperPointPlot, arguments 'data'  and 'alpha.trsp' had not 
+  been passed on correctly
++ some changes in wrapper to cniperpointplot
++ fixed an error in cniperPointPlot() -- default for argument risk had not 
+  been passed on correctly to cniperCont()
+#######################################
 version 0.9
 #######################################
 

@@ -38,7 +38,7 @@ respective \file{sysdata.rda} file. }
            upper = 1e4, lower = 1e-4, OptOrIter = "iterate",
            maxiter = 50, tol = .Machine$double.eps^0.4,
            loRad = 0, upRad = Inf, loRad0 = 1e-3,
-           loRad.s = 0.2, up.Rad.s = 1, withStartLM = TRUE)
+           loRad.s = 0.2, up.Rad.s = 1, withStartLM = TRUE, len = 13)
 
 
 .saveGridToCSV(Grid, toFileCSV, namPFam, nameInSysdata)
@@ -47,7 +47,7 @@ respective \file{sysdata.rda} file. }
 
 .generateInterpGrid(thGrid, PFam, toFileCSV = "temp.csv",
             getFun = .getLMGrid, ..., modifyfct, nameInSysdata,
-            GridFileName, withPrint = TRUE)
+            GridFileName, withPrint = TRUE, len = 13)
 }
 
 \arguments{
@@ -114,6 +114,7 @@ respective \file{sysdata.rda} file. }
                 \code{withPrint}; produces the y-values for the
                 interpolation grid. }
   \item{\dots}{further arguments to be passed on to \code{getFun}. }
+  \item{len}{integer; number of Lagrange multipliers to be calibrated. }
 }
 \details{
   \code{.MBRE.th} computes the Lagrange multipliers for the MBRE estimator,

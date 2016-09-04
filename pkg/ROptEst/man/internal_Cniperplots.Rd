@@ -9,7 +9,7 @@ These functions are internally used helper function for \code{\link{cniperCont}}
 and \code{cniperPointPlot}.}
 
 \usage{
-.plotData(data, dots, origCl, fun, L2Fam,  IC )
+.plotData(data, dots, fun, L2Fam,  IC, jit.fac, jit.tol )
 .getFunCnip(IC1,IC2, risk, L2Fam, r, b20=NULL)
 }
 \arguments{
@@ -29,6 +29,10 @@ and \code{cniperPointPlot}.}
   from}
   \item{r}{positive numeric of length 1: the neighborhood radius}
   \item{b20}{positive numeric of length 1: the maximal bias of \code{IC2}.}
+  \item{jit.fac}{jittering factor used in case of a \code{DiscreteDistribution}
+                    for plotting points of the second argument in a jittered fashion.}
+  \item{jit.tol}{jittering tolerance used in case of a \code{DiscreteDistribution}
+                    for plotting points of the second argument in a jittered fashion.}
 }
 \details{
 \code{.plotData} takes argument \code{data} and plots it into the cniper graph.

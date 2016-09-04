@@ -22,7 +22,8 @@ optIC(model, risk, ...)
 
 \S4method{optIC}{InfRobModel,asUnOvShoot}(model, risk, upper = 1e4,
                                           lower = 1e-4, maxiter = 50,
-                                          tol = .Machine$double.eps^0.4, warn = TRUE)
+                                          tol = .Machine$double.eps^0.4, warn = TRUE, 
+                                          verbose = NULL)
 
 \S4method{optIC}{FixRobModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, lower = 1e-4,
                                           maxiter = 50, tol = .Machine$double.eps^0.4, 

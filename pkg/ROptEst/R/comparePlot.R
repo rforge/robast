@@ -1,3 +1,5 @@
+.oldcomparePlot <- getMethod("comparePlot", signature("IC","IC"))
+
 setMethod("comparePlot", signature("IC","IC"),
     function(obj1,obj2, obj3 = NULL, obj4 = NULL, data = NULL,
              ..., withSweave = getdistrOption("withSweave"),
@@ -45,8 +47,7 @@ setMethod("comparePlot", signature("IC","IC"),
         }
         mcl$MBRB <- MBRB
         mcl$withMBR <- withMBR
-        do.call(getMethod("comparePlot", signature("IC","IC"),
-                           where="RobAStBase"), as.list(mcl[-1]),
+        do.call(.oldcomparePlot, as.list(mcl[-1]),
                 envir=parent.frame(2))
         return(invisible())
       })

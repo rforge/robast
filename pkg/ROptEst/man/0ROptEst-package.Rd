@@ -12,14 +12,16 @@ using S4 classes and methods.
 \details{
 \tabular{ll}{
 Package: \tab ROptEst \cr
-Version: \tab 0.9 \cr
-Date: \tab 2013-09-11 \cr
-Depends: \tab R(>= 2.7.0), methods, distr(>= 2.0), distrEx(>= 2.0),
-distrMod(>= 2.0), RandVar(>= 0.6.4), RobAStBase \cr
-LazyLoad: \tab yes \cr
+Version: \tab 1.0 \cr
+Date: \tab 2015-05-03 \cr
+Depends: \tab R(>= 2.14.0), methods, distr(>= 2.5.2), distrEx(>= 2.5), distrMod(>= 2.5.2), 
+RandVar(>= 0.9.2), RobAStBase(>= 1.0) \cr
+Suggests: \tab RobLox, MASS \cr
+Imports: \tab startupmsg \cr
+ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 694 \cr
+SVNRevision: \tab 728 \cr
 }
 }
 \author{
@@ -30,6 +32,9 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
 \references{
   M. Kohl (2005). Numerical Contributions to the Asymptotic Theory of Robustness.
   Dissertation. University of Bayreuth.
+
+  M. Kohl, P. Ruckdeschel, H. Rieder (2010). Infinitesimally Robust Estimation in 
+  General Smoothly Parametrized Models. Statistical Methods and Application 19(3):333-354. 
 }
 \seealso{
 \code{\link[distr:0distr-package]{distr-package}}, 

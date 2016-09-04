@@ -2,8 +2,10 @@
    list(s = getRiskIC(IC,risk=trAsCov())$trAsCov$value^.5,
         b = getRiskIC(IC,risk=asBias(),neighbor=neighbor)$asBias$value)
 
-getReq <- function(Risk,neighbor,IC1,IC2,n=1,upper=15){
-            if(!is(IC1,"IC")||!is(IC2,"IC")) 
+getReq <- function(Risk,neighbor,IC1,IC2,n=1,upper=15,
+                   radOrOutl=c("radius","Outlier")){
+            radOrOutl <- match.arg(radOrOutl)
+            if(!is(IC1,"IC")||!is(IC2,"IC"))
                stop("Arguments IC1, IC2 must be of class 'IC'.")
             if(!identical(IC1@CallL2Fam,IC2@CallL2Fam))
                stop("Arguments IC1, IC2 must be of defined for the same model.")
@@ -24,6 +26,8 @@ getReq <- function(Risk,neighbor,IC1,IC2,n=1,upper=15){
                  get.asGRisk.fct(Risk)(r,s=sb2$s,b=sb2$b)
             }
             r0 <- uniroot(dRisk,lower=0, upper=upper)$root/n^.5
+            if(radOrOutl=="Outlier")
+               r0 <- if(sb1$s<=sb2$s) floor(r0*n) else ceiling(r0*n)
             if(sb1$s<=sb2$s)
                return(c(0,r0))
             else   

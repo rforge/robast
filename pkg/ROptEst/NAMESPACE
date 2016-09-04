@@ -4,13 +4,20 @@ import("distrEx")
 import("RandVar")
 import("distrMod")
 import("RobAStBase")
+importFrom("startupmsg", "buildStartupMessage", "infoShow")
+importFrom("graphics", "abline", "axis", "box", "par", 
+           "points", "text", "matlines", "matpoints", "mtext",
+           "title")
+importFrom("stats", "complete.cases", "dnorm", "na.omit", "optim",
+             "optimize", "pnorm", "qnorm", "uniroot")
+importFrom("utils", "read.csv", "read.table", "str", "write.table")
+importFrom("graphics", "abline")
 
 exportClasses("asAnscombe", "asL1", "asL4") 
 exportMethods("optIC", 
               "getInfRobIC", 
               "getFixRobIC",
               "getAsRisk", 
-              "getFiRisk",
               "getInfRad", 
               "getInfClip", 
               "getFixClip",
