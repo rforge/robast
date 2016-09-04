@@ -6,7 +6,10 @@ setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRi
     mc$neighbor <- ContNeighborhood(radius=0.5)
 
     gridn <- type(risk)
-    nam <- gsub(" ","",name(model))
+
+    nam <- paste(".",gsub("[F,f]amily","",gsub(" ","",name(model))),sep="")
+    if(nam==".GeneralizedPareto") nam <- ".GPareto"
+
     param1 <- param(model)
 
     scshnm <- scaleshapename(model)
@@ -15,12 +18,12 @@ setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRi
     ### check whether mc[-1] is a good strategy to delete risk parameter...!!!
 
     nsng <- character(0)
-    sng <- try(getFromNamespace(gridn, ns = "RobAStRDA"), silent=TRUE)
-    if(!is(sng,"try-error")) nsng <- names(sng)
-    if(length(nsng)){
-       if(nam %in% nsng){
-          fctN <- .versionSuff("fun")
-          interpolfct <- sng[[nam]][[fctN]]
+    famg <- try(getFromNamespace(nam, ns = "RobAStRDA"), silent=TRUE)
+    #sng <- try(getFromNamespace(gridn, ns = "RobAStRDA"), silent=TRUE)
+    if(!is(famg,"try-error")) nsng <- names(famg)
+    if(length(nsng)&&.versionSuff("fun")=="fun.N"){
+       if(gridn %in% nsng){
+          interpolfct <- famg[[gridn]][["fun.N"]]
           .modifyIC0 <- function(L2Fam, IC){
                     para <- param(L2Fam)
                     if(!.is.na.Psi(para, interpolfct, shnam))
@@ -52,19 +55,22 @@ setMethod("getStartIC",signature(model = "L2LocScaleShapeUnion", risk = "interpo
     mc$neighbor <- ContNeighborhood(radius=0.5)
 
     gridn <- type(risk)
-    nam <- gsub(" ","",name(model))
+
+    nam <- paste(".",gsub("[F,f]amily","",gsub(" ","",name(model))),sep="")
+    if(nam==".GEV") nam <- ".GEVU" 
+
     param1 <- param(model)
 
     scshnm <- scaleshapename(model)
     shnam <- scshnm["shape"]
 
     nsng <- character(0)
-    sng <- try(getFromNamespace(gridn, ns = "RobAStRDA"), silent=TRUE)
-    if(!is(sng,"try-error")) nsng <- names(sng)
-    if(length(nsng)){
-       if(nam %in% nsng){
-          fctN <- .versionSuff("fun")
-          interpolfct <- sng[[nam]][[fctN]]
+    famg <- try(getFromNamespace(nam, ns = "RobAStRDA"), silent=TRUE)
+    #sng <- try(getFromNamespace(gridn, ns = "RobAStRDA"), silent=TRUE)
+    if(!is(famg,"try-error")) nsng <- names(famg)
+    if(length(nsng)&&.versionSuff("fun")=="fun.N"){
+       if(gridn %in% nsng){
+          interpolfct <- famg[[gridn]][["fun.N"]]
           .modifyIC <- function(L2Fam, IC){
                     para <- param(L2Fam)
                     if(!.is.na.Psi(para, interpolfct, shnam))
