@@ -18,16 +18,16 @@
 minmaxBias(L2deriv, neighbor, biastype, ...)
 
 \S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv,
-     neighbor, biastype, symm, trafo, maxiter, tol, warn, Finfo)
+     neighbor, biastype, symm, trafo, maxiter, tol, warn, Finfo, verbose = NULL)
 
 \S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(
-     L2deriv, neighbor, biastype, symm, trafo, maxiter, tol, warn, Finfo)
+     L2deriv, neighbor, biastype, symm, trafo, maxiter, tol, warn, Finfo, verbose = NULL)
 
 \S4method{minmaxBias}{UnivariateDistribution,ContNeighborhood,onesidedBias}(
-     L2deriv, neighbor, biastype, symm, trafo, maxiter, tol, warn, Finfo)
+     L2deriv, neighbor, biastype, symm, trafo, maxiter, tol, warn, Finfo, verbose = NULL)
 
 \S4method{minmaxBias}{UnivariateDistribution,TotalVarNeighborhood,BiasType}(
-     L2deriv, neighbor, biastype, symm, trafo, maxiter, tol, warn, Finfo)
+     L2deriv, neighbor, biastype, symm, trafo, maxiter, tol, warn, Finfo, verbose = NULL)
 
 \S4method{minmaxBias}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv,
      neighbor, biastype, normtype, Distr, z.start, A.start,  z.comp, A.comp,

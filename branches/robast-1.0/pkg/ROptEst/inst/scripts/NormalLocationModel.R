@@ -140,6 +140,7 @@ getMaxIneff(N0.IC7,neighbor=ContNeighborhood())
 
 
 ## For estimation use function roptest
+set.seed(123)
 ind <- rbinom(1e2, size=1, prob=0.05)
 x <- rnorm(1e2, mean=1, sd = (1-ind)+ind*9)
 

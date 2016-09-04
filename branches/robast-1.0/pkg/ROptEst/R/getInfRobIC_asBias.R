@@ -116,7 +116,7 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "ContNeighborhood",
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, symm, 
-             trafo, maxiter, tol, warn, Finfo){
+             trafo, maxiter, tol, warn, Finfo, verbose = NULL){
         zi <- sign(as.vector(trafo))
         A <- as.matrix(zi)
         z <- q(L2deriv)(0.5)
@@ -153,7 +153,7 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "TotalVarNeighborhood",
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, symm, trafo, 
-             maxiter, tol, warn, Finfo){
+             maxiter, tol, warn, Finfo, verbose = NULL){
         zi <- sign(as.vector(trafo))
         A <- as.matrix(zi)
         b <- zi*as.vector(trafo)/(-m1df(L2deriv, 0))
@@ -276,6 +276,7 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
         a <- eerg$a
         z <- numeric(k)
         d <- 0
+        problem <- eerg$problem
 
         # to be done:
         # computation of 'd', in case 'L2derivDistr' not abs. cont.
@@ -314,7 +315,7 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "ContNeighborhood", 
                                    biastype = "asymmetricBias"),
     function(L2deriv, neighbor, biastype, symm, 
-             trafo, maxiter, tol, warn, Finfo){
+             trafo, maxiter, tol, warn, Finfo, verbose = NULL){
         nu1 <- nu(biastype)[1]
         nu2 <- nu(biastype)[2]
         zi <- sign(as.vector(trafo))
@@ -359,7 +360,7 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "ContNeighborhood", 
                                    biastype = "onesidedBias"),
     function(L2deriv, neighbor, biastype, symm, 
-             trafo, maxiter, tol, warn, Finfo){
+             trafo, maxiter, tol, warn, Finfo, verbose = NULL){
         infotxt <- c("minimum asymptotic bias (lower case) solution")
         noIC <- function(){
                 warntxt <- paste(gettext(

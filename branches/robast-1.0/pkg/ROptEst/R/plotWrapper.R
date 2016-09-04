@@ -87,7 +87,8 @@ CniperPointPlot <- function(fam,...
                    ,cex.pts = substitute(1)
                    ,col.pts = substitute(par("col"))
                    ,pch.pts = substitute(19)
-                   ,jitter.fac = substitute(1)
+                   ,jit.fac = substitute(1)
+                   ,jit.tol = .Machine$double.eps
                    ,with.lab = substitute(FALSE)
                    ,lab.pts = substitute(NULL)
                    ,lab.font = substitute(NULL)
@@ -95,6 +96,9 @@ CniperPointPlot <- function(fam,...
                    ,which.lbs = substitute(NULL)
                    ,which.Order  = substitute(NULL)
                    ,return.Order = substitute(FALSE)
+                   ,draw.nonlbl = TRUE  ## should non-labelled observations also be drawn?
+                   ,cex.nonlbl = 0.3    ## character expansion(s) for non-labelled observations
+                   ,pch.nonlbl = "."    ## plotting symbol(s) for non-labelled observations
                    ,adj = 0.5
                    ,cex.main = substitute(1.5)
                    ,cex.lab = substitute(1.5)

@@ -34,7 +34,7 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
   Dissertation. University of Bayreuth.
 
   M. Kohl, P. Ruckdeschel, H. Rieder (2010). Infinitesimally Robust Estimation in 
-  General Smoothly Parametrized Models. Statistical Methods and Application 19(3):333–354. 
+  General Smoothly Parametrized Models. Statistical Methods and Application 19(3):333-354. 
 }
 \seealso{
 \code{\link[distr:0distr-package]{distr-package}}, 

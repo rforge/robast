@@ -28,7 +28,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
 
         L2derivDim <- numberOfMaps(L2Fam@L2deriv)
         if(L2derivDim == 1){
-            leastFavFct <- function(r, L2Fam, neighbor, risk, rho,
+            leastFavFct1dim <- function(r, L2Fam, neighbor, risk, rho,
                                     upper.b, MaxIter, eps, warn){
                 loRad <- r*rho
                 upRad <- r/rho
@@ -113,7 +113,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                 cat("current radius:\t", r, "\tinefficiency:\t", ineff, "\n")
                 return(ineff)
             }
-            leastFavR <- optimize(leastFavFct, lower = 1e-4, upper = upRad,
+            leastFavR <- optimize(leastFavFct1dim, lower = 1e-4, upper = upRad,
                             tol = .Machine$double.eps^0.25, maximum = TRUE,
                             L2Fam = L2Fam, neighbor = neighbor, risk = risk,
                             rho = rho, upper.b = upper, MaxIter = maxiter,
@@ -148,8 +148,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                 std <- if(is(normtype,"QFNorm"))
                        QuadForm(normtype) else diag(nrow(trafo))
 
-
-                leastFavFct <- function(r, L2Fam, neighbor, risk, rho,
+                leastFavFctPdim <- function(r, L2Fam, neighbor, risk, rho,
                                         z.start, A.start, upper.b, MaxIter, eps, warn){
 
                     loRad <- r*rho
@@ -237,7 +236,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                        fl <- (0.2/lower)^(1/6); fu <- (0.5/upper)^(1/6)
                        while(warnRund < 7 && isE ){
                          warnRund <- warnRund + 1
-                         lower <- lower * fl;  upper <- upper *fr
+                         lower <- lower * fl;  upper <- upper *fu
                          if( warnRund == 4 ) min(upper, 1.5)
                          if(is.finite(upRad)){
                             args.Ie$upRad <- upper; rL <- .getRisk(upper)
@@ -273,7 +272,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                 }
                 if(is.null(z.start)) z.start <- numeric(L2derivDim)
                 if(is.null(A.start)) A.start <- trafo
-                leastFavR <- optimize(leastFavFct, lower = 1e-4, upper = upRad,
+                leastFavR <- optimize(leastFavFctPdim, lower = 1e-4, upper = upRad,
                                 tol = .Machine$double.eps^0.25, maximum = TRUE,
                                 L2Fam = L2Fam, neighbor = neighbor, risk = risk,
                                 rho = rho, z.start = z.start, A.start = A.start,

@@ -114,6 +114,7 @@ setMethod("getAsRisk", signature(risk = "asBias",
              A.start = A.start, maxiter = maxiter,
              tol = tol, verbose = verbose)
         erg <- eerg$b
+        bias <- 1/erg$value
 
         return(list(asBias = bias, normtype = eerg$normtype))
     })

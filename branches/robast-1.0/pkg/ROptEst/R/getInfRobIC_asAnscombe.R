@@ -80,7 +80,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
           return(FI/trV-eff)
           }
 
-        if(is.null(f.low)) f.low  <- fun(lower)  
+        if(is.null(f.low)) f.low  <- funb(lower)  
 
         if(verbose) print(c(lower,upper, f.lower=f.low, f.upper=e.up-eff))
         

@@ -1,4 +1,5 @@
 .oldcomparePlot <- getMethod("comparePlot", signature("IC","IC"))
+
 setMethod("comparePlot", signature("IC","IC"),
     function(obj1,obj2, obj3 = NULL, obj4 = NULL, data = NULL,
              ..., withSweave = getdistrOption("withSweave"),
