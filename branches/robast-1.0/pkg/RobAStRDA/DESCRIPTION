@@ -4,7 +4,7 @@ Date: 2016-04-30
 Title: Interpolation Grids for Packages of the 'RobASt' - Family of Packages
 Description: Includes 'sysdata.rda' file for packages of the 'RobASt' - family of packages; is
         currently used by package 'RobExtremes' only.
-Depends: R (>= 2.14.0)
+Depends: R (>= 3.3.0)
 Imports: stats
 Authors@R: c(person("Matthias", "Kohl", role=c("aut", "cph")), person("Bernhard", "Spangl",
         role="ctb", comment="contributed smoothed grid values of the Lagrange multipliers"),

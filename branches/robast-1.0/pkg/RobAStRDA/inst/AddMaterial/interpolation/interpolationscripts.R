@@ -14,7 +14,7 @@ require(RobAStRDA)
 
 oldwd <- getwd()
 .basepath <- "C:/rtest/RobASt/branches/robast-1.0/pkg"
-.myFolderFrom <- file.path(.basepath,"RobExtremesBuffer")
+.myFolderFrom <- file.path(.basepath,"RobExtremesBuffer/neu")
 myRDA0 <- file.path(.basepath,"RobExtremesBuffer/sysdata.rda")
 #myRDA <- file.path(.basepath,"RobExtremesBuffer/sysdata.rda")
 #myRDA0 <- file.path(.basepath,"RobAStRDA/R/sysdata0.rda")
