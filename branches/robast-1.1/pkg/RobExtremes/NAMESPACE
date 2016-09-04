@@ -12,6 +12,9 @@ import("ROptEst")
 import("actuar")
 import("evd")
 importFrom("startupmsg", "buildStartupMessage", "infoShow")
+importFrom("stats", "dunif", "integrate", "optimize", "pnorm",
+             "predict", "qnorm", "quantile", "smooth.spline", "uniroot")
+importFrom("utils", "getFromNamespace")
 
 exportClasses("GumbelParameter",
               "ParetoParameter",
