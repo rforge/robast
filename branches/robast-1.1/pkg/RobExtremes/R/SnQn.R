@@ -106,10 +106,12 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
 
 .Sn.intp <- function(x, nam){
     if(abs(scale(x)-1)< 1e-12){
-       sng <- try(getFromNamespace(".Sn", ns = "RobAStRDA"), silent =TRUE)
-       if(is(sng,"try-error")) return(Sn(as(x,"AbscontDistribution")))
-       if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
-       snf <- sng[[nam]][[.versionSuff("fun")]]
+       famg <- try(getFromNamespace(nam, ns = "RobAStRDA"), silent =TRUE)
+#       sng <- try(getFromNamespace(".Sn", ns = "RobAStRDA"), silent =TRUE)
+       if(is(famg,"try-error")) return(Sn(as(x,"AbscontDistribution")))
+#       if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
+       if(!.versionSuff("fun")=="fun.N") return(Sn(as(x,"AbscontDistribution")))
+       snf <- famg[["Sn"]][[.versionSuff("fun")]]
        ret <- snf(shape(x))
        if(is.na(ret)) return(Sn(as(x,"AbscontDistribution")))
     }else ret <- scale(x)*Sn(x=x/scale(x))
@@ -117,13 +119,13 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
 }
 
 setMethod("Sn", signature(x = "GPareto"),
-    function(x, ...).Sn.intp(x,"GeneralizedParetoFamily") )
+    function(x, ...).Sn.intp(x,".GPareto") )
 
 setMethod("Sn", signature(x = "GEV"),
-    function(x, ...).Sn.intp(x,"GEVFamily") )
+    function(x, ...).Sn.intp(x,".GEV") )
 
 setMethod("Sn", signature(x = "Gammad"),
-    function(x, ...).Sn.intp(x,"Gammafamily") )
+    function(x, ...).Sn.intp(x,".Gamma") )
 
 setMethod("Sn", signature(x = "Weibull"),
-    function(x, ...).Sn.intp(x,"WeibullFamily") )
+    function(x, ...).Sn.intp(x,".Weibull") )
