@@ -9,11 +9,10 @@ qqplot(x, y, ...)
     plot.it = TRUE, xlab = deparse(substitute(x)),
     ylab = deparse(substitute(y)), ..., distance = NormType(),
     n.adj = TRUE)
-\S4method{qqplot}{ANY,InfRobModel}(x, y,
-   n = length(x), withIdLine = TRUE, withConf = TRUE,
-   withConf.pw  = withConf,  withConf.sim = withConf,
-    plot.it = TRUE, xlab = deparse(substitute(x)),
-    ylab = deparse(substitute(y)), ..., cex.pts.fun = NULL, n.adj = TRUE)
+\S4method{qqplot}{ANY,InfRobModel}(x, y, n = length(x), withIdLine = TRUE, 
+withConf = TRUE, withConf.pw = withConf, withConf.sim = withConf,
+  plot.it = TRUE, xlab = deparse(substitute(x)), ylab =
+  deparse(substitute(y)), ..., cex.pts.fun = NULL, n.adj = TRUE)
 \S4method{qqplot}{ANY,kStepEstimate}(x, y,
    n = length(x), withIdLine = TRUE, withConf = TRUE,
    withConf.pw  = withConf,  withConf.sim = withConf,

@@ -2,10 +2,9 @@
 \docType{methods}
 \alias{getRiskFctBV}
 \alias{getRiskFctBV-methods}
-\alias{getRiskFctBV,interpolRisk,ANY-method}
 \alias{getRiskFctBV,asGRisk,ANY-method}
-\alias{getRiskFctBV,interpolRisk,ANY-method}
 \alias{getRiskFctBV,asMSE,ANY-method}
+\alias{getRiskFctBV,interpolRisk,ANY-method}
 \alias{getRiskFctBV,asSemivar,onesidedBias-method}
 \alias{getRiskFctBV,asSemivar,asymmetricBias-method}
 \title{Methods for Function getRiskFctBV  in Package `RobAStBase'}
@@ -17,10 +16,6 @@
 
 \item{getRiskFctBV}{\code{signature(risk = "asGRisk", biastype = "ANY")}:
   returns an error that the respective method is not yet implemented. }
-\item{getRiskFctBV}{\code{signature(risk = "interpolRisk", biastype = "ANY")}:
-  returns a function with arguments \code{bias} and \code{variance}
-  to compute the asymptotic MSE for a given ALE at a situation where it has bias \code{bias}
-  (including the radius!) and variance \code{variance}. }
 \item{getRiskFctBV}{\code{signature(risk = "asMSE", biastype = "ANY")}:
   returns a function with arguments \code{bias} and \code{variance}
   to compute the asymptotic MSE for a given ALE at a situation where it has bias \code{bias}

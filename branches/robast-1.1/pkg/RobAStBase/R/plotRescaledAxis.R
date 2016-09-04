@@ -1,7 +1,7 @@
 ## helper functions for rescaling x and y axis in various diagnostic plots
 
 .rescalefct <- function(x, fct,
-         scaleX = FALSE, scaleX.fct,# scaleX.inv,
+         scaleX = FALSE, scaleX.fct, scaleX.inv,
          scaleY = FALSE, scaleY.fct = pnorm,
          xlim, ylim, dots){
 
@@ -13,39 +13,30 @@
 #    paradigm small letters = orig. scale, capital letters = transformed scale
 # return value: list with (thinned out) x and y, X and Y and modified dots
 
-         ordx <- order(x)
          X <- x
          wI <- 1:length(x)
-         wIninf <- wI
-         wcollapse <- wI 
          if(scaleX){
             if(!is.null(xlim)){
                    dots$xlim <- scaleX.fct(xlim)
                    x <- x[x>=xlim[1] & x<=xlim[2]]
-                   ordx <- order(x)
-                   rkx <- rank(x)
             }
-            Xo <- X <- scaleX.fct(x[ordx])
-            Xcollapse <- .DistrCollapse(X, 0*X)
-            wcollapse <- ordx[Xcollapse$reps]           
-            X <- Xcollapse$supp
-            #wI <- sapply(X, function(uu){ w<- which(uu==Xo); if(length(w)>0) w[1] else NA})
-            #wI <- wI[!is.na(wI)]
-            x <- x[wcollapse]
+            Xo <- X <- scaleX.fct(x)
+            X <- .DistrCollapse(X, 0*X)$supp
+            wI <- sapply(X, function(uu){ w<- which(uu==Xo); if(length(w)>0) w[1] else NA})
+            wI <- wI[!is.na(wI)]
+            x <- scaleX.inv(X)
             dots$axes <- NULL
             dots$xaxt <- "n"
          }
-         y <- if(is.function(fct)) fct(x) else fct[sort(wcollapse),1]
-         Y <- if(is.function(fct)) fct(X) else fct[wcollapse,1]
-         scy <- if(is.function(fct)) NA else fct[sort(wcollapse),2]
+         Y <- y <- if(is.function(fct)) fct(x) else fct[wI,1]
+         scy <- if(is.function(fct)) NA else fct[wI,2]
          if(scaleY){
             Y <- scaleY.fct(y)
             if(!is.null(ylim)) dots$ylim <- scaleY.fct(ylim)
             dots$axes <- NULL
             dots$yaxt <- "n"
             }
-#         print(c("HUH",lapply(list(x=x,y=y,X=X,Y=Y),length)))
-         return(list(x=x,y=y,X=X,Y=Y,scy=scy,idx=wcollapse, dots=dots))
+         return(list(x=x,y=y,X=X,Y=Y,scy=scy,dots=dots))
 }
 
 if(FALSE){
@@ -54,14 +45,12 @@ if(FALSE){
   res2 <- .rescalefct(x, fct=function(s) sin(s), scaleY=T, xlim=c(-2,1),ylim=c(0,1),dots=list(NULL))
   res3 <- .rescalefct(x, fct=function(s) sin(s),
             scaleX=T, scaleX.fct=function(x)exp(x)/(exp(x)+1),
-            #scaleX.inv = function(x)log(x/(1-x)), 
-            scaleY=T,
+            scaleX.inv = function(x)log(x/(1-x)), scaleY=T,
             xlim=c(-2,1),ylim=c(0,1),dots=list(NULL))
   distroptions("DistrResolution"=0.05)
   res4 <- .rescalefct(x, fct=function(s) sin(s),
             scaleX=T, scaleX.fct=function(x)exp(x)/(exp(x)+1),
-            #scaleX.inv = function(x)log(x/(1-x)), 
-            scaleY=T,
+            scaleX.inv = function(x)log(x/(1-x)), scaleY=T,
             xlim=c(-2,1),ylim=c(0,1),dots=list(NULL))
 }
 
@@ -191,15 +180,13 @@ if(FALSE){
   distroptions("DistrResolution"=0.000001)
   res3 <- .rescalefct(x, fct=function(s) sin(s),
             scaleX=T, scaleX.fct=function(x)exp(x)/(exp(x)+1),
-            # scaleX.inv = function(x)log(x/(1-x)), 
-            scaleY=T,
+            scaleX.inv = function(x)log(x/(1-x)), scaleY=T,
             xlim=xlim0,ylim=ylim0,dots=list(NULL))
   ex1 <- function(x)log(x/(1-x))
   ex0 <- function(x)exp(x)/(exp(x)+1)
   res4 <- .rescalefct(x, fct=function(s) sin(s),
             scaleX=T, scaleX.fct=ex0,
-            #scaleX.inv = ex1, 
-            scaleY=T,
+            scaleX.inv = ex1, scaleY=T,
             xlim=xlim0,ylim=ylim0,dots=list(NULL))
   plot(res3$X,res3$Y,axes=F, xlim=xlim01,ylim=ylim01)
   .plotRescaledAxis(scaleX=T, scaleX.fct=function(x)exp(x)/(exp(x)+1),

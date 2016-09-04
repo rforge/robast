@@ -1,13 +1,3 @@
-.isReplicated <- function(x, tol=.Machine$double.eps){
-  ina <- is.na(x)|is.infinite(x)
-  x[ina] <- FALSE
-  xnina <- x[!ina]
-  tx <- table(xnina)
-  rx <- as.numeric(names(tx[tx>1]))
-  x[!ina] <- sapply(xnina, function(y) any(abs(y-rx)<tol))
-  return(x)
-}
-
 .ddPlot.MatNtNtCoCo <- function(data, ...,
                                 dist.x = NormType(), 
                                 dist.y  = NormType(),
@@ -20,7 +10,7 @@
                                 id.n,
                                 cex.pts = 1,
                                 lab.pts,
-                                jit.pts = 0,
+                                jitt.pts = 0,
                                 alpha.trsp = NA,
                                 adj =0,
                                 cex.idn = 1,
@@ -38,13 +28,12 @@
                                 text.abline.x.fmt.qx = "%4.2f%%",
                                 text.abline.y.fmt.cy = "%7.2f",
                                 text.abline.y.fmt.qy = "%4.2f%%",
-                                jit.fac = 10,
-                                jit.tol = .Machine$double.eps,
+                                jitt.fac = 10,
                                 doplot = TRUE){
 
        dots <- match.call(expand.dots = FALSE)$"..."
 
-       jit.pts <- rep(jit.pts,length.out=2)
+       jitt.pts <- rep(jitt.pts,length.out=2)
 
        col <- if(is.null(dots$col)) par("col") else dots$col
        if(!is.na(alpha.trsp)) col <- addAlphTrsp2col(col, alpha.trsp)
@@ -156,10 +145,10 @@
       if(!missing(lty.cutoff)) abdots$lty <- lty.cutoff[[1]]
       if(!missing(lwd.cutoff)) abdots$lwd <- lwd.cutoff[1]
       abdots$col <- col.cutoff[1]
-      abdots$jit.fac <- dots$jit.fac
+      abdots$jitt.fac <- dots$jitt.fac
 
       abdots <- list(abdots,abdots)
-      abdots$jit.fac <- pdots$jit.fac
+      abdots$jitt.fac <- pdots$jitt.fac
 
       if(!is.null(abdots$lty))
 	          if(is.list(lty.cutoff)) abdots[[2]]$lty <-  lty.cutoff[[2]]
@@ -188,7 +177,7 @@
       
       if(!missing(lwd.cutoff)) abdots$lwd <- lwd.cutoff
       if(!missing(lty.cutoff)) abdots$lty <- lty.cutoff
-      abdots$jit.fac <- dots$jit.fac
+      abdots$jitt.fac <- dots$jitt.fac
 
       abtdots.x$labels <- if(! is.null(text.abline.x))
                        .mpresubs(text.abline.x) else gettextf(
@@ -262,10 +251,10 @@
       ndata.x0 <- ndata.x
       ndata.y0 <- ndata.y
       isna <- is.na(ndata.x0)|is.na(ndata.y0)
-      if(any(.isReplicated(ndata.x0[!isna], jit.tol)))
-          ndata.x0[!isna] <- jitter(ndata.x0[!isna], factor=jit.pts[1])
-      if(any(.isReplicated(ndata.y0[!isna], jit.tol)))
-          ndata.y0[!isna] <- jitter(ndata.y0[!isna], factor=jit.pts[2])
+      if(any(duplicated(ndata.x0[!isna])))
+          ndata.x0[!isna] <- jitter(ndata.x0[!isna], factor=jitt.pts[1])
+      if(any(duplicated(ndata.y0[!isna])))
+          ndata.y0[!isna] <- jitter(ndata.y0[!isna], factor=jitt.pts[2])
 
       pdots$col <- col
       if(doplot){
@@ -289,8 +278,8 @@
 #      do.call(text, args = c(list(mid.x,co.y+5,paste(cutoff.quantile.x*100," %-cutoff = ",round(co.y,digits=2)))))
 
         if(length(id.xy))
-           do.call(text, args = c(list(jitter(ndata.x[id.xy],factor=jit.fac),
-                                     jitter(ndata.y[id.xy],factor=jit.fac),
+           do.call(text, args = c(list(jitter(ndata.x[id.xy],factor=jitt.fac),
+                                     jitter(ndata.y[id.xy],factor=jitt.fac),
                                 labels=lab.pts[id.xy]), tdots))
           #axis(side=4)
 #      axis(side=1)

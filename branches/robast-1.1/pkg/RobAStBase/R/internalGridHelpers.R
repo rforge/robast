@@ -31,10 +31,8 @@
   ..y.ticks <- .fillList(y.ticks,ndim)
   .xticksS <- substitute({
             .x.ticks <- x.ticks0
-#            print(list(axp=par("xaxp"), usr=par("usr"), log=par("xlog")))
             if(is.null(.x.ticks))
-               .x.ticks <- axTicks(1)#, axp=par("xaxp"), #usr=par("usr")[1:2], 
-                                   #log=par("xlog"))
+               .x.ticks <- axTicks(1, axp=par("xaxp"), usr=par("usr"))
             scaleX00 <- FALSE
             if(!is.null(scaleX0)) scaleX00 <- scaleX0
             if(scaleX00) .x.ticks <- scaleX.fct0(.x.ticks)
@@ -69,10 +67,8 @@
   .yticksS <- substitute({
             .y.ticksL <- y.ticks0
             getYI0
-            #print(list(axp=par("yaxp"), usr=par("usr"), log=par("ylog")))
             if(is.null(.y.ticks))
-               .y.ticks <- axTicks(2)#, #axp=par("yaxp"),# usr=par("usr")[3:4], 
-                                     # log=par("ylog"))
+               .y.ticks <- axTicks(2, axp=par("yaxp"), usr=par("usr"))
             scaleY00 <- FALSE
             if(!is.null(scaleY0)) scaleY00 <- scaleY0
             if(scaleY00) assYI0

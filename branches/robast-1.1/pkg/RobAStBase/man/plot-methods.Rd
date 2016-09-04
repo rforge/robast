@@ -21,11 +21,10 @@
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
              withSubst = TRUE)
-\S4method{plot}{IC,numeric}(x, y, ..., cex.pts = 1,
-             col.pts = par("col"), pch.pts = 1, jit.fac = 1, jit.tol = .Machine$double.eps, with.lab = FALSE,
-             lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
-             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
-             draw.nonlbl = TRUE, cex.nonlbl=0.3, pch.nonlbl=".")
+\S4method{plot}{IC,numeric}(x, y, ..., cex.pts = 1, col.pts = par("col"), pch.pts
+                 = 1, jitter.fac = 1, with.lab = FALSE, lab.pts = NULL,
+                 lab.font = NULL, alpha.trsp = NA, which.lbs = NULL,
+                 which.Order = NULL, return.Order = FALSE)
 }
 \arguments{
   \item{x}{object of class \code{"IC"}: IC to be plotted }
@@ -124,13 +123,19 @@
                          }
   \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
       titles and lables is used; otherwise no substitution is used. }
-  \item{cex.pts}{size of the points of the second argument plotted}
-  \item{col.pts}{color of the points of the second argument plotted}
-  \item{pch.pts}{symbol of the points of the second argument plotted}
+  \item{cex.pts}{size of the points of the second argument plotted, can be a vector;
+         if it has the same length as the number of observations prior to any
+         selection then it overrides argument \code{cex.nonlbl} and assigns 
+         individual sizes to each of the points; otherwise it is recycled to
+         the length of selected observations.}
+  \item{col.pts}{color of the points of the second argument plotted, can
+         be a vector as in \code{cex.pts}.}
+  \item{pch.pts}{symbol of the points of the second argument plotted, can
+         be a vector as in \code{cex.pts}.}
   \item{with.lab}{logical; shall labels be plotted to the observations?}
   \item{lab.pts}{character or NULL; labels to be plotted to the observations; if \code{NULL}
                  observation indices;}
-  \item{lab.font}{font to be used for labels}
+  \item{lab.font}{font to be used for labels (of the observations).}       
   \item{alpha.trsp}{alpha transparency to be added ex post to colors
         \code{col.pch} and \code{col.lbl}; if one-dim and NA all colors are
         left unchanged. Otherwise, with usual recycling rules \code{alpha.trsp}
@@ -139,10 +144,8 @@
         while for the remaining ones, the alpha channel in rgb space is set
         to the respective coordinate value of \code{alpha.trsp}. The non-NA
         entries must be integers in [0,255] (0 invisible, 255 opaque).}
-  \item{jit.fac}{jittering factor used in case of a \code{DiscreteDistribution}
+  \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
                     for plotting points of the second argument in a jittered fashion.}
-  \item{jit.tol}{threshold for jittering: if distance between points is smaller
-               than \code{jit.tol}, points are considered replicates.}
   \item{which.lbs}{either an integer vector with the indices of the observations
           to be plotted into graph or \code{NULL} --- then no observation is excluded}
   \item{which.Order}{we order the observations (descending) according to the norm given by
@@ -157,10 +160,13 @@
     reduction by argument \code{which.lbs}, and ordering is according to the norm given by
            \code{normtype(object)});
    otherwise we return \code{invisible()} as usual.}
-  \item{draw.nonlbl}{logical; should non-labelled observations be drawn?}
-  \item{cex.nonlbl}{character expansion(s) for non-labelled observations}
-  \item{pch.nonlbl}{plotting symbol(s) for non-labelled observations}
   \item{\dots}{further parameters for \code{plot}}
+}
+\value{
+  The function returns invisibly a list of elements containing the information 
+  needed to compute the respective diagnostic plot.
+   The return value allows to recover all information used to produce the plot
+   for later use in enhanced graphics (e.g. with ggplot).   
 }
 \details{
 Any parameters of \code{plot.default} may be passed on to this particular

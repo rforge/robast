@@ -29,9 +29,9 @@
   invisible(NULL)
 }
 \description{
-  The wrapper takes most of arguments to the plot method by
-  default and gives a user possibility to run the function
-  with low number of arguments
+  The wrapper \code{InfoPlot} (captial I!) takes most of arguments to the plot 
+  method \code{infoPlot} (lower case i!) by default and gives a user possibility to run 
+  the function with low number of arguments.
 }
 \section{Details}{
   Calls \code{infoPlot} with suitably chosen defaults. If

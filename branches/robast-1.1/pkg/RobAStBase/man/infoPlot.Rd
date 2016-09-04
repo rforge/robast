@@ -9,28 +9,20 @@
 }
 \usage{
 infoPlot(object,  ...)
-\S4method{infoPlot}{IC}(object, data = NULL, ...,
-             withSweave = getdistrOption("withSweave"),
-             col = par("col"), lwd = par("lwd"), lty, 
-             colI = grey(0.5), lwdI = 0.7*par("lwd"), ltyI = "dotted",
-             main = FALSE, inner = TRUE, sub = FALSE, 
-             col.inner = par("col.main"), cex.inner = 0.8, 
-             bmar = par("mar")[1], tmar = par("mar")[3],
-             with.automatic.grid = TRUE,
-             with.legend = TRUE, legend = NULL, legend.bg = "white",
-             legend.location = "bottomright", legend.cex = 0.8,
-             x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
-             scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
-             scaleN = 9, x.ticks = NULL, y.ticks = NULL,
-             mfColRow = TRUE, to.draw.arg = NULL,
-             cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-             pch.pts = 1, jit.fac = 1, jit.tol = .Machine$double.eps, with.lab = FALSE,
-             lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
-             which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
-             draw.nonlbl = TRUE, cex.nonlbl=0.3, pch.nonlbl=".",
-             ylab.abs = "absolute information", 
-             ylab.rel= "relative information",
-             withSubst = TRUE)
+\S4method{infoPlot}{IC}(object, data = NULL, ..., 
+withSweave = getdistrOption("withSweave"), col = par("col"), lwd = par("lwd"), 
+lty, colI = grey(0.5), lwdI = 0.7 * par("lwd"), ltyI = "dotted", main = FALSE, 
+inner = TRUE, sub = FALSE, col.inner = par("col.main"), cex.inner = 0.8, 
+bmar = par("mar")[1], tmar = par("mar")[3], with.automatic.grid = TRUE, 
+with.legend = TRUE, legend = NULL, legend.bg = "white",
+ legend.location = "bottomright", legend.cex = 0.8, x.vec = NULL, 
+ scaleX = FALSE, scaleX.fct, scaleX.inv,scaleY = FALSE, scaleY.fct = pnorm, 
+ scaleY.inv = qnorm, scaleN = 9, x.ticks = NULL, y.ticks = NULL,
+ mfColRow = TRUE, to.draw.arg = NULL, cex.pts = 1, cex.pts.fun = NULL, 
+ col.pts = par("col"), pch.pts = 1, jitter.fac = 1, with.lab = FALSE, 
+ lab.pts = NULL, lab.font = NULL, alpha.trsp = NA, which.lbs = NULL,
+ which.Order = NULL, return.Order = FALSE, ylab.abs = "absolute information", 
+ ylab.rel = "relative information", withSubst = TRUE)
 }
 \arguments{
   \item{object}{object of class \code{"InfluenceCurve"} }
@@ -134,7 +126,16 @@ infoPlot(object,  ...)
                          }
   \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
         titles and lables is used; otherwise no substitution is used. }
-  \item{cex.pts}{size of the points of the \code{data} argument plotted}
+  \item{col.pts}{color of the points of the \code{data} argument plotted; (may 
+     be a vector of length 2, one value for the classical IC, one for the IC
+     in argument \code{object}, or it can be a matrix \code{n} by 2, \code{n} the  
+     number of observations prior to any selection, in which case it assigns 
+     observation-specific colors to the observations; in this case this 
+     overrides settings in the respective \code{col.nonlbl} argument.}
+  \item{pch.pts}{symbol of the points of the \code{data} argument plotted
+                 (may be a vector of length 2 or a matrix, see \code{col.pts}).}
+  \item{cex.pts}{size of the points of the \code{data} argument plotted
+                 (may be a vector of length 2 or a matrix, see \code{col.pts}).}
   \item{cex.pts.fun}{rescaling function for the size of the points to be plotted;
         either \code{NULL} (default), then \code{log(1+abs(x))} is used for each of
         the rescalings, or a function which is then used for each of the
@@ -145,24 +146,27 @@ infoPlot(object,  ...)
         dimensions of the pICs to be plotted; in the index of this list,
         the index for classical vs. \code{IC} is incremented first;
         then \code{dim}.}
-  \item{col.pts}{color of the points of the \code{data} argument plotted}
-  \item{pch.pts}{symbol of the points of the \code{data} argument plotted}
-  \item{with.lab}{logical; shall labels be plotted to the observations?}
-  \item{lab.pts}{character or NULL; labels to be plotted to the observations; if \code{NULL}
-                 observation indices;}
-  \item{lab.font}{font to be used for labels}
+  \item{with.lab}{logical; shall labels be plotted to the observations?
+                  (may be a vector of length 2, see \code{col.pts} -- 
+                   but not a matrix)}
+  \item{lab.pts}{character or NULL; labels to be plotted to the observations; 
+                 can be a vector of length \code{n}, \code{n} the number of 
+                 all observations prior to any selection with \code{which.lbs},
+                 \code{which.Order}; if \code{lab.pts} is \code{NULL}, 
+                 observation indices are used.}
+  \item{lab.font}{font to be used for labels; (may be a vector of length 2, 
+                  see \code{with.lab}).}
   \item{alpha.trsp}{alpha transparency to be added ex post to colors
-        \code{col.pch} and \code{col.lbl}; if one-dim and NA all colors are
+        \code{col.pch} and \code{col.nonlbl}; if one-dim and NA all colors are
         left unchanged. Otherwise, with usual recycling rules \code{alpha.trsp}
-        gets shorted/prolongated to length the data-symbols to be plotted.
-        Coordinates of this vector \code{alpha.trsp} with NA are left unchanged,
+        gets shorted/prolongated to length the number of panel data-symbols to 
+        be plotted. Coordinates of this vector \code{alpha.trsp} with NA are left unchanged,
         while for the remaining ones, the alpha channel in rgb space is set
         to the respective coordinate value of \code{alpha.trsp}. The non-NA
         entries must be integers in [0,255] (0 invisible, 255 opaque).}
-  \item{jit.fac}{jittering factor used in case of a \code{DiscreteDistribution}
-                    for plotting points of the \code{data} argument in a jittered fashion.}
-  \item{jit.tol}{threshold for jittering: if distance between points is smaller
-               than \code{jit.tol}, points are considered replicates.}
+  \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
+                    for plotting points of the \code{data} argument in a jittered fashion
+                  (may be a vector of length 2, see \code{with.lab}).}
   \item{which.lbs}{either an integer vector with the indices of the observations
           to be plotted into graph or \code{NULL} --- then no observation is excluded}
   \item{which.Order}{we order the observations (descending) according to the norm given by
@@ -178,12 +182,15 @@ infoPlot(object,  ...)
     reduction by argument \code{which.lbs}, and ordering is according to the norm given by
            \code{normtype(object)});
    otherwise we return \code{invisible()} as usual.}
-  \item{draw.nonlbl}{logical; should non-labelled observations be drawn?}
-  \item{cex.nonlbl}{character expansion(s) for non-labelled observations}
-  \item{pch.nonlbl}{plotting symbol(s) for non-labelled observations}
   \item{ylab.abs}{character; label to be used for y-axis in absolute information panel} 
   \item{ylab.rel}{character; label to be used for y-axis in relative information panel} 
   \item{\dots}{further parameters for \code{plot}}
+}
+\value{
+  The function returns invisibly a list of elements containing the information 
+  needed to compute the respective diagnostic plot.
+   The return value allows to recover all information used to produce the plot
+   for later use in enhanced graphics (e.g. with ggplot).   
 }
 \details{
   Absolute information is defined as the square of the length

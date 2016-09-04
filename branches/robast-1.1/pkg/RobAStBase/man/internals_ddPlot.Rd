@@ -8,22 +8,19 @@
 This function is an internally used helper function for \code{\link{ddPlot}} in package \pkg{RobAStBase}.}
 
 \usage{
-.ddPlot.MatNtNtCoCo(data, ...,  dist.x = NormType(), dist.y  = NormType(),
-       cutoff.x = cutoff(norm = dist.x, cutoff.quantile  = cutoff.quantile.x),
-       cutoff.y = cutoff(norm = dist.y, cutoff.quantile  = cutoff.quantile.y),
-       cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
-       transform.x, transform.y = transform.x,
-       id.n, cex.pts = 1,lab.pts, jit.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
-       col.idn, lty.cutoff,
-       lwd.cutoff, col.cutoff = "red", text.abline = TRUE,
-       text.abline.x = NULL, text.abline.y = NULL,
-       cex.abline = par("cex"), col.abline = col.cutoff,
-       font.abline = par("font"), adj.abline = c(0,0),
-       text.abline.x.x = NULL, text.abline.x.y = NULL, 
-       text.abline.y.x = NULL, text.abline.y.y = NULL,
-       text.abline.x.fmt.cx = "\%7.2f", text.abline.x.fmt.qx = "\%4.2f\%\%",
-       text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%",
-       jit.fac, jit.tol=.Machine$double.eps, doplot = TRUE)
+.ddPlot.MatNtNtCoCo(data, ..., dist.x = NormType(), dist.y  = NormType(),
+cutoff.x = cutoff(norm = dist.x, cutoff.quantile  = cutoff.quantile.x),
+cutoff.y = cutoff(norm = dist.y, cutoff.quantile  = cutoff.quantile.y),
+cutoff.quantile.x = 0.95,  cutoff.quantile.y = cutoff.quantile.x,
+transform.x,transform.y = transform.x, id.n, cex.pts = 1, lab.pts,
+jitt.pts = 0, alpha.trsp = NA, adj =0,cex.idn = 1,col.idn = par("col"),
+lty.cutoff,lwd.cutoff,col.cutoff = "red",text.abline = TRUE,
+text.abline.x = NULL, text.abline.y = NULL,cex.abline = par("cex"), 
+col.abline = col.cutoff,font.abline = par("font"), adj.abline = c(0,0),
+text.abline.x.x = NULL, text.abline.x.y = NULL, text.abline.y.x = NULL, 
+text.abline.y.y = NULL, text.abline.x.fmt.cx = "\%7.2f",
+text.abline.x.fmt.qx = "\%4.2f\%\%", text.abline.y.fmt.cy = "\%7.2f",
+text.abline.y.fmt.qy = "\%4.2f\%\%", jitt.fac = 10, doplot = TRUE)
 }
 \arguments{
   \item{data}{data in \code{matrix} form (columns are observations; rows are variable
