@@ -1,3 +1,9 @@
+importFrom("grDevices", "dev.new")
+importFrom("graphics", "abline", "boxplot", "curve", "layout", "legend", "par", "plot")
+importFrom("methods", "is", "new")
+importFrom("stats", "approx", "complete.cases", "dnorm", "integrate",
+           "mad", "median", "na.omit", "optim", "optimize", "pnorm",
+           "qnorm", "rbinom", "rnorm", "uniroot")
 importFrom("Biobase", "rowMedians")
 importFrom("lattice","stripplot")
 importFrom("RColorBrewer","brewer.pal")

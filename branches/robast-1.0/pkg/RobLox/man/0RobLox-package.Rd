@@ -13,9 +13,9 @@ estimators in case of normal location and/or scale.
 \tabular{ll}{
 Package: \tab RobLox \cr
 Version: \tab 1.0 \cr
-Date: \tab 2015-05-03 \cr
-Depends: \tab R(>= 2.14.0), stats, distrMod(>= 2.5.2), RobAStBase(>= 0.9) \cr
-Imports: \tab lattice, RColorBrewer, Biobase, RandVar(>= 0.9.2), distr(>= 2.5.2) \cr
+Date: \tab 2015-09-05 \cr
+Depends: \tab R(>= 2.14.0), methods, distrMod(>= 2.5.2), RobAStBase(>= 0.9) \cr
+Imports: \tab stats, lattice, RColorBrewer, Biobase, RandVar(>= 0.9.2), distr(>= 2.5.2) \cr
 Suggests: \tab MASS\cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
