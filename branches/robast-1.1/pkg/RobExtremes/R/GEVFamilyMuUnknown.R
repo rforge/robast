@@ -357,28 +357,36 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
         tr <- force(main(param)[1])
         sc <- force(main(param)[2])
         k <- force(main(param)[3])
-        k1 <- k+1
-        if(..withWarningGEV).warningGEVShapeLarge(k)
-        G20 <- gamma(2*k)
-        G10 <- gamma(k)
-        G11 <- digamma(k)*gamma(k)
-        G01 <- -0.57721566490153 # digamma(1)
-        G02 <- 1.9781119906559 #trigamma(1)+digamma(1)^2
-        x0 <- k1^2*2*k
-        I00 <- (2*k)*k1^2*G20/sc^2
-        I01 <- (G10-k1*2*G20)*k1/sc^2
-        I02 <- (k1*2 * gamma(2*k)- k1* gamma(k) -  gamma(k)-k * G11)*k1/k
-        I02 <- (2*k1*G20 -(k+2)*G10-k*G11)*k1/k/sc
-        I11 <- G20*x0-2*G10*k*(k+1)+1
-        I11 <- I11/sc^2/k^2
-        I12 <- G20*(-x0)+ G10*(k^3+4*k^2+3*k) - k -1
-        I12 <- I12 + G11*(k^3+k^2) -G01*k
-        I12 <- I12/sc/k^3
-        I22 <- G20*x0 +(k+1)^2 -G10*(x0+2*k*(k+1))
-        I22 <- I22 - G11*2*k^2*(k+1) + G01*2*k*(1+k)+k^2 *G02
-        I22 <- I22 /k^4
+        if(abs(k)>=1e-4){
+          k1 <- k+1
+          if(..withWarningGEV).warningGEVShapeLarge(k)
+          G20 <- gamma(2*k)
+          G10 <- gamma(k)
+          G11 <- digamma(k)*gamma(k)
+          G01 <- -0.57721566490153 # digamma(1)
+          G02 <- 1.9781119906559 #trigamma(1)+digamma(1)^2
+          x0 <- k1^2*2*k
+          I00 <- (2*k)*k1^2*G20/sc^2
+          I01 <- (G10-k1*2*G20)*k1/sc^2
+          I02 <- (2*k1*G20 -(k+2)*G10-k*G11)*k1/k/sc
+          I11 <- G20*x0-2*G10*k*k1+1
+          I11 <- I11/sc^2/k^2
+          I12 <- G20*(-x0)+ G10*(k^3+4*k^2+3*k) - k1
+          I12 <- I12 + G11*k^2*k1 -G01*k
+          I12 <- -I12/sc/k^3
+          I22 <- G20*x0 +k1^2 -G10*(x0+2*k*k1)
+          I22 <- I22 - G11*2*k^2*k1 + G01*2*k*k1+k^2 *G02
+          I22 <- I22 /k^4
+        }else{
+          I00 <- ..I11/sc^2
+          I01 <- ..I12/sc^2
+          I02 <- ..I13/sc^2
+          I11 <- ..I22/sc^2
+          I12 <- ..I23/sc
+          I22 <- ..I33
+        }
         mat <- PosSemDefSymmMatrix(matrix(c(I00,I01,I02,I01,I11,I12,I02,I12,I22),3,3))
-        lcs <- c("location",scaleshapename)
+        cs <- c("location",scaleshapename)
         dimnames(mat) <- list(lcs,lcs)
         return(mat)
     }
@@ -444,3 +452,23 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
     L2Fam@.withEvalL2derivDistr <- FALSE
     return(L2Fam)
 }
+
+
+
+..gam3 <- function(x){ 
+     te <- psigamma(x,3)+4*psigamma(x,2)*digamma(x)+3*trigamma(x)^2
+     te <- te + 6*digamma(x)^2*trigamma(x)+digamma(x)^4
+     te <- te * gamma(x)
+     return(te)}                         
+..gam2 <- function(x){ 
+      gamma(x)*(psigamma(x,2)+3*trigamma(x)*digamma(x)+digamma(x)^3)
+      }
+..gam1 <- function(x) gamma(x)*(trigamma(x)+digamma(x)^2)
+..gam0 <- function(x) gamma(x)*digamma(x)
+..I11 <- 1
+..I12 <- -..gam0(3)+2*..gam0(2)-..gam0(1)
+..I22 <- ..gam1(1)-2*..gam1(2)+..gam1(3)+2*..gam0(1)-2*..gam0(2)+1
+..I13 <- -..gam0(2)+..gam1(3)/2-..gam1(2)/2
+..I23 <- -..gam2(3)/2+..gam2(2)-..gam2(1)/2+..gam1(2)-..gam1(1)
+..I33 <- (..gam3(3)-2*..gam3(2)+..gam3(1))/4+..gam2(1)-..gam2(2)+..gam1(1)
+
