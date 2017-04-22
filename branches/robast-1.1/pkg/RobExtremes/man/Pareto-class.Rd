@@ -83,7 +83,7 @@ Class \code{"Distribution"}, by class \code{"AbscontDistribution"}.
   Klugman, S. A., Panjer, H. H. and Willmot, G. E. (2004),
   \emph{Loss Models, From Data to Decisions, Second Edition}, Wiley.
     }
-\author{Nataliya Horbenko \email{Nataliya.Horbenko@itwm.fraunhofer.de}}
+\author{Nataliya Horbenko \email{nhorbenko@gmail.com}}
 \note{This class is based on the code provided by the package \pkg{actuar}
 by  Vincent Goulet and Mathieu Pigeon.}
 \seealso{\code{\link[actuar:SingleParameterPareto]{dpareto1}}, \code{\link[distr]{AbscontDistribution-class}}}

@@ -88,7 +88,7 @@ J. Pickands (1975): Statistical inference using extreme order statistics.
 }
 
 %\references{  }
-\author{Nataliya Horbenko \email{Nataliya.Horbenko@itwm.fraunhofer.de},\cr
+\author{Nataliya Horbenko \email{nhorbenko@gmail.com},\cr
         Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
 \seealso{\code{\link{ParamFamily-class}}, \code{\link{ParamFamily}}, 

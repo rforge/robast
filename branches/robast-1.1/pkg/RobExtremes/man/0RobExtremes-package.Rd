@@ -30,15 +30,15 @@ robust estimators, with LDEstimators (in general, and with \code{medkMAD},
 \details{
 \tabular{ll}{
 Package: \tab RobExtremes \cr
-Version: \tab 1.0 \cr
-Date: \tab 2015-05-03 \cr
+Version: \tab 1.1 \cr
+Date: \tab 2017-04-23 \cr
 Depends: \tab R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 0.9), robustbase(>= 0.8-0), evd, actuar \cr
 Suggests: \tab RUnit (>= 0.4.26), ismev (>= 1.39)\cr
 Imports: \tab RobAStRDA, distr, distrEx, RandVar, RobAStBase, startupmsg \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 694 \cr
+SVNRevision: \tab 932 \cr
 }
 }
 \section{Classes}{
@@ -184,7 +184,7 @@ Note: The first two numbers of package versions do not necessarily reflect
 \author{
 Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},\cr
 Matthias Kohl \email{Matthias.Kohl@stamats.de}, and \cr
-Nataliya Horbenko \email{Nataliya.Horbenko@itwm.fraunhofer.de},\cr
+Nataliya Horbenko \email{nhorbenko@gmail.com},\cr
 
 \emph{Maintainer:}  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
 }
@@ -195,7 +195,7 @@ Theory of Robustness.} PhD Thesis. Bayreuth. Available as
 
 P. Ruckdeschel, M. Kohl, T. Stabla, F. Camphausen (2006):
 S4 Classes for Distributions, \emph{R News}, \emph{6}(2), 2-6. 
-\url{http://CRAN.R-project.org/doc/Rnews/Rnews_2006-2.pdf}
+\url{https://CRAN.R-project.org/doc/Rnews/Rnews_2006-2.pdf}
 
 M.~Kohl, P. Ruckdeschel, H.~Rieder (2010):
 Infinitesimally Robust Estimation in General Smoothly Parametrized Models.
