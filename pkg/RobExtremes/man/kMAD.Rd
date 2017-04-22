@@ -32,7 +32,7 @@ kMAD(x,k,...)
   Ruckdeschel, P., Horbenko, N. (2010): Robustness Properties for Generalized Pareto Distributions. ITWM Report 182.
 }
 \author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}, 
-Nataliya Horbenko \email{Nataliya.Horbenko@itwm.fraunhofer.de}}
+Nataliya Horbenko \email{nhorbenko@gmail.com}}
 \seealso{\code{\link{mad}}}
 \examples{
 x <- rnorm(100)

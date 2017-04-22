@@ -20,7 +20,7 @@
 %\details{}
 \value{Object of class \code{"GPareto"}}
 %\references{}
-\author{Nataliya Horbenko \email{Nataliya.Horbenko@itwm.fraunhofer.de}}
+\author{Nataliya Horbenko \email{nhorbenko@gmail.com}}
 \note{The class \code{"GPareto"} is based on the code provided 
   by the package \pkg{evd} by  Alec Stephenson.}
 \seealso{\code{\link{GPareto-class}}, \code{\link[evd:gpd]{dgpd}}}

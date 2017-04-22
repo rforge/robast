@@ -40,7 +40,7 @@ Class \code{"OptionalParameter"}, by class \code{"Parameter"}.
   }
 }
 %\references{}
-\author{Nataliya Horbenko \email{Nataliya.Horbenko@itwm.fraunhofer.de}}
+\author{Nataliya Horbenko \email{nhorbenko@gmail.com}}
 %\note{}
 \seealso{\code{\link{Pareto-class}}, \code{\link[distr]{Parameter-class}}}
 \examples{

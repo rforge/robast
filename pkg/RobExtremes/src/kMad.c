@@ -1,7 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <R.h>
+#include <Rinternals.h>
+#include <Rmath.h>		/* constants */
+#include <R_ext/Rdynload.h>
+#include <R_ext/Visibility.h>
 
-int compare_doubles(const void *a,const void *b)
+#define C_DEF(name, n)  {#name, (DL_FUNC) &name, n}
+
+int attribute_hidden compare_doubles(const void *a,const void *b)
 {
   double *da = (double*)a;
   double *db = (double*)b;
@@ -13,7 +20,7 @@ int compare_doubles(const void *a,const void *b)
       return 0;
 }
 
-void kMad(double *x, int *lx, int *kp, double *d, double *eps)
+void attribute_hidden kMad(double *x, int *lx, int *kp, double *d, double *eps)
 {
 double m;
 int n2, r1, r2, i1, i2,j, k = (*kp);
@@ -106,3 +113,18 @@ int n2, r1, r2, i1, i2,j, k = (*kp);
 //   return 0;
 //  }
 //
+
+/* P.R. 20170421: register routine */
+
+static const R_CMethodDef R_CDef[]  = {
+    C_DEF(kMad, 5),
+    {NULL, NULL, 0}
+};
+
+void attribute_visible R_init_RobExtremes(DllInfo *dll)
+{
+    R_registerRoutines(dll, R_CDef, NULL, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
+
+}

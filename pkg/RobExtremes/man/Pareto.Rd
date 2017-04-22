@@ -15,7 +15,7 @@
 %\details{}
 \value{Object of class \code{"Pareto"}}
 %\references{}
-\author{Nataliya Horbenko \email{Nataliya.Horbenko@itwm.fraunhofer.de}}
+\author{Nataliya Horbenko \email{nhorbenko@gmail.com}}
 \note{The class \code{"Pareto"} is based on the code provided 
   by the package \pkg{actuar} by  Vincent Goulet and Mathieu Pigeon.}
 \seealso{\code{\link{Pareto-class}}, \code{\link[actuar:SingleParameterPareto]{dpareto1}}}

@@ -273,7 +273,7 @@ Kohl M.
 Ruckdeschel P., Kohl M., Stabla T., and Camphausen F. 
 \newblock {S4 Classes for Distributions.} 
 \newblock {\em R-News\/}, {\bf 6}(2): 10--13.
-\newblock http://CRAN.R-project.org/doc/Rnews/Rnews\_2006-2.pdf
+\newblock https://CRAN.R-project.org/doc/Rnews/Rnews\_2006-2.pdf
 \newblock See also {http://www.uni-bayreuth.de/departments/math/org/mathe7/RUCKDESCHEL/pubs/distr.pdf}
 
 \end{thebibliography}
