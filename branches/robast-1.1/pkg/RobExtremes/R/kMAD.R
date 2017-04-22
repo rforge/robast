@@ -11,12 +11,11 @@ setMethod("kMAD", signature(x = "numeric", k = "numeric"),
        if(! length(k)==1) stop ("k has to be a numeric of length 1")
        if(k<=0) stop ("k has to be strictly positive")
        eps1 <- min(diff(unique(sort(x))))          
-       erg  <- .C("kMad", as.double(x),
+       erg  <- .C(C_kMad, as.double(x),
                 as.integer(length(x)),
                 as.integer(k),
                 d = double(1),
-                eps = as.double(min(eps1,eps)),
-                PACKAGE="RobExtremes")
+                eps = as.double(min(eps1,eps)))
       return(erg$d)
     })
 
