@@ -8,6 +8,16 @@
  information)
 
 #######################################
+version 1.0.1
+#######################################
+
+user-visible CHANGES:
++ update of Natalyias email
+
+under the hood:
++ use of Authors@R in DESCRIPTION file
+
+#######################################
 version 1.0
 #######################################
 

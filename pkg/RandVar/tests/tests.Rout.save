@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2016-04-22 r70532) -- "Unsuffered Consequences"
-Copyright (C) 2016 The R Foundation for Statistical Computing
-Platform: i386-w64-mingw32/i386 (32-bit)
+R version 3.4.0 Patched (2017-04-22 r72596) -- "You Stupid Darkness"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -27,7 +27,7 @@ Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
 :SweaveListingUtils>  Utilities for Sweave Together with
 :SweaveListingUtils>  TeX 'listings' Package (version
-:SweaveListingUtils>  0.7.3)
+:SweaveListingUtils>  0.7.7)
 :SweaveListingUtils> 
 :SweaveListingUtils>  NOTE: Support for this package
 :SweaveListingUtils>  will stop soon.
@@ -60,7 +60,7 @@ The following objects are masked from 'package:base':
     library, require
 
 :distr>  Object Oriented Implementation of Distributions (version
-:distr>  2.6)
+:distr>  2.6.2)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -86,7 +86,7 @@ The following objects are masked from 'package:stats':
     df, qqplot, sd
 
 Loading required package: distrEx
-:distrEx>  Extensions of Package 'distr' (version 2.6)
+:distrEx>  Extensions of Package 'distr' (version 2.6.1)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
 :distrEx>  attached /before/ package "distrEx". See
@@ -109,7 +109,7 @@ The following objects are masked from 'package:stats':
 
     IQR, mad, median, var
 
-:RandVar>  Implementation of Random Variables (version 1.0)
+:RandVar>  Implementation of Random Variables (version 1.0.1)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -139,7 +139,7 @@ Range:	NULL
 function (x) 
 {
 }
-<environment: 0x09ee6428>
+<environment: 0x60345b0>
 
 > Domain(R1)
 NULL
@@ -408,7 +408,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x099a036c>
+<environment: 0x8dfb298>
 
 > dimension(R6)
 [1] 6
@@ -500,10 +500,10 @@ see 'distrARITH()'; for switching off this warning see '?distroptions'
       0       0       0 
 > system.time(Map(gamma(R7)), gcFirst = TRUE)
    user  system elapsed 
-      0       0       0 
+  0.000   0.000   0.001 
 > system.time(Map(exp(RL1)[[1]]), gcFirst = TRUE)
    user  system elapsed 
-      0       0       0 
+  0.000   0.000   0.002 
 > 
 > 
 > ## "Arith" group
@@ -520,7 +520,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x09f52240>
+<environment: 0xa055f98>
 
 [[2]]
 function (x) 
@@ -531,7 +531,7 @@ function (x)
     }
     3 * f2(x)
 }
-<environment: 0x09f52240>
+<environment: 0xa055f98>
 
 [[3]]
 function (x) 
@@ -542,7 +542,7 @@ function (x)
     }
     5 * f2(x)
 }
-<environment: 0x09f52240>
+<environment: 0xa055f98>
 
 [[4]]
 function (x) 
@@ -553,7 +553,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x09f52240>
+<environment: 0xa055f98>
 
 Warning message:
 In c(1, 3, 5) * R3 :
@@ -571,7 +571,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x09f1a8c0>
+<environment: 0x9fed5d0>
 
 [[2]]
 function (x) 
@@ -582,7 +582,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x09f1a8c0>
+<environment: 0x9fed5d0>
 
 [[3]]
 function (x) 
@@ -593,7 +593,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x09f1a8c0>
+<environment: 0x9fed5d0>
 
 [[4]]
 function (x) 
@@ -604,7 +604,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x09f1a8c0>
+<environment: 0x9fed5d0>
 
 > Map(2/R6)
 [[1]]
@@ -616,7 +616,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x09ee624c>
+<environment: 0x9f8e0d0>
 
 [[2]]
 function (x) 
@@ -627,7 +627,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x09ee624c>
+<environment: 0x9f8e0d0>
 
 [[3]]
 function (x) 
@@ -638,7 +638,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x09ee624c>
+<environment: 0x9f8e0d0>
 
 [[4]]
 function (x) 
@@ -649,7 +649,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x09ee624c>
+<environment: 0x9f8e0d0>
 
 [[5]]
 function (x) 
@@ -660,7 +660,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x09ee624c>
+<environment: 0x9f8e0d0>
 
 [[6]]
 function (x) 
@@ -671,7 +671,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x09ee624c>
+<environment: 0x9f8e0d0>
 
 > Map(c(1,3,5) %% R6)
 [[1]]
@@ -683,7 +683,7 @@ function (x)
     }
     1%%f2(x)
 }
-<environment: 0x09eaf0cc>
+<environment: 0x9e641b8>
 
 [[2]]
 function (x) 
@@ -694,7 +694,7 @@ function (x)
     }
     3%%f2(x)
 }
-<environment: 0x09eaf0cc>
+<environment: 0x9e641b8>
 
 [[3]]
 function (x) 
@@ -705,7 +705,7 @@ function (x)
     }
     5%%f2(x)
 }
-<environment: 0x09eaf0cc>
+<environment: 0x9e641b8>
 
 [[4]]
 function (x) 
@@ -716,7 +716,7 @@ function (x)
     }
     1%%f2(x)
 }
-<environment: 0x09eaf0cc>
+<environment: 0x9e641b8>
 
 [[5]]
 function (x) 
@@ -727,7 +727,7 @@ function (x)
     }
     3%%f2(x)
 }
-<environment: 0x09eaf0cc>
+<environment: 0x9e641b8>
 
 [[6]]
 function (x) 
@@ -738,7 +738,7 @@ function (x)
     }
     5%%f2(x)
 }
-<environment: 0x09eaf0cc>
+<environment: 0x9e641b8>
 
 > Map(R4 - 5)
 [[1]]
@@ -750,7 +750,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x09e97288>
+<environment: 0x9e32ba8>
 
 [[2]]
 function (x) 
@@ -761,7 +761,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x09e97288>
+<environment: 0x9e32ba8>
 
 [[3]]
 function (x) 
@@ -772,7 +772,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x09e97288>
+<environment: 0x9e32ba8>
 
 [[4]]
 function (x) 
@@ -783,7 +783,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x09e97288>
+<environment: 0x9e32ba8>
 
 > Map(R6 %/% 2)
 [[1]]
@@ -795,7 +795,7 @@ function (x)
     }
     f1(x)%/%2
 }
-<environment: 0x09e698c8>
+<environment: 0x9dd5088>
 
 [[2]]
 function (x) 
@@ -806,7 +806,7 @@ function (x)
     }
     f1(x)%/%2
 }
-<environment: 0x09e698c8>
+<environment: 0x9dd5088>
 
 [[3]]
 function (x) 
@@ -817,7 +817,7 @@ function (x)
     }
     f1(x)%/%2
 }
-<environment: 0x09e698c8>
+<environment: 0x9dd5088>
 
 [[4]]
 function (x) 
@@ -828,7 +828,7 @@ function (x)
     }
     f1(x)%/%2
 }
-<environment: 0x09e698c8>
+<environment: 0x9dd5088>
 
 [[5]]
 function (x) 
@@ -839,7 +839,7 @@ function (x)
     }
     f1(x)%/%2
 }
-<environment: 0x09e698c8>
+<environment: 0x9dd5088>
 
 [[6]]
 function (x) 
@@ -850,7 +850,7 @@ function (x)
     }
     f1(x)%/%2
 }
-<environment: 0x09e698c8>
+<environment: 0x9dd5088>
 
 > Map(R3 ^ R3)
 [[1]]
@@ -866,7 +866,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x09e52954>
+<environment: 0x9da1558>
 
 [[2]]
 function (x) 
@@ -881,7 +881,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x09e52954>
+<environment: 0x9da1558>
 
 [[3]]
 function (x) 
@@ -896,7 +896,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x09e52954>
+<environment: 0x9da1558>
 
 [[4]]
 function (x) 
@@ -911,7 +911,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x09e52954>
+<environment: 0x9da1558>
 
 > Map(R7 * R7)
 [[1]]
@@ -927,7 +927,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x09df6a7c>
+<environment: 0x9d16d48>
 
 [[2]]
 function (x) 
@@ -942,7 +942,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x09df6a7c>
+<environment: 0x9d16d48>
 
 [[3]]
 function (x) 
@@ -957,7 +957,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x09df6a7c>
+<environment: 0x9d16d48>
 
 [[4]]
 function (x) 
@@ -972,7 +972,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x09df6a7c>
+<environment: 0x9d16d48>
 
 > Map((1 + RL1)[[1]])
 [[1]]
@@ -984,7 +984,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x09db010c>
+<environment: 0x9cdba28>
 
 [[2]]
 function (x) 
@@ -995,7 +995,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x09db010c>
+<environment: 0x9cdba28>
 
 [[3]]
 function (x) 
@@ -1006,7 +1006,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x09db010c>
+<environment: 0x9cdba28>
 
 [[4]]
 function (x) 
@@ -1017,7 +1017,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x09db010c>
+<environment: 0x9cdba28>
 
 > Map((RL1 * 2)[[2]])
 [[1]]
@@ -1029,7 +1029,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x09d1a208>
+<environment: 0x973a678>
 
 [[2]]
 function (x) 
@@ -1040,7 +1040,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x09d1a208>
+<environment: 0x973a678>
 
 [[3]]
 function (x) 
@@ -1051,7 +1051,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x09d1a208>
+<environment: 0x973a678>
 
 [[4]]
 function (x) 
@@ -1062,7 +1062,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x09d1a208>
+<environment: 0x973a678>
 
 [[5]]
 function (x) 
@@ -1073,7 +1073,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x09d1a208>
+<environment: 0x973a678>
 
 [[6]]
 function (x) 
@@ -1084,11 +1084,11 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x09d1a208>
+<environment: 0x973a678>
 
 > system.time(Map((RL1 %% RL1)[[3]]), gcFirst = TRUE)
    user  system elapsed 
-   0.02    0.00    0.02 
+  0.000   0.000   0.002 
 > 
 > 
 > ## "%*%"
@@ -1104,24 +1104,28 @@ function (x)
 {
     exp(x)
 }
+<bytecode: 0x8cec5e8>
 
 [[2]]
 function (x) 
 {
     abs(x)
 }
+<bytecode: 0x8609c18>
 
 [[3]]
 function (x) 
 {
     sin(x)
 }
+<bytecode: 0x84ba240>
 
 [[4]]
 function (x) 
 {
     floor(x)
 }
+<bytecode: 0x7167f78>
 
 > M1[1,]
 [1]  1  3  5  7  9 11 13 15
@@ -1158,7 +1162,7 @@ function (x)
     }
     f1(x) + c(13L, 15L) %*% f2(x)
 }
-<environment: 0x09ed34ac>
+<environment: 0x9f7d040>
 > M1[2,]
 [1]  2  4  6  8 10 12 14 16
 > Map(R8)[[2]]
@@ -1194,7 +1198,7 @@ function (x)
     }
     f1(x) + c(14L, 16L) %*% f2(x)
 }
-<environment: 0x09ed34ac>
+<environment: 0x9f7d040>
 > M2 <- matrix(1:2, ncol = 2)
 > (R9 <- M2 %*% R7)
 An object of class "EuclRandMatrix" 
@@ -1207,24 +1211,28 @@ function (x)
 {
     exp(x)
 }
+<bytecode: 0x8cec5e8>
 
 [[2]]
 function (x) 
 {
     abs(x)
 }
+<bytecode: 0x8609c18>
 
 [[3]]
 function (x) 
 {
     sin(x)
 }
+<bytecode: 0x84ba240>
 
 [[4]]
 function (x) 
 {
     floor(x)
 }
+<bytecode: 0x7167f78>
 
 > Map(R9)
 [[1]]
@@ -1244,7 +1252,7 @@ function (x)
     }
     f1(x) + 2L %*% f2(x)
 }
-<environment: 0x09e68388>
+<environment: 0x9de4498>
 
 [[2]]
 function (x) 
@@ -1263,7 +1271,7 @@ function (x)
     }
     f1(x) + 2L %*% f2(x)
 }
-<environment: 0x09e3da40>
+<environment: 0x9d9a150>
 
 > Map(1:4 %*% R3) # inner product
 [[1]]
@@ -1299,7 +1307,7 @@ function (x)
     }
     f1(x) + 4L %*% f2(x)
 }
-<environment: 0x09de4a0c>
+<environment: 0x9d1ba90>
 
 > Map(1:2 %*% R7) # corresponds to Map(t(1:2) %*% R7)
 [[1]]
@@ -1319,7 +1327,7 @@ function (x)
     }
     f1(x) + 2L %*% f2(x)
 }
-<environment: 0x09d6b21c>
+<environment: 0x97fec48>
 
 [[2]]
 function (x) 
@@ -1338,7 +1346,7 @@ function (x)
     }
     f1(x) + 2L %*% f2(x)
 }
-<environment: 0x09d453b0>
+<environment: 0x97b65b8>
 
 > Map(R4 %*% 1:8) # inner product
 [[1]]
@@ -1410,7 +1418,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x09ccdf2c>
+<environment: 0x9678740>
 
 > Map(R9 %*% 3:4)
 [[1]]
@@ -1466,7 +1474,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x09c7b6ac>
+<environment: 0x95d7498>
 
 > Map(R9 %*% matrix(1:4, nrow = 2))
 [[1]]
@@ -1522,7 +1530,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x09bf32bc>
+<environment: 0x950f6a8>
 
 [[2]]
 function (x) 
@@ -1577,7 +1585,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x09bf32bc>
+<environment: 0x950f6a8>
 
 > (R10 <- R3 %*% matrix(1:16, ncol = 4))
 An object of class "EuclRandMatrix" 
@@ -1622,7 +1630,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x09b8541c>
+<environment: 0x9416fb8>
 
 [[2]]
 function (x) 
@@ -1661,7 +1669,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x09b8541c>
+<environment: 0x9416fb8>
 
 [[3]]
 function (x) 
@@ -1700,7 +1708,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x09b8541c>
+<environment: 0x9416fb8>
 
 [[4]]
 function (x) 
@@ -1739,7 +1747,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x09b8541c>
+<environment: 0x9416fb8>
 
 > R3 %*% R3 # inner product
 An object of class "EuclRandMatrix" 
@@ -1753,7 +1761,7 @@ Domain:	Real Space with dimension 1
 Range:	Euclidean Space with dimension 1 
 > system.time(R9 %*% R7, gcFirst = TRUE)
    user  system elapsed 
-      0       0       0 
+  0.000   0.000   0.001 
 > (RL3 <- diag(dimension(RL1)) %*% RL1)
 An object of class "EuclRandMatrix" 
 Dim of Map:	 14 1 
@@ -1764,7 +1772,7 @@ Range:	Real Space with dimension 1
 > ## %m% "matrix multiplication" for 'EuclRandVarList'
 > system.time(RL4 <- EuclRandVarList(t(R3[1:2]), R7) %m% EuclRandVarList(R6, R9), gcFirst = TRUE)
    user  system elapsed 
-   0.02    0.00    0.01 
+  0.008   0.000   0.008 
 > 
 > ## integration
 > MVD <- DiscreteMVDistribution(supp = matrix(c(r(Pois(5))(10), r(Pois(5))(10)), ncol = 2))
@@ -1975,4 +1983,4 @@ In DiscreteMVDistribution(supp = matrix(c(r(Pois(5))(10), r(Pois(5))(10)),  :
 > q("no")
 > proc.time()
    user  system elapsed 
-   4.84    0.32    5.17 
+  4.456   0.060   4.599 
