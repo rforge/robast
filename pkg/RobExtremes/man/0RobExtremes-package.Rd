@@ -195,7 +195,7 @@ Theory of Robustness.} PhD Thesis. Bayreuth. Available as
 
 P. Ruckdeschel, M. Kohl, T. Stabla, F. Camphausen (2006):
 S4 Classes for Distributions, \emph{R News}, \emph{6}(2), 2-6. 
-\url{http://CRAN.R-project.org/doc/Rnews/Rnews_2006-2.pdf}
+\url{https://CRAN.R-project.org/doc/Rnews/Rnews_2006-2.pdf}
 
 M.~Kohl, P. Ruckdeschel, H.~Rieder (2010):
 Infinitesimally Robust Estimation in General Smoothly Parametrized Models.
