@@ -12,8 +12,8 @@ using S4 classes and methods.
 \details{
 \tabular{ll}{
 Package: \tab ROptEst \cr
-Version: \tab 1.0.0 \cr
-Date: \tab 2017-04-22 \cr
+Version: \tab 1.0.1 \cr
+Date: \tab 2017-04-23 \cr
 Depends: \tab R(>= 2.14.0), methods, distr(>= 2.5.2), distrEx(>= 2.5), distrMod(>= 2.5.2), 
 RandVar(>= 0.9.2), RobAStBase(>= 1.0) \cr
 Suggests: \tab RobLox, MASS \cr
