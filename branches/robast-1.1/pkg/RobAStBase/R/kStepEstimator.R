@@ -2,6 +2,7 @@
 ## k-step estimator
 ###############################################################################
 
+setMethod("neighborRadius","ANY",function(object)NA)
 
 ### no dispatch on top layer -> keep product structure of dependence
 kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
@@ -271,7 +272,8 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         }else{
            if(steps > 1)
               stop("slot 'modifyIC' of 'IC' is 'NULL'!")
-           upd <- updateStep(u.theta,theta,IC, L2Fam, Param, withModif = FALSE)
+           upd <- updateStep(u.theta,theta,IC, L2Fam, Param,withPreModif = FALSE,
+                               withPostModif = TRUE)
            theta <- upd$theta
            u.theta <- upd$u.theta
            var0 <- upd$var
@@ -316,6 +318,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                     asBias <- neighborRadius(IC)*Risks(IC)$asBias
                 else
                     asBias <- neighborRadius(IC)*Risks(IC)$asBias$value
+                if(is.na(asBias)) asBias <- NULL
         }else{
                 if(is(IC, "HampIC")){
                     r <- neighborRadius(IC)
