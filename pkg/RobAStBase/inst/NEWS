@@ -2,10 +2,15 @@
 ##  News: to package RobAStBase
 ###############################################################################
 
-(first two numbers of package versions do not necessarily reflect 
- package-individual development, but rather are chosen for the 
- RobAStXXX family as a whole in order to ease updating "depends" 
+(first two numbers of package versions do not necessarily reflect
+ package-individual development, but rather are chosen for the
+ RobAStXXX family as a whole in order to ease updating "depends"
  information)
+
+#######################################
+version 1.0.2
+#######################################
++ corrected to if-conditions with length > 1
 
 #######################################
 version 1.0.1
@@ -22,44 +27,44 @@ user-visible CHANGES:
   with.automatic.grid; if TRUE a corresponding grid oriented at tickmarks
   is produced; this also works for rescaled axes
 + comparePlot, infoPlot, and the plot-Method for ICs gain optional
-  pattern substitution (like plot) which can be switched off by 
+  pattern substitution (like plot) which can be switched off by
   argument withSubst
 + arguments panel.first, panel.last for plot-methods can now be lists
-+ infoPlot and comparePlot gain an argument cex.pts.fun to enable individual 
++ infoPlot and comparePlot gain an argument cex.pts.fun to enable individual
   scaling of the point sizes to be plotted onto each of the plotted curves
-+ .ddPlot.MatNtNtCoCo, and also ddPlot, outlyingnessPlot gain an 
++ .ddPlot.MatNtNtCoCo, and also ddPlot, outlyingnessPlot gain an
    additional argument 'doplot' defaulting to TRUE; if FALSE, no plot
    is produced and only the return value is calculated.
-+ arguments scaleY.fct and scaleY.inv in the plot-method for ICs, 
++ arguments scaleY.fct and scaleY.inv in the plot-method for ICs,
   and in comparePlot und infoPlot now also may be lists of functions,
   one for each of the panels to be plot; hence scaling of the y-axis
   can now be done individually for each panel.
 + introduce jitter for points in ddPlot for DiscreteDistributions
-+ comparePlot, infoPlot, and the plot-Method for ICs gain an argument x.vec; 
-  if given it is the x-grid on which to evaluate the ICs; by default this 
-  argument is NULL; then (as before) the grid is selected automatically 
-  according to the distribution of the IC. This can be useful for usage with a 
-  rescaling of the x-Axis to avoid that the evaluation points be selected too 
-  unevenly (i.e. on an equally spaced grid in the original scale, but then, after 
-  rescaling non-equally... The grid has to be specified in original scale; i.e.; 
++ comparePlot, infoPlot, and the plot-Method for ICs gain an argument x.vec;
+  if given it is the x-grid on which to evaluate the ICs; by default this
+  argument is NULL; then (as before) the grid is selected automatically
+  according to the distribution of the IC. This can be useful for usage with a
+  rescaling of the x-Axis to avoid that the evaluation points be selected too
+  unevenly (i.e. on an equally spaced grid in the original scale, but then, after
+  rescaling non-equally... The grid has to be specified in original scale; i.e.;
   when used with rescaling, should be chosen non-equally spaced...
 + wrapper functions ICPlot, InfoPlot, and ComparePlot use refined grids, i.e.,
   the grids are plotted on user given coordinates (or rescaled coordinates)
-+ comparePlot, infoPlot, and the plot-Method for ICs now if scaleX is TRUE by 
++ comparePlot, infoPlot, and the plot-Method for ICs now if scaleX is TRUE by
   default use an equidistant grid on the rescaled x-Axis.
-+ qqplot-method for c("ANY","InfRobModel") gains argument 
++ qqplot-method for c("ANY","InfRobModel") gains argument
  'cex.pts.fun' to better control the scaling of points-sizes
 + new helper function cutoff.quant() to produce cutoff from model quantiles
- 
+
 GENERAL ENHANCEMENTS:
-  
+
 under the hood:
 + introduced automatic scaling of points in comparePlot.R and infoPlot.R
 + .cexscale is now documented
 + the argument of .fillList is now automatically cast to list (if necessary).
 + interpolRisks gain biastype and normtype methods, as well as getRiskFctBV
-  => now cniperPointPlot should work for GPD-type data 
-+ added reference for copied routine stats:::format.perc  
+  => now cniperPointPlot should work for GPD-type data
++ added reference for copied routine stats:::format.perc
 + in the axis annotation (after rescaling) there are checks now
  whether values +-infinity are taken at all. (This was a bug
  before for distributions passed on as cdf and quantile function
@@ -67,13 +72,13 @@ under the hood:
 + output in kStepEstimator() and oneStepEstimator() is filtered
   by  .checkEstClassForParamFamily(); this allows to return an
   object of S4 class specific to the resp. parametric family (by means of
-  S4 method dispatch); this is used in pkg 'RobExtremes' to produce, e.g., 
-  objects of class "GEVkStepEstimate", i.e. which inherit from both 
-  "kStepEstimate", so that a diag-method for "GEVEstimate" becomes 
+  S4 method dispatch); this is used in pkg 'RobExtremes' to produce, e.g.,
+  objects of class "GEVkStepEstimate", i.e. which inherit from both
+  "kStepEstimate", so that a diag-method for "GEVEstimate" becomes
   available for this class.
 + enhanced imports in DESCRIPTION by explicating second order imports
 
-  
+
 BUGFIXES:
 + two bugs in plotWrapper.R in pkgs RobAStBase and ROptEst detected by Misha
 + bug in kStepEstimator: after evaluation of starting estimator, IC must be
@@ -90,7 +95,7 @@ BUGFIXES:
 + bugfix in outlyingnessPlot: for robCov.y ==TRUE (default) the
   inverse covariance matrix was used for standardization instead
   of the original one
- 
+
 
 #######################################
 version 0.9
@@ -126,7 +131,7 @@ under the hood:
   (unless done so anyway in the call to the starting estimator)/ as not needed
 + in kStepEstimator one can now delay evaluations of covariance matrices,
   depending on new argument  withEvalAsVar
-+ a small change in kStepEstimator -- now uses the (possibly nonlinear) 
++ a small change in kStepEstimator -- now uses the (possibly nonlinear)
    trafo instead of the Jacobian to get the pIC-estimator from the untransformed estimator
 + in kStepEstimator we force an argument list (to avoid an "argument missing" error)
 
@@ -146,8 +151,8 @@ under the hood:
 + modularized diagnostic plots; still checking + debugging necessary
 
 + documented helper functions
-  
-+ thx to hint by Matthias (NAMESPACE), and some (more specific) Rd-links to 
+
++ thx to hint by Matthias (NAMESPACE), and some (more specific) Rd-links to
   gettextf, now no more notes or warnings in R-2.16.0dev
 
 + .rescalefct looses argument scaleY.inv (not needed).
@@ -171,7 +176,7 @@ version 0.8
 #######################################
 
 USER-VISIBLE CHANGES
-+ new helper methods makeIC to apply to functions or list of functions 
++ new helper methods makeIC to apply to functions or list of functions
          for easily producing (suboptimal) ICs
 + included risk computation for sin,cos-IC in makeIC-methods.Rd
 
@@ -181,45 +186,45 @@ USER-VISIBLE CHANGES
         (all with reasonable defaults)
 
         -text.abline:          controls whether cutoff lines get labeled
-        -text.abline.x, 
-        -text.abline.y:        text to be added as labels, 
-                               defaults to something like "95%-cutoff = 4.32"  
+        -text.abline.x,
+        -text.abline.y:        text to be added as labels,
+                               defaults to something like "95%-cutoff = 4.32"
 							   4.32 the cutoff value)
-        
-		-cex.abline, 
-        -col.abline, 
-        -font.abline, 
+
+		-cex.abline,
+        -col.abline,
+        -font.abline,
         -adj.abline:           respective parameters for labels
-        
-		-text.abline.x.x, 
-        -text.abline.x.y, 
-        -text.abline.y.x, 
+
+		-text.abline.x.x,
+        -text.abline.x.y,
+        -text.abline.y.x,
         -text.abline.y.y:      coordinates of labels,
 
-		-text.abline.x.fmt.cx, 
-        -text.abline.x.fmt.qx, 
-        -text.abline.y.fmt.cy, 
-        -text.abline.y.fmt.qy: format strings for cutoff quantiles 
+		-text.abline.x.fmt.cx,
+        -text.abline.x.fmt.qx,
+        -text.abline.y.fmt.cy,
+        -text.abline.y.fmt.qy: format strings for cutoff quantiles
 		                       and values in labels
 
-  -arguments cex.idn and col.idn now if missing first check against arguments 
+  -arguments cex.idn and col.idn now if missing first check against arguments
    cex and col respectively before using defaults par("cex") and par("col") respectively
 
-+ for restoring old par() values, not all attributes may be set; 
++ for restoring old par() values, not all attributes may be set;
   hence deleted them from stored value in plot functions by something like
         opar$cin <- opar$cra <- opar$csi <- opar$cxy <-  opar$din <- NULL
 
-+ infoPlot gains arguments ylab.rel and ylab.abs to set the label 
++ infoPlot gains arguments ylab.rel and ylab.abs to set the label
   for y axis (as requested by N. Horbenko)
 
-+ DESCRIPTION files and package-help files gain a tag SVNRevision 
++ DESCRIPTION files and package-help files gain a tag SVNRevision
   to be filled by get[All]RevNr.R from utils in distr
 
-BUGFIXES  
+BUGFIXES
 
 +   you could not place single plots where you wanted...
 +   Nataliya found yet another bug in infoPlot.R
-  
+
 #######################################
 version 0.7
 #######################################
@@ -228,25 +233,25 @@ user-visible CHANGES:
 
 + enhanced plotting:
   * new diagnostic function qqplot to check the quality of a model fit
-    + special methods for second argument of class 
+    + special methods for second argument of class
       "RobModel", "InfRobModel", and "kStepEstimate"
     + comes with corresponding (pointwise/simultaneous) confidence intervals
-    + for "RobModel", "InfRobModel": sizing of points and labels according to 
+    + for "RobModel", "InfRobModel": sizing of points and labels according to
       Mahalanobis size of points / any other distance function
-    + for "kStepEstimate": fading / sizing of points and labels according to 
+    + for "kStepEstimate": fading / sizing of points and labels according to
       weight of corresponding [p]IC
   * suggestions by A. Unwin, Augsburg;
     plot for ICs, infoPlot, and comparePlot may be restricted to selected subplots;
   * ylim can now be matrix-valued...
   * infoPlot and comparePlot now have a placeable legend location - argument
-  * plot functions gain data argument: 
-    it is "y" for plot(IC, numeric) and  for comparePlot, 
+  * plot functions gain data argument:
+    it is "y" for plot(IC, numeric) and  for comparePlot,
     for infoPlot it is argument "data"
   * plot functions gain arguments
-    - which.lbs : select some data indices for plotting, 
-    - which.Order : select some order statistics from the remaining data 
+    - which.lbs : select some data indices for plotting,
+    - which.Order : select some order statistics from the remaining data
                     for plotting (ordered; w.r.t. norm of IC) (in descending order)
-    - return.Order : shall ordering be printed out?  
+    - return.Order : shall ordering be printed out?
 + documentation
   * added some UML class diagrams
 + checking functions
@@ -255,10 +260,10 @@ user-visible CHANGES:
   * unified treatmend of NAs:
     - class Estimate gains slot completecases to control for NA in the input
     - slot samplesize only counts remaining cases
-    - samplesize accessor has argument onlycompletecases and hence can issue both remaining 
+    - samplesize accessor has argument onlycompletecases and hence can issue both remaining
       and original samplesize
     - locMEstimator gains arg na.rm
-  * class kStepEstimator gains slots 
+  * class kStepEstimator gains slots
     - start:   argument start of kStepEstimator
     - startval:matrix of transformed starting values
     - ustarval:matrix of untransformed starting values
@@ -269,10 +274,10 @@ user-visible CHANGES:
     and corresponding accessors
   * oneStepEstimator and kStepEstimator gain an argument startArgList
 
-+ ICs 
++ ICs
   * we now can digest case p=1, k>1 for asymmetric biastypes as well as for total variation
 
-+ new getRobAStBaseOption-s 
++ new getRobAStBaseOption-s
   * "all.verbose" : globally set verbose to TRUE
   * "withUpdateInKer" --- what to do in kStep on ker(D)
   * "IC.UpdateInKer" --- IC to use in kStep on ker(D)
@@ -288,17 +293,17 @@ GENERAL ENHANCEMENTS:
 
 + added tests/Examples folder with file RobAStBase-Ex.Rout.save to have
   some automatic testing
-+ added TOBEDONE (sic!) files; in English (for possible collaborators) 
++ added TOBEDONE (sic!) files; in English (for possible collaborators)
 + added keyword robust and made some minor corrections ...
 + added/updated NEWS files, updated CITATION files using code by A. Zeileis
 
 + Rd-parsing:
   * patch for Brian Ripley's
     Re: [Rd] Warning: missing text for item ... in \describe?
-  * fixed errors / warnings in .Rd files detected by parser 2 
+  * fixed errors / warnings in .Rd files detected by parser 2
     (c.f. [Rd] More intensive checking of R help files, Prof Brian Ripley, 09.01.2009 10:25)
 
-+ svn-revision-tags 
++ svn-revision-tags
   * added in all DESCRIPTION files
   * added field "Encoding: latin1" to all DESCRIPTION files because
     substituting $LastChangedDate by svn would cause problems for
@@ -320,10 +325,10 @@ INTERNALLY:
 
 + oneStepEstimator and kStepEstimator implemented anew
   * oneStepEstimator and kStepEstimator no longer are generic.
-  * kStepEstimator 
+  * kStepEstimator
     - now only uses one function
     - works with non-trivial trafo
-    - has new arguments 
+    - has new arguments
       withUpdateInKer : shall we update IC in ker(D)?
       IC.UpdateInKer  : which is the default IC to be taken for ker(D) -- default = NULL
                         in which case we use getBoundedIC
@@ -333,14 +338,14 @@ INTERNALLY:
      - numeric
      - estimate
      - function (to be evaluated at data x)
-  * kStepEstimatorStart-method for function now has arguments   
+  * kStepEstimatorStart-method for function now has arguments
     (start, x, nrvalues, na.rm, L2Fam, startList)
    * oneStepEstimator now basically calls kStepEstimator except for the case
-     when IC is not of class "IC", in which similar code is adapted by hand  
+     when IC is not of class "IC", in which similar code is adapted by hand
 
 + kStepEstimator
 
-  - we do update only on demand, i.e. when with.u.var is TRUE 
+  - we do update only on demand, i.e. when with.u.var is TRUE
     (which is true only in the last iteration step)
     if (! var.to.be.c), ie. if asvar information is missing in
     the optimized IC, we calculate it as
@@ -355,25 +360,25 @@ INTERNALLY:
   computations in k-Space are more problematic than thought
   if matrix D has not got full rank or nuisance parameters are present:
 
-  * k-dimensional untransformed.estimate 
+  * k-dimensional untransformed.estimate
     this was clear; no problems as to this;
     works for both options withUpdateInKer TRUE or FALSE
 
   * k-dimensional IC
 
     D^- %*% pIC is not an IC in case ker D is not trivial.
-    
-    two options: 
+
+    two options:
     -> withUpdateInKer FALSE: be content
-    with a solution in Psi^(D^-D) ... 
+    with a solution in Psi^(D^-D) ...
     IC.tot = IC.tot1 = D^- %*% pIC
     -> withUpdateInKer TRUE: complete IC.tot1
     by addition of  IC.tot2 = projker %*% IC2
     for projker = I - D^-D and IC2 is either
     a given IC IC.UpdateInKer or a default bounded IC gotten by getBoundedIC.
-    
+
   * kxk dimensinoal var
-    this is most problematic in case ker D is non-trivial:  
+    this is most problematic in case ker D is non-trivial:
     - if argument start is of class ALEstimate and has a non-NULL pIC-slot
       IC0, this one is taken for computation of untransformed.asvar, i.e.
       IC.tot.0 = projker %*% IC0 + D^- %*% pIC
@@ -383,15 +388,15 @@ INTERNALLY:
 
   - if argument start is of class Estimate and has a non-NULL asvar-slot
       the one is taken later
-  
-  - variances u.var and var0 are calculated in internal function 
+
+  - variances u.var and var0 are calculated in internal function
 
 + new function getBoundedIC to produce (arbitrarily; in fact rather large b) bounded IC as EuclRandVariable
   used in kStepEstimator to give default IC to be projected on ker D.
 
 + .onAttach now uses startupmessages
 + StartClass now also contains "matrix"
-+ argument "start" in kStepEstimator and oneStepEstimator is NULL by default 
++ argument "start" in kStepEstimator and oneStepEstimator is NULL by default
   (and then replaced by L2Fam@startPar)
 + clip and start obtain signatures acc. to graphics/stats methods
 + introduce particular show methods for [Optional]pICList
@@ -401,11 +406,11 @@ INTERNALLY:
 
 BUGFIXES:
 
-+ in plotting functions: 
++ in plotting functions:
   * fixed xlim and ylim args for plots;
   * fixed some bugs with lty[I], lwd[I], col[I] in comparePlot and infoPlot
   * legend.location was missing in usage-section
-  * bug(?) in plot corrected now works for trafo ... 
+  * bug(?) in plot corrected now works for trafo ...
     similar bug in plot method for L2ParamFamily?!
   * minor correction of plot title
   * infoPlot.R minor bugs corrected - seems to work now, but code has some fragile points ...
@@ -414,7 +419,7 @@ BUGFIXES:
   * minor documentation error in infoPlot.Rd
 + small bug in checkIC corrected
 + the "dim" attribute issue:
-  * new kstepEstimator returned [untransformed.]estimates with dim - attribute ... 
+  * new kstepEstimator returned [untransformed.]estimates with dim - attribute ...
     this caused e.g. problems in RobLox, in rlsOptIC.AL.Rd, changed this;
   * yet another small change ... to eliminate non-wanted dim-attribute
 + minor typo in kStepEstimator
@@ -427,7 +432,7 @@ version 0.1.3
 + new plotting features similar to package distr
 + new plotting functionality: ddPlot and outlyingPlot
 + introduced option("newDevice") to control new opening of graphic devices
-+ use of on.exit() to restore old settings for options() and par() at the end 
++ use of on.exit() to restore old settings for options() and par() at the end
   of functions
 + introduction of NEWS-file
 + update of CITATION-file (based on code provided by A. Zeileis on R help)
