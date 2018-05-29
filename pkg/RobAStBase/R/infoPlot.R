@@ -1,11 +1,11 @@
 setMethod("infoPlot", "IC",
     function(object, data = NULL,
              ..., withSweave = getdistrOption("withSweave"),
-             col = par("col"), lwd = par("lwd"), lty, 
+             col = par("col"), lwd = par("lwd"), lty,
              colI = grey(0.5), lwdI = 0.7*par("lwd"), ltyI = "dotted",
-             main = FALSE, inner = TRUE, sub = FALSE, 
-             col.inner = par("col.main"), cex.inner = 0.8, 
-             bmar = par("mar")[1], tmar = par("mar")[3], 
+             main = FALSE, inner = TRUE, sub = FALSE,
+             col.inner = par("col.main"), cex.inner = 0.8,
+             bmar = par("mar")[1], tmar = par("mar")[3],
              with.automatic.grid = TRUE,
              with.legend = TRUE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
@@ -17,14 +17,14 @@ setMethod("infoPlot", "IC",
              pch.pts = 1, jitter.fac = 1, with.lab = FALSE,
              lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, return.Order = FALSE,
-             ylab.abs = "absolute information", 
+             ylab.abs = "absolute information",
              ylab.rel= "relative information",
              withSubst = TRUE){
 
         objectc <- match.call(call = sys.call(sys.parent(1)))$object
-        dots <- match.call(call = sys.call(sys.parent(1)), 
+        dots <- match.call(call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)$"..."
-                   
+
         L2Fam <- eval(object@CallL2Fam)
 
         if(missing(scaleX.fct)){
@@ -42,19 +42,19 @@ setMethod("infoPlot", "IC",
         trafO <- trafo(L2Fam@param)
         dimsA <- dims <- nrow(trafO)
         dimm <- ncol(trafO)
-        
+
         to.draw <- 1:(dims+1)
         dimnms <- rownames(trafO)
         if(is.null(dimnms))
            dimnms <- names(main(L2Fam@param))# paste("dim",1:dims,sep="")
         pdimnms <- c("Abs",dimnms)
         if(! is.null(to.draw.arg)){
-            if(is.character(to.draw.arg)) 
+            if(is.character(to.draw.arg))
                  to.draw <- pmatch(to.draw.arg, pdimnms)
-            else if(is.numeric(to.draw.arg)) 
+            else if(is.numeric(to.draw.arg))
                  to.draw <- to.draw.arg
         }
-        
+
         to.draw1 <- to.draw[to.draw>1]
         dims0 <- length(to.draw1)
         nrows <- trunc(sqrt(dims0))
@@ -94,7 +94,7 @@ setMethod("infoPlot", "IC",
 
         if(is(distr, "UnivariateDistribution")){
            xlim <- eval(dots$xlim)
-           if(!is.null(xlim)){ 
+           if(!is.null(xlim)){
                xm <- min(xlim)
                xM <- max(xlim)
                dots$xlim <- NULL
@@ -107,7 +107,7 @@ setMethod("infoPlot", "IC",
                 upper1 <- me + 6 * s
                 lower <- max(lower0, lower1)
                 upper <- min(upper0, upper1)
-                if(!is.null(xlim)){ 
+                if(!is.null(xlim)){
                   lower <- min(lower,xm)
                   upper <- max(upper,xM)
                 }
@@ -141,9 +141,9 @@ setMethod("infoPlot", "IC",
             }
          }
          ylim <- eval(dots$ylim)
-         if(!is.null(ylim)){ 
-               if(!length(ylim) %in% c(2,2*(dims0+in1to.draw))) 
-                  stop("Wrong length of Argument ylim"); 
+         if(!is.null(ylim)){
+               if(!length(ylim) %in% c(2,2*(dims0+in1to.draw)))
+                  stop("Wrong length of Argument ylim");
                ylim <- matrix(ylim, nrow=2,ncol=dims0+in1to.draw)
                dots$ylim <- NULL
          }
@@ -157,21 +157,21 @@ setMethod("infoPlot", "IC",
          dotsT["main"] <- dotsT["cex.main"] <- dotsT["col.main"] <- NULL
          dotsT["line"] <- NULL
          dotsP$xlim <- xlim
-         
+
          trafo <- trafo(L2Fam@param)
-            
-            
+
+
             mainL <- FALSE
             subL <- FALSE
             lineT <- NA
-       
+
            .mpresubs <- if(withSubst){function(inx)
                     .presubs(inx, c("%C", "%D", "%A"),
                           c(as.character(class(object)[1]),
                             as.character(date()),
                             as.character(deparse(objectc))))
                     } else function(inx)inx
-           
+
             if (hasArg(main)){
                  mainL <- TRUE
                  if (is.logical(main)){
@@ -201,51 +201,51 @@ setMethod("infoPlot", "IC",
                      if (missing(bmar)) bmar <- 6
              }
              mnm <- names(L2Fam@param@main)
-             mnms <- if(is.null(mnm)) NULL else paste("'", mnm, "' = ", sep = "") 
-             innerParam <-  paste(gettext("\nwith main parameter ("), 
-                                         paste(mnms, round(L2Fam@param@main, 3), 
+             mnms <- if(is.null(mnm)) NULL else paste("'", mnm, "' = ", sep = "")
+             innerParam <-  paste(gettext("\nwith main parameter ("),
+                                         paste(mnms, round(L2Fam@param@main, 3),
                                                collapse = ", "),
                                       ")", sep = "")
-             if(!is.null(L2Fam@param@nuisance)){            
+             if(!is.null(L2Fam@param@nuisance)){
                  nnm <- names(L2Fam@param@nuisance)
-                 nnms <- if(is.null(nnm)) NULL else paste("'", nnm, "' = ", sep = "") 
+                 nnms <- if(is.null(nnm)) NULL else paste("'", nnm, "' = ", sep = "")
                  innerParam <- paste(innerParam,
-                                     gettext("\nand nuisance parameter ("), 
-                                         paste(nnms, round(L2Fam@param@nuisance, 3), 
+                                     gettext("\nand nuisance parameter ("),
+                                         paste(nnms, round(L2Fam@param@nuisance, 3),
                                                 collapse = ", "),
                                      ")", sep ="")
              }
              if(!is.null(L2Fam@param@fixed)){
                  fnm <- names(L2Fam@param@fixed)
-                 fnms <- if(is.null(fnm)) NULL else paste("'", fnm, "' = ", sep = "") 
+                 fnms <- if(is.null(fnm)) NULL else paste("'", fnm, "' = ", sep = "")
                  innerParam <- paste(innerParam,
-                                     gettext("\nand fixed known parameter ("), 
-                                         paste(fnms, round(L2Fam@param@fixed, 3), 
+                                     gettext("\nand fixed known parameter ("),
+                                         paste(fnms, round(L2Fam@param@fixed, 3),
                                                 collapse = ", "),
                                      ")", sep ="")
-             }    
+             }
              if(!is.logical(inner)){
                 #if(!is.character(inner))
                 #stop("Argument 'inner' must either be 'logical' or a 'list'")
                 if(!is.list(inner))
-                    inner <- as.list(inner)                
+                    inner <- as.list(inner)
                 innerT <- .fillList(inner,1+dims)
                 if(dims0<dims){
                    innerT0 <- innerT
-                   for(i in 1:dims0) innerT[1+to.draw[i]] <- innerT0[1+i]          
+                   for(i in 1:dims0) innerT[1+to.draw[i]] <- innerT0[1+i]
                 }
                 innerL <- TRUE
             }else{if(any(is.na(inner))||any(!inner)) {
                      innerT <- as.list(rep("",1+dims)); innerL <- FALSE
                 }else{innerL <- TRUE
                       tnm  <- rownames(trafO)
-                      tnms <- if(is.null(tnm)) paste(1:dims) else 
-                                               paste("'", tnm, "'", sep = "") 
-                      innerT <- as.list(paste(c( paste(gettext("Absolute information of (partial) IC for "), 
+                      tnms <- if(is.null(tnm)) paste(1:dims) else
+                                               paste("'", tnm, "'", sep = "")
+                      innerT <- as.list(paste(c( paste(gettext("Absolute information of (partial) IC for "),
                                        name(L2Fam)[1], sep =""),
                                    paste(gettext("Relative information of \ncomponent "),
-                                       tnms, 
-                                       gettext(" of (partial) IC\nfor "), 
+                                       tnms,
+                                       gettext(" of (partial) IC\nfor "),
                                        name(L2Fam)[1], sep ="")), innerParam))
                    }
               }
@@ -255,7 +255,7 @@ setMethod("infoPlot", "IC",
             if(is(object,"ContIC") & dimsA>1 )
                {if (is(normtype(object),"QFNorm")) QFc <- QuadForm(normtype(object))
                 QFc0 <- solve( trafo %*% solve(L2Fam@FisherInfo) %*% t(trafo ))
-                if (is(normtype(object),"SelfNorm")|is(normtype(object),"InfoNorm")) 
+                if (is(normtype(object),"SelfNorm")|is(normtype(object),"InfoNorm"))
                     QFc <- QFc0
                }
 
@@ -311,7 +311,7 @@ setMethod("infoPlot", "IC",
                                       )
             }
 
-            
+
             pL <- expression({})
             if(!is.null(dots[["panel.last"]])){
                 pL <- .panel.mingle(dots,"panel.last")
@@ -321,7 +321,7 @@ setMethod("infoPlot", "IC",
                pL.rel <- pL[[1]]
                pL.abs <- pL[-1]
             }else{ pL.abs <- pL }
-            
+
 
             pF <- expression({})
             if(!is.null(dots[["panel.first"]])){
@@ -353,7 +353,7 @@ setMethod("infoPlot", "IC",
                                       }, list(pF=..panelFirst, gridS0=gridS))
             }
             dotsP$panel.last <- dotsP$panel.first <- NULL
-            
+
             if(!is.null(data)){
 
                n <- if(!is.null(dim(data))) nrow(data) else length(data)
@@ -373,13 +373,13 @@ setMethod("infoPlot", "IC",
                x.d <- sel$data
                x.dC <- sel.C$data
                n <- length(i.d)
-               
+
                if(missing(col.pts)) col.pts <- c(col, colI)
                col.pts <- rep(col.pts, length.out=2)
                pch.pts <- matrix(rep(pch.pts, length.out=2*n),n,2)
                cex.pts <- rep(cex.pts,length.out=2)
                jitter.fac <- rep(jitter.fac, length.out=2)
-               with.lab <- rep(with.lab, length.out=2)
+#               with.lab <- rep(with.lab, length.out=2)
                lab.font <- rep(lab.font, length.out=2)
 
 
@@ -452,7 +452,7 @@ setMethod("infoPlot", "IC",
                       y0c.vec <- jitter(y0c.vec, factor = jitter.fac0[2])
                    }
 
-                   col.pts <- if(!is.na(al0)) sapply(col0,
+                   col.pts <- if(!is.na(al0[i1])) sapply(col0,
                               addAlphTrsp2col, alpha=al0[i1]) else col0
                    dotsP0 <- dotsP
                    resc.rel <- .rescalefct(y0, cbind(y0.vec,ICy0),
@@ -486,9 +486,9 @@ setMethod("infoPlot", "IC",
             }
 
             if(!is.null(ylim))
-                dotsP$ylim <- ylim[,1]       
-            
-            fac.leg <- if(dims0>1) 3/4 else .75/.8 
+                dotsP$ylim <- ylim[,1]
+
+            fac.leg <- if(dims0>1) 3/4 else .75/.8
 
 
             dotsP$axes <- NULL
@@ -534,7 +534,7 @@ setMethod("infoPlot", "IC",
                if(with.legend)
                  legend(.legendCoord(legend.location[[1]], scaleX, scaleX.fct,
                         scaleY, scaleY.fct), legend = legend[[1]], bg = legend.bg,
-                     lty = c(ltyI, lty), col = c(colI, col), 
+                     lty = c(ltyI, lty), col = c(colI, col),
                      lwd = c(lwdI, lwd), cex = legend.cex*fac.leg)
 
 
@@ -542,7 +542,7 @@ setMethod("infoPlot", "IC",
                   do.call(title, args=c(list(main = innerT[[1]]),  dotsT,
                           line = lineT, cex.main = cex.inner, col.main = col.inner))
             }
-            
+
             if(dims > 1 && length(to.draw[to.draw!=1])>0){
                 nrows <- trunc(sqrt(dims0))
                 ncols <- ceiling(dims0/nrows)
@@ -554,8 +554,8 @@ setMethod("infoPlot", "IC",
                 for(i in 1:dims0){
                     indi <- to.draw1[i]-1
                     i1 <- i + in1to.draw
-                    if(!is.null(ylim)) 
-                         dotsP$ylim <- ylim[,in1to.draw+i]       
+                    if(!is.null(ylim))
+                         dotsP$ylim <- ylim[,in1to.draw+i]
                     else dotsP$ylim <- c(0,1)
 
                     y.vec1 <- sapply(resc$x, IC1.i.5@Map[[indi]])^2/
@@ -605,8 +605,8 @@ setMethod("infoPlot", "IC",
                            col = c(colI, col), lwd = c(lwdI, lwd),
                            lty = c(ltyI, lty), cex = legend.cex*fac.leg)
                     if(innerL)
-                       do.call(title, args = c(list(main = innerT[[1+indi]]),  
-                               dotsT, line = lineT, cex.main = cex.inner, 
+                       do.call(title, args = c(list(main = innerT[[1+indi]]),
+                               dotsT, line = lineT, cex.main = cex.inner,
                                col.main = col.inner))
                 }
             }
@@ -627,4 +627,4 @@ setMethod("infoPlot", "IC",
         invisible()
         }
     )
- 
+
