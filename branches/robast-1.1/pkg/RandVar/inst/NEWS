@@ -8,6 +8,24 @@
  information)
 
 #######################################
+version 1.1
+#######################################
+
+under the hood:
++ wherever possible also use q.l internally instead of q to 
+  provide functionality in IRKernel
+
+#######################################
+version 1.0.1
+#######################################
+
+user-visible CHANGES:
++ update of Natalyias email
+
+under the hood:
++ use of Authors@R in DESCRIPTION file
+
+#######################################
 version 1.0
 #######################################
 
