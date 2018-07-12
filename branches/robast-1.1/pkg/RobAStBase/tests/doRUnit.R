@@ -27,7 +27,7 @@ if(require("RUnit", quietly=TRUE)) {
   ## or simply call PKG:::myPrivateFunction() in tests
  
   ## --- Testing ---
- 
+  if(length(dir(path))){
   ## Define tests
   testSuite <- defineTestSuite(name=paste(pkg, "unit testing"),
                                           dirs=path)
@@ -55,6 +55,7 @@ if(require("RUnit", quietly=TRUE)) {
   if(tmp$nFail > 0 | tmp$nErr > 0) {
     stop(paste("\n\nunit testing failed (#test failures: ", tmp$nFail,
                ", #R errors: ",  tmp$nErr, ")\n\n", sep=""))
+  }
   }
 } else {
   warning("cannot run unit tests -- package RUnit is not available")
