@@ -57,7 +57,7 @@ cutoff.quant <- function(qfct){
                                   if(is.null(qfctA)){
                                      if(exists("..ICloc")){
                                         L2m <- eval(CallL2Fam(get("..ICloc")))
-                                        qfct0 <- q(L2m)
+                                        qfct0 <- q.l(L2m)
                                      }else{
                                         qfct0 <- qnorm
                                      }

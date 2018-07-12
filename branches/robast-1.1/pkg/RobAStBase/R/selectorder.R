@@ -1,4 +1,4 @@
-.SelectOrderData <- function(data, fct, which.lbs, which.Order, which.nonlbs){
+.SelectOrderData <- function(data, fct, which.lbs, which.Order, which.nonlbs = NULL){
    ## for data to be plotted in; performs two selections:
    ## on unordered (original) data (acc. to which.lbs)
    ## on data ordered acc. to fct a selection acc. to which.Order is done
@@ -43,14 +43,19 @@
           which.Order <- 1:n.s ## if no 2nd selection performed use all remaining obs.
 
      ## from ranks in remaining selection pick out those in which.order
-     oN.t <-  oN.s[(n.s+1)-which.Order] ## use largest ones in this order
+     in.t <- (n.s+1)-which.Order
+     in.t <- in.t[in.t>0]
+     oN.t <-  oN.s[in.t] ## use largest ones in this order
+     oN.t <- oN.t[!is.na(oN.t)]
 
      ## remaining number of observations after 2nd selection
      n.t <- length(oN.t)
      ## observations indices after 2nd selection
      ind.t <- ind.s[oN.t]  
+     ind.t <- ind.t[!is.na(ind.t)]
      ## function values after 2nd selection
      y.t <- y.s[oN.t]
+     y.t <- y.t[!is.na(y.t)]
 
      ## produce data set of same dimensions as original one after 2nd selection
      which.lbt <- ind %in% ind.t
@@ -68,7 +73,7 @@
      #### non selected obs' indices after 1st selection
      ind.ns0 <- ind[!which.lbs0]
      #### non selected obs' indices in 2nd selection
-     ind.nt <- ind.s[-oN.t]
+     ind.nt <- if(length(oN.t)) ind.s[-oN.t] else numeric(0)
      #### non selected obs' in total is the union of both non-selected ones
      ind.ns1 <- unique(sort(c(ind.ns0, ind.nt)))
      ind.ns <- ind.ns1[ind.ns1 %in% which.nonlbs]

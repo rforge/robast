@@ -25,8 +25,8 @@
   ndim <- .getDimsTD(L2Fam,to.draw.arg)
   if(is.null(scaleY.fct)){
      scaleY.fct <- .fillList(pnorm,ndim)
-  }else{
-     scaleY.fct <- .fillList(scaleY.fct,ndim)
+  }else{if(!is.list(scaleY.fct))
+           scaleY.fct <- .fillList(scaleY.fct,ndim)
   }
   ..y.ticks <- .fillList(y.ticks,ndim)
   .xticksS <- substitute({
