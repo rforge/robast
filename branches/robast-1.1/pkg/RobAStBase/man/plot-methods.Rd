@@ -21,10 +21,15 @@
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
              withSubst = TRUE)
-\S4method{plot}{IC,numeric}(x, y, ..., cex.pts = 1, col.pts = par("col"), pch.pts
-                 = 1, jitter.fac = 1, with.lab = FALSE, lab.pts = NULL,
+\S4method{plot}{IC,numeric}(x, y, ...,
+                 cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
+                 pch.pts = 1,
+                 cex.npts = 1, cex.npts.fun = NULL, col.npts = par("col"),
+                 pch.npts = 2,
+                 jitter.fac = 1, with.lab = FALSE, lab.pts = NULL,
                  lab.font = NULL, alpha.trsp = NA, which.lbs = NULL,
-                 which.Order = NULL, return.Order = FALSE)
+                 which.Order = NULL, which.nonlbs = NULL, attr.pre = FALSE,
+                 return.Order = FALSE)
 }
 \arguments{
   \item{x}{object of class \code{"IC"}: IC to be plotted }
@@ -125,13 +130,33 @@
       titles and lables is used; otherwise no substitution is used. }
   \item{cex.pts}{size of the points of the second argument plotted, can be a vector;
          if it has the same length as the number of observations prior to any
-         selection then it overrides argument \code{cex.nonlbl} and assigns 
+         selection then it overrides argument \code{cex.npts} and assigns
          individual sizes to each of the points; otherwise it is recycled to
          the length of selected observations.}
+  \item{cex.pts.fun}{rescaling function for the size of the points to be plotted;
+        either \code{NULL} (default), then \code{log(1+abs(x))} is used for each of
+        the rescalings, or a function which is then used for each of the
+        rescalings, or a list of functions; if it is a function or a list of
+        functions, if necessary it is recylced to length \code{dim}
+        where \code{dim} is the number of dimensions of the pICs to be plotted.}
   \item{col.pts}{color of the points of the second argument plotted, can
          be a vector as in \code{cex.pts}.}
   \item{pch.pts}{symbol of the points of the second argument plotted, can
          be a vector as in \code{cex.pts}.}
+  \item{col.npts}{color of the non-labelled points of the \code{data} argument
+     plotted; (may be a vector).}
+  \item{pch.npts}{symbol of the non-labelled points of the \code{data} argument
+         plotted (may be a vector).}
+  \item{cex.npts}{size of the non-labelled points of the \code{data} argument
+                 plotted (may be a vector).}
+  \item{cex.npts.fun}{rescaling function for the size of the non-labelled points
+  to be plotted; either \code{NULL} (default), then \code{log(1+abs(x))}
+  is used for each of the rescalings, or a function which is then used
+  for each of the rescalings, or a list of functions; if it is a
+  function or a list of functions, if necessary it is recylced
+  to length \code{dim} where \code{dim} is the number of dimensions of
+  the pICs to be plotted.}
+
   \item{with.lab}{logical; shall labels be plotted to the observations?}
   \item{lab.pts}{character or NULL; labels to be plotted to the observations; if \code{NULL}
                  observation indices;}
@@ -146,6 +171,10 @@
         entries must be integers in [0,255] (0 invisible, 255 opaque).}
   \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
                     for plotting points of the second argument in a jittered fashion.}
+  \item{attr.pre}{logical; do graphical attributes for plotted data refer
+                  to indices prior (\code{TRUE}) or posterior to selection
+                  via arguments \code{which.lbs}, \code{which.Order}, \code{which.nonlbs}
+                  (\code{FALSE})? }
   \item{which.lbs}{either an integer vector with the indices of the observations
           to be plotted into graph or \code{NULL} --- then no observation is excluded}
   \item{which.Order}{we order the observations (descending) according to the norm given by
@@ -154,6 +183,10 @@
            observations (remaining after a possible reduction by argument \code{which.lbs})
            to be plotted into graph or \code{NULL} --- then no (further) observation
            is excluded.}
+  \item{which.nonlbs}{indices of the observations which should be plotted but
+        not labelled; either an integer vector with the indices of the observations
+          to be plotted into graph or \code{NULL} --- then all non-labelled
+          observations are plotted.}
   \item{return.Order}{logical; if \code{TRUE}, an order vector
     is returned; more specifically, the order of the (remaining) observations
     given by their original index is returned (remaining means: after a possible
@@ -162,11 +195,12 @@
    otherwise we return \code{invisible()} as usual.}
   \item{\dots}{further parameters for \code{plot}}
 }
-\value{
-  The function returns invisibly a list of elements containing the information 
-  needed to compute the respective diagnostic plot.
-   The return value allows to recover all information used to produce the plot
-   for later use in enhanced graphics (e.g. with ggplot).   
+\value{An S3 object of class \code{c("plotInfo","DiagnInfo")}, i.e., a list
+  containing the information needed to produce the
+  respective plot, which at a later stage could be used by different
+  graphic engines (like, e.g. \code{ggplot}) to produce the plot
+  in a different framework. A more detailed description will follow in
+  a subsequent version.
 }
 \details{
 Any parameters of \code{plot.default} may be passed on to this particular

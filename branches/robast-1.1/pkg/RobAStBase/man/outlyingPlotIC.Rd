@@ -76,7 +76,8 @@ calls a corresponding \code{\link{ddPlot}} method to produce the plot.
   }
 
 \value{
-a list (returned as \code{invisible()}) with items
+If argument \code{doplot} is \code{FALSE}:
+A list (returned as \code{invisible()}) with items
 \item{id.x}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{x}-cutoff}
 \item{id.y}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{y}-cutoff}
 \item{id.xy}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{x}-cutoff and the \code{y}-cutoff}
@@ -84,6 +85,16 @@ a list (returned as \code{invisible()}) with items
 \item{qty}{the quantiles of the distances of the (possibly transformed) data in \code{y} direction}
 \item{cutoff.x.v}{the cutoff value in \code{x} direction}
 \item{cutoff.y.v}{the cutoff value in \code{y} direction}
+
+If argument \code{doplot} is \code{TRUE}:
+An S3 object of class \code{c("plotInfo","DiagnInfo")}, i.e., a list
+  containing the information needed to produce the
+  respective plot, which at a later stage could be used by different
+  graphic engines (like, e.g. \code{ggplot}) to produce the plot
+  in a different framework. A more detailed description will follow in
+  a subsequent version.a list (returned as \code{invisible()}) with items;
+  one item is \code{retV} which is the return value in case \code{doplot} is \code{FALSE}.
+
 }
 
 \examples{

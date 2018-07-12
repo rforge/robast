@@ -23,7 +23,7 @@ These functions are internally used helper functions for \code{\link{plot}},
                   finiteEndpoints = rep(FALSE,4),
                   x.ticks = NULL, y.ticks = NULL, withbox = TRUE)
 .legendCoord(x, scaleX, scaleX.fct, scaleY, scaleY.fct)
-.SelectOrderData(data, fct, which.lbs, which.Order)
+.SelectOrderData(data, fct, which.lbs, which.Order, which.nonlbs = NULL)
 .makedotsP(dots)
 .makedotsLowLevel(dots)
 .cexscale(y, y1=y, maxcex=4,mincex=0.05,cex, fun=NULL)
@@ -75,6 +75,10 @@ These functions are internally used helper functions for \code{\link{plot}},
     a possible thin-out by \code{which.lbs} and after ordering in descending order
     of the remaining observations. If this argument is \code{NULL} then no
     (further) observation is excluded.}
+  \item{which.nonlbs}{indices of the observations which should be plotted but
+        not labelled; either an integer vector with the indices of the observations
+          to be plotted into graph or \code{NULL} --- then all non-labelled
+          observations are plotted.}
   \item{withbox}{logical of length 1. If \code{TRUE}, even if \code{scaleX} and
    \code{scaleY} are both \code{FALSE} and, simultaneously, \code{x.ticks} and
    \code{y.ticks} are both \code{NULL}, a respective box is drawn around the

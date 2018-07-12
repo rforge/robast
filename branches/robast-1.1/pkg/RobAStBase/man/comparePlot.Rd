@@ -14,20 +14,23 @@ comparePlot(obj1, obj2, ... )
                  ..., withSweave = getdistrOption("withSweave"),
                  forceSameModel = FALSE, main = FALSE, inner = TRUE,
                  sub = FALSE, col = par("col"), lwd = par("lwd"), lty,
-                 col.inner = par("col.main"), cex.inner = 0.8, bmar =
-                 par("mar")[1], tmar = par("mar")[3],
+                 col.inner = par("col.main"), cex.inner = 0.8,
+                 bmar = par("mar")[1], tmar = par("mar")[3],
                  with.automatic.grid = TRUE, with.legend = FALSE,
-                 legend = NULL, legend.bg = "white", legend.location =
-                 "bottomright", legend.cex = 0.8, withMBR = FALSE, MBRB
-                 = NA, MBR.fac = 2, col.MBR = par("col"), lty.MBR =
-                 "dashed", lwd.MBR = 0.8, x.vec = NULL, scaleX = FALSE,
-                 scaleX.fct, scaleX.inv, scaleY = FALSE, scaleY.fct =
-                 pnorm, scaleY.inv = qnorm, scaleN = 9, x.ticks = NULL,
-                 y.ticks = NULL, mfColRow = TRUE, to.draw.arg = NULL,
+                 legend = NULL, legend.bg = "white",
+                 legend.location = "bottomright", legend.cex = 0.8,
+                 withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
+                 lty.MBR = "dashed", lwd.MBR = 0.8, x.vec = NULL,
+                 scaleX = FALSE, scaleX.fct, scaleX.inv, scaleY = FALSE,
+                 scaleY.fct = pnorm, scaleY.inv = qnorm, scaleN = 9,
+                 x.ticks = NULL, y.ticks = NULL, mfColRow = TRUE,
+                 to.draw.arg = NULL,
                  cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-                 pch.pts = 1, jitter.fac = 1, with.lab = FALSE, lab.pts
-                 = NULL, lab.font = NULL, alpha.trsp = NA, which.lbs =
-                 NULL, which.Order = NULL, return.Order = FALSE,
+                 pch.pts = 1, cex.npts = 1, cex.npts.fun = NULL,
+                 col.npts = par("col"), pch.npts = 2, jitter.fac = 1,
+                 with.lab = FALSE, lab.pts = NULL, lab.font = NULL,
+                 alpha.trsp = NA, which.lbs = NULL, which.Order = NULL,
+                 which.nonlbs = NULL, attr.pre = FALSE, return.Order = FALSE,
                  withSubst = TRUE)
 }
 \arguments{
@@ -142,7 +145,7 @@ comparePlot(obj1, obj2, ... )
      \code{n} by \code{nIC}, \code{n} the number of observations prior to any 
      selection, in which case it assigns observation-specific colors to the 
      observations; in this case this  overrides settings in the respective 
-     \code{col.nonlbl} argument.}
+     \code{col.npts} argument.}
   \item{pch.pts}{symbol of the points of the \code{data} argument plotted
                  (may be a vector of length \code{nIC} or a matrix, see \code{col.pts}).}
   \item{cex.pts}{size of the points of the \code{data} argument plotted
@@ -155,16 +158,35 @@ comparePlot(obj1, obj2, ... )
         where \code{dim} is the number of dimensions of the pICs to be plotted; 
         in the index of this list, \code{nIC} is incremented first; 
         then \code{dim}.}
-
-  \item{with.lab}{logical; shall labels be plotted to the observations?
-                 (May be a vector of length \code{nIC}, see \code{col.pts}
-                 -- but not a matrix).}
-  \item{lab.pts}{character or NULL; labels to be plotted to the observations; 
+  \item{col.npts}{color of the non-labelled points of the \code{data} argument
+     plotted; (may be a vector of length \code{nIC} the number of plotted pICs,
+     i.e., one value for each pIC in arguments \code{obj1}, \code{obj2}, and,
+     if available, \code{obj3} and \code{obj4}, or it can be a matrix
+     \code{nnlb <- sum(which.nonlbs)} by \code{nIC},
+     \code{nnlb} the number of non-labelled observations.}
+  \item{pch.npts}{symbol of the non-labelled points of the \code{data} argument
+         plotted (may be a vector of length \code{nIC} or a matrix,
+         see \code{col.npts}).}
+  \item{cex.npts}{size of the non-labelled points of the \code{data} argument
+                 plotted (may be a vector of length \code{nIC} or a matrix, see
+                 \code{col.npts}).}
+  \item{cex.npts.fun}{rescaling function for the size of the non-labelled points
+  to be plotted; either \code{NULL} (default), then \code{log(1+abs(x))}
+  is used for each of the rescalings, or a function which is then used
+  for each of the rescalings, or a list of functions; if it is a
+  function or a list of functions, if necessary it is recylced
+  to length \code{nIC * dim} where \code{dim} is the number of dimensions of
+  the pICs to be plotted;  in the index of this list,
+  \code{nIC} is incremented first; then \code{dim}.}
+  \item{lab.pts}{character or NULL; labels to be plotted to the observations;
                  can be a vector of length \code{n}, \code{n} the number of 
                  all observations prior to any selection with \code{which.lbs},
                  \code{which.Order}; if \code{lab.pts} is \code{NULL}, 
                  observation indices are used.}
-  \item{lab.font}{font to be used for labels (may be a vector of length 
+  \item{with.lab}{logical; shall labels be plotted to the observations?
+                 (May be a vector of length \code{nIC}, see \code{col.pts}
+                 -- but not a matrix).}
+  \item{lab.font}{font to be used for labels (may be a vector of length
                   \code{nIC}, see \code{with.lab}).}
   \item{alpha.trsp}{alpha transparency to be added ex post to colors
         \code{col.pch} and \code{col.lbl}; if one-dim and NA all colors are
@@ -177,6 +199,10 @@ comparePlot(obj1, obj2, ... )
   \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
                     for plotting points of the \code{data} argument in a jittered 
                     fashion (may be a vector of length 2, see \code{with.lab}).}
+  \item{attr.pre}{logical; do graphical attributes for plotted data refer
+                  to indices prior (\code{TRUE}) or posterior to selection
+                  via arguments \code{which.lbs}, \code{which.Order}, \code{which.nonlbs}
+                  (\code{FALSE})? }
   \item{which.lbs}{either an integer vector with the indices of the observations
           to be plotted into graph or \code{NULL} --- then no observation is excluded.}
   \item{which.Order}{for each of the given ICs, we order the observations (descending)
@@ -185,6 +211,10 @@ comparePlot(obj1, obj2, ... )
            observations (remaining after a possible reduction by argument \code{which.lbs})
            to be plotted into graph or \code{NULL} --- then no (further) observation
            is excluded.}
+  \item{which.nonlbs}{indices of the observations which should be plotted but
+        not labelled; either an integer vector with the indices of the observations
+          to be plotted into graph or \code{NULL} --- then all non-labelled
+          observations are plotted.}
   \item{return.Order}{logical; if \code{TRUE}, a list of length maximally four
     with order vectors is returned --- one for the ordering w.r.t. each of
     the given ICs; more specifically, the order of the (remaining) observations
@@ -194,11 +224,12 @@ comparePlot(obj1, obj2, ... )
    othervise we return \code{invisible()} as usual.}
   \item{\dots}{further arguments to be passed to \code{plot}}
 }
-\value{
-  The function returns invisibly a list of elements containing the information 
-  needed to compute the respective diagnostic plot.
-   The return value allows to recover all information used to produce the plot
-   for later use in enhanced graphics (e.g. with ggplot).   
+\value{An S3 object of class \code{c("plotInfo","DiagnInfo")}, i.e., a list
+  containing the information needed to produce the
+  respective plot, which at a later stage could be used by different
+  graphic engines (like, e.g. \code{ggplot}) to produce the plot
+  in a different framework. A more detailed description will follow in
+  a subsequent version.
 }
 \details{
 Any parameters of \code{plot.default} may be passed on to this particular
@@ -281,11 +312,11 @@ comparePlot(IC1, IC2, data=x, which.Order=10,
 Y <- Chisq(df=1)* DiscreteDistribution(c(-1,1))
 comparePlot(IC1, IC2, data=x, which.Order=10,
             scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
-            scaleY = TRUE, scaleY.fct=p(Y), scaleY.inv=q(Y),
+            scaleY = TRUE, scaleY.fct=p(Y), scaleY.inv=q.l(Y),
             panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
 comparePlot(IC1, IC2, data=x, which.Order=10,
             scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
-            scaleY = TRUE, scaleY.fct=p(Y), scaleY.inv=q(Y),
+            scaleY = TRUE, scaleY.fct=p(Y), scaleY.inv=q.l(Y),
             x.ticks = c(-Inf, -10, -1,0,1,10,Inf),
             y.ticks = c(-Inf, -5, -1,0,1,5,Inf),
             panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))

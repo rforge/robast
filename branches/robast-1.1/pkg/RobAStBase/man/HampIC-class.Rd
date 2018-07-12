@@ -4,6 +4,7 @@
 \alias{lowerCase}
 \alias{lowerCase,HampIC-method}
 \alias{neighborRadius}
+\alias{neighborRadius,ANY-method}
 \alias{neighborRadius,HampIC-method}
 \alias{neighborRadius<-}
 \alias{neighborRadius<-,HampIC-method}
@@ -89,6 +90,8 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
     \item{neighborRadius<-}{\code{signature(object = "HampIC")}:
       replacement function for slot \code{neighborRadius}. }
 
+    \item{neighborRadius}{\code{signature(object = "ANY")}:
+      returns \code{NULL}. }
   }
 }
 \references{
