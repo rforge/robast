@@ -277,6 +277,7 @@
         abtdots.y$x <- if(is.null(text.abline.y.x)) mid.x else text.abline.y.x
         abtdots.x$y <- if(is.null(text.abline.x.y)) mid.y else text.abline.x.y
 
+        plotInfo$usr <- pusr
         plotInfo$ablineV <- c(list(v=co.x), abdots[[1]])
         plotInfo$ablineH <- c(list(h=co.y), abdots[[2]])
         do.call(abline, args = c(list(v=co.x), abdots[[1]]))
