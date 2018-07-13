@@ -156,8 +156,8 @@ An S3 object of class \code{c("plotInfo","DiagnInfo")}, i.e., a list
   respective plot, which at a later stage could be used by different
   graphic engines (like, e.g. \code{ggplot}) to produce the plot
   in a different framework. A more detailed description will follow in
-  a subsequent version.a list (returned as \code{invisible()}) with items;
-  one item is \code{retV} which is the return value in case \code{doplot} is \code{FALSE}.
+  a subsequent version.
+  One item is \code{retV} which is the return value in case \code{doplot} is \code{FALSE}.
 
 }
 \author{
