@@ -16,3 +16,10 @@
         distr <- paste(class(L2Fam@distribution)[1], paramstring, sep = "")
 }
 
+.msapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE){
+            if(is.null(X)) return(NULL)
+            if(is.list(X)) if(is.null(X[[1]])) return(NULL)
+            if(length(X)>0) return(sapply(X = X, FUN = FUN, ...,
+                                   simplify = simplify, USE.NAMES = USE.NAMES))
+            return(NULL)
+}

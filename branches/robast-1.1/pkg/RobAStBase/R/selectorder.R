@@ -54,15 +54,9 @@
      ind.t <- ind.s[oN.t]  
      ind.t <- ind.t[!is.na(ind.t)]
      ## function values after 2nd selection
-     y.t <- y.s[oN.t]
-     y.t <- y.t[!is.na(y.t)]
-
-     ## produce data set of same dimensions as original one after 2nd selection
-     which.lbt <- ind %in% ind.t
-     ## if needed recycle arg which.lbs0 (e.g. if several columns)
-     which.lbx <- rep(which.lbt, length.out=length(data))
+     y.t <- y[ind.t]
      ## data after both selections
-     data.t <- data[which.lbx]
+     data.t <- if(dimL) data[ind.t,] else data[ind.t]
      # if needed recast it to matrix/array
      if(dimL) dim(data.t) <- c(n.t,d1[-1])
 
@@ -116,16 +110,10 @@ if(FALSE){
      n0 <- n # n0 is the original nb of obs
      
      n <- sum(which.lbs0) # n now is the remaining nb of obs after first selection
-     ## if needed recycle arg which.lbs0 (e.g. if several columns)
-     which.lbx <- rep(which.lbs0, length.out=length(data))
 
      ## data not shown: data.ns 
-     data.ns <- data[!which.lbx] ## select data not shown
-     # if needed recast it to matrix
-     if(dimL) dim(data.ns) <- c(n0-n,d1[-1])
-     
-     ## remaining data becomes data
-     data <- data[which.lbx]
+     data.ns <- if(dimL) data[!which.lbs,] else data[!which.lbs] ## select data not shown
+
      # if needed recast it to matrix
      if(dimL) dim(data) <- c(n,d1[-1])
 
