@@ -298,7 +298,7 @@ IC1 <- optIC(model = N, risk = asCov())
 infoPlot(IC1)
 
 ## don't run to reduce check time on CRAN
-\dontrun{
+\donttest{
 ## selection of subpanels for plotting
 par(mfrow=c(1,2))
 infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"))

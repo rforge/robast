@@ -102,7 +102,7 @@ plot(IC5)
 checkIC(IC5)
 
 ## don't run to reduce check time on CRAN
-\dontrun{
+\donttest{
 N0 <- NormLocationScaleFamily()
 IC6 <- makeIC(list(sin,cos),N0)
 plot(IC6)

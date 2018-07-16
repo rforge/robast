@@ -103,7 +103,7 @@ pICList(est1)
 start(est1)
 
 ## don't run to reduce check time on CRAN
-\dontrun{
+\donttest{
 ## a transformed model
 tfct <- function(x){
     nms0 <- c("mean","sd")

@@ -296,8 +296,9 @@ comparePlot(IC1, IC2, data=data, with.lab = TRUE,
             which.Order = 1:6,
             return.Order = TRUE)
 
-## don't run to reduce check time on CRAN
-\dontrun{
+
+## don't test to reduce check time on CRAN
+\donttest{
 ## selection of subpanels for plotting
 par(mfrow=c(1,1))
 comparePlot(IC1, IC2 ,mfColRow = FALSE, to.draw.arg=c("mean"),
