@@ -56,9 +56,10 @@
      ## function values after 2nd selection
      y.t <- y[ind.t]
      ## data after both selections
-     data.t <- if(dimL) data[ind.t,] else data[ind.t]
-     # if needed recast it to matrix/array
-     if(dimL) dim(data.t) <- c(n.t,d1[-1])
+#     data.t <- if(dimL) data[ind.t,] else data[ind.t]
+#     # if needed recast it to matrix/array
+#     if(dimL) dim(data.t) <- c(n.t,d1[-1])
+     data.t <- .SelectIndex(data,1,ind.t)
 
 #------------------------------------------------------------------------------
      ## data not labelled: data.ns
@@ -74,18 +75,51 @@
      ## number of non-selected obs'
      n.ns <- length(ind.ns)
 
-     which.lbns0 <-ind %in% ind.ns
-     which.lbnx <- rep(which.lbns0, length.out=length(data))
+#     which.lbns0 <-ind %in% ind.ns
+#     which.lbnx <- rep(which.lbns0, length.out=length(data))
 
      ## non selected data
-     data.ns <- data[which.lbnx]
+     data.ns <- .SelectIndex(data,1,ind.ns)
+#     data.ns <- data[which.lbnx]
      # if needed recast it to matrix
-     if(dimL) dim(data.ns) <- c(n.ns,d1[-1])
+#     if(dimL) dim(data.ns) <- c(n.ns,d1[-1])
 
      y.ns <- y[ind.ns]
 
      return(list(data=data.t, y=y.t, ind=ind.t, ind1=ind1.s, data.ns=data.ns, y.ns=y.ns, ind.ns = ind.ns))
 }
+
+.SelectIndex <- function(data,index,selection){
+  dims <- dim(data)
+  if(is.null(dims)) return(data[selection])
+  datav <- data
+  dimv <- dims
+  if(index!=1){
+     n <- length(dims)
+     dims1 <- dims[-index]
+     ind0 <- 1:n
+     ind1 <- if(index<n) c((1:(index-1))+1,1,((index+1):n)) else c((1:(index-1))+1,1)
+     ind2 <- c(index,ind0[-index])
+     datav <- aperm(data,ind2)
+     dimv <- dims[ind2]
+  }
+  len0 <- dimv[1]
+  len1 <- prod(dimv[-1])
+  lens <- length(selection)
+  sel <- numeric(lens*len1)
+  dimss <- dimv
+  dimss[1] <- lens
+  for(j in 1:len1)
+     sel[1:lens+(j-1)*lens] <- selection+(j-1)*len0
+  datas <- datav[sel]
+  dim(datas) <- dimss
+  if(index!=1){
+     datas <- aperm(datas,ind1)
+  }
+  return(datas)
+}
+
+
 
 if(FALSE){
 .SelectOrderData <- function(data, fct, which.lbs, which.Order){
@@ -111,15 +145,17 @@ if(FALSE){
      
      n <- sum(which.lbs0) # n now is the remaining nb of obs after first selection
 
-     ## data not shown: data.ns 
-     data.ns <- if(dimL) data[!which.lbs,] else data[!which.lbs] ## select data not shown
-
-     # if needed recast it to matrix
-     if(dimL) dim(data) <- c(n,d1[-1])
-
      ## produce indices for shown and non-shown data
      ind.ns <- ind[!which.lbs0]
      ind <- ind[which.lbs0]
+
+     ## data not shown: data.ns
+#     data.ns <- if(dimL) data[!which.lbs,] else data[!which.lbs] ## select data not shown
+     data.ns <- .SelectIndex(data,1,ind.ns)
+
+     # if needed recast it to matrix
+     # if(dimL) dim(data) <- c(n,d1[-1])
+
 
      ### function evaluation
      y <- if(dimL) apply(data, 1, fct) else sapply(data,fct)
@@ -134,7 +170,8 @@ if(FALSE){
           which.Order <- 1:n ## if no 2nd selection performed use all remaining obs.
      
      oN <-  oN[(n+1)-which.Order] ## use largest ones in this order
-     data <- if(dimL) data[oN,] else data[oN]
+#     data <- if(dimL) data[oN,] else data[oN]
+     data <- .SelectIndex(data,1,oN)
      y <- y[oN]
      ind <- ind[oN]
 
