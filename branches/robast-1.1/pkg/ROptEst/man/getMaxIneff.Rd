@@ -60,7 +60,7 @@ getMaxIneff(N0.ICM,neighbor)
 getMaxIneff(N0.ICR,neighbor)
 
 ## Don't run to reduce check time on CRAN
-\dontrun{
+\donttest{
 N0ls <- NormLocationScaleFamily()
 ICsc <- makeIC(list(sin,cos),N0ls)
 getMaxIneff(ICsc,neighbor)

@@ -58,8 +58,8 @@ robest(x, L2Fam,  fsCor = 1, risk = asMSE(), steps = 1L,
           \code{\link[RobAStBase]{UncondNeighborhood-class}},
           \code{\link[distrMod]{RiskType-class}} }
 \examples{
-## Don't run to reduce check time on CRAN
-\dontrun{
+## Don't test to reduce check time on CRAN
+\donttest{
 #############################
 ## 1. Binomial data
 #############################

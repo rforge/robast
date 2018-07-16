@@ -46,8 +46,8 @@ N0.ICM <- optIC(model=N0.Rob1, risk=asMSE())
 getReq(asMSE(),neighbor,N0.ICA,N0.ICM,n=1)
 getReq(asMSE(),neighbor,N0.ICA,N0.ICM,n=30)
 
-## Don't run to reduce check time on CRAN
-\dontrun{
+## Don't test to reduce check time on CRAN
+\donttest{
 ## RMX solution
 N0.ICR <- radiusMinimaxIC(L2Fam=N0, neighbor=neighbor,risk=asMSE())
 

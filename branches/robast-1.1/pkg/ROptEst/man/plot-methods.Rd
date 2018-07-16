@@ -18,7 +18,7 @@ points.
 N <- NormLocationScaleFamily(mean=0, sd=1)
 IC <- optIC(model = N, risk = asCov())
 ## Don't run to reduce check time on CRAN
-\dontrun{
+\donttest{
 plot(IC, main = TRUE, panel.first= grid(),
      col = "blue", cex.main = 2, cex.inner = 0.6,
      withMBR=TRUE)

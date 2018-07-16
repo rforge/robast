@@ -278,7 +278,7 @@ estimate(MLest)
 confint(MLest)
 
 ## Don't run to reduce check time on CRAN
-\dontrun{
+\donttest{
 ## compute optimally robust estimator (known contamination)
 ## takes some time -> you can use package RobLox for normal 
 ## location and scale which is optimized for speed
