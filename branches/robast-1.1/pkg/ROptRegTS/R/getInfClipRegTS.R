@@ -19,7 +19,7 @@ setMethod("getInfClipRegTS", signature(clip = "numeric",
                                        neighbor = "Av1CondTotalVarNeighborhood"),
     function(clip, ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent){
         if(!z.comp){
-            cent <- function(x){-b/2}
+            cent <- function(x){}#-b/2}
             body(cent) <- substitute({-b/2}, list(b = clip))
             return(neighbor@radius^2*clip + 
                    getInfGammaRegTS(ErrorL2deriv = ErrorL2deriv, 

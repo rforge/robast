@@ -1,12 +1,12 @@
 Package: ROptRegTS
 Version: 1.1.0
-Date: 2018-07-08
+Date: 2018-07-17
 Title: Optimally Robust Estimation for Regression-Type Models
 Description: Optimally robust estimation for regression-type models using S4 classes and
         methods.
 Depends: R (>= 2.14.0), methods, ROptEstOld(>= 0.9.1)
 Imports: distr(>= 2.5.2), distrEx(>= 2.5), RandVar(>= 0.9.2)
-Authors@R: c(person("Matthias", "Kohl", role=c("cre", "cph"),
+Authors@R: c(person("Matthias", "Kohl", role=c("cre", "aut", "cph"),
         email="Matthias.Kohl@stamats.de"), person("Peter", "Ruckdeschel", role=c("aut",
         "cph")))
 ByteCompile: yes

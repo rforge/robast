@@ -61,11 +61,17 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2RegTypeFamily",
                                     trafo = L2Fam@param@trafo)[[1]]
             }
 
-            leastFavR <- uniroot(getIneffDiff, lower = lower, upper = upper, 
-                            tol = .Machine$double.eps^0.25, L2Fam = L2Fam, neighbor = neighbor, 
-                            upper.b = upper.b, risk = risk, loRad = loRad, upRad = upRad, 
-                            loRisk = loRisk, upRisk = upRisk, eps = tol, 
-                            MaxIter = maxiter, warn = warn)$root
+            ineff <- NULL
+            getIneffDiff.1 <- function(x){
+                       res <- getIneffDiff(x, L2Fam = L2Fam, neighbor = neighbor,
+                            upper.b = upper.b, risk = risk, loRad = loRad, upRad = upRad,
+                            loRisk = loRisk, upRisk = upRisk, eps = .Machine$double.eps^0.25,
+                            MaxIter = maxiter, warn = warn)
+                       ineff <<- res["ineff"]
+                       return(res["ineffDiff"])
+            }
+            leastFavR <- uniroot(getIneffDiff.1, lower = lower, upper = upper,
+                                tol = .Machine$double.eps^0.25)$root
             neighbor@radius <- leastFavR
             res <- getInfRobRegTypeIC(ErrorL2deriv = L2Fam@ErrorL2derivDistr[[1]], 
                         Regressor = L2Fam@RegDistr, risk = risk, neighbor = neighbor, 
@@ -152,11 +158,17 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2RegTypeFamily",
                                         trafo = trafo)[[1]]
                 }
 
-                leastFavR <- uniroot(getIneffDiff, lower = lower, upper = upper, 
-                                tol = .Machine$double.eps^0.25, L2Fam = L2Fam, neighbor = neighbor, 
-                                z.start = z.start, A.start = A.start, upper.b = upper.b, risk = risk, 
-                                loRad = loRad, upRad = upRad, loRisk = loRisk, upRisk = upRisk, 
-                                eps = tol, MaxIter = maxiter, warn = warn)$root
+                ineff <- NULL
+                getIneffDiff.p <- function(x){
+                         res <- getIneffDiff(x, L2Fam = L2Fam, neighbor = neighbor,
+                                z.start = z.start, A.start = A.start, upper.b = upper.b, risk = risk,
+                                loRad = loRad, upRad = upRad, loRisk = loRisk, upRisk = upRisk,
+                                eps = .Machine$double.eps^0.25, MaxIter = maxiter, warn = warn)
+                         ineff <<- res["ineff"]
+                         return(res["ineffDiff"])
+                         }
+                leastFavR <- uniroot(getIneffDiff.p, lower = lower, upper = upper,
+                                tol = .Machine$double.eps^0.25)$root
                 neighbor@radius <- leastFavR
                 res <- getInfRobRegTypeIC(ErrorL2deriv = ErrorL2deriv, 
                             Regressor = L2Fam@RegDistr, risk = risk, neighbor = neighbor, 

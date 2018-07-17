@@ -3,6 +3,8 @@ import("distr")
 import("distrEx")
 import("RandVar")
 import("ROptEstOld")
+importFrom("stats", "approxfun", "dbinom", "fft", "optim", "optimize",
+             "pbinom", "pnorm", "uniroot")
 
 exportClasses("RegTypeFamily", 
               "L2RegTypeFamily")

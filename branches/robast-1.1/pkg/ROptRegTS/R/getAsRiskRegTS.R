@@ -50,6 +50,7 @@ setMethod("getAsRiskRegTS", signature(risk = "asBias",
         
         zi <- sign(as.vector(trafo))
         A <- as.matrix(zi)
+        upper <- q.l(ErrorL2deriv)(1-getdistrOption("TruncQuantile"))
         if(z.comp){
             abs.fct <- function(x, ErrorL2deriv, cent){ 
                 abs(x)*E(ErrorL2deriv, function(u, xx, cent){abs(u - cent/x)}, xx = x, cent = cent)
@@ -113,7 +114,7 @@ setMethod("getAsRiskRegTS", signature(risk = "asBias",
                 E(ErrorL2deriv, abs.fctu, xx = x, A = A, a0 = a0)
             }
 
-            bmin.fct <- function(param, ErrorL2deriv, Regressor, trafo){
+            bmin.fct.z <- function(param, ErrorL2deriv, Regressor, trafo){
                 p <- nrow(trafo)
                 k <- ncol(trafo)
                 A <- matrix(param[1:(p*k)], ncol=k, nrow=p)
@@ -122,7 +123,7 @@ setMethod("getAsRiskRegTS", signature(risk = "asBias",
                 return(E(Regressor, abs.fctx, ErrorL2deriv = ErrorL2deriv, A = A, a0 = a)/sum(diag(A %*% t(trafo))))
             }
         
-            erg <- optim(c(as.vector(trafo), numeric(nrow(trafo))), bmin.fct, method = "Nelder-Mead", 
+            erg <- optim(c(as.vector(trafo), numeric(nrow(trafo))), bmin.fct.z, method = "Nelder-Mead",
                         control=list(reltol=tol, maxit=100*maxiter), Regressor = Regressor, 
                         ErrorL2deriv = ErrorL2deriv, trafo = trafo)
             b <- 1/erg$value
@@ -252,7 +253,7 @@ setMethod("getAsRiskRegTS", signature(risk = "asBias",
         
         stop("not yet implemented")
 
-        return(list(asBias = b))        
+        return(list(asBias = NULL))
     })
 setMethod("getAsRiskRegTS", signature(risk = "asUnOvShoot",
                                       ErrorL2deriv = "UnivariateDistribution",

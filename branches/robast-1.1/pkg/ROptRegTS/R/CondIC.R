@@ -26,6 +26,7 @@ setMethod("checkIC", signature(IC = "CondIC", L2Fam = "missing"),
     function(IC, out = TRUE){ 
         L2Fam <- eval(IC@CallL2Fam)
         K <- L2Fam@RegDistr
+        TruncQuantile <- getdistrOption("TruncQuantile")
         if(is(K, "DiscreteDistribution") || is(K, "DiscreteMVDistribution"))
             cond <- as.matrix(support(K))
         else{
@@ -74,6 +75,7 @@ setMethod("checkIC", signature(IC = "CondIC", L2Fam = "missing"),
 setMethod("checkIC", signature(IC = "CondIC", L2Fam = "L2RegTypeFamily"), 
     function(IC, L2Fam, out = TRUE){ 
         K <- L2Fam@RegDistr
+        TruncQuantile <- getdistrOption("TruncQuantile")
         if(is(K, "DiscreteDistribution") || is(K, "DiscreteMVDistribution"))
             cond <- as.matrix(support(K))
         else{

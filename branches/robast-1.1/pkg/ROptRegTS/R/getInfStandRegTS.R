@@ -70,7 +70,7 @@ setMethod("getInfStandRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
             Afctu3 <- function(u, xx, clip, cent, stand){
                 u^2*wfct(xx = xx, u = u, clip = clip, cent = cent, stand = stand)
             }
-            Afct <- function(x, clip, cent, stand, D1){
+            Afct.z <- function(x, clip, cent, stand, D1){
                 int1 <- E(D1, Afctu1, xx = x, clip = clip, cent = cent, stand = stand) 
                 int2 <- E(D1, Afctu2, xx = x, clip = clip, cent = cent, stand = stand) 
                 int3 <- E(D1, Afctu3, xx = x, clip = clip, cent = cent, stand = stand) 
@@ -78,7 +78,7 @@ setMethod("getInfStandRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                 return((x %*% t(x))*int3 - (cent %*% t(x))*int2 
                         - (x %*% t(cent))*int2 + (cent %*% t(cent))*int1)
             }
-            res <- E(Regressor, Afct, clip = clip, cent = cent, stand = stand,
+            res <- E(Regressor, Afct.z, clip = clip, cent = cent, stand = stand,
                      D1 = ErrorL2deriv)
         }else{
             Afct <- function(x, clip, stand, D1){
@@ -124,11 +124,11 @@ setMethod("getInfStandRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
             Afctu <- function(u, xx, clip, cent, stand){
                 (u - cent(xx))^2*wfct(xx = xx, u = u, clip = clip, cent = cent, stand = stand)
             }
-            Afct <- function(x, clip, cent, stand, D1){
+            Afct.z <- function(x, clip, cent, stand, D1){
                 return((x %*% t(x))*E(D1, Afctu, xx = x, clip = clip, 
                                       cent = cent, stand = stand))
             }
-            res <- E(Regressor, Afct, clip = clip, cent = cent, stand = stand,
+            res <- E(Regressor, Afct.z, clip = clip, cent = cent, stand = stand,
                      D1 = ErrorL2deriv)
         }else{
             Afct <- function(x, clip, stand, D1){

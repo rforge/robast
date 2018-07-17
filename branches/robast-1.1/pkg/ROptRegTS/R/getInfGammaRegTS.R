@@ -24,7 +24,7 @@ setMethod("getInfGammaRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                                         neighbor = "ContNeighborhood"),
     function(ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent, clip){
         if(z.comp){
-            Gfct <- function(x, stand, cent, clip, D1){
+            Gfct.z <- function(x, stand, cent, clip, D1){
                 Gfctu <- function(u, xx, stand, cent, clip){
                     v <- as.vector(stand %*% (xx*u - cent))
                     res <- as.vector(sqrt(v %*% v)) - clip
@@ -32,7 +32,7 @@ setMethod("getInfGammaRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                 }
                 E(D1, Gfctu, xx = x, stand = stand, cent = cent, clip = clip)
             }
-            return(-E(Regressor, Gfct, stand = stand, cent = cent, clip = clip, D1 = ErrorL2deriv))
+            return(-E(Regressor, Gfct.z, stand = stand, cent = cent, clip = clip, D1 = ErrorL2deriv))
         }else{
             Gfct <- function(x, stand, clip, D1){
                 v <- t(x) %*% stand
@@ -64,7 +64,7 @@ setMethod("getInfGammaRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                                         neighbor = "Av1CondContNeighborhood"),
     function(ErrorL2deriv, Regressor, risk, neighbor, z.comp, stand, cent, clip){
         if(z.comp){
-            Gfct <- function(x, stand, cent, clip, D1){
+            Gfct.z <- function(x, stand, cent, clip, D1){
                 Gfctu <- function(u, xx, stand, cent, clip){
                     v <- as.vector(stand %*% xx*(u - cent(xx)))
                     res <- as.vector(sqrt(v %*% v)) - clip
@@ -72,7 +72,7 @@ setMethod("getInfGammaRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                 }
                 E(D1, Gfctu, xx = x, stand = stand, cent = cent, clip = clip)
             }
-            return(-E(Regressor, Gfct, stand = stand, cent = cent, clip = clip, D1 = ErrorL2deriv))
+            return(-E(Regressor, Gfct.z, stand = stand, cent = cent, clip = clip, D1 = ErrorL2deriv))
         }else{
             Gfct <- function(x, stand, clip, D1){
                 v <- t(x) %*% stand

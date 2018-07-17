@@ -23,6 +23,7 @@ setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                                        Regressor = "UnivariateDistribution",
                                        neighbor = "TotalVarNeighborhood"),
     function(ErrorL2deriv, Regressor, neighbor, clip, cent, z.comp){
+        tol.z  <- .Machine$double.eps^.25
         if(!z.comp) return(-clip/2)
         
         g.fct <- function(z, c0, D1, K){
@@ -42,8 +43,8 @@ setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
         lower <- q.l(ErrorL2deriv)(distr::TruncQuantile)
         upper <- q.l(ErrorL2deriv)(1-distr::TruncQuantile)
 
-        return(uniroot(g.fct, lower = lower, upper = upper, tol = tol.z, 
-                    c0 = clip, D1 = D1, K = Regressor)$root)        
+        return(uniroot(g.fct, lower = lower, upper = upper, tol = tol.z,
+                    c0 = clip, D1 = ErrorL2deriv, K = Regressor)$root)
     })
 setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                                        Regressor = "MultivariateDistribution",
@@ -83,8 +84,13 @@ setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                                        Regressor = "numeric",
                                        neighbor = "CondTotalVarNeighborhood"),
     function(ErrorL2deriv, Regressor, neighbor, clip, cent, z.comp){
+
+        tol.z  <- .Machine$double.eps^.25
+
         if(!z.comp) return(-clip)
         
+        x <- Regressor
+        b <- clip/2
         if(x > 0){
             g.fct <- function(z, c0, D1, x){
                 z*p(D1)(z/x) - x*(m1df(D1, z/x) - m1df(D1, b/x)) + b*(1-p(D1)(b/x))
@@ -97,8 +103,8 @@ setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
         lower <- q.l(ErrorL2deriv)(distr::TruncQuantile)
         upper <- q.l(ErrorL2deriv)(1-distr::TruncQuantile)
 
-        return(uniroot(g.fct, lower = lower, upper = upper, tol = tol.z, 
-                    c0 = clip, D1 = D1, x = Regressor)$root)        
+        return(uniroot(g.fct, lower = lower, upper = upper, tol = tol.z,
+                    c0 = clip, D1 = ErrorL2deriv, x = Regressor)$root)
     })
 setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                                        Regressor = "UnivariateDistribution",
@@ -181,7 +187,7 @@ setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
         z.vec <- res2/res1
         k <- dimension(img(Regressor))
         if(is(Regressor, "DiscreteMVDistribution")){
-            z.fct <- function(x){ 
+            z.fct <- function(x){
                 ind <- colSums(apply(round(x.vec, 8), 1, "==", round(x, 8))) == k
                 if(any(ind))
                     return(z.vec[ind])
@@ -214,7 +220,7 @@ setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                                        neighbor = "Av1CondTotalVarNeighborhood"),
     function(ErrorL2deriv, Regressor, neighbor, clip, cent, stand, z.comp, x.vec, tol.z){
         if(!z.comp){ 
-            z.fct <- function(x){-b/2}
+            z.fct <- function(x){}#-b/2}
             body(z.fct) <- substitute({-b/2}, list(b = clip))
             z.vec <- numeric(length(x.vec)) - clip/2
             return(list(z.fct = z.fct, z.vec = z.vec))
@@ -263,7 +269,7 @@ setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                                        neighbor = "Av1CondTotalVarNeighborhood"),
     function(ErrorL2deriv, Regressor, neighbor, clip, cent, stand, z.comp, x.vec, tol.z){
         if(!z.comp){ 
-            z.fct <- function(x){ -b/2 }
+            z.fct <- function(x){}# -b/2 }
             body(z.fct) <- substitute({ -b/2 }, list(b = clip))
             z.vec <- numeric(nrow(as.matrix(x.vec))) - clip/2
             return(list(z.fct = z.fct, z.vec = z.vec))

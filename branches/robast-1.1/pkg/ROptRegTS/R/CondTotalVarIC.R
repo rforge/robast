@@ -34,11 +34,11 @@ setMethod("generateIC", signature(neighbor = "CondTotalVarNeighborhood",
         L2 <- L2Fam@ErrorL2deriv[[1]]
         k <- dimension(img(L2Fam@RegDistr))
         if(!is.null(d)){
-            ICfct[[1]] <- function(x){ A <- matrix(A.vec, ncol = k)
-                                       Y <- as.vector(A %*% x[1:k]) * L2(x[k+1])
-                                       ind1 <- (Y > 0); ind2 <- (Y < 0)
-                                       b(x[1:k])*ind1 + a(x[1:k])*ind2
-                          }
+            ICfct[[1]] <- function(x){}# A <- matrix(A.vec, ncol = k)
+                                       # Y <- as.vector(A %*% x[1:k]) * L2(x[k+1])
+                                       # ind1 <- (Y > 0); ind2 <- (Y < 0)
+                                       # b(x[1:k])*ind1 + a(x[1:k])*ind2
+                          # }
             body(ICfct[[1]]) <- substitute({ A <- matrix(A.vec, ncol = k)
                                              Y <- as.vector(A %*% x[1:k]) * L2(x[k+1])
                                              ind1 <- (Y > 0); ind2 <- (Y < 0)
@@ -46,9 +46,9 @@ setMethod("generateIC", signature(neighbor = "CondTotalVarNeighborhood",
                                            list(A.vec = as.vector(A), L2 = L2@Map[[1]], a = a@Map[[1]], 
                                                 b = b@Map[[1]], k = k))
         }else{
-            ICfct[[1]]<- function(x){ A <- matrix(A.vec, ncol = k)
-                                      Y <- as.vector(A %*% x[1:k]) * L2(x[k+1])
-                                      min(max(a(x[1:k]), Y), b(x[1:k])) }
+            ICfct[[1]]<- function(x){}# A <- matrix(A.vec, ncol = k)
+                                      # Y <- as.vector(A %*% x[1:k]) * L2(x[k+1])
+                                      # min(max(a(x[1:k]), Y), b(x[1:k])) }
             body(ICfct[[1]]) <- substitute({ A <- matrix(A.vec, ncol = k)
                                              Y <- as.vector(A %*% x[1:k]) * L2(x[k+1])
                                              min(max(a(x[1:k]), Y), b(x[1:k])) }, 
