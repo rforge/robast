@@ -8,6 +8,21 @@
  information)
 
 #######################################
+version 1.1
+#######################################
+
+user-visible CHANGES:
++ plot-methods now have arguments .nonlb to only plot (but not label) some points
++ plot-methods are vectorized to a higher extent in all arguments
++ plot methods now return an S3 object of class \code{c("plotInfo","DiagnInfo")}, i.e., a list containing the 
+information needed to produce the respective plot, which at a later stage could be used by different graphic engines (like, e.g. 
+\code{ggplot}) to produce the plot in a different framework. A more detailed description will follow in a subsequent version.
+
+under the hood:
++ wherever possible also use q.l internally instead of q to 
+  provide functionality in IRKernel
+
+#######################################
 version 1.0.1
 #######################################
 user-visible CHANGES:
