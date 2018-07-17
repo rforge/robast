@@ -30,7 +30,7 @@ setMethod("checkIC", signature(IC = "CondIC", L2Fam = "missing"),
             cond <- as.matrix(support(K))
         else{
             if(is(K, "AbscontDistribution"))
-                cond <- as.matrix(seq(from = q(K)(TruncQuantile), to = q(K)(1-TruncQuantile),
+                cond <- as.matrix(seq(from = q.l(K)(TruncQuantile), to = q.l(K)(1-TruncQuantile),
                             length = 100))
             else
                 cond <- as.matrix(r(K)(1000))
@@ -78,7 +78,7 @@ setMethod("checkIC", signature(IC = "CondIC", L2Fam = "L2RegTypeFamily"),
             cond <- as.matrix(support(K))
         else{
             if(is(K, "AbscontDistribution"))
-                cond <- as.matrix(seq(from = q(K)(TruncQuantile), to = q(K)(1-TruncQuantile),
+                cond <- as.matrix(seq(from = q.l(K)(TruncQuantile), to = q.l(K)(1-TruncQuantile),
                             length = 100))
             else
                 cond <- as.matrix(r(K)(1000))

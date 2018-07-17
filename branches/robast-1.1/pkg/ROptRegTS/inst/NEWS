@@ -2,10 +2,17 @@
 ##  News: to package ROptRegTS
 ###############################################################################
 
-(first two numbers of package versions do not necessarily reflect 
- package-individual development, but rather are chosen for the 
- RobAStXXX family as a whole in order to ease updating "depends" 
- information)
+(first two numbers of package versions do not necessarily reflect package-individual 
+ development, but rather are chosen for the RobAStXXX family as a whole in order 
+ to ease updating "depends" information)
+
+#######################################
+version 1.1
+#######################################
+
+under the hood:
++ wherever possible also use q.l internally instead of q to provide functionality in 
+  IRKernel
 
 #######################################
 version 1.0
@@ -25,8 +32,8 @@ version 0.8
 #######################################
 
 no changes this time
-+ DESCRIPTION files and package-help files gain a tag SVNRevision 
-  to be filled by get[All]RevNr.R from utils in distr
++ DESCRIPTION files and package-help files gain a tag SVNRevision to be filled by 
+  get[All]RevNr.R from utils in distr
 
 #######################################
 version 0.7

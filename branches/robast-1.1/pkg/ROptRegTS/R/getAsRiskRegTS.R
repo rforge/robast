@@ -74,7 +74,7 @@ setMethod("getAsRiskRegTS", signature(risk = "asBias",
              ErrorL2derivDistrSymm, trafo, maxiter, tol){
         zi <- sign(as.vector(trafo))
         A <- as.matrix(zi)
-        z <- q(ErrorL2deriv)(0.5)
+        z <- q.l(ErrorL2deriv)(0.5)
         Eu <- E(ErrorL2deriv, function(x, z){abs(x - z)}, z = z)
         Ex <- E(Regressor, function(x){abs(x)})
         b <- zi*as.vector(trafo)/(Ex*Eu)
@@ -163,7 +163,7 @@ setMethod("getAsRiskRegTS", signature(risk = "asBias",
         erg <- optim(as.vector(trafo), bmin.fct, method = "Nelder-Mead", 
                      control = list(reltol = tol, maxit = 100*maxiter), 
                      Regressor = Regressor, trafo = trafo)
-        z <- q(ErrorL2deriv)(0.5)
+        z <- q.l(ErrorL2deriv)(0.5)
         b <- 1/(erg$value*E(ErrorL2deriv, function(x, z){abs(x - z)}, z = z))
 
         return(list(asBias = b))        
@@ -175,7 +175,7 @@ setMethod("getAsRiskRegTS", signature(risk = "asBias",
     function(risk, ErrorL2deriv, Regressor, neighbor, 
              ErrorL2derivDistrSymm, trafo, maxiter, tol){
         K <- E(Regressor, fun = function(x){ x %*% t(x) })
-        z <- q(ErrorL2deriv)(0.5)
+        z <- q.l(ErrorL2deriv)(0.5)
         Eu <- E(ErrorL2deriv, function(x, z){abs(x - z)}, z = z)
         b <- sqrt(sum(diag(trafo %*% solve(K) %*% t(trafo))))/Eu
         
@@ -281,8 +281,8 @@ setMethod("getAsRiskRegTS", signature(risk = "asUnOvShoot",
                                       neighbor = "CondNeighborhood"),
     function(risk, ErrorL2deriv, Regressor, neighbor, clip, cent, stand){
         if(is(Regressor, "AbscontDistribution")){
-            xlower <- ifelse(is.finite(q(Regressor)(0)), q(Regressor)(0), q(Regressor)(distr::TruncQuantile))
-            xupper <- ifelse(is.finite(q(Regressor)(1)), q(Regressor)(1), q(Regressor)(1 - distr::TruncQuantile))
+            xlower <- ifelse(is.finite(q.l(Regressor)(0)), q.l(Regressor)(0), q.l(Regressor)(distr::TruncQuantile))
+            xupper <- ifelse(is.finite(q.l(Regressor)(1)), q.l(Regressor)(1), q.l(Regressor)(1 - distr::TruncQuantile))
             x.vec <- seq(from = xlower, to = xupper, by = 0.01)
         }else{
             if(is(Regressor, "DiscreteDistribution"))
