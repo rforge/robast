@@ -125,7 +125,7 @@ robloxbioc(x, ...)
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
   the Radius. \emph{Statistical Methods and Applications} \bold{17}(1) 13-40.
-  Extended version: \url{http://www.stamats.de/RRlong.pdf}
+  Extended version: \url{http://r-kurs.de/RRlong.pdf}
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de},
 

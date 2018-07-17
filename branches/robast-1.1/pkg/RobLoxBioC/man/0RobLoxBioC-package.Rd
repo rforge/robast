@@ -43,7 +43,7 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
   the Radius. \emph{Statistical Methods and Applications} \bold{17}(1) 13-40.
-  Extended version: \url{http://www.stamats.de/RRlong.pdf}
+  Extended version: \url{http://r-kurs.de/RRlong.pdf}
 }
 \seealso{
 \code{\link[RobLox]{roblox}}, \code{\link[RobLox]{rowRoblox}}
