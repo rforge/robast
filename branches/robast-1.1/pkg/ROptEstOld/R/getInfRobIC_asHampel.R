@@ -8,7 +8,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
              upper, maxiter, tol, warn){
         A <- trafo / E(L2deriv, function(x){x^2})
         b <- risk@bound
-        bmax <- abs(as.vector(A))*max(abs(q(L2deriv)(0)), q(L2deriv)(1))
+        bmax <- abs(as.vector(A))*max(abs(q.l(L2deriv)(0)), q.l(L2deriv)(1))
         if(b >= bmax){
             if(warn) cat("'b >= maximum asymptotic bias' => (classical) optimal IC\n", 
                          "in sense of Cramer-Rao bound is returned\n")
@@ -70,8 +70,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         if(is.null(A.start)) A.start <- trafo
 
         ClassIC <- trafo %*% solve(Finfo) %*% L2deriv
-        lower <- q(Distr)(getdistrOption("TruncQuantile"))
-        upper <- q(Distr)(1-getdistrOption("TruncQuantile"))
+        lower <- q.l(Distr)(getdistrOption("TruncQuantile"))
+        upper <- q.l(Distr)(1-getdistrOption("TruncQuantile"))
         x <- seq(from = lower, to = upper, by = 0.01)
         bmax <- evalRandVar(ClassIC, as.matrix(x))^2
         bmax <- sqrt(max(colSums(bmax)))

@@ -13,7 +13,7 @@ setMethod("lowerCaseRadius", signature(L2Fam = "L2ParamFamily",
         w0 <- options("warn")
         options(warn = -1)
         L2deriv <- L2Fam@L2derivDistr[[1]]        
-        m <- q(L2deriv)(0.5)
+        m <- q.l(L2deriv)(0.5)
         wsm <- d(L2deriv)(m)
         
         supp <- support(L2deriv)

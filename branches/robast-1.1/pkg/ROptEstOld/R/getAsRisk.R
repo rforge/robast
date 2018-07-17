@@ -29,7 +29,7 @@ setMethod("getAsRisk", signature(risk = "asBias",
                                  L2deriv = "UnivariateDistribution",
                                  neighbor = "ContNeighborhood"),
     function(risk, L2deriv, neighbor, trafo){
-        z <- q(L2deriv)(0.5)
+        z <- q.l(L2deriv)(0.5)
         bias <- abs(as.vector(trafo))/E(L2deriv, function(x, z){abs(x - z)}, 
                                         useApply = FALSE, z = z)
 
