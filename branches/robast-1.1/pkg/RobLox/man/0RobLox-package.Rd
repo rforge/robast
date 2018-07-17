@@ -32,7 +32,7 @@ SVNRevision: \tab 940 \cr
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008). The Costs of not Knowing
   the Radius. \emph{Statistical Methods and Applications} \bold{17}(1) 13-40.
-  Extended version: \url{http://www.stamats.de/RRlong.pdf}
+  Extended version: \url{http://r-kurs.de/RRlong.pdf}
   
   M. Kohl, P. Ruckdeschel, and H. Rieder (2010). Infinitesimally Robust Estimation 
   in General Smoothly Parametrized Models. \emph{Statistical Methods and Application}, 

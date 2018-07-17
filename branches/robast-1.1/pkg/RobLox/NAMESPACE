@@ -1,7 +1,7 @@
 importFrom("Biobase", "rowMedians")
 importFrom("lattice","stripplot")
 importFrom("RColorBrewer","brewer.pal")
-importFrom("distr", "p", "q", "r", "Reals")
+importFrom("distr", "p", "q", "r", "q.l", "Reals")
 importClassesFrom("distr","Reals")
 importFrom("RandVar", "EuclRandVarList", "RealRandVariable")		 
 importClassesFrom("RandVar", "EuclRandVarList", "RealRandVariable")		 
@@ -10,6 +10,13 @@ importClassesFrom("distrMod", "L2LocationFamily", "NormLocationFamily", "NormLoc
 importMethodsFrom("distrMod", "distribution", "main", "addInfo<-", "Infos", "Infos<-",
                   "normtype", "biastype","normtype<-","biastype<-", "estimate")
 importFrom("RobAStBase","generateIC","ContNeighborhood", "IC")
+importFrom("grDevices", "dev.new")
+importFrom("graphics", "abline", "boxplot", "curve", "layout",
+             "legend", "par", "plot")
+importFrom("methods", "is", "new")
+importFrom("stats", "approx", "complete.cases", "dnorm", "integrate",
+             "mad", "median", "na.omit", "optim", "optimize", "pnorm",
+             "qnorm", "rbinom", "rnorm", "uniroot")
 importClassesFrom("RobAStBase", "HampelWeight", "ALEstimate", "kStepEstimate", "ContNeighborhood")
 importMethodsFrom("RobAStBase", "clip", "cent", "stand", "weight", "clip<-", "cent<-", "stand<-", "weight<-", 
          "getweight", "makeIC", "CallL2Fam", "CallL2Fam<-", "neighborRadius", "modifyIC", "addInfo<-")
