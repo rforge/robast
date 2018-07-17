@@ -120,7 +120,7 @@ setMethod("getAsRisk", signature(risk = "asCov",
         nrvalues <- nrow(stand)
         ICfct <- vector(mode = "list", length = nrvalues)
         for(i in 1:nrvalues){
-            ICfct[[i]] <- function(x){ Yi(x)*pmin(1, b/absY(x)) }
+            ICfct[[i]] <- function(x){}# Yi(x)*pmin(1, b/absY(x)) }
             body(ICfct[[i]]) <- substitute({ Yi(x)*pmin(1, b/absY(x)) },
                                     list(Yi = Y@Map[[i]], absY = absY@Map[[1]], b = clip))
         }

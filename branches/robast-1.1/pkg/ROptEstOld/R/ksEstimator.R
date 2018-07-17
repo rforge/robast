@@ -22,23 +22,23 @@ setMethod("ksEstimator", signature(x = "numeric", distribution = "Binom"),
         if(param == "prob"){
             if(max(x) > size(distribution))
                 stop("maximum of 'x' > 'size' of distribution")
-            KSdist <- function(prob, x, size){
+            KSdist.p <- function(prob, x, size){
                 supp <- 0:size
                 edf <- ecdf(x)
                 return(max(abs(edf(supp)-pbinom(supp, size = size, prob = prob))))
             }
-            res <- optimize(f = KSdist, interval = c(0, 1), tol = eps, 
+            res <- optimize(f = KSdist.p, interval = c(0, 1), tol = eps,
                      x = x, size = size(distribution))$minimum
             return(list(size = size(distribution), prob = res))
         }
         if(param == "size"){
-            KSdist <- function(size, x, prob){
+            KSdist.s <- function(size, x, prob){
                 supp <- 0:size
                 edf <- ecdf(x)
                 return(max(abs(edf(supp)-pbinom(supp, size = size, prob = prob))))
             }
             size <- max(x):(max(x) + 100)
-            ind <- which.min(sapply(size, KSdist, x = x, prob = prob(distribution)))
+            ind <- which.min(sapply(size, KSdist.s, x = x, prob = prob(distribution)))
 
             return(list(size = size[ind], prob = prob(distribution)))
         }
@@ -70,24 +70,24 @@ setMethod("ksEstimator", signature(x = "numeric", distribution = "Norm"),
                 if(param[2] <= 0) return(Inf)
                 return(ks.test(x, "pnorm", mean = param[1], sd = param[2])$statistic)
             }
-            res <- optim(c(mean(distribution), sd(distribution)), f = KSdist, 
+            res <- optim(c(mean(distribution), sd(distribution)), fn = KSdist,
                         method = "Nelder-Mead", control=list(reltol=eps), 
                         x = x)$par
             return(list(mean = res[1], sd = res[2]))
         }
         if(param == "mean"){
-            KSdist <- function(mean, x, sd){
+            KSdist.m <- function(mean, x, sd){
                 return(ks.test(x, "pnorm", mean = mean, sd = sd)$statistic)
             }
-            res <- optimize(f = KSdist, interval = c(min(x), max(x)), 
+            res <- optimize(f = KSdist.m, interval = c(min(x), max(x)),
                         tol = eps, x = x, sd = sd(distribution))$minimum
             return(list(mean = res, sd = sd(distribution)))
         }
         if(param == "sd"){
-            KSdist <- function(sd, x, mean){
+            KSdist.s <- function(sd, x, mean){
                 return(ks.test(x, "pnorm", mean = mean, sd = sd)$statistic)
             }
-            res <- optimize(f = KSdist, 
+            res <- optimize(f = KSdist.s,
                         interval = c(.Machine$double.eps^0.5, max(x)-min(x)), 
                         tol = eps, x = x, mean = mean(distribution))$minimum
             return(list(mean = mean(distribution), sd = res))
@@ -105,24 +105,24 @@ setMethod("ksEstimator", signature(x = "numeric", distribution = "Lnorm"),
                 if(param[2] <= 0) return(Inf)
                 return(ks.test(x, "plnorm", meanlog = param[1], sdlog = param[2])$statistic)
             }
-            res <- optim(c(meanlog(distribution), sdlog(distribution)), f = KSdist, 
+            res <- optim(c(meanlog(distribution), sdlog(distribution)), fn = KSdist,
                         method = "Nelder-Mead", control=list(reltol=eps), 
                         x = x)$par
             return(list(meanlog = res[1], sdlog = res[2]))
         }
         if(param == "meanlog"){
-            KSdist <- function(meanlog, x, sdlog){
+            KSdist.m <- function(meanlog, x, sdlog){
                 return(ks.test(x, "plnorm", meanlog = meanlog, sdlog = sdlog)$statistic)
             }
-            res <- optimize(f = KSdist, interval = c(min(x), max(x)), 
+            res <- optimize(f = KSdist.m, interval = c(min(x), max(x)),
                         tol = eps, x = x, sdlog = sdlog(distribution))$minimum
             return(list(meanlog = res, sdlog = sdlog(distribution)))
         }
         if(param == "sdlog"){
-            KSdist <- function(sdlog, x, meanlog){
+            KSdist.s <- function(sdlog, x, meanlog){
                 return(ks.test(x, "plnorm", meanlog = meanlog, sdlog = sdlog)$statistic)
             }
-            res <- optimize(f = KSdist, 
+            res <- optimize(f = KSdist.s,
                         interval = c(.Machine$double.eps^0.5, max(x)-min(x)), 
                         tol = eps, x = x, meanlog = meanlog(distribution))$minimum
             return(list(meanlog = meanlog(distribution), sdlog = res))
@@ -140,24 +140,24 @@ setMethod("ksEstimator", signature(x = "numeric", distribution = "Gumbel"),
                 if(param[2] <= 0) return(Inf)
                 return(ks.test(x, "pgumbel", loc = param[1], scale = param[2])$statistic)
             }
-            res <- optim(c(mean(distribution), sd(distribution)), f = KSdist, 
+            res <- optim(c(mean(distribution), sd(distribution)), fn = KSdist,
                         method = "Nelder-Mead", control=list(reltol=eps), 
                         x = x)$par
             return(list(loc = res[1], scale = res[2]))
         }
         if(param == "loc"){
-            KSdist <- function(loc, x, scale){
+            KSdist.l <- function(loc, x, scale){
                 return(ks.test(x, "pgumbel", loc = loc, scale = scale)$statistic)
             }
-            res <- optimize(f = KSdist, interval = c(min(x), max(x)), 
+            res <- optimize(f = KSdist.l, interval = c(min(x), max(x)),
                         tol = eps, x = x, scale = scale(distribution))$minimum
             return(list(loc = res, scale = scale(distribution)))
         }
         if(param == "scale"){
-            KSdist <- function(scale, x, loc){
+            KSdist.s <- function(scale, x, loc){
                 return(ks.test(x, "pgumbel", loc = loc, scale = scale)$statistic)
             }
-            res <- optimize(f = KSdist, 
+            res <- optimize(f = KSdist.s,
                         interval = c(.Machine$double.eps^0.5, max(x)-min(x)), 
                         tol = eps, x = x, loc = loc(distribution))$minimum
             return(list(loc = loc(distribution), scale = res))
@@ -187,23 +187,23 @@ setMethod("ksEstimator", signature(x = "numeric", distribution = "Gammad"),
                 if((param[1] <= 0) || (param[2] <= 0)) return(Inf)
                 return(ks.test(x, "pgamma", scale = param[1], shape = param[2])$statistic)
             }
-            res <- optim(c(scale(distribution), shape(distribution)), f = KSdist, method = "Nelder-Mead", 
+            res <- optim(c(scale(distribution), shape(distribution)), fn = KSdist, method = "Nelder-Mead",
                         control=list(reltol=eps), x = x)$par
             return(list(scale = res[1], shape = res[2]))
         }
         if(param == "scale"){
-            KSdist <- function(scale, x, shape){
+            KSdist.sc <- function(scale, x, shape){
                 return(ks.test(x, "pgamma", scale = scale, shape = shape)$statistic)
             }
-            res <- optimize(f = KSdist, interval = c(min(x), max(x)), 
+            res <- optimize(f = KSdist.sc, interval = c(min(x), max(x)),
                         tol = eps, x = x, shape = shape(distribution))$minimum
             return(list(scale = res, shape = shape(distribution)))
         }
         if(param == "shape"){
-            KSdist <- function(shape, x, scale){
+            KSdist.sh <- function(shape, x, scale){
                 return(ks.test(x, "pgamma", scale = scale, shape = shape)$statistic)
             }
-            res <- optimize(f = KSdist, 
+            res <- optimize(f = KSdist.sh,
                         interval = c(.Machine$double.eps^0.5, max(x)-min(x)), 
                         tol = eps, x = x, scale = scale(distribution))$minimum
             return(list(scale = scale(distribution), shape = res))

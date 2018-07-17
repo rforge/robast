@@ -3,6 +3,11 @@ import("distr")
 import("distrEx")
 import("RandVar")
 import("evd")
+importFrom("grDevices", "grey")
+importFrom("graphics", "legend", "lines", "par", "title")
+importFrom("stats", "approxfun", "dbinom", "ecdf", "fft", "ks.test",
+             "optim", "optimize", "pbinom", "pnorm", "ppois", "qpois",
+             "uniroot")
 
 exportClasses("FunctionSymmetry",
               "NonSymmetric",

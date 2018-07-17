@@ -14,6 +14,7 @@ setMethod("initialize", "Gumbel",
         body(.Object@p) <- substitute({p1 <- pgumbel(q, loc = loc1, scale = scale1, lower.tail = lower.tail) 
                                        return(if(log.p) log(p1) else p1)},
                                      list(loc1 = loc, scale1 = scale))
+        loc1 <- loc; scale1 <- scale
         .Object@q <- function(p, loc = loc1, scale = scale1, lower.tail = TRUE, log.p = FALSE){}
             body(.Object@q) <- substitute({
                         ## P.R.: changed to vectorized form 
