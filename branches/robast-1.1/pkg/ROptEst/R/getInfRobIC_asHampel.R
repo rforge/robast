@@ -18,7 +18,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
         b <- risk@bound
 
         if(checkBounds){
-        bmax <- abs(as.vector(A))*max(abs(q(L2deriv)(0)), q(L2deriv)(1))
+        bmax <- abs(as.vector(A))*max(abs(q.l(L2deriv)(0)), q.l(L2deriv)(1))
         if(b >= bmax){
             if(warn) cat("'b >= maximum asymptotic bias' => (classical) optimal IC\n", 
                          "in sense of Cramer-Rao bound is returned\n")

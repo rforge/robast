@@ -38,7 +38,7 @@ setMethod("getAsRisk", signature(risk = "asBias",
                                  neighbor = "ContNeighborhood", 
                                  biastype = "ANY"),
     function(risk, L2deriv, neighbor, biastype, normtype = NULL, clip = NULL, cent = NULL, stand = NULL, trafo, ...){
-        z <- q(L2deriv)(0.5)                                
+        z <- q.l(L2deriv)(0.5)
         bias <- abs(as.vector(trafo))/E(L2deriv, function(x, z){abs(x - z)}, 
                                         useApply = FALSE, z = z)
 
@@ -321,7 +321,7 @@ setMethod("getAsRisk", signature(risk = "asBias",
         nu1 <- nu(biastype)[1]
         nu2 <- nu(biastype)[2]
         num <- nu2/(nu1+nu2)        
-        z <- q(L2deriv)(num)
+        z <- q.l(L2deriv)(num)
         Int <- E(L2deriv, function(x, m){abs(x-m)}, m = z)
         omega <- 2/(Int/nu1+Int/nu2)
         bias <- abs(as.vector(trafo))*omega

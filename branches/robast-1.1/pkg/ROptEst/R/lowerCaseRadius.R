@@ -15,7 +15,7 @@ setMethod("lowerCaseRadius", signature(L2Fam = "L2ParamFamily",
         on.exit(options(w0))
         options(warn = -1)
         L2deriv <- L2Fam@L2derivDistr[[1]]        
-        m <- q(L2deriv)(0.5)
+        m <- q.l(L2deriv)(0.5)
         wsm <- d(L2deriv)(m)
         
         supp <- support(L2deriv)
@@ -170,7 +170,7 @@ setMethod("lowerCaseRadius", signature(L2Fam = "UnivariateDistribution",
 
         num <- nu2/(nu1+nu2)        
         
-        zl <- q(L2deriv)(num)
+        zl <- q.l(L2deriv)(num)
         pl <- p(L2deriv)(zl)
         dl <- d(L2deriv)(zl)
         

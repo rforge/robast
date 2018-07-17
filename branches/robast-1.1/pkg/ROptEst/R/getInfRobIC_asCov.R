@@ -12,7 +12,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             info <- c("optimal IC in sense of Cramer-Rao bound")
             A <- trafo %*% solve(Finfo)
             
-            b <- abs(as.vector(A))*max(abs(q(L2deriv)(1)),abs(q(L2deriv)(0)))
+            b <- abs(as.vector(A))*max(abs(q.l(L2deriv)(1)),abs(q.l(L2deriv)(0)))
             
             asCov <- A %*% t(trafo)
             r <- neighbor@radius
@@ -44,8 +44,8 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
 
             info <- c("optimal IC in sense of Cramer-Rao bound")
             A <- trafo %*% solve(Finfo)
-            b <- abs(as.vector(A))*(q(L2deriv)(1)-q(L2deriv)(0))
-            a <- -abs(as.vector(A))*q(L2deriv)(0)
+            b <- abs(as.vector(A))*(q.l(L2deriv)(1)-q.l(L2deriv)(0))
+            a <- -abs(as.vector(A))*q.l(L2deriv)(0)
             asCov <- A %*% t(trafo)
             r <- neighbor@radius
             Risk <- list(asCov = asCov, 
@@ -83,8 +83,8 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             A <- trafo %*% solve(Finfo)
             IC <- A %*% L2deriv
             if(is(Distr, "UnivariateDistribution")){
-                lower <- ifelse(is.finite(q(Distr)(0)), q(Distr)(1e-8), q(Distr)(0))
-                upper <- ifelse(is.finite(q(Distr)(1)), q(Distr)(1-1e-8), q(Distr)(1))
+                lower <- ifelse(is.finite(q.l(Distr)(0)), q.l(Distr)(1e-8), q.l(Distr)(0))
+                upper <- ifelse(is.finite(q.l(Distr)(1)), q.l(Distr)(1-1e-8), q.l(Distr)(1))
                 x <- seq(from = lower, to = upper, length = 1e5)
                 x <- x[x!=0] # problems with NaN=log(0)!
                 ICx <- evalRandVar(IC, as.matrix(x))

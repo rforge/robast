@@ -119,7 +119,7 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
              trafo, maxiter, tol, warn, Finfo, verbose = NULL){
         zi <- sign(as.vector(trafo))
         A <- as.matrix(zi)
-        z <- q(L2deriv)(0.5)
+        z <- q.l(L2deriv)(0.5)
         b <- zi*as.vector(trafo)/E(L2deriv, function(x, z){abs(x - z)}, z = z)
 
         if(is(L2deriv, "AbscontDistribution"))
@@ -320,7 +320,7 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
         nu2 <- nu(biastype)[2]
         zi <- sign(as.vector(trafo))
         A <- as.matrix(zi)
-        z <- q(L2deriv)(nu1/(nu1+nu2))
+        z <- q.l(L2deriv)(nu1/(nu1+nu2))
         b <- zi*as.vector(trafo)/E(L2deriv, function(x, z){(x - z)*(x>z)/nu2 +
                  (z-x)*(z>x)/nu1}, z = z)
 
@@ -370,7 +370,7 @@ setMethod("minmaxBias", signature(L2deriv = "UnivariateDistribution",
                                  gettext(
                 "'tol'+ w_inf, w_inf = -1/inf_P psi or 1/sup_P psi).\n"
                                          ))
-                w <- if(sign(biastype)>0) -1/q(L2deriv)(0) else 1/q(L2deriv)(1)
+                w <- if(sign(biastype)>0) -1/q.l(L2deriv)(0) else 1/q.l(L2deriv)(1)
                 if(warn) cat(warntxt)
                 bd <- tol + w
                 while (!is.list(try(
