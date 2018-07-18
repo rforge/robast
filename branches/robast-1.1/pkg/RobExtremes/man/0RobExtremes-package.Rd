@@ -32,13 +32,30 @@ robust estimators, with LDEstimators (in general, and with \code{medkMAD},
 Package: \tab RobExtremes \cr
 Version: \tab 1.1.0 \cr
 Date: \tab 2018-07-18 \cr
-Depends: \tab R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 1.0), robustbase(>= 0.8-0),
-evd, actuar \cr
-Suggests: \tab RUnit (>= 0.4.26), ismev (>= 1.39)\cr
+Title: Optimally Robust Estimation for Extreme Value Distributions
+Description: Optimally robust estimation for extreme value distributions using S4 classes and
+        methods (based on packages distr, distrEx, distrMod, RobAStBase, and ROptEst).
+Depends:\tab R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 1.0), robustbase(>= 0.8-0),
+        evd, actuar \cr
+Suggests: \tab RUnit (>= 0.4.26), ismev (>= 1.39) \cr
 Imports: \tab RobAStRDA, distr, distrEx, RandVar, RobAStBase, startupmsg \cr
+Authors:
+\tab Bernhard Spangl, [contributed smoothed grid values of the LMs]\cr
+\tab Sascha Desmettre [contributed smoothed grid values of the LMs]\cr
+\tab Eugen Massini [contributed an interactive smoothing routine for \cr
+\tab smoothing the LMs and smoothed grid values of the LMs] \cr
+\tab Daria Pupashenko [contributed MDE-estimation for GEV distribution in \cr
+\tab the framework of her PhD thesis 2011--14]\cr
+\tab Gerald Kroisandt [contributed testing routines]\cr
+\tab Nataliya Horbenko ["aut","cph"] \cr
+\tab Matthias Kohl ["aut", "cph"]\cr
+\tab Peter Ruckdeschel ["cre", "aut", "cph"],\cr
+\tab peter.ruckdeschel@uni-oldenburg.de\cr
 ByteCompile: \tab yes \cr
+LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
+Encoding: \tab latin1 \cr
 SVNRevision: \tab 940 \cr
 }
 }
@@ -192,7 +209,7 @@ Nataliya Horbenko \email{nhorbenko@gmail.com},\cr
 \references{
 M. Kohl (2005): \emph{Numerical Contributions to the Asymptotic
 Theory of Robustness.} PhD Thesis. Bayreuth. Available as
-\url{http://www.stamats.de/ThesisMKohl.pdf}
+\url{http://r-kurs.de/RRlong.pdf}
 
 P. Ruckdeschel, M. Kohl, T. Stabla, F. Camphausen (2006):
 S4 Classes for Distributions, \emph{R News}, \emph{6}(2), 2-6. 
@@ -203,8 +220,7 @@ Infinitesimally Robust Estimation in General Smoothly Parametrized Models.
 \emph{Stat. Methods Appl.}, \bold{19}, 333--354.\cr
 
 Ruckdeschel, P. and Horbenko, N. (2011): Optimally-Robust Estimators in Generalized
-Pareto Models. ArXiv 1005.1476. To appear at \emph{Statistics}.
-DOI: 10.1080/02331888.2011.628022. \cr
+Pareto Models. \emph{Statistics}. \bold{47}(4), 762--791.\cr
 
 Ruckdeschel, P. and Horbenko, N. (2012): Yet another breakdown point notion:
 EFSBP --illustrated at scale-shape models. \emph{Metrika}, \bold{75}(8),
