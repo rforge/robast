@@ -18,7 +18,7 @@ setMethod("rescaleFunction", signature(L2Fam="GParetoFamily"),
       distr <- distribution(L2Fam)
       scaleList <- list(scaleX = substitute(TRUE)
                         ,scaleX.fct = substitute(p(distr))
-                        ,scaleX.inv = substitute(q(distr))
+                        ,scaleX.inv = substitute(q.l(distr))
                         ,scaleY = substitute(TRUE)
                         ,scaleY.fct = substitute(pnorm)
                         ,scaleY.inv = substitute(qnorm)

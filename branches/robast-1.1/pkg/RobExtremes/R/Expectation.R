@@ -59,7 +59,7 @@ setMethod("E", signature(object = "DistributionsIntegratingByQuantiles",
         if(!is.null(dots$useApply)) useApply <- dots$useApply
         dots.withoutUseApply$useApply <- NULL
         integrand <- function(x, dfun, ...){   di <- dim(x)
-                                               y <- q(object)(x)##quantile transformation
+                                               y <- q.l(object)(x)##quantile transformation
                                                if(useApply){
                                                     funy <- sapply(y,fun, ...)
                                                     dim(y) <- di

@@ -7,7 +7,7 @@ asvarMedkMAD <- function( model, k=1){
   beta <- par0[1]; xi <- par0[2]
 
   M <- kMAD(model@distribution, k=k)
-  m <- q(model)(.5)
+  m <- q.l(model)(.5)
 
   x1.0 <- m - M
   x2.0 <- m + k * M
