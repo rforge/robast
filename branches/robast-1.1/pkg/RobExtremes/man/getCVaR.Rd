@@ -49,7 +49,7 @@ Journal of Operational Risk 6(2), 3--30.
   GPD <- GParetoFamily(loc=20480, scale=7e4, shape=0.3)
   data <- r(GPD)(500)
   getCVaR(data,GPD,0.99)
-  \dontrun{ # to reduce checking time
+  \donttest{ # to reduce checking time
   getVaR(data,GPD,0.99)
   getEL(data,GPD,5)
   getVaR(data,GPD,0.99, rob=FALSE)

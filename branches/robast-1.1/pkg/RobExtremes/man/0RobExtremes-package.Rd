@@ -30,15 +30,16 @@ robust estimators, with LDEstimators (in general, and with \code{medkMAD},
 \details{
 \tabular{ll}{
 Package: \tab RobExtremes \cr
-Version: \tab 1.1 \cr
-Date: \tab 2017-04-23 \cr
-Depends: \tab R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 0.9), robustbase(>= 0.8-0), evd, actuar \cr
+Version: \tab 1.1.0 \cr
+Date: \tab 2018-07-18 \cr
+Depends: \tab R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 1.0), robustbase(>= 0.8-0),
+evd, actuar \cr
 Suggests: \tab RUnit (>= 0.4.26), ismev (>= 1.39)\cr
 Imports: \tab RobAStRDA, distr, distrEx, RandVar, RobAStBase, startupmsg \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 932 \cr
+SVNRevision: \tab 940 \cr
 }
 }
 \section{Classes}{
