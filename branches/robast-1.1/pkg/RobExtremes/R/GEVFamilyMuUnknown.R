@@ -363,8 +363,8 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
           G20 <- gamma(2*k)
           G10 <- gamma(k)
           G11 <- digamma(k)*gamma(k)
-          G01 <- -0.57721566490153 # digamma(1)
-          G02 <- 1.9781119906559 #trigamma(1)+digamma(1)^2
+          G01 <- ..dig1 # digamma(1)
+          G02 <- ..trig1dig1sq #trigamma(1)+digamma(1)^2
           x0 <- k1^2*2*k
           I00 <- (2*k)*k1^2*G20/sc^2
           I01 <- (G10-k1*2*G20)*k1/sc^2
@@ -373,7 +373,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
           I11 <- I11/sc^2/k^2
           I12 <- G20*(-x0)+ G10*(k^3+4*k^2+3*k) - k1
           I12 <- I12 + G11*k^2*k1 -G01*k
-          I12 <- -I12/sc/k^3
+          I12 <- I12/sc/k^3
           I22 <- G20*x0 +k1^2 -G10*(x0+2*k*k1)
           I22 <- I22 - G11*2*k^2*k1 + G01*2*k*k1+k^2 *G02
           I22 <- I22 /k^4
@@ -387,7 +387,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
         }
         mat <- PosSemDefSymmMatrix(matrix(c(I00,I01,I02,I01,I11,I12,I02,I12,I22),3,3))
         cs <- c("location",scaleshapename)
-        dimnames(mat) <- list(lcs,lcs)
+        dimnames(mat) <- list(cs,cs)
         return(mat)
     }
 
@@ -471,4 +471,5 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
 ..I13 <- -..gam0(2)+..gam1(3)/2-..gam1(2)/2
 ..I23 <- -..gam2(3)/2+..gam2(2)-..gam2(1)/2+..gam1(2)-..gam1(1)
 ..I33 <- (..gam3(3)-2*..gam3(2)+..gam3(1))/4+..gam2(1)-..gam2(2)+..gam1(1)
-
+..dig1 <- digamma(1)
+..trig1dig1sq <- trigamma(1)+digamma(1)^2
