@@ -3,7 +3,7 @@
 setMethod("comparePlot", signature("IC","IC"),
     function(obj1,obj2, obj3 = NULL, obj4 = NULL, data = NULL,
              ..., withSweave = getdistrOption("withSweave"),
-             forceSameModel = forceSameModel,
+             forceSameModel =  FALSE,
              main = FALSE, inner = TRUE, sub = FALSE,
              col = par("col"), lwd = par("lwd"), lty,
              col.inner = par("col.main"), cex.inner = 0.8,
