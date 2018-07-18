@@ -202,12 +202,14 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
   ###
   ### 4. evaluate the call (i.e., produce the graphic)
   ###
-  eval(mycall)
+  retV <- eval(mycall)
+  retV$wrapcall <- mc
+  retV$wrappedcall <- mycall
   ###
   ### 5. return the call (if withCall==TRUE)
   ###
   if(mc$withCall) print(mycall)
-
+  return(invisible(retV))
 }
 
 
@@ -393,11 +395,14 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
   ###
   ### 4. evaluate the call (i.e., produce the graphic)
   ###
-  eval(mycall)
+  retV <- eval(mycall)
+  retV$wrapcall <- mc
+  retV$wrappedcall <- mycall
   ###
   ### 5. return the call (if withCall==TRUE)
   ###
   if(mc$withCall) print(mycall)
+  return(invisible(retV))
 
 }
 
@@ -599,11 +604,14 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
   ###
   ### 4. evaluate the call (i.e., produce the graphic)
   ###
-  eval(mycall)
+  retV <- eval(mycall)
+  retV$wrapcall <- mc
+  retV$wrappedcall <- mycall
   ###
   ### 5. return the call (if withCall==TRUE)
   ###
   if(mc$withCall) print(mycall)
+  return(invisible(retV))
 
 }
 
