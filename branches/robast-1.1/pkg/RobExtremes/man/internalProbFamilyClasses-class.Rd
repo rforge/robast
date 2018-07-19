@@ -60,11 +60,11 @@ of the parameter in the class \code{GEVFamilyMuUnknown}.\cr
 }
 
 \seealso{\code{\link[distrMod]{L2ParamFamily-class}},
-\code{\link[distrMod]{L2ScaleShapeUnion-class}},
+\code{\link[distrMod:internalClassUnions-class]{L2ScaleShapeUnion-class}},
 \code{\link[distrMod]{L2LocationScaleFamily-class}},
-\code{\link[distrMod]{ParamWithScaleAndShapeFamParameter-class}},
-\code{\link[distrMod]{ParamWithScaleFamParameter-class}},
-\code{\link[distrMod]{ParamWithShapeFamParameter-class}}.
+\code{\link[distrMod:ParamFamParameter-class]{ParamWithScaleAndShapeFamParameter-class}},
+\code{\link[distrMod:ParamFamParameter-class]{ParamWithScaleFamParameter-class}},
+\code{\link[distrMod:ParamFamParameter-class]{ParamWithShapeFamParameter-class}}.
 }
 
 \author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
