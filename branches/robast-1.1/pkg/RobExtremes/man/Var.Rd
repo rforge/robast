@@ -39,7 +39,6 @@
 \alias{Sn,Gammad-method}
 \alias{Sn,Weibull-method}
 \alias{Sn,GEV-method}
-\alias{Sn,GEVU-method}
 \alias{Sn,DiscreteDistribution-method}
 \alias{Qn}
 \alias{Qn-methods}
@@ -94,7 +93,6 @@ Sn(x, ...)
 \S4method{Sn}{AffLinDistribution}(x,  ...)
 \S4method{Sn}{Norm}(x,  ...)
 \S4method{Sn}{GPareto}(x,  ...)
-\S4method{Sn}{GEVU}(x,  ...)
 \S4method{Sn}{GEV}(x,  ...)
 \S4method{Sn}{Gammad}(x,  ...)
 \S4method{Sn}{Weibull}(x,  ...)
@@ -224,8 +222,8 @@ var(G)
 IQR(G)
 
 ## note the timing
-Sn(GPareto(shape=0.5,scale=2))
-Sn(as(GPareto(shape=0.5,scale=2),"AbscontDistribution"))
+system.time(print(Sn(GPareto(shape=0.5,scale=2))))
+system.time(print(Sn(as(GPareto(shape=0.5,scale=2),"AbscontDistribution"))))
 
 }
 \seealso{\code{\link[distrEx]{Var}},\cr
