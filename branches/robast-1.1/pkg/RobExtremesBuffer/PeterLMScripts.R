@@ -31,7 +31,7 @@
 #
 ## evtl naechste Zeile modifizieren
 baseDir0 <- "C:/rtest/RobASt"
-interpolDir <- "branches/robast-1.0/pkg/RobExtremes/inst/AddMaterial/interpolation"
+interpolDir <- "branches/robast-1.1/pkg/RobExtremes/inst/AddMaterial/interpolation"
 interpolFile <- "plotInterpol.R"
 ##
 # (1) Paket laden
@@ -164,7 +164,7 @@ if(getRversion()<"2.16"){
 ## folgenden Code einsourcen:
 ### change adequately:
 .baseDir.loc <- "C:/rtest/RobASt"
-.basepath <- file.path(.baseDir.loc,"branches/robast-0.9/pkg")
+.basepath <- file.path(.baseDir.loc,"branches/robast-1.1/pkg")
 myRDA <- file.path(.basepath,"RobAStRDA/R/sysdata.rda")
 require(RobAStRDA)
 RobAStRDA:::.computeInterpolators(myRDA, myRDA,withSmoothFct = TRUE)
