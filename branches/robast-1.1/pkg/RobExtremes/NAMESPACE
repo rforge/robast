@@ -42,7 +42,7 @@ exportMethods("validParameter",
               "+", "*",
               "Min", "Min<-",
               "E", "var", "IQR", "skewness", "kurtosis", "median", "dispersion")
-exportMethods{".checkEstClassForParamFamily"}
+exportMethods(".checkEstClassForParamFamily")
 exportMethods("locscaleshapename","locscalename","scaleshapename",
               "locationname","scalename","shapename","locscaleshapename<-")
 exportMethods("modifyModel", "getStartIC")
