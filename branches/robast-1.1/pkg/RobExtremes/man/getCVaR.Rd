@@ -45,11 +45,11 @@ Journal of Operational Risk 6(2), 3--30.
 \author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 \seealso{\code{\link{GParetoFamily}}, \code{\link{GEVFamily}}, \code{\link{WeibullFamily}}, \code{\link{GammaFamily}}}
 \examples{
+  \donttest{ # to reduce checking time
   set.seed(123)
   GPD <- GParetoFamily(loc=20480, scale=7e4, shape=0.3)
   data <- r(GPD)(500)
   getCVaR(data,GPD,0.99)
-  \donttest{ # to reduce checking time
   getVaR(data,GPD,0.99)
   getEL(data,GPD,5)
   getVaR(data,GPD,0.99, rob=FALSE)

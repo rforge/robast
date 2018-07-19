@@ -1,4 +1,4 @@
-.getXiGrid <- function(){c(0.1,seq(-0.48,5,by=0.5))}
+.getXiGrid <- function(){c(-0.48,-0.1,0,0.1,0.4,1,3,6)}
 
 
 .getBetaXiGEV <- function(x, mu, xiGrid = .getXiGrid(), withPos=TRUE, secLevel = 0.7,

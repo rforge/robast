@@ -47,7 +47,7 @@ Class \code{GEVkStepEstimate} extends classes \code{GEVEstimate},
 %\note{}
 \seealso{\code{\link[distrMod]{Estimate-class}},
 \code{\link[distrMod]{MCEstimate-class}},
-\code{\link[distrMod]{kStepEstimate-class}},
+\code{\link[RobAStBase]{kStepEstimate-class}},
 \code{\link{LDEstimate-class}}}
 \concept{GPD distribution}
 \concept{GEV distribution}

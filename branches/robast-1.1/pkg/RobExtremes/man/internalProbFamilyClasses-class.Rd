@@ -3,12 +3,20 @@
 \alias{InternalProbFamilyClasses-class}
 \alias{L2LocScaleShapeUnion-class}
 \alias{ParamWithLocAndScaleAndShapeFamParameter-class}
+\alias{locscaleshapename}
+\alias{locscaleshapename-methods}
 \alias{locscaleshapename,L2LocScaleShapeUnion-method}
 \alias{locscalename,L2LocScaleShapeUnion-method}
 \alias{scaleshapename,L2LocScaleShapeUnion-method}
+\alias{locationname}
+\alias{locationname-methods}
 \alias{locationname,L2LocScaleShapeUnion-method}
 \alias{scalename,L2LocScaleShapeUnion-method}
+\alias{shapename}
+\alias{shapename-methods}
 \alias{shapename,L2LocScaleShapeUnion-method}
+\alias{locscaleshapename<-}
+\alias{locscaleshapename<--methods}
 \alias{locscaleshapename<-,L2LocScaleShapeUnion-method}
 \title{Internal Classes for Method Dispatch in 'ProbFamliy' Classes}
 \description{Internal S4 classes for method dispatch in 'L2ParamFamily' and

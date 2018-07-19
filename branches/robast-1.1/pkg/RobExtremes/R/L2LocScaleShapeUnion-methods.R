@@ -16,7 +16,7 @@ setMethod("locationname", signature(object = "L2LocScaleShapeUnion"),
            function(object) object@locscaleshapename["location"])
 
 
-setReplaceMethod("locscaleshapename", "L2LocationScaleUnion",
+setReplaceMethod("locscaleshapename", "L2LocScaleShapeUnion",
     function(object, value){
         if(length(value)!=3)
            stop("value of slot 'locscaleshapename' must be of length three")

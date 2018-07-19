@@ -27,8 +27,7 @@ exportClasses("Gumbel", "Pareto", "GPareto", "GEV")
 exportClasses("GParetoFamily", "GumbelLocationFamily", "WeibullFamily",
               "ParetoFamily", "GEVFamily", "GEVFamilyMuUnknown")
 exportClasses("DistributionsIntegratingByQuantiles")
-exportClasses("ParamWithLocAndScaleAndShapeFamParameterUnion",
-              "ParamWithLocAndScaleAndShapeFamParameter")
+exportClasses("ParamWithLocAndScaleAndShapeFamParameter")
 exportClasses("L2LocScaleShapeUnion")
 exportClasses("GPDEstimate","GPDMCEstimate","GPDLDEstimate",
               "GPDkStepEstimate","GEVEstimate","GEVLDEstimate",
