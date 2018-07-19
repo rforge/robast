@@ -19,7 +19,7 @@ The S4 classes described here are \code{GPDEstimate}, \code{GEVEstimate},
  \code{GPDMCEstimate}, \code{GEVMCEstimate},
  \code{GPDLDEstimate}, \code{GEVLDEstimate},
  \code{GPDkStepEstimate}, \code{GEVkStepEstimate}.}
-}
+
 \section{Objects from the Class}{These classes are used internally
 to provide specific S4 methods for different estimators later on;
 thus, there are no generating functions.}
