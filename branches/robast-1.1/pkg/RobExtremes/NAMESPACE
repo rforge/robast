@@ -9,8 +9,10 @@ import("distrMod")
 import("robustbase")
 import("RobAStBase")
 import("ROptEst")
-import("actuar")
-import("evd")
+importFrom("actuar", "qpareto1", "ppareto1", "dpareto1", "rpareto1")
+importFrom("evd", "qgumbel", "pgumbel", "dgumbel", "rgumbel",
+           "qgpd", "pgpd", "dgpd", "rgpd",
+		   "qgev", "pgev", "dgev", "rgev")
 importFrom("startupmsg", "buildStartupMessage", "infoShow")
 importFrom("stats", "dunif", "integrate", "optimize", "pnorm",
              "predict", "qnorm", "quantile", "smooth.spline", "uniroot")
@@ -25,6 +27,12 @@ exportClasses("Gumbel", "Pareto", "GPareto", "GEV")
 exportClasses("GParetoFamily", "GumbelLocationFamily", "WeibullFamily",
               "ParetoFamily", "GEVFamily", "GEVFamilyMuUnknown")
 exportClasses("DistributionsIntegratingByQuantiles")
+exportClasses("ParamWithLocAndScaleAndShapeFamParameterUnion",
+              "ParamWithLocAndScaleAndShapeFamParameter")
+exportClasses("L2LocScaleShapeUnion")
+exportClasses("GPDEstimate","GPDMCEstimate","GPDLDEstimate",
+              "GPDkStepEstimate","GEVEstimate","GEVLDEstimate",
+			  "GEVkStepEstimate","GEVMCEstimate")			  
 exportMethods("initialize", "show", "rescaleFunction") 
 exportMethods("loc", "loc<-", "kMAD", "Sn", "Qn")
 exportMethods("validParameter",
@@ -34,10 +42,12 @@ exportMethods("validParameter",
               "+", "*",
               "Min", "Min<-",
               "E", "var", "IQR", "skewness", "kurtosis", "median", "dispersion")
+exportMethods{".checkEstClassForParamFamily"}
+exportMethods("locscaleshapename","locscalename","scaleshapename",
+              "locationname","scalename","shapename","locscaleshapename<-")
 exportMethods("modifyModel", "getStartIC")
 exportMethods("moveL2Fam2RefParam",
 			  "moveICBackFromRefParam")			  
-
 export("EULERMASCHERONICONSTANT","APERYCONSTANT")
 export("getCVaR", "getVaR", "getEL")
 export("Gumbel", "Pareto", "GPareto", "GEV")
