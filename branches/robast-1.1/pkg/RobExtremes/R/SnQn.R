@@ -110,7 +110,7 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
 #       sng <- try(getFromNamespace(".Sn", ns = "RobAStRDA"), silent =TRUE)
        if(is(famg,"try-error")) return(Sn(as(x,"AbscontDistribution")))
 #       if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
-       if(!.versionSuff("fun")=="fun.N") return(Sn(as(x,"AbscontDistribution")))
+#       if(!.versionSuff("fun")=="fun.N") return(Sn(as(x,"AbscontDistribution")))
        snf <- famg[["Sn"]][[.versionSuff("fun")]]
        ret <- snf(shape(x))
        if(is.na(ret)) return(Sn(as(x,"AbscontDistribution")))
@@ -130,5 +130,3 @@ setMethod("Sn", signature(x = "Gammad"),
 setMethod("Sn", signature(x = "Weibull"),
     function(x, ...).Sn.intp(x,".Weibull") )
 
-setMethod("Sn", signature(x = "GEVU"),
-    function(x, ...).Sn.intp(x,".GEV") )

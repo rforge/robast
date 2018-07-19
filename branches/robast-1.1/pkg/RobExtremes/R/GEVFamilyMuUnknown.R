@@ -40,7 +40,7 @@ setMethod("validParameter",signature(object="GEVFamilyMuUnknown"),
                tau <- function(theta){th <- theta[2]; names(th) <- "scale"; th}
                Dtau <- function(theta){D <- t(c(0,1,0));rownames(D) <- "scale";D}
             }else{
-               tau <- function(theta){ th <- theta;
+               tau <- function(theta){ th <- theta[1:2];
                                        names(th) <- c("loc","scale");  th}
                Dtau <- function(theta){ D <- t(matrix(c(1,0,0,0,1, 0),3,2))
                                         rownames(D) <- c("loc","scale"); D}
@@ -158,8 +158,8 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
 
     ## parameters
     names(theta) <- c("loc", "scale", "shape")
-    scaleshapename <- c("scale"="scale", "shape"="shape")
-
+#    scaleshapename <- c("scale"="scale", "shape"="shape")
+    locscaleshapename <- c("location"="location", "scale"="scale", "shape"="shape")
 
     btq <- bDq <- btes <- bDes <- btel <- bDel <- NULL
     if(!is.null(p)){
@@ -386,7 +386,7 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
           I22 <- ..I33
         }
         mat <- PosSemDefSymmMatrix(matrix(c(I00,I01,I02,I01,I11,I12,I02,I12,I22),3,3))
-        cs <- c("location",scaleshapename)
+        cs <- locscaleshapename
         dimnames(mat) <- list(cs,cs)
         return(mat)
     }
@@ -398,7 +398,8 @@ GEVFamilyMuUnknown <- function(loc = 0, scale = 1, shape = 0.5,
 
     ## initializing the GPareto family with components of L2-family
     L2Fam <- new("GEVFamilyMuUnknown")
-    L2Fam@scaleshapename <- scaleshapename
+#    L2Fam@scaleshapename <- scaleshapename
+    L2Fam@locscaleshapename <- locscaleshapename
     L2Fam@name <- name
     L2Fam@param <- param
     L2Fam@distribution <- distribution
