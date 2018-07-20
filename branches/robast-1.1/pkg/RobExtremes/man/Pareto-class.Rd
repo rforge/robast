@@ -6,6 +6,7 @@
 \alias{shape<-,Pareto-method}
 \alias{Min,Pareto-method}
 \alias{Min<-,Pareto-method}
+\alias{scale,Pareto-method}
 
 \title{Pareto distribution}
 \description{[borrowed from \pkg{actuar}]:
@@ -56,6 +57,9 @@ Class \code{"Distribution"}, by class \code{"AbscontDistribution"}.
       slot \code{shape} of slot \code{param}. }
 
     \item{Min}{\code{signature(x = "Pareto")}: wrapped access method for
+      slot \code{Min} of slot \code{param}. }
+
+    \item{scale}{\code{signature(x = "Pareto")}: wrapped access method for
       slot \code{Min} of slot \code{param}. }
 
     \item{shape<-}{\code{signature(object = "Pareto")}: wrapped replace method for
