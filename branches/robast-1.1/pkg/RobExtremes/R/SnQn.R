@@ -130,3 +130,5 @@ setMethod("Sn", signature(x = "Gammad"),
 setMethod("Sn", signature(x = "Weibull"),
     function(x, ...).Sn.intp(x,".Weibull") )
 
+setMethod("Sn", signature(x = "Pareto"),
+    function(x, ...).Sn.intp(x,".Pareto") )
