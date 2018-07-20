@@ -120,7 +120,7 @@ ParetoFamily <- function(Min = 1, shape = 0.5, trafo = NULL, start0Est = NULL,
     L2Fam@modifyParam <- modifyPar
     L2Fam@L2derivSymm <- FunSymmList(NonSymmetric())
     L2Fam@L2derivDistrSymm <- DistrSymmList(NoSymmetry())
-    L2derivDistr <- UnivarDistrList(1/shape+log(Min)-log(distribution))
+    L2Fam@L2derivDistr <- UnivarDistrList(1/shape+log(Min)-log(distribution))
 
     L2deriv <- EuclRandVarList(RealRandVariable(list(L2deriv.fct(param)),
                                Domain = Reals()))
