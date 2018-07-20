@@ -5,19 +5,19 @@ setMethod("getStartIC",signature(model = "ParetoFamily", risk = "interpolRisk"),
     xi <- main(param1)
     .modifyIC0 <- function(L2Fam, IC){
               xi0 <- main(param(L2Fam))
-              return(.getPsi.P(xi0, type(risk)))
+              return(.getPsi.P(xi0, L2Fam, type(risk)))
     }
     .modifyIC <- function(L2Fam,IC){
          psi.0 <- .modifyIC0(L2Fam,IC)
          psi.0@modifyIC <- .modifyIC
          return(psi.0)
     }
-    IC0 <- .getPsi.P(xi, type(risk))
+    IC0 <- .getPsi.P(xi, model, type(risk))
     IC0@modifyIC <- .modifyIC
     return(IC0)
     })
 
-.getPsi.P <- function(xi, type){
+.getPsi.P <- function(xi, L2Fam, type){
    ## the respective LMs have been computed ahead of time
    ## and stored in sysdata.rda of this package
    ## the code for this computation is in AddMaterial/getLMPareto.R

@@ -8,7 +8,7 @@
 ## Access Methods
 setMethod("shape", "ParetoParameter", function(object) object@shape)
 setMethod("Min", "ParetoParameter", function(object) object@Min)
-setMethod("scale", "GEVParameter",
+setMethod("scale", "ParetoParameter",
            function(x, center = TRUE, scale = TRUE) x@Min)
 ### odd arg-list due to existing function in base package
 
@@ -49,6 +49,8 @@ Pareto <- function(shape = 1, Min = 1)
 ## wrapped access methods
 setMethod("shape", "Pareto", function(object) shape(param(object)))
 setMethod("Min", "Pareto", function(object) Min(param(object)))
+setMethod("scale", "Pareto",
+           function(x, center = TRUE, scale = TRUE) Min(param(x)))
 
 ## wrapped replace methods
 setMethod("shape<-", "Pareto", function(object, value)

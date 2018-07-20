@@ -11,11 +11,46 @@
 version 1.1
 #######################################
 
+user-visible CHANGES:
++ revised DESCRIPTION and staring help page	
++ full robustness support now for ParetoFamily
++ moved "actuar" from require to imports in DESCRIPTION
++ NAMESPACE: export some formerly internal S4 classes + accessors and replacers for 
+             locscaleshapename; specify from which package (actuar,evd) to take gumbel p,d,q,r
++ smaller grid of xi values as starting values for GPD and GEVD for speed reasons
++ new accessor method scale for Pareto distribution
+
+minor changes:
++ new Rd files for now exported (formerly internal) intermediate classes 
++ added timings for Sn 			 
++ allow for versions < 3.0 when reading grid from sysdata.rda
+
+bug fixes:
++ fixed a sign error in FisherInfo.fct for GEV(U)
++ R CMD check did not like "usage" section in internal-methods.Rd, so we commented it out
++ in .define.tau.Dtau.withMu  (only need theta[1:2])
++ in getStartIC.R (in names risk type is without ".")
++ fixed modifyIC in "getStartIC",signature(model = "L2LocScaleShapeUnion")
++ some fixes in .checkEstClassForParamFamiliyMethods
++ class ParamWithLocAndScaleAndShapeFamParameter now contains ParamWithScaleAndShapeFamParameter
++ in ParetoFamily.R L2derivDistr was not attached to return value
+
 under the hood:
 + prepared everything for first release on CRAN
++ ParetoFamily now has interpolRisks
++ ParetoFamily distribution now has speed up for Sn
++ updated/prepared plotOutlyingness.R
++ fixed unit test suite for zero length
++ changed \dontrun in \donttest in examples
 + wherever possible also use q.l internally instead of q to 
   provide functionality in IRKernel
-
++ in addition, now use slot locscaleshapename in generating function of GEVFamilyMuUnknown
++ new generics/methods for locationname, locscaleshapename(<-), scaleshapename, locscalename, shapename, scalename 
++ use prefix evd:: to clarify which [p,d,q,r]gumbel to take
++ L2LocScaleShapeUnion gains slot locscaleshapename = "character" / looses slot scaleshapename = "character"
++ added some more specific links to other Rd files in distrMod
++ added code for the computation of LMs for ParetoFamily
+  
 #######################################
 version 1.0
 #######################################
