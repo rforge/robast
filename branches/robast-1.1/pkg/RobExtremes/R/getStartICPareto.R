@@ -21,24 +21,25 @@ setMethod("getStartIC",signature(model = "ParetoFamily", risk = "interpolRisk"),
    ## the respective LMs have been computed ahead of time
    ## and stored in sysdata.rda of this package
    ## the code for this computation is in AddMaterial/getLMPareto.R
+   .PLM <- getFromNamespace(".ParetoLM", ns = "RobExtremes")
    if(type==".MBRE"){
-         b  <- xi*.ParetoLM$MBR["b"]
-         a  <- xi*.ParetoLM$MBR["a"]
-         aw <-    .ParetoLM$MBR["aw"]
-         A  <- xi*.ParetoLM$MBR["A"]
-         Aw <- xi*.ParetoLM$MBR["Aw"]
+         b  <- xi*.PLM$MBR["b"]
+         a  <- xi*.PLM$MBR["a"]
+         aw <- 1/xi*.PLM$MBR["aw"]
+         A  <- matrix(xi^2*.PLM$MBR["A"],1,1)
+         Aw <- matrix(xi^2*.PLM$MBR["Aw"],1,1)
    }else{if(type==".RMXE"){
-         b  <- xi*.ParetoLM$RMX["b"]
-         a  <- xi*.ParetoLM$RMX["a"]
-         aw <-    .ParetoLM$RMX["aw"]
-         A  <- xi*.ParetoLM$RMX["A"]
-         Aw <- xi*.ParetoLM$RMX["Aw"]
+         b  <- xi*.PLM$RMX["b"]
+         a  <- xi*.PLM$RMX["a"]
+         aw <- 1/xi*.PLM$RMX["aw"]
+         A  <- matrix(xi^2*.PLM$RMX["A"],1,1)
+         Aw <- matrix(xi^2*.PLM$RMX["Aw"],1,1)
       }else{if(type==".OMSE"){
-         b  <- xi*.ParetoLM$OMS["b"]
-         a  <- xi*.ParetoLM$OMS["a"]
-         aw <-    .ParetoLM$OMS["aw"]
-         A  <- xi*.ParetoLM$OMS["A"]
-         Aw <- xi*.ParetoLM$OMS["Aw"]
+         b  <- xi*.PLM$OMS["b"]
+         a  <- xi*.PLM$OMS["a"]
+         aw <- 1/xi*.PLM$OMS["aw"]
+         A  <- matrix(xi^2*.PLM$OMS["A"],1,1)
+         Aw <- matrix(xi^2*.PLM$OMS["Aw"],1,1)
          }
       }
    }
