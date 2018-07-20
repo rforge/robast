@@ -8,6 +8,9 @@
 ## Access Methods
 setMethod("shape", "ParetoParameter", function(object) object@shape)
 setMethod("Min", "ParetoParameter", function(object) object@Min)
+setMethod("scale", "GEVParameter",
+           function(x, center = TRUE, scale = TRUE) x@Min)
+### odd arg-list due to existing function in base package
 
 ## Replace Methods
 setReplaceMethod("shape", "ParetoParameter", 
