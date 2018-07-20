@@ -1,4 +1,14 @@
 ### getLMs for Pareto
+### produced Jul 20, 2018 P.Ruckdeschel
+
+## note:: the only param to be estimated in the smooth model framework
+##        is the shape k
+##        now, independent of fixed parameter Min
+#         L2deriv in this case is distributed as (1-Exp(1))/k
+##        so shape k acts as a scaling parameter, and we can compute
+##        LMs under reference value k = 1, Min = 1,
+##        the respective for general k OptICs then are simply  k \times OptIC(k=1)
+
 .checkIC <- function(IC,L2deriv,Distr){
    IC. <- as(diag(dimension(IC@Curve)) %*% IC@Curve, "EuclRandVariable")
    IC.. <- function(x) sapply(x,function(y) c(IC.@Map[[1]](q.l(Distr)(y))))
