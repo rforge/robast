@@ -39,6 +39,7 @@
 \alias{Sn,Gammad-method}
 \alias{Sn,Weibull-method}
 \alias{Sn,GEV-method}
+\alias{Sn,Pareto-method}
 \alias{Sn,DiscreteDistribution-method}
 \alias{Qn}
 \alias{Qn-methods}
@@ -93,6 +94,7 @@ Sn(x, ...)
 \S4method{Sn}{AffLinDistribution}(x,  ...)
 \S4method{Sn}{Norm}(x,  ...)
 \S4method{Sn}{GPareto}(x,  ...)
+\S4method{Sn}{Pareto}(x,  ...)
 \S4method{Sn}{GEV}(x,  ...)
 \S4method{Sn}{Gammad}(x,  ...)
 \S4method{Sn}{Weibull}(x,  ...)
@@ -194,6 +196,8 @@ Qn(x, ...)
   \item{\code{Sn}, \code{signature(x = "Gammad")}:}{
     speeded up using interpolation grid.}
   \item{\code{Sn}, \code{signature(x = "Weibull")}:}{
+    speeded up using interpolation grid.}
+  \item{\code{Sn}, \code{signature(x = "Pareto")}:}{
     speeded up using interpolation grid.}
 
   \item{\code{Qn}, \code{signature(x = "Norm")}:}{
