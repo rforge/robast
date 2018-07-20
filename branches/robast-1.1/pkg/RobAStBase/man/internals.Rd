@@ -23,10 +23,10 @@ These functions are used internally by package RobAStBase.}
   \item{list0}{a list}
   \item{X}{like \code{sapply}: a vector (atomic or list) or an \code{expression} object. Other objects
   (including classed objects) will be coerced by \code{base::as.list}.}
-  \item{FUN}{like \code{sapply}: the function to be applied to each element of \code{X}. See also \code{\link[base]{sapply}}}
+  \item{FUN}{like \code{sapply}: the function to be applied to each element of \code{X}. See also \code{\link[base:lapply]{sapply}}}
   \item{\dots}{like \code{sapply}: optional arguments to \code{FUN}.}
   \item{simplify}{like \code{sapply}: logical or character string;
-  should the result be simplified to a vector, matrix or higher dimensional array if possible? See also \code{\link[base]{sapply}}}
+  should the result be simplified to a vector, matrix or higher dimensional array if possible? See also \code{\link[base:lapply]{sapply}}}
   \item{USE.NAMES}{like \code{sapply}: logical; if \code{TRUE} and if \code{X} is character,
   use \code{X} as names for the result unless it had names already.}
 }
