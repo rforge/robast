@@ -19,7 +19,10 @@ for Lagrange multipliers or LDEstimators in package \pkg{RobExtremes},
 to be stored in the respective \file{sysdata.rda} file. }
 
 \usage{
-.getPsi(param, fct, L2Fam , type)
+.getPsi(param, fct, L2Fam , type, withMakeIC)
+.getPsi.wL(param, fct, L2Fam , type, withMakeIC)
+.getPsi.P(xi, L2Fam , type, withMakeIC)
+
 
 .is.na.Psi(param, fct, nam = "shape")
 
@@ -99,11 +102,18 @@ to be stored in the respective \file{sysdata.rda} file. }
   \item{namFzus}{character; infix for the name of the \file{.csv}-File
                  to which the results are written; used to split the
                  work on xi-grids into chunks.}
+  \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
+        \code{makeIC} before return.}
 }
 \details{
    \code{.getpsi} reads the respective interpolating function
     from an object from \file{sysdata.rda} and generates a respective
    \code{HampelIC} object by a call to  \code{generateIC}.
+   \code{.getpsi.wL} does the same thing for the 3-dim model
+    \code{GEVFamilyMuUnknown}.
+   Last, due to scale equivariance, or the \code{ParetoFamliy}, \code{.getpsi.P}
+   reads the LM's for the reference parameter and then generates
+   the  respective \code{HampelIC} object by a call to  \code{generateIC}.
 
    \code{.is.na.Psi} checks whether the shape parameter already lies
    beyond the range for which inter-/extrapolation is admitted
