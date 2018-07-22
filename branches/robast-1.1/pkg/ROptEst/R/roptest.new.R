@@ -89,7 +89,8 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     withLogScale = TRUE,..withCheck=FALSE,
                     withTimings = FALSE, withMDE = NULL,
                     withEvalAsVar = NULL){
-    dots <- match.call(expand.dots=FALSE)[["..."]]
+    mc <- match.call(expand.dots=FALSE)
+    dots <- mc[["..."]]
     scalename <- dots[["scalename"]]
     nbCtrl <- list()
     nbCtrl[["neighbor"]] <- if(!missing(neighbor)) neighbor else ContNeighborhood()
@@ -115,12 +116,15 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     kStepCtrl[["withLogScale"]] <- if(!missing(withLogScale)) withLogScale else TRUE
     kStepCtrl[["withEvalAsVar"]] <- if(!missing(withEvalAsVar)) withEvalAsVar else NULL
 
-    return(robest(x=x, L2Fam=L2Fam,  fsCor = fsCor,
+    retV <- robest(x=x, L2Fam=L2Fam,  fsCor = fsCor,
            risk = risk, steps = steps, verbose = verbose,
            OptOrIter = OptOrIter, nbCtrl = nbCtrl,
            startCtrl = startCtrl, kStepCtrl = kStepCtrl,
            na.rm = na.rm, ..., debug = ..withCheck,
-           withTimings = withTimings))
+           withTimings = withTimings)
+    attr(mc,"robest.call") <- retV@estimate.call
+    retV@estimate.call <- mc
+    return(retV)
 }
 #roptest(x=1:10,L2Fam=GammaFamily(),also=3,..withCheck=TRUE)
 
