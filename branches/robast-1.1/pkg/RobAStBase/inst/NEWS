@@ -19,7 +19,9 @@ information needed to produce the respective plot, which at a later stage could 
 \code{ggplot}) to produce the plot in a different framework. A more detailed description will follow in a subsequent version.
 + new methods for returnlevelplot for RobModel, InfRobModel, kStepEstimate (as qqplot) 
 + unified return values for qqplot
-             
++ oneStepEstimator and kStepEstimator gain an argument withMakeIC
++ optIC gains an argument withMakeIC             
+
 bug fix: 
 + slot modifyIC was set to a wrong value in makeIC / former (potential) move was overridden 
  

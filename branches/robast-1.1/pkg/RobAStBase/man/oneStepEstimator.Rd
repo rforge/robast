@@ -10,7 +10,7 @@ oneStepEstimator(x, IC, start = NULL,
       useLast = getRobAStBaseOption("kStepUseLast"),
       withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
       IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
-      na.rm = TRUE, startArgList = NULL, ...)
+      na.rm = TRUE, startArgList = NULL, withMakeIC = FALSE, ...)
 }
 \arguments{
   \item{x}{ sample }
@@ -35,6 +35,8 @@ oneStepEstimator(x, IC, start = NULL,
    the sample \code{x}, and the model \code{eval(CallL2Fam(IC))}; in case \code{IC}
    is not of class \code{IC}, the model argument \code{L2Fam} will be set
    to \code{NULL}.}
+  \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
+        \code{makeIC} before return.}
   \item{...}{ additional arguments }
 }
 \details{

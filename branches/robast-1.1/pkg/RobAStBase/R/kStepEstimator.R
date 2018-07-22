@@ -12,7 +12,8 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                            withICList = getRobAStBaseOption("withICList"),
                            withPICList = getRobAStBaseOption("withPICList"),
                            na.rm = TRUE, startArgList = NULL, ...,
-                           withLogScale = TRUE, withEvalAsVar = TRUE){
+                           withLogScale = TRUE, withEvalAsVar = TRUE,
+                           withMakeIC = FALSE){
 
         if(missing(IC.UpdateInKer)) IC.UpdateInKer <- NULL
 ## save call
@@ -235,6 +236,11 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                if(i>1){
                   IC <- upd$IC
                   L2Fam <- upd$L2Fam
+                  modif.old <- modifyIC(IC)
+                  if((i==steps)&&withMakeIC){
+                     IC <- makeIC(IC,L2Fam)
+                     IC@modifyIC <- modif.old
+                  }
                   Param <- upd$Param
                   tf <- trafo(L2Fam, Param)
                   withPre <- FALSE

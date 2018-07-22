@@ -13,7 +13,8 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
       withICList = getRobAStBaseOption("withICList"),
       withPICList = getRobAStBaseOption("withPICList"),
       na.rm = TRUE, startArgList = NULL, ...,
-      withLogScale = TRUE, withEvalAsVar = TRUE)
+      withLogScale = TRUE, withEvalAsVar = TRUE,
+      withMakeIC = FALSE)
 }
 \arguments{
   \item{x}{ sample }
@@ -47,6 +48,8 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
    backtransformed afterwards (default). This avoids crossing 0. }
   \item{withEvalAsVar}{logical; if \code{TRUE} (default), tells R to evaluate
    the asymptotic variance or just to produces a call to do so.}
+  \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
+        \code{makeIC} before return.}
 }
 \details{
   Given an initial estimation \code{start}, a sample \code{x} 
