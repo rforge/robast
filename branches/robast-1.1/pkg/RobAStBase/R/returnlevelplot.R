@@ -1,20 +1,10 @@
 ################################################################
-# QQ - Plot functions in package RobAStBase
+# Returnlevel - Plot functions in package RobAStBase
 ################################################################
 
 
-
-.fadeColor <- function(col,x, bg = "white"){
- ind <- seq(along=x)
- col <- .makeLenAndOrder(col,ind)
- colx <- t(sapply(ind,function(i) colorRamp(c(bg,col[i]))(x[i])))
- colv2col <- function(colvec)
-   rgb(red = colvec[1], green = colvec[2], blue = colvec[3], maxColorValue = 255)
- apply(colx,1,function(x) colv2col(x))
-}
-
 ## into RobAStBase
-setMethod("qqplot", signature(x = "ANY",
+setMethod("returnlevelplot", signature(x = "ANY",
                               y = "RobModel"), function(x, y,
                               n = length(x), withIdLine = TRUE, withConf = TRUE,
     withConf.pw  = withConf,  withConf.sim = withConf,
@@ -22,20 +12,18 @@ setMethod("qqplot", signature(x = "ANY",
     ylab = deparse(substitute(y)), ..., distance = NormType(),
     n.adj = TRUE){
 
-    mc <- match.call(call = sys.call(sys.parent(1)))
-    dots <- match.call(call = sys.call(sys.parent(1)),
-                       expand.dots = FALSE)$"..."
-    args0 <- list(x = x, y = y,
-                  n = if(!missing(n)) n else length(x),
-                  withIdLine = withIdLine, withConf = withConf,
-    withConf.pw  = if(!missing(withConf.pw)) withConf.pw else if(!missing(withConf)) withConf else NULL,
-    withConf.sim = if(!missing(withConf.sim)) withConf.sim else if(!missing(withConf)) withConf else NULL,
-                  plot.it = plot.it, xlab = xlab, ylab = ylab, distance=distance, n.adj=n.adj)
+    args0 <- list(x=x,y=y,n=n,withIdLine=withIdLine, withConf=withConf,
+        withConf.pw  = if(!missing(withConf.pw)) withConf.pw else if(!missing(withConf)) withConf else NULL,
+        withConf.sim = if(!missing(withConf.sim)) withConf.sim else if(!missing(withConf)) withConf else NULL,
+        plot.it = plot.it, xlab = xlab, ylab = ylab, distance = distance, n.adj = n.adj)
 
+    mc <- match.call(call = sys.call(sys.parent(1)))
+    mc1 <- match.call(call = sys.call(sys.parent(1)), expand.dots=FALSE)
+    dots <- mc1$"..."
     plotInfo <- list(call=mc, dots=dots, args=args0)
 
     xcc <- as.character(deparse(mc$x))
-    if(missing(xlab)) mc$xlab <- xcc
+    if(missing(xlab)) mc$xlab <- paste(gettext("Return Level of"), as.character(deparse(mc$x)))
     if(missing(ylab)) mc$ylab <- as.character(deparse(mc$y))
     mcl <- as.list(mc)[-1]
 
@@ -60,34 +48,32 @@ setMethod("qqplot", signature(x = "ANY",
     x.cex <- 3/(1+log(1+xD))
     mcl$cex.pch <- x.cex
 
-    retv <- do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
+    retv <- do.call(getMethod("returnlevelplot", signature(x="ANY", y="ProbFamily")),
             args=mcl)
     retv$call <- retv$dots <- retv$args <- NULL
     plotInfo <- c(plotInfo,retv)
-    class(plotInfo) <- c("qqplotInfo","DiagnInfo")
+    class(plotInfo) <- c("plotInfo","DiagnInfo")
     return(invisible(plotInfo))
     })
 
 
 ## into RobAStBase
-setMethod("qqplot", signature(x = "ANY", y = "InfRobModel"),
+setMethod("returnlevelplot", signature(x = "ANY", y = "InfRobModel"),
       function(x, y, n = length(x), withIdLine = TRUE, withConf = TRUE,
                withConf.pw  = withConf,  withConf.sim = withConf,
                plot.it = TRUE, xlab = deparse(substitute(x)),
                ylab = deparse(substitute(y)), ..., cex.pts.fun = NULL, n.adj = TRUE){
 
-    mc <- match.call(call = sys.call(sys.parent(1)))
-    dots <- match.call(call = sys.call(sys.parent(1)),
-                       expand.dots = FALSE)$"..."
-    args0 <- list(x = x, y = y,
-                  n = if(!missing(n)) n else length(x),
-                  withIdLine = withIdLine, withConf = withConf,
-    withConf.pw  = if(!missing(withConf.pw)) withConf.pw else if(!missing(withConf)) withConf else NULL,
-    withConf.sim = if(!missing(withConf.sim)) withConf.sim else if(!missing(withConf)) withConf else NULL,
-                  plot.it = plot.it, xlab = xlab, ylab = ylab, cex.pts.fun=cex.pts.fun,
-                  n.adj = n.adj)
+    args0 <- list(x=x,y=y,n=n,withIdLine=withIdLine, withConf=withConf,
+        withConf.pw  = if(!missing(withConf.pw)) withConf.pw else if(!missing(withConf)) withConf else NULL,
+        withConf.sim = if(!missing(withConf.sim)) withConf.sim else if(!missing(withConf)) withConf else NULL,
+        plot.it = plot.it, xlab = xlab, ylab = ylab, cex.pts.fun=cex.pts.fun, n.adj = n.adj)
 
+    mc <- match.call(call = sys.call(sys.parent(1)))
+    mc1 <- match.call(call = sys.call(sys.parent(1)), expand.dots=FALSE)
+    dots <- mc1$"..."
     plotInfo <- list(call=mc, dots=dots, args=args0)
+
     if(missing(xlab)) mc$xlab <- as.character(deparse(mc$x))
     if(missing(ylab)) mc$ylab <- as.character(deparse(mc$y))
     mcl <- as.list(mc)[-1]
@@ -128,16 +114,16 @@ setMethod("qqplot", signature(x = "ANY", y = "InfRobModel"),
 
     mcl$cex.pch <- x.cex
 
-    retv <- do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
+    retv <- do.call(getMethod("returnlevelplot", signature(x="ANY", y="ProbFamily")),
             args=mcl)
     retv$call <- retv$dots <- retv$args <- NULL
     plotInfo <- c(plotInfo,retv)
-    class(plotInfo) <- c("qqplotInfo","DiagnInfo")
+    class(plotInfo) <- c("plotInfo","DiagnInfo")
     return(invisible(plotInfo))
     })
 
 ## into RobAStBase
-setMethod("qqplot", signature(x = "ANY",
+setMethod("returnlevelplot", signature(x = "ANY",
                               y = "kStepEstimate"), function(x, y,
                               n = length(x), withIdLine = TRUE, withConf = TRUE,
     withConf.pw  = withConf,  withConf.sim = withConf,
@@ -149,7 +135,6 @@ setMethod("qqplot", signature(x = "ANY",
     exp.fadcol.pch = 1.85,
     bg = "white"
     ){
-
     args0 <- list(x=x,y=y,n=n,withIdLine=withIdLine, withConf=withConf,
         withConf.pw  = if(!missing(withConf.pw)) withConf.pw else if(!missing(withConf)) withConf else NULL,
         withConf.sim = if(!missing(withConf.sim)) withConf.sim else if(!missing(withConf)) withConf else NULL,
@@ -198,10 +183,10 @@ setMethod("qqplot", signature(x = "ANY",
       mcl$col.pch <- .fadeColor(col.pch,wx^exp.fadcol.pch, bg = bg)
     }
 
-    retv <- do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
+    retv <- do.call(getMethod("returnlevelplot", signature(x="ANY", y="ProbFamily")),
             args=mcl)
     retv$call <- retv$dots <- retv$args <- NULL
     plotInfo <- c(plotInfo,retv)
-    class(plotInfo) <- c("qqplotInfo","DiagnInfo")
+    class(plotInfo) <- c("plotInfo","DiagnInfo")
     return(invisible(plotInfo))
     })

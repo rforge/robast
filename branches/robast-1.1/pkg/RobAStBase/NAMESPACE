@@ -69,7 +69,7 @@ exportMethods("pICList","ICList", "ksteps", "uksteps",
 exportMethods("moveL2Fam2RefParam",
 			  "moveICBackFromRefParam",
 			  "rescaleFunction")			  
-exportMethods("ddPlot", "qqplot")
+exportMethods("ddPlot", "qqplot", "returnlevelplot")
 exportMethods("cutoff.quantile", "cutoff.quantile<-")
 exportMethods("samplesize<-", "samplesize")
 exportMethods("getRiskFctBV", "getFiRisk")
