@@ -12,13 +12,17 @@ version 1.1
 #######################################
 
 user-visible CHANGES:
-+ revised DESCRIPTION and staring help page	
++ revised DESCRIPTION and staring help page	 
 + full robustness support now for ParetoFamily
 + moved "actuar" from require to imports in DESCRIPTION
 + NAMESPACE: export some formerly internal S4 classes + accessors and replacers for 
              locscaleshapename; specify from which package (actuar,evd) to take gumbel p,d,q,r
 + smaller grid of xi values as starting values for GPD and GEVD for speed reasons
 + new accessor method scale for Pareto distribution
++ new checkIC and makeIC methods for GEV[U], GPD, and Pareto
++ new script RobFitsAtRealData 
++ GEVFamily, GParetoFamily and GEVFamilyMuUnknown gain argument withMDE (by default TRUE) which controls usage of MDEs at finding startPars
++ gev/gpddiag and friends (i.e. interface to ismev methods) now apply to return values of roptest
 
 minor changes:
 + new Rd files for now exported (formerly internal) intermediate classes 
@@ -37,6 +41,11 @@ bug fixes:
 
 under the hood:
 + prepared everything for first release on CRAN
++ due to speed gains moved back diagnostic plot examples out of \donttest
++ added MakeIC calls in getStartIC to enhance accuracy
++ in order to avoid time-costly double calls to MakeIC, the respective modifyIC-slots gain attribute "hasMakeICin.modifyIC" once MakeIC is in the slot
++ added different route to get hand on L2Fam in gevgpddiag.R to make it applicable to return values of roptest
++ speeded up startEstGEV and startEstGPD 
 + ParetoFamily now has interpolRisks
 + ParetoFamily distribution now has speed up for Sn
 + updated/prepared plotOutlyingness.R
