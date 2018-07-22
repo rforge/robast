@@ -29,7 +29,9 @@ argument \code{ICstart} in \code{kStepEstimator}.}
 \item{getStartIC}{\code{signature(model = "ParetoFamily", risk = "interpolRisk")}:
       computes the optimally robust influence function by interpolation
       on a grid (using internal helper function \code{.getPsi.P}).}
-}}
+}
+All of these methods recenter and restandardize the obtained ICs to
+warrant centeredness and Fisher consistency.}
 \value{
 An IC of type \code{HampIC}.
 }

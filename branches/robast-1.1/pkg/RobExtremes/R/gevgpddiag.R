@@ -73,12 +73,16 @@ setMethod("gpd.profxi",  "GPDEstimate", function(z,  xlow, xup, npy=365,
             else  param <- ParamFamParameter(main=utfe, nuisance=nuisance(z))
             es.call <- z@estimate.call
             nm.call <- names(es.call)
-            PFam <- NULL
-            if("ParamFamily" %in% nm.call)
-                PFam <- eval(as.list(es.call)[["ParamFamily"]])
-            if(is.null(PFam))
-               stop("There is no object of class 'ProbFamily' in the call of 'z'")
-            PFam0 <- modifyModel(PFam, param)
+            if("pIC" %in% names(getSlots(class(z)))){
+               PFam0 <- eval(z@pIC@CallL2Fam)
+            }else{
+                  PFam <- NULL
+                  if("ParamFamily" %in% nm.call)
+                     PFam <- eval(as.list(es.call)[["ParamFamily"]])
+                  if(is.null(PFam))
+                     stop("There is no object of class 'ProbFamily' in the call of 'z'")
+                  PFam0 <- modifyModel(PFam, param)
+            }
             thresh <- if(GPD)  fixed(param) else NULL
             x <- eval(es.call$x)
             n0 <- length(x)

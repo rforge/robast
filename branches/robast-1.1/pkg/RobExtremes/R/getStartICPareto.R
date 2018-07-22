@@ -7,11 +7,13 @@ setMethod("getStartIC",signature(model = "ParetoFamily", risk = "interpolRisk"),
               xi0 <- main(param(L2Fam))
               return(.getPsi.P(xi0, L2Fam, type(risk)))
     }
+    attr(.modifyIC0,"hasMakeICin.modifyIC") <- TRUE
     .modifyIC <- function(L2Fam,IC){
          psi.0 <- .modifyIC0(L2Fam,IC)
          psi.0@modifyIC <- .modifyIC
          return(psi.0)
     }
+    attr(.modifyIC,"hasMakeICin.modifyIC") <- TRUE
     IC0 <- .getPsi.P(xi, model, type(risk))
     IC0@modifyIC <- .modifyIC
     return(IC0)
@@ -68,5 +70,6 @@ setMethod("getStartIC",signature(model = "ParetoFamily", risk = "interpolRisk"),
 
 
    IC <- generateIC(nb, L2Fam, res)
+   IC <- makeIC(IC,L2Fam)
    return(IC)
 }

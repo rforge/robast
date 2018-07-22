@@ -44,6 +44,7 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
                           secLevel = 0.7,
                           withCentL2 = FALSE,
                           withL2derivDistr  = FALSE,
+                          withMDE = FALSE,
                           ..ignoreTrafo = FALSE){
     theta <- c(loc, scale, shape)
 
@@ -139,7 +140,7 @@ GParetoFamily <- function(loc = 0, scale = 1, shape = 0.5,
            medkMADhybr(c(x), k=10, ParamFamily = PF,
                              q.lo = 1e-3, q.up = 15), silent =TRUE)
            if(is(e1,"try-error")){ e0 <- .getBetaXiGPD(x=x, mu=tr,
-                       xiGrid=.getXiGrid(), withPos=withPos)
+                       xiGrid=.getXiGrid(), withPos=withPos, withMDE=withMDE)
            }else e0 <- estimate(e1)
         }else{
            if(is(start0Est,"function")){

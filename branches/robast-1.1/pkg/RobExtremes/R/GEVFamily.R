@@ -181,6 +181,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                           secLevel = 0.7,
                           withCentL2 = FALSE,
                           withL2derivDistr  = FALSE,
+                          withMDE = FALSE,
                           ..ignoreTrafo = FALSE,
                           ..withWarningGEV = TRUE){
     theta <- c(loc, scale, shape)
@@ -281,7 +282,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
         #   PF <- GEVFamily(loc = theta[1], scale = theta[2], shape = theta[3])
         #   e1 <- PickandsEstimator(x,ParamFamily=PF)
         #   e0 <- estimate(e1)
-           e0 <- .getBetaXiGEV(x=x, mu=mu, xiGrid=.getXiGrid(), withPos=withPos)
+           e0 <- .getBetaXiGEV(x=x, mu=mu, xiGrid=.getXiGrid(), withPos=withPos, withMDE=withMDE)
         }else{
            if(is(start0Est,"function")){
               e1 <- start0Est(x, ...)

@@ -52,6 +52,7 @@
 
 
    IC <- generateIC(nb, L2Fam, res)
+   IC <- makeIC(IC,L2Fam)
    return(IC)
 }
 
@@ -108,6 +109,7 @@
 
 
    IC <- generateIC(nb, L2Fam, res)
+   IC <- makeIC(IC,L2Fam)
    return(IC)
 }
 
