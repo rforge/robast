@@ -427,7 +427,7 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                            lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
                            which.lbs = NULL, which.nonlbs = NULL,
                            which.Order  = NULL, attr.pre = FALSE, return.Order = FALSE,
-                           withSubst = TRUE){
+                           withSubst = TRUE, withMakeIC = FALSE){
 
         args0 <- list(L2Fam = L2Fam, data=data,
                        neighbor = if(missing(neighbor)) NULL else neighbor,
@@ -451,7 +451,8 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                         alpha.trsp = alpha.trsp,
                         which.lbs = which.lbs, which.Order  = which.Order,
                         which.nonlbs = which.nonlbs, attr.pre = attr.pre,
-                        return.Order = return.Order, withSubst = withSubst)
+                        return.Order = return.Order, withSubst = withSubst,
+                        withMakeIC = withMakeIC)
 
         mc0 <- match.call(#call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)
@@ -483,9 +484,9 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
 
         robMod <- InfRobModel(center = L2Fam, neighbor = neighbor)
 
-        mcl$IC1 <- optIC(model = L2Fam, risk = asCov())
+        mcl$IC1 <- optIC(model = L2Fam, risk = asCov(), withMakeIC = withMakeIC)
         mcl$IC2 <- if(is(risk,"interpolRisk")){
-                     getStartIC(model=L2Fam, risk = risk)
+                     getStartIC(model=L2Fam, risk = risk, withMakeIC = withMakeIC)
                    }else optIC(model = robMod, risk = risk)
         mcl$L2Fam <- NULL
         if(is.null(dots$ylab))

@@ -17,17 +17,19 @@ optIC(model, risk, ...)
                                      OptOrIter = "iterate", maxiter = 50,
                                      tol = .Machine$double.eps^0.4, warn = TRUE, 
                                      noLow = FALSE, verbose = NULL, ...,
-                                     .withEvalAsVar = TRUE,
+                                     .withEvalAsVar = TRUE, withMakeIC = FALSE,
                                      returnNAifProblem = FALSE)
 
 \S4method{optIC}{InfRobModel,asUnOvShoot}(model, risk, upper = 1e4,
                                           lower = 1e-4, maxiter = 50,
-                                          tol = .Machine$double.eps^0.4, warn = TRUE, 
+                                          tol = .Machine$double.eps^0.4,
+                                          withMakeIC = FALSE, warn = TRUE,
                                           verbose = NULL)
 
 \S4method{optIC}{FixRobModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, lower = 1e-4,
                                           maxiter = 50, tol = .Machine$double.eps^0.4, 
-                                          warn = TRUE, Algo = "A", cont = "left",
+                                          withMakeIC = FALSE, warn = TRUE,
+                                          Algo = "A", cont = "left",
                                           verbose = NULL)
 }
 \arguments{
@@ -58,6 +60,8 @@ optIC(model, risk, ...)
   \item{.withEvalAsVar}{logical (of length 1):
      if \code{TRUE}, risks based on covariances are to be
      evaluated (default), otherwise just a call is returned. }
+  \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
+        \code{makeIC} before return.}
   \item{returnNAifProblem}{logical (of length 1):
      if \code{TRUE} (not the default), in case of convergence problems in
      the algorithm, returns \code{NA}. }

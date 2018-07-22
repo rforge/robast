@@ -2,7 +2,8 @@ setMethod("getStartIC",signature(model = "ANY", risk = "ANY"),
            function(model, risk, ...) stop("not yet implemented"))
 
 setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
-           function(model, risk, ..., withEvalAsVar = TRUE, ..debug=FALSE){
+           function(model, risk, ..., withEvalAsVar = TRUE, withMakeIC = FALSE,
+           ..debug=FALSE){
     mc <- match.call(expand.dots=FALSE, call = sys.call(sys.parent(1)))
     dots <- as.list(mc$"...")
     if("fsCor" %in% names(dots)){
@@ -32,6 +33,7 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
     dots.optic$model <- NULL
     dots.optic$risk <- NULL
     dots.optic$.withEvalAsVar <- withEvalAsVar
+    dots.optic$withMakeIC <- withMakeIC
 
     if(is.null(eps[["e"]])){
         dots.rmx$loRad <- eps$sqn * eps$lower
@@ -59,15 +61,15 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
   })
 
 setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asCov"),
-           function(model, risk, ..., ..debug=FALSE){
-    return(optIC(model, risk))
+           function(model, risk, ..., withMakeIC = FALSE, ..debug=FALSE){
+    return(optIC(model, risk, withMakeIC = withMakeIC))
   })
 setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "trAsCov"),
      getMethod("getStartIC", signature(model = "L2ParamFamily", risk = "asCov"))
            )
 
 setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asBias"),
-           function(model, risk, ..., ..debug=FALSE){
+           function(model, risk, ..., withMakeIC = FALSE, ..debug=FALSE){
     mc <- match.call(expand.dots=FALSE, call = sys.call(sys.parent(1)))
     dots <- as.list(mc$"...")
     if("neighbor" %in% names(dots)){
@@ -76,7 +78,7 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asBias"),
     }else neighbor <- ContNeighborhood()
 
     infMod <- InfRobModel(center = model, neighbor = neighbor)
-    return(optIC(infMod, risk))
+    return(optIC(infMod, risk, withMakeIC = withMakeIC))
            })
 
 

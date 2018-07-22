@@ -42,7 +42,7 @@ cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                            lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
                            which.lbs = NULL, which.nonlbs = NULL,
                            which.Order  = NULL, attr.pre = FALSE, return.Order = FALSE,
-                           withSubst = TRUE)
+                           withSubst = TRUE, withMakeIC = FALSE)
 }
 \arguments{
   \item{IC1}{ object of class \code{IC} }
@@ -150,6 +150,8 @@ cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
    otherwise we return \code{invisible()} as usual.}
   \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
       titles and lables is used; otherwise no substitution is used. }
+  \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
+        \code{makeIC} before return.}
 }
 \details{
   In case of \code{cniperCont} the difference between the risks of two ICs 

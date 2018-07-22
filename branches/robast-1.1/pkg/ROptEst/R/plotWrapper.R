@@ -111,6 +111,7 @@ CniperPointPlot <- function(fam,...
                    ,ylab=substitute("Asymptotic Risk difference (classic - robust)")
                    ,bty = substitute("o")
                    ,withSubst = TRUE
+                   ,withMakeIC = FALSE
                    ), scaleList)
 #  print(argsList)
   ##parameter for plotting
