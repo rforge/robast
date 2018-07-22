@@ -99,6 +99,8 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   to do so. If \code{withEvalAsVar} is \code{NULL} (default),  the content
        of slot \code{.withEvalAsVar} in the L2 family is used instead to take
        this decision.}
+  \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
+        \code{makeIC} before return.}
 }
 \details{
   Computes the optimally robust estimator for a given L2 differentiable
