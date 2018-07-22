@@ -25,10 +25,11 @@ mlEi
 MBRi
 estimate(mlEi)
 estimate(MBRi)
+attr(MBRi, "timings")
 gev.diag(mlEi)
 gev.diag(MBRi)
 gev.prof(mlEi, m = 10, 4.1, 5)
-gev.profxi(mBRi, -0.3, 0.3)
+gev.profxi(MBRi, -0.3, 0.3)
 plot(MBRi@pIC)
 
 ## contaminated:
@@ -95,11 +96,11 @@ gpd.diag(MBR2c)
 gpd.prof(mlE2c, m = 10, 55, 77)
 gpd.profxi(mlE2c, -0.02, 0.02)
 plot(MBR2c@pIC)
-## to be fixed
+
 qqplot(rainc,MBR2c)
 qqplot(rainc,MBR2c,ylim=c(5,100))
 qqplot(rainc,MBR2c,xlim=c(5,100),ylim=c(5,100),log="xy")
-## to be fixed
+
 returnlevelplot(raini,MBR2i,MaxOrPot="POT",threshold=0)
 returnlevelplot(rainc,MBR2c,MaxOrPot="POT",threshold=0)
 returnlevelplot(rainc,MBR2c,ylim=c(10,100),MaxOrPot="POT",threshold=0)
@@ -114,5 +115,6 @@ qqplot(rainc.10,dI2c-10)
 returnlevelplot(rainc.10,dI2c-10,MaxOrPot="POT",threshold=0)
 dI2i <- distribution(eval(MBR2i@pIC@CallL2Fam))
 loc(dI2i) <- 0
+## wrong data set
 qqplot(portpiriei-10,dI2i)
 qqplot(portpiriec,MBR2c)

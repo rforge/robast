@@ -23,6 +23,7 @@ user-visible CHANGES:
 + new script RobFitsAtRealData 
 + GEVFamily, GParetoFamily and GEVFamilyMuUnknown gain argument withMDE (by default TRUE) which controls usage of MDEs at finding startPars
 + gev/gpddiag and friends (i.e. interface to ismev methods) now apply to return values of roptest
++ new argument withMakeIC to control when to use makeIC to enhance accuracy
 
 minor changes:
 + new Rd files for now exported (formerly internal) intermediate classes 
@@ -51,8 +52,7 @@ under the hood:
 + updated/prepared plotOutlyingness.R
 + fixed unit test suite for zero length
 + changed \dontrun in \donttest in examples
-+ wherever possible also use q.l internally instead of q to 
-  provide functionality in IRKernel
++ wherever possible also use q.l internally instead of q to provide functionality in IRKernel
 + in addition, now use slot locscaleshapename in generating function of GEVFamilyMuUnknown
 + new generics/methods for locationname, locscaleshapename(<-), scaleshapename, locscalename, shapename, scalename 
 + use prefix evd:: to clarify which [p,d,q,r]gumbel to take
