@@ -17,6 +17,11 @@ user-visible CHANGES:
 + plot methods now return an S3 object of class \code{c("plotInfo","DiagnInfo")}, i.e., a list containing the 
 information needed to produce the respective plot, which at a later stage could be used by different graphic engines (like, e.g. 
 \code{ggplot}) to produce the plot in a different framework. A more detailed description will follow in a subsequent version.
++ optIC gains argument withMakeIC
++ roptest gains argument withMakeIC
++ getStartIC-methods gain argument withMakeIC
++ cniperPointPlot gains argument withMakeIC
++ genkStepCtrl gains argument withMakeIC
 
 under the hood:
 + wherever possible also use q.l internally instead of q to 
