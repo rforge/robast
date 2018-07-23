@@ -42,6 +42,8 @@ bug fixes:
 + in ParetoFamily.R L2derivDistr was not attached to return value
 
 under the hood:
++ Expectation E for DistributionsIntegratingByQuantiles to speed up things
+    now uses stop.on.error = FALSE and for accuracy splits up the integration range in [0,0.98] and [0.98, upp] as soon as upp>0.98
 + prepared everything for first release on CRAN
 + due to speed gains moved back diagnostic plot examples out of \donttest
 + added MakeIC calls in getStartIC to enhance accuracy
