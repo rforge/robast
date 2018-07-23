@@ -1,3 +1,10 @@
+import(distr)
+import(RandVar)
+importFrom("RobAStBase", "IC", "ContNeighborhood")
+importFrom("methods", "is")
+importFrom("stats", "dnorm", "integrate", "optim", "optimize", "pnorm",
+             "stepfun", "uniroot")
+import(ROptRegTS)
 export(rgsOptIC.AL, 
        rgsOptIC.M, 
        rgsOptIC.MK, 
