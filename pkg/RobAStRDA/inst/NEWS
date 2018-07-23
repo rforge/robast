@@ -8,6 +8,16 @@
  information)
 
 #######################################
+version 1.1
+#######################################
+
+user-visible CHANGES:
++ DESCRIPTION tag SVNRevision changed to VCS/SVNRevision
+
+under the hood:
++ recreated RDA file as it was no longer loadable
+
+#######################################
 version 1.0
 #######################################
 
