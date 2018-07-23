@@ -24,7 +24,7 @@ setMethod("kMAD", signature(x = "UnivariateDistribution", k = "numeric"),
        if(! length(k)==1) stop ("k has to be a numeric of length 1")
        if(k<=0) stop ("k has to be strictly positive")
        m <- median(x)
-       if(is.null(up)) up <- min(3*IQR(x),q(x)(1)-m,m-q(x)(0))
+       if(is.null(up)) up <- min(3*IQR(x),q.l(x)(1)-m,m-q.l(x)(0))
        fun <- function(t)
            {p(x)(m+k*t)-p(x)(m-t)-.5}
        return(uniroot(fun,lower=0,upper=up)$root)

@@ -12,7 +12,7 @@ setMethod(".checkEstClassForParamFamily",
               function(PFam, estimator) as(estimator,"GPDMCEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamily",estimator="Estimate"),
-              function(PFam, estimator) as(estimator,"GEVkStepEstimate"))
+              function(PFam, estimator) as(estimator,"GEVEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamily",estimator="LDEstimate"),
               function(PFam, estimator) as(estimator,"GEVLDEstimate"))
@@ -24,7 +24,7 @@ setMethod(".checkEstClassForParamFamily",
               function(PFam, estimator) as(estimator,"GEVMCEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamilyMuUnknown",estimator="Estimate"),
-              function(PFam, estimator) as(estimator,"GEVkStepEstimate"))
+              function(PFam, estimator) as(estimator,"GEVEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamilyMuUnknown",estimator="LDEstimate"),
               function(PFam, estimator) as(estimator,"GEVLDEstimate"))

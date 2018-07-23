@@ -16,8 +16,8 @@ asvarPickands <- function(model, alpha=2){
     al2 <- exp(-1/alpha^2)
   }
 
-  M2 <- q(model)(al1)
-  M4 <- q(model)(al2)
+  M2 <- q.l(model)(al1)
+  M4 <- q.l(model)(al2)
 
   xi <- log((M4-M2)/M2)/log(alpha)
   qu <- 1/(alpha^xi-1)
@@ -82,7 +82,7 @@ asvarQBCC <- function(model, p1 = 1/3, p2= 2/3){
 
  if(p1>=p2) {p<-p1; p1 <- p2; p2 <- p}
 
-  qm <- q(model)
+  qm <- q.l(model)
   Q1 <- qm(p1)
   Q2 <- qm(p2)
   l1 <- -log(p1); l2 <- -log(p2)

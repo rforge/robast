@@ -23,10 +23,14 @@ buildStartupMessage(pkg = "RobExtremes", msga="", msgb="",
 }
 
 
+#setClassUnion("ParamWithLocAndScaleAndShapeFamParameterUnion",
+#               c("ParamWithScaleFamParameter",
+#                 "ParamWithShapeFamParameter")
+#         )
+
 setClass("ParamWithLocAndScaleAndShapeFamParameter",
-            contains = c("ParamWithScaleFamParameter",
-                         "ParamWithShapeFamParameter")
-         )
+            contains = c("ParamWithScaleAndShapeFamParameter")
+)
 
 
 # parameter of Gumbel distribution
@@ -47,10 +51,10 @@ setClass("GumbelParameter", representation(loc = "numeric",
 
 # Gumbel distribution
 setClass("Gumbel", 
-            prototype = prototype(r = function(n){ rgumbel(n, loc = 0, scale = 1) },
-                                  d = function(x, log){ dgumbel(x, loc = 0, scale = 1, log = FALSE) },
+            prototype = prototype(r = function(n){ evd::rgumbel(n, loc = 0, scale = 1) },
+                                  d = function(x, log){ evd::dgumbel(x, loc = 0, scale = 1, log = FALSE) },
                                   p = function(q, lower.tail = TRUE, log.p = FALSE){ 
-                                         p0 <- pgumbel(q, loc = 0, scale = 1, lower.tail = lower.tail)
+                                         p0 <- evd::pgumbel(q, loc = 0, scale = 1, lower.tail = lower.tail)
                                          if(log.p) return(log(p0)) else return(p0) 
                                   },
                                   q = function(p, loc = 0, scale = 1, lower.tail = TRUE, log.p = FALSE){
@@ -66,7 +70,7 @@ setClass("Gumbel",
                                       p0 <- p
                                       p0[ii01] <- if(log.p) log(0.5) else 0.5
                                                     
-                                      q1 <- qgumbel(p0, loc = 0, scale = 1, 
+                                      q1 <- evd::qgumbel(p0, loc = 0, scale = 1,
                                                     lower.tail = lower.tail) 
                                       q1[i0] <- if(lower.tail) -Inf else Inf
                                       q1[i1] <- if(!lower.tail) -Inf else Inf
@@ -198,7 +202,7 @@ setClass("GEV",
           prototype = prototype(
                       r = function(n){ rgev(n,loc = 0, scale = 1, shape = 0.5) },
                       d = function(x, log = FALSE){ 
-                              dgev(x, loc = 0, scale = 1, shape = 0.5, log = log) 
+                              dgev(x, loc = 0, scale = 1, shape = 0.5, log = log)
                                           },
                       p = function(q, lower.tail = TRUE, log.p = FALSE ){ 
                               p0 <- pgev(q, loc = 0, scale = 1, shape = 0.5)
@@ -250,7 +254,7 @@ setClass("GEVFamily", contains="L2ScaleShapeUnion")
 setClass("WeibullFamily", contains="L2ScaleShapeUnion")
 
 ## virtual in-between class for common parts in modifyModel - method
-setClass("L2LocScaleShapeUnion", representation(scaleshapename ="character"),
+setClass("L2LocScaleShapeUnion", representation(locscaleshapename = "character"),
          contains = c("L2GroupParamFamily","VIRTUAL")
         )
 

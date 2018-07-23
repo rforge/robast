@@ -8,13 +8,12 @@
 ## methods
 setMethod("validParameter",signature(object="ParetoFamily"),
            function(object, param, tol =.Machine$double.eps){
-             if (is(param, "ParamFamParameter")) 
+             if (is(param, "ParamFamParameter"))
                  param <- main(param)
-             if (!all(is.finite(param))) 
+             if (!all(is.finite(param)))
                  return(FALSE)
-             if(object@param@withPosRestr)
-                 if (any(param[1] <= tol))
-                     return(FALSE)
+             if (any(param[1] <= tol))
+                 return(FALSE)
              return(TRUE)
            })
 
@@ -64,7 +63,8 @@ ParetoFamily <- function(Min = 1, shape = 0.5, trafo = NULL, start0Est = NULL,
         if(any(x < tr))
                stop("some data smaller than 'Min' ")
         names(e0) <- NULL
-        return(e0)
+        erange <- e0*c(1/10,10)
+        return(erange)
     }
 
 
@@ -86,7 +86,7 @@ ParetoFamily <- function(Min = 1, shape = 0.5, trafo = NULL, start0Est = NULL,
 
         Lambda <- function(x) {
             y <- x*0
-            ind <- (x > Min) #
+            ind <- (x > Min0) #
             y[ind] <- 1/k + log(Min0/x[ind])
             return(y)
         }
@@ -120,7 +120,7 @@ ParetoFamily <- function(Min = 1, shape = 0.5, trafo = NULL, start0Est = NULL,
     L2Fam@modifyParam <- modifyPar
     L2Fam@L2derivSymm <- FunSymmList(NonSymmetric())
     L2Fam@L2derivDistrSymm <- DistrSymmList(NoSymmetry())
-    L2derivDistr <- UnivarDistrList(1/shape+log(Min)-log(distribution))
+    L2Fam@L2derivDistr <- UnivarDistrList(1/shape+log(Min)-log(distribution))
 
     L2deriv <- EuclRandVarList(RealRandVariable(list(L2deriv.fct(param)),
                                Domain = Reals()))

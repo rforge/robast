@@ -20,9 +20,9 @@ setMethod("Sn", signature(x = "ANY"),
 
 setMethod("Qn", signature(x = "UnivariateDistribution"),
     function(x, q00 = NULL,  ...){
-         if(is.null(q00)) q00 <- 10*q(x)(3/4)
+         if(is.null(q00)) q00 <- 10*q.l(x)(3/4)
 
-         intv <- function(xx,q0=q00) p(x)(q0+q(x)(xx))-5/8
+         intv <- function(xx,q0=q00) p(x)(q0+q.l(x)(xx))-5/8
          intq <- function(q){
                     sapply(q, function(q1){
                                  integrate(intv,lower=0,upper=1,q0=q1)$value})
@@ -37,7 +37,7 @@ setMethod("Qn", signature(x = "UnivariateDistribution"),
 setMethod("Qn", signature(x = "DiscreteDistribution"),
     function(x,  ...){
          x2 <- x-x
-         q(x2)(5/8)
+         q.l(x2)(5/8)
     })
 
 
@@ -59,7 +59,7 @@ setMethod("Sn", signature(x = "UnivariateDistribution"),
                }else{   return(m)    }
           }
 
-          x0 <- q(x)(seq(.5/accuracy,1-.5/accuracy,length=accuracy))
+          x0 <- q.l(x)(seq(.5/accuracy,1-.5/accuracy,length=accuracy))
           y  <- sapply(x0,g)
           c0 <- median(y,na.rm=TRUE)
           return(c0)
@@ -110,7 +110,7 @@ setMethod("Qn", signature(x = "AffLinDistribution"),
 #       sng <- try(getFromNamespace(".Sn", ns = "RobAStRDA"), silent =TRUE)
        if(is(famg,"try-error")) return(Sn(as(x,"AbscontDistribution")))
 #       if(!nam %in% names(sng)) return(Sn(as(x,"AbscontDistribution")))
-       if(!.versionSuff("fun")=="fun.N") return(Sn(as(x,"AbscontDistribution")))
+#       if(!.versionSuff("fun")=="fun.N") return(Sn(as(x,"AbscontDistribution")))
        snf <- famg[["Sn"]][[.versionSuff("fun")]]
        ret <- snf(shape(x))
        if(is.na(ret)) return(Sn(as(x,"AbscontDistribution")))
@@ -129,3 +129,6 @@ setMethod("Sn", signature(x = "Gammad"),
 
 setMethod("Sn", signature(x = "Weibull"),
     function(x, ...).Sn.intp(x,".Weibull") )
+
+setMethod("Sn", signature(x = "Pareto"),
+    function(x, ...).Sn.intp(x,".Pareto") )

@@ -2,7 +2,7 @@
    xi <- main(param)[nam]
    return(is.na(fct[[1]](xi)))
 }
-.getPsi <- function(param, fct, L2Fam , type){
+.getPsi <- function(param, fct, L2Fam , type, withMakeIC = FALSE){
 
    scshnm <- scaleshapename(L2Fam)
    shnam <- scshnm["shape"]
@@ -52,11 +52,12 @@
 
 
    IC <- generateIC(nb, L2Fam, res)
+   if(withMakeIC) IC <- makeIC(IC,L2Fam)
    return(IC)
 }
 
 
-.getPsi.wL <- function(param, fct, L2Fam , type){
+.getPsi.wL <- function(param, fct, L2Fam , type, withMakeIC = FALSE){
 
    scshnm <- scaleshapename(L2Fam)
    shnam <- scshnm["shape"]
@@ -108,6 +109,7 @@
 
 
    IC <- generateIC(nb, L2Fam, res)
+   if(withMakeIC) IC <- makeIC(IC,L2Fam)
    return(IC)
 }
 

@@ -10,7 +10,7 @@ RobExtremes -- Optimally Robust Estimation for Extreme Value Distributions
 for extreme value distributions, extending packages
 \pkg{distr}, \pkg{distrEx}, \pkg{distrMod}, \pkg{robustbase},
 \pkg{RobAStBase}, and \pkg{ROptEst}. Importing from packages \pkg{actuar},
-\pkg{evd}, it provides S4 classes and methods for
+\pkg{evd}, it provides S4 classes and methods for the
 \itemize{\item Gumbel distribution
          \item Generalized Extreme Value distribution (GEVD)
          \item Generalized Pareto distribution (GPD)
@@ -22,29 +22,57 @@ from package \pkg{robustbase}, we provide functionals for Sn and Qn. A new
 asymmetric version of the \code{mad}, \code{kMAD} gives yet another robust
 scale estimator (and functional). \cr
 
-As to models, we provide the GPD model, together with (speeded-up) optimally
+As to models, we provide the
+\itemize{
+\item GPD model (with known threshold), together with (speeded-up) optimally
 robust estimators, with LDEstimators (in general, and with \code{medkMAD},
-\code{medSn} and \code{medQn} as particular ones) as starting estimators.
+\code{medSn} and \code{medQn} as particular ones) and Pickands' estimator as
+starting estimators.
+\item GEVD model (with known or unknown threshold), together with (speeded-up)
+optimally robust estimators, with LDEstimators (see above) and Pickands'
+estimator as starting estimators.
+\item Pareto model
+}
 }
 
 \details{
 \tabular{ll}{
 Package: \tab RobExtremes \cr
-Version: \tab 1.0 \cr
-Date: \tab 2016-09-05 \cr
-Depends: \tab R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 1.0), robustbase(>= 0.8-0), evd, actuar \cr
-Suggests: \tab ismev (>= 1.39)\cr
-Imports: \tab RobAStRDA, distr, distrEx, RandVar, RobAStBase, startupmsg \cr
+Version: \tab 1.1.0 \cr
+Date: \tab 2018-07-19 \cr
+Title: \tab Optimally Robust Estimation for Extreme Value Distributions\cr
+Description: \tab Optimally robust estimation for extreme value distributions
+using S4 classes and methods \cr
+\tab (based on packages distr, distrEx, distrMod, RobAStBase, and ROptEst). \cr
+Depends:\tab R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 1.0), robustbase(>= 0.8-0),
+        evd \cr
+Suggests: \tab RUnit (>= 0.4.26), ismev (>= 1.39) \cr
+Imports: \tab actuar, RobAStRDA, distr, distrEx, RandVar, RobAStBase, startupmsg \cr
+Authors:
+\tab Bernhard Spangl [contributed smoothed grid values of the Lagrange multipliers]\cr
+\tab Sascha Desmettre [contributed smoothed grid values of the Lagrange multipliers]\cr
+\tab Eugen Massini [contributed an interactive smoothing routine for smoothing the
+     Lagrange multipliers and smoothed grid values of the Lagrange multipliers] \cr
+\tab Daria Pupashenko [contributed MDE-estimation for GEV distribution in
+the framework of her PhD thesis 2011--14]\cr
+\tab Gerald Kroisandt [contributed testing routines]\cr
+\tab Nataliya Horbenko ["aut","cph"] \cr
+\tab Matthias Kohl ["aut", "cph"]\cr
+\tab Peter Ruckdeschel ["cre", "aut", "cph"],\cr
+Contact: \tab peter.ruckdeschel@uni-oldenburg.de\cr
 ByteCompile: \tab yes \cr
+LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 694 \cr
+Encoding: \tab latin1 \cr
+VCS/SVNRevision: \tab 940 \cr
 }
 }
 \section{Classes}{
 \preformatted{
 
-[*]: there is a generating function with the same name in this package
+[*]: there is a generating function with the same name in RobExtremes
+[**]:  generating function from distrMod, but with (speeded-up) opt.rob-estimators in RobExtremes
 
 ##########################
 Distribution Classes
@@ -81,12 +109,15 @@ slots: [<name>(<class>)]
 |>|>|>"L2GroupParamFamily"                    (from distrMod)
 |>|>|>|>"ParetoFamily"                  [*]
 |>|>|>|>"L2ScaleShapeUnion"                   (from distrMod)
+|>|>|>|>|>"GammaFamily"                 [**]
 |>|>|>|>|>"GParetoFamily"               [*]
 |>|>|>|>|>"GEVFamily"                   [*]
-|>|>|>|>|>"WeibullFamily"               [*]
+|>|>|>|>|>"WeibullFamily"               [**]
 |>|>|>|>"L2LocationScaleUnion"  /VIRTUAL/     (from distrMod)
 |>|>|>|>|>"L2LocationFamily"                  (from distrMod)
 |>|>|>|>|>|>"GumbelLocationFamily"      [*]
+|>|>|>|>"L2LocScaleShapeUnion"  /VIRTUAL/     (from distrMod)
+|>|>|>|>|>"GEVFamilyMuUnknown"          [*]
 }
 }
 
@@ -124,22 +155,14 @@ WeibullFamily           Generating function for WeibullFamily-class
 \preformatted{
 
 Functionals:
-E                       Generic function for the computation of
-                        (conditional) expectations
-var                     Generic functions for the computation of
-                        functionals
-IQR                     Generic functions for the computation of
-                        functionals
-median                  Generic functions for the computation of
-                        functionals
-skewness                Generic functions for the computation of
-                        functionals
-kurtosis                Generic functions for the computation of
-                        Functionals
-Sn                       Generic function for the computation of
-                        (conditional) expectations
-Qn                     Generic functions for the computation of
-                        functionals
+E                       Generic function for the computation of  (conditional) expectations
+var                     Generic functions for the computation of functionals
+IQR                     Generic functions for the computation of functionals
+median                  Generic functions for the computation of functionals
+skewness                Generic functions for the computation of functionals
+kurtosis                Generic functions for the computation of functionals
+Sn                      Generic function for the computation of (conditional) expectations
+Qn                      Generic functions for the computation of functionals
 
 }
 }
@@ -184,26 +207,25 @@ Note: The first two numbers of package versions do not necessarily reflect
 \author{
 Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},\cr
 Matthias Kohl \email{Matthias.Kohl@stamats.de}, and \cr
-Nataliya Horbenko \email{Nataliya.Horbenko@itwm.fraunhofer.de},\cr
+Nataliya Horbenko \email{nhorbenko@gmail.com},\cr
 
 \emph{Maintainer:}  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
 }
 \references{
 M. Kohl (2005): \emph{Numerical Contributions to the Asymptotic
 Theory of Robustness.} PhD Thesis. Bayreuth. Available as
-\url{http://www.stamats.de/ThesisMKohl.pdf}
+\url{http://r-kurs.de/RRlong.pdf}
 
 P. Ruckdeschel, M. Kohl, T. Stabla, F. Camphausen (2006):
 S4 Classes for Distributions, \emph{R News}, \emph{6}(2), 2-6. 
 \url{https://CRAN.R-project.org/doc/Rnews/Rnews_2006-2.pdf}
 
-M.~Kohl, P. Ruckdeschel, H.~Rieder (2010):
+M. Kohl, P. Ruckdeschel, H. Rieder (2010):
 Infinitesimally Robust Estimation in General Smoothly Parametrized Models.
 \emph{Stat. Methods Appl.}, \bold{19}, 333--354.\cr
 
 Ruckdeschel, P. and Horbenko, N. (2011): Optimally-Robust Estimators in Generalized
-Pareto Models. ArXiv 1005.1476. To appear at \emph{Statistics}.
-DOI: 10.1080/02331888.2011.628022. \cr
+Pareto Models. \emph{Statistics}. \bold{47}(4), 762--791.\cr
 
 Ruckdeschel, P. and Horbenko, N. (2012): Yet another breakdown point notion:
 EFSBP --illustrated at scale-shape models. \emph{Metrika}, \bold{75}(8),
@@ -212,12 +234,11 @@ EFSBP --illustrated at scale-shape models. \emph{Metrika}, \bold{75}(8),
 %a more detailed manual for \pkg{distr}, \pkg{distrSim}, \pkg{distrTEst}, and \pkg{RobExtremes} may be downloaded from
 %\url{http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf}\cr
 
-a vignette for packages \pkg{distr}, \pkg{distrSim}, \pkg{distrTEst}, 
+A vignette for packages \pkg{distr}, \pkg{distrSim}, \pkg{distrTEst},
 and \pkg{RobExtremes} is included into the mere documentation package \pkg{distrDoc}
-and may be called by \code{require("distrDoc");vignette("distr")}
+and may be called by \code{require("distrDoc");vignette("distr")}.
 
-a homepage to this package is available under\cr
-\url{http://robast.r-forge.r-project.org/}
+A homepage to this package is available under \url{http://robast.r-forge.r-project.org/}.
 
 }
 \keyword{package}

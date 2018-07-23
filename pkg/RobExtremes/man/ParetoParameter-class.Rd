@@ -7,6 +7,7 @@
 \alias{shape<-,ParetoParameter-method}
 \alias{Min,ParetoParameter-method}
 \alias{Min<-,ParetoParameter-method}
+\alias{scale,ParetoParameter-method}
 
 \title{Paramter of Pareto distributions}
 \description{The class of the parameter of Pareto distributions.}
@@ -32,6 +33,8 @@ Class \code{"OptionalParameter"}, by class \code{"Parameter"}.
     \item{shape}{\code{signature(object = "ParetoParameter")}: access method for
       slot \code{shape}. }
     \item{Min}{\code{signature(x = "ParetoParameter")}: access method for
+      slot \code{Min}. }
+    \item{scale}{\code{signature(x = "ParetoParameter")}: access method for
       slot \code{Min}. }
     \item{shape<-}{\code{signature(object = "ParetoParameter")}: replace method for
       slot \code{shape}. }

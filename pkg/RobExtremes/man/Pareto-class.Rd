@@ -6,6 +6,8 @@
 \alias{shape<-,Pareto-method}
 \alias{Min,Pareto-method}
 \alias{Min<-,Pareto-method}
+\alias{scale,Pareto-method}
+\alias{*,Pareto,numeric-method}
 
 \title{Pareto distribution}
 \description{[borrowed from \pkg{actuar}]:
@@ -58,6 +60,9 @@ Class \code{"Distribution"}, by class \code{"AbscontDistribution"}.
     \item{Min}{\code{signature(x = "Pareto")}: wrapped access method for
       slot \code{Min} of slot \code{param}. }
 
+    \item{scale}{\code{signature(x = "Pareto")}: wrapped access method for
+      slot \code{Min} of slot \code{param}. }
+
     \item{shape<-}{\code{signature(object = "Pareto")}: wrapped replace method for
       slot \code{shape} of slot \code{param}. }
 
@@ -76,6 +81,10 @@ Class \code{"Distribution"}, by class \code{"AbscontDistribution"}.
     exact evaluation using explicit expressions.}
     \item{kurtosis}{\code{signature(signature(x = "Pareto")}: 
     exact evaluation using explicit expressions.}
+
+    \item{*}{\code{signature(e1 = "Pareto", e2 = "numeric")}: exact method
+      for this transformation --- stays within this class if \code{e2>0}. }
+
   }
 }
 \references{Johnson et al. (1995) \emph{Continuous Univariate Distributions. Vol. 2. 2nd ed.}

@@ -181,6 +181,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
                           secLevel = 0.7,
                           withCentL2 = FALSE,
                           withL2derivDistr  = FALSE,
+                          withMDE = FALSE,
                           ..ignoreTrafo = FALSE,
                           ..withWarningGEV = TRUE){
     theta <- c(loc, scale, shape)
@@ -281,7 +282,7 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
         #   PF <- GEVFamily(loc = theta[1], scale = theta[2], shape = theta[3])
         #   e1 <- PickandsEstimator(x,ParamFamily=PF)
         #   e0 <- estimate(e1)
-           e0 <- .getBetaXiGEV(x=x, mu=mu, xiGrid=.getXiGrid(), withPos=withPos)
+           e0 <- .getBetaXiGEV(x=x, mu=mu, xiGrid=.getXiGrid(), withPos=withPos, withMDE=withMDE)
         }else{
            if(is(start0Est,"function")){
               e1 <- start0Est(x, ...)
@@ -374,26 +375,32 @@ GEVFamily <- function(loc = 0, scale = 1, shape = 0.5,
     FisherInfo.fct <- function(param) {
         sc <- force(main(param)[1])
         k <- force(main(param)[2])
-        if(..withWarningGEV).warningGEVShapeLarge(k)
-        G20 <- gamma(2*k)
-        G10 <- gamma(k)
-        G11 <- digamma(k)*gamma(k)
-        G01 <- -0.57721566490153 # digamma(1)
-        G02 <- 1.9781119906559 #trigamma(1)+digamma(1)^2
-        x0 <- (k+1)^2*2*k
-        I11 <- G20*x0-2*G10*k*(k+1)+1
-        I11 <- I11/sc^2/k^2
-        I12 <- G20*(-x0)+ G10*(k^3+4*k^2+3*k) - k -1
-        I12 <- I12 + G11*(k^3+k^2) -G01*k
-        I12 <- I12/sc/k^3
-        I22 <- G20*x0 +(k+1)^2 -G10*(x0+2*k*(k+1))
-        I22 <- I22 - G11*2*k^2*(k+1) + G01*2*k*(1+k)+k^2 *G02
-        I22 <- I22 /k^4
+        if(abs(k)>=1e-4){
+          k1 <- k+1
+          if(..withWarningGEV).warningGEVShapeLarge(k)
+          G20 <- gamma(2*k)
+          G10 <- gamma(k)
+          G11 <- digamma(k)*gamma(k)
+          G01 <- ..dig1 # digamma(1)
+          G02 <- ..trig1dig1sq #trigamma(1)+digamma(1)^2
+          x0 <- k1^2*2*k
+          I11 <- G20*x0-2*G10*k*k1+1
+          I11 <- I11/sc^2/k^2
+          I12 <- G20*(-x0)+ G10*(k^3+4*k^2+3*k) - k1
+          I12 <- I12 + G11*(k^3+k^2) -G01*k
+          I12 <- I12/sc/k^3
+          I22 <- G20*x0 +k1^2 -G10*(x0+2*k*k1)
+          I22 <- I22 - G11*2*k^2*k1 + G01*2*k*k1+k^2 *G02
+          I22 <- I22 /k^4
+        }else{
+          I11 <- ..I22/sc^2
+          I12 <- ..I23/sc
+          I22 <- ..I33
+        }
         mat <- PosSemDefSymmMatrix(matrix(c(I11,I12,I12,I22),2,2))
         dimnames(mat) <- list(scaleshapename,scaleshapename)
         return(mat)
     }
-
 
 
     FisherInfo <- FisherInfo.fct(param)

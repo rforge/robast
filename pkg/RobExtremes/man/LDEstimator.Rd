@@ -138,7 +138,9 @@ G <- GammaFamily(scale = 1, shape = 2)
 
 medQn(x = x, ParamFamily = G)
 medSn(x = x, ParamFamily = G, q.lo = 0.5, q.up = 4)
-\dontrun{
+
+\donttest{
+## not tested on CRAN because it takes time...
 ## without speedup for Sn:
 LDEstimator(x, loc.est = median, disp.est = Sn, loc.fctal = median,
             disp.fctal = getMethod("Sn","UnivariateDistribution"),
