@@ -1,0 +1,8 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+to be done in package RobExtremes
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
++ generate LM-Grids for ParetoFamily
++ write code so that it uses different (semi-equivariant) norms 
+  in GEVFamily, GParetoFamily, GParetoFamilyMuUnknown
++ use .Call interface for kMAD   

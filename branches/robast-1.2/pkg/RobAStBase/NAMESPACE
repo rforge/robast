@@ -1,0 +1,88 @@
+import("methods")
+importFrom("rrcov", "getCov", "CovMcd")
+import("distr")
+import("distrEx")
+import("distrMod")
+import("RandVar")
+importFrom("startupmsg", "buildStartupMessage", "infoShow")
+importFrom("grDevices", "colorRamp", "grey", "rgb")
+importFrom("graphics", "abline", "axis", "box", "lines", "matlines",
+           "matpoints", "mtext", "par", "points", "text", "title")
+importFrom("stats", "complete.cases", "dbinom", "dnorm", "fft",
+           "na.omit", "pbinom", "pnorm", "qnorm", "quantile",
+           "uniroot", "approxfun")
+
+exportClasses("Neighborhood", 
+              "UncondNeighborhood", 
+              "ContNeighborhood", 
+              "TotalVarNeighborhood") 
+exportClasses("RobModel", 
+              "FixRobModel", 
+              "InfRobModel") 
+exportClasses("InfluenceCurve", 
+              "IC", "HampIC",
+              "ContIC", 
+              "TotalVarIC")
+exportClasses("RobAStControl", "RobWeight", "BoundedWeight",
+              "BdStWeight", "HampelWeight")
+exportClasses("ALEstimate", "kStepEstimate", "MEstimate")
+exportClasses("cutoff")
+exportClasses("interpolRisk", "OMSRRisk","MBRRisk","RMXRRisk")
+exportClasses("StartClass", "pICList", "OptionalpICList")
+exportMethods("show", 
+              "plot")
+exportMethods("type", "radius", "radius<-")
+exportMethods("name", "name<-", 
+              "infoPlot")
+exportMethods("center", "center<-", 
+              "neighbor", "neighbor<-")
+exportMethods("Curve", 
+              "Risks", "Risks<-", "addRisk<-", 
+              "Infos", "Infos<-", "addInfo<-", 
+              "CallL2Fam", "CallL2Fam<-",
+              "modifyIC", 
+              "generateIC", 
+              "checkIC",
+              "evalIC",
+              "clip", "clip<-", 
+              "cent", "cent<-", 
+              "stand", "stand<-", 
+              "lowerCase", "lowerCase<-", 
+              "neighborRadius", "neighborRadius<-", 
+              "clipLo", "clipLo<-", 
+              "clipUp", "clipUp<-",
+              "optIC", "start", "startval", "pICList") 
+exportMethods("locMEstimator")
+exportMethods("weight", "weight<-", 
+              "getweight", 
+              "minbiasweight", 
+              "generateIC.fct",
+              "makeIC", "normtype", "biastype")
+exportMethods("getRiskIC")
+exportMethods("getBiasIC")
+exportMethods("comparePlot")
+exportMethods("pIC", "asbias", 
+              "steps", 
+              "Mroot","kStepEstimator.start")
+exportMethods("pICList","ICList", "ksteps", "uksteps", 
+              "start", "startval", "ustartval")
+exportMethods("moveL2Fam2RefParam",
+			  "moveICBackFromRefParam",
+			  "rescaleFunction")			  
+exportMethods("ddPlot", "qqplot", "returnlevelplot")
+exportMethods("cutoff.quantile", "cutoff.quantile<-")
+exportMethods("samplesize<-", "samplesize")
+exportMethods("getRiskFctBV", "getFiRisk")
+export("oneStepEstimator", "kStepEstimator")
+export("ContNeighborhood", "TotalVarNeighborhood") 
+export("FixRobModel", "InfRobModel") 
+export("InfluenceCurve", "IC", "ContIC", "TotalVarIC")
+export(".eq", ".getDistr", "getBoundedIC")
+export("RobAStBaseOptions", "getRobAStBaseOption")
+export("cutoff","cutoff.chisq","cutoff.sememp", "cutoff.quant")
+export("outlyingPlotIC", "RobAStBaseMASK")
+export("OMSRRisk","MBRRisk","RMXRRisk")
+export("getRiskFctBV")
+export(".rescalefct",".plotRescaledAxis",".makedotsP",".makedotsLowLevel",".SelectOrderData")
+export(".merge.lists")
+export("InfoPlot", "ComparePlot", "PlotIC")

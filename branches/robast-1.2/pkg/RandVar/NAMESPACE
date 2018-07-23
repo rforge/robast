@@ -1,0 +1,37 @@
+import("methods")
+import("distr")
+import("distrEx")
+importFrom("startupmsg", "buildStartupMessage")
+
+exportClasses("OptionalrSpace") 
+exportClasses("RandVariable", 
+              "EuclRandVariable",
+              "EuclRandMatrix", 
+              "RealRandVariable", 
+              "EuclRandVarList")
+
+exportMethods("show", 
+              "coerce")
+exportMethods("E", 
+              "Map", "Map<-", 
+              "Domain", "Domain<-", 
+              "Range", "Range<-", 
+              "Dim", "Dim<-", 
+              "length", 
+              "dimension", 
+              "nrow", "ncol", 
+              "compatibleDomains", 
+              "evalRandVar", 
+              "imageDistr", 
+              "t", 
+              "numberOfMaps", 
+              "%*%", 
+              "%m%", 
+              "Arith", 
+              "Math")
+
+export("RandVariable", 
+       "EuclRandVariable", 
+       "EuclRandMatrix", 
+       "RealRandVariable", 
+       "EuclRandVarList")
