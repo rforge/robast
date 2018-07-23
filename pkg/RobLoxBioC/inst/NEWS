@@ -1,5 +1,5 @@
 ###############################################################################
-##  News: to package RobLoxBioC
+##  News: to package RobLox
 ###############################################################################
 
 (first two numbers of package versions do not necessarily reflect 
@@ -8,10 +8,26 @@
  information)
 
 #######################################
-version 0.9
+version 1.1
 #######################################
 
 user-visible CHANGES:
++ DESCRIPTION tag SVNRevision changed to VCS/SVNRevision
+
+under the hood:
++ wherever possible also use q.l internally instead of q to 
+  provide functionality in IRKernel
+
+#######################################
+version 1.0
+#######################################
+
+user-visible CHANGES:
++ title changed to title style / capitalization
+
+#######################################
+version 0.9
+#######################################
 
 GENERAL ENHANCEMENTS:
 + cleaned DESCRIPTION and NAMESPACE file as to Imports/Depends
@@ -24,35 +40,38 @@ BUGFIXES
 
 
 #######################################
-version 0.8.3
+version 0.8.1
 #######################################
-+ update for beadarray versions >= 2.0.0 with support by Mark Dunnings and 
-  Andy Lynch
-+ some changes for internal functions due to changes in R 2.16.0 regarding
-  .C and .Call
++ new internal functions due to changes to .C() and .Call() calls
+
 
 #######################################
 version 0.8
 #######################################
-+ renamed AffySimStudy.R to AffymetrixSimStudy.R
-+ update of Figure numbers in IlluminaExample.R
-+ added scripts AffymetrixReproducibility.R and IlluminaReproducibility.R
 
-+ DESCRIPTION files and package-help files gain a tag SVNRevision 
+BUG FIX:
++ roblox(): if only sd or mean is to be estimated, starting 
+  value mean.sd was not; similarly, in case only mean is of 
+  interest, robEst had no component est...
+
+  + DESCRIPTION files and package-help files gain a tag SVNRevision 
   to be filled by get[All]RevNr.R from utils in distr
-
-#######################################
-## version 0.7.1
-#######################################
-+ corrected bug in AffySimStudy and IlluminaSimStudy
-+ minor modifications of scripts in scripts folder
 
 #######################################
 version 0.7
 #######################################
+
+user-visible CHANGES:
+
++ Roblox,colRoblox,rowRoblox gain na.rm argument
+  and consistently fill new slot completecases
++ introduction of finite-sample correction
++ handle marginal cases n = 1 or 2 as well as eps = 0 and mad = 0
++ package Rd-file added
+
 GENERAL ENHANCEMENTS:
 
-+ added tests/Examples folder with file RobLoxBioC-Ex.Rout.save to have
++ added tests/Examples folder with file RobLox-Ex.Rout.save to have
   some automatic testing
 + added TOBEDONE (sic!) files; in English (for possible collaborators) 
 + added keyword robust and made some minor corrections ...
@@ -72,51 +91,21 @@ GENERAL ENHANCEMENTS:
 
 + removed pdf-file from version control - Rnw-file is sufficient
 
-
 INTERNALLY:
 
-+ renamed AllGeneric.R to 0AllGeneric.R to be on first position ...
-+ in robloxAffyBatch.R return se not sd ...
-+ some modifications for Figure 2 in IlluminaExample.R
-+ set default to 3-step estimation ...
-+ changed return value of KolmogorovMinDist, now also returns the corresponding sample sizes.
-+ Added file for Illumina simulation study and renamed file AffySimStudy.Rd to SimStudies.Rd.
-+ reduced the Illumina example code to relevant part ...
-
++ gains new slots of kStepEstimator
 
 BUGFIXES:
 
-+ code seems to work correctly, affycompTable in AffymetrixExample does
-  not work yet (because of missing dilution data).
++ corrected small bug in computation of bias in case of TuMad IC ...
++ small correction in finiteSampleCorrection ...
++ forgot to include correction for 50% or more outliers
 
 
 #######################################
-version 0.5
+version 0.6.1
 #######################################
-+ added example code for Illumina data
-+ function to perform Monte-Carlo studies for comparison with Illumina's
-  default method
-
-#######################################
-version 0.4
-#######################################
-+ added finite-sample correction
-+ handle cases with sample size <= 2 and contamination eps = 0
-+ moved function AffySimStudy from folder inst/scripts to folder R as 
-  exported and documented function to perform Monte-Carlo studies.
-
-#######################################
-version 0.3
-#######################################
-+ added KolmogorovMinDist methods for matrix, AffyBatch and BeadLevelList
-
-#######################################
-version 0.2
-#######################################
-+ robloxbioc methods for AffyBatch and BeadLevelList
-
-#######################################
-version 0.1
-#######################################
-+ start of development
-
++ bug in computation of as. covariance in roblox corrected.
++ bug in rsOptIC corrected.
++ introduction of NEWS-file
++ update of CITATION-file (based on code provided by A. Zeileis on R help)

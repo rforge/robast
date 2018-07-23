@@ -1,15 +1,48 @@
-import("methods", "distr")
-importMethodsFrom("BiocGenerics","append","annotation")
-importFrom("Biobase","assayDataNew")
+importFrom("Biobase", "rowMedians")
 importFrom("lattice","stripplot")
 importFrom("RColorBrewer","brewer.pal")
-importClassesFrom("Biobase","ExpressionSet","AssayData","AnnotatedDataFrame")
-importMethodsFrom("Biobase", "rowMedians", "featureNames", "sampleNames", 
-           "phenoData", "experimentData", "exprs", "exprs<-", "assayData","assayData<-")
-importFrom("affy","bg.correct.mas","getCdfInfo","tukey.biweight")
-importMethodsFrom("affy","intensity")
-import("beadarray")
-importFrom("RobLox", "rowRoblox", "finiteSampleCorrection")
+importFrom("distr", "p", "q", "r", "q.l", "Reals")
+importClassesFrom("distr","Reals")
+importFrom("RandVar", "EuclRandVarList", "RealRandVariable")		 
+importClassesFrom("RandVar", "EuclRandVarList", "RealRandVariable")		 
+importFrom("distrMod", "NormLocationFamily", "NormLocationScaleFamily", "symmetricBias", "NormType")
+importClassesFrom("distrMod", "L2LocationFamily", "NormLocationFamily", "NormLocationScaleFamily")
+importMethodsFrom("distrMod", "distribution", "main", "addInfo<-", "Infos", "Infos<-",
+                  "normtype", "biastype","normtype<-","biastype<-", "estimate")
+importFrom("RobAStBase","generateIC","ContNeighborhood", "IC")
+importFrom("grDevices", "dev.new")
+importFrom("graphics", "abline", "boxplot", "curve", "layout",
+             "legend", "par", "plot")
+importFrom("methods", "is", "new")
+importFrom("stats", "approx", "complete.cases", "dnorm", "integrate",
+             "mad", "median", "na.omit", "optim", "optimize", "pnorm",
+             "qnorm", "rbinom", "rnorm", "uniroot")
+importClassesFrom("RobAStBase", "HampelWeight", "ALEstimate", "kStepEstimate", "ContNeighborhood")
+importMethodsFrom("RobAStBase", "clip", "cent", "stand", "weight", "clip<-", "cent<-", "stand<-", "weight<-", 
+         "getweight", "makeIC", "CallL2Fam", "CallL2Fam<-", "neighborRadius", "modifyIC", "addInfo<-")
 
-exportMethods("robloxbioc", "KolmogorovMinDist")
-export("AffySimStudy", "IlluminaSimStudy")
+export(finiteSampleCorrection,
+       rlsOptIC.AL, 
+       rlsOptIC.M, 
+       rlsOptIC.BM,
+       rlsOptIC.Hu1, 
+       rlsOptIC.Hu2a, 
+       rlsOptIC.Hu2, 
+       rlsOptIC.Hu3, 
+       rlsOptIC.HuMad, 
+       rlsOptIC.Ha3,
+       rlsOptIC.Ha4, 
+       rlsOptIC.HaMad, 
+       rlsOptIC.An1,
+       rlsOptIC.An2, 
+       rlsOptIC.AnMad, 
+       rlsOptIC.Tu1,
+       rlsOptIC.Tu2, 
+       rlsOptIC.TuMad, 
+       rlsOptIC.MM2,
+       rlOptIC,
+       rsOptIC,
+       roblox,
+       rowRoblox,
+       colRoblox,
+       showdown)
