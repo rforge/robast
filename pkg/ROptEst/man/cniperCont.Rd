@@ -11,34 +11,38 @@
   other procedure.
 }
 \usage{
-cniperCont(IC1, IC2, data = NULL, ..., neighbor, risk, lower =
-                 getdistrOption("DistrResolution"), upper = 1 -
-                 getdistrOption("DistrResolution"), n = 101, scaleX =
-                 FALSE, scaleX.fct, scaleX.inv, scaleY = FALSE,
-                 scaleY.fct = pnorm, scaleY.inv = qnorm, scaleN = 9,
-                 x.ticks = NULL, y.ticks = NULL, cex.pts = 1,
-                 cex.pts.fun = NULL, col.pts = par("col"), pch.pts =
-                 19, jit.fac = 1, jit.tol = .Machine$double.eps,
-                 with.lab = FALSE, lab.pts = NULL, lab.font = NULL,
-                 alpha.trsp = NA, which.lbs = NULL, which.Order = NULL,
-                 return.Order = FALSE, draw.nonlbl = TRUE, cex.nonlbl =
-                 0.3, pch.nonlbl = ".", withSubst = TRUE)
+cniperCont(IC1, IC2, data = NULL, ...,
+           neighbor, risk, lower=getdistrOption("DistrResolution"),
+           upper=1-getdistrOption("DistrResolution"), n = 101,
+           with.automatic.grid = TRUE, scaleX = FALSE, scaleX.fct,
+           scaleX.inv, scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+           scaleN = 9, x.ticks = NULL, y.ticks = NULL, cex.pts = 1,
+           cex.pts.fun = NULL, col.pts = par("col"), pch.pts = 19,
+           cex.npts = 0.6, cex.npts.fun = NULL, col.npts = "red", pch.npts = 20,
+           jit.fac = 1, jit.tol = .Machine$double.eps, with.lab = FALSE,
+           lab.pts = NULL, lab.font = NULL, alpha.trsp = NA, which.lbs = NULL,
+           which.Order  = NULL, which.nonlbs = NULL, attr.pre = FALSE,
+           return.Order = FALSE, withSubst = TRUE)
 
 cniperPoint(L2Fam, neighbor, risk, lower, upper)
 
-cniperPointPlot(L2Fam, data = NULL, ..., neighbor, risk = asMSE(),
-                 lower = getdistrOption("DistrResolution"), upper = 1 -
-                 getdistrOption("DistrResolution"), n = 101,
-                 withMaxRisk = TRUE, scaleX = FALSE, scaleX.fct,
-                 scaleX.inv, scaleY = FALSE, scaleY.fct = pnorm,
-                 scaleY.inv = qnorm, scaleN = 9, x.ticks = NULL,
-                 y.ticks = NULL, cex.pts = 1, cex.pts.fun = NULL,
-                 col.pts = par("col"), pch.pts = 19, jit.fac = 1,
-                 jit.tol = .Machine$double.eps, with.lab = FALSE,
-                 lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
-                 which.lbs = NULL, which.Order = NULL, return.Order =
-                 FALSE, draw.nonlbl = TRUE, cex.nonlbl = 0.3,
-                 pch.nonlbl = ".", withSubst = TRUE)
+cniperPointPlot(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
+                        lower=getdistrOption("DistrResolution"),
+                        upper=1-getdistrOption("DistrResolution"), n = 101,
+                        withMaxRisk = TRUE, with.automatic.grid = TRUE,
+                           scaleX = FALSE, scaleX.fct, scaleX.inv,
+                           scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+                           scaleN = 9, x.ticks = NULL, y.ticks = NULL,
+                           cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
+                           pch.pts = 19,
+                           cex.npts = 1, cex.npts.fun = NULL, col.npts = par("col"),
+                           pch.npts = 19,
+                           jit.fac = 1, jit.tol = .Machine$double.eps,
+                           with.lab = FALSE,
+                           lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
+                           which.lbs = NULL, which.nonlbs = NULL,
+                           which.Order  = NULL, attr.pre = FALSE, return.Order = FALSE,
+                           withSubst = TRUE, withMakeIC = FALSE)
 }
 \arguments{
   \item{IC1}{ object of class \code{IC} }
@@ -62,6 +66,9 @@ cniperPointPlot(L2Fam, data = NULL, ..., neighbor, risk = asMSE(),
      with Dirac contamination in the evaluation point for both ICs
      \eqn{\psi}{psi} and \eqn{\eta}{eta} which amounts to calling \code{cniperCont}
      with \code{IC1=psi}, \code{IC2=eta}.}
+  \item{with.automatic.grid}{logical; should a grid be plotted alongside
+      with the ticks of the axes, automatically? If \code{TRUE} a respective
+      call to \code{grid} in argument \code{panel.first} is ignored. }
   \item{scaleX}{logical; shall X-axis be rescaled (by default according to the cdf of
           the underlying distribution)?}
   \item{scaleY}{logical; shall Y-axis be rescaled (by default according to a probit scale)?}
@@ -86,13 +93,23 @@ cniperPointPlot(L2Fam, data = NULL, ..., neighbor, risk = asMSE(),
                  if non-NULL, user-given x-ticks (on original scale);}
   \item{y.ticks}{numeric; defaults to NULL; (then ticks are chosen automatically);
                  if non-NULL, user-given y-ticks (on original scale);}
-  \item{cex.pts}{size of the points of the second argument plotted}
+  \item{cex.pts}{size of the points of the second argument plotted (vectorized);}
   \item{cex.pts.fun}{rescaling function for the size of the points to be plotted;
         either \code{NULL} (default), then \code{log(1+abs(x))} is used for
         the rescaling, or a function which is then used for the
         rescaling.}
-  \item{col.pts}{color of the points of the second argument plotted}
-  \item{pch.pts}{symbol of the points of the second argument plotted}
+  \item{col.pts}{color of the points of the second argument plotted (vectorized);}
+  \item{pch.pts}{symbol of the points of the second argument plotted (vectorized);}
+  \item{col.npts}{color of the non-labelled points of the \code{data} argument
+     plotted (vectorized);}
+  \item{pch.npts}{symbol of the non-labelled points of the \code{data} argument
+         plotted (vectorized);}
+  \item{cex.npts}{size of the non-labelled points of the \code{data} argument
+                 plotted (vectorized);}
+  \item{cex.npts.fun}{rescaling function for the size of the non-labelled points
+  to be plotted; either \code{NULL} (default), then \code{log(1+abs(x))}
+  is used for each of the rescalings, or a function which is then used
+  for each of the rescalings.}
   \item{with.lab}{logical; shall labels be plotted to the observations?}
   \item{lab.pts}{character or NULL; labels to be plotted to the observations; if \code{NULL}
                  observation indices;}
@@ -111,23 +128,30 @@ cniperPointPlot(L2Fam, data = NULL, ..., neighbor, risk = asMSE(),
                     for plotting points of the second argument in a jittered fashion.}
   \item{which.lbs}{either an integer vector with the indices of the observations
           to be plotted into graph or \code{NULL} --- then no observation is excluded}
+  \item{which.nonlbs}{indices of the observations which should be plotted but
+        not labelled; either an integer vector with the indices of the observations
+          to be plotted into graph or \code{NULL} --- then all non-labelled
+          observations are plotted.}
   \item{which.Order}{we order the observations (descending) according to the norm given by
            \code{normtype(object)}; then \code{which.Order}
            either is an integer vector with the indices of the \emph{ordered}
            observations (remaining after a possible reduction by argument \code{which.lbs})
            to be plotted into graph or \code{NULL} --- then no (further) observation
            is excluded.}
+  \item{attr.pre}{logical; do graphical attributes for plotted data refer
+                  to indices prior (\code{TRUE}) or posterior to selection
+                  via arguments \code{which.lbs}, \code{which.Order}, \code{which.nonlbs}
+                  (\code{FALSE})? }
   \item{return.Order}{logical; if \code{TRUE}, an order vector
     is returned; more specifically, the order of the (remaining) observations
     given by their original index is returned (remaining means: after a possible
     reduction by argument \code{which.lbs}, and ordering is according to the norm given by
            \code{normtype(object)});
    otherwise we return \code{invisible()} as usual.}
-  \item{draw.nonlbl}{logical; should non-labelled observations be drawn?}
-  \item{cex.nonlbl}{character expansion(s) for non-labelled observations}
-  \item{pch.nonlbl}{plotting symbol(s) for non-labelled observations}
   \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
       titles and lables is used; otherwise no substitution is used. }
+  \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
+        \code{makeIC} before return.}
 }
 \details{
   In case of \code{cniperCont} the difference between the risks of two ICs 
@@ -164,7 +188,16 @@ cniperPointPlot(L2Fam, data = NULL, ..., neighbor, risk = asMSE(),
   to Section~3.5 of Kohl et al. (2008) as well as Ruckdeschel (2004) and 
   the Introduction of Kohl (2005).
 }
-\value{invisible() resp. cniper point is returned.}
+\value{The cniper point is returned by \code{cniperPoint}.
+In case of \code{cniperPointPlot}, we return
+an S3 object of class \code{c("plotInfo","DiagnInfo")}, i.e., a list
+  containing the information needed to produce the
+  respective plot, which at a later stage could be used by different
+  graphic engines (like, e.g. \code{ggplot}) to produce the plot
+  in a different framework. A more detailed description will follow in
+  a subsequent version.
+
+}
 \references{
   Kohl, M. and Ruckdeschel, H. and Rieder, H. (2008). Infinitesimally 
   Robust Estimation in General Smoothly Parametrized Models. Unpublished
@@ -196,7 +229,7 @@ cniperPointPlot(P, neighbor = ContNeighborhood(radius = 0.5),
                 risk = asMSE(), lower = 0, upper = 10)
 
 ## Don't run to reduce check time on CRAN
-\dontrun{
+\donttest{
 ## cniper point
 cniperPoint(P, neighbor = ContNeighborhood(radius = 0.5), 
             risk = asMSE(), lower = 0, upper = 4)

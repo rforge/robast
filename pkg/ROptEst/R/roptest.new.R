@@ -88,8 +88,9 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     na.rm = TRUE, initial.est.ArgList, ...,
                     withLogScale = TRUE,..withCheck=FALSE,
                     withTimings = FALSE, withMDE = NULL,
-                    withEvalAsVar = NULL){
-    dots <- match.call(expand.dots=FALSE)[["..."]]
+                    withEvalAsVar = NULL, withMakeIC = FALSE){
+    mc <- match.call(expand.dots=FALSE)
+    dots <- mc[["..."]]
     scalename <- dots[["scalename"]]
     nbCtrl <- list()
     nbCtrl[["neighbor"]] <- if(!missing(neighbor)) neighbor else ContNeighborhood()
@@ -114,13 +115,17 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     kStepCtrl[["scalename"]] <- if(!is.null(scalename)) scalename else "scale"
     kStepCtrl[["withLogScale"]] <- if(!missing(withLogScale)) withLogScale else TRUE
     kStepCtrl[["withEvalAsVar"]] <- if(!missing(withEvalAsVar)) withEvalAsVar else NULL
+    kStepCtrl[["withMakeIC"]] <- if(!missing(withMakeIC)) withMakeIC else FALSE
 
-    return(robest(x=x, L2Fam=L2Fam,  fsCor = fsCor,
+    retV <- robest(x=x, L2Fam=L2Fam,  fsCor = fsCor,
            risk = risk, steps = steps, verbose = verbose,
            OptOrIter = OptOrIter, nbCtrl = nbCtrl,
            startCtrl = startCtrl, kStepCtrl = kStepCtrl,
            na.rm = na.rm, ..., debug = ..withCheck,
-           withTimings = withTimings))
+           withTimings = withTimings)
+    attr(mc,"robest.call") <- retV@estimate.call
+    retV@estimate.call <- mc
+    return(retV)
 }
 #roptest(x=1:10,L2Fam=GammaFamily(),also=3,..withCheck=TRUE)
 
@@ -165,6 +170,8 @@ robest <- function(x, L2Fam,  fsCor = 1,
 
     withEvalAsVar <- kStepCtrl$withEvalAsVar
     if(is.null(withEvalAsVar)) withEvalAsVar <- L2Fam@.withEvalAsVar
+    withMakeIC <- kStepCtrl$withMakeIC
+    if(is.null(withMakeIC)) withMakeIC <- FALSE
 
 
     es.list <- as.list(es.call0[-1])
@@ -275,7 +282,8 @@ robest <- function(x, L2Fam,  fsCor = 1,
     es.list0$fsCor <- eval(es.list0$fsCor)
 
     if(debug) {cat("\n\n\n::::\n\n")
-    argList <- c(list(model=L2Fam,risk=risk,neighbor=neighbor),
+    argList <- c(list(model=L2Fam,risk=risk,neighbor=neighbor,
+                      withEvalAsVar = withEvalAsVar, withMakeIC = withMakeIC),
                                              es.list0)
     print(argList)
     cat("\n\n\n")
@@ -283,7 +291,8 @@ robest <- function(x, L2Fam,  fsCor = 1,
     if(!debug){
       sy.getStartIC <-  system.time({
        ICstart <- do.call(getStartIC, args=c(list(model=L2FamStart,risk=risk,
-                              neighbor=neighbor, withEvalAsVar = withEvalAsVar),
+                              neighbor=neighbor, withEvalAsVar = withEvalAsVar,
+                              withMakeIC = withMakeIC),
                               es.list0))
      })
      if (withTimings) print(sy.getStartIC)
@@ -301,7 +310,8 @@ robest <- function(x, L2Fam,  fsCor = 1,
                             na.rm = na.rm,
                             scalename = kStepCtrl$scalename,
                             withLogScale = kStepCtrl$withLogScale,
-                            withEvalAsVar = withEvalAsVar)
+                            withEvalAsVar = withEvalAsVar,
+                            withMakeIC = withMakeIC)
          print(argList) }
       sy.kStep <- system.time({
          res <- kStepEstimator(x, IC = ICstart, start = initial.est, steps = steps,
@@ -313,7 +323,8 @@ robest <- function(x, L2Fam,  fsCor = 1,
                             na.rm = na.rm,
                             scalename = kStepCtrl$scalename,
                             withLogScale = kStepCtrl$withLogScale,
-                            withEvalAsVar = withEvalAsVar)
+                            withEvalAsVar = withEvalAsVar,
+                            withMakeIC = withMakeIC)
                             })
        if (withTimings) print(sy.kStep)
 

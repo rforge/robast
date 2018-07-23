@@ -74,7 +74,6 @@ CniperPointPlot <- function(fam,...
 
   ## Scaling of the axes
   scaleList <- rescaleFunction(fam, FALSE, rescale)
-
   argsList <- c(list(L2Fam = substitute(fam)
                    ,data = data
                    ,neighbor = substitute(ContNeighborhood(radius = 0.5))
@@ -83,17 +82,26 @@ CniperPointPlot <- function(fam,...
                    ,upper = substitute(upper)
                    ,n = substitute(101)
                    ,withMaxRisk = substitute(TRUE)
+                   ,with.automatic.grid = substitute(TRUE)
                    ,scaleN = substitute(9)
                    ,cex.pts = substitute(1)
+                   ,cex.pts.fun = NULL
                    ,col.pts = substitute(par("col"))
                    ,pch.pts = substitute(19)
-                   ,jitter.fac = substitute(1)
+                   ,cex.npts = substitute(1)
+                   ,cex.npts.fun = NULL
+                   ,col.npts = substitute(par("col"))
+                   ,pch.npts = substitute(19)
+                   ,jit.fac = substitute(1)
+                   ,jit.tol = substitute(.Machine$double.eps)
                    ,with.lab = substitute(FALSE)
                    ,lab.pts = substitute(NULL)
                    ,lab.font = substitute(NULL)
                    ,alpha.trsp = alpha.trsp
                    ,which.lbs = substitute(NULL)
+                   ,which.nonlbs = substitute(NULL)
                    ,which.Order  = substitute(NULL)
+                   ,attr.pre = substitute(FALSE)
                    ,return.Order = substitute(FALSE)
                    ,adj = 0.5
                    ,cex.main = substitute(1.5)
@@ -103,6 +111,7 @@ CniperPointPlot <- function(fam,...
                    ,ylab=substitute("Asymptotic Risk difference (classic - robust)")
                    ,bty = substitute("o")
                    ,withSubst = TRUE
+                   ,withMakeIC = FALSE
                    ), scaleList)
 #  print(argsList)
   ##parameter for plotting

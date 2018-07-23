@@ -12,9 +12,11 @@
    L2Fam, # L2Family
    IC, # IC1 in cniperContPlot and eta in cniperPointPlot
    jit.fac,
-   jit.tol
+   jit.tol,
+   plotInfo
 ){
                dotsP <- .makedotsP(dots)
+               dotsP$attr.pre <- NULL
 
                al <- dotsP$alpha.trsp
                if(!is.null(al)) if(!is.na(al))
@@ -27,22 +29,73 @@
 
 
                sel <- .SelectOrderData(data, function(x)sapply(x,fun),
-                                       dots$which.lbs, dots$which.Order)
+                                       dots$which.lbs, dots$which.Order,
+                                       dots$which.nonlbs)
                i.d <- sel$ind
                i0.d <- sel$ind1
                y.d <- sel$y
                x.d <- sel$data
                n <- length(i.d)
+               i.d.ns <- sel$ind.ns
+               y.d.ns <- sel$y.ns
+               x.d.ns <- sel$data.ns
+               n.ns <- length(i.d.ns)
+
+    if(dots$attr.pre){
+       col.pts <- col.pts[sel$ind]
+       col.npts <- col.pts[sel$ind.ns]
+       pch.pts <- pch.pts[sel$ind]
+       pch.npts <- pch.pts[sel$ind.ns]
+       cex.pts <- cex.pts[sel$ind]
+       cex.npts <- cex.pts[sel$ind.ns]
+       lab.pts <- lab.pts[sel$ind]
+    }else{
+       if(missing(pch.pts)) pch.pts <- 1
+       if(!length(pch.pts)==n)
+          pch.pts <- rep(pch.pts, length.out= n)
+       if(missing(col.pts)) col.pts <- par("col")
+       if(!length(col.pts)==n)
+          col.pts <- rep(col.pts, length.out= n)
+       if(missing(cex.pts)) cex.pts <- 1
+       if(!length(cex.pts)==n)
+          cex.pts <- rep(cex.pts, length.out= n)
+       lab.pts <- if(is.null(lab.pts)) paste(1:n) else rep(lab.pts,length.out=n)
+
+       if(missing(pch.npts)) pch.npts <- 1
+       if(!length(pch.npts)==n.ns)
+          pch.npts <- rep(pch.npts, length.out= n.ns)
+       if(missing(col.npts)) col.npts <- par("col")
+       if(!length(col.npts)==n.ns)
+          col.npts <- rep(col.npts, length.out= n.ns)
+       if(missing(cex.npts)) cex.npts <- 1
+       if(!length(cex.npts)==n.ns)
+          cex.npts <- rep(cex.npts, length.out= n.ns)
+    }
+    pL <- dots$panel.last
+    dotsP$panel.last <- NULL
+
 
                resc.dat <- .rescalefct(x.d, function(x) sapply(x,fun),
                               dots$scaleX, dots$scaleX.fct, dots$scaleX.inv,
                               dots$scaleY, dots$scaleY.fct,
                               dots$xlim, dots$ylim, dots)
 
+               plotInfo$resc.dat <- resc.dat
+               resc.dat.ns <- .rescalefct(x.d.ns, function(x) sapply(x,fun),
+                              dots$scaleX, dots$scaleX.fct, dots$scaleX.inv,
+                              dots$scaleY, dots$scaleY.fct,
+                              dots$xlim, dots$ylim, dots)
+
+               plotInfo$resc.dat.ns <- resc.dat.ns
+
                if(any(.isReplicated(resc.dat$X, jit.tol))&&jit.fac>0)
                        resc.dat$X <- jitter(resc.dat$X, factor = jit.fac)
                if(any(.isReplicated(resc.dat$Y, jit.tol))&&jit.fac>0)
                        resc.dat$Y <- jitter(resc.dat$Y, factor = jit.fac)
+               if(any(.isReplicated(resc.dat.ns$X, jit.tol))&&jit.fac>0)
+                       resc.dat.ns$X <- jitter(resc.dat.ns$X, factor = jit.fac)
+               if(any(.isReplicated(resc.dat.ns$Y, jit.tol))&&jit.fac>0)
+                       resc.dat.ns$Y <- jitter(resc.dat.ns$Y, factor = jit.fac)
 
                dotsP$scaleX <- dotsP$scaleY <- dotsP$scaleN <-NULL
                dotsP$scaleX.fct <- dotsP$scaleY.fct <- NULL
@@ -52,7 +105,7 @@
                dotsP$return.Order <- dotsP$cex.pts.fun <- NULL
                dotsP$x.ticks <- dotsP$y.ticks <- NULL
                dotsP$lab.font <- dotsP$which.lbs <- dotsP$which.lbs <- NULL
-
+               dotsP$which.nonlbs <- dotsP$attr.pre <- NULL
                dotsP$x <- resc.dat$X
                dotsP$y <- resc.dat$Y
 
@@ -74,15 +127,31 @@
                dotsT$cex <- dotsP$cex/2
                dotsP$cex <- .cexscale(absy,absy,cex=dots$cex.pts, fun = dots$cex.pts.fun)
                dotsP$col <- dots$col.pts
+               dotsP$pch <- dots$pch.pts
 
                dotsT$pch <- NULL
                dotsT$labels <- if(is.null(dots$lab.pts)) i.d else dots$lab.pts[i.d]
                do.call(points,dotsP)
+               plotInfo$PointSArg <- dotsP
+               dotsP$x <- resc.dat.ns$X
+               dotsP$y <- resc.dat.ns$Y
+               dotsP$cex <- .cexscale(absy,absy,cex=dots$cex.npts, fun = dots$cex.npts.fun)
+               dotsP$col <- dots$col.npts
+               dotsP$pch <- dots$pch.npts
+               do.call(points,dotsP)
+               plotInfo$PointSnsArg <- dotsP
+
+               plotInfo$labArg <- dotsT
+
                if(!is.null(dots$with.lab))
                    if(dots$with.lab)  do.call(text,dotsT)
+
+               plotInfo$retV <- i0.d
+
                if(!is.null(dots$return.Order))
                    if(dots$return.Order) return(i0.d)
-        return(invisible(NULL))
+
+        return(invisible(plotInfo))
         }
 
 
@@ -123,18 +192,49 @@
 cniperCont <- function(IC1, IC2, data = NULL, ...,
                            neighbor, risk, lower=getdistrOption("DistrResolution"),
                            upper=1-getdistrOption("DistrResolution"), n = 101,
+                           with.automatic.grid = TRUE,
                            scaleX = FALSE, scaleX.fct, scaleX.inv,
                            scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
                            scaleN = 9, x.ticks = NULL, y.ticks = NULL,
                            cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-                           pch.pts = 19, jit.fac = 1, jit.tol = .Machine$double.eps, with.lab = FALSE,
+                           pch.pts = 19, cex.npts = 0.6, cex.npts.fun = NULL,
+                           col.npts = "red", pch.npts = 20, jit.fac = 1,
+                           jit.tol = .Machine$double.eps, with.lab = FALSE,
                            lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
                            which.lbs = NULL, which.Order  = NULL,
-                           return.Order = FALSE, 
-             draw.nonlbl = TRUE,  ## should non-labelled observations also be drawn?
-             cex.nonlbl = 0.3,    ## character expansion(s) for non-labelled observations
-             pch.nonlbl = ".",    ## plotting symbol(s) for non-labelled observations
+                           which.nonlbs = NULL, attr.pre = FALSE,
+                           return.Order = FALSE,
                            withSubst = TRUE){
+
+        args0 <- list(IC1 = IC1, IC2 = IC2, data = data,
+                       neighbor = if(missing(neighbor)) NULL else neighbor,
+                       risk= if(missing(risk)) NULL else risk,
+                       lower=lower, upper=upper, n = n,
+                       with.automatic.grid = with.automatic.grid,
+                        scaleX = scaleX,
+                        scaleX.fct = if(missing(scaleX.fct)) NULL else scaleX.fct,
+                        scaleX.inv = if(missing(scaleX.inv)) NULL else scaleX.inv,
+                        scaleY = scaleY,
+                        scaleY.fct = scaleY.fct,
+                        scaleY.inv = scaleY.inv, scaleN = scaleN,
+                        x.ticks = x.ticks, y.ticks = y.ticks,
+                        cex.pts = cex.pts, cex.pts.fun = cex.pts.fun,
+                        col.pts = col.pts, pch.pts = pch.pts,
+                        cex.npts = cex.npts, cex.npts.fun = cex.npts.fun,
+                        col.npts = col.npts, pch.npts = pch.npts,
+                        jit.fac = jit.fac, jit.tol = jit.tol,
+                        with.lab = with.lab,
+                        lab.pts = lab.pts, lab.font = lab.font,
+                        alpha.trsp = alpha.trsp,
+                        which.lbs = which.lbs, which.Order  = which.Order,
+                        which.nonlbs = which.nonlbs, attr.pre = attr.pre,
+                        return.Order = return.Order, withSubst = withSubst)
+
+
+        mcD <- match.call(expand.dots = FALSE)
+        mc <- match.call(expand.dots = TRUE)
+        dots <- as.list(mcD$"...")
+        plotInfo <- list(call = mc, dots=dots, args=args0)
 
         mcD <- match.call(expand.dots = FALSE)
         dots <- as.list(mcD$"...")
@@ -155,6 +255,8 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
                             ))
                      }else function(inx)inx
 
+        plotInfo$.mpresubs <- .mpresubs
+
         if(!is.null(dots$main)) dots$main <- .mpresubs(dots$main)
         if(!is.null(dots$sub)) dots$sub <- .mpresubs(dots$sub)
         if(!is.null(dots$xlab)) dots$xlab <- .mpresubs(dots$xlab)
@@ -174,21 +276,23 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
         dots$fromCniperPlot <- NULL
         
         fun <- .getFunCnip(IC1,IC2, risk, L2Fam, neighbor@radius, b20)
+        plotInfo$CnipFun <- fun
 
         if(missing(scaleX.fct)){
            scaleX.fct <- p(L2Fam)
-           scaleX.inv <- q(L2Fam)
+           scaleX.inv <- q.l(L2Fam)
         }
 
         if("lower" %in% names(as.list(mc))) lower <- p(L2Fam)(lower)
         if("upper" %in% names(as.list(mc))) upper <- p(L2Fam)(upper)
 
-        x <-  q(L2Fam)(seq(lower,upper,length=n))
+        x <-  q.l(L2Fam)(seq(lower,upper,length=n))
         if(is(distribution(L2Fam), "DiscreteDistribution"))
-           x <- seq(q(L2Fam)(lower),q(L2Fam)(upper),length=n)
+           x <- seq(q.l(L2Fam)(lower),q.l(L2Fam)(upper),length=n)
 
         resc <- .rescalefct(x, fun, scaleX, scaleX.fct,
                      scaleX.inv, scaleY, scaleY.fct, dots$xlim, dots$ylim, dots)
+        plotInfo$resc <- resc
 
         dotsPl <- dots
         dotsPl$x <- resc$X
@@ -219,7 +323,11 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
                    dotsPl$lty <- ltyo[[1]]
             }
         }
+
+        plotInfo$plotArgs <- dotsPl
         do.call(plot,dotsPl)
+        plotInfo$usr <- par("usr")
+
 
         dots$x <- dots$y <- NULL
         dotsl <- .makedotsLowLevel(dots)
@@ -229,10 +337,15 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
 
         dotsl$h <- if(scaleY) scaleY.fct(0) else 0
         do.call(abline, dotsl)
+        plotInfo$abline <- dotsl
 
         .plotRescaledAxis(scaleX, scaleX.fct, scaleX.inv, scaleY,scaleY.fct,
                           scaleY.inv, dots$xlim, dots$ylim, resc$X, ypts = 400,
                           n = scaleN, x.ticks = x.ticks, y.ticks = y.ticks)
+        plotInfo$Axis <- list(scaleX, scaleX.fct, scaleX.inv, scaleY,scaleY.fct,
+                          scaleY.inv, dots$xlim, dots$ylim, resc$X, ypts = 400,
+                          n = scaleN, x.ticks = x.ticks, y.ticks = y.ticks)
+
         if(!is.null(data)){
            dots$scaleX <- scaleX
            dots$scaleX.fct <-  scaleX.fct
@@ -247,19 +360,31 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
            dots$cex.pts.fun <- cex.pts.fun
            dots$col.pts <- col.pts
            dots$pch.pts <- pch.pts
-           dots$jit.fac <- jit.fac
-           dots$jit.tol <- jit.tol
+           dots$cex.npts <- cex.npts
+           dots$cex.npts.fun <- cex.npts.fun
+           dots$col.npts <- col.npts
+           dots$pch.npts <- pch.npts
            dots$with.lab <- with.lab
            dots$lab.pts <- lab.pts
            dots$lab.font <- lab.font
            dots$alpha.trsp <- alpha.trsp
            dots$which.lbs <- which.lbs
+           dots$which.nonlbs <- which.nonlbs
            dots$which.Order  <- which.Order
            dots$return.Order <- return.Order
+           dots$attr.pre <- attr.pre
 
-           return(.plotData(data=data, dots=dots, fun=fun, L2Fam=L2Fam, IC=IC1, jit.fac=jit.fac, jit.tol=jit.tol))
+           dots$return.Order <- FALSE
+           plotInfo$PlotData <- list(data=data, dots=dots, fun=fun, L2Fam=L2Fam,
+                     IC=IC1, jit.fac=jit.fac, jit.tol=jit.tol)
+           retV <- .plotData(data=data, dots=dots, fun=fun, L2Fam=L2Fam,
+                            IC=IC1, jit.fac=jit.fac, jit.tol=jit.tol, plotInfo)
+
+           plotInfo <- c(plotInfo,retV)
         }
-        invisible(NULL)
+        class(plotInfo) <- c("plotInfo","DiagnInfo")
+        if(return.Order){return(plotInfo)}
+        invisible(plotInfo)
 }
 
 cniperPoint <- function(L2Fam, neighbor, risk= asMSE(),
@@ -269,8 +394,8 @@ cniperPoint <- function(L2Fam, neighbor, risk= asMSE(),
 
         mc <- match.call(expand.dots = FALSE)
 
-        if(is.null(as.list(mc)$lower)) lower <- q(L2Fam)(lower)
-        if(is.null(as.list(mc)$upper)) upper <- q(L2Fam)(upper)
+        if(is.null(as.list(mc)$lower)) lower <- q.l(L2Fam)(lower)
+        if(is.null(as.list(mc)$upper)) upper <- q.l(L2Fam)(upper)
 #        lower <- q(L2Fam)(lower)
 #        upper <- q(L2Fam)(upper)
 
@@ -289,24 +414,54 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                         lower=getdistrOption("DistrResolution"),
                         upper=1-getdistrOption("DistrResolution"), n = 101,
                         withMaxRisk = TRUE,
+                        with.automatic.grid = TRUE,
                            scaleX = FALSE, scaleX.fct, scaleX.inv,
                            scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
                            scaleN = 9, x.ticks = NULL, y.ticks = NULL,
                            cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-                           pch.pts = 19, jit.fac = 1, jit.tol = .Machine$double.eps, 
+                           pch.pts = 19,
+                           cex.npts = 1, cex.npts.fun = NULL, col.npts = par("col"),
+                           pch.npts = 19,
+                           jit.fac = 1, jit.tol = .Machine$double.eps,
                            with.lab = FALSE,
                            lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
-                           which.lbs = NULL, which.Order  = NULL,
-                           return.Order = FALSE, 
-             draw.nonlbl = TRUE,  ## should non-labelled observations also be drawn?
-             cex.nonlbl = 0.3,    ## character expansion(s) for non-labelled observations
-             pch.nonlbl = ".",    ## plotting symbol(s) for non-labelled observations
-                           withSubst = TRUE){
+                           which.lbs = NULL, which.nonlbs = NULL,
+                           which.Order  = NULL, attr.pre = FALSE, return.Order = FALSE,
+                           withSubst = TRUE, withMakeIC = FALSE){
+
+        args0 <- list(L2Fam = L2Fam, data=data,
+                       neighbor = if(missing(neighbor)) NULL else neighbor,
+                       risk= risk, lower=lower, upper=upper, n = n,
+                        withMaxRisk = withMaxRisk,
+                        with.automatic.grid = with.automatic.grid,
+                        scaleX = scaleX,
+                        scaleX.fct = if(missing(scaleX.fct)) NULL else scaleX.fct,
+                        scaleX.inv = if(missing(scaleX.inv)) NULL else scaleX.inv,
+                        scaleY = scaleY,
+                        scaleY.fct = scaleY.fct,
+                        scaleY.inv = scaleY.inv, scaleN = scaleN,
+                        x.ticks = x.ticks, y.ticks = y.ticks,
+                        cex.pts = cex.pts, cex.pts.fun = cex.pts.fun,
+                        col.pts = col.pts, pch.pts = pch.pts,
+                        cex.npts = cex.npts, cex.npts.fun = cex.npts.fun,
+                        col.npts = col.npts, pch.npts = pch.npts,
+                        jit.fac = jit.fac, jit.tol = jit.tol,
+                        with.lab = with.lab,
+                        lab.pts = lab.pts, lab.font = lab.font,
+                        alpha.trsp = alpha.trsp,
+                        which.lbs = which.lbs, which.Order  = which.Order,
+                        which.nonlbs = which.nonlbs, attr.pre = attr.pre,
+                        return.Order = return.Order, withSubst = withSubst,
+                        withMakeIC = withMakeIC)
 
         mc0 <- match.call(#call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)
         mc <- match.call(#call = sys.call(sys.parent(1)),
                        expand.dots = TRUE)
+        dots <- match.call(expand.dots = FALSE)$"..."
+        plotInfo <- list(call = mc, dots=dots, args=args0)
+
+
         mcl <- as.list(mc[-1])
         dots <- as.list(mc0$"...")
         L2Famc <- as.character(deparse(L2Fam))
@@ -319,6 +474,7 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
                             as.character(date())
                             ))
                      }else function(inx)inx
+        plotInfo$.mpresubs <- .mpresubs
 
         if(!is.null(dots$main)) dots$main <- .mpresubs(dots$main)
         if(!is.null(dots$sub)) dots$sub <- .mpresubs(dots$sub)
@@ -328,9 +484,9 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
 
         robMod <- InfRobModel(center = L2Fam, neighbor = neighbor)
 
-        mcl$IC1 <- optIC(model = L2Fam, risk = asCov())
+        mcl$IC1 <- optIC(model = L2Fam, risk = asCov(), withMakeIC = withMakeIC)
         mcl$IC2 <- if(is(risk,"interpolRisk")){
-                     getStartIC(model=L2Fam, risk = risk)
+                     getStartIC(model=L2Fam, risk = risk, withMakeIC = withMakeIC)
                    }else optIC(model = robMod, risk = risk)
         mcl$L2Fam <- NULL
         if(is.null(dots$ylab))
@@ -341,18 +497,29 @@ cniperPointPlot <- function(L2Fam, data=NULL, ..., neighbor, risk= asMSE(),
         if(withMaxRisk) mcl$fromCniperPlot <- TRUE
         mcl$withMaxRisk <- NULL
         mcl$withSubst <- FALSE
-        do.call(cniperCont, mcl)
+        mcl$return.Order <- FALSE
+        plotInfo$PlotCall <- mcl
+        ret <- do.call(cniperCont, mcl)
+        ret$args <- ret$dots <- ret$call <- NULL
+        ret$.mpresubs <- NULL
+        plotInfo <- c(plotInfo, ret)
+        class(plotInfo) <- c("plotInfo","DiagnInfo")
+        if(return.Order){return(plotInfo)}
+        invisible(plotInfo)
 }
 
 
 
  .cexscale <- function(y, y1=y, maxcex=4,mincex=0.05,cex, fun=NULL){
+         if(length(y)==0||is.null(y)) return(NA)
+         if(is.list(y)) if(is.null(y[[1]])) return(NA)
          if(is.null(fun)) fun <- function(x) log(1+abs(x))
          ly <- fun(y)
          ly1 <- fun(unique(c(y,y1)))
          my <- min(ly1,na.rm=TRUE)
          My <- max(ly1,na.rm=TRUE)
-         ly0 <- (ly-my)/My
+         ly0 <- (ly-my)/(My-my)
          ly1 <- ly0*(maxcex-mincex)+mincex
          return(cex*ly1)
  }
+

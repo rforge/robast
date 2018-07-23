@@ -9,7 +9,7 @@ These functions are internally used helper function for \code{\link{cniperCont}}
 and \code{cniperPointPlot}.}
 
 \usage{
-.plotData(data, dots, fun, L2Fam,  IC, jit.fac, jit.tol )
+.plotData(data, dots, fun, L2Fam,  IC, jit.fac, jit.tol, plotInfo )
 .getFunCnip(IC1,IC2, risk, L2Fam, r, b20=NULL)
 }
 \arguments{
@@ -33,6 +33,7 @@ and \code{cniperPointPlot}.}
                     for plotting points of the second argument in a jittered fashion.}
   \item{jit.tol}{jittering tolerance used in case of a \code{DiscreteDistribution}
                     for plotting points of the second argument in a jittered fashion.}
+  \item{plotInfo}{stored info from the plot}
 }
 \details{
 \code{.plotData} takes argument \code{data} and plots it into the cniper graph.

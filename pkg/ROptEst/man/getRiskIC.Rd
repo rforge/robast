@@ -13,9 +13,9 @@
 \usage{
 getRiskIC(IC, risk, neighbor, L2Fam, ...)
 
-\S4method{getRiskIC}{HampIC,asCov,missing,missing}(IC, risk)
+\S4method{getRiskIC}{HampIC,asCov,missing,missing}(IC, risk, withCheck= TRUE)
 
-\S4method{getRiskIC}{HampIC,asCov,missing,L2ParamFamily}(IC, risk, L2Fam)
+\S4method{getRiskIC}{HampIC,asCov,missing,L2ParamFamily}(IC, risk, L2Fam, withCheck= TRUE)
 \S4method{getRiskIC}{TotalVarIC,asCov,missing,L2ParamFamily}(IC, risk, L2Fam)
 
 }
@@ -25,6 +25,8 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
   \item{neighbor}{ object of class \code{"Neighborhood"}; missing in the methods described here. }
   \item{\dots}{ additional parameters }
   \item{L2Fam}{ object of class \code{"L2ParamFamily"}. }
+  \item{withCheck}{logical: should a call to \code{checkIC} be done to
+                   check accuracy (defaults to \code{TRUE}).}
 }
 \details{To make sure that the results are valid, it is recommended
   to include an additional check of the IC properties of \code{IC}

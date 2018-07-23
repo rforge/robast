@@ -3,6 +3,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
              main = FALSE, inner = TRUE, sub = FALSE, 
              col.inner = par("col.main"), cex.inner = 0.8, 
              bmar = par("mar")[1], tmar = par("mar")[3],
+             with.automatic.grid = TRUE,
              with.legend = FALSE, legend = NULL, legend.bg = "white",
              legend.location = "bottomright", legend.cex = 0.8,
              withMBR = FALSE, MBRB = NA, MBR.fac = 2, col.MBR = par("col"),
@@ -11,6 +12,27 @@ setMethod("plot", signature(x = "IC", y = "missing"),
              scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL, withSubst = TRUE){
+
+        args0 <- list(x = x, withSweave = withSweave,
+             main = main, inner = inner, sub = sub,
+             col.inner = col.inner, cex.inner = cex.inner,
+             bmar = bmar, tmar = tmar, with.automatic.grid = with.automatic.grid,
+             with.legend = with.legend, legend = legend, legend.bg = legend.bg,
+             legend.location = legend.location, legend.cex = legend.cex,
+             withMBR = withMBR, MBRB = MBRB, MBR.fac = MBR.fac, col.MBR = col.MBR,
+             lty.MBR = lty.MBR, lwd.MBR = lwd.MBR, n.MBR = n.MBR,
+             x.vec = x.vec, scaleX = scaleX,
+             scaleX.fct = if(!missing(scaleX.fct)) scaleX.fct else NULL,
+             scaleX.inv = if(!missing(scaleX.inv)) scaleX.inv else NULL,
+             scaleY = scaleY,
+             scaleY.fct = scaleY.fct,
+             scaleY.inv = scaleY.inv, scaleN = scaleN, x.ticks = x.ticks,
+             y.ticks = y.ticks, mfColRow = mfColRow, to.draw.arg = to.draw.arg,
+             withSubst = withSubst)
+        mc <- match.call(call = sys.call(sys.parent(1)))
+        dots <- match.call(call = sys.call(sys.parent(1)),
+                       expand.dots = FALSE)$"..."
+        plotInfo <- list(call = mc, dots=dots, args=args0)
 
         mcl <- match.call(call = sys.call(sys.parent(1)), expand.dots = TRUE)
 
@@ -41,12 +63,17 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         mcl$withMBR <- withMBR
         plm <- getMethod("plot", signature(x = "IC", y = "missing"),
                            where="RobAStBase")
-        do.call(plm, as.list(mcl[-1]), envir=parent.frame(2))
-       return(invisible())
+
+        ret <- do.call(plm, as.list(mcl[-1]), envir=parent.frame(2))
+        ret$dots <- ret$args <- ret$call <- NULL
+        plotInfo <- c(plotInfo, ret)
+        class(plotInfo) <- c("plotInfo","DiagnInfo")
+
+       return(invisible(plotInfo))
       })
 
 .getExtremeCoordIC <- function(IC, D, indi, n = 10000){
-    x <- q(D)(seq(1/2/n,1-1/2/n, length=n))
+    x <- q.l(D)(seq(1/2/n,1-1/2/n, length=n))
     y <- (matrix(evalIC(IC,matrix(x,ncol=1)),ncol=n))[indi,,drop=FALSE]
     return(cbind(min=apply(y,1,min),max=apply(y,1,max)))
 }

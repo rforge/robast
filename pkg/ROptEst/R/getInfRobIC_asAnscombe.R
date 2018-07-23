@@ -47,7 +47,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
            } else f.low <- NULL        
         
         if(is.null(upper))
-           upper <- max(4*lower,q(L2deriv)(eff^.5)*3)
+           upper <- max(4*lower,q.l(L2deriv)(eff^.5)*3)
   
         e.up <- 0
         while(e.up < eff){

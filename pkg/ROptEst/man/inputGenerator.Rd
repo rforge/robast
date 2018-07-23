@@ -14,7 +14,7 @@ genkStepCtrl(useLast = getRobAStBaseOption("kStepUseLast"),
                     withICList = getRobAStBaseOption("withICList"),
                     withPICList = getRobAStBaseOption("withPICList"),
                     scalename = "scale", withLogScale = TRUE,
-                    withEvalAsVar = NULL)
+                    withEvalAsVar = NULL, withMakeIC = FALSE)
 genstartCtrl(initial.est = NULL, initial.est.ArgList = NULL,
                         startPar = NULL, distance = CvMDist, withMDE = NULL)
 gennbCtrl(neighbor = ContNeighborhood(), eps, eps.lower, eps.upper)
@@ -41,7 +41,8 @@ gennbCtrl(neighbor = ContNeighborhood(), eps, eps.lower, eps.upper)
   to do so. If \code{withEvalAsVar} is \code{NULL} (default),  the content
        of slot \code{.withEvalAsVar} in the L2 family is used instead to take
        this decision.}
-
+  \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
+        \code{makeIC} before return.}
   \item{initial.est}{ initial estimate for unknown parameter. If missing
         minimum distance estimator is computed. }
   \item{initial.est.ArgList}{a list of arguments to be given to argument \code{start} if the latter

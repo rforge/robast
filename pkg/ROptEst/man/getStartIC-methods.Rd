@@ -16,10 +16,10 @@ argument \code{ICstart} in \code{kStepEstimator}.}
 \usage{getStartIC(model, risk, ...)
 \S4method{getStartIC}{ANY,ANY}(model, risk, ...)
 \S4method{getStartIC}{L2ParamFamily,asGRisk}(model, risk, ...,
-                      withEvalAsVar = TRUE,..debug=FALSE)
-\S4method{getStartIC}{L2ParamFamily,asBias}(model, risk, ..., ..debug=FALSE)
-\S4method{getStartIC}{L2ParamFamily,asCov}(model, risk, ..., ..debug=FALSE)
-\S4method{getStartIC}{L2ParamFamily,trAsCov}(model, risk, ..., ..debug=FALSE)
+                      withEvalAsVar = TRUE, withMakeIC = FALSE, ..debug=FALSE)
+\S4method{getStartIC}{L2ParamFamily,asBias}(model, risk, ..., withMakeIC = FALSE, ..debug=FALSE)
+\S4method{getStartIC}{L2ParamFamily,asCov}(model, risk, ..., withMakeIC = FALSE, ..debug=FALSE)
+\S4method{getStartIC}{L2ParamFamily,trAsCov}(model, risk, ..., withMakeIC = FALSE, ..debug=FALSE)
 }
 
 \arguments{
@@ -29,6 +29,8 @@ argument \code{ICstart} in \code{kStepEstimator}.}
   \item{withEvalAsVar}{logical (of length 1):
      if \code{TRUE}, risks based on covariances are to be
      evaluated (default), otherwise just a call is returned.}
+  \item{withMakeIC}{logical; if \code{TRUE} the IC is passed through
+        \code{makeIC} before return.}
   \item{..debug}{logical; if \code{TRUE} information for debugging is issued.}
 }
 \section{Methods}{\describe{
