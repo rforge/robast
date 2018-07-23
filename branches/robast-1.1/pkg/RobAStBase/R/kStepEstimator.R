@@ -106,7 +106,8 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         ### update - function
         updateStep <- function(u.theta, theta, IC, L2Fam, Param,
                                withPreModif = FALSE,
-                               withPostModif = TRUE, with.u.var = FALSE
+                               withPostModif = TRUE, with.u.var = FALSE,
+                               oldmodifIC = NULL
                                ){
 
                 if(withPreModif){
@@ -119,6 +120,10 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                                .withL2derivDistr = L2Fam@.withEvalL2derivDistr)
 #                   print(L2Fam)
                    IC <- modifyIC(IC)(L2Fam, IC)
+                   if(steps==1L &&withMakeIC){
+                      IC <- makeIC(IC, L2Fam)
+                      IC@modifyIC <- oldmodifIC
+                    }
  #                  print(IC)
                 }
 
@@ -233,10 +238,10 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         rownames(uksteps) <- u.est.names
         if(!is(modifyIC(IC), "NULL") ){
            for(i in 1:steps){
+               modif.old <- modifyIC(IC)
                if(i>1){
                   IC <- upd$IC
                   L2Fam <- upd$L2Fam
-                  modif.old <- modifyIC(IC)
                   if((i==steps)&&withMakeIC){
                      IC <- makeIC(IC,L2Fam)
                      IC@modifyIC <- modif.old
@@ -248,7 +253,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                upd <- updateStep(u.theta,theta,IC, L2Fam, Param,
                                  withPreModif = withPre,
                                  withPostModif = (steps>i) | useLast,
-                                 with.u.var = i==steps)
+                                 with.u.var = i==steps, oldmodifIC = modif.old)
                uksteps[,i] <- u.theta <- upd$u.theta
                ksteps[,i] <- theta <- upd$theta
                if(withICList)
@@ -271,6 +276,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
               tf <- trafo(L2Fam, Param)
               Infos <- rbind(Infos, c("kStepEstimator",
                "computation of IC, trafo, asvar and asbias via useLast = TRUE"))
+              if(withMakeIC) IC <- makeIC(IC, L2Fam)
            }else{
               Infos <- rbind(Infos, c("kStepEstimator",
                "computation of IC, trafo, asvar and asbias via useLast = FALSE"))
@@ -315,7 +321,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                 else
                     asVar <- Risks(IC)$asCov$value
            else
-                asVar <- getRiskIC(IC, risk = asCov())$asCov$value
+                asVar <- getRiskIC(IC, risk = asCov(), withCheck = FALSE)$asCov$value
 
         }else asVar <- var0
 #        print(asVar)
@@ -329,7 +335,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                 if(is(IC, "HampIC")){
                     r <- neighborRadius(IC)
                     asBias <- r*getRiskIC(IC, risk = asBias(),
-                                          neighbor = neighbor(IC))$asBias$value
+                                          neighbor = neighbor(IC), withCheck = FALSE)$asBias$value
                 }else{
                     asBias <- NULL
                 }

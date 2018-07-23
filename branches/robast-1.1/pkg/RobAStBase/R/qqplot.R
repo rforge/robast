@@ -185,6 +185,7 @@ setMethod("qqplot", signature(x = "ANY",
                weight(weight(IC))(L.fct(matrix(x))[,,1])
 
       wx <- w.fct(x)
+      if(max(wx)>1) wx <- wx/max(wx)
       mcl$order.traf <- function(x) 1/w.fct(x)
 
       cex.lbl <- if(is.null(mcl$cex.lbl))  par("cex")  else eval(mcl$cex.lbl)

@@ -15,16 +15,23 @@ user-visible CHANGES:
 + plot-methods now have arguments .nonlb to only plot (but not label) some points
 + plot-methods are vectorized to a higher extent in all arguments
 + plot methods now return an S3 object of class \code{c("plotInfo","DiagnInfo")}, i.e., a list containing the 
-information needed to produce the respective plot, which at a later stage could be used by different graphic engines (like, e.g. 
-\code{ggplot}) to produce the plot in a different framework. A more detailed description will follow in a subsequent version.
+  information needed to produce the respective plot, which at a later stage could be used by different graphic engines (like, e.g. 
+  \code{ggplot}) to produce the plot in a different framework. A more detailed description will follow in a subsequent version.
 + new methods for returnlevelplot for RobModel, InfRobModel, kStepEstimate (as qqplot) 
 + unified return values for qqplot
 + oneStepEstimator and kStepEstimator gain an argument withMakeIC
 + optIC gains an argument withMakeIC             
 + DESCRIPTION tag SVNRevision changed to VCS/SVNRevision
++ getRiskIC and getBiasIC gain argument withCheck to speed up things if one does not want to call checkIC 
++ getRiskIC and getBiasIC gain argument withCheck to speed up things if one does not want to call checkIC 
++ in kStepEstimator, withCheck is set to FALSE when getRiskIC is called, and makeIC is only called just 
+  before the last update, and, if useLast == TRUE for the last update (of course, only if withMakeIC ==TRUE)
 
 bug fix: 
 + slot modifyIC was set to a wrong value in makeIC / former (potential) move was overridden 
++ in .preparePanelFirstLast if condition with.automatic.grid was (possibly) vector valued 
++ in qqplot & returnlevelplot for x = "ANY", y = "kStepEstimate" the weight function 
+  needs not to be bounded by 1 (e.g. in case of MBRE), so the numeric weights are scaled to [0,1] first
  
 under the hood:
 + wherever possible also use q.l internally instead of q to 

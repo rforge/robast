@@ -389,7 +389,7 @@
                      }
             }
 
-            gridS <- if(with.automatic.grid)
+            gridS <- if(any(with.automatic.grid))
                  substitute({grid <- function(...){}}) else expression({})
 
             pL <- pL.0
