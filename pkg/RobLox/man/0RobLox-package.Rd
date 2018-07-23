@@ -12,16 +12,15 @@ estimators in case of normal location and/or scale.
 \details{
 \tabular{ll}{
 Package: \tab RobLox \cr
-Version: \tab 0.9 \cr
-Date: \tab 2013-09-12 \cr
-Depends: \tab R(>= 2.7.0), stats, lattice, RColorBrewer, RandVar, Biobase, distr, distrMod,
-RobAStBase \cr
+Version: \tab 1.1.0 \cr
+Date: \tab 2018-07-08 \cr
+Depends: \tab R(>= 2.14.0), stats, distrMod(>= 2.5.2), RobAStBase(>= 0.9) \cr
+Imports: \tab lattice, RColorBrewer, Biobase, RandVar(>= 0.9.2), distr(>= 2.5.2) \cr
 Suggests: \tab MASS\cr
-LazyLoad: \tab yes \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 696 \cr
+VCS/SVNRevision: \tab 940 \cr
 }
 }
 \author{Matthias Kohl  \email{matthias.kohl@stamats.de}}
@@ -33,7 +32,7 @@ SVNRevision: \tab 696 \cr
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008). The Costs of not Knowing
   the Radius. \emph{Statistical Methods and Applications} \bold{17}(1) 13-40.
-  Extended version: \url{http://www.stamats.de/RRlong.pdf}
+  Extended version: \url{http://r-kurs.de/RRlong.pdf}
   
   M. Kohl, P. Ruckdeschel, and H. Rieder (2010). Infinitesimally Robust Estimation 
   in General Smoothly Parametrized Models. \emph{Statistical Methods and Application}, 
