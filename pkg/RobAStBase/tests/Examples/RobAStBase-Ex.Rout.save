@@ -1,7 +1,7 @@
 
-R version 3.0.1 Patched (2013-09-02 r63805) -- "Good Sport"
-Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: i386-w64-mingw32/i386 (32-bit)
+R Under development (unstable) (2015-05-02 r68310) -- "Unsuffered Consequences"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -20,38 +20,23 @@ Type 'q()' to quit R.
 > pkgname <- "RobAStBase"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
-> options(pager = "console")
-> base::assign(".ExTimings", "RobAStBase-Ex.timings", pos = 'CheckExEnv')
-> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
-> base::assign(".format_ptime",
-+ function(x) {
-+   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
-+   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
-+   options(OutDec = '.')
-+   format(x[1L:3L], digits = 7L)
-+ },
-+ pos = 'CheckExEnv')
-> 
-> ### * </HEADER>
 > library('RobAStBase')
 Loading required package: rrcov
 Loading required package: robustbase
-Loading required package: pcaPP
-Loading required package: mvtnorm
-Scalable Robust Estimators with High Breakdown Point (version 1.3-4)
+Scalable Robust Estimators with High Breakdown Point (version 1.3-8)
 
 Loading required package: distr
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.8)
+:startupmsg>  Utilities for Start-Up Messages (version 0.9.1)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
 
 Loading required package: sfsmisc
 Loading required package: SweaveListingUtils
-:SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version
-:SweaveListingUtils>  0.6.1)
+:SweaveListingUtils>  Utilities for Sweave Together with
+:SweaveListingUtils>  TeX 'listings' Package (version
+:SweaveListingUtils>  0.7)
 :SweaveListingUtils> 
 :SweaveListingUtils>  NOTE: Support for this package
 :SweaveListingUtils>  will stop soon.
@@ -77,14 +62,14 @@ Loading required package: SweaveListingUtils
 :SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
 
 
-Attaching package: 'SweaveListingUtils'
+Attaching package: ‘SweaveListingUtils’
 
-The following objects are masked from 'package:base':
+The following objects are masked from ‘package:base’:
 
     library, require
 
-:distr>  Object oriented implementation of distributions (version
-:distr>  2.5)
+:distr>  Object Oriented Implementation of Distributions (version
+:distr>  2.6)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -103,14 +88,14 @@ The following objects are masked from 'package:base':
 :distr>  vignette("distr").
 
 
-Attaching package: 'distr'
+Attaching package: ‘distr’
 
-The following objects are masked from 'package:stats':
+The following objects are masked from ‘package:stats’:
 
     df, qqplot, sd
 
 Loading required package: distrEx
-:distrEx>  Extensions of package distr (version 2.4)
+:distrEx>  Extensions of Package 'distr' (version 2.6)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
 :distrEx>  attached /before/ package "distrEx". See
@@ -127,15 +112,15 @@ Loading required package: distrEx
 :distrEx>  vignette("distr").
 
 
-Attaching package: 'distrEx'
+Attaching package: ‘distrEx’
 
-The following objects are masked from 'package:stats':
+The following objects are masked from ‘package:stats’:
 
     IQR, mad, median, var
 
 Loading required package: distrMod
 Loading required package: RandVar
-:RandVar>  Implementation of random variables (version 0.9.2)
+:RandVar>  Implementation of Random Variables (version 1.0)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -145,8 +130,8 @@ Loading required package: RandVar
 
 Loading required package: MASS
 Loading required package: stats4
-:distrMod>  Object oriented implementation of probability models
-:distrMod>  (version 2.5)
+:distrMod>  Object Oriented Implementation of Probability Models
+:distrMod>  (version 2.6)
 :distrMod> 
 :distrMod>  Some functions from pkg's 'base' and 'stats' are
 :distrMod>  intentionally masked ---see distrModMASK().
@@ -165,21 +150,21 @@ Loading required package: stats4
 :distrMod>  vignette("distr").
 
 
-Attaching package: 'distrMod'
+Attaching package: ‘distrMod’
 
-The following object is masked from 'package:stats4':
-
-    confint
-
-The following object is masked from 'package:stats':
+The following object is masked from ‘package:stats4’:
 
     confint
 
-The following object is masked from 'package:base':
+The following object is masked from ‘package:stats’:
+
+    confint
+
+The following object is masked from ‘package:base’:
 
     norm
 
-:RobAStBase>  Robust Asymptotic Statistics (version 0.9)
+:RobAStBase>  Robust Asymptotic Statistics (version 1.0)
 :RobAStBase> 
 :RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
 :RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
@@ -192,9 +177,9 @@ The following object is masked from 'package:base':
 :RobAStBase>    http://robast.r-forge.r-project.org/
 
 
-Attaching package: 'RobAStBase'
+Attaching package: ‘RobAStBase’
 
-The following object is masked from 'package:graphics':
+The following object is masked from ‘package:graphics’:
 
     clip
 
@@ -206,7 +191,6 @@ The following object is masked from 'package:graphics':
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RobAStBase-package
 > ### Title: Robust Asymptotic Statistics
 > ### Aliases: RobAStBase-package RobAStBase
@@ -224,27 +208,24 @@ The following object is masked from 'package:graphics':
 > plot(IC0) # plot IC
 NULL
 > checkIC(IC0, B)
-precision of centering:	 -2.631986e-17 
+precision of centering:	 -7.3919e-18 
 precision of Fisher consistency:
-              prob
-prob -1.110223e-16
+             prob
+prob 2.220446e-16
 precision of Fisher consistency - relativ error [%]:
-              prob
-prob -1.110223e-14
+             prob
+prob 2.220446e-14
 maximum deviation 
-     1.110223e-16 
+     2.220446e-16 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("0RobAStBase-package", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("ALEstimate-class")
 > ### * ALEstimate-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ALEstimate-class
 > ### Title: ALEstimate-class.
 > ### Aliases: ALEstimate-class pIC pIC,ALEstimate-method asbias
@@ -261,7 +242,7 @@ maximum deviation
 > new("ALEstimate")
 Evaluations of Asymptotically linear estimate:
 ----------------------------------------------
-An object of class "Estimate" 
+An object of class “Estimate” 
 generated by call
   `{}`()
 estimate:
@@ -271,15 +252,12 @@ NULL
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("ALEstimate-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("BdStWeight-class")
 > ### * BdStWeight-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: BdStWeight-class
 > ### Title: Robust Weight classes for bounded, standardized weights
 > ### Aliases: BdStWeight-class stand,BdStWeight-method
@@ -304,21 +282,18 @@ Slot "name":
 Slot "weight":
 function (x) 
 1
-<bytecode: 0x07976854>
+<bytecode: 0x73c63c0>
 <environment: namespace:RobAStBase>
 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("BdStWeight-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("BoundedWeight-class")
 > ### * BoundedWeight-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: BoundedWeight-class
 > ### Title: Robust Weight classes for bounded weights
 > ### Aliases: BoundedWeight-class clip,BoundedWeight-method
@@ -339,21 +314,18 @@ Slot "name":
 Slot "weight":
 function (x) 
 1
-<bytecode: 0x0796fce0>
+<bytecode: 0x73a34a8>
 <environment: namespace:RobAStBase>
 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("BoundedWeight-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("ComparePlotWrapper")
 > ### * ComparePlotWrapper
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ComparePlot
 > ### Title: Wrapper function for function comparePlot
 > ### Aliases: ComparePlot
@@ -376,26 +348,23 @@ comparePlot(obj1 = IC1, obj2 = IC2, MBR.fac = 2, MBRB = NA, adj = 0.5,
         3, 4), data = y, forceSameModel = FALSE, inner = TRUE, 
     jitter.fac = 1, legend.bg = "white", legend.cex = 0.8, legend.location = "bottomright", 
     lty.MBR = "dashed", lwd.MBR = 0.8, main = FALSE, mfColRow = TRUE, 
-    panel.first = grid(), pch.pts = 19, return.Order = FALSE, 
-    scaleN = 9, scaleX = FALSE, scaleY = FALSE, scaleY.fct = function (q, 
+    pch.pts = 19, return.Order = FALSE, scaleN = 9, scaleX = FALSE, 
+    scaleY = FALSE, scaleY.fct = function (q, mean = 0, sd = 1, 
+        lower.tail = TRUE, log.p = FALSE) 
+    .Call(C_pnorm, q, mean, sd, lower.tail, log.p), scaleY.inv = function (p, 
         mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) 
-    .External(C_pnorm, q, mean, sd, lower.tail, log.p), scaleY.inv = function (p, 
-        mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) 
-    .External(C_qnorm, p, mean, sd, lower.tail, log.p), sub = FALSE, 
-    tmar = par("mar")[3], with.lab = FALSE, with.legend = FALSE, 
-    withMBR = FALSE, withSweave = getdistrOption("withSweave"))
+    .Call(C_qnorm, p, mean, sd, lower.tail, log.p), sub = FALSE, 
+    tmar = par("mar")[3], with.automatic.grid = TRUE, with.lab = FALSE, 
+    with.legend = FALSE, withMBR = FALSE, withSubst = TRUE, withSweave = getdistrOption("withSweave"))
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("ComparePlotWrapper", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("ContIC-class")
 > ### * ContIC-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ContIC-class
 > ### Title: Influence curve of contamination type
 > ### Aliases: ContIC-class CallL2Fam<-,ContIC-method cent cent,ContIC-method
@@ -413,15 +382,12 @@ NULL
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("ContIC-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("ContIC")
 > ### * ContIC
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ContIC
 > ### Title: Generating function for ContIC-class
 > ### Aliases: ContIC
@@ -435,15 +401,12 @@ NULL
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("ContIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("ContNeighborhood-class")
 > ### * ContNeighborhood-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ContNeighborhood-class
 > ### Title: Contamination Neighborhood
 > ### Aliases: ContNeighborhood-class
@@ -452,21 +415,18 @@ NULL
 > ### ** Examples
 > 
 > new("ContNeighborhood")
-An object of class "ContNeighborhood" 
+An object of class “ContNeighborhood” 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("ContNeighborhood-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("ContNeighborhood")
 > ### * ContNeighborhood
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ContNeighborhood
 > ### Title: Generating function for ContNeighborhood-class
 > ### Aliases: ContNeighborhood
@@ -475,7 +435,7 @@ radius:	 0
 > ### ** Examples
 > 
 > ContNeighborhood()
-An object of class "ContNeighborhood" 
+An object of class “ContNeighborhood” 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
@@ -490,15 +450,12 @@ function (radius = 0)
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("ContNeighborhood", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("FixRobModel-class")
 > ### * FixRobModel-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: FixRobModel-class
 > ### Title: Robust model with fixed (unconditional) neighborhood
 > ### Aliases: FixRobModel-class neighbor<-,FixRobModel-method
@@ -508,7 +465,7 @@ function (radius = 0)
 > ### ** Examples
 > 
 > new("FixRobModel")
-An object of class "FixRobModel" 
+An object of class “FixRobModel” 
 ###### center:	An object of class "ParamFamily"
 ### name:	parametric family of probability measures
 
@@ -520,21 +477,18 @@ An object of class "FixRobModel"
 name:	parameter of a parametric family of probability measures
 main:	0
 
-###### neighborhood:	An object of class "ContNeighborhood" 
+###### neighborhood:	An object of class “ContNeighborhood” 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("FixRobModel-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("FixRobModel")
 > ### * FixRobModel
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: FixRobModel
 > ### Title: Generating function for FixRobModel-class
 > ### Aliases: FixRobModel
@@ -543,7 +497,7 @@ radius:	 0
 > ### ** Examples
 > 
 > (M1 <- FixRobModel())
-An object of class "FixRobModel" 
+An object of class “FixRobModel” 
 ###### center:	An object of class "ParamFamily"
 ### name:	parametric family of probability measures
 
@@ -555,7 +509,7 @@ An object of class "FixRobModel"
 name:	location
 main:	0
 
-###### neighborhood:	An object of class "ContNeighborhood" 
+###### neighborhood:	An object of class “ContNeighborhood” 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
@@ -570,15 +524,12 @@ function (center = ParamFamily(), neighbor = ContNeighborhood())
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("FixRobModel", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("HampIC-class")
 > ### * HampIC-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: HampIC-class
 > ### Title: Influence curve of Hampel type
 > ### Aliases: HampIC-class lowerCase lowerCase,HampIC-method neighborRadius
@@ -595,15 +546,12 @@ NULL
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("HampIC-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("HampelWeight-class")
 > ### * HampelWeight-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: HampelWeight-class
 > ### Title: Robust Weight classes for weights of Hampel type
 > ### Aliases: HampelWeight-class cent,HampelWeight-method
@@ -631,21 +579,18 @@ Slot "name":
 Slot "weight":
 function (x) 
 1
-<bytecode: 0x07933778>
+<bytecode: 0x69bd9b8>
 <environment: namespace:RobAStBase>
 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("HampelWeight-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("IC-class")
 > ### * IC-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: IC-class
 > ### Title: Influence curve
 > ### Aliases: IC-class CallL2Fam CallL2Fam,IC-method CallL2Fam<-
@@ -662,15 +607,12 @@ NULL
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("IC-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("IC")
 > ### * IC
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: IC
 > ### Title: Generating function for IC-class
 > ### Aliases: IC
@@ -684,15 +626,12 @@ NULL
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("IC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("InfRobModel-class")
 > ### * InfRobModel-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: InfRobModel-class
 > ### Title: Robust model with infinitesimal (unconditional) neighborhood
 > ### Aliases: InfRobModel-class neighbor<-,InfRobModel-method
@@ -702,7 +641,7 @@ NULL
 > ### ** Examples
 > 
 > new("InfRobModel")
-An object of class "InfRobModel" 
+An object of class “InfRobModel” 
 ###### center:	An object of class "L2ParamFamily"
 ### name:	L_2 differentiable parametric family of probability measures
 
@@ -714,21 +653,18 @@ An object of class "InfRobModel"
 name:	parameter of a parametric family of probability measures
 main:	0
 
-###### neighborhood:	An object of class "ContNeighborhood" 
+###### neighborhood:	An object of class “ContNeighborhood” 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("InfRobModel-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("InfRobModel")
 > ### * InfRobModel
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: InfRobModel
 > ### Title: Generating function for InfRobModel-class
 > ### Aliases: InfRobModel
@@ -737,7 +673,7 @@ radius:	 0
 > ### ** Examples
 > 
 > (M1 <- InfRobModel())
-An object of class "InfRobModel" 
+An object of class “InfRobModel” 
 ###### center:	An object of class "L2ParamFamily"
 ### name:	L_2 differentiable parametric family of probability measures
 
@@ -749,7 +685,7 @@ An object of class "InfRobModel"
 name:	location
 main:	0
 
-###### neighborhood:	An object of class "ContNeighborhood" 
+###### neighborhood:	An object of class “ContNeighborhood” 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
@@ -764,15 +700,12 @@ function (center = L2ParamFamily(), neighbor = ContNeighborhood())
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("InfRobModel", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("InfluenceCurve-class")
 > ### * InfluenceCurve-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: InfluenceCurve-class
 > ### Title: Influence curve
 > ### Aliases: InfluenceCurve-class addInfo<- addInfo<-,InfluenceCurve-method
@@ -788,10 +721,10 @@ function (center = L2ParamFamily(), neighbor = ContNeighborhood())
 > ### ** Examples
 > 
 > new("InfluenceCurve")
-An object of class "InfluenceCurve" 
+An object of class “InfluenceCurve” 
 ### name:	  
 
-### 'Curve':	An object of class "EuclRandVarList" 
+### 'Curve':	An object of class “EuclRandVarList” 
 Domain:	NULL
 [[1]]
 length of Map:	 1 
@@ -802,15 +735,12 @@ Range:	Euclidean Space with dimension 1
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("InfluenceCurve-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("InfluenceCurve")
 > ### * InfluenceCurve
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: InfluenceCurve
 > ### Title: Generating function for InfluenceCurve-class
 > ### Aliases: InfluenceCurve
@@ -819,10 +749,10 @@ Range:	Euclidean Space with dimension 1
 > ### ** Examples
 > 
 > InfluenceCurve()
-An object of class "InfluenceCurve" 
+An object of class “InfluenceCurve” 
 ### name:	 influence curve 
 
-### 'Curve':	An object of class "EuclRandVarList" 
+### 'Curve':	An object of class “EuclRandVarList” 
 Domain:	Real Space with dimension 1 
 [[1]]
 length of Map:	 1 
@@ -848,15 +778,12 @@ Range:	Euclidean Space with dimension 1
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("InfluenceCurve", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("InfoPlotWrapper")
 > ### * InfoPlotWrapper
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: InfoPlot
 > ### Title: Wrapper function for information plot method
 > ### Aliases: InfoPlot
@@ -867,7 +794,7 @@ Range:	Euclidean Space with dimension 1
 > fam  <-  GammaFamily()
 > IC <- optIC(model = fam, risk = asCov())
 > Y <- distribution(fam)
-> data  <-  r(Y)(1000)
+> data  <-  r(Y)(500)
 > InfoPlot(IC, data, withCall = FALSE)
 Warning in log(x/1) : NaNs produced
 Warning in log(x/1) : NaNs produced
@@ -1544,15 +1471,12 @@ Warning in log(x/1) : NaNs produced
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("InfoPlotWrapper", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("MEstimate-class")
 > ### * MEstimate-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: MEstimate-class
 > ### Title: MEstimate-class.
 > ### Aliases: MEstimate-class Mroot Mroot,MEstimate-method
@@ -1565,7 +1489,7 @@ Warning in log(x/1) : NaNs produced
 > new("MEstimate")
 Evaluations of Asymptotically linear estimate:
 ----------------------------------------------
-An object of class "Estimate" 
+An object of class “Estimate” 
 generated by call
   `{}`()
 estimate:
@@ -1577,15 +1501,12 @@ numeric(0)
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("MEstimate-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("PlotICWrapper")
 > ### * PlotICWrapper
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: PlotIC
 > ### Title: Wrapper function for plot method for IC
 > ### Aliases: PlotIC
@@ -1604,15 +1525,12 @@ NULL
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("PlotICWrapper", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("RobAStBaseMASK")
 > ### * RobAStBaseMASK
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RobAStBaseMASK
 > ### Title: Masking of/by other functions in package "RobAStBase"
 > ### Aliases: RobAStBaseMASK MASKING
@@ -1639,18 +1557,16 @@ masking:
 +clip()    (package "graphics")
  
  
+
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("RobAStBaseMASK", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("RobAStBaseOptions")
 > ### * RobAStBaseOptions
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RobAStBaseOptions
 > ### Title: Function to change the global variables of the package
 > ###   'RobAStBase'
@@ -1690,15 +1606,12 @@ $kStepUseLast
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("RobAStBaseOptions", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("RobWeight-class")
 > ### * RobWeight-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RobWeight-class
 > ### Title: Robust Weight classes
 > ### Aliases: RobWeight-class name,RobWeight-method name<-,RobWeight-method
@@ -1717,21 +1630,18 @@ Slot "name":
 Slot "weight":
 function (x) 
 1
-<bytecode: 0x06c35cfc>
+<bytecode: 0x5113e68>
 <environment: namespace:RobAStBase>
 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("RobWeight-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("TotalVarIC-class")
 > ### * TotalVarIC-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: TotalVarIC-class
 > ### Title: Influence curve of total variation type
 > ### Aliases: TotalVarIC-class CallL2Fam<-,TotalVarIC-method clipLo
@@ -1751,15 +1661,12 @@ NULL
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("TotalVarIC-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("TotalVarIC")
 > ### * TotalVarIC
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: TotalVarIC
 > ### Title: Generating function for TotalVarIC-class
 > ### Aliases: TotalVarIC
@@ -1773,15 +1680,12 @@ NULL
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("TotalVarIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("TotalVarNeighborhood-class")
 > ### * TotalVarNeighborhood-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: TotalVarNeighborhood-class
 > ### Title: Total variation neighborhood
 > ### Aliases: TotalVarNeighborhood-class
@@ -1790,21 +1694,18 @@ NULL
 > ### ** Examples
 > 
 > new("TotalVarNeighborhood")
-An object of class "TotalVarNeighborhood" 
+An object of class “TotalVarNeighborhood” 
 type:	 (uncond.) total variation neighborhood 
 radius:	 0 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("TotalVarNeighborhood-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("TotalVarNeighborhood")
 > ### * TotalVarNeighborhood
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: TotalVarNeighborhood
 > ### Title: Generating function for TotalVarNeighborhood-class
 > ### Aliases: TotalVarNeighborhood
@@ -1813,7 +1714,7 @@ radius:	 0
 > ### ** Examples
 > 
 > TotalVarNeighborhood()
-An object of class "TotalVarNeighborhood" 
+An object of class “TotalVarNeighborhood” 
 type:	 (uncond.) total variation neighborhood 
 radius:	 0 
 > 
@@ -1828,15 +1729,34 @@ function (radius = 0)
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("TotalVarNeighborhood", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("biastype-methods")
+> ### * biastype-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: biastype-methods
+> ### Title: Methods for Function biastype in Package 'RobAStBase'
+> ### Aliases: biastype,interpolRisk-method biastype
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> myrisk <- MBRRisk(samplesize=100)
+> biastype(myrisk)
+An object of class "symmetricBias"
+Slot "name":
+[1] "symmetric Bias"
+
+> 
+> 
+> 
 > cleanEx()
 > nameEx("checkIC")
 > ### * checkIC
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: checkIC
 > ### Title: Generic Function for Checking ICs
 > ### Aliases: checkIC
@@ -1858,15 +1778,12 @@ maximum deviation
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("checkIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("comparePlot")
 > ### * comparePlot
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: comparePlot-methods
 > ### Title: Compare - Plots
 > ### Aliases: comparePlot comparePlot-methods comparePlot,IC,IC-method
@@ -1941,33 +1858,18 @@ maximum deviation
 + 
 + }
 Loading required package: ROptEst
-$obj1
- [1]  2  1 17  3  4 16 19 18 20 15
-
-$obj2
- [1]  2  1 17  3  4 16 19 18 20 15
-
-$obj3
-NULL
-
-$obj4
-NULL
-
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("comparePlot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 
-detaching 'package:ROptEst'
+detaching ‘package:ROptEst’
 
 > nameEx("cutoff-class")
 > ### * cutoff-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cutoff-class
 > ### Title: Cutoff class for distance-distance plots
 > ### Aliases: cutoff-class cutoff.quantile<-,cutoff-method cutoff.quantile<-
@@ -1992,7 +1894,7 @@ function (data)
     }
     quantile(slot(norm, "fct")(data), cutoff.quantile)
 }
-<environment: 0x0647b414>
+<environment: 0x8572340>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -2000,18 +1902,15 @@ Slot "cutoff.quantile":
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cutoff-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("cutoff")
 > ### * cutoff
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: cutoff
 > ### Title: Generating function(s) for class 'cutoff'
-> ### Aliases: cutoff cutoff.sememp cutoff.chisq
+> ### Aliases: cutoff cutoff.sememp cutoff.chisq cutoff.quant
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -2031,7 +1930,7 @@ function (data)
     }
     quantile(slot(norm, "fct")(data), cutoff.quantile)
 }
-<environment: 0x09adb78c>
+<environment: 0x81845b0>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -2053,10 +1952,10 @@ function (data)
         n.05 <- chol(QF)
         N0 <- matrix(rnorm(nsim * nrow(QF)), ncol = ncol(QF))
         N0 <- N0 %*% n.05
-        quantile((rowSums(N0^2))^0.5, cutoff.quantile)
+        quantile((rowSums(N0^2))^0.5, 0.95)
     }
 }
-<environment: 0x0994ac1c>
+<environment: 0x810b328>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -2075,11 +1974,11 @@ function (data)
         else diag(nrow(data))
     }
     {
-        dim = nrow(data)
-        qchisq(df = dim, cutoff.quantile)^0.5
+        dim = nrow(as.matrix(data))
+        qchisq(df = dim, 0.95)^0.5
     }
 }
-<environment: 0x098f74f0>
+<environment: 0x7f5ae10>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -2087,15 +1986,12 @@ Slot "cutoff.quantile":
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("cutoff", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("ddPlot-methods")
 > ### * ddPlot-methods
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: ddPlot-methods
 > ### Title: Methods for Function ddPlot in Package 'RobAStBase'
 > ### Aliases: ddPlot ddPlot-methods ddPlot,matrix-method
@@ -2107,47 +2003,20 @@ Slot "cutoff.quantile":
 > MX <- matrix(rnorm(1500),nrow=6)
 > QM <- matrix(rnorm(36),nrow=6); QM <- QM %*% t(QM)
 > ddPlot(data=MX, dist.y=QFNorm(QuadF=PosSemDefSymmMatrix(QM)))
-$id.x
- [1]  35  75  81  83 103 134 141 156 161 195 201 216 241
-
-$id.y
- [1]   3  83  85  92  93 103 141 161 177 190 197 199 216
-
-$id.xy
-[1]  83 103 141 161 216
-
-$qtx
-       0%       25%       50%       75%      100% 
-0.8082529 1.8923066 2.3790813 2.8897964 4.2364298 
-
-$qty
-        0%        25%        50%        75%       100% 
- 0.9448272  4.1291471  5.9492604  8.1544779 17.8387159 
-
-$cutoff.x.v
-     95% 
-3.513026 
-
-$cutoff.y.v
-     95% 
-10.60745 
-
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("ddPlot-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("getRiskFctBV-methods")
 > ### * getRiskFctBV-methods
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: getRiskFctBV-methods
 > ### Title: Methods for Function getRiskFctBV in Package 'RobAStBase'
 > ### Aliases: getRiskFctBV getRiskFctBV-methods
-> ###   getRiskFctBV,asGRisk,ANY-method getRiskFctBV,asMSE,ANY-method
+> ###   getRiskFctBV,interpolRisk,ANY-method getRiskFctBV,asGRisk,ANY-method
+> ###   getRiskFctBV,asMSE,ANY-method
 > ###   getRiskFctBV,asSemivar,onesidedBias-method
 > ###   getRiskFctBV,asSemivar,asymmetricBias-method
 > ### Keywords: classes
@@ -2157,20 +2026,17 @@ $cutoff.y.v
 > myrisk <- asMSE()
 > getRiskFctBV(myrisk)
 function (bias, var) 
-bias^2 + var
-<environment: 0x09959b74>
+return(bias^2 + var)
+<environment: 0xd32dba0>
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("getRiskFctBV-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("infoPlot")
 > ### * infoPlot
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: infoPlot
 > ### Title: Plot absolute and relative information
 > ### Aliases: infoPlot infoPlot-methods infoPlot,IC-method
@@ -2226,15 +2092,12 @@ bias^2 + var
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("infoPlot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("internals_ddPlot")
 > ### * internals_ddPlot
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: internals_for_RobAStBase_ddPlot
 > ### Title: Internal / Helper functions of package RobAStBase for ddPlot
 > ### Aliases: internals_for_RobAStBase_ddPlot .ddPlot.MatNtNtCoCo
@@ -2252,43 +2115,15 @@ bias^2 + var
 +         lab.pts=letters,log="x", main="GA", sub="NO",cex.sub=0.2)
 Warning in (function (which = "plot", lty = "solid", ...)  :
   "log" is not a graphical parameter
-$id.x
-[1]  83 161 156 134  81 177
-
-$id.y
-[1]  83  85 161  93 177
-
-$id.xy
-[1]  83 161 177
-
-$qtx
-       0%       25%       50%       75%      100% 
-0.8082529 1.8790815 2.4615238 2.9567433 4.2266258 
-
-$qty
-       0%       25%       50%       75%      100% 
- 1.382379  4.188070  6.092054  8.546559 15.779126 
-
-$cutoff.x.v
-     95% 
-3.495733 
-
-$cutoff.y.v
-     95% 
-11.26504 
-
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("internals_ddPlot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("interpolRisk-class")
 > ### * interpolRisk-class
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: interpolRisk-class
 > ### Title: Interpolated Risks
 > ### Aliases: interpolRisk-class OMSRRisk-class RMXRRisk-class MBRRisk-class
@@ -2298,16 +2133,16 @@ $cutoff.y.v
 > ### ** Examples
 > 
 > new("OMSRRisk")
-An object of class "OMSRRisk" 
+An object of class “OMSRRisk” 
 risk type:	 .OMSE 
 > OMSRRisk()
-An object of class "OMSRRisk" 
+An object of class “OMSRRisk” 
 risk type:	 .OMSE 
 > RMXRRisk()
-An object of class "RMXRRisk" 
+An object of class “RMXRRisk” 
 risk type:	 .RMXE 
 > MBRRisk()
-An object of class "MBRRisk" 
+An object of class “MBRRisk” 
 risk type:	 .MBRE 
 > myrisk <- MBRRisk(samplesize=100)
 > samplesize(myrisk)
@@ -2316,15 +2151,12 @@ risk type:	 .MBRE
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("interpolRisk-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("kStepEstimator")
 > ### * kStepEstimator
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: kStepEstimator
 > ### Title: Function for the computation of k-step estimates
 > ### Aliases: kStepEstimator
@@ -2394,31 +2226,28 @@ risk type:	 .MBRE
 Loading required package: ROptEst
 Evaluations of Minimum Kolmogorov distance estimate:
 ----------------------------------------------------
-An object of class "Estimate" 
+An object of class “Estimate” 
 generated by call
   MDEstimator(x = x, ParamFamily = NormLocationScaleFamily())
 samplesize:   100
 estimate:
-       mean          sd 
--0.05297991  0.92479741 
+      mean         sd 
+-0.1176227  0.7942553 
 Criterion:
 Kolmogorov distance 
-         0.05524875 
+              1e+20 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("kStepEstimator", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 
-detaching 'package:ROptEst'
+detaching ‘package:ROptEst’
 
 > nameEx("makeIC-methods")
 > ### * makeIC-methods
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: makeIC-methods
 > ### Title: Generic Function for making ICs consistent at a possibly
 > ###   different model
@@ -2452,7 +2281,7 @@ maximum deviation
 > 
 > ## check IC properties
 > checkIC(IC2)
-precision of centering:	 -3.523763e-18 
+precision of centering:	 7.272702e-17 
 precision of Fisher consistency:
               prob
 prob -1.110223e-16
@@ -2465,7 +2294,7 @@ maximum deviation
 > ## slot modifyIC is filled in case of IC2
 > IC3 <- modifyIC(IC2)(BinomFamily(13, 0.2), IC2)
 > checkIC(IC3)
-precision of centering:	 2.152077e-17 
+precision of centering:	 -3.091672e-18 
 precision of Fisher consistency:
      prob
 prob    0
@@ -2473,10 +2302,10 @@ precision of Fisher consistency - relativ error [%]:
      prob
 prob    0
 maximum deviation 
-     2.152077e-17 
+     3.091672e-18 
 > ## identical to
 > checkIC(IC3, BinomFamily(13, 0.2))
-precision of centering:	 2.152077e-17 
+precision of centering:	 -3.091672e-18 
 precision of Fisher consistency:
      prob
 prob    0
@@ -2484,11 +2313,11 @@ precision of Fisher consistency - relativ error [%]:
      prob
 prob    0
 maximum deviation 
-     2.152077e-17 
+     3.091672e-18 
 > 
 > IC4 <- makeIC(sin, B)
 $Curve
-An object of class "EuclRandVarList" 
+An object of class “EuclRandVarList” 
 Domain:	Real Space with dimension 1 
 [[1]]
 length of Map:	 1 
@@ -2497,11 +2326,11 @@ Range:	Real Space with dimension 1
 $CallL2Fam
 L2Fam@fam.call
 
-An object of class "IC" 
+An object of class “IC” 
 ### name:	 square integrable (partial) influence curve 
 ### L2-differentiable parametric family:	 Binomial family 
 
-### 'Curve':	An object of class "EuclRandVarList" 
+### 'Curve':	An object of class “EuclRandVarList” 
 Domain:	Real Space with dimension 1 
 [[1]]
 length of Map:	 1 
@@ -2510,7 +2339,7 @@ Range:	Real Space with dimension 1
 ### Infos:
      method message
 > checkIC(IC4)
-precision of centering:	 6.336912e-18 
+precision of centering:	 2.715274e-17 
 precision of Fisher consistency:
               prob
 prob -1.110223e-16
@@ -2521,11 +2350,11 @@ maximum deviation
      1.110223e-16 
 > 
 > (IC5 <- makeIC(list(function(x)x^3), B, name="a try"))
-An object of class "IC" 
+An object of class “IC” 
 ### name:	 a try 
 ### L2-differentiable parametric family:	 Binomial family 
 
-### 'Curve':	An object of class "EuclRandVarList" 
+### 'Curve':	An object of class “EuclRandVarList” 
 Domain:	Real Space with dimension 1 
 [[1]]
 length of Map:	 1 
@@ -2537,7 +2366,7 @@ Range:	Real Space with dimension 1
 > plot(IC5)
 NULL
 > checkIC(IC5)
-precision of centering:	 1.149699e-17 
+precision of centering:	 2.565774e-17 
 precision of Fisher consistency:
      prob
 prob    0
@@ -2545,7 +2374,7 @@ precision of Fisher consistency - relativ error [%]:
      prob
 prob    0
 maximum deviation 
-     1.149699e-17 
+     2.565774e-17 
 > 
 > ## don't run to reduce check time on CRAN
 > ## Not run: 
@@ -2561,15 +2390,44 @@ maximum deviation
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("makeIC-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("normtype-methods")
+> ### * normtype-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: normtype-methods
+> ### Title: Methods for Function normtype in Package 'RobAStBase'
+> ### Aliases: normtype,interpolRisk-method normtype
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> myrisk <- MBRRisk(samplesize=100)
+> normtype(myrisk)
+An object of class "NormType"
+Slot "name":
+[1] "EuclideanNorm"
+
+Slot "fct":
+function(x){ 
+    if(is.vector(x)) 
+        return(abs(x))
+    else 
+        return(sqrt(colSums(x^2)))
+}
+<bytecode: 0xc3daf30>
+<environment: namespace:distrMod>
+
+> 
+> 
+> 
 > cleanEx()
 > nameEx("optIC")
 > ### * optIC
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: optIC
 > ### Title: Generic function for the computation of optimally robust ICs
 > ### Aliases: optIC optIC-methods optIC,L2ParamFamily,asCov-method
@@ -2584,27 +2442,24 @@ maximum deviation
 > plot(IC0) # plot IC
 NULL
 > checkIC(IC0, B)
-precision of centering:	 -2.631986e-17 
+precision of centering:	 -7.3919e-18 
 precision of Fisher consistency:
-              prob
-prob -1.110223e-16
+             prob
+prob 2.220446e-16
 precision of Fisher consistency - relativ error [%]:
-              prob
-prob -1.110223e-14
+             prob
+prob 2.220446e-14
 maximum deviation 
-     1.110223e-16 
+     2.220446e-16 
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("optIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("outlyingPlotIC")
 > ### * outlyingPlotIC
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: outlyingPlotIC
 > ### Title: Function outlyingPlotIC in Package 'RobAStBase'
 > ### Aliases: outlyingPlotIC
@@ -2623,61 +2478,32 @@ maximum deviation
 + outlyingPlotIC(xn, IC.x=N0.IC1)
 + }
 Loading required package: ROptEst
+Fall 1
 
-Robust asVar:
-          evIC.1... evIC.2...
-evIC.1...  1.792119 -2.648152
-evIC.2... -2.648152 33.365165
-Warning in rep(col.cutoff, length.out = 2) :
-  'x' is NULL so the result will be NULL
+An object of class "PosSemDefSymmMatrix"
+           X1         X2
+X1 0.63213606 0.05017187
+X2 0.05017187 0.03395346
 Warning in stats::runif(length(x), -amount, amount) : NAs produced
 Warning in stats::runif(length(x), -amount, amount) : NAs produced
+Fall 1
 
-Robust asVar:
-           evIC.1...  evIC.2...
-evIC.1...  0.7130141 -0.6763236
-evIC.2... -0.6763236  5.4699718
-Warning in rep(col.cutoff, length.out = 2) :
-  'x' is NULL so the result will be NULL
-$id.x
-integer(0)
-
-$id.y
-integer(0)
-
-$id.xy
-integer(0)
-
-$qtx
-       0%       25%       50%       75%      100% 
-0.9254527 1.4720053 1.9122569 2.8925078 4.4553510 
-
-$qty
-       0%       25%       50%       75%      100% 
-0.3674573 0.7756047 1.0718009 1.6382899 2.3754474 
-
-$cutoff.x.v
-     95% 
-4.684533 
-
-$cutoff.y.v
-[1] 2.447747
-
+An object of class "PosSemDefSymmMatrix"
+          X1        X2
+X1 1.5888364 0.1964485
+X2 0.1964485 0.2071058
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("outlyingPlotIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 
-detaching 'package:ROptEst'
+detaching ‘package:ROptEst’
 
 > nameEx("plot-methods")
 > ### * plot-methods
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: plot-methods
 > ### Title: Methods for Function plot in Package 'RobAStBase'
 > ### Aliases: plot plot-methods plot,IC,missing-method
@@ -2721,14 +2547,10 @@ NULL
 +      which.Order = 1:6, return.Order = TRUE)
 [1] -2  3
 [1] -2  3
-[1] -2  3
-[1] -2  3
  [1]  4 15 18  3 19  1 20  2 16 17
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("plot-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("qqplot")
@@ -2736,7 +2558,6 @@ NULL
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: qqplot
 > ### Title: Methods for Function qqplot in Package 'RobAStBase'
 > ### Aliases: qqplot qqplot-methods qqplot,ANY,RobModel-method
@@ -2745,62 +2566,23 @@ NULL
 > 
 > ### ** Examples
 > 
-> qqplot(r(Norm(15,sqrt(30)))(40), Chisq(df=15))
-$x
- [1]  2.869589  4.103872  6.944357  7.457534 10.423074 10.506110 11.568771
- [8] 11.597325 12.381064 12.726981 12.840385 13.327319 14.146673 14.437008
-[15] 14.675127 14.692570 14.705298 14.753888 14.911322 15.408409 16.005856
-[22] 16.804788 17.123365 17.135259 17.289160 17.669759 18.153684 18.252932
-[29] 18.394925 19.043971 19.180086 19.283937 19.498014 20.033446 20.169604
-[36] 21.025087 21.161500 22.441794 23.280366 23.737713
-
-$y
- [1]  5.456913  6.818180  7.637289  8.270052  8.804812  9.278699  9.711238
- [8] 10.114131 10.495045 10.859344 11.210980 11.552993 11.887815 12.217460
-[15] 12.543650 12.867908 13.191621 13.516092 13.842583 14.172349 14.506674
-[22] 14.846908 15.194499 15.551043 15.918333 16.298428 16.693737 17.107140
-[29] 17.542150 18.003150 18.495741 19.027288 19.607791 20.251382 20.979051
-[36] 21.824094 22.844394 24.155466 26.050039 29.843102
-
+> qqplot(rnorm(40, mean = 15, sd = sqrt(30)), Chisq(df=15))
 > RobM <- InfRobModel(center = NormLocationFamily(mean=13,sd=sqrt(28)),
 +                     neighbor = ContNeighborhood(radius = 0.4))
-> x <- r(Norm(15,sqrt(30)))(20)
+> x <- rnorm(20, mean = 15, sd = sqrt(30))
 > qqplot(x, RobM)
-$x
- [1]  8.814224  9.497963 11.149040 11.375858 12.278782 13.355490 13.955754
- [8] 14.231792 14.377338 16.875949 17.029301 17.435943 18.078416 18.489453
-[15] 19.071074 19.680944 22.493351 25.847097
-
-$y
- [1]  2.869387  5.681883  7.257000  8.440661  9.430936 10.309334 11.118922
- [8] 11.886518 12.631262 13.368738 14.113482 14.881078 15.690666 16.569064
-[15] 17.559339 18.743000 20.318117 23.130613
-
-> qqplot(x, RobM, alpha.CI=0.9)
-$x
- [1]  8.814224  9.497963 11.149040 11.375858 12.278782 13.355490 13.955754
- [8] 14.231792 14.377338 16.875949 17.029301 17.435943 18.078416 18.489453
-[15] 19.071074 19.680944 22.493351 25.847097
-
-$y
- [1]  2.869387  5.681883  7.257000  8.440661  9.430936 10.309334 11.118922
- [8] 11.886518 12.631262 13.368738 14.113482 14.881078 15.690666 16.569064
-[15] 17.559339 18.743000 20.318117 23.130613
-
+> ## to reduce check time
 > ## further examples for ANY,kStepEstimator-method
 > ## in example to roptest() in package ROptEst
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("qqplot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("samplesize-methods")
 > ### * samplesize-methods
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: samplesize-methods
 > ### Title: Methods for Function samplesize in Package 'RobAStBase'
 > ### Aliases: samplesize,interpolRisk-method samplesize
@@ -2816,13 +2598,11 @@ $y
 > 
 > 
 > 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("samplesize-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > ### * <FOOTER>
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  30.05 0.38 30.78 NA NA 
+Time elapsed:  15.547 0.096 15.634 0.001 0.002 
 > grDevices::dev.off()
 null device 
           1 

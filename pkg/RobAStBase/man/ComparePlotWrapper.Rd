@@ -33,7 +33,11 @@
   \item{withCall}{the flag for the call output}
 }
 \value{
-  invisible(NULL)
+  \code{invisible(retV)} where \code{retV} is the return value
+  of the respective call to the full-fledged function \code{comparePlot}
+  with the additional item \code{wrapcall} with the call
+  to the wrapper \code{ComparePlot} and \code{wrappedcall} the call to
+  to the full-fledged function \code{comparePlot}.
 }
 \description{
   The wrapper \code{ComparePlot} (capital C!) takes most of arguments 
@@ -43,7 +47,8 @@
 \section{Details}{
   Calls \code{comparePlot} with suitably chosen defaults;
   if \code{withCall == TRUE}, the call to
-  \code{comparePlot} is returned.
+  \code{comparePlot}, i.e., item \code{wrappedcall} of the (hidden)
+  return value, is printed.
 }
 \examples{
 # Gamma

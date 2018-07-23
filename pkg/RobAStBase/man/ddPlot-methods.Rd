@@ -13,7 +13,7 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        cutoff.x, cutoff.y, ...,
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, cex.pts = 1,lab.pts, jit.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
+       id.n, cex.pts = 1,lab.pts, jitter.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
        col.idn, lty.cutoff, lwd.cutoff, col.cutoff, text.abline = TRUE,
        text.abline.x = NULL, text.abline.y = NULL,
        cex.abline = par("cex"), col.abline = col.cutoff,
@@ -22,12 +22,12 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "\%7.2f", text.abline.x.fmt.qx = "\%4.2f\%\%",
        text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%", 
-	     jit.fac, jit.tol = .Machine$double.eps,doplot = TRUE)
+	     jitter.fac, jitter.tol = .Machine$double.eps,doplot = TRUE)
 \S4method{ddPlot}{numeric}(data, dist.x = NormType(), dist.y  = NormType(),
        cutoff.x, cutoff.y, ...,
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, cex.pts = 1,lab.pts, jit.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
+       id.n, cex.pts = 1,lab.pts, jitter.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
        col.idn, lty.cutoff, lwd.cutoff, col.cutoff, text.abline = TRUE,
        text.abline.x = NULL, text.abline.y = NULL,
        cex.abline = par("cex"), col.abline = col.cutoff,
@@ -36,12 +36,12 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "\%7.2f", text.abline.x.fmt.qx = "\%4.2f\%\%",
        text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%",
-	   jit.fac, jit.tol=.Machine$double.eps, doplot = TRUE)
+	   jitter.fac, jitter.tol=.Machine$double.eps, doplot = TRUE)
 \S4method{ddPlot}{data.frame}(data, dist.x = NormType(), dist.y  = NormType(),
        cutoff.x, cutoff.y, ...,
        cutoff.quantile.x = 0.95, cutoff.quantile.y = cutoff.quantile.x,
        transform.x, transform.y = transform.x,
-       id.n, cex.pts = 1,lab.pts, jit.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
+       id.n, cex.pts = 1,lab.pts, jitter.pts = 0, alpha.trsp = NA, adj =0, cex.idn,
        col.idn, lty.cutoff, lwd.cutoff, col.cutoff, text.abline = TRUE,
        text.abline.x = NULL, text.abline.y = NULL,
        cex.abline = par("cex"), col.abline = col.cutoff,
@@ -50,7 +50,7 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
        text.abline.y.x = NULL, text.abline.y.y = NULL,
        text.abline.x.fmt.cx = "\%7.2f", text.abline.x.fmt.qx = "\%4.2f\%\%",
        text.abline.y.fmt.cy = "\%7.2f", text.abline.y.fmt.qy = "\%4.2f\%\%",
-	   jit.fac, jit.tol=.Machine$double.eps, doplot = TRUE)
+	   jitter.fac, jitter.tol=.Machine$double.eps, doplot = TRUE)
 }
 \arguments{
   \item{data}{data coercable to \code{matrix}; the data  at which to produce the \code{ddPlot}.}
@@ -71,7 +71,7 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
   of the data in argument \code{data}.}
   \item{cex.pts}{the corresponding \code{cex} argument for plotted points.}
   \item{lab.pts}{a vector of labels for the (unsubsetted) \code{data}.}
-  \item{jit.pts}{the corresponding \code{jitter} argument for plotted points;
+  \item{jitter.pts}{the corresponding \code{jitter} argument for plotted points;
     may be a vector of length 2 -- for separate factors for x- and y-coordinate.}
   \item{alpha.trsp}{alpha transparency to be added ex post to colors
         \code{col.pch} and \code{col.lbl}; if one-dim and NA all colors are
@@ -98,10 +98,10 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
   \item{text.abline}{vector of logicals (cast to length 2): shall text be added
                  to cutoff lines.}
   \item{text.abline.x}{text to be added to cutoff lines in x direction; if \code{NULL}
-   (default) we use ``[pp] \%-cutoff = [ff]'' where [pp] is the percentag up to 2 digits
+   (default) we use ``[pp] \%-cutoff = [ff]'' where [pp] is the percentage up to 2 digits
           and [ff] is the cutoff value up to 2 digits.}
   \item{text.abline.y}{text to be added to cutoff lines in y direction; if \code{NULL}
-   (default) we use ``[pp] \%-cutoff = [ff]'' where [pp] is the percentag up to 2 digits
+   (default) we use ``[pp] \%-cutoff = [ff]'' where [pp] is the percentage up to 2 digits
           and [ff] is the cutoff value up to 2 digits.}
   \item{cex.abline}{vector of numerics (cast to length 2): cex-value for added cutoff text.}
   \item{col.abline}{vector of length 2: color for added cutoff text.}
@@ -119,9 +119,9 @@ ddPlot(data, dist.x, dist.y, cutoff.x, cutoff.y, ...)
   \item{text.abline.x.fmt.qx}{format string to format cutoff probability in label in x direction.}
   \item{text.abline.y.fmt.cy}{format string to format the cutoff value in label in y direction.}
   \item{text.abline.y.fmt.qy}{format string to format cutoff probability in label in y direction.}
-  \item{jit.fac}{factor for jittering, see \code{jitter};}
-  \item{jit.tol}{threshold for jittering: if distance between points is smaller
-               than \code{jit.tol}, points are considered replicates.}
+  \item{jitter.fac}{factor for jittering, see \code{jitter};}
+  \item{jitter.tol}{threshold for jittering: if distance between points is smaller
+               than \code{jitter.tol}, points are considered replicates.}
   \item{doplot}{logical; shall a plot be produced? if \code{FALSE} only the return values are produced.}
   }
 \details{
@@ -140,7 +140,8 @@ patterns are substituted:
 }
 }
 \value{
-a list (returned as \code{invisible()}) with items
+If argument \code{doplot} is \code{FALSE}:
+A list (returned as \code{invisible()}) with items
 \item{id.x}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{x}-cutoff}
 \item{id.y}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{y}-cutoff}
 \item{id.xy}{the indices of (possibly transformed) data (within subset \code{id.n}) beyond the \code{x}-cutoff and the \code{y}-cutoff}
@@ -148,6 +149,16 @@ a list (returned as \code{invisible()}) with items
 \item{qty}{the quantiles of the distances of the (possibly transformed) data in \code{y} direction}
 \item{cutoff.x.v}{the cutoff value in \code{x} direction}
 \item{cutoff.y.v}{the cutoff value in \code{y} direction}
+
+If argument \code{doplot} is \code{TRUE}:
+An S3 object of class \code{c("plotInfo","DiagnInfo")}, i.e., a list
+  containing the information needed to produce the
+  respective plot, which at a later stage could be used by different
+  graphic engines (like, e.g. \code{ggplot}) to produce the plot
+  in a different framework. A more detailed description will follow in
+  a subsequent version.
+  One item is \code{retV} which is the return value in case \code{doplot} is \code{FALSE}.
+
 }
 \author{
   Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}

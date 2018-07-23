@@ -12,7 +12,11 @@
 # slots xaxt, yaxt, axes of dots to indicate the new axes have to be drawn
 #    paradigm small letters = orig. scale, capital letters = transformed scale
 # return value: list with (thinned out) x and y, X and Y and modified dots
-
+         if(length(x)==0) return(list(x=NULL,y=NULL,X=NULL,Y=NULL,scy=NA,dots=dots))
+         if(!is.null(dots$log)){
+             scaleX <- scaleX & !grepl("x", dots$log)
+             scaleY <- scaleY & !grepl("y", dots$log)
+         }
          X <- x
          wI <- 1:length(x)
          if(scaleX){

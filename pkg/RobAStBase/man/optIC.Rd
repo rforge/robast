@@ -10,12 +10,14 @@
 \usage{
 optIC(model, risk, ...)
 
-\S4method{optIC}{L2ParamFamily,asCov}(model, risk)
+\S4method{optIC}{L2ParamFamily,asCov}(model, risk, withMakeIC = FALSE)
 }
 \arguments{
   \item{model}{ probability model. }
   \item{risk}{ object of class \code{"RiskType"}. }
   \item{\dots}{ additional parameters. }
+  \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
+        \code{makeIC} before return.}
 }
 \details{ 
   The classical optimal IC which ist optimal in sense of the Cramer-Rao bound

@@ -20,21 +20,21 @@
 \usage{
 getRiskIC(IC, risk, neighbor, L2Fam, ...)
 
-\S4method{getRiskIC}{IC,asCov,missing,missing}(IC, risk, tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asCov,missing,missing}(IC, risk, tol = .Machine$double.eps^0.25, withCheck = TRUE)
 
-\S4method{getRiskIC}{IC,asCov,missing,L2ParamFamily}(IC, risk, L2Fam, tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asCov,missing,L2ParamFamily}(IC, risk, L2Fam, tol = .Machine$double.eps^0.25, withCheck = TRUE)
 
-\S4method{getRiskIC}{IC,trAsCov,missing,missing}(IC, risk, tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,trAsCov,missing,missing}(IC, risk, tol = .Machine$double.eps^0.25, withCheck = TRUE)
 
-\S4method{getRiskIC}{IC,trAsCov,missing,L2ParamFamily}(IC, risk, L2Fam, tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,trAsCov,missing,L2ParamFamily}(IC, risk, L2Fam, tol = .Machine$double.eps^0.25, withCheck = TRUE)
 
-\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,missing}(IC, risk, neighbor, tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,missing}(IC, risk, neighbor, tol = .Machine$double.eps^0.25, withCheck = TRUE)
 
-\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25, withCheck = TRUE)
 
-\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,missing}(IC, risk, neighbor,  tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,missing}(IC, risk, neighbor,  tol = .Machine$double.eps^0.25, withCheck = TRUE)
 
-\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25)
+\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25, withCheck = TRUE)
 
 \S4method{getRiskIC}{TotalVarIC,asUnOvShoot,UncondNeighborhood,missing}(IC, risk, neighbor)
 
@@ -52,6 +52,8 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
   \item{sampleSize}{ integer: sample size. }
   \item{Algo}{ "A" or "B". }
   \item{cont}{ "left" or "right". }
+  \item{withCheck}{logical: should a call to \code{checkIC} be done to
+                   check accuracy (defaults to \code{TRUE}).}
 }
 \details{To make sure that the results are valid, it is recommended
   to include an additional check of the IC properties of \code{IC} 

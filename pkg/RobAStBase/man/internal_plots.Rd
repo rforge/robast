@@ -7,6 +7,11 @@
 \alias{.makedotsP}
 \alias{.makedotsLowLevel}
 \alias{.cexscale}
+\alias{.getX.vec}
+\alias{.getXlimYlim}
+\alias{.prepareTitles}
+\alias{.getToDraw}
+\alias{.preparePanelFirstLast}
 
 \title{Internal / Helper functions of package RobAStBase for plot functions}
 
@@ -23,10 +28,17 @@ These functions are internally used helper functions for \code{\link{plot}},
                   finiteEndpoints = rep(FALSE,4),
                   x.ticks = NULL, y.ticks = NULL, withbox = TRUE)
 .legendCoord(x, scaleX, scaleX.fct, scaleY, scaleY.fct)
-.SelectOrderData(data, fct, which.lbs, which.Order)
+.SelectOrderData(data, fct, which.lbs, which.Order, which.nonlbs = NULL)
 .makedotsP(dots)
 .makedotsLowLevel(dots)
 .cexscale(y, y1=y, maxcex=4,mincex=0.05,cex, fun=NULL)
+.getX.vec(distr, dims0, lty, x.vec, scaleX, scaleX.fct, scaleX.inv, xm, xM)
+.getXlimYlim(dots,dotsP, dims0, xlim, ylim)
+.prepareTitles(withSubst, presubArg2, presubArg3, dots, mainText,
+               L2Fam, inner, dims0, dims, to.draw, trafO, obj, type, bmar, tmar)
+.getToDraw(dims, trafO, L2Fam, to.draw.arg, Abs=NULL)
+.preparePanelFirstLast(with.automatic.grid , dims0, pF.0, pL.0,
+            logArg, scaleX, scaleY, x.ticks, y.ticks, scaleX.fct, scaleY.fct)
 }
 \arguments{
   \item{scaleX}{logical; shall X-axis be rescaled (by default according to the cdf of
@@ -75,17 +87,65 @@ These functions are internally used helper functions for \code{\link{plot}},
     a possible thin-out by \code{which.lbs} and after ordering in descending order
     of the remaining observations. If this argument is \code{NULL} then no
     (further) observation is excluded.}
+  \item{which.nonlbs}{indices of the observations which should be plotted but
+        not labelled; either an integer vector with the indices of the observations
+          to be plotted into graph or \code{NULL} --- then all non-labelled
+          observations are plotted.}
   \item{withbox}{logical of length 1. If \code{TRUE}, even if \code{scaleX} and
    \code{scaleY} are both \code{FALSE} and, simultaneously, \code{x.ticks} and
    \code{y.ticks} are both \code{NULL}, a respective box is drawn around the
    panel; otherwise no box is drawn in this case. }
   \item{dots}{a list; intended to be the \code{\dots} argument of \code{plot}. }
-  \item{y}{}
-  \item{y1}{}
-  \item{maxcex}{}
-  \item{mincex}{}
-  \item{cex}{}
-  \item{fun}{}
+  \item{y}{input at which to compute \code{cex}-values (for these \code{y} values)}
+  \item{y1}{secondary input of \code{y}-values which is also used for
+         computaiton but not plotted itself at this \code{cex} value.}
+  \item{maxcex}{maximal value for \code{cex}}
+  \item{mincex}{minimal value for \code{cex}}
+  \item{cex}{basic factor for \code{cex}}
+  \item{fun}{(optional) function to compute the \code{cex}-values acc. to the
+              \code{y} and \code{y1}-values.}
+\item{L2Fam}{L2-Family},
+\item{to.draw.arg}{resp. argument from the user-interface of \code{comparePlot}, \code{infoPlot}, and the
+\code{plot}-method for ICs, i.e., either \code{NULL} (default;
+everything is plotted) or a vector of either integers (the indices of the
+subplots to be drawn) or characters --- the names of the subplots to be drawn:
+these names are to be chosen either among the row names of the trafo matrix
+\code{rownames(trafo(eval(x@CallL2Fam)@param))} or if the last expression is
+\code{NULL} a vector \code{"dim<dimnr>"}, \code{dimnr} running through
+the number of rows of the trafo matrix.}
+\item{panelFirst}{the \code{panel.first} expression to be extended}
+\item{distr}{underlying distribution of the observations}
+\item{dims0}{number of panels to be plotted}
+\item{lty}{the \code{lty} argument used in the user interface}
+\item{x.vec}{the resp. argument from the user interface.}
+\item{xm}{minimal x-value}
+\item{xM}{maximal x-value}
+\item{dots}{the internal \code{dots}-variable to be changed}
+\item{dotsP}{the internal \code{dotsP}-variable to be changed (taking up
+  additional arguments for the calls to \code{plot})}
+\item{xlim}{the possibly matrix-valued argument of the user interface}
+\item{ylim}{the possibly matrix-valued argument of the user interface}
+\item{withSubst}{should substitutions be made in titles?}
+\item{presubArg2}{title part}
+\item{presubArg3}{title part}
+\item{mainText}{text to be used for \code{main}}
+\item{inner}{the resp. argument from the user interface.}
+\item{dims}{the dimension of the pIC}
+\item{to.draw}{the actual numbers / names of the plotted panels.}
+\item{trafO}{the parameter transformation of  \code{L2fam@param}.}
+\item{obj}{the object from which to draw the name (of the plot).}
+\item{type}{for which type of plot should the titles be produced -- \code{"info"},
+\code{"all"} or \code{compare}.}
+\item{bmar}{resp. argument from the user-interface of \code{comparePlot}, \code{infoPlot}, and the
+\code{plot}-method for ICs.}
+\item{tmar}{resp. argument from the user-interface of \code{comparePlot}, \code{infoPlot}, and the
+\code{plot}-method for ICs.}
+\item{Abs}{additional text template used in \code{infoPlot}.}
+\item{with.automatic.grid}{}
+\item{pF.0}{the \code{panel.first} expression given by rhe user}
+\item{pL.0}{the \code{panel.last} expression  given by rhe user}
+\item{logArg}{a character vector with \code{log}-arguments for  \code{plot}
+for each of the plotted panels.}
 }
 \details{
 \code{.rescalefct} rescales, if necessary, x and y axis for use in plot
@@ -144,6 +204,19 @@ argument, deleting certain items and selecting items which can be digested by
      by which the rescaling is done; by default this argument is \code{NULL}
      and in this case the function \code{log(1+abs(x))} is used.
 }
+\code{.getDimsTD}{returns the number of different coordinates to be plotted.}
+\code{.producePanelFirstS}{for each graphical panel inserts
+                           (if needed) x and y tickmarks for user-specific axes
+                           into a \code{panel.first} expression.}
+\code{.getX.vec}{produces the x-grid (on original scale) for each of the panels
+                 and decides whether to plot lines or points.}
+
+\code{.getXlimYlim}{produces panel-wise \code{xlim} and \code{ylim} arguments
+                    as well as left and right endpoints of the x-scalas.}
+\code{.prepareTitles}{produces the titles for the panels}
+\code{.getToDraw}{computes which panels are to be drawn}
+\code{.preparePanelFirstLast}{prepares the \code{panel.first} and \code{panel.last}
+      expressions for each of the panels.}
 }
 
 

@@ -75,7 +75,7 @@ setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
         if(out){
             cat("precision of Fisher consistency:\n")
             print(consist)
-            cat("precision of Fisher consistency - relativ error [%]:\n")
+            cat("precision of Fisher consistency - relative error [%]:\n")
             print(100*consist/trafo)
         }
 
@@ -124,6 +124,11 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "missing"),
 ## make some L2function a pIC at a model
 setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"), 
     function(IC, L2Fam){ 
+
+        dims <- length(L2Fam@param)
+        if(dimension(IC@Curve) != dims)
+           stop("Dimension of IC and parameter must be equal")
+
         D1 <- L2Fam@distribution
         if(dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
@@ -133,19 +138,32 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
         cent <- E(D1, IC1)
         IC1 <- IC1 - cent
 
-        dims <- length(L2Fam@param)
-        if(dimension(IC@Curve) != dims)
-           stop("Dimension of IC and parameter must be equal")
-
         L2deriv <- as(diag(dims) %*% L2Fam@L2deriv, "EuclRandVariable")
 
-        E1 <- matrix(E(L2Fam, IC1 %*% t(L2deriv)), dims, dims)
+        E10 <- E(L2Fam, IC1 %*% t(L2deriv))
+        E1 <- matrix(E10, dims, dims)
         stand <- trafo %*% solve(E1) 
         Y <- as(stand %*% IC1, "EuclRandVariable")
         #ICfct <- vector(mode = "list", length = dims)
         #ICfct[[1]] <- function(x){Y(x)}
+        ..modifnew <- function(L2Fam, IC) return(makeIC(IC,L2Fam))
 
-        modifyIC <- function(L2Fam, IC){ makeIC(IC, L2Fam) }
+        if(! ("modifyIC" %in% names(getSlots(class(IC))))){
+           modifyIC <- ..modifnew
+        }else{
+           if(!is.function(IC@modifyIC)){
+              modifyIC <- ..modifnew
+           }else{
+              .modifyIC <- IC@modifyIC
+              if(!is.null(attr(IC@modifyIC,"hasMakeICin.modifyIC"))){
+                  modifyIC <- .modifyIC
+              }else{
+                  modifyIC <- function(L2Fam, IC){ IC. <- .modifyIC(L2Fam, IC)
+                                         return(makeIC(IC., L2Fam)) }
+              }
+           }
+        }
+        attr(modifyIC,"hasMakeICin.modifyIC") <- TRUE
 
         CallL2Fam <- L2Fam@fam.call
 

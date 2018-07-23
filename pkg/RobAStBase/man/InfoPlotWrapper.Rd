@@ -26,7 +26,11 @@
   \item{withCall}{the flag for the call output}
 }
 \value{
-  invisible(NULL)
+  \code{invisible(retV)} where \code{retV} is the return value
+  of the respective call to the full-fledged function \code{infoPlot}
+  with the additional item \code{wrapcall} with the call
+  to the wrapper \code{InfoPlot} and \code{wrappedcall} the call to
+  to the full-fledged function \code{infoPlot}.
 }
 \description{
   The wrapper \code{InfoPlot} (captial I!) takes most of arguments to the plot 
@@ -35,7 +39,8 @@
 }
 \section{Details}{
   Calls \code{infoPlot} with suitably chosen defaults. If
-  \code{withCall == TRUE}, the call to \code{infoPlot} is
+  \code{withCall == TRUE}, the call to \code{infoPlot}, i.e.,
+  item \code{wrappedcall} of the (hidden) return value, is
   returned
 }
 \examples{

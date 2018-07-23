@@ -26,7 +26,11 @@
   \item{withCall}{the flag for the call output}
 }
 \value{
-  invisible(NULL)
+  \code{invisible(retV)} where \code{retV} is the return value
+  of the respective call to the full-fledged plot method
+  with the additional item \code{wrapcall} with the call
+  to \code{PlotIC} and \code{wrappedcall} the call to
+  to the full-fledged plot method.
 }
 \description{
   The wrapper \code{PlotIC} takes most of arguments to the \code{plot} 
@@ -35,8 +39,9 @@
 }
 \section{Details}{
   Calls \code{plot} with suitably chosen defaults; if
-  \code{withCall == TRUE}, the call to \code{plot} is
-  returned.
+  \code{withCall == TRUE}, the call to \code{plot}, i.e.,
+  item \code{wrappedcall} from the (hidden) return value, is
+  printed.
 }
 \examples{
 # Gamma

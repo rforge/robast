@@ -10,7 +10,7 @@
                                 id.n,
                                 cex.pts = 1,
                                 lab.pts,
-                                jitt.pts = 0,
+                                jitter.pts = 0,
                                 alpha.trsp = NA,
                                 adj =0,
                                 cex.idn = 1,
@@ -28,12 +28,19 @@
                                 text.abline.x.fmt.qx = "%4.2f%%",
                                 text.abline.y.fmt.cy = "%7.2f",
                                 text.abline.y.fmt.qy = "%4.2f%%",
-                                jitt.fac = 10,
+                                jitter.fac = 10,
+                                jitter.tol = .Machine$double.eps,
                                 doplot = TRUE){
 
-       dots <- match.call(expand.dots = FALSE)$"..."
+       mc <- match.call(expand.dots = FALSE)
+       dots <- mc$"..."
 
-       jitt.pts <- rep(jitt.pts,length.out=2)
+       if(missing(jitter.pts)||is.null(jitter.pts)) jitter.pts <- 0
+       jitter.pts <- rep(jitter.pts,length.out=2)
+       if(missing(jitter.tol)||is.null(jitter.tol)) jitter.tol <- .Machine$double.eps
+       jitter.tol <- rep(jitter.tol,length.out=2)
+       if(missing(jitter.fac)||is.null(jitter.fac)) jitter.fac <- 10
+       jitter.fac <- rep(jitter.fac,length.out=2)
 
        col <- if(is.null(dots$col)) par("col") else dots$col
        if(!is.na(alpha.trsp)) col <- addAlphTrsp2col(col, alpha.trsp)
@@ -121,13 +128,16 @@
       if(is.null(dots$lwd)) dots$lwd <- par("lwd")
       if(is.null(dots$lty)) dots$lty <- par("lty")
 
-      if(is.null(col.cutoff)) col.cutoff <- "red"
+      if(missing(col.cutoff) || is.null(col.cutoff)) col.cutoff <- "red"
       col.cutoff <- rep(col.cutoff,length.out=2)
-      if(missing(lty.cutoff) && !is.null(dots$lty)) lty.cutoff <- dots$lty
-      if(missing(lwd.cutoff) && !is.null(dots$lwd)) lwd.cutoff <- dots$lwd
-      if(missing(cex.abline) && !is.null(dots$cex)) cex.abline <- dots$cex
-      if(missing(adj.abline) && !is.null(dots$adj)) lty.abline <- dots$adj
-      if(missing(font.abline) && !is.null(dots$font)) font.abline <- dots$font
+      if((missing(lty.cutoff)|| is.null(lty.cutoff)) && !is.null(dots$lty)) lty.cutoff <- dots$lty
+      if((missing(lwd.cutoff)|| is.null(lwd.cutoff)) && !is.null(dots$lwd)) lwd.cutoff <- dots$lwd
+      if((missing(cex.abline)|| is.null(cex.abline)) && !is.null(dots$cex)) cex.abline <- dots$cex
+      if((missing(cex.abline)|| is.null(cex.abline))) cex.abline <- par("cex")
+      if((missing(adj.abline)|| is.null(adj.abline)) && !is.null(dots$adj)) adj.abline <- dots$adj
+      if((missing(adj.abline)|| is.null(adj.abline))) adj.abline <- c(0.5,0.5)
+      if((missing(font.abline)|| is.null(font.abline)) && !is.null(dots$font)) font.abline <- dots$font
+      if((missing(font.abline)|| is.null(font.abline))) font.abline <- par("font")
 
       pdots <- .makedotsLowLevel(dots)
       pdots$pch <- if(is.null(dots$pch)) "." else dots$pch
@@ -144,19 +154,21 @@
       abdots <- .makedotsAB(dots)
       if(!missing(lty.cutoff)) abdots$lty <- lty.cutoff[[1]]
       if(!missing(lwd.cutoff)) abdots$lwd <- lwd.cutoff[1]
-      abdots$col <- col.cutoff[1]
-      abdots$jitt.fac <- dots$jitt.fac
+      if(!missing(col.cutoff)) abdots$col <- col.cutoff[1]
 
       abdots <- list(abdots,abdots)
-      abdots$jitt.fac <- pdots$jitt.fac
 
       if(!is.null(abdots$lty))
 	          if(is.list(lty.cutoff)) abdots[[2]]$lty <-  lty.cutoff[[2]]
       if(!is.null(abdots$lwd))
 	         if(length(lwd.cutoff)>1) abdots[[2]]$lwd <-  lwd.cutoff[2]
+      if(!is.null(abdots$col))
+	         if(length(col.cutoff)>1) abdots[[2]]$col <-  col.cutoff[2]
 
+      if(missing(text.abline)||is.null(text.abline)) text.abline <- TRUE
       ab.textL <- rep(text.abline,length.out=2)
-	    abtdots.x <- abtdots.y <- vector("list",0)
+
+      abtdots.x <- abtdots.y <- vector("list",0)
 	    cex.abline <- rep(cex.abline, length.out = 2)
 	    col.abline <- rep(if(!is.null(col.abline))
                           col.abline else "red", length.out = 2)
@@ -164,6 +176,10 @@
       adj.abline <- matrix(rep(adj.abline,length.out=4),2,2)
 
 
+      if(is.null(text.abline.x.fmt.cx))  text.abline.x.fmt.cx <- "%7.2f"
+      if(is.null(text.abline.x.fmt.qx))  text.abline.x.fmt.qx <- "%4.2f%%"
+      if(is.null(text.abline.y.fmt.cy))  text.abline.y.fmt.cy <- "%7.2f"
+      if(is.null(text.abline.y.fmt.qy))  text.abline.y.fmt.qy <- "%4.2f%%"
 	    .mpresubs <- function(inx)
                     .presubs(inx, c("%qx", "%qy", "%cx", "%cy"),
                         c(gettextf(text.abline.x.fmt.qx,
@@ -174,16 +190,10 @@
                              round(co.x,2)),
                           gettextf(text.abline.y.fmt.cy,
                           round(co.y,2))))
-      
-      if(!missing(lwd.cutoff)) abdots$lwd <- lwd.cutoff
-      if(!missing(lty.cutoff)) abdots$lty <- lty.cutoff
-      abdots$jitt.fac <- dots$jitt.fac
-
-      abtdots.x$labels <- if(! is.null(text.abline.x))
-                       .mpresubs(text.abline.x) else gettextf(
-                              paste(text.abline.x.fmt.qx,"-cutoff = ",
-	                                            text.abline.x.fmt.cx,sep=""),
-                              cutoff.quantile.x*100,round(co.x,digits=2))
+      if(!is.null(text.abline.x)){abtdots.x$labels <- .mpresubs(text.abline.x)
+         }else{
+         abtdots.x$labels <- .mpresubs(gettextf("%%qx-cutoff =%%cx"))
+         }
       abtdots.x$cex <- cex.abline[1]
 	    abtdots.x$col <- col.abline[1]
 	    abtdots.x$font <- font.abline[1]
@@ -191,10 +201,8 @@
 	    abtdots.x$adj <- adj.abline[,1]
 
       abtdots.y$labels <- if(! is.null(text.abline.y))
-                       .mpresubs(text.abline.y) else gettextf(
-                             paste(text.abline.y.fmt.qy,"-cutoff = ",
-	                                            text.abline.y.fmt.cy,sep=""),
-                             cutoff.quantile.y*100,round(co.y,digits=2))
+                       .mpresubs(text.abline.y) else .mpresubs(gettextf(
+                              "%%qy-cutoff =%%cy"))
 	    abtdots.y$cex <- cex.abline[2]
 	    abtdots.y$col <- col.abline[2]
 	    abtdots.y$font <- font.abline[2]
@@ -251,41 +259,61 @@
       ndata.x0 <- ndata.x
       ndata.y0 <- ndata.y
       isna <- is.na(ndata.x0)|is.na(ndata.y0)
-      if(any(duplicated(ndata.x0[!isna])))
-          ndata.x0[!isna] <- jitter(ndata.x0[!isna], factor=jitt.pts[1])
-      if(any(duplicated(ndata.y0[!isna])))
-          ndata.y0[!isna] <- jitter(ndata.y0[!isna], factor=jitt.pts[2])
+
+      if(any(duplicated(ndata.x0[!isna]/jitter.tol[1])))
+          ndata.x0[!isna] <- jitter(ndata.x0[!isna], factor=jitter.pts[1])
+      if(any(duplicated(ndata.y0[!isna]/jitter.tol[2])))
+          ndata.y0[!isna] <- jitter(ndata.y0[!isna], factor=jitter.pts[2])
 
       pdots$col <- col
+      retV <- list(id.x=id0.x, id.y= id0.y, id.xy = id0.xy,
+             qtx = quantile(ndata.x), qty = quantile(ndata.y),
+             cutoff.x.v = co.x, cutoff.y.v = co.y)
+
       if(doplot){
-        do.call(plot, args = c(list(x = ndata.x0, y=ndata.y0, type = "p"), pdots))
-        do.call(box,args=c(adots))
+        plotInfo<- list("plotArgs"=NULL)
+
+        plotInfo$PlotArgs <- c(list(x = ndata.x0, y=ndata.y0, type = "p"), pdots)
+        plotInfo$BoxArgs <- c(adots)
+
+        do.call(plot, args = plotInfo$PlotArgs)
+        do.call(box,args=plotInfo$BoxArgs)
 
         pusr <- par("usr")
+        plotInfo$usr <- pusr
+
         mid.x <- mean(pusr[c(1,2)])
         mid.y <- mean(pusr[c(3,4)])
         abtdots.y$x <- if(is.null(text.abline.y.x)) mid.x else text.abline.y.x
         abtdots.x$y <- if(is.null(text.abline.x.y)) mid.y else text.abline.x.y
 
-        do.call(abline, args = c(list(v=co.x), abdots[[1]]))
-	      do.call(abline, args = c(list(h=co.y), abdots[[2]]))
+        plotInfo$ablineV <- c(list(v=co.x), abdots[[1]])
+        plotInfo$ablineH <- c(list(h=co.y), abdots[[2]])
+        do.call(abline, args = plotInfo$ablineV)
+	      do.call(abline, args = plotInfo$ablineH)
 
-        if(ab.textL[1])
-           do.call(text, args = c(list(y=co.y*1.03), abtdots.y))
+        if(ab.textL[1]){
+           plotInfo$abtextV <- c(list(y=co.y*1.03), abtdots.y)
+           do.call(text, args = plotInfo$abtextV)
 #         do.call(text, args = c(list(co.x-5,mid.y,paste(cutoff.quantile.y*100,"%-cutoff = ",round(co.x,digits=2)),srt=90)))
-        if(ab.textL[2])
-           do.call(text, args = c(list(x=co.x*1.03), abtdots.x,srt=90))
+        }
+        if(ab.textL[2]){
+           plotInfo$abtextH <- c(list(x=co.x*1.03), abtdots.x,srt=90)
+           do.call(text, args = plotInfo$abtextH)
 #      do.call(text, args = c(list(mid.x,co.y+5,paste(cutoff.quantile.x*100," %-cutoff = ",round(co.y,digits=2)))))
-
-        if(length(id.xy))
-           do.call(text, args = c(list(jitter(ndata.x[id.xy],factor=jitt.fac),
-                                     jitter(ndata.y[id.xy],factor=jitt.fac),
-                                labels=lab.pts[id.xy]), tdots))
+        }
+        if(length(id.xy)){
+           plotInfo$Lab <- c(list(jitter(ndata.x[id.xy],factor=jitter.fac[1]),
+                                     jitter(ndata.y[id.xy],factor=jitter.fac[2]),
+                                labels=lab.pts[id.xy]), tdots)
+           do.call(text, args = plotInfo$Lab)
+        }
+        plotInfo$retV <- retV
+        class(plotInfo) <- c("plotInfo","DiagnInfo")
+        return(invisible(plotInfo))
           #axis(side=4)
 #      axis(side=1)
+
       }
-      return(invisible(list(id.x=id0.x, id.y= id0.y, id.xy = id0.xy,
-             qtx = quantile(ndata.x), qty = quantile(ndata.y),
-             cutoff.x.v = co.x, cutoff.y.v = co.y
-             )))
+      return(invisible(retV))
 }

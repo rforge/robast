@@ -13,14 +13,15 @@ cutoff.x = cutoff(norm = dist.x, cutoff.quantile  = cutoff.quantile.x),
 cutoff.y = cutoff(norm = dist.y, cutoff.quantile  = cutoff.quantile.y),
 cutoff.quantile.x = 0.95,  cutoff.quantile.y = cutoff.quantile.x,
 transform.x,transform.y = transform.x, id.n, cex.pts = 1, lab.pts,
-jitt.pts = 0, alpha.trsp = NA, adj =0,cex.idn = 1,col.idn = par("col"),
+jitter.pts = 0, alpha.trsp = NA, adj =0,cex.idn = 1,col.idn = par("col"),
 lty.cutoff,lwd.cutoff,col.cutoff = "red",text.abline = TRUE,
 text.abline.x = NULL, text.abline.y = NULL,cex.abline = par("cex"), 
 col.abline = col.cutoff,font.abline = par("font"), adj.abline = c(0,0),
 text.abline.x.x = NULL, text.abline.x.y = NULL, text.abline.y.x = NULL, 
 text.abline.y.y = NULL, text.abline.x.fmt.cx = "\%7.2f",
 text.abline.x.fmt.qx = "\%4.2f\%\%", text.abline.y.fmt.cy = "\%7.2f",
-text.abline.y.fmt.qy = "\%4.2f\%\%", jitt.fac = 10, doplot = TRUE)
+text.abline.y.fmt.qy = "\%4.2f\%\%", jitter.fac = 10,
+jitter.tol = .Machine$double.eps, doplot = TRUE)
 }
 \arguments{
   \item{data}{data in \code{matrix} form (columns are observations; rows are variable
@@ -42,7 +43,7 @@ text.abline.y.fmt.qy = "\%4.2f\%\%", jitt.fac = 10, doplot = TRUE)
   of the data in argument \code{data}.}
   \item{cex.pts}{the corresponding \code{cex} argument for plotted points.}
   \item{lab.pts}{a vector of labels for the (unsubsetted) \code{data}.}
-  \item{jit.pts}{the corresponding \code{jitter} argument for plotted points;
+  \item{jitter.pts}{the corresponding \code{jitter} argument for plotted points;
     may be a vector of length 2 -- for separate factors for x- and y-coordinate.}
   \item{alpha.trsp}{alpha transparency to be added ex post to colors
         \code{col.pch} and \code{col.lbl}; if one-dim and NA all colors are
@@ -90,9 +91,9 @@ text.abline.y.fmt.qy = "\%4.2f\%\%", jitt.fac = 10, doplot = TRUE)
   \item{text.abline.x.fmt.qx}{format string to format cutoff probability in label in x direction.}
   \item{text.abline.y.fmt.cy}{format string to format the cutoff value in label in y direction.}
   \item{text.abline.y.fmt.qy}{format string to format cutoff probability in label in y direction.}
-  \item{jit.fac}{factor for jittering, see \code{jitter};}
-  \item{jit.tol}{threshold for jittering: if distance between points is smaller
-               than \code{jit.tol}, points are considered replicates.}
+  \item{jitter.fac}{factor for jittering, see \code{jitter};}
+  \item{jitter.tol}{threshold for jittering: if distance between points is smaller
+               than \code{jitter.tol}, points are considered replicates.}
   \item{doplot}{logical; shall a plot be produced? if \code{FALSE} only the return values are produced.}
 }
 

@@ -9,20 +9,31 @@
 }
 \usage{
 infoPlot(object,  ...)
-\S4method{infoPlot}{IC}(object, data = NULL, ..., 
-withSweave = getdistrOption("withSweave"), col = par("col"), lwd = par("lwd"), 
-lty, colI = grey(0.5), lwdI = 0.7 * par("lwd"), ltyI = "dotted", main = FALSE, 
-inner = TRUE, sub = FALSE, col.inner = par("col.main"), cex.inner = 0.8, 
-bmar = par("mar")[1], tmar = par("mar")[3], with.automatic.grid = TRUE, 
-with.legend = TRUE, legend = NULL, legend.bg = "white",
- legend.location = "bottomright", legend.cex = 0.8, x.vec = NULL, 
- scaleX = FALSE, scaleX.fct, scaleX.inv,scaleY = FALSE, scaleY.fct = pnorm, 
- scaleY.inv = qnorm, scaleN = 9, x.ticks = NULL, y.ticks = NULL,
- mfColRow = TRUE, to.draw.arg = NULL, cex.pts = 1, cex.pts.fun = NULL, 
- col.pts = par("col"), pch.pts = 1, jitter.fac = 1, with.lab = FALSE, 
- lab.pts = NULL, lab.font = NULL, alpha.trsp = NA, which.lbs = NULL,
- which.Order = NULL, return.Order = FALSE, ylab.abs = "absolute information", 
- ylab.rel = "relative information", withSubst = TRUE)
+\S4method{infoPlot}{IC}(object, data = NULL,
+             ..., withSweave = getdistrOption("withSweave"),
+             col = par("col"), lwd = par("lwd"), lty,
+             colI = grey(0.5), lwdI = 0.7*par("lwd"), ltyI = "dotted",
+             main = FALSE, inner = TRUE, sub = FALSE,
+             col.inner = par("col.main"), cex.inner = 0.8,
+             bmar = par("mar")[1], tmar = par("mar")[3],
+             with.automatic.grid = TRUE,
+             with.legend = TRUE, legend = NULL, legend.bg = "white",
+             legend.location = "bottomright", legend.cex = 0.8,
+             x.vec = NULL, scaleX = FALSE, scaleX.fct, scaleX.inv,
+             scaleY = FALSE, scaleY.fct = pnorm, scaleY.inv=qnorm,
+             scaleN = 9, x.ticks = NULL, y.ticks = NULL,
+             mfColRow = TRUE, to.draw.arg = NULL,
+             cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
+             pch.pts = 1,
+             cex.npts = 1, cex.npts.fun = NULL, col.npts = grey(.5),
+             pch.npts = 2,
+             jitter.fac = 1, with.lab = FALSE, lab.pts = NULL,
+             lab.font = NULL, alpha.trsp = NA,
+             which.lbs = NULL, which.Order  = NULL, which.nonlbs = NULL,
+             attr.pre = FALSE, return.Order = FALSE,
+             ylab.abs = "absolute information",
+             ylab.rel= "relative information",
+             withSubst = TRUE)
 }
 \arguments{
   \item{object}{object of class \code{"InfluenceCurve"} }
@@ -126,12 +137,12 @@ with.legend = TRUE, legend = NULL, legend.bg = "white",
                          }
   \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
         titles and lables is used; otherwise no substitution is used. }
-  \item{col.pts}{color of the points of the \code{data} argument plotted; (may 
+  \item{col.pts}{color of the points of the \code{data} argument plotted; (may
      be a vector of length 2, one value for the classical IC, one for the IC
-     in argument \code{object}, or it can be a matrix \code{n} by 2, \code{n} the  
-     number of observations prior to any selection, in which case it assigns 
-     observation-specific colors to the observations; in this case this 
-     overrides settings in the respective \code{col.nonlbl} argument.}
+     in argument \code{object}, or it can be a matrix \code{n} by 2, \code{n} the
+     number of observations prior to any selection, in which case it assigns
+     observation-specific colors to the observations; in this case this
+     overrides settings in the respective \code{col.npts} argument.}
   \item{pch.pts}{symbol of the points of the \code{data} argument plotted
                  (may be a vector of length 2 or a matrix, see \code{col.pts}).}
   \item{cex.pts}{size of the points of the \code{data} argument plotted
@@ -141,11 +152,32 @@ with.legend = TRUE, legend = NULL, legend.bg = "white",
         the rescalings, or a function which is then used for each of the
         rescalings, or a list of functions; if it is a function or a list of
         functions, if necessary it is recylced to length \code{2 * dim}
-        (where 2 is for the two pICs plotted, i.e., the classically optimal one and
-        argument \code{IC}, and \code{dim} is the number of
-        dimensions of the pICs to be plotted; in the index of this list,
-        the index for classical vs. \code{IC} is incremented first;
+        where \code{2} is for the classical IC and the IC in argument \code{object}
+        and \code{dim} is the number of dimensions of the pICs to be plotted;
+        in the index of this list, \code{2} is incremented first;
         then \code{dim}.}
+  \item{col.npts}{color of the non-labelled points of the \code{data} argument
+     plotted; (may be a vector of length 2, or it can be a matrix
+     \code{nnlb <- sum(which.nonlbs)} by \code{2},
+     \code{nnlb} the number of non-labelled observations.}
+  \item{pch.npts}{symbol of the non-labelled points of the \code{data} argument
+         plotted (may be a vector of length \code{2} or a matrix,
+         see \code{col.npts}).}
+  \item{cex.npts}{size of the non-labelled points of the \code{data} argument
+                 plotted (may be a vector of length \code{2} or a matrix, see
+                 \code{col.npts}).}
+  \item{cex.npts.fun}{rescaling function for the size of the non-labelled points
+  to be plotted; either \code{NULL} (default), then \code{log(1+abs(x))}
+  is used for each of the rescalings, or a function which is then used
+  for each of the rescalings, or a list of functions; if it is a
+  function or a list of functions, if necessary it is recylced
+  to length \code{2 * dim} where \code{dim} is the number of dimensions of
+  the pICs to be plotted;  in the index of this list,
+  \code{2} is incremented first; then \code{dim}.}
+  \item{attr.pre}{logical; do graphical attributes for plotted data refer
+                  to indices prior (\code{TRUE}) or posterior to selection
+                  via arguments \code{which.lbs}, \code{which.Order}, \code{which.nonlbs}
+                  (\code{FALSE})? }
   \item{with.lab}{logical; shall labels be plotted to the observations?
                   (may be a vector of length 2, see \code{col.pts} -- 
                    but not a matrix)}
@@ -175,6 +207,10 @@ with.legend = TRUE, legend = NULL, legend.bg = "white",
            observations (remaining after a possible reduction by argument \code{which.lbs})
            to be plotted into graph or \code{NULL} --- then no (further) observation
            is excluded.}
+  \item{which.nonlbs}{indices of the observations which should be plotted but
+        not labelled; either an integer vector with the indices of the observations
+          to be plotted into graph or \code{NULL} --- then all non-labelled
+          observations are plotted.}
   \item{return.Order}{logical; if \code{TRUE}, a list of length two with order vectors
     is returned --- one for ordering w.r.t. the given IC, one for ordering w.r.t.
     the classically optimal IC; more specifically, the order of the (remaining) observations
@@ -186,11 +222,12 @@ with.legend = TRUE, legend = NULL, legend.bg = "white",
   \item{ylab.rel}{character; label to be used for y-axis in relative information panel} 
   \item{\dots}{further parameters for \code{plot}}
 }
-\value{
-  The function returns invisibly a list of elements containing the information 
-  needed to compute the respective diagnostic plot.
-   The return value allows to recover all information used to produce the plot
-   for later use in enhanced graphics (e.g. with ggplot).   
+\value{An S3 object of class \code{c("plotInfo","DiagnInfo")}, i.e., a list
+  containing the information needed to produce the
+  respective plot, which at a later stage could be used by different
+  graphic engines (like, e.g. \code{ggplot}) to produce the plot
+  in a different framework. A more detailed description will follow in
+  a subsequent version.
 }
 \details{
   Absolute information is defined as the square of the length
@@ -261,7 +298,7 @@ IC1 <- optIC(model = N, risk = asCov())
 infoPlot(IC1)
 
 ## don't run to reduce check time on CRAN
-\dontrun{
+\donttest{
 ## selection of subpanels for plotting
 par(mfrow=c(1,2))
 infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"))
