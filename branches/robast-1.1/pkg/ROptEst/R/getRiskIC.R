@@ -5,16 +5,16 @@ setMethod("getRiskIC", signature(IC = "HampIC",
                                  risk = "asCov",
                                  neighbor = "missing",
                                  L2Fam = "missing"),
-    function(IC, risk){
+    function(IC, risk, withCheck= TRUE){
         L2Fam <- force(eval(IC@CallL2Fam))
-        getRiskIC(IC = IC, risk = risk, L2Fam = L2Fam)
+        getRiskIC(IC = IC, risk = risk, L2Fam = L2Fam, withCheck= withCheck)
     })
 
 setMethod("getRiskIC", signature(IC = "HampIC", 
                                  risk = "asCov",
                                  neighbor = "missing",
                                  L2Fam = "L2ParamFamily"),
-    function(IC, risk, L2Fam){
+    function(IC, risk, L2Fam, withCheck= TRUE){
         Cov <- eval(IC@Risks[["asCov"]])
         if(is.null(Cov)){
            if(numberOfMaps(L2Fam@L2deriv)==1){ ## L2derivDim <- L2Fam@L2deriv
@@ -28,7 +28,7 @@ setMethod("getRiskIC", signature(IC = "HampIC",
               return(list(asCov = list(distribution = .getDistr(L2Fam),
                           value = Cov)))
             }
-            return(getRiskIC(as(IC, "IC"), risk = risk, L2Fam = L2Fam))
+            return(getRiskIC(as(IC, "IC"), risk = risk, L2Fam = L2Fam, withCheck= withCheck))
         }else
             return(list(asCov = list(distribution = .getDistr(L2Fam), value = Cov)))
     })

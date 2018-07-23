@@ -170,7 +170,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
 
     withEvalAsVar <- kStepCtrl$withEvalAsVar
     if(is.null(withEvalAsVar)) withEvalAsVar <- L2Fam@.withEvalAsVar
-    withMakeIC <- kStepCtrl$MakeIC
+    withMakeIC <- kStepCtrl$withMakeIC
     if(is.null(withMakeIC)) withMakeIC <- FALSE
 
 
