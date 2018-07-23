@@ -9,8 +9,8 @@ IlluminaSimStudy <- function(n, M, eps, seed = 123,
     stopifnot(n >= 3)
     stopifnot(eps >= 0, eps <= 0.5)
     if(plot1){
-        from <- min(-6, q(contD)(1e-15))
-        to <- max(6, q(contD)(1-1e-15))
+        from <- min(-6, q.l(contD)(1e-15))
+        to <- max(6, q.l(contD)(1-1e-15))
         curve(pnorm, from = from, to = to, lwd = 2, n = 201, 
               main = "Comparison: ideal vs. real", ylab = "cdf")
         fun <- function(x) (1-eps)*pnorm(x) + eps*p(contD)(x)

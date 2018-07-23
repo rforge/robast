@@ -181,7 +181,7 @@ setMethod("robloxbioc", signature(x = "beadLevelData"),
                 rownames(eMat) <- rownames(varMat) <- rownames(nObs) <- as.character(IlluminaIDs)
                 status <- rep("Unknown", length(probeIDs))
                 annoPkg <- paste("illumina", annoName, ".db", sep = "")
-                annoVers <- packageDescription(annoPkg, field = "Version")
+                annoVers <- packageDescription(annoPkg, fields = "Version")
                 message(paste("Annotating control probes using package ", annoPkg, " Version:", annoVers, "\n", sep = ""))
                 mapEnv <- as.name(paste("illumina", annoName, "REPORTERGROUPNAME", sep = ""))
                 t <- try(eval(mapEnv), silent = TRUE)

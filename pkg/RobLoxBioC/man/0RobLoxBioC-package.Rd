@@ -12,15 +12,15 @@ and estimators for preprocessing omics data, in particular gene expression data.
 \details{
 \tabular{ll}{
 Package: \tab RobLoxBioC \cr
-Version: \tab 0.9 \cr
-Date: \tab 2013-09-12 \cr
-Depends: \tab R(>= 2.14.0), methods, Biobase, affy, beadarray, distr, RobLox,
-lattice, RColorBrewer \cr
-LazyLoad: \tab yes \cr
+Version: \tab 1.1.0 \cr
+Date: \tab 2018-07-17 \cr
+Depends:\tab R(>= 2.14.0), methods, distr(>= 2.5.2), affy \cr
+Imports:\tab Biobase, BiocGenerics, beadarray, RobLox(>= 0.9.2), distrMod(>= 2.5.2), lattice, RColorBrewer \cr
+Suggests:\tab affydata, hgu95av2cdf, beadarrayExampleData, illuminaHumanv3.db \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 696 \cr
+VCS/SVNRevision: \tab 940 \cr
 Encoding: \tab latin1 \cr
 }
 }
@@ -43,7 +43,7 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
   the Radius. \emph{Statistical Methods and Applications} \bold{17}(1) 13-40.
-  Extended version: \url{http://www.stamats.de/RRlong.pdf}
+  Extended version: \url{http://r-kurs.de/RRlong.pdf}
 }
 \seealso{
 \code{\link[RobLox]{roblox}}, \code{\link[RobLox]{rowRoblox}}

@@ -125,7 +125,7 @@ robloxbioc(x, ...)
 
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008) The Costs of not Knowing
   the Radius. \emph{Statistical Methods and Applications} \bold{17}(1) 13-40.
-  Extended version: \url{http://www.stamats.de/RRlong.pdf}
+  Extended version: \url{http://r-kurs.de/RRlong.pdf}
 }
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de},
 
@@ -147,13 +147,13 @@ robloxbioc(X, steps = 5)
 robloxbioc(X, eps = 0.05)
 robloxbioc(X, eps = 0.05, steps = 5)
 
-## Don't run to reduce check time on CRAN
-\dontrun{
+\donttest{
+## \donttest to reduce check time
 ## the function is designed for large scale problems
 X <- matrix(rnorm(50000*20, mean = 1), nrow = 50000)
 system.time(robloxbioc(X))
 
-## using Affymetrix-Data
+## using Affymetrix data
 ## confer example to generateExprVal.method.mas
 ## A more worked out example can be found in the scripts folder
 ## of the package.
@@ -167,13 +167,15 @@ plot(concentrations, mas$exprs, log="xy", ylim=c(50,10000), type="b",
 points(concentrations, rl[,1], pch = 20, col="orange", type="b")
 legend("topleft", c("MAS", "roblox"), pch = c(1, 20))
 
-require(affydata)
+## Affymetrix dilution data
+library(affydata)
 data(Dilution)
 eset <- robloxbioc(Dilution)
 ## Affymetrix scale normalization
 eset1 <- robloxbioc(Dilution, normalize = TRUE)
-## "Not run" just because of computation time
-require(beadarrayExampleData)
+
+## Illumina bead level data
+library(beadarrayExampleData)
 data(exampleBLData)
 res <- robloxbioc(exampleBLData, eps.upper = 0.5)
 res
