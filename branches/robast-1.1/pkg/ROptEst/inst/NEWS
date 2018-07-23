@@ -23,6 +23,7 @@ user-visible CHANGES:
 + getStartIC-methods gain argument withMakeIC
 + cniperPointPlot gains argument withMakeIC
 + genkStepCtrl gains argument withMakeIC
++ DESCRIPTION tag SVNRevision changed to VCS/SVNRevision
 
 under the hood:
 + wherever possible also use q.l internally instead of q to 

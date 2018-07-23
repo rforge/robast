@@ -20,7 +20,7 @@ Suggests:\tab affydata, hgu95av2cdf, beadarrayExampleData, illuminaHumanv3.db \c
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 940 \cr
+VCS/SVNRevision: \tab 940 \cr
 Encoding: \tab latin1 \cr
 }
 }

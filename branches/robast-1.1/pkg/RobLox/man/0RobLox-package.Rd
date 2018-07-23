@@ -20,7 +20,7 @@ Suggests: \tab MASS\cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-SVNRevision: \tab 940 \cr
+VCS/SVNRevision: \tab 940 \cr
 }
 }
 \author{Matthias Kohl  \email{matthias.kohl@stamats.de}}

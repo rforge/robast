@@ -24,6 +24,7 @@ user-visible CHANGES:
 + GEVFamily, GParetoFamily and GEVFamilyMuUnknown gain argument withMDE (by default TRUE) which controls usage of MDEs at finding startPars
 + gev/gpddiag and friends (i.e. interface to ismev methods) now apply to return values of roptest
 + new argument withMakeIC to control when to use makeIC to enhance accuracy
++ DESCRIPTION tag SVNRevision changed to VCS/SVNRevision
 
 minor changes:
 + new Rd files for now exported (formerly internal) intermediate classes 
