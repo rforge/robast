@@ -9,7 +9,7 @@
 
         n <- 10^getdistrOption("RtoDPQ.e")+1
         u <- seq(0,1,length=n+1); u <- (u[1:n]+u[2:(n+1)])/2
-        qd <- q(distr)
+        qd <- q.l(distr)
         y <- f(qd(u))
     
         wmdn <- getdistrOption("warn.makeDNew")

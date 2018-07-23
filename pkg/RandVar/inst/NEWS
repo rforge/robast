@@ -8,6 +8,15 @@
  information)
 
 #######################################
+version 1.1
+#######################################
+
+under the hood:
++ wherever possible also use q.l internally instead of q to 
+  provide functionality in IRKernel
++ DESCRIPTION tag SVNRevision changed to VCS/SVNRevision
+
+#######################################
 version 1.0.1
 #######################################
 
