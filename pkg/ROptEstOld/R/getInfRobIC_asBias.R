@@ -8,7 +8,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
              upper, maxiter, tol, warn){
         zi <- sign(as.vector(trafo))
         A <- as.matrix(zi)
-        z <- q(L2deriv)(0.5)
+        z <- q.l(L2deriv)(0.5)
         b <- zi*as.vector(trafo)/E(L2deriv, function(x, z){abs(x - z)}, z = z)
 
         if(is(L2deriv, "AbscontDistribution"))

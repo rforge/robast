@@ -8,6 +8,24 @@
  information)
 
 #######################################
+version 1.1
+#######################################
+
+user-visible CHANGES:
++ DESCRIPTION tag SVNRevision changed to VCS/SVNRevision
+
+under the hood:
++ wherever possible also use q.l internally instead of q to 
+  provide functionality in IRKernel
+
+#######################################
+version 1.0
+#######################################
+
+user-visible CHANGES:
++ title changed to title style / capitalization
+
+#######################################
 version 0.9
 #######################################
 

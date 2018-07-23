@@ -9,8 +9,8 @@ setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
         z.fct <- function(z, c0, D1){
             return(c0 + (z-c0)*p(D1)(z-c0) - (z+c0)*p(D1)(z+c0) + m1df(D1, z+c0) - m1df(D1, z-c0))
         }
-        lower <- q(L2deriv)(getdistrOption("TruncQuantile"))
-        upper <- q(L2deriv)(1-getdistrOption("TruncQuantile"))
+        lower <- q.l(L2deriv)(getdistrOption("TruncQuantile"))
+        upper <- q.l(L2deriv)(1-getdistrOption("TruncQuantile"))
 
         return(uniroot(z.fct, lower = lower, upper = upper, tol = tol.z, 
                     c0=clip, D1=L2deriv)$root)
@@ -24,8 +24,8 @@ setMethod("getInfCent", signature(L2deriv = "UnivariateDistribution",
         g.fct <- function(g, c0, D1){
             return(g*p(D1)(g) + (g+c0)*(1-p(D1)(g+c0)) - m1df(D1, g) + m1df(D1, g+c0))
         }
-        lower <- q(L2deriv)(getdistrOption("TruncQuantile"))
-        upper <- q(L2deriv)(1-getdistrOption("TruncQuantile"))
+        lower <- q.l(L2deriv)(getdistrOption("TruncQuantile"))
+        upper <- q.l(L2deriv)(1-getdistrOption("TruncQuantile"))
 
         return(uniroot(g.fct, lower = lower, upper = upper, tol = tol.z, 
                     c0 = clip, D1 = D1)$root)

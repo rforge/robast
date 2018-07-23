@@ -13,8 +13,8 @@ setMethod("plot", "L2ParamFamily",
         plot(e1)
 
         if(is(e1, "AbscontDistribution")){
-            lower <- ifelse(is.finite(q(e1)(0)), q(e1)(0), q(e1)(getdistrOption("TruncQuantile")))
-            upper <- ifelse(is.finite(q(e1)(1)), q(e1)(1), q(e1)(1 - getdistrOption("TruncQuantile")))
+            lower <- ifelse(is.finite(q.l(e1)(0)), q.l(e1)(0), q.l(e1)(getdistrOption("TruncQuantile")))
+            upper <- ifelse(is.finite(q.l(e1)(1)), q.l(e1)(1), q.l(e1)(1 - getdistrOption("TruncQuantile")))
             h <- upper - lower
             x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
             plty <- "l"
@@ -69,8 +69,8 @@ setMethod("plot", "IC",
         if(!is(e1, "UnivariateDistribution")) stop("not yet implemented")
 
         if(is(e1, "AbscontDistribution")){
-            lower <- ifelse(is.finite(q(e1)(0)), q(e1)(0), q(e1)(getdistrOption("TruncQuantile")))
-            upper <- ifelse(is.finite(q(e1)(1)), q(e1)(1), q(e1)(1 - getdistrOption("TruncQuantile")))
+            lower <- ifelse(is.finite(q.l(e1)(0)), q.l(e1)(0), q.l(e1)(getdistrOption("TruncQuantile")))
+            upper <- ifelse(is.finite(q.l(e1)(1)), q.l(e1)(1), q.l(e1)(1 - getdistrOption("TruncQuantile")))
             h <- upper - lower
             x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
             plty <- "l"

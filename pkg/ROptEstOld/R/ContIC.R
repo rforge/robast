@@ -56,17 +56,17 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
         Y <- as(A %*% L2Fam@L2deriv - a, "EuclRandVariable")
         if(nrvalues == 1){
             if(!is.null(d)){
-                ICfct[[1]] <- function(x){ 
-                                    ind <- (Y(x) != 0) 
-                                    b*(ind*Y(x)/(ind*absY(x) + (1-ind)) + zi*(1-ind)*d)
-                              }
+                ICfct[[1]] <- function(x){}#
+                                    #ind <- (Y(x) != 0)
+                                   # b*(ind*Y(x)/(ind*absY(x) + (1-ind)) + zi*(1-ind)*d)
+                              #}
                 body(ICfct[[1]]) <- substitute(
                                         { ind <- (Y(x) != 0) 
                                           b*(ind*Y(x)/(ind*absY(x) + (1-ind)) + zi*(1-ind)*d) },
                                         list(Y = Y@Map[[1]], absY = abs(Y)@Map[[1]], b = b, d = d, 
                                              zi = sign(L2Fam@param@trafo)))
             }else{
-                ICfct[[1]] <- function(x){ Y(x)*pmin(1, b/absY(x)) }
+                ICfct[[1]] <- function(x){}# Y(x)*pmin(1, b/absY(x)) }
                 body(ICfct[[1]]) <- substitute({ Y(x)*pmin(1, b/absY(x)) },
                                                  list(Y = Y@Map[[1]], absY = abs(Y)@Map[[1]], b = b))
             }
@@ -74,13 +74,13 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
             absY <- sqrt(Y %*% Y)
             if(!is.null(d))
                 for(i in 1:nrvalues){
-                    ICfct[[i]] <- function(x){ ind <- (Yi(x) != 0) ; ind*b*Yi(x)/absY(x) + (1-ind)*d }
+                    ICfct[[i]] <- function(x){}# ind <- (Yi(x) != 0) ; ind*b*Yi(x)/absY(x) + (1-ind)*d }
                     body(ICfct[[i]]) <- substitute({ ind <- (Yi(x) != 0) ; ind*b*Yi(x)/absY(x) + (1-ind)*d },
                                                  list(Yi = Y@Map[[i]], absY = absY@Map[[1]], b = b, d = d[i]))
                 }
             else
                 for(i in 1:nrvalues){
-                    ICfct[[i]] <- function(x){ Yi(x)*pmin(1, b/absY(x)) }
+                    ICfct[[i]] <- function(x){}# Yi(x)*pmin(1, b/absY(x)) }
                     body(ICfct[[i]]) <- substitute({ Yi(x)*pmin(1, b/absY(x)) },
                                                  list(Yi = Y@Map[[i]], absY = absY@Map[[1]], b = b))
                 }

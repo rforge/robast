@@ -20,10 +20,11 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                 ineffUp <- res$b^2/upRisk
             else
                 ineffUp <- (as.vector(res$A)*trafo - res$b^2*(radius^2-upRad^2))/upRisk
-            assign("ineff", ineffUp, envir = sys.frame(which = -4))
-
-            return(ineffUp - ineffLo)
+## changed: shakey...            assign("ineff", ineffUp, envir = sys.frame(which = -4))
+#            return(ineffUp - ineffLo)
+        return(c(ineff=ineffUp,ineffDiff=ineffUp - ineffLo))
         }else{
+
             if(is(L2Fam@distribution, "UnivariateDistribution")){
                 if((length(L2Fam@L2deriv) == 1) & is(L2Fam@L2deriv[[1]], "RealRandVariable")){
                     L2deriv <- L2Fam@L2deriv[[1]]
@@ -57,10 +58,11 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                     ineffUp <- res$b^2/upRisk
                 else
                     ineffUp <- (sum(diag(res$A%*%t(trafo))) - res$b^2*(radius^2-upRad^2))/upRisk
-                assign("ineff", ineffUp, envir = sys.frame(which = -4))
+     ## changed: shakey  assign("ineff", ineffUp, envir = sys.frame(which = -4))
                 cat("current radius:\t", radius, "\tMSE-inefficiency difference:\t", ineffUp - ineffLo, "\n")
 
-                return(ineffUp - ineffLo)
+     ##           return(ineffUp - ineffLo)
+                return(c(ineff=ineffUp,ineffDiff=ineffUp - ineffLo))
             }else{
                 stop("not yet implemented")
             }

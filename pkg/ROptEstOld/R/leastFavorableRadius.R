@@ -15,7 +15,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
 
         L2derivDim <- numberOfMaps(L2Fam@L2deriv)
         if(L2derivDim == 1){
-            leastFavFct <- function(r, L2Fam, neighbor, risk, rho, 
+            leastFavFct.1 <- function(r, L2Fam, neighbor, risk, rho,
                                     upper.b, MaxIter, eps, warn){
                 loRad <- r*rho
                 upRad <- r/rho
@@ -51,16 +51,23 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                         neighbor = neighbor, clip = resUp$b, cent = resUp$a, 
                                         stand = resUp$A, trafo = L2Fam@param@trafo)[[1]]
                 }
-                leastFavR <- uniroot(getIneffDiff, lower = lower, upper = upper, 
-                                tol = .Machine$double.eps^0.25, L2Fam = L2Fam, neighbor = neighbor, 
-                                risk = risk, loRad = loRad, upRad = upRad, loRisk = loRisk, 
-                                upRisk = upRisk, upper.b = upper.b, eps = eps, MaxIter = MaxIter, 
-                                warn = warn)$root
+
+                ineff <- NULL
+                getIneffDiff.1 <- function(x){
+                            res <- getIneffDiff(x, L2Fam = L2Fam, neighbor = neighbor,
+                              upper.b = upper.b, risk = risk, loRad = loRad, upRad = upRad,
+                              loRisk = loRisk, upRisk = upRisk, eps = .Machine$double.eps^0.25,
+                              MaxIter = MaxIter, warn = warn)
+                            ineff <<- res["ineff"]
+                            return(res["ineffDiff"])
+                }
+                leastFavR <- uniroot(getIneffDiff.1, lower = lower, upper = upper,
+                                tol = .Machine$double.eps^0.25)$root
                 options(ow)
                 cat("current radius:\t", r, "\tinefficiency:\t", ineff, "\n")
                 return(ineff)
             }
-            leastFavR <- optimize(leastFavFct, lower = 1e-4, upper = upRad, 
+            leastFavR <- optimize(leastFavFct.1, lower = 1e-4, upper = upRad,
                             tol = .Machine$double.eps^0.25, maximum = TRUE,
                             L2Fam = L2Fam, neighbor = neighbor, risk = risk,
                             rho = rho, upper.b = upper, MaxIter = maxiter, 
@@ -91,7 +98,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                         L2derivDistrSymm <- new("DistrSymmList", L2)
                     }
                 }
-                leastFavFct <- function(r, L2Fam, neighbor, risk, rho, 
+                leastFavFct.p <- function(r, L2Fam, neighbor, risk, rho,
                                         z.start, A.start, upper.b, MaxIter, eps, warn){
                     loRad <- r*rho
                     upRad <- r/rho
@@ -132,18 +139,24 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                          upRisk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor, 
                                         clip = resUp$b, cent = resUp$a, stand = resUp$A, trafo = trafo)[[1]]
                     }
-                    leastFavR <- uniroot(getIneffDiff, lower = lower, upper = upper, 
-                                    tol = .Machine$double.eps^0.25, L2Fam = L2Fam, neighbor = neighbor, 
-                                    z.start = z.start, A.start = A.start, upper.b = upper.b, risk = risk, 
-                                    loRad = loRad, upRad = upRad, loRisk = loRisk, upRisk = upRisk,
-                                    eps = eps, MaxIter = MaxIter, warn = warn)$root
+                    ineff <- NULL
+                    getIneffDiff.p <- function(x){
+                            res <- getIneffDiff(x, L2Fam = L2Fam, neighbor = neighbor,
+                                z.start = z.start, A.start = A.start, upper.b = upper.b, risk = risk,
+                                loRad = loRad, upRad = upRad, loRisk = loRisk, upRisk = upRisk,
+                                eps = .Machine$double.eps^0.25, MaxIter = MaxIter, warn = warn)
+                            ineff <<- res["ineff"]
+                            return(res["ineffDiff"])
+                            }
+                    leastFavR <- uniroot(getIneffDiff.p, lower = lower, upper = upper,
+                            tol = .Machine$double.eps^0.25)$root
                     options(ow)
                     cat("current radius:\t", r, "\tinefficiency:\t", ineff, "\n")
                     return(ineff)
                 }
                 if(is.null(z.start)) z.start <- numeric(L2derivDim)
                 if(is.null(A.start)) A.start <- L2Fam@param@trafo
-                leastFavR <- optimize(leastFavFct, lower = 1e-4, upper = upRad, 
+                leastFavR <- optimize(leastFavFct.p, lower = 1e-4, upper = upRad,
                                 tol = .Machine$double.eps^0.25, maximum = TRUE,
                                 L2Fam = L2Fam, neighbor = neighbor, risk = risk,
                                 rho = rho, z.start = z.start, A.start = A.start, 

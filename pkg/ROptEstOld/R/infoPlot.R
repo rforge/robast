@@ -7,8 +7,8 @@ setMethod("infoPlot", "IC",
 
         if(is(e1, "UnivariateDistribution")){
             if(is(e1, "AbscontDistribution")){
-                ifelse(is.finite(q(e1)(0)), lower <- q(e1)(0), lower <- q(e1)(getdistrOption("TruncQuantile")))
-                ifelse(is.finite(q(e1)(1)), upper <- q(e1)(1), upper <- q(e1)(1 - getdistrOption("TruncQuantile")))
+                ifelse(is.finite(q.l(e1)(0)), lower <- q.l(e1)(0), lower <- q.l(e1)(getdistrOption("TruncQuantile")))
+                ifelse(is.finite(q.l(e1)(1)), upper <- q.l(e1)(1), upper <- q.l(e1)(1 - getdistrOption("TruncQuantile")))
                 h <- upper - lower
                 x.vec <- seq(from = lower - 0.1*h, to = upper + 0.1*h, length = 1000)
                 plty <- "l"
