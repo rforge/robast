@@ -24,6 +24,10 @@ user-visible CHANGES:
 + cniperPointPlot gains argument withMakeIC
 + genkStepCtrl gains argument withMakeIC
 + DESCRIPTION tag SVNRevision changed to VCS/SVNRevision
++ getRiskIC and getBiasIC gain argument withCheck to speed up things if one does not want to call checkIC 
+
+Bugfix: 
++ argument withMakeIC was not correctly used in roptest.new 
 
 under the hood:
 + wherever possible also use q.l internally instead of q to 
