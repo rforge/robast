@@ -12,9 +12,9 @@ K1 <- DiscreteDistribution(supp = 1:5)
 
 # AL-estimator
 system.time(IC.AL1 <- rgsOptIC.AL(r = 0.1, K = K1, check = TRUE), gcFirst = TRUE)
-distrExOptions(ErelativeTolerance, 1e-10)
+distrExOptions("ErelativeTolerance"= 1e-10)
 checkIC(IC.AL1)
-distrExOptions(ErelativeTolerance, .Machine$double.eps^0.25)
+distrExOptions("ErelativeTolerance"= .Machine$double.eps^0.25)
 Risks(IC.AL1)
 
 # M-estimator

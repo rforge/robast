@@ -81,7 +81,7 @@ AL2 <- oneStepEstimator(cbind(1,year,calls), IC2, c(fit2.MM$coeff, fit2.MM$s))
 ## Plot
 plot(calls ~ year, ylab = "phone calls [Mio.]", xlab = "year", 
      main = "Belgium Phone Calls 1950-1973", pch = 20)
-abline(fit2.LS, lwd = 2, col = "black", col = myCol[1])
+abline(fit2.LS, lwd = 2, col = myCol[1])
 abline(fit2.M, lwd = 2, col = myCol[2])
 abline(fit2.MM, lwd = 2, col = myCol[3])
 abline(fit2.LTS, lwd = 2, col = myCol[4], lty = 2)
