@@ -15,11 +15,11 @@ rowRoblox2 <- function(x, r, mean = 0, k = 1L){
         A <- b^2*(1+r^2)
         a <- (qnorm(0.75)^2 - 1)/sd*A
     }else{
-        A <- sd^2*.getA.sc(r)
-        a <- sd*.geta.sc(r)
-        b <- sd*.getb.sc(r)
+        A <- sd^2*RobLox:::.getA.sc(r)
+        a <- sd*RobLox:::.geta.sc(r)
+        b <- sd*RobLox:::.getb.sc(r)
     }
-    robEst <- .kstep.sc.matrix(x = x, initial.est = sd, A = A, a = a, b = b, mean = mean, k = k)
+    robEst <- RobLox:::.kstep.sc.matrix(x = x, initial.est = sd, A = A, a = a, b = b, mean = mean, k = k)
     robEst$est <- as.matrix(robEst$est)
     colnames(robEst$est) <- "sd"
     return(robEst$est)
@@ -104,7 +104,7 @@ for(j in 65:74){
         gc()
         if(round(r.fi[i,j], 2) > 3 | i == length(eps)) break
     }
-    save.image(file = "FiniteSampleScale1.RData")
+#    save.image(file = "FiniteSampleScale1.RData")
     cat("Dauer:\t", proc.time() - ptm, "\n")
 }
 

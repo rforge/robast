@@ -18,10 +18,10 @@ rowRoblox1 <- function(x, r, k = 1L){
         a <- -0.6277527697*A2/sd
         mse <- A1 + A2
     }else{
-        A1 <- sd^2*.getA1.locsc(r)
-        A2 <- sd^2*.getA2.locsc(r)
-        a <- sd*.geta.locsc(r)
-        b <- sd*.getb.locsc(r)
+        A1 <- sd^2*RobLox:::.getA1.locsc(r)
+        A2 <- sd^2*RobLox:::.getA2.locsc(r)
+        a <- sd*RobLox:::.geta.locsc(r)
+        b <- sd*RobLox:::.getb.locsc(r)
         mse <- A1 + A2
     }
     robEst <- .kstep.locsc.matrix(x = x, initial.est = cbind(mean, sd), 

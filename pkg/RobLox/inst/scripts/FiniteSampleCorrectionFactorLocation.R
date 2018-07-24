@@ -15,10 +15,10 @@ rowRoblox1 <- function(x, r, sd = 1, k = 1L){
         b <- sd*sqrt(pi/2)
         A <- b^2*(1+r^2)
     }else{
-        A <- sd^2*.getA.loc(r)
-        b <- sd*.getb.loc(r)
+        A <- sd^2*RobLox:::.getA.loc(r)
+        b <- sd*RobLox:::.getb.loc(r)
     }
-    robEst <- as.matrix(.kstep.loc.matrix(x = x, initial.est = mean, A = A, b = b, sd = sd, k = k))
+    robEst <- as.matrix(RobLox:::.kstep.loc.matrix(x = x, initial.est = mean, A = A, b = b, sd = sd, k = k))
     colnames(robEst) <- "mean"
     return(robEst)
 }
