@@ -1434,7 +1434,7 @@ system.time(r.rho1 <- leastFavorableRadius(L2Fam=B, neighbor=ContNeighborhood(),
 #current radius:  0.6388282      inefficiency:    1.044571
 #current radius:  0.6387762      inefficiency:    1.044584
 #   user  system elapsed
-# 437.47    0.09  438.58
+# 125.41    1.20  143.03
 
 r.rho1
 
@@ -1464,8 +1464,7 @@ system.time(r.rho2 <- leastFavorableRadius(L2Fam=B, neighbor=TotalVarNeighborhoo
 #current radius:  0.3104966      inefficiency:    1.043323
 #current radius:  0.3105373      inefficiency:    1.043323
 #   user  system elapsed
-#2211.92    1.13 2235.70
-
+# 431.94    2.64  483.05
 r.rho2
 
 #$rho

@@ -6,6 +6,8 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
            ..debug=FALSE){
     mc <- match.call(expand.dots=FALSE, call = sys.call(sys.parent(1)))
     dots <- as.list(mc$"...")
+#    cat("HALLLO IN getstartIC\n"); print(..debug)
+    if(missing(..debug)||!is.logical(..debug)) ..debug <- FALSE
     if("fsCor" %in% names(dots)){
         fsCor <- eval(dots[["fsCor"]])
         dots$fsCor <- NULL

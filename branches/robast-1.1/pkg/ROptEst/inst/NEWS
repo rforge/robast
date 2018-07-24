@@ -26,12 +26,19 @@ user-visible CHANGES:
 + DESCRIPTION tag SVNRevision changed to VCS/SVNRevision
 + getRiskIC and getBiasIC gain argument withCheck to speed up things if one does not want to call checkIC 
 
+Return value of "roptest"
++ the return value of "roptest", an object of class "kStepEstimate" has a slot "estimate.call" which
+  contains the (matched) call to "roptest"; internally "roptest" calls "robest"; the call to "robest"
+  may be of interest, too, so we have a new slot "robestCall" of class "OptionalCall", ie a call  
+  or NULL (default); it can be accessed via function robestCall() 
+
 Bugfix: 
 + argument withMakeIC was not correctly used in roptest.new 
 
 under the hood:
 + wherever possible also use q.l internally instead of q to 
   provide functionality in IRKernel
++ fixed all scripts
 
 #######################################
 version 1.0.1

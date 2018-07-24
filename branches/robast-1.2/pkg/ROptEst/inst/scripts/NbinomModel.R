@@ -156,14 +156,15 @@ RobN1     # show RobN1
 
 system.time(ICA <-  optIC(model=RobN1, risk=asAnscombe(),
             verbose=TRUE,lower=NULL,upper=10))
-
+#   user  system elapsed
+#   9.67    0.01   10.43
 #-------------------------------------------------------------------------------
 ## MSE solution
 #-------------------------------------------------------------------------------
 system.time(IC1 <- optIC(model=RobN1, risk=asMSE()))
 
 #   user  system elapsed
-#  10.53    0.02   11.21 
+#   0.97    0.00    0.97
 
 IC1
 
@@ -455,7 +456,7 @@ plot(IC1)
 system.time(IC2 <- optIC(model=RobN2, risk=asMSE()))
 
 #   user  system elapsed
-# 75.57    0.22   81.59
+#   2.46   0.00     2.46
 
 IC2
 
@@ -1150,7 +1151,7 @@ plot(IC6)
 system.time(IC7 <- radiusMinimaxIC(L2Fam=N, neighbor=ContNeighborhood(),
                         risk=asMSE(), loRad=0.01, upRad=3.9))
 #   user  system elapsed
-#  33.26    0.02   33.64 
+#   8.57    0.00    8.59
 
 IC7
 
@@ -1267,7 +1268,7 @@ plot(IC7)
 system.time(IC8 <- radiusMinimaxIC(L2Fam=N, neighbor=TotalVarNeighborhood(),
                         risk=asMSE(), loRad=0.01, upRad=1.8))
 #   user  system elapsed
-# 565.58    0.21  586.05
+#  66.47    0.25   68.73
 
 IC8
 
@@ -1405,7 +1406,7 @@ system.time(r.rho1 <- leastFavorableRadius(L2Fam=N, neighbor=ContNeighborhood(),
 #current radius:  0.5626002      inefficiency:    1.044701 
 #current radius:  0.5625595      inefficiency:    1.044701 
 #   user  system elapsed 
-# 361.25    0.12  369.05 
+#  141.37   0.84  150.89
 
 ## same as for binomial????
  
@@ -1439,7 +1440,7 @@ system.time(r.rho2 <- leastFavorableRadius(L2Fam=N, neighbor=TotalVarNeighborhoo
 #current radius:  0.2866482      inefficiency:    1.044425 
 #current radius:  0.2866889      inefficiency:    1.044456 
 #    user  system elapsed 
-# 4891.07    1.90 5063.44 
+#  707.48    3.17  760.09
  
 r.rho2
 
@@ -2563,6 +2564,7 @@ checkIC(pIC(est4c))
 
 IC12 <- radiusMinimaxIC(L2Fam=NbinomFamily(size=25, prob=estimate(est0)),
                  neighbor=TotalVarNeighborhood(), risk=asMSE(), loRad=0, upRad=Inf)
+(est4v <- kStepEstimator(x, IC=IC12, start=est0, steps = 3L))
 
 #Evaluations of 3-step estimate:
 #-------------------------------

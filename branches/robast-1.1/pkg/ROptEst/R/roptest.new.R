@@ -123,7 +123,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
            startCtrl = startCtrl, kStepCtrl = kStepCtrl,
            na.rm = na.rm, ..., debug = ..withCheck,
            withTimings = withTimings)
-    attr(mc,"robest.call") <- retV@estimate.call
+    retV@robestCall <- retV@estimate.call
     retV@estimate.call <- mc
     return(retV)
 }
@@ -231,6 +231,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
                                      startCtrl0 = startCtrl$initial.est.ArgList)
                                  ))
       }else{
+       initial.est <- startCtrl$initial.est
        print(substitute(kStepEstimator.start(initial.est0, x = x0,
                                         nrvalues = nrvalues0, na.rm = na.rm0,
                                         L2Fam = L2Fam0),list(x0=x,L2Fam0=L2Fam,

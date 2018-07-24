@@ -12,13 +12,16 @@
 \usage{
 getBiasIC(IC, neighbor, ...)
 
-\S4method{getBiasIC}{HampIC,UncondNeighborhood}(IC, neighbor, L2Fam, ...)
+\S4method{getBiasIC}{HampIC,UncondNeighborhood}(IC, neighbor, L2Fam, ..., withCheck = TRUE)
 }
 \arguments{
   \item{IC}{ object of class \code{"InfluenceCurve"} }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{L2Fam}{ object of class \code{"L2ParamFamily"}. }
   \item{\dots}{ additional parameters }
+  \item{withCheck}{logical: should a call to \code{checkIC} be done to
+                   check accuracy (defaults to \code{TRUE}; ignored
+                   if nothing is computed but simply a slot is read out).}
 }
 \details{ This function is rarely called directly. It is used by 
   other functions/methods. }

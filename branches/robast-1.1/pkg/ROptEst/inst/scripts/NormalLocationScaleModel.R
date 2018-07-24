@@ -81,16 +81,18 @@ Risks(N0.IC4)
 plot(N0.IC4) 
 infoPlot(N0.IC4)
 
-(N0.IC4.i <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(), 
+system.time(N0.IC4.i <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(),
                 risk=asMSE(normtype=InfoNorm()), loRad=0, upRad=Inf))
+print(N0.IC4.i)
 checkIC(N0.IC4.i)
 Risks(N0.IC4.i)
 plot(N0.IC4.i) 
 infoPlot(N0.IC4.i)
 
 ## takes extremely long time:
-(N0.IC4.s <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(), 
+system.time(N0.IC4.s <- radiusMinimaxIC(L2Fam=N0, neighbor=ContNeighborhood(),
                 risk=asMSE(normtype=SelfNorm()), loRad=0, upRad=Inf))
+print(N0.IC4.s)
 checkIC(N0.IC4.s)
 Risks(N0.IC4.s)
 plot(N0.IC4.s) 

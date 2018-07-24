@@ -89,7 +89,7 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                                        normtype = upNorm, tol = eps, 
                                        numbeval = 1e4)
                    biasUp <- biasUpE$asBias$value
-                   ineffLo <- (p+biasLo^2*loRad^2)/loRisk
+                   ineffLo <- (p+biasLo^2*radius^2)/loRisk
                    ineffUp <- if(upRad == Inf) biasUp^2/upRisk else
                                    (p+biasUp^2*upRad^2)/upRisk
                 }else{
@@ -110,6 +110,7 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                                          collapse = ""),"\n",sep="")
                         )
 
+#                print(c(ineffLo,ineffUp))
                 if(withRetIneff) return(c(lo= ineffLo, up=ineffUp))
                 else return(ineffUp - ineffLo)
             }else{

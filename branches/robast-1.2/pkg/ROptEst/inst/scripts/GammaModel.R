@@ -74,6 +74,7 @@ RobG1 <- InfRobModel(center = G, neighbor = ContNeighborhood(radius = 0.5))
 RobG1     # show RobB1
 
 ## OBRE solution ARE 0.95 in ideal model
+## really need distrExOptions(ErelativeTolerance = 1e-8)
 system.time(ICA <- optIC(model = RobG1, risk = asAnscombe(),
                          upper=NULL,lower=NULL, verbose=TRUE))
 checkIC(ICA)
@@ -110,12 +111,12 @@ x11()
 infoPlot(IC3)
 
 ## radius minimax IC
-## takes quite some time - about 30 min.
+## takes quite some time - about 180 sec.
 system.time(IC4 <- radiusMinimaxIC(L2Fam=G, neighbor=ContNeighborhood(), 
             risk=asMSE(), loRad=0, upRad=Inf))
 
 ## least favorable radius
-## takes really long time - several hours!
+## takes really long time - 33 min!
 #system.time(r.rho1 <- leastFavorableRadius(L2Fam=G, neighbor=ContNeighborhood(),
 #                    risk=asMSE(), rho=0.5))
 

@@ -5,7 +5,7 @@
 setMethod("getModifyIC", signature(L2FamIC = "L2ParamFamily", 
                                    neighbor = "Neighborhood", risk = "asRisk"),
     function(L2FamIC, neighbor, risk, ...){
-        dots <- list(...)
+        dots <- match.call(call = sys.call(sys.parent(1)), expand.dots=FALSE)[["..."]]
         dots$verbose <- NULL
         modIC <- function(L2Fam, IC){}
         body(modIC) <- substitute({ verbose <- getRobAStBaseOption("all.verbose")

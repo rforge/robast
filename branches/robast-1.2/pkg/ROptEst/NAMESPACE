@@ -12,6 +12,7 @@ importFrom("stats", "complete.cases", "dnorm", "na.omit", "optim",
              "optimize", "pnorm", "qnorm", "uniroot")
 importFrom("utils", "read.csv", "read.table", "str", "write.table")
 importFrom("graphics", "abline")
+importFrom("MASS", "ginv")
 
 exportClasses("asAnscombe", "asL1", "asL4") 
 exportMethods("optIC", 
