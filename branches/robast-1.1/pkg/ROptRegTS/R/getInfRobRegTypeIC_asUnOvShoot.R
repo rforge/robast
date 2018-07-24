@@ -152,14 +152,14 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
              RegSymm, Finfo, trafo, upper, maxiter, tol, warn){
         radiusCurve <- neighbor@radiusCurve
         if(is(Regressor, "AbscontDistribution")){
-            xlower <- ifelse(is.finite(q.l(Regressor)(0)), q.l(Regressor)(0), q.l(Regressor)(distr::TruncQuantile))
-            xupper <- ifelse(is.finite(q.l(Regressor)(1)), q.l(Regressor)(1), q.l(Regressor)(1 - distr::TruncQuantile))
+            xlower <- ifelse(is.finite(q.l(Regressor)(0)), q.l(Regressor)(0), q.l(Regressor)(getdistrOption("TruncQuantile")))
+            xupper <- ifelse(is.finite(q.l(Regressor)(1)), q.l(Regressor)(1), q.l(Regressor)(1 - getdistrOption("TruncQuantile")))
             x.vec <- seq(from = xlower, to = xupper, length = 1000)
         }else{
             if(is(Regressor, "DiscreteDistribution"))
                 x.vec <- support(Regressor) 
             else
-                x.vec <- unique(r(Regressor)(distr::RtoDPQ.e))
+                x.vec <- unique(r(Regressor)(getdistrOption("RtoDPQ.e")))
         }
 
         radCx <- radiusCurve(x.vec)

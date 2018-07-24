@@ -62,7 +62,7 @@ setMethod("getFiRiskRegTS", signature(risk = "fiUnOvShoot",
         eps <- neighbor@radius
         tau <- risk@width
         n <- sampleSize
-        m <- distr::DefaultNrFFTGridPointsExponent
+        m <- getdistrOption("DefaultNrFFTGridPointsExponent")
 
         if(Algo != "A"){
             if(cont == "left"){
@@ -173,7 +173,7 @@ setMethod("getFiRiskRegTS", signature(risk = "fiUnOvShoot",
         delta <- neighbor@radius
         tau <- risk@width
         n <- sampleSize
-        m <- distr::DefaultNrFFTGridPointsExponent
+        m <- getdistrOption("DefaultNrFFTGridPointsExponent")
 
         if(Algo != "A"){
             if(cont == "left"){
@@ -289,17 +289,17 @@ setMethod("getFiRiskRegTS", signature(risk = "fiUnOvShoot",
         eps <- neighbor@radiusCurve
         tau <- risk@width
         n <- sampleSize
-        m <- distr::DefaultNrFFTGridPointsExponent
+        m <- getdistrOption("DefaultNrFFTGridPointsExponent")
 
         if(is(Regressor, "AbscontDistribution")){
-            xlower <- ifelse(is.finite(q.l(Regressor)(0)), q.l(Regressor)(0), q.l(Regressor)(distr::TruncQuantile))
-            xupper <- ifelse(is.finite(q.l(Regressor)(1)), q.l(Regressor)(1), q.l(Regressor)(1 - distr::TruncQuantile))
+            xlower <- ifelse(is.finite(q.l(Regressor)(0)), q.l(Regressor)(0), q.l(Regressor)(getdistrOption("TruncQuantile")))
+            xupper <- ifelse(is.finite(q.l(Regressor)(1)), q.l(Regressor)(1), q.l(Regressor)(1 - getdistrOption("TruncQuantile")))
             x.vec <- seq(from = xlower, to = xupper, length = 1000)
         }else{
             if(is(Regressor, "DiscreteDistribution"))
                 x.vec <- support(Regressor) 
             else
-                x.vec <- unique(r(Regressor)(distr::RtoDPQ.e))
+                x.vec <- unique(r(Regressor)(getdistrOption("RtoDPQ.e")))
         }
 
         b.vec <- sapply(x.vec, clip)
@@ -363,17 +363,17 @@ setMethod("getFiRiskRegTS", signature(risk = "fiUnOvShoot",
         delta <- neighbor@radiusCurve
         tau <- risk@width
         n <- sampleSize
-        m <- distr::DefaultNrFFTGridPointsExponent
+        m <- getdistrOption("DefaultNrFFTGridPointsExponent")
 
         if(is(Regressor, "AbscontDistribution")){
-            xlower <- ifelse(is.finite(q.l(Regressor)(0)), q.l(Regressor)(0), q.l(Regressor)(distr::TruncQuantile))
-            xupper <- ifelse(is.finite(q.l(Regressor)(1)), q.l(Regressor)(1), q.l(Regressor)(1 - distr::TruncQuantile))
+            xlower <- ifelse(is.finite(q.l(Regressor)(0)), q.l(Regressor)(0), q.l(Regressor)(getdistrOption("TruncQuantile")))
+            xupper <- ifelse(is.finite(q.l(Regressor)(1)), q.l(Regressor)(1), q.l(Regressor)(1 - getdistrOption("TruncQuantile")))
             x.vec <- seq(from = xlower, to = xupper, length = 1000)
         }else{
             if(is(Regressor, "DiscreteDistribution"))
                 x.vec <- support(Regressor) 
             else
-                x.vec <- unique(r(Regressor)(distr::RtoDPQ.e))
+                x.vec <- unique(r(Regressor)(getdistrOption("RtoDPQ.e")))
         }
 
         b.vec <- sapply(x.vec, clip)

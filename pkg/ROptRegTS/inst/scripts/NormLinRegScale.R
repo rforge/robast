@@ -3,7 +3,6 @@
 ###############################################################################
 
 require(ROptRegTS)
-require(RobRex)
 
 ###############################################################################
 ## Example 1 (1-dim., discrete Regressor)
@@ -39,7 +38,7 @@ checkIC(IC21)
 Risks(IC21)
 
 # AL-estimator from package RobRex
-system.time(IC.AL1 <- rgsOptIC.AL(r = 0.5, K = K1, check = TRUE), gcFirst = TRUE)
+system.time(IC.AL1 <- RobRex::rgsOptIC.AL(r = 0.5, K = K1, check = TRUE), gcFirst = TRUE)
 checkIC(IC.AL1)
 Risks(IC.AL1)
 
@@ -49,7 +48,7 @@ checkIC(IC21c)
 Risks(IC21c)
 
 # AL-estimator from package RobRex
-system.time(IC.AL1c <- rgsOptIC.ALc(r = 0.5, K = K1, check = TRUE), gcFirst = TRUE)
+system.time(IC.AL1c <- RobRex::rgsOptIC.ALc(r = 0.5, K = K1, check = TRUE), gcFirst = TRUE)
 checkIC(IC.AL1c)
 Risks(IC.AL1c)
 
@@ -162,7 +161,7 @@ checkIC(IC23)
 Risks(IC23)
 
 # AL-estimator from package RobRex
-system.time(IC.AL3 <- rgsOptIC.AL(r = 0.5, K = K3, check = TRUE), gcFirst = TRUE)
+system.time(IC.AL3 <- RobRex::rgsOptIC.AL(r = 0.5, K = K3, check = TRUE), gcFirst = TRUE)
 checkIC(IC.AL3)
 Risks(IC.AL3)
 
@@ -172,7 +171,7 @@ checkIC(IC23c)
 Risks(IC23c)
 
 # AL-estimator from package RobRex
-system.time(IC.AL3c <- rgsOptIC.ALc(r = 0.5, K = K3, check = TRUE), gcFirst = TRUE)
+system.time(IC.AL3c <- RobRex::rgsOptIC.ALc(r = 0.5, K = K3, check = TRUE), gcFirst = TRUE)
 checkIC(IC.AL3c)
 Risks(IC.AL3c)
 

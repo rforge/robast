@@ -40,8 +40,8 @@ setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
             }
             return(E(K, gu.fct, z = z, c0 = c0, D1 = D1))
         }
-        lower <- q.l(ErrorL2deriv)(distr::TruncQuantile)
-        upper <- q.l(ErrorL2deriv)(1-distr::TruncQuantile)
+        lower <- q.l(ErrorL2deriv)(getdistrOption("TruncQuantile"))
+        upper <- q.l(ErrorL2deriv)(1-getdistrOption("TruncQuantile"))
 
         return(uniroot(g.fct, lower = lower, upper = upper, tol = tol.z,
                     c0 = clip, D1 = ErrorL2deriv, K = Regressor)$root)
@@ -100,8 +100,8 @@ setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                 z*(1-p(D1)(z/x)) + x*(m1df(D1, z/x) - m1df(D1, b/x)) + b*p(D1)(b/x)
             }
         }
-        lower <- q.l(ErrorL2deriv)(distr::TruncQuantile)
-        upper <- q.l(ErrorL2deriv)(1-distr::TruncQuantile)
+        lower <- q.l(ErrorL2deriv)(getdistrOption("TruncQuantile"))
+        upper <- q.l(ErrorL2deriv)(1-getdistrOption("TruncQuantile"))
 
         return(uniroot(g.fct, lower = lower, upper = upper, tol = tol.z,
                     c0 = clip, D1 = ErrorL2deriv, x = Regressor)$root)
@@ -209,8 +209,8 @@ setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
         z.fct <- function(z, c0, D1){
             return(c0 + (z-c0)*p(D1)(z-c0) - (z+c0)*p(D1)(z+c0) + m1df(D1, z+c0) - m1df(D1, z-c0))
         }
-        lower <- q.l(ErrorL2deriv)(distr::TruncQuantile)
-        upper <- q.l(ErrorL2deriv)(1-distr::TruncQuantile)
+        lower <- q.l(ErrorL2deriv)(getdistrOption("TruncQuantile"))
+        upper <- q.l(ErrorL2deriv)(1-getdistrOption("TruncQuantile"))
 
         return(uniroot(z.fct, lower = lower, upper = upper, tol = tol.z, 
                     c0=clip, D1=ErrorL2deriv)$root)
@@ -234,8 +234,8 @@ setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
         zfun <- function(x, z0, c0, D1, tol.z){
             if(x == 0) return(0)
             
-            lower <- q.l(D1)(distr::TruncQuantile)
-            upper <- q.l(D1)(1-distr::TruncQuantile)
+            lower <- q.l(D1)(getdistrOption("TruncQuantile"))
+            upper <- q.l(D1)(1-getdistrOption("TruncQuantile"))
 
             return(uniroot(g.fct, lower = lower, upper = upper, tol = tol.z, 
                         c0 = c0, xx = x, D1 = D1)$root)
@@ -284,8 +284,8 @@ setMethod("getInfCentRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
         zfun <- function(x, z0, c0, A0, D1, tol.z){
             if(all(x == numeric(length(x)))) return(0)
             
-            lower <- q.l(D1)(distr::TruncQuantile)
-            upper <- q.l(D1)(1-distr::TruncQuantile)
+            lower <- q.l(D1)(getdistrOption("TruncQuantile"))
+            upper <- q.l(D1)(1-getdistrOption("TruncQuantile"))
 
             return(uniroot(g.fct, lower = lower, upper = upper, tol = tol.z, 
                         c0 = c0, A0 = A0, xx = x, D1 = D1)$root)

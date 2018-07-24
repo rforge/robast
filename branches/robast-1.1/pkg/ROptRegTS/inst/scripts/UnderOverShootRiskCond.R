@@ -90,7 +90,7 @@ system.time(IC32v <- optIC(model=RobLM3v, risk=fiUnOvShoot(width = tau/sqrt(n)),
 checkIC(IC32v) # takes some time
 Risks(IC32v)
 
-distroptions("DefaultNrFFTGridPointsExponent", 8)
+distroptions("DefaultNrFFTGridPointsExponent"= 8)
 system.time(IC42c <- optIC(model=RobLM4c, risk=fiUnOvShoot(width = tau/sqrt(n)), sampleSize = n), gcFirst = TRUE)
 checkIC(IC42c) # takes some time
 Risks(IC42c)
@@ -127,7 +127,7 @@ body(clipLo13) <- substitute({ b3 <- b3fun; -stand3*b3(x)*abs(x) }, list(b3fun =
 clipLo(IC13c) <- RealRandVariable(list(clipLo13), Domain=Reals())
 stand(IC13c) <- as.matrix(stand3)
 checkIC(IC13c)
-distroptions("DefaultNrFFTGridPointsExponent", 12)
+distroptions("DefaultNrFFTGridPointsExponent"= 12)
 Risks(IC13c) <- getFiRiskRegTS(risk = fiUnOvShoot(width = tau/sqrt(n)), 
                    ErrorDistr = Norm(), Regressor = K1, 
                    neighbor = CondContNeighborhood(radius = 0, 
@@ -163,7 +163,7 @@ body(clipLo23) <- substitute({ b3 <- b3fun; -stand3*b3(x)*abs(x) }, list(b3fun =
 clipLo(IC23c) <- RealRandVariable(list(clipLo23), Domain=Reals())
 stand(IC23c) <- as.matrix(stand3)
 checkIC(IC23c)
-distroptions("DefaultNrFFTGridPointsExponent", 8)
+distroptions("DefaultNrFFTGridPointsExponent"= 8)
 Risks(IC23c) <- getFiRiskRegTS(risk = fiUnOvShoot(width = tau/sqrt(n)), 
                    ErrorDistr = Norm(), Regressor = K2, 
                    neighbor = CondContNeighborhood(radius = 0, 
@@ -199,7 +199,7 @@ clipLo(IC13v) <- RealRandVariable(list(clipLo13), Domain=Reals())
 stand(IC13v) <- as.matrix(stand3)
 checkIC(IC13v)
 
-distroptions("DefaultNrFFTGridPointsExponent", 12)
+distroptions("DefaultNrFFTGridPointsExponent"= 12)
 Risks(IC13v) <- getFiRiskRegTS(risk = fiUnOvShoot(width = tau/sqrt(n)), 
                    ErrorDistr = Norm(), Regressor = K1, 
                    neighbor = CondTotalVarNeighborhood(radius = 0, 
@@ -234,7 +234,7 @@ clipLo(IC23v) <- RealRandVariable(list(clipLo23), Domain=Reals())
 stand(IC23v) <- as.matrix(stand3)
 checkIC(IC23v)
 
-distroptions("DefaultNrFFTGridPointsExponent", 8)
+distroptions("DefaultNrFFTGridPointsExponent"= 8)
 Risks(IC23v) <- getFiRiskRegTS(risk = fiUnOvShoot(width = tau/sqrt(n)), 
                    ErrorDistr = Norm(), Regressor = K2, 
                    neighbor = CondTotalVarNeighborhood(radius = 0, 

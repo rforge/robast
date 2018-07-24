@@ -16,7 +16,9 @@ user-visible CHANGES:
 under the hood:
 + wherever possible also use q.l internally instead of q to provide functionality in 
   IRKernel
-
++ changed calls to formerly exported objects from NAMESPACE distr to getdistrOption("<object>")
++ fixed large parts of the scripts
+  
 #######################################
 version 1.0
 #######################################

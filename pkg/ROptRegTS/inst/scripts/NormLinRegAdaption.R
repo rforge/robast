@@ -69,8 +69,8 @@ K3 <- ConvexContamination(e1 = Unif(Min = -1, Max = 0),
 checkL2deriv(LM31)
 
 distrExOptions(ErelativeTolerance, .Machine$double.eps^0.5)
-(LM32 <- NormLinRegInterceptFamily(RegDistr = K3, trafo = matrix(c(1,0), nrow = 1), nuisance = TRUE))
-distrExOptions(ErelativeTolerance, .Machine$double.eps^0.25)
+(LM32 <- NormLinRegInterceptFamily(RegDistr = K3-E(K3), trafo = matrix(c(1,0), nrow = 1), nuisance = TRUE))
+distrExOptions("ErelativeTolerance"= .Machine$double.eps^0.25)
 checkL2deriv(LM32)
 
 ## infinitesimal robust model

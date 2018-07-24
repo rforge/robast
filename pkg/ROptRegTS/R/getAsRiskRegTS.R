@@ -282,8 +282,8 @@ setMethod("getAsRiskRegTS", signature(risk = "asUnOvShoot",
                                       neighbor = "CondNeighborhood"),
     function(risk, ErrorL2deriv, Regressor, neighbor, clip, cent, stand){
         if(is(Regressor, "AbscontDistribution")){
-            xlower <- ifelse(is.finite(q.l(Regressor)(0)), q.l(Regressor)(0), q.l(Regressor)(distr::TruncQuantile))
-            xupper <- ifelse(is.finite(q.l(Regressor)(1)), q.l(Regressor)(1), q.l(Regressor)(1 - distr::TruncQuantile))
+            xlower <- ifelse(is.finite(q.l(Regressor)(0)), q.l(Regressor)(0), q.l(Regressor)(getdistrOption("TruncQuantile")))
+            xupper <- ifelse(is.finite(q.l(Regressor)(1)), q.l(Regressor)(1), q.l(Regressor)(1 - getdistrOption("TruncQuantile")))
             x.vec <- seq(from = xlower, to = xupper, by = 0.01)
         }else{
             if(is(Regressor, "DiscreteDistribution"))

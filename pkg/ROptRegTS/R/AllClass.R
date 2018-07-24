@@ -160,8 +160,8 @@ setClass("FixRobRegTypeModel",
                     radCurve <- object@neighbor@radiusCurve
                     if(is(D1, "UnivariateDistribution")){
                         if(is(D1, "AbscontDistribution")){
-                            xlo <- ifelse(is.finite(q.l(D1)(0)), q.l(D1)(0), q.l(D1)(distr::TruncQuantile))
-                            xup <- ifelse(is.finite(q.l(D1)(1)), q.l(D1)(1), q.l(D1)(1 - distr::TruncQuantile))
+                            xlo <- ifelse(is.finite(q.l(D1)(0)), q.l(D1)(0), q.l(D1)(getdistrOption("TruncQuantile")))
+                            xup <- ifelse(is.finite(q.l(D1)(1)), q.l(D1)(1), q.l(D1)(1 - getdistrOption("TruncQuantile")))
                             x <- seq(from = xlo, to = xup, by = 1e-3)
                         }else{
                             if(is(Regressor, "DiscreteDistribution"))
@@ -210,8 +210,8 @@ setClass("InfRobRegTypeModel",
                     radCurve <- object@neighbor@radiusCurve
                     if(is(D1, "UnivariateDistribution")){
                         if(is(D1, "AbscontDistribution")){
-                            xlo <- ifelse(is.finite(q.l(D1)(0)), q.l(D1)(0), q.l(D1)(distr::TruncQuantile))
-                            xup <- ifelse(is.finite(q.l(D1)(1)), q.l(D1)(1), q.l(D1)(1 - distr::TruncQuantile))
+                            xlo <- ifelse(is.finite(q.l(D1)(0)), q.l(D1)(0), q.l(D1)(getdistrOption("TruncQuantile")))
+                            xup <- ifelse(is.finite(q.l(D1)(1)), q.l(D1)(1), q.l(D1)(1 - getdistrOption("TruncQuantile")))
                             x <- seq(from = xlo, to = xup, by = 1e-3)
                         }else{
                             if(is(Regressor, "DiscreteDistribution"))
