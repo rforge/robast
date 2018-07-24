@@ -1,21 +1,22 @@
 Package: RobExtremes
 Version: 1.1.0
-Date: 2018-07-23
+Date: 2018-07-25
 Title: Optimally Robust Estimation for Extreme Value Distributions
-Description: Optimally robust estimation for extreme value distributions using S4 classes and methods (based on packages
-          distr, distrEx, distrMod, RobAStBase, and ROptEst).
+Description: Optimally robust estimation for extreme value distributions using S4 classes and methods (based
+         on packages distr, distrEx, distrMod, RobAStBase, and ROptEst).
 Depends: R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 1.0), robustbase, evd
 Suggests: RUnit (>= 0.4.26), ismev (>= 1.39)
 Imports: RobAStRDA, distr, distrEx, RandVar, RobAStBase, startupmsg, actuar
 Authors@R: c(person("Nataliya", "Horbenko", role=c("aut","cph")), person("Bernhard", "Spangl", role="ctb",
-          comment="contributed smoothed grid values of the Lagrange multipliers"), person("Sascha", "Desmettre",
-          role="ctb", comment="contributed smoothed grid values of the Lagrange multipliers"), person("Eugen",
-          "Massini", role="ctb", comment="contributed an interactive smoothing routine for smoothing the Lagrange
-          multipliers and smoothed grid values of the Lagrange multipliers"), person("Daria", "Pupashenko", role="ctb",
-          comment="contributed MDE-estimation for GEV distribution in the framework of her PhD thesis 2011--14"),
-          person("Gerald", "Kroisandt", role="ctb", comment="contributed testing routines"), person("Matthias", "Kohl",
-          role=c("aut", "cph")), person("Peter", "Ruckdeschel", role=c("cre", "aut", "cph"),
-          email="peter.ruckdeschel@uni-oldenburg.de"))
+         comment="contributed smoothed grid values of the Lagrange multipliers"), person("Sascha",
+         "Desmettre", role="ctb", comment="contributed smoothed grid values of the Lagrange multipliers"),
+         person("Eugen", "Massini", role="ctb", comment="contributed an interactive smoothing routine for
+         smoothing the Lagrange multipliers and smoothed grid values of the Lagrange multipliers"),
+         person("Daria", "Pupashenko", role="ctb", comment="contributed MDE-estimation for GEV distribution
+         in the framework of her PhD thesis 2011--14"), person("Gerald", "Kroisandt", role="ctb",
+         comment="contributed testing routines"), person("Matthias", "Kohl", role=c("aut", "cph")),
+         person("Peter", "Ruckdeschel", role=c("cre", "aut", "cph"),
+         email="peter.ruckdeschel@uni-oldenburg.de"))
 ByteCompile: yes
 LazyLoad: yes
 License: LGPL-3
@@ -23,4 +24,4 @@ Encoding: latin1
 URL: http://robast.r-forge.r-project.org/
 LastChangedDate: {$LastChangedDate$}
 LastChangedRevision: {$LastChangedRevision$}
-VCS/SVNRevision: 1040
+VCS/SVNRevision: 1057
