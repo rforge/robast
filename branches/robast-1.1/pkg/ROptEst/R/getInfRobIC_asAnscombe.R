@@ -58,7 +58,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    tol = toli, warn, noLow = noLow,
                                    verbose = FALSE, checkBounds = FALSE) 
              trV <- upBerg$risk$trAsCov$value
-             e.up <- FI/trV
+             if(!is.na(trV)) e.up <- FI/trV
              upper <- upper * 3
            } 
         upper <- upper / 3

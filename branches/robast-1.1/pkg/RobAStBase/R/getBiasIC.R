@@ -12,6 +12,8 @@ setMethod("getBiasIC", signature(IC = "IC",
             misF <- TRUE 
             L2Fam <- eval(IC@CallL2Fam)
         }
+        if(missing(withCheck)) withCheck <- TRUE
+
         D1 <- L2Fam@distribution
         if(dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
