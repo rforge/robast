@@ -3,7 +3,7 @@
 \alias{KolmogorovMinDist-methods}
 \alias{KolmogorovMinDist,matrix,Norm-method}
 \alias{KolmogorovMinDist,AffyBatch,AbscontDistribution-method}
-\alias{KolmogorovMinDist,BeadLevelList,AbscontDistribution-method}
+\alias{KolmogorovMinDist,beadLevelData,AbscontDistribution-method}
 
 \title{Generic Function for Computing Minimum Kolmogorov Distance for Biological Data}
 \description{
@@ -17,7 +17,7 @@ KolmogorovMinDist(x, D, ...)
 \S4method{KolmogorovMinDist}{AffyBatch,AbscontDistribution}(x, D, bg.correct = TRUE, pmcorrect = TRUE, 
                   verbose = TRUE)
 
-\S4method{KolmogorovMinDist}{BeadLevelList,AbscontDistribution}(x, D, log = FALSE, imagesPerArray = 1, what = "G", 
+\S4method{KolmogorovMinDist}{beadLevelData,AbscontDistribution}(x, D, log = FALSE, what = "Grn", 
                   probes = NULL, arrays = NULL)
 }
 \arguments{
@@ -32,10 +32,8 @@ KolmogorovMinDist(x, D, ...)
     If \code{FALSE} only \code{log2(PM)} is used. }
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed. }
   \item{log}{ if \code{TRUE}, then the log2 intensities for each bead-type are summarized. }
-  \item{imagesPerArray}{ Specifies how many images (strips) there are per array. 
-    Normally 1 for a SAM and 1 or 2 for a BeadChip. The images (strips) from the same array 
-    will be combined so that each column in the output represents a sample. }
-  \item{what}{ character string specifying which intensities/values to summarize. }
+  \item{what}{ character string specifying which intensities/values to summarize; 
+    see \code{\link[beadarray]{getBeadData}}. }
   \item{probes}{ Specify particular probes to summarize. If left \code{NULL} then all
     the probes on the first array are used. }
   \item{arrays}{ integer (scalar or vector) specifying the strips/arrays to summarize. 
@@ -67,15 +65,16 @@ ind <- rbinom(200, size=1, prob=0.05)
 X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
 KolmogorovMinDist(X, D = Norm())
 
-## using Affymetrix-Data
+## using Affymetrix data
 data(SpikeIn)
 probes <- log2(pm(SpikeIn))
 (res <- KolmogorovMinDist(probes, Norm()))
 boxplot(res$dist)
 
-\dontrun{
-## "Not run" just because of computation time
-require(affydata)
+\donttest{
+## \donttest because of check time
+## using Affymetrix data
+library(affydata)
 data(Dilution)
 res <- KolmogorovMinDist(Dilution[,1], Norm())
 summary(res$dist)
@@ -86,14 +85,12 @@ plot(res$n, res$dist, pch = 20, main = "Kolmogorov distance vs. sample size",
 uni.n <- min(res$n):max(res$n)
 lines(uni.n, 1/(2*uni.n), col = "orange", lwd = 2)
 legend("topright", legend = "minimal possible distance", fill = "orange")
-}
 
-## using Illumina-Data
-\dontrun{
-## "Not run" just because of computation time
-data(BLData)
-res <- KolmogorovMinDist(BLData, Norm(), arrays = 1)
-res1 <- KolmogorovMinDist(BLData, log = TRUE, Norm(), arrays = 1)
+## Illumina bead level data
+library(beadarrayExampleData)
+data(exampleBLData)
+res <- KolmogorovMinDist(exampleBLData, Norm(), arrays = 1)
+res1 <- KolmogorovMinDist(exampleBLData, Norm(), log = TRUE, arrays = 1)
 summary(cbind(res$dist, res1$dist))
 boxplot(list(res$dist, res1$dist), names = c("raw", "log-raw"))
 sort(unique(res1$n))
