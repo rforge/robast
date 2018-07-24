@@ -152,8 +152,8 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
              RegSymm, Finfo, trafo, upper, maxiter, tol, warn){
         radiusCurve <- neighbor@radiusCurve
         if(is(Regressor, "AbscontDistribution")){
-            xlower <- ifelse(is.finite(q(Regressor)(0)), q(Regressor)(0), q(Regressor)(distr::TruncQuantile))
-            xupper <- ifelse(is.finite(q(Regressor)(1)), q(Regressor)(1), q(Regressor)(1 - distr::TruncQuantile))
+            xlower <- ifelse(is.finite(q.l(Regressor)(0)), q.l(Regressor)(0), q.l(Regressor)(distr::TruncQuantile))
+            xupper <- ifelse(is.finite(q.l(Regressor)(1)), q.l(Regressor)(1), q.l(Regressor)(1 - distr::TruncQuantile))
             x.vec <- seq(from = xlower, to = xupper, length = 1000)
         }else{
             if(is(Regressor, "DiscreteDistribution"))
@@ -257,14 +257,14 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
                     return(NA)
             }
         }else{
-            if(is.finite(q(Regressor)(0))){
+            if(is.finite(q.l(Regressor)(0))){
                 yleft.b <- NA
                 yleft.z <- NA
             }else{
                 yleft.b <- b.vec[1]
                 yleft.z <- z.vec[1]
             }
-            if(is.finite(q(Regressor)(1))){
+            if(is.finite(q.l(Regressor)(1))){
                 yright.b <- NA
                 yright.z <- NA
             }else{

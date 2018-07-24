@@ -76,7 +76,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
              RegSymm, Finfo, trafo, upper, maxiter, tol, warn){
         zi <- sign(as.vector(trafo))
         A <- as.matrix(zi)
-        z <- q(ErrorL2deriv)(0.5)
+        z <- q.l(ErrorL2deriv)(0.5)
         Eu <- E(ErrorL2deriv, function(x, z){abs(x - z)}, z = z)
         Ex <- E(Regressor, abs)
         b <- zi*as.vector(trafo)/(Ex*Eu)
@@ -112,7 +112,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
     function(ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm, 
              RegSymm, Finfo, trafo, upper, maxiter, tol, warn){
         K <- E(Regressor, fun = function(x){ x %*% t(x) })
-        z <- q(ErrorL2deriv)(0.5)
+        z <- q.l(ErrorL2deriv)(0.5)
         Eu <- E(ErrorL2deriv, function(x, z){abs(x - z)}, z = z)
         b <- sqrt(sum(diag(trafo %*% solve(K) %*% t(trafo))))/Eu
         
@@ -183,7 +183,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
                 E(ErrorL2deriv, abs.fctu, xx = x, A = A, a0 = a0)
             }
 
-            bmin.fct <- function(param, ErrorL2deriv, Regressor, trafo){
+            bmin.fct.z <- function(param, ErrorL2deriv, Regressor, trafo){
                 p <- nrow(trafo)
                 k <- ncol(trafo)
                 A <- matrix(param[1:(p*k)], ncol=k, nrow=p)
@@ -192,7 +192,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
                 return(E(Regressor, abs.fctx, ErrorL2deriv = ErrorL2deriv, A = A, a0 = a)/sum(diag(A %*% t(trafo))))
             }
         
-            erg <- optim(c(as.vector(trafo), numeric(nrow(trafo))), bmin.fct, method = "Nelder-Mead", 
+            erg <- optim(c(as.vector(trafo), numeric(nrow(trafo))), bmin.fct.z, method = "Nelder-Mead",
                         control=list(reltol=tol, maxit=100*maxiter), Regressor = Regressor, 
                         ErrorL2deriv = ErrorL2deriv, trafo = trafo)
             b <- 1/erg$value
@@ -251,7 +251,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
         
         erg <- optim(as.vector(trafo), bmin.fct, method = "Nelder-Mead", 
                     control=list(reltol=tol, maxit=100*maxiter), Regressor = Regressor, trafo = trafo)
-        z <- q(ErrorL2deriv)(0.5)
+        z <- q.l(ErrorL2deriv)(0.5)
         b <- 1/(erg$value*E(ErrorL2deriv, function(x, z){abs(x - z)}, z = z))
 
         p <- nrow(trafo)
@@ -372,5 +372,5 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "RealRandVariable",
         
         stop("not yet implemented")
 
-        return(list(A = A, a = a, b = b, d = 0*a, risk = Risk, info = info))
+        return(NULL) #list(A = A, a = a, b = b, d = 0*a, risk = Risk, info = info))
     })

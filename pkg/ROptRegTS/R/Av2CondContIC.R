@@ -34,12 +34,12 @@ setMethod("generateIC", signature(neighbor = "Av2CondContNeighborhood",
 
         if(!is.null(d)){
             b0 <- b/sqrt(sum(diag(trafo %*% K.inv %*% t(trafo))))
-            ICfct[[1]] <- function(x){ 
-                                ind <- (L2(x[k+1]) != z) 
-                                D <- matrix(D.vec, ncol = k)
-                                K.inv <- matrix(K.vec, ncol = k)
-                                b0*D %*% K.inv %*% x[1:k]*(sign(L2(x[k+1]) - z) + (1-ind)*d)
-                          }
+            ICfct[[1]] <- function(x){}
+                             #   ind <- (L2(x[k+1]) != z)
+                             #   D <- matrix(D.vec, ncol = k)
+                             #   K.inv <- matrix(K.vec, ncol = k)
+                             #   b0*D %*% K.inv %*% x[1:k]*(sign(L2(x[k+1]) - z) + (1-ind)*d)
+                             # }
             body(ICfct[[1]]) <- substitute(
                                     { ind <- (L2(x[k+1]) != z) 
                                       D <- matrix(D.vec, ncol = k)
@@ -49,10 +49,10 @@ setMethod("generateIC", signature(neighbor = "Av2CondContNeighborhood",
                                          K.vec = as.vector(K.inv), b0 = b0, d = d, k = k))
         }else{
             c0 <- b/(A*sqrt(sum(diag(K.inv))))
-            ICfct[[1]] <- function(x){ D <- matrix(D.vec, ncol = k)
-                                       K.inv <- matrix(K.vec, ncol = k)
-                                       A*D %*% K.inv %*% x[1:k]*(L2(x[k+1]) - z)*pmin(1, c0/abs(L2(x[k+1]) - z)) 
-                          }
+            ICfct[[1]] <- function(x){}# D <- matrix(D.vec, ncol = k)
+                                      # K.inv <- matrix(K.vec, ncol = k)
+                                      # A*D %*% K.inv %*% x[1:k]*(L2(x[k+1]) - z)*pmin(1, c0/abs(L2(x[k+1]) - z))
+                          #}
             body(ICfct[[1]]) <- substitute({ D <- matrix(D.vec, ncol = k)
                                              K.inv <- matrix(K.vec, ncol = k)
                                              A*D %*% K.inv %*% x[1:k]*(L2(x[k+1]) - z)*pmin(1, c0/abs(L2(x[k+1]) - z)) },

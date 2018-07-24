@@ -26,11 +26,12 @@ setMethod("checkIC", signature(IC = "CondIC", L2Fam = "missing"),
     function(IC, out = TRUE){ 
         L2Fam <- eval(IC@CallL2Fam)
         K <- L2Fam@RegDistr
+        TruncQuantile <- getdistrOption("TruncQuantile")
         if(is(K, "DiscreteDistribution") || is(K, "DiscreteMVDistribution"))
             cond <- as.matrix(support(K))
         else{
             if(is(K, "AbscontDistribution"))
-                cond <- as.matrix(seq(from = q(K)(TruncQuantile), to = q(K)(1-TruncQuantile),
+                cond <- as.matrix(seq(from = q.l(K)(TruncQuantile), to = q.l(K)(1-TruncQuantile),
                             length = 100))
             else
                 cond <- as.matrix(r(K)(1000))
@@ -74,11 +75,12 @@ setMethod("checkIC", signature(IC = "CondIC", L2Fam = "missing"),
 setMethod("checkIC", signature(IC = "CondIC", L2Fam = "L2RegTypeFamily"), 
     function(IC, L2Fam, out = TRUE){ 
         K <- L2Fam@RegDistr
+        TruncQuantile <- getdistrOption("TruncQuantile")
         if(is(K, "DiscreteDistribution") || is(K, "DiscreteMVDistribution"))
             cond <- as.matrix(support(K))
         else{
             if(is(K, "AbscontDistribution"))
-                cond <- as.matrix(seq(from = q(K)(TruncQuantile), to = q(K)(1-TruncQuantile),
+                cond <- as.matrix(seq(from = q.l(K)(TruncQuantile), to = q.l(K)(1-TruncQuantile),
                             length = 100))
             else
                 cond <- as.matrix(r(K)(1000))

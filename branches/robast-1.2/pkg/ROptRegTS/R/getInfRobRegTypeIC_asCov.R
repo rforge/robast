@@ -9,9 +9,9 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
             A <- trafo %*% solve(Finfo)
-            b <- max(abs(as.vector(A)))*max(q(ErrorL2deriv)(1),abs(q(ErrorL2deriv)(0)))
+            b <- max(abs(as.vector(A)))*max(q.l(ErrorL2deriv)(1),abs(q.l(ErrorL2deriv)(0)))
             if(is(Regressor, "UnivariateDistribution"))
-                b <- b*max(abs(q(Regressor)(1)), abs(q(Regressor)(0)))
+                b <- b*max(abs(q.l(Regressor)(1)), abs(q.l(Regressor)(0)))
                 
             Risk <- list(asCov = A %*% t(trafo), asBias = b)
 
@@ -25,8 +25,8 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
             A <- trafo %*% solve(Finfo)
-            b <- abs(as.vector(A))*(q(ErrorL2deriv)(1) - q(ErrorL2deriv)(0))
-            b <- b*(abs(q(Regressor)(1)) + abs(q(Regressor)(0)))
+            b <- abs(as.vector(A))*(q.l(ErrorL2deriv)(1) - q.l(ErrorL2deriv)(0))
+            b <- b*(abs(q.l(Regressor)(1)) + abs(q.l(Regressor)(0)))
             Risk <- list(asCov = A %*% t(trafo), asBias = b)
 
             return(list(A = A, a = -b/2, b = b, d = NULL, risk = Risk, info = info))
@@ -39,9 +39,9 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
             A <- trafo %*% solve(Finfo)
-            b <- max(abs(as.vector(A)))*max(q(ErrorL2deriv)(1),abs(q(ErrorL2deriv)(0)))
+            b <- max(abs(as.vector(A)))*max(q.l(ErrorL2deriv)(1),abs(q.l(ErrorL2deriv)(0)))
             if(is(Regressor, "UnivariateDistribution"))
-                b <- b*max(abs(q(Regressor)(1)), abs(q(Regressor)(0)))
+                b <- b*max(abs(q.l(Regressor)(1)), abs(q.l(Regressor)(0)))
             b.fct <- function(x){ b }
             body(b.fct) <- substitute({ b }, list(b = b))
             bfun <- RealRandVariable(Map = list(b.fct), 
@@ -58,9 +58,9 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
             A <- trafo %*% solve(Finfo)
-            b <- abs(as.vector(A))*(q(ErrorL2deriv)(1) - q(ErrorL2deriv)(0))
+            b <- abs(as.vector(A))*(q.l(ErrorL2deriv)(1) - q.l(ErrorL2deriv)(0))
             if(is(Regressor, "UnivariateDistribution"))
-                b <- b*(abs(q(Regressor)(1)) + abs(q(Regressor)(0)))
+                b <- b*(abs(q.l(Regressor)(1)) + abs(q.l(Regressor)(0)))
             b.fct <- function(x){ b }
             body(b.fct) <- substitute({ b }, list(b = b))
             bfun <- RealRandVariable(Map = list(b.fct), 
@@ -81,9 +81,9 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
             A <- trafo %*% solve(Finfo)
-            b <- max(abs(as.vector(A)))*max(q(ErrorL2deriv)(1),abs(q(ErrorL2deriv)(0)))
+            b <- max(abs(as.vector(A)))*max(q.l(ErrorL2deriv)(1),abs(q.l(ErrorL2deriv)(0)))
             if(is(Regressor, "UnivariateDistribution"))
-                b <- b*max(abs(q(Regressor)(1)), abs(q(Regressor)(0)))
+                b <- b*max(abs(q.l(Regressor)(1)), abs(q.l(Regressor)(0)))
             Risk <- list(asCov = A %*% t(trafo), asBias = b)
             a.fct <- function(x){numeric(k)}
             body(a.fct) <- substitute({numeric(k)}, list(k = nrow(trafo)))
@@ -101,9 +101,9 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
             A <- trafo %*% solve(Finfo)
-            b <- max(abs(as.vector(A)))*max(q(ErrorL2deriv)(1),abs(q(ErrorL2deriv)(0)))
+            b <- max(abs(as.vector(A)))*max(q.l(ErrorL2deriv)(1),abs(q.l(ErrorL2deriv)(0)))
             if(is(Regressor, "UnivariateDistribution"))
-                b <- b*max(abs(q(Regressor)(1)), abs(q(Regressor)(0)))
+                b <- b*max(abs(q.l(Regressor)(1)), abs(q.l(Regressor)(0)))
             Risk <- list(asCov = A %*% t(trafo), asBias = b)
 
             return(list(A = 1, z = 0, b = b, d = NULL, risk = Risk, info = info))
@@ -116,9 +116,9 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
             A <- trafo %*% solve(Finfo)
-            b <- max(abs(as.vector(A)))*abs(q(ErrorL2deriv)(1) - q(ErrorL2deriv)(0))
+            b <- max(abs(as.vector(A)))*abs(q.l(ErrorL2deriv)(1) - q.l(ErrorL2deriv)(0))
             if(is(Regressor, "UnivariateDistribution"))
-                b <- b*(q(Regressor)(1) - q(Regressor)(0))
+                b <- b*(q.l(Regressor)(1) - q.l(Regressor)(0))
             Risk <- list(asCov = A %*% t(trafo), asBias = b)
             a.fct <- function(x){-b/2}
             body(a.fct) <- substitute({-b/2}, list(b = b))
@@ -135,8 +135,8 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "RealRandVariable",
             A <- trafo %*% solve(Finfo)
 
             if(is(ErrorDistr, "UnivariateDistribution")){
-                lower <- ifelse(is.finite(q(ErrorDistr)(0)), q(ErrorDistr)(1e-8), q(ErrorDistr)(0))
-                upper <- ifelse(is.finite(q(ErrorDistr)(1)), q(ErrorDistr)(1-1e-8), q(ErrorDistr)(1))
+                lower <- ifelse(is.finite(q.l(ErrorDistr)(0)), q.l(ErrorDistr)(1e-8), q.l(ErrorDistr)(0))
+                upper <- ifelse(is.finite(q.l(ErrorDistr)(1)), q.l(ErrorDistr)(1-1e-8), q.l(ErrorDistr)(1))
                 x <- seq(from = lower, to = upper, length = 1e4)
                 x <- x[x!=0] # problems with NaN=log(0)!
                 b <- evalRandVar(ErrorL2deriv, as.matrix(x))^2
@@ -158,8 +158,8 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "RealRandVariable",
             A <- trafo %*% solve(Finfo)
 
             if(is(ErrorDistr, "UnivariateDistribution")){
-                lower <- ifelse(is.finite(q(ErrorDistr)(0)), q(ErrorDistr)(1e-8), q(ErrorDistr)(0))
-                upper <- ifelse(is.finite(q(ErrorDistr)(1)), q(ErrorDistr)(1-1e-8), q(ErrorDistr)(1))
+                lower <- ifelse(is.finite(q.l(ErrorDistr)(0)), q.l(ErrorDistr)(1e-8), q.l(ErrorDistr)(0))
+                upper <- ifelse(is.finite(q.l(ErrorDistr)(1)), q.l(ErrorDistr)(1-1e-8), q.l(ErrorDistr)(1))
                 x <- seq(from = lower, to = upper, length = 1e4)
                 x <- x[x!=0] # problems with NaN=log(0)!
                 b <- evalRandVar(ErrorL2deriv, as.matrix(x))^2

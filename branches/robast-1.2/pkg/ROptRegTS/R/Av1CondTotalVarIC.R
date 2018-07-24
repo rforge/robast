@@ -32,13 +32,13 @@ setMethod("generateIC", signature(neighbor = "Av1CondTotalVarNeighborhood",
         L2 <- L2Fam@ErrorL2deriv[[1]]
         k <- dimension(img(L2Fam@RegDistr))
         if(!is.null(d)){
-            ICfct[[1]] <- function(x){ ind1 <- (L2(x[k+1]) > 0); ind2 <- (L2(x[k+1]) < 0)
-                                       A <- matrix(A.vec, ncol = k)
-                                       Y <- as.vector(A %*% x[1:k])
-                                       v <- sqrt(sum(Y^2))
-                                       ax <- a(x[1:k])
-                                       Y/v*((ax+b)*ind1 + ax*ind2)
-                          }
+            ICfct[[1]] <- function(x){}# ind1 <- (L2(x[k+1]) > 0); ind2 <- (L2(x[k+1]) < 0)
+                                       # A <- matrix(A.vec, ncol = k)
+                                       # Y <- as.vector(A %*% x[1:k])
+                                       # v <- sqrt(sum(Y^2))
+                                       # ax <- a(x[1:k])
+                                       # Y/v*((ax+b)*ind1 + ax*ind2)
+                         # }
             body(ICfct[[1]]) <- substitute({ ind1 <- (L2(x[k+1]) > 0); ind2 <- (L2(x[k+1]) < 0)
                                              A <- matrix(A.vec, ncol = k)
                                              Y <- as.vector(A %*% x[1:k])
@@ -49,13 +49,13 @@ setMethod("generateIC", signature(neighbor = "Av1CondTotalVarNeighborhood",
                                                 b = b, k = k))
         }else{
             if(b == Inf){
-                ICfct[[1]]<- function(x){ A <- matrix(A.vec, ncol = k)
-                                          v <- as.vector(sqrt(sum((A %*% x[1:k])^2)))
-                                          ax <- a(x[1:k])
-                                          if(ax == -Inf) 
-                                              as.vector(A %*% x[1:k])*L2(x[k+1])
-                                          else 
-                                              as.vector(A %*% x[1:k])*max(a(x[1:k])/v, L2(x[k+1])) }
+                ICfct[[1]]<- function(x){}# A <- matrix(A.vec, ncol = k)
+                                          # v <- as.vector(sqrt(sum((A %*% x[1:k])^2)))
+                                          # ax <- a(x[1:k])
+                                          # if(ax == -Inf)
+                                          #     as.vector(A %*% x[1:k])*L2(x[k+1])
+                                          # else
+                                          #     as.vector(A %*% x[1:k])*max(a(x[1:k])/v, L2(x[k+1])) }
                 body(ICfct[[1]]) <- substitute({ A <- matrix(A.vec, ncol = k)
                                                  v <- as.vector(sqrt(sum((A %*% x[1:k])^2)))
                                                  ax <- a(x[1:k])
@@ -66,10 +66,10 @@ setMethod("generateIC", signature(neighbor = "Av1CondTotalVarNeighborhood",
                                                list(A.vec = as.vector(A), L2 = L2@Map[[1]], a = a@Map[[1]], 
                                                     b = b, k = k))
             }else{
-                ICfct[[1]] <- function(x){ A <- matrix(A.vec, ncol = k)
-                                           v <- as.vector(sqrt(sum((A %*% x[1:k])^2)))
-                                           ax <- a(x[1:k])
-                                           as.vector(A %*% x[1:k])*min(max(a(x[1:k])/v, L2(x[k+1])), (ax+b)/v) }
+                ICfct[[1]] <- function(x){}# A <- matrix(A.vec, ncol = k)
+                                           # v <- as.vector(sqrt(sum((A %*% x[1:k])^2)))
+                                           # ax <- a(x[1:k])
+                                           # as.vector(A %*% x[1:k])*min(max(a(x[1:k])/v, L2(x[k+1])), (ax+b)/v) }
                 body(ICfct[[1]]) <- substitute({ A <- matrix(A.vec, ncol = k)
                                                  v <- as.vector(sqrt(sum((A %*% x[1:k])^2)))
                                                  ax <- a(x[1:k])

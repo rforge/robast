@@ -38,17 +38,17 @@ setMethod("generateIC", signature(neighbor = "CondContNeighborhood",
         k <- dimension(img(L2Fam@RegDistr))
         if(nrvalues == 1){
             if(!is.null(d)){
-                ICfct[[1]] <- function(x){ 
-                                    ind <- (Y(x) != 0) 
-                                    b(x[1:k])*(ind*Y(x)/(ind*absY(x) + (1-ind)) + zi*(1-ind)*d)
-                              }
+                ICfct[[1]] <- function(x){}
+                              #      ind <- (Y(x) != 0)
+                              #      b(x[1:k])*(ind*Y(x)/(ind*absY(x) + (1-ind)) + zi*(1-ind)*d)
+                              #}
                 body(ICfct[[1]]) <- substitute(
                                         { ind <- (Y(x) != 0) 
                                           b(x[1:k])*(ind*Y(x)/(ind*absY(x) + (1-ind)) + zi*(1-ind)*d) },
                                         list(Y = Y@Map[[1]], absY = abs(Y)@Map[[1]], b = b@Map[[1]], d = d, 
                                              zi = sign(L2Fam@param@trafo), k = k))
             }else{
-                ICfct[[1]] <- function(x){ Y(x)*pmin(1, b(x[1:k])/absY(x)) }
+                ICfct[[1]] <- function(x){}# Y(x)*pmin(1, b(x[1:k])/absY(x)) }
                 body(ICfct[[1]]) <- substitute({ Y(x)*pmin(1, b(x[1:k])/absY(x)) },
                                                  list(Y = Y@Map[[1]], absY = abs(Y)@Map[[1]], 
                                                       b = b@Map[[1]], k = k))
@@ -57,14 +57,14 @@ setMethod("generateIC", signature(neighbor = "CondContNeighborhood",
             absY <- sqrt(Y %*% Y)
             if(!is.null(d))
                 for(i in 1:nrvalues){
-                    ICfct[[i]] <- function(x){ ind <- (Yi(x) != 0) ; ind*b(x[1:k])*Yi(x)/absY(x) + (1-ind)*d }
+                    ICfct[[i]] <- function(x){}# ind <- (Yi(x) != 0) ; ind*b(x[1:k])*Yi(x)/absY(x) + (1-ind)*d }
                     body(ICfct[[i]]) <- substitute({ ind <- (Yi(x) != 0) ; ind*b(x[1:k])*Yi(x)/absY(x) + (1-ind)*d },
                                                  list(Yi = Y@Map[[i]], absY = absY@Map[[1]], b = b@Map[[1]], 
                                                       d = d[i], k = k))
                 }
             else
                 for(i in 1:nrvalues){
-                    ICfct[[i]] <- function(x){ Yi(x)*pmin(1, b(x[1:k])/absY(x)) }
+                    ICfct[[i]] <- function(x){}# Yi(x)*pmin(1, b(x[1:k])/absY(x)) }
                     body(ICfct[[i]]) <- substitute({ Yi(x)*pmin(1, b(x[1:k])/absY(x)) },
                                                  list(Yi = Y@Map[[i]], absY = absY@Map[[1]], b = b@Map[[1]], k = k))
                 }
