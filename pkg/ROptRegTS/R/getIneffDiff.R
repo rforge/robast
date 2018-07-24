@@ -22,13 +22,12 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                 ineffUp <- res$b^2/upRisk
             else
                 ineffUp <- (sum(diag(res$A %*% t(trafo))) - res$b^2*(radius^2-upRad^2))/upRisk
-## changed: shakey...            assign("ineff", ineffUp, envir = sys.frame(which = -4))
-#            return(ineffUp - ineffLo)
-        return(c(ineff=ineffUp,ineffDiff=ineffUp - ineffLo))
-        }else{
+            assign("ineff", ineffUp, envir = sys.frame(which = -4))
             if(is(L2Fam@RegDistr, "MultivariateDistribution"))
                 cat("current radius:\t", radius, "\tMSE-inefficiency difference:\t", ineffUp - ineffLo, "\n")
 
+            return(ineffUp - ineffLo)
+        }else{
             if(is(L2Fam@ErrorDistr, "UnivariateDistribution")){
                 if((length(L2Fam@ErrorL2deriv) == 1) 
                    & is(L2Fam@ErrorL2deriv[[1]], "RealRandVariable")){
@@ -65,11 +64,11 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                     ineffUp <- res$b^2/upRisk
                 else
                     ineffUp <- (sum(diag(res$A%*%t(trafo))) - res$b^2*(radius^2-upRad^2))/upRisk
-     ## changed: shakey  assign("ineff", ineffUp, envir = sys.frame(which = -4))
-                cat("current radius:\t", radius, "\tMSE-inefficiency difference:\t", ineffUp - ineffLo, "\n")
+#                assign("ineff", ineffUp, envir = sys.frame(which = -4))
 
-     ##           return(ineffUp - ineffLo)
-                return(c(ineff=ineffUp,ineffDiff=ineffUp - ineffLo))
+                cat("current radius:\t", radius, "\tMSE-inefficiency difference:\t", ineffUp - ineffLo, "\n")
+                return(c(ineff=ineffUp, ineffDiff=ineffUp-ineffLo))
+#                return(ineffUp - ineffLo)
             }else{
                 stop("not yet implemented")
             }
@@ -97,10 +96,11 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                 ineffUp <- res$b^2/upRisk
             else
                 ineffUp <- (res$A*sum(diag(t(trafo) %*% K.inv)) - res$b^2*(radius^2-upRad^2))/upRisk
-            assign("ineff", ineffUp, envir = sys.frame(which = -4))
+#            assign("ineff", ineffUp, envir = sys.frame(which = -4))
 #            cat("current radius:\t", radius, "\tMSE-inefficiency difference:\t", ineffUp - ineffLo, "\n")
 
-            return(ineffUp - ineffLo)
+                return(c(ineff=ineffUp, ineffDiff=ineffUp-ineffLo))
+#            return(ineffUp - ineffLo)
         }else{
             stop("not yet implemented")
         }
