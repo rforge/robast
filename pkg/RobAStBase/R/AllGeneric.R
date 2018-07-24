@@ -193,6 +193,9 @@ if(!isGeneric("ICList")){
 if(!isGeneric("pICList")){
     setGeneric("pICList", function(object) standardGeneric("pICList"))
 }
+if(!isGeneric("robestCall")){
+    setGeneric("robestCall", function(object) standardGeneric("robestCall"))
+}
 if(!isGeneric("Mroot")){
     setGeneric("Mroot", function(object) standardGeneric("Mroot"))
 }

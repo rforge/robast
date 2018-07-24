@@ -2,6 +2,7 @@
 ## Functions and methods for "kStepEstimate" classes and subclasses
 ###############################################################################
 
+setMethod("robestCall", "kStepEstimate", function(object) object@robestCall)
 setMethod("pICList", "kStepEstimate", function(object) object@pICList)
 setMethod("ICList", "kStepEstimate", function(object) object@ICList)
 setMethod("start", "kStepEstimate", function(x) x@start)

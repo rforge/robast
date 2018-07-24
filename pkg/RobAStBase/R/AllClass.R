@@ -214,6 +214,7 @@ setClass("TotalVarIC",
             })
 
 ## ALEstimate
+setClassUnion("OptionalCall", c("call","NULL"))
 setClassUnion("OptionalInfluenceCurve", c("InfluenceCurve", "NULL"))
 setClassUnion("StartClass", c("numeric", "matrix", "function", "Estimate"))
 setClass("pICList",
@@ -257,7 +258,8 @@ setClass("kStepEstimate",
                         startval = "matrix",
                         ustartval = "matrix",
                         ksteps = "OptionalMatrix",
-                        uksteps = "OptionalMatrix"),
+                        uksteps = "OptionalMatrix",
+                        robestCall = "OptionalCall"),
          prototype(name = "Asymptotically linear estimate",
                    estimate = numeric(0),
                    samplesize = numeric(0),
@@ -281,7 +283,8 @@ setClass("kStepEstimate",
                    Infos = matrix(c(character(0),character(0)), ncol=2,
                                   dimnames=list(character(0), c("method", "message"))),
                    untransformed.estimate = NULL,
-                   untransformed.asvar = NULL),
+                   untransformed.asvar = NULL,
+                   robestCall = NULL),
          contains = "ALEstimate")
 setClass("MEstimate", 
          representation(Mroot = "numeric"),

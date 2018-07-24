@@ -27,6 +27,12 @@ user-visible CHANGES:
 + in kStepEstimator, withCheck is set to FALSE when getRiskIC is called, and makeIC is only called just 
   before the last update, and, if useLast == TRUE for the last update (of course, only if withMakeIC ==TRUE)
 
+Return value of "roptest"
++ the return value of "roptest", an object of class "kStepEstimate" has a slot "estimate.call" which
+  contains the (matched) call to "roptest"; internally "roptest" calls "robest"; the call to "robest"
+  may be of interest, too, so we have a new slot "robestCall" of class "OptionalCall", ie a call  
+  or NULL (default); it can be accessed via function robestCall() 
+
 bug fix: 
 + slot modifyIC was set to a wrong value in makeIC / former (potential) move was overridden 
 + in .preparePanelFirstLast if condition with.automatic.grid was (possibly) vector valued 

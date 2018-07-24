@@ -28,7 +28,7 @@ exportClasses("RobAStControl", "RobWeight", "BoundedWeight",
 exportClasses("ALEstimate", "kStepEstimate", "MEstimate")
 exportClasses("cutoff")
 exportClasses("interpolRisk", "OMSRRisk","MBRRisk","RMXRRisk")
-exportClasses("StartClass", "pICList", "OptionalpICList")
+exportClasses("StartClass", "pICList", "OptionalpICList", "OptionalCall")
 exportMethods("show", 
               "plot")
 exportMethods("type", "radius", "radius<-")
@@ -51,7 +51,8 @@ exportMethods("Curve",
               "neighborRadius", "neighborRadius<-", 
               "clipLo", "clipLo<-", 
               "clipUp", "clipUp<-",
-              "optIC", "start", "startval", "pICList") 
+              "optIC", "start", "startval", "pICList", 
+			  "robestCall") 
 exportMethods("locMEstimator")
 exportMethods("weight", "weight<-", 
               "getweight", 

@@ -2,6 +2,26 @@
 ## k-step estimator
 ###############################################################################
 
+.fix.scalename <- function(obj, scalename, estname){
+        hasdim <- !is.null(dim(obj))
+        n.obj <- if(hasdim) rownames(obj) else names(obj)
+        if(!is.na(scalename)) if(scalename!="") {
+           if((! (scalename %in% estname)) && "scale" %in% estname)
+                estname[estname=="scale"] <- scalename
+
+           if((! (scalename%in% n.obj)) && "scale" %in% n.obj){
+              n.obj[n.obj=="scale"] <- scalename
+              if(hasdim) rownames(obj) <- n.obj else names(obj) <- n.obj
+           }else{
+              if(length(n.obj)==0) n.obj <- rep("", length(estname))
+              if(all(n.obj=="")) {
+              if(hasdim) rownames(obj) <- estname else names(obj) <- estname
+              }
+           }
+        }
+        return(obj)
+}
+
 setMethod("neighborRadius","ANY",function(object)NA)
 
 ### no dispatch on top layer -> keep product structure of dependence
@@ -90,6 +110,12 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         start.val <- matrix(theta,ncol=1)
         rownames(u.start.val) <- u.est.names
         rownames(start.val) <- est.names
+#        print(theta)
+        theta <- .fix.scalename(theta, sclname, est.names)
+#        print(theta)
+#        print(u.theta)
+        u.theta <- .fix.scalename(u.theta, sclname, u.est.names)
+#        print(u.theta)
 
 ### shall intermediate IC's / pIC's be stored?
         pICList <- if(withPICList) vector("list", steps) else NULL
@@ -167,11 +193,14 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                                u.theta[sclname] <- scl * exp(correct[sclname]/scl)
                      }else u.theta <- u.theta + correct
 
-                     theta <- (tf$fct(u.theta))$fval
+                     theta <- (tf$fct(u.theta[idx]))$fval
                 }else{
 #                     print("HU2!")
                      correct <- rowMeans(evalRandVar(IC.c, x0), na.rm = na.rm )
                      iM <- is.matrix(theta)
+#                     print(sclname)
+#                     print(names(theta))
+#                     print(str(theta))
                      names(correct) <- if(iM) rownames(theta) else names(theta)
                      if(logtrf){
                         scl <- if(iM) theta[sclname,1] else theta[sclname]
@@ -255,6 +284,8 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                                  withPostModif = (steps>i) | useLast,
                                  with.u.var = i==steps, oldmodifIC = modif.old)
                uksteps[,i] <- u.theta <- upd$u.theta
+#               print(str(upd$theta))
+#               print(nrow(ksteps))
                ksteps[,i] <- theta <- upd$theta
                if(withICList)
                   ICList[[i]] <- new("InfluenceCurve",

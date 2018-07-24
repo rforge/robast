@@ -1,5 +1,6 @@
 \name{kStepEstimate-class}
 \docType{class}
+\alias{OptionalCall-class}
 \alias{kStepEstimate-class}
 \alias{steps}
 \alias{steps,kStepEstimate-method}
@@ -11,6 +12,8 @@
 \alias{ICList,kStepEstimate-method}
 \alias{pICList}
 \alias{pICList,kStepEstimate-method}
+\alias{robestCall}
+\alias{robestCall,kStepEstimate-method}
 \alias{start,kStepEstimate-method}
 \alias{startval}
 \alias{startval,kStepEstimate-method}
@@ -82,6 +85,9 @@
     \item{\code{uksteps}}{Object of class \code{"OptionalMatrix"}:
     the intermediate estimates (in \eqn{k}-space) for the parameter;
     only filled when called from \code{kStepEstimator}. }
+    \item{\code{robestcall}}{Object of class \code{"OptionalCall"}, i.e.,
+     a \code{call} or \code{NULL}: only filled when called from \code{roptest}
+     in package \pkg{ROptEst}.}
   }
 }
 \section{Extends}{
@@ -119,6 +125,8 @@ Class \code{"Estimate"}, by class \code{"ALEstimate"}
 
     \item{pICList}{\code{signature(object = "kStepEstimate")}:
       accessor function for slot \code{pICList}. }
+    \item{robestCall}{\code{signature(object = "kStepEstimate")}:
+      accessor function for slot \code{robestCall}. }
 
     \item{show}{\code{signature(object = "kStepEstimate")}: a show method; }
   }
