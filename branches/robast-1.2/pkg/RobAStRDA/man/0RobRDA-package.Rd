@@ -31,14 +31,14 @@ See also mail exchange P.Ruckdeschel - U.Ligges on R-devel---
 \details{
 \tabular{ll}{
 Package: \tab RobAStRDA \cr
-Version: \tab 1.1.0 \cr
-Date: \tab 2018-07-23 \cr
+Version: \tab 1.2.0 \cr
+Date: \tab 2018-07-25 \cr
 Depends: \tab R (>= 2.3.0) \cr
 LazyData: \tab yes \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-VCS/SVNRevision: \tab 1040 \cr
+VCS/SVNRevision: \tab 1058 \cr
 }
 }
 
