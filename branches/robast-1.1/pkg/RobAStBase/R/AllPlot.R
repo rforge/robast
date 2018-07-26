@@ -319,10 +319,11 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 setMethod("plot", signature(x = "IC",y = "numeric"),
           function(x, y, ...,
           cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-          pch.pts = 1,
+          pch.pts = 19,
           cex.npts = 1, cex.npts.fun = NULL, col.npts = par("col"),
-          pch.npts = 2,
-          jitter.fac = 1, with.lab = FALSE,
+          pch.npts = 20,
+          jitter.fac = 1, with.lab = FALSE, cex.lbs = 1, adj.lbs = c(0,0),
+          col.lbs = col.pts,
           lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
           which.lbs = NULL, which.Order  = NULL, which.nonlbs = NULL,
           attr.pre = FALSE, return.Order = FALSE){
@@ -330,7 +331,10 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
         args0 <- list(x = x, y = y, cex.pts = cex.pts, cex.pts.fun = cex.pts.fun,
              col.pts = col.pts, pch.pts = pch.pts, cex.npts = cex.npts,
              cex.npts.fun = cex.npts.fun, col.npts = col.npts, pch.npts = pch.npts,
-             jitter.fac = jitter.fac, with.lab = with.lab, lab.pts = lab.pts,
+             jitter.fac = jitter.fac, with.lab = with.lab,
+             cex.lbs = cex.lbs, adj.lbs = adj.lbs,
+             col.lbs = if(!missing(col.lbs)) col.lbs else if(!missing(col.pts)) col.pts else par("col"),
+             lab.pts = lab.pts,
              lab.font = lab.font, alpha.trsp = alpha.trsp,
              which.lbs = which.lbs, which.Order  = which.Order,
              which.nonlbs = which.nonlbs, attr.pre = attr.pre,
@@ -341,6 +345,17 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
         plotInfo <- list(call = mc, dots=dots, args=args0)
 
     n <- if(!is.null(dim(y))) nrow(y) else length(y)
+
+    L2Fam <- eval(x@CallL2Fam)
+    trafO <- trafo(L2Fam@param)
+    dims0 <- length(.getToDraw(nrow(trafO), trafO, L2Fam, eval(dots$to.draw.arg)))
+
+    if(missing(adj.lbs)) adj.lbs <- c(0,0)
+    if(!is.matrix(adj.lbs) ||
+          (is.matrix(adj.lbs)&&!all.equal(dim(adj.lbs),c(2,dims0)))){
+          adj.lbs <- matrix(rep(adj.lbs, length.out= dims0*2),nrow=2,ncol=dims0)
+    }
+
     if(attr.pre){
        if(missing(pch.pts)) pch.pts <- 1
        if(!length(pch.pts)==n)
@@ -351,6 +366,14 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
        if(missing(cex.pts)) cex.pts <- 1
        if(!length(cex.pts)==n)
           cex.pts <- rep(cex.pts, length.out= n)
+       if(missing(cex.lbs)) cex.lbs <- 1
+       if(!is.matrix(cex.lbs) ||
+          (is.matrix(cex.lbs)&&!all.equal(dim(cex.lbs),c(n,dims0)))){
+          cex.lbs <- matrix(rep(cex.lbs, length.out= n*dims0),nrow=n,ncol=dims0)
+       }
+       if(missing(col.lbs)) col.lbs <- col.pts
+       if(!length(col.lbs)==n)
+          col.lbs <- rep(col.lbs, length.out= n)
        lab.pts <- if(is.null(lab.pts)) paste(1:n) else rep(lab.pts,length.out=n)
     }
 
@@ -380,7 +403,7 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
 
     i.d <- sel$ind
     i0.d <- sel$ind1
-    n <- length(i.d)
+    n.s <- length(i.d)
 
     i.d.ns <- sel$ind.ns
     n.ns <- length(i.d.ns)
@@ -393,17 +416,19 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
        cex.npts <- cex.pts[sel$ind.ns]
        cex.pts <- cex.pts[sel$ind]
        lab.pts <- lab.pts[sel$ind]
+       cex.lbs <-  cex.lbs[sel$ind,]
+       col.lbs <-  col.lbs[sel$ind]
     }else{
        if(missing(pch.pts)) pch.pts <- 1
-       if(!length(pch.pts)==n)
-          pch.pts <- rep(pch.pts, length.out= n)
+       if(!length(pch.pts)==n.s)
+          pch.pts <- rep(pch.pts, length.out= n.s)
        if(missing(col.pts)) col.pts <- par("col")
-       if(!length(col.pts)==n)
-          col.pts <- rep(col.pts, length.out= n)
+       if(!length(col.pts)==n.s)
+          col.pts <- rep(col.pts, length.out= n.s)
        if(missing(cex.pts)) cex.pts <- 1
-       if(!length(cex.pts)==n)
-          cex.pts <- rep(cex.pts, length.out= n)
-       lab.pts <- if(is.null(lab.pts)) paste(1:n) else rep(lab.pts,length.out=n)
+       if(!length(cex.pts)==n.s)
+          cex.pts <- rep(cex.pts, length.out= n.s)
+       lab.pts <- if(is.null(lab.pts)) paste(1:n.s) else rep(lab.pts,length.out=n.s)
 
        if(missing(pch.npts)) pch.npts <- 1
        if(!length(pch.npts)==n.ns)
@@ -414,6 +439,13 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
        if(missing(cex.npts)) cex.npts <- 1
        if(!length(cex.npts)==n.ns)
           cex.npts <- rep(cex.npts, length.out= n.ns)
+       if(!is.matrix(cex.lbs) ||
+          (is.matrix(cex.lbs)&&!all.equal(dim(cex.lbs),c(n.s,dims0)))){
+          cex.lbs <- matrix(rep(cex.lbs, length.out= n.s*dims0),nrow=n.s,ncol=dims0)
+       }
+       if(missing(col.lbs)) col.lbs <- col.pts
+       if(!length(col.lbs)==n.s)
+          col.lbs <- rep(col.lbs, length.out= n.s)
     }
 
 
@@ -473,10 +505,10 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
                         col = col.pts, pch = pch0), dwo0))
 
             if(with.lab0){
-               text(x = y0s, y = ICy, labels = lab.pts0,
-                    cex = cex.l/2, col = col0)
-               pI$doLabs[[i]] <- list(x = y0s, y = ICy, labels = lab.pts0,
-                    cex = cex.l/2, col = col0)
+               text(x = y0s, y = ICy, adj=adj.lb0[,i], labels = lab.pts0,
+                    cex = cex.lb0[,i], col = col.lb0)
+               pI$doLabs[[i]] <- list(x = y0s, y = ICy, adj=adj.lb0[,i],
+                    labels = lab.pts0, cex = cex.lb0[,i], col = col.lb0)
             }
         }
 
@@ -512,7 +544,8 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
                 with.lab0 = with.lab, lab.pts0 = lab.pts,
                 al0 = alpha.trsp, jitter.fac0 = jitter.fac,
                 cexfun=cex.pts.fun, cexnfun=cex.npts.fun,
-                trEnv0 = trEnv
+                trEnv0 = trEnv, cex.lb0 = cex.lbs, adj.lb0 = adj.lbs,
+                col.lb0=col.lbs
                 ))
 
   assign("plotInfo", plotInfo, envir = trEnv)
@@ -525,4 +558,5 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
                     return(plotInfo[whichRet])}
   return(invisible(plotInfo))
 })
+
 

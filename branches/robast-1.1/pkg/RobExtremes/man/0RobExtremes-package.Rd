@@ -6,21 +6,41 @@
 RobExtremes -- Optimally Robust Estimation for Extreme Value Distributions
 }
 \description{
-\pkg{RobExtremes} provides infrastructure for optimally robust estimation
-for extreme value distributions, extending packages
-\pkg{distr}, \pkg{distrEx}, \pkg{distrMod}, \pkg{robustbase},
-\pkg{RobAStBase}, and \pkg{ROptEst}. Importing from packages \pkg{actuar},
+\pkg{RobExtremes} provides infrastructure for speeded-up optimally robust
+estimation (i.e., MBRE, OMSE, RMXE) for extreme value distributions,
+extending packages \pkg{distr}, \pkg{distrEx}, \pkg{distrMod},
+\pkg{robustbase}, \pkg{RobAStBase}, and \pkg{ROptEst}.}
+
+\section{Distributions}{
+
+Importing from packages \pkg{actuar},
 \pkg{evd}, it provides S4 classes and methods for the
 \itemize{\item Gumbel distribution
          \item Generalized Extreme Value distribution (GEVD)
          \item Generalized Pareto distribution (GPD)
          \item Pareto distribution}
-together with particular methods for expectations (as in package \pkg{distrEx})
----with particular integrators for GPD and GEVD---, variances, median,
-IQR, skewness, kurtosis. In addition, extending estimators \code{Sn} and \code{Qn}
-from package \pkg{robustbase}, we provide functionals for Sn and Qn. A new
+\cr
+}
+\section{Functionals for Distributions}{
+
+These distributions come together with particular methods for expectations.
+I.e., a functional E() as in package \pkg{distrEx}, which as first argument
+takes the distribution, and, optionally, can take as second argument
+a function which then is used as integrand. These particular methods are
+available for the GPD, Pareto, Gamma, Weibull, and GEV disdribution and use
+integration on the quantile scale, i.e.,
+\deqn{\mathop{E}[X]=\int_0^1 q^X(s)\,ds}{E[X] = integral_0^1 q^X(s) ds}
+where \eqn{q^X}{q^X} is the quantile function of X.
+In addition, where they exist, we provide closed from expressions for
+variances, median, IQR, skewness, kurtosis. \cr
+
+In addition, extending estimators \code{Sn} and \code{Qn} from package
+\pkg{robustbase}, we provide functionals for Sn and Qn. A new
 asymmetric version of the \code{mad}, \code{kMAD} gives yet another robust
 scale estimator (and functional). \cr
+}
+
+\section{Models and Estimators}{
 
 As to models, we provide the
 \itemize{
@@ -32,8 +52,51 @@ starting estimators.
 optimally robust estimators, with LDEstimators (see above) and Pickands'
 estimator as starting estimators.
 \item Pareto model
+\item Weibull model
+\item Gamma model
 }
+and for each of these, we provide  speeded-up optimally robust estimation
+(i.e., MBRE, OMSE, RMXE).\cr
+
+We robust (high-breakdown) starting estimators for
+\itemize{
+  \item GPD (PickandsEstimator, medkMAD, medSn, medQn)
+  \item GEV (PickandsEstimator)
+  \item Pareto (Cramér-von-Mises-Minimum-Distance-Estimator)
+  \item Weibull (the quantile based estimator of Boudt/Caliskan/Croux)
+  \item Gamma (Cramér-von-Mises-Minimum-Distance-Estimator)
 }
+
+For all these families, of course, MLEs and Minimum-Distance-Estimators
+are also available through package "distrMod". \cr
+}
+\section{Diagnostics}{
+
+We bridge to the diagnostics provided by package "ismev", i.e. our
+return objects can be plugged into the diagnostics of this package.\cr
+
+We have the usual diagnostic plots from package "RobAStBase", i.e.
+\itemize{
+  \item Outylingness plots  \code{outlyingPlotIC}
+  \item IC plots \code{plot}
+  \item Information plots via \code{infoPlot}
+  \item IC comparison plots via \code{comparePlot}
+  \item Cniperpoint plots (from package "ROptEst") via \code{CniperPointPlot}
+}
+but also (adopted from package "distrMod")
+\itemize{
+  \item qqplots (with confidence bands) via \code{qqplot}
+  \item returnlevel plots via \code{returnlevelplot}
+}\cr
+}
+
+\section{Starting Point}{
+ As a starting point you may look at the included script
+  \file{"RobFitsAtRealData.R"} in the scripts folder of the package,
+  accessible by
+    \code{file.path(system.file(package="RobExtremes"),
+             "scripts/RobFitsAtRealData.R")}.
+\cr}
 
 \details{
 \tabular{ll}{
@@ -68,6 +131,7 @@ Encoding: \tab latin1 \cr
 VCS/SVNRevision: \tab 940 \cr
 }
 }
+
 \section{Classes}{
 \preformatted{
 
@@ -174,34 +238,16 @@ APERYCONSTANT
 
 }}
 
-\section{Start-up-Banner}{
-You may suppress the start-up banner/message completely by setting 
-\code{options("StartupBanner"="off")} somewhere before loading this package by 
-\code{library} or \code{require} in your R-code / R-session.
-
-If option \code{"StartupBanner"} is not defined (default) or setting    
-\code{options("StartupBanner"=NULL)} or 
-\code{options("StartupBanner"="complete")} the complete start-up banner is 
-displayed.
-
-For any other value of option \code{"StartupBanner"} (i.e., not in 
-\code{c(NULL,"off","complete")}) only the version information is displayed.
-
-The same can be achieved by wrapping the \code{library} or \code{require}  call 
-into either \code{suppressStartupMessages()} or 
-\code{onlytypeStartupMessages(.,atypes="version")}.  
- 
-As for general \code{packageStartupMessage}'s, you may also suppress all
- the start-up banner by wrapping the \code{library} or \code{require} 
- call into \code{suppressPackageStartupMessages()} from 
- \pkg{startupmsg}-version 0.5 on.
- }
-
-\section{Package versions}{
-Note: The first two numbers of package versions do not necessarily reflect
- package-individual development, but rather are chosen for the
- RobAStXXX family as a whole in order to ease updating "depends"
- information.
+\section{Acknowledgement}{
+This package is joint work by Peter Ruckdeschel, Matthias Kohl, and
+Nataliya Horbenko (whose PhD thesis went into this package to a large extent),
+with contributions by Dasha Pupashenko, Misha Pupashenko, Gerald Kroisandt,
+Eugen Massini, Sascha Desmettre, and Bernhard Spangl, in the framework of
+project "Robust Risk Estimation" (2011-2016) funded by Volkswagen foundation
+(and gratefully ackknowledged). Thanks also goes to the maintainers of CRAN,
+in particully to Uwe Ligges who greatly helped us with finding an appropriate
+way to store the database of interpolating functions which allow the speed up
+-- this is now package RobAStRDA on CRAN.\cr
 }
 
 \author{
@@ -241,6 +287,37 @@ and may be called by \code{require("distrDoc");vignette("distr")}.
 A homepage to this package is available under \url{http://robast.r-forge.r-project.org/}.
 
 }
+
+\section{Start-up-Banner}{
+You may suppress the start-up banner/message completely by setting
+\code{options("StartupBanner"="off")} somewhere before loading this package by
+\code{library} or \code{require} in your R-code / R-session.
+%
+If option \code{"StartupBanner"} is not defined (default) or setting
+\code{options("StartupBanner"=NULL)} or
+\code{options("StartupBanner"="complete")} the complete start-up banner is
+displayed.
+%
+For any other value of option \code{"StartupBanner"} (i.e., not in
+\code{c(NULL,"off","complete")}) only the version information is displayed.
+%
+The same can be achieved by wrapping the \code{library} or \code{require}  call
+into either \code{suppressStartupMessages()} or
+\code{onlytypeStartupMessages(.,atypes="version")}.
+%
+As for general \code{packageStartupMessage}'s, you may also suppress all
+ the start-up banner by wrapping the \code{library} or \code{require}
+ call into \code{suppressPackageStartupMessages()} from
+ \pkg{startupmsg}-version 0.5 on.
+ }
+
+\section{Package versions}{
+Note: The first two numbers of package versions do not necessarily reflect
+ package-individual development, but rather are chosen for the
+ RobAStXXX family as a whole in order to ease updating "depends"
+ information.
+}
+
 \keyword{package}
 \concept{S4 condition class}
 \concept{S4 distribution class}

@@ -46,7 +46,7 @@ setMethod("returnlevelplot", signature(x = "ANY",
 
     xD <- fct(distance)(x)
     x.cex <- 3/(1+log(1+xD))
-    mcl$cex.pch <- x.cex
+    mcl$cex.pts <- x.cex
 
     retv <- do.call(getMethod("returnlevelplot", signature(x="ANY", y="ProbFamily")),
             args=mcl)
@@ -112,7 +112,7 @@ setMethod("returnlevelplot", signature(x = "ANY", y = "InfRobModel"),
 
     x.cex <- 3/(1+.cexscale(xD,xD,cex=cex.pts, fun = cex.pts.fun))
 
-    mcl$cex.pch <- x.cex
+    mcl$cex.pts <- x.cex
 
     retv <- do.call(getMethod("returnlevelplot", signature(x="ANY", y="ProbFamily")),
             args=mcl)
@@ -129,18 +129,18 @@ setMethod("returnlevelplot", signature(x = "ANY",
     withConf.pw  = withConf,  withConf.sim = withConf,
     plot.it = TRUE, xlab = deparse(substitute(x)),
     ylab = deparse(substitute(y)), ...,
-    exp.cex2.lbl = -.15,
-    exp.cex2.pch = -.35,
-    exp.fadcol.lbl = 1.85,
-    exp.fadcol.pch = 1.85,
+    exp.cex2.lbs = -.15,
+    exp.cex2.pts = -.35,
+    exp.fadcol.lbs = 1.85,
+    exp.fadcol.pts = 1.85,
     bg = "white"
     ){
     args0 <- list(x=x,y=y,n=n,withIdLine=withIdLine, withConf=withConf,
         withConf.pw  = if(!missing(withConf.pw)) withConf.pw else if(!missing(withConf)) withConf else NULL,
         withConf.sim = if(!missing(withConf.sim)) withConf.sim else if(!missing(withConf)) withConf else NULL,
-        plot.it = plot.it, xlab = xlab, ylab = ylab, exp.cex2.lbl=exp.cex2.lbl,
-        exp.cex2.pch=exp.cex2.pch, exp.fadcol.lbl=exp.fadcol.lbl,
-        exp.fadcol.pch=exp.fadcol.pch, bg=bg)
+        plot.it = plot.it, xlab = xlab, ylab = ylab, exp.cex2.lbs=exp.cex2.lbs,
+        exp.cex2.pts=exp.cex2.pts, exp.fadcol.lbs=exp.fadcol.lbs,
+        exp.fadcol.pts=exp.fadcol.pts, bg=bg)
 
     mc <- match.call(call = sys.call(sys.parent(1)))
     mc1 <- match.call(call = sys.call(sys.parent(1)), expand.dots=FALSE)
@@ -169,19 +169,19 @@ setMethod("returnlevelplot", signature(x = "ANY",
       w.fct <- function(x)
                weight(weight(IC))(L.fct(matrix(x))[,,1])
 
-      wx <- w.fct(x)
+      wx <- 1/(1+w.fct(x))
       if(max(wx)>1) wx <- wx/max(wx)
       mcl$order.traf <- function(x) 1/w.fct(x)
 
-      cex.lbl <- if(is.null(mcl$cex.lbl))  par("cex")  else eval(mcl$cex.lbl)
-      cex.pch <- if(is.null(mcl$cex.pch))  par("cex")  else eval(mcl$cex.pch)
-      mcl$cex.lbl <- cex.lbl*wx^exp.cex2.lbl
-      mcl$cex.pch <- cex.pch*wx^exp.cex2.pch
+      cex.lbs <- if(is.null(mcl$cex.lbs))  par("cex")  else eval(mcl$cex.lbs)
+      cex.pts <- if(is.null(mcl$cex.pts))  par("cex")  else eval(mcl$cex.pts)
+      mcl$cex.lbs <- cex.lbs*wx^exp.cex2.lbs
+      mcl$cex.pts <- cex.pts*wx^exp.cex2.pts
 
-      col.lbl <- if(is.null(mcl$col.lbl))  par("col")  else eval(mcl$col.lbl)
-      col.pch <- if(is.null(mcl$col.pch))  par("col")  else eval(mcl$col.pch)
-      mcl$col.lbl <- .fadeColor(col.lbl,wx^exp.fadcol.lbl, bg = bg)
-      mcl$col.pch <- .fadeColor(col.pch,wx^exp.fadcol.pch, bg = bg)
+      col.lbs <- if(is.null(mcl$col.lbs))  par("col")  else eval(mcl$col.lbs)
+      col.pts <- if(is.null(mcl$col.pts))  par("col")  else eval(mcl$col.pts)
+      mcl$col.lbs <- .fadeColor(col.lbs,wx^exp.fadcol.lbs, bg = bg)
+      mcl$col.pts <- .fadeColor(col.pts,wx^exp.fadcol.pts, bg = bg)
     }
 
     retv <- do.call(getMethod("returnlevelplot", signature(x="ANY", y="ProbFamily")),

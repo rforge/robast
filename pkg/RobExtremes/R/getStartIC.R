@@ -13,7 +13,7 @@ setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRi
     gridn <- gsub("\\.","",type(risk))
 
     nam <- paste(".",gsub("[F,f]amily","",gsub(" ","",name(model))),sep="")
-
+    if(nam==".Weibull") nam <- ".WeibullFamily"
     if(nam==".GeneralizedPareto") nam <- ".GPareto"
 
     param1 <- param(model)

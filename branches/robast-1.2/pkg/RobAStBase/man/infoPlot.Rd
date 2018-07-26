@@ -24,11 +24,11 @@ infoPlot(object,  ...)
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-             pch.pts = 1,
+             pch.pts = 19,
              cex.npts = 1, cex.npts.fun = NULL, col.npts = grey(.5),
-             pch.npts = 2,
-             jitter.fac = 1, with.lab = FALSE, lab.pts = NULL,
-             lab.font = NULL, alpha.trsp = NA,
+             pch.npts = 20,
+             jitter.fac = 1, with.lab = FALSE, cex.lbs = 1, adj.lbs = c(0, 0),
+             col.lbs = col.pts, lab.pts = NULL, lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, which.nonlbs = NULL,
              attr.pre = FALSE, return.Order = FALSE,
              ylab.abs = "absolute information",
@@ -137,16 +137,26 @@ infoPlot(object,  ...)
                          }
   \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
         titles and lables is used; otherwise no substitution is used. }
-  \item{col.pts}{color of the points of the \code{data} argument plotted; (may
-     be a vector of length 2, one value for the classical IC, one for the IC
-     in argument \code{object}, or it can be a matrix \code{n} by 2, \code{n} the
-     number of observations prior to any selection, in which case it assigns
-     observation-specific colors to the observations; in this case this
-     overrides settings in the respective \code{col.npts} argument.}
+  \item{col.pts}{color of the points of the \code{data} argument plotted;
+     can be a vector or a matrix. More specifically, if argument \code{attr.pre}
+     is \code{TRUE}, it is recycled to fill a matrix of dimension \code{n} by 2
+     (\code{n} the number of observations prior to any selection) where filling
+     is done in order column first. The two columns are used for possibly
+     different colors for the actual IC from the argument and the classical
+     IC which is also shown. The selection done via \code{which.lbs} and
+     \code{which.Order} is then done afterwards and on this matrix;
+     argument \code{col.npts} is ignored in this case. If \code{attr.pre} is \code{FALSE},
+     \code{col.pts} is recycled to fill a matrix of dimension \code{n.s} by 2
+     where \code{n.s} is the number of observations selected for labelling
+     and refers to the index ordering after the selection. Then argument
+     \code{col.npts} deteremines the colors of the shown but non-labelled
+     observations as given in argument \code{which.nonlbs}.}
   \item{pch.pts}{symbol of the points of the \code{data} argument plotted
-                 (may be a vector of length 2 or a matrix, see \code{col.pts}).}
+                 (may be a vector of length 2 or a matrix, see \code{col.pts},
+                 with argument \code{pch.npts} as counterpart).}
   \item{cex.pts}{size of the points of the \code{data} argument plotted
-                 (may be a vector of length 2 or a matrix, see \code{col.pts}).}
+                 (may be a vector of length 2 or a matrix, see \code{col.pts},
+                 with argument \code{cex.npts} as counterpart).}
   \item{cex.pts.fun}{rescaling function for the size of the points to be plotted;
         either \code{NULL} (default), then \code{log(1+abs(x))} is used for each of
         the rescalings, or a function which is then used for each of the
@@ -159,7 +169,7 @@ infoPlot(object,  ...)
   \item{col.npts}{color of the non-labelled points of the \code{data} argument
      plotted; (may be a vector of length 2, or it can be a matrix
      \code{nnlb <- sum(which.nonlbs)} by \code{2},
-     \code{nnlb} the number of non-labelled observations.}
+     \code{nnlb} the number of non-labelled shown observations.}
   \item{pch.npts}{symbol of the non-labelled points of the \code{data} argument
          plotted (may be a vector of length \code{2} or a matrix,
          see \code{col.npts}).}
@@ -181,7 +191,18 @@ infoPlot(object,  ...)
   \item{with.lab}{logical; shall labels be plotted to the observations?
                   (may be a vector of length 2, see \code{col.pts} -- 
                    but not a matrix)}
-  \item{lab.pts}{character or NULL; labels to be plotted to the observations; 
+  \item{cex.lbs}{size of the labels; can be vectorized to an array
+                 of dim nlbs x 2 x npnl where npnl is the number of plotted
+                 panels and nlbs the number of plotted labels; if it is
+                 a vector, it is recylced in order labels then ICs
+                 [arg \code{IC}/classic] then panels.}
+  \item{col.lbs}{color of the labels; can be vectorized to a matrix
+                 of dim nlbs x 2 as \code{col.pts}.}
+  \item{adj.lbs}{adjustment of the labels; can be vectorized to an array
+             of dim 2 x 2 x npnl matrix, npnl the number of plotted panels;
+             if it is a vector, it is recycled in order (x,y)-coords then ICs
+                 [arg \code{IC}/classic] then panels.}
+  \item{lab.pts}{character or NULL; labels to be plotted to the observations;
                  can be a vector of length \code{n}, \code{n} the number of 
                  all observations prior to any selection with \code{which.lbs},
                  \code{which.Order}; if \code{lab.pts} is \code{NULL}, 

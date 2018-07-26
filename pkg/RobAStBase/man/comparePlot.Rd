@@ -26,9 +26,10 @@ comparePlot(obj1, obj2, ... )
                  x.ticks = NULL, y.ticks = NULL, mfColRow = TRUE,
                  to.draw.arg = NULL,
                  cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-                 pch.pts = 1, cex.npts = 1, cex.npts.fun = NULL,
-                 col.npts = par("col"), pch.npts = 2, jitter.fac = 1,
-                 with.lab = FALSE, lab.pts = NULL, lab.font = NULL,
+                 pch.pts = 19, cex.npts = 1, cex.npts.fun = NULL,
+                 col.npts = par("col"), pch.npts = 20, jitter.fac = 1,
+                 with.lab = FALSE, cex.lbs = 1, adj.lbs = c(0, 0),
+                 col.lbs = col.pts, lab.pts = NULL, lab.font = NULL,
                  alpha.trsp = NA, which.lbs = NULL, which.Order = NULL,
                  which.nonlbs = NULL, attr.pre = FALSE, return.Order = FALSE,
                  withSubst = TRUE)
@@ -138,14 +139,21 @@ comparePlot(obj1, obj2, ... )
                          }
   \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
         titles and lables is used; otherwise no substitution is used. }
-  \item{col.pts}{color of the points of the \code{data} argument plotted; (may 
-     be a vector of length \code{nIC}, \code{nIC} the number of plotted pICs, 
-     i.e., one value for each pIC in arguments \code{obj1}, \code{obj2}, and, 
-     if available, \code{obj3} and \code{obj4}, or it can be a matrix 
-     \code{n} by \code{nIC}, \code{n} the number of observations prior to any 
-     selection, in which case it assigns observation-specific colors to the 
-     observations; in this case this  overrides settings in the respective 
-     \code{col.npts} argument.}
+  \item{col.pts}{color of the points of the \code{data} argument plotted;
+     can be a vector or a matrix. More specifically, if argument \code{attr.pre}
+     is \code{TRUE}, it is recycled to fill a matrix of dimension \code{n} by
+     \code{nIC} (\code{n} the number of observations prior to any selection and
+     \code{nIC} the number of ICs plotted) where filling is done in order column
+     first. The columns are used for possibly different colors for the different
+     ICs from arguments \code{obj1}, \code{obj2}, and, possibly \code{obj3} and
+     \code{obj4}. The selection done via \code{which.lbs} and
+     \code{which.Order} is then done afterwards and on this matrix; in this case,
+     argument \code{col.npts} is ignored. If \code{attr.pre} is \code{FALSE},
+     \code{col.pts} is recycled to fill a matrix of dimension \code{n.s} by
+     \code{nIC} where \code{n.s} is the number of observations selected for
+     labelling and refers to the index ordering after the selection.
+     Then argument \code{col.npts} deteremines the colors of the shown but
+     non-labelled observations as given in argument \code{which.nonlbs}.}
   \item{pch.pts}{symbol of the points of the \code{data} argument plotted
                  (may be a vector of length \code{nIC} or a matrix, see \code{col.pts}).}
   \item{cex.pts}{size of the points of the \code{data} argument plotted
@@ -186,6 +194,17 @@ comparePlot(obj1, obj2, ... )
   \item{with.lab}{logical; shall labels be plotted to the observations?
                  (May be a vector of length \code{nIC}, see \code{col.pts}
                  -- but not a matrix).}
+  \item{cex.lbs}{size of the labels; can be vectorized to an array
+                 of dim nlbs x \code{nIC} x npnl where npnl
+                 is the number of plotted panels and nlbs the number of
+                 plotted labels; if it is a vector, it is recylced in order
+                 labels then plotted ICs then panels.}
+  \item{col.lbs}{color of the labels; can be vectorized to a matrix
+                 of dim nlbs x \code{nIC} as \code{col.pts}.}
+  \item{adj.lbs}{adjustment of the labels; can be vectorized to an array of
+                 dim 2 x \code{nIC} x npnl, npnl the number of plotted panels;
+                 if it is a vector, it is recycled in order (x,y)-coords
+                 then ICs then panels.}
   \item{lab.font}{font to be used for labels (may be a vector of length
                   \code{nIC}, see \code{with.lab}).}
   \item{alpha.trsp}{alpha transparency to be added ex post to colors

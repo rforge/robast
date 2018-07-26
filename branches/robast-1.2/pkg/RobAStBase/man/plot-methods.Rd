@@ -23,11 +23,12 @@
              withSubst = TRUE)
 \S4method{plot}{IC,numeric}(x, y, ...,
                  cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-                 pch.pts = 1,
+                 pch.pts = 19,
                  cex.npts = 1, cex.npts.fun = NULL, col.npts = par("col"),
-                 pch.npts = 2,
-                 jitter.fac = 1, with.lab = FALSE, lab.pts = NULL,
-                 lab.font = NULL, alpha.trsp = NA, which.lbs = NULL,
+                 pch.npts = 20,
+                 jitter.fac = 1, with.lab = FALSE, cex.lbs = 1, adj.lbs = c(0,0),
+                 col.lbs = col.pts, lab.pts = NULL, lab.font = NULL,
+                 alpha.trsp = NA, which.lbs = NULL,
                  which.Order = NULL, which.nonlbs = NULL, attr.pre = FALSE,
                  return.Order = FALSE)
 }
@@ -129,10 +130,15 @@
   \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
       titles and lables is used; otherwise no substitution is used. }
   \item{cex.pts}{size of the points of the second argument plotted, can be a vector;
-         if it has the same length as the number of observations prior to any
-         selection then it overrides argument \code{cex.npts} and assigns
-         individual sizes to each of the points; otherwise it is recycled to
-         the length of selected observations.}
+         if argument \code{attr.pre} is \code{TRUE}, it is recycled to the length
+         of all observations and determines the sizes of all plotted symbols,
+         i.e., the selection is done within this argument; in this case argument
+         \code{col.npts} is ignored. If \code{attr.pre} is \code{FALSE},
+         \code{cex.pts} is recycled to the number of the observations selected
+         for labelling and refers to the index ordering after the
+         selection. Then argument \code{cex.npts} deteremines the sizes
+         of the shown but non-labelled observations as given in argument
+         \code{which.nonlbs}.}
   \item{cex.pts.fun}{rescaling function for the size of the points to be plotted;
         either \code{NULL} (default), then \code{log(1+abs(x))} is used for each of
         the rescalings, or a function which is then used for each of the
@@ -140,9 +146,9 @@
         functions, if necessary it is recylced to length \code{dim}
         where \code{dim} is the number of dimensions of the pICs to be plotted.}
   \item{col.pts}{color of the points of the second argument plotted, can
-         be a vector as in \code{cex.pts}.}
+         be a vector as in \code{cex.pts} (with \code{col.npts} as counterpart).}
   \item{pch.pts}{symbol of the points of the second argument plotted, can
-         be a vector as in \code{cex.pts}.}
+         be a vector as in \code{cex.pts} (with \code{pch.npts} as counterpart).}
   \item{col.npts}{color of the non-labelled points of the \code{data} argument
      plotted; (may be a vector).}
   \item{pch.npts}{symbol of the non-labelled points of the \code{data} argument
@@ -156,8 +162,16 @@
   function or a list of functions, if necessary it is recylced
   to length \code{dim} where \code{dim} is the number of dimensions of
   the pICs to be plotted.}
-
   \item{with.lab}{logical; shall labels be plotted to the observations?}
+  \item{cex.lbs}{size of the labels; can be vectorized to a matrix
+                 of dim nlbs x npnl where npnl is the number of plotted
+                 panels and nlbs the number of plotted labels; if it is
+                 a vector, it is recylced in order label then panel.}
+  \item{col.lbs}{color of the labels; can be vectorized as \code{col.pts}.}
+  \item{adj.lbs}{adjustment of the labels; can be vectorized to a 2 x npnl
+                 matrix, npnl the number of plotted panels;
+                 if it is a vector, it is recycled in order (x,y)-coords
+                 then panel.}
   \item{lab.pts}{character or NULL; labels to be plotted to the observations; if \code{NULL}
                  observation indices;}
   \item{lab.font}{font to be used for labels (of the observations).}       
@@ -181,12 +195,12 @@
            \code{normtype(object)}; then \code{which.Order}
            either is an integer vector with the indices of the \emph{ordered}
            observations (remaining after a possible reduction by argument \code{which.lbs})
-           to be plotted into graph or \code{NULL} --- then no (further) observation
-           is excluded.}
+           to be plotted (with labels) into graph or \code{NULL} --- then no (further)
+           observation is excluded.}
   \item{which.nonlbs}{indices of the observations which should be plotted but
         not labelled; either an integer vector with the indices of the observations
           to be plotted into graph or \code{NULL} --- then all non-labelled
-          observations are plotted.}
+          observations are plotted}
   \item{return.Order}{logical; if \code{TRUE}, an order vector
     is returned; more specifically, the order of the (remaining) observations
     given by their original index is returned (remaining means: after a possible

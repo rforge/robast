@@ -12,7 +12,19 @@ version 1.1
 #######################################
 
 user-visible CHANGES:
-+ plot-methods now have arguments .nonlb to only plot (but not label) some points
++ plot-methods now have arguments .nonlbs to only plot (but not label) some points
++ all diagnostics (including qqplot and returnlevelplot) have adopted the same 
+  argument naming (and selection paradigm) 
+    the suffix is .lbs instead of .lbl, 
+	the attributes of shown points have ending .pts
+	the observations are classed into three groups:
+	  - the labelled observations selected through which.lbs and which.Order
+	  - the shown non labelled observations (which are not in the previous set)
+	    selected by which.nonlbs
+	  - the non-shown observations (the remaining ones not contained in the former 2 grps)
+	-> point attributes may either refer to prior selection or to post-selection in
+       which case we have .npts variants	
++ changed the default plotting symbol to 19
 + plot-methods are vectorized to a higher extent in all arguments
 + plot methods now return an S3 object of class \code{c("plotInfo","DiagnInfo")}, i.e., a list containing the 
   information needed to produce the respective plot, which at a later stage could be used by different graphic engines (like, e.g. 

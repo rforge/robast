@@ -18,10 +18,10 @@ withConf = TRUE, withConf.pw = withConf, withConf.sim = withConf,
    withConf.pw  = withConf,  withConf.sim = withConf,
     plot.it = TRUE, xlab = deparse(substitute(x)),
     ylab = deparse(substitute(y)), ...,
-    exp.cex2.lbl = -.15,
-    exp.cex2.pch = -.35,
-    exp.fadcol.lbl = 1.85,
-    exp.fadcol.pch = 1.85,
+    exp.cex2.lbs = -.15,
+    exp.cex2.pts = -.35,
+    exp.fadcol.lbs = 1.85,
+    exp.fadcol.pts = 1.85,
     bg = "white")
    }
 \alias{qqplot}
@@ -52,13 +52,13 @@ to radius of the corresponding neighborhood?}
 \item{distance}{a function mapping observations \code{x} to the positive reals;
 used to determine the size of the plotted points (the larger \code{distance(x)},
 the smaller the points are plotted.}
-\item{exp.cex2.lbl}{for objects \code{kStepEstimate} based on a [p]IC of class \code{HampIC}:
+\item{exp.cex2.lbs}{for objects \code{kStepEstimate} based on a [p]IC of class \code{HampIC}:
 exponent for the weights of this [p]IC used to magnify the labels.}
-\item{exp.cex2.pch}{for objects \code{kStepEstimate} based on a [p]IC of class \code{HampIC}:
+\item{exp.cex2.pts}{for objects \code{kStepEstimate} based on a [p]IC of class \code{HampIC}:
 exponent for the weights of this [p]IC used to magnify the symbols.}
-\item{exp.fadcol.lbl}{for objects \code{kStepEstimate} based on a [p]IC of class \code{HampIC}:
+\item{exp.fadcol.lbs}{for objects \code{kStepEstimate} based on a [p]IC of class \code{HampIC}:
 exponent for the weights of this [p]IC used to find out-fading colors.}
-\item{exp.fadcol.pch}{for objects \code{kStepEstimate} based on a [p]IC of class \code{HampIC}:
+\item{exp.fadcol.pts}{for objects \code{kStepEstimate} based on a [p]IC of class \code{HampIC}:
 exponent for the weights of this [p]IC used to find out-fading colors.}
 \item{bg}{background color to fade against}
 }
@@ -111,11 +111,11 @@ quantiles of the model distribution of model at which
 the corresponding \code{kStepEstimate} \code{y} had been calibrated at.
 By default, if the [p]IC of the \code{kStepEstimate} is of class
 \code{HampIC}, i.e.; has a corresponding weight function,
-points (and, if \code{withLab==TRUE}, labels) are
+points (and, if \code{with.lab==TRUE}, labels) are
 scaled and faded according to this weight function. Corresponding
-arguments \code{exp.cex2.pch} and \code{exp.fadcol.pch} control this
+arguments \code{exp.cex2.pts} and \code{exp.fadcol.pts} control this
 scaling and fading, respectively
-(and analogously \code{exp.cex2.lbl} and \code{exp.fadcol.lbl} for the labels).
+(and analogously \code{exp.cex2.lbs} and \code{exp.fadcol.lbs} for the labels).
 The choice of these arguments has to be done on a case-by-case basis.
 Positive exponents induce fading, magnification with increasing weight,
 for negative exponents the same is true for decreasing weight; higher

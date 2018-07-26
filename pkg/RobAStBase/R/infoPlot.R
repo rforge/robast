@@ -14,10 +14,11 @@ setMethod("infoPlot", "IC",
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-             pch.pts = 1,
+             pch.pts = 19,
              cex.npts = 1, cex.npts.fun = NULL, col.npts = grey(.5),
-             pch.npts = 2,
-             jitter.fac = 1, with.lab = FALSE, lab.pts = NULL,
+             pch.npts = 20,
+             jitter.fac = 1, with.lab = FALSE, cex.lbs = 1, adj.lbs = c(0,0),
+             col.lbs = col.pts, lab.pts = NULL,
              lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, which.nonlbs = NULL,
              attr.pre = FALSE, return.Order = FALSE,
@@ -43,8 +44,10 @@ setMethod("infoPlot", "IC",
              cex.pts = cex.pts, cex.pts.fun = cex.pts.fun, col.pts = col.pts,
              pch.pts = pch.pts, cex.npts = cex.npts, cex.npts.fun = cex.npts.fun,
              col.npts = col.npts, pch.npts = pch.npts,
-             jitter.fac = jitter.fac, with.lab = with.lab, lab.pts = lab.pts,
-             lab.font = lab.font, alpha.trsp = alpha.trsp,
+             jitter.fac = jitter.fac, with.lab = with.lab,
+             cex.lbs = cex.lbs, adj.lbs = adj.lbs,
+             col.lbs = if(!missing(col.lbs)) col.lbs else if(!missing(col.pts)) col.pts else par("col"),
+             lab.pts = lab.pts, lab.font = lab.font, alpha.trsp = alpha.trsp,
              which.lbs = which.lbs, which.Order  = which.Order,
              which.nonlbs = which.nonlbs, attr.pre = attr.pre,
              return.Order = return.Order, ylab.abs = ylab.abs, ylab.rel= ylab.rel,
@@ -301,6 +304,16 @@ setMethod("infoPlot", "IC",
                    cex.npts.fun <- .fillList(cex.npts.fun, (dims1)*2)
                }
 
+               if(missing(adj.lbs)) cex.lbs <- c(0,0)
+               if(!is.array(adj.lbs) ||
+                 (is.array(adj.lbs)&&!all.equal(dim(adj.lbs),c(2,2,dims1)))){
+                  adj.lbs <- array(rep(adj.lbs, length.out= 2*dims1*2),
+                                     dim=c(2,2,dims1))
+               }
+               adjC.lbs <- matrix(adj.lbs[,2,],nrow=2,ncol=dims1)
+               adj.lbs <- matrix(adj.lbs[,1,],nrow=2,ncol=dims1)
+
+
                if(attr.pre){
                  if(missing(pch.pts)) pch.pts <- 1
                  if(!is.matrix(pch.pts))
@@ -313,6 +326,18 @@ setMethod("infoPlot", "IC",
                  if(missing(cex.pts)) cex.pts <- 1
                  if(!is.matrix(cex.pts))
                     cex.pts <- matrix(rep(cex.pts, length.out= 2*n),n,2)
+
+                 if(missing(cex.lbs)) cex.lbs <- 1
+                 if(!is.array(cex.lbs) ||
+                   (is.array(cex.lbs)&&!all.equal(dim(cex.lbs),c(n,2,dims1)))){
+                    cex.lbs <- array(rep(cex.lbs, length.out= n*dims1*2),
+                                     dim=c(n,2,dims1))
+                   }
+
+                 if(missing(col.lbs)) col.lbs <- col.pts
+                 if(!is.matrix(col.lbs))
+                    col.lbs <- t(matrix(rep(col.lbs, length.out= 2*n),2,n))
+
                  }
                  if(!is.null(lab.pts))
                     lab.pts <-  rep(lab.pts, length.out=n)
@@ -372,6 +397,14 @@ setMethod("infoPlot", "IC",
                lab0.pts <-  lab.pts[sel$ind,1]
                labC.pts <-  lab.pts[sel.C$ind,2]
                lab.pts <- lab0.pts
+
+               cex0.lbs <- matrix(cex.lbs[sel$ind,1,],nrow=n.s,ncol=dims1)
+               cexC.lbs <- matrix(cex.lbs[sel.C$ind,2,],nrow=n.s,ncol=dims1)
+               cex.lbs <- cex0.lbs
+
+               col0.lbs <- col.lbs[sel$ind,1]
+               colC.lbs <- col.lbs[sel$ind,2]
+               col.lbs <- col0.lbs
           }else{
                if(missing(pch.pts)) pch.pts <- 1
                if(!is.matrix(pch.pts))
@@ -408,6 +441,21 @@ setMethod("infoPlot", "IC",
                   cex.npts <- matrix(rep(cex.npts, length.out= 2*n.ns),n.ns,2)
                cexC.npts <- cex.npts[,2]
                cex.npts <- cex.npts[,1]
+
+               if(missing(cex.lbs)) cex.lbs <- 1
+               if(!is.array(cex.lbs) ||
+                   (is.array(cex.lbs)&&all.equal(dim(cex.lbs),c(n.s,2,dims1)))){
+                    cex.lbs <- array(rep(cex.lbs, length.out= n.s*dims1*2),
+                                     dim=c(n.s,2,dims1))
+                   }
+               cexC.lbs <- matrix(cex.lbs[,2,],nrow=n.s,ncol=dims1)
+               cex.lbs <- matrix(cex.lbs[,1,],nrow=n.s,ncol=dims1)
+
+               if(missing(col.lbs)) col.lbs <- col.pts
+               if(!is.matrix(col.lbs))
+                    col.lbs <- t(matrix(rep(col.lbs, length.out= 2*n.s),2,n.s))
+               colC.lbs <- col.lbs[,2]
+               col.lbs <- col.lbs[,1]
 
                if(!is.null(lab.pts)){
                   lab.pts <- matrix(rep(lab.pts, length.out= 2*n.s),n.s,2)
@@ -459,9 +507,9 @@ setMethod("infoPlot", "IC",
                  if(length(x)>0)
                     do.call(points,args=c(list(x,y,cex=cxa,col=ca,pch=pa),
                             dots.points))}
-               tx <- function(xa,ya,lb,cx,ca){
+               tx <- function(xa,ya,lb,cx,ca,ad){
                  if(length(xa)>0)
-                    if(!is.null(lb)) text(x=xa,y=ya,labels=lb,cex=cx, col=ca)
+                    if(!is.null(lb)) text(x=xa,y=ya,labels=lb,cex=cx, col=ca, adj=ad)
                }
                alp.v <- rep(alpha.trsp, length.out = dims1)
 
@@ -494,12 +542,12 @@ setMethod("infoPlot", "IC",
                       do.pts(x0c, ICy0cr1, f1c,colC.pts,pch0C)
 
                       if(with.lab0){
-                         tx(x0, ICy0r1, lab.pts0, f1/2, col.pts)
-                         tx(x0c, ICy0cr1, labC.pts0, f1c/2, colC.pts)
-                         pI$doLabsAbs <- list(x = x0, y = ICy0r1,
-                                         lab = lab.pts0, cex = f1/2, col= col0)
-                         pI$doLabsCAbs <- list(x = x0c, y = ICy0cr1,
-                                         lab = labC.pts0, cex = f1c/2, col= col0C)
+                         tx(x0, ICy0r1, lab.pts0, cex.lbs0, col.lbs0, adj.lbs0)
+                         tx(x0c, ICy0cr1, labC.pts0, cexC.lbs0, colC.lbs0, adjC.lbs0)
+                         pI$doLabsAbs <- list(x = x0, y = ICy0r1, adj = adj.lbs0,
+                                         lab = lab.pts0, cex = cex.lbs0, col= col.lbs0)
+                         pI$doLabsCAbs <- list(x = x0c, y = ICy0cr1, adj = adjC.lbs0,
+                                         lab = labC.pts0, cex = cexC.lbs0, col= colC.lbs0)
                       }
                    }
                    if(length(ICy0.ns)){
@@ -553,6 +601,12 @@ setMethod("infoPlot", "IC",
                            with.lab0 = with.lab, n0 = n,
                            jitter.fac0 = jitter.fac, cexfun = cex.pts.fun,
                            cexfun.ns = cex.npts.fun,
+                           cex.lbs0 = cex.lbs[,1],
+                           cexC.lbs0 = cexC.lbs[,1],
+                           adj.lbs0 = adj.lbs[,1],
+                           adjC.lbs0 = adjC.lbs[,1],
+                           col.lbs0 = col.lbs,
+                           colC.lbs0 = colC.lbs,
                            trEnv0 = trEnv)
                            )
 
@@ -601,12 +655,14 @@ setMethod("infoPlot", "IC",
                       do.pts(resc.rel.c$X, resc.rel.c$Y, f1c,colC.pts,pch0C)
 
                       if(with.lab0){
-                        tx(resc.rel$X, resc.rel$Y, lab.pts0, f1/2, col0)
-                        tx(resc.rel.c$X, resc.rel.c$Y, labC.pts0, f1c/2, col0C)
+                        cexl <- cex.lbs0[,i1]; cexlC <- cexC.lbs0[,i1]
+                        adjl <- adj.lbs0[,i1]; adjlC <- adjC.lbs0[,i1]
+                        tx(resc.rel$X, resc.rel$Y, lab.pts0, cexl, col.lbs0, adjl)
+                        tx(resc.rel.c$X, resc.rel.c$Y, labC.pts0, cexlC, colC.lbs0, adjlC)
                         pI$doLabsRel[[i]] <- list(x = resc.rel$X, y = resc.rel$Y,
-                                         lab = lab.pts0, cex = f1/2, col= col0)
+                                         lab = lab.pts0, cex = cexl, col= col.lbs0, adj=adjl)
                         pI$doLabsCRel[[i]] <- list(x = resc.rel.c$X, y = resc.rel.c$Y,
-                                         lab = labC.pts0, cex = f1c/2, col= col0C)
+                                         lab = labC.pts0, cex = cexlC, col= colC.lbs0, adj=adjl)
                       }
                    }
                    if(length(x0.ns)){
@@ -632,7 +688,7 @@ setMethod("infoPlot", "IC",
                       pI$resc.datC.rel.ns[[i]] <- resc.rel.c.ns
 
                       c1fun.ns <- if(is.null(cexfun.ns)) NULL else cexfun.ns[[(i1-1)*2+1]]
-                      c2fun.ns <- if(is.null(cexfun.ns)) NULL else cexfun.ns[[(i1-1)*2+1]]
+                      c2fun.ns <- if(is.null(cexfun.ns)) NULL else cexfun.ns[[(i1-1)*2+2]]
                       f1.ns <- .cexscale(resc.rel.ns$scy,resc.rel.c.ns$scy,cex=cex0.ns, fun = c1fun.ns)
                       f1c.ns <- .cexscale(resc.rel.c.ns$scy,resc.rel.ns$scy,cex=cex0C.ns, fun = c2fun.ns)
 
@@ -673,6 +729,12 @@ setMethod("infoPlot", "IC",
                            with.lab0 = with.lab, n0 = n, al0 = alp.v,
                            jitter.fac0 = jitter.fac, cexfun = cex.pts.fun,
                            cexfun.ns = cex.npts.fun,
+                           cex.lbs0 = cex.lbs,
+                           cexC.lbs0 = cexC.lbs,
+                           adj.lbs0 = adj.lbs,
+                           adjC.lbs0 = adjC.lbs,
+                           col.lbs0 = col.lbs,
+                           colC.lbs0 = colC.lbs,
                            trEnv0 = trEnv)
                   )
 

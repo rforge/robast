@@ -16,10 +16,11 @@ setMethod("comparePlot", signature("IC","IC"),
              scaleN = 9, x.ticks = NULL, y.ticks = NULL,
              mfColRow = TRUE, to.draw.arg = NULL,
              cex.pts = 1, cex.pts.fun = NULL, col.pts = par("col"),
-             pch.pts = 1,
+             pch.pts = 19,
              cex.npts = 1, cex.npts.fun = NULL, col.npts = par("col"),
-             pch.npts = 2,
-             jitter.fac = 1, with.lab = FALSE, lab.pts = NULL,
+             pch.npts = 20,
+             jitter.fac = 1, with.lab = FALSE, cex.lbs = 1, adj.lbs = c(0,0),
+             col.lbs = col.pts, lab.pts = NULL,
              lab.font = NULL, alpha.trsp = NA,
              which.lbs = NULL, which.Order  = NULL, which.nonlbs = NULL,
              attr.pre = FALSE, return.Order = FALSE,
@@ -44,8 +45,10 @@ setMethod("comparePlot", signature("IC","IC"),
              cex.pts = cex.pts, cex.pts.fun = cex.pts.fun, col.pts = col.pts,
              pch.pts = pch.pts, cex.npts = cex.npts, cex.npts.fun = cex.npts.fun,
              col.npts = col.npts, pch.npts = pch.npts,
-             jitter.fac = jitter.fac, with.lab = with.lab, lab.pts = lab.pts,
-             lab.font = lab.font, alpha.trsp = alpha.trsp,
+             jitter.fac = jitter.fac, with.lab = with.lab,
+             cex.lbs = cex.lbs, adj.lbs = adj.lbs,
+             col.lbs = if(!missing(col.lbs)) col.lbs else if(!missing(col.pts)) col.pts else par("col"),
+             lab.pts = lab.pts, lab.font = lab.font, alpha.trsp = alpha.trsp,
              which.lbs = which.lbs, which.Order  = which.Order,
              which.nonlbs = which.nonlbs, attr.pre = attr.pre,
              return.Order = return.Order, withSubst = withSubst)
@@ -280,6 +283,13 @@ setMethod("comparePlot", signature("IC","IC"),
             if(!is.null(cex.npts.fun)){
                   cex.npts.fun <- .fillList(cex.npts.fun, dims0*ncomp)}
 
+            if(missing(adj.lbs)) cex.lbs <- c(0,0)
+            if(!is.array(adj.lbs) ||
+                (is.array(adj.lbs)&&!all.equal(dim(adj.lbs),c(2,ncomp,dims0)))){
+                 adj.lbs <- array(rep(adj.lbs, length.out= 2*dims0*ncomp),
+                                      dim=c(2,ncomp,dims0))
+            }
+
             if(attr.pre){
                if(missing(pch.pts)) pch.pts <- 1
                if(!is.matrix(pch.pts))
@@ -292,7 +302,19 @@ setMethod("comparePlot", signature("IC","IC"),
                if(missing(cex.pts)) cex.pts <- 1
                if(!is.matrix(cex.pts))
                   cex.pts <- matrix(rep(cex.pts, length.out= ncomp*n),n,ncomp)
+
+               if(missing(cex.lbs)) cex.lbs <- 1
+               if(!is.array(cex.lbs) ||
+                   (is.array(cex.lbs)&&!all.equal(dim(cex.lbs),c(n,ncomp,dims0)))){
+                    cex.lbs <- array(rep(cex.lbs, length.out= n*dims0*ncomp),
+                                     dim=c(n,ncomp,dims0))
+                   }
+
+               if(missing(col.lbs)) col.lbs <- col.pts
+               if(!is.matrix(col.lbs))
+                  col.lbs <- t(matrix(rep(col.lbs, length.out= ncomp*n),ncomp,n))
                }
+
                if(!is.null(lab.pts))
                   lab.pts <- matrix(rep(lab.pts, length.out=n*ncomp),n,ncomp)
 
@@ -337,6 +359,12 @@ setMethod("comparePlot", signature("IC","IC"),
                lab0.pts     <- lab.pts[sel1$ind,]
                lab0.pts[,2] <- lab.pts[sel2$ind,2]
 
+               cex0.lbs      <- cex.lbs[sel1$ind,,,drop=FALSE]
+               cex0.lbs[,2,] <- cex.lbs[sel2$ind,2,]
+
+               col0.lbs     <- col.lbs[sel1$ind,]
+               col0.lbs[,2] <- col.lbs[sel2$ind,2]
+
                col.npts     <- col.pts[sel1$ind.ns,]
                col.npts[,2] <- col.pts[sel2$ind.ns,2]
 
@@ -359,6 +387,8 @@ setMethod("comparePlot", signature("IC","IC"),
                                    pch0.pts[,3] <- pch.pts[sel3$ind,3]
                                    cex0.pts[,3] <- cex.pts[sel3$ind,3]
                                    lab0.pts[,3] <- lab.pts[sel3$ind,3]
+                                   cex0.lbs[,3,] <- cex.lbs[sel3$ind,3,]
+                                   col0.lbs[,3] <- col.lbs[sel3$ind,3]
                                    col.npts[,3] <- col.pts[sel3$ind.ns,3]
                                    pch.npts[,3] <- pch.pts[sel3$ind.ns,3]
                                    cex.npts[,3] <- cex.pts[sel3$ind.ns,3]
@@ -374,7 +404,9 @@ setMethod("comparePlot", signature("IC","IC"),
                                    col0.pts[,4] <- col.pts[sel4$ind,4]
                                    pch0.pts[,4] <- pch.pts[sel4$ind,4]
                                    cex0.pts[,4] <- cex.pts[sel4$ind,4]
-                                   lab0.pts[,4] <- lab.pts[sel3$ind,4]
+                                   lab0.pts[,4] <- lab.pts[sel4$ind,4]
+                                   cex0.lbs[,4,] <- cex.lbs[sel4$ind,4,]
+                                   col0.lbs[,4] <- col.lbs[sel4$ind,4]
                                    col.npts[,4] <- col.pts[sel4$ind.ns,4]
                                    pch.npts[,4] <- pch.pts[sel4$ind.ns,4]
                                    cex.npts[,4] <- cex.pts[sel4$ind.ns,4]
@@ -386,6 +418,8 @@ setMethod("comparePlot", signature("IC","IC"),
                pch.pts <- pch0.pts
                cex.pts <- cex0.pts
                lab.pts <- lab0.pts
+               cex.lbs <- cex0.lbs
+               col.lbs <- col0.lbs
             }else{
                n.s <- length(sel1$ind)
                n.ns <- length(sel1$ind.ns)
@@ -409,6 +443,17 @@ setMethod("comparePlot", signature("IC","IC"),
                if(missing(cex.npts)) cex.npts <- 1
                if(!is.matrix(cex.npts))
                   cex.npts <- matrix(rep(cex.npts, length.out= ncomp*n.ns),n.ns,ncomp)
+
+               if(missing(cex.lbs)) cex.lbs <- 1
+               if(!is.array(cex.lbs) ||
+                   (is.array(cex.lbs)&&all.equal(dim(cex.lbs),c(n.s,ncomp,dims0)))){
+                    cex.lbs <- array(rep(cex.lbs, length.out= n.s*dims0*dims0),
+                                     dim=c(n.s,ncomp,dims0))
+                   }
+
+               if(missing(col.lbs)) col.lbs <- col.pts
+               if(!is.matrix(col.lbs))
+                  col.lbs <- t(matrix(rep(col.lbs, length.out= ncomp*n.s),ncomp,n.s))
 
                if(missing(lab.pts)) lab.pts <- 1:n.s
                if(!is.matrix(lab.pts))
@@ -465,9 +510,9 @@ setMethod("comparePlot", signature("IC","IC"),
                               col = col.l, pch = pch.l), dwo0))
                            if(with.lab0){
                               text(rescd$X[i.l], rescd$Y[i.l], labels = lab.pts.l,
-                                   cex = cex.l/2, col = col.l)
+                                   cex = cexl[,j.l,i], col = coll0[,j.l], adj=adjl[,j.l,i])
                               pI$doLabs[[(i-1)*ncomp+j.l]] <- list(rescd$X[i.l], rescd$Y[i.l], labels = lab.pts.l,
-                                   cex = cex.l/2, col = col.l)
+                                   cex = cexl[,j.l,i], col = coll0[,j.l],adj=adjl[,j.l,i])
                            }
                         }
                      }
@@ -495,7 +540,8 @@ setMethod("comparePlot", signature("IC","IC"),
                       jitter.fac0 = jitter.fac, dwo0 = dots.points, al0 = alp.v,
                       with.lab0 = with.lab, lab0 = lab.pts, cexfun=cex.pts.fun,
                       cexn0 = cex.npts, pchn0 = pch.npts, coln0 = col.npts,
-                      cexnfun=cex.npts.fun, trEnv0 = trEnv)
+                      cexnfun=cex.npts.fun, trEnv0 = trEnv, cexl0 = cex.lbs,
+                      adjl0 = adj.lbs, coll0 = col.lbs)
                       #,scaleX = scaleX, scaleX.fct = scaleX.fct,
                       #scaleX.inv = scaleX.inv, scaleY = scaleY,
                       #scaleY.fct = scaleY.fct, scaleY.inv = scaleY.inv)
