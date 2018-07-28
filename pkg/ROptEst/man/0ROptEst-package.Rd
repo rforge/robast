@@ -16,9 +16,10 @@ Version: \tab 1.1.0 \cr
 Date: \tab 2018-07-25 \cr
 Depends: \tab R(>= 2.14.0), methods, distr(>= 2.5.2), distrEx(>= 2.5), distrMod(>= 2.5.2), 
 RandVar(>= 0.9.2), RobAStBase(>= 1.0) \cr
-Suggests: \tab RobLox, MASS \cr
-Imports: \tab startupmsg \cr
+Suggests: \tab RobLox\cr
+Imports: \tab startupmsg, MASS, stats, graphics, utils, grDevices \cr
 ByteCompile: \tab yes \cr
+Encoding: \tab latin1 \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
 VCS/SVNRevision: \tab 1057 \cr

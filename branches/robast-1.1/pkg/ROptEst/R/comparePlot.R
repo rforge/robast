@@ -88,6 +88,7 @@ setMethod("comparePlot", signature("IC","IC"),
         ret$dots <- ret$args <- ret$call <- NULL
         plotInfo <- c(plotInfo, ret)
         class(plotInfo) <- c("plotInfo","DiagnInfo")
-
+        if(return.Order){ whichRet <- names(plotInfo) %in% c("obj1","obj2","obj3","obj4")
+                            return(plotInfo[whichRet])}
         return(invisible(plotInfo))
       })

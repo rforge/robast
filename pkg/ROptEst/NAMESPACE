@@ -5,6 +5,7 @@ import("RandVar")
 import("distrMod")
 import("RobAStBase")
 importFrom("startupmsg", "buildStartupMessage", "infoShow")
+importFrom("grDevices", "dev.list")
 importFrom("graphics", "abline", "axis", "box", "par", 
            "points", "text", "matlines", "matpoints", "mtext",
            "title")

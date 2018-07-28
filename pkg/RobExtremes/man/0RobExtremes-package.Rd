@@ -11,7 +11,7 @@ estimation (i.e., MBRE, OMSE, RMXE) for extreme value distributions,
 extending packages \pkg{distr}, \pkg{distrEx}, \pkg{distrMod},
 \pkg{robustbase}, \pkg{RobAStBase}, and \pkg{ROptEst}.}
 
-\section{Distributions}
+\section{Distributions}{
 
 Importing from packages \pkg{actuar},
 \pkg{evd}, it provides S4 classes and methods for the
@@ -19,9 +19,9 @@ Importing from packages \pkg{actuar},
          \item Generalized Extreme Value distribution (GEVD)
          \item Generalized Pareto distribution (GPD)
          \item Pareto distribution}
-\cr
+\cr}
 
-\section{Functionals for Distributions}
+\section{Functionals for Distributions}{
 
 These distributions come together with particular methods for expectations.
 I.e., a functional E() as in package \pkg{distrEx}, which as first argument
@@ -38,8 +38,8 @@ In addition, extending estimators \code{Sn} and \code{Qn} from package
 \pkg{robustbase}, we provide functionals for Sn and Qn. A new
 asymmetric version of the \code{mad}, \code{kMAD} gives yet another robust
 scale estimator (and functional). \cr
-
-\section{Models and Estimators}
+}
+\section{Models and Estimators}{
 
 As to models, we provide the
 \itemize{
@@ -68,8 +68,8 @@ We robust (high-breakdown) starting estimators for
 
 For all these families, of course, MLEs and Minimum-Distance-Estimators
 are also available through package "distrMod". \cr
-
-\section{Diagnostics}
+}
+\section{Diagnostics}{
 
 We bridge to the diagnostics provided by package "ismev", i.e. our
 return objects can be plugged into the diagnostics of this package.\cr
@@ -87,14 +87,15 @@ but also (adopted from package "distrMod")
   \item qqplots (with confidence bands) via \code{qqplot}
   \item returnlevel plots via \code{returnlevelplot}
 }
+\cr}
 
-\section{Starting Point}
+\section{Starting Point}{
  As a starting point you may look at the included script
   \file{"RobFitsAtRealData.R"} in the scripts folder of the package,
   accessible by
     \code{file.path(system.file(package="RobExtremes"),
-             "scripts/RobFitsAtRealData.R")}.
-
+             "scripts/RobFitsAtRealData.R")}. \cr
+}
 
 \details{
 \tabular{ll}{
@@ -236,7 +237,7 @@ APERYCONSTANT
 
 }}
 
-\section{Acknowledgement}
+\section{Acknowledgement}{
 This package is joint work by Peter Ruckdeschel, Matthias Kohl, and
 Nataliya Horbenko (whose PhD thesis went into this package to a large extent),
 with contributions by Dasha Pupashenko, Misha Pupashenko, Gerald Kroisandt,
@@ -245,7 +246,7 @@ project "Robust Risk Estimation" (2011-2016) funded by Volkswagen foundation
 (and gratefully ackknowledged). Thanks also goes to the maintainers of CRAN,
 in particully to Uwe Ligges who greatly helped us with finding an appropriate
 way to store the database of interpolating functions which allow the speed up
--- this is now package RobAStRDA on CRAN.
+-- this is now package RobAStRDA on CRAN.\cr}
 
 
 \author{
@@ -290,19 +291,19 @@ A homepage to this package is available under \url{http://robast.r-forge.r-proje
 You may suppress the start-up banner/message completely by setting
 \code{options("StartupBanner"="off")} somewhere before loading this package by
 \code{library} or \code{require} in your R-code / R-session.
-
+%
 If option \code{"StartupBanner"} is not defined (default) or setting
 \code{options("StartupBanner"=NULL)} or
 \code{options("StartupBanner"="complete")} the complete start-up banner is
 displayed.
-
+%
 For any other value of option \code{"StartupBanner"} (i.e., not in
 \code{c(NULL,"off","complete")}) only the version information is displayed.
-
+%
 The same can be achieved by wrapping the \code{library} or \code{require}  call
 into either \code{suppressStartupMessages()} or
 \code{onlytypeStartupMessages(.,atypes="version")}.
-
+%
 As for general \code{packageStartupMessage}'s, you may also suppress all
  the start-up banner by wrapping the \code{library} or \code{require}
  call into \code{suppressPackageStartupMessages()} from
