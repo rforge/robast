@@ -335,12 +335,13 @@ infoPlot(IC1, mfColRow = FALSE, panel.first= grid(),
          ylim = c(0,4,0,.3,0,.8), xlim=c(-6,6))
 par(mfrow=c(1,1))
 
+set.seed(123)
 data <- r(N)(20)
 par(mfrow=c(1,3))
 infoPlot(IC1, data=data, mfColRow = FALSE, panel.first= grid(),
          with.lab = TRUE, cex.pts=2,
-         which.lbs = c(1:4,15:20), which.Order = 1:6,
-         return.Order = TRUE)
+         which.lbs = c(1:4,15:20), which.Order = 1:6, cex.lbs=2,
+         return.Order = TRUE,col.pts="red",col.npts="blue")
 infoPlot(IC1, data=data[1:10], mfColRow = FALSE, panel.first= grid(),
          with.lab = TRUE, cex.pts=0.7)
 par(mfrow=c(1,1))

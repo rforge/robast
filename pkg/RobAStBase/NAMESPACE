@@ -5,7 +5,7 @@ import("distrEx")
 import("distrMod")
 import("RandVar")
 importFrom("startupmsg", "buildStartupMessage", "infoShow")
-importFrom("grDevices", "colorRamp", "grey", "rgb")
+importFrom("grDevices", "colorRamp", "grey", "rgb", "dev.list")
 importFrom("graphics", "abline", "axis", "box", "lines", "matlines",
            "matpoints", "mtext", "par", "points", "text", "title")
 importFrom("stats", "complete.cases", "dbinom", "dnorm", "fft",

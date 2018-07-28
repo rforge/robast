@@ -112,8 +112,8 @@ setMethod("infoPlot", "IC",
         in1to.draw <- (1%in%to.draw)
 
         yaxt0 <- xaxt0 <- rep("s",dims1)
-        if(!is.null(dots$xaxt)) xaxt0 <- rep(eval(dots$xaxt), length.out=dims1)
-        if(!is.null(dots$yaxt)) yaxt0 <- rep(eval(dots$yaxt), length.out=dims1)
+        if(!is.null(dots$xaxt)){ xaxt1 <- eval(dots$xaxt); xaxt0 <- rep(xaxt1, length.out=dims1)}
+        if(!is.null(dots$yaxt)){ yaxt1 <- eval(dots$yaxt); yaxt0 <- rep(yaxt1, length.out=dims1)}
 
         logArg <- NULL
         if(!is.null(dots[["log"]]))
@@ -245,11 +245,23 @@ setMethod("infoPlot", "IC",
             on.exit(options(warn = w0))
 #            opar$cin <- opar$cra <- opar$csi <- opar$cxy <-  opar$din <- NULL
             opar <- par(no.readonly = TRUE)
+            on.exit(par(opar))
             omar <- par("mar")
-            if(mfColRow){ on.exit(par(opar));
-                par(mfrow = c(nrows, ncols),mar = c(bmar,omar[2],tmar,omar[4])) }
-#            if (!withSweave)
-#               devNew()
+
+
+            wmar <- FALSE
+            if(!missing(bmar)||!missing(tmar)){
+                 lpA <- max(dims1,1)
+                 parArgsL <- vector("list",lpA)
+                 wmar <- TRUE
+                 if(missing(bmar)) bmar <- omar[1]
+                 if(missing(tmar)) bmar <- omar[3]
+                 bmar <- rep(bmar, length.out=lpA)
+                 tmar <- rep(tmar, length.out=lpA)
+                 for( i in 1:lpA)
+                      parArgsL[[i]] <- list(mar = c(bmar[i],omar[2],tmar[i],omar[4]))
+                 plotInfo$parArgsL <- parArgsL
+            }
 
            .pFL <- .preparePanelFirstLast(with.automatic.grid , dims1, pF.0, pL.0,
                              logArg, scaleX, scaleY, x.ticks, y.ticks,
@@ -269,33 +281,19 @@ setMethod("infoPlot", "IC",
             plotInfo$gridS <- .pFL$gridS
 
 
-#            omar <- par("mar")
-#            lpA <- max(dims1,1)
-#            parArgsL <- vector("list",lpA)
-#            bmar <- rep(bmar, length.out=lpA)
-#            tmar <- rep(tmar, length.out=lpA)
-#            xaxt0 <- if(is.null(dots$xaxt)) {
-#                      if(is.null(dots$axes)||eval(dots$axes))
-#                         rep(par("xaxt"),lpA) else rep("n",lpA)
-#                      }else rep(eval(dots$xaxt),lpA)
-#            yaxt0 <- if(is.null(dots$yaxt)) {
-#                      if(is.null(dots$axes)||eval(dots$axes))
-#                         rep(par("yaxt"),lpA) else rep("n",lpA)
-#                      }else rep(eval(dots$yaxt),lpA)
-
-#            for( i in 1:lpA){
-#                 parArgsL[[i]] <- list(mar = c(bmar[i],omar[2],tmar[i],omar[4])
-#                                      ,xaxt=xaxt0[i], yaxt= yaxt0[i]
-#                                      )
-#            }
-
+            wmar <- FALSE
+            if(!missing(bmar)||!missing(tmar)){
+               wmar <- TRUE
+               bmar <-
+               nmar <- c(bmar[i],omar[2],tmar[i],omar[4])
+            }
             trEnv <- new.env()
 
             if(!is.null(data)){
 
                n <- if(!is.null(dim(data))) nrow(data) else length(data)
 
-               if(is.null(lab.pts)) lab.pts <- paste(1:n)
+               lab.pts <- if(is.null(lab.pts)) paste(1:n) else rep(lab.pts,length.out=n)
 
                if(!is.null(cex.pts.fun)){
                    cex.pts.fun <- .fillList(cex.pts.fun, (dims1)*2)
@@ -304,7 +302,7 @@ setMethod("infoPlot", "IC",
                    cex.npts.fun <- .fillList(cex.npts.fun, (dims1)*2)
                }
 
-               if(missing(adj.lbs)) cex.lbs <- c(0,0)
+               if(missing(adj.lbs)) adj.lbs <- c(0,0)
                if(!is.array(adj.lbs) ||
                  (is.array(adj.lbs)&&!all.equal(dim(adj.lbs),c(2,2,dims1)))){
                   adj.lbs <- array(rep(adj.lbs, length.out= 2*dims1*2),
@@ -339,8 +337,6 @@ setMethod("infoPlot", "IC",
                     col.lbs <- t(matrix(rep(col.lbs, length.out= 2*n),2,n))
 
                  }
-                 if(!is.null(lab.pts))
-                    lab.pts <-  rep(lab.pts, length.out=n)
 
                sel <- .SelectOrderData(data, function(x)absInfoEval(x,absInfo.f),
                                        which.lbs, which.Order, which.nonlbs)
@@ -375,6 +371,9 @@ setMethod("infoPlot", "IC",
             plotInfo$IC <- i0.d
             plotInfo$IC.class <- i0.dC
 
+            labC.pts <-  lab.pts[sel.C$ind]
+            lab.pts <-  lab.pts[sel$ind]
+
             if(attr.pre){
                col0.pts <- col.pts[sel$ind,1]
                colC.pts <- col.pts[sel.C$ind,2]
@@ -393,10 +392,6 @@ setMethod("infoPlot", "IC",
                cex0.npts <- cex.npts[sel$ind.ns,1]
                cexC.npts <- cex.npts[sel.C$ind.ns,2]
                cex.pts <- cex0.pts; cex.npts <- cex0.npts
-
-               lab0.pts <-  lab.pts[sel$ind,1]
-               labC.pts <-  lab.pts[sel.C$ind,2]
-               lab.pts <- lab0.pts
 
                cex0.lbs <- matrix(cex.lbs[sel$ind,1,],nrow=n.s,ncol=dims1)
                cexC.lbs <- matrix(cex.lbs[sel.C$ind,2,],nrow=n.s,ncol=dims1)
@@ -456,12 +451,6 @@ setMethod("infoPlot", "IC",
                     col.lbs <- t(matrix(rep(col.lbs, length.out= 2*n.s),2,n.s))
                colC.lbs <- col.lbs[,2]
                col.lbs <- col.lbs[,1]
-
-               if(!is.null(lab.pts)){
-                  lab.pts <- matrix(rep(lab.pts, length.out= 2*n.s),n.s,2)
-               }
-               labC.pts <- lab.pts[,2]
-               lab.pts <- lab.pts[,1]
             }
 
                jitter.fac <- rep(jitter.fac, length.out=2)
@@ -756,8 +745,7 @@ setMethod("infoPlot", "IC",
 
                dotsP[[1]] <- resc$dots
 
-#               do.call(par, args = parArgsL[[1]])
-#               plotInfo$par.abs <- parArgsL[[1]]
+               if(wmar) do.call(par, args = parArgsL[[1]])
 
                finiteEndpoints <- rep(FALSE,4)
                if(scaleX[1]){
@@ -852,6 +840,12 @@ setMethod("infoPlot", "IC",
                 plotInfo$relLegend <- plotInfo$relTitle <- vector("list", dims0)
                 plotInfo$doLabsRel <- plotInfo$doLabsCRel <- vector("list", dims0)
 
+                if(mfColRow){
+                  if(!withSweave&&in1to.draw && length(dev.list())>0) devNew()
+                  par(mfrow = c(nrows, ncols))
+                  plotInfo$rel.mfrow <- c(nrows, ncols)
+                }
+
                 for(i in 1:dims0){
                     indi <- to.draw1[i]-1
                     i1 <- i + in1to.draw
@@ -878,12 +872,7 @@ setMethod("infoPlot", "IC",
                     plotInfo$relY[[i]] <- resc$Y
                     plotInfo$relYc[[i]] <- resc.C$Y
 
-#                    if(mfColRow){
-#                       parArgsL[[i+in1to.draw]] <- c(parArgsL[[i+in1to.draw]],list(mfrow = c(nrows, ncols)))
-#                        devNew()
-#                       if(i==1) do.call(par,args=parArgsL[[i+in1to.draw]])
-#                    } else{do.call(par,args=parArgsL[[i+in1to.draw]])}
-#                    plotInfo$par.rel[[i]] <- parArgsL[[i+in1to.draw]]
+                    if(wmar) do.call(par, args = parArgsL[[i+in1to.draw]])
 
                     finiteEndpoints <- rep(FALSE,4)
                     if(scaleX[i1]){

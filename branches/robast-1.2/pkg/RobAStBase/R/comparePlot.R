@@ -114,8 +114,8 @@ setMethod("comparePlot", signature("IC","IC"),
         ncols <- ceiling(dims0/nrows)
 
         yaxt0 <- xaxt0 <- rep("s",dims0)
-        if(!is.null(dots$xaxt)) xaxt0 <- rep(dots$xaxt, length.out=dims0)
-        if(!is.null(dots$yaxt)) yaxt0 <- rep(dots$yaxt, length.out=dims0)
+        if(!is.null(dots$xaxt)){ xaxt1 <- eval(dots$xaxt); xaxt0 <- rep(xaxt1, length.out=dims0)}
+        if(!is.null(dots$yaxt)){ yaxt1 <- eval(dots$yaxt); yaxt0 <- rep(yaxt1, length.out=dims0)}
 
         logArg <- NULL
         if(!is.null(dots[["log"]]))
@@ -212,29 +212,26 @@ setMethod("comparePlot", signature("IC","IC"),
         w0 <- getOption("warn"); options(warn = -1); on.exit(options(warn = w0))
 
         opar <- par(no.readonly = TRUE)
+        on.exit(par(opar))
         omar <- par("mar")
-        if(mfColRow){ on.exit(par(opar));
-           par(mfrow = c(nrows, ncols),mar = c(bmar,omar[2],tmar,omar[4])) }
 
-#            omar <- par("mar")
-#            lpA <- max(dims0,1)
-#            parArgsL <- vector("list",lpA)
-#            bmar <- rep(bmar, length.out=lpA)
-#            tmar <- rep(tmar, length.out=lpA)
-#            xaxt0 <- if(is.null(dots$xaxt)) {
-#                      if(is.null(dots$axes)||eval(dots$axes))
-#                         rep(par("xaxt"),lpA) else rep("n",lpA)
-#                      }else rep(eval(dots$xaxt),lpA)
-#            yaxt0 <- if(is.null(dots$yaxt)) {
-#                      if(is.null(dots$axes)||eval(dots$axes))
-#                         rep(par("yaxt"),lpA) else rep("n",lpA)
-#                      }else rep(eval(dots$yaxt),lpA)
+        if(mfColRow) par(mfrow = c(nrows, ncols)) else{
+          if(!withSweave && length(dev.list())>0) devNew()
+        }
 
-#            for( i in 1:lpA){
-#                 parArgsL[[i]] <- list(mar = c(bmar[i],omar[2],tmar[i],omar[4])
-#                                      ,xaxt=xaxt0[i], yaxt= yaxt0[i]
-#                                      )
-#            }
+        wmar <- FALSE
+        if(!missing(bmar)||!missing(tmar)){
+             lpA <- max(dims0,1)
+             parArgsL <- vector("list",lpA)
+             wmar <- TRUE
+             if(missing(bmar)) bmar <- omar[1]
+             if(missing(tmar)) bmar <- omar[3]
+             bmar <- rep(bmar, length.out=lpA)
+             tmar <- rep(tmar, length.out=lpA)
+             for( i in 1:lpA)
+                  parArgsL[[i]] <- list(mar = c(bmar[i],omar[2],tmar[i],omar[4]))
+             plotInfo$parArgsL <- parArgsL
+        }
 
         if(is(distr, "DiscreteDistribution")){
             x.vecD <- vector("list", dims0)
@@ -277,6 +274,7 @@ setMethod("comparePlot", signature("IC","IC"),
 
             n <- if(!is.null(dim(data))) nrow(data) else length(data)
 
+            lab.pts <- if(is.null(lab.pts)) paste(1:n) else rep(lab.pts,length.out=n)
 
             if(!is.null(cex.pts.fun)){
                   cex.pts.fun <- .fillList(cex.pts.fun, dims0*ncomp)}
@@ -315,8 +313,6 @@ setMethod("comparePlot", signature("IC","IC"),
                   col.lbs <- t(matrix(rep(col.lbs, length.out= ncomp*n),ncomp,n))
                }
 
-               if(!is.null(lab.pts))
-                  lab.pts <- matrix(rep(lab.pts, length.out=n*ncomp),n,ncomp)
 
             absInfoEval <- function(x,IC){
                   QF <- ID
@@ -341,10 +337,17 @@ setMethod("comparePlot", signature("IC","IC"),
             sel1 <- def.sel(IC1); sel2 <- def.sel(IC2)
             plotInfo$sel1 <- sel1
             plotInfo$sel2 <- sel2
-            plotInfo$obj1 <- sel1$ind1
-            plotInfo$obj2 <- sel2$ind1
+            plotInfo$obj1 <- sel1$ind
+            plotInfo$obj2 <- sel2$ind
             selAlly.s <- c(sel1$y,sel2$y)
             selAlly.ns <- c(sel1$y.ns,sel2$y.ns)
+
+            n.s <- length(sel1$ind)
+            n.ns <- length(sel1$ind.ns)
+
+            lab0.pts <- matrix(NA, n.s, ncomp)
+            lab0.pts[,1] <- lab.pts[sel1$ind]
+            lab0.pts[,2] <- lab.pts[sel2$ind]
 
             if(attr.pre){
                col0.pts     <- col.pts[sel1$ind,]
@@ -356,8 +359,6 @@ setMethod("comparePlot", signature("IC","IC"),
                cex0.pts     <- cex.pts[sel1$ind,]
                cex0.pts[,2] <- cex.pts[sel2$ind,2]
 
-               lab0.pts     <- lab.pts[sel1$ind,]
-               lab0.pts[,2] <- lab.pts[sel2$ind,2]
 
                cex0.lbs      <- cex.lbs[sel1$ind,,,drop=FALSE]
                cex0.lbs[,2,] <- cex.lbs[sel2$ind,2,]
@@ -378,15 +379,15 @@ setMethod("comparePlot", signature("IC","IC"),
 
             if(is(obj3, "IC")){ sel3 <- def.sel(IC3)
                                 plotInfo$sel3 <- sel3
-                                plotInfo$obj3 <- sel3$ind1
+                                plotInfo$obj3 <- sel3$ind
                                 selAlly.s <- c(selAlly.s,sel3$y)
                                 selAlly.ns <- c(selAlly.ns,sel3$y.ns)
                                 plotInfo$IC3abs.f <- function(x) absInfoEval(x,IC3)
+                                lab0.pts[,3] <- lab.pts[sel3$ind]
                                 if(attr.pre){
                                    col0.pts[,3] <- col.pts[sel3$ind,3]
                                    pch0.pts[,3] <- pch.pts[sel3$ind,3]
                                    cex0.pts[,3] <- cex.pts[sel3$ind,3]
-                                   lab0.pts[,3] <- lab.pts[sel3$ind,3]
                                    cex0.lbs[,3,] <- cex.lbs[sel3$ind,3,]
                                    col0.lbs[,3] <- col.lbs[sel3$ind,3]
                                    col.npts[,3] <- col.pts[sel3$ind.ns,3]
@@ -396,15 +397,15 @@ setMethod("comparePlot", signature("IC","IC"),
                               }
             if(is(obj4, "IC")){ sel4 <- def.sel(IC4)
                                 plotInfo$sel4 <- sel4
-                                plotInfo$obj4 <- sel4$ind1
+                                plotInfo$obj4 <- sel4$ind
                                 selAlly.s <- c(selAlly.s,sel4$y)
                                 selAlly.ns <- c(selAlly.ns,sel4$y.ns)
                                 plotInfo$IC4abs.f <- function(x) absInfoEval(x,IC4)
+                                lab0.pts[,4] <- lab.pts[sel4$ind]
                                 if(attr.pre){
                                    col0.pts[,4] <- col.pts[sel4$ind,4]
                                    pch0.pts[,4] <- pch.pts[sel4$ind,4]
                                    cex0.pts[,4] <- cex.pts[sel4$ind,4]
-                                   lab0.pts[,4] <- lab.pts[sel4$ind,4]
                                    cex0.lbs[,4,] <- cex.lbs[sel4$ind,4,]
                                    col0.lbs[,4] <- col.lbs[sel4$ind,4]
                                    col.npts[,4] <- col.pts[sel4$ind.ns,4]
@@ -413,16 +414,15 @@ setMethod("comparePlot", signature("IC","IC"),
                                 }
                               }
 
+            lab.pts <- lab0.pts
+
             if(attr.pre){
                col.pts <- col0.pts
                pch.pts <- pch0.pts
                cex.pts <- cex0.pts
-               lab.pts <- lab0.pts
                cex.lbs <- cex0.lbs
                col.lbs <- col0.lbs
             }else{
-               n.s <- length(sel1$ind)
-               n.ns <- length(sel1$ind.ns)
                if(missing(pch.pts)) pch.pts <- 1
                if(!is.matrix(pch.pts))
                    pch.pts <- t(matrix(rep(pch.pts, length.out= ncomp*n.s),ncomp,n.s))
@@ -454,10 +454,6 @@ setMethod("comparePlot", signature("IC","IC"),
                if(missing(col.lbs)) col.lbs <- col.pts
                if(!is.matrix(col.lbs))
                   col.lbs <- t(matrix(rep(col.lbs, length.out= ncomp*n.s),ncomp,n.s))
-
-               if(missing(lab.pts)) lab.pts <- 1:n.s
-               if(!is.matrix(lab.pts))
-                  lab.pts <- matrix(rep(lab.pts, length.out= ncomp*n.s),n.s,ncomp)
             }
 
 
@@ -510,9 +506,9 @@ setMethod("comparePlot", signature("IC","IC"),
                               col = col.l, pch = pch.l), dwo0))
                            if(with.lab0){
                               text(rescd$X[i.l], rescd$Y[i.l], labels = lab.pts.l,
-                                   cex = cexl[,j.l,i], col = coll0[,j.l], adj=adjl[,j.l,i])
+                                   cex = cexl0[,j.l,i], col = coll0[,j.l], adj=adjl0[,j.l,i])
                               pI$doLabs[[(i-1)*ncomp+j.l]] <- list(rescd$X[i.l], rescd$Y[i.l], labels = lab.pts.l,
-                                   cex = cexl[,j.l,i], col = coll0[,j.l],adj=adjl[,j.l,i])
+                                   cex = cexl0[,j.l,i], col = coll0[,j.l],adj=adjl0[,j.l,i])
                            }
                         }
                      }
@@ -604,11 +600,7 @@ setMethod("comparePlot", signature("IC","IC"),
                finiteEndpoints[4] <- is.finite(scaleY.inv[[i]](max(yM, ylim[2,i],na.rm=TRUE)))
             }
 
-#            if(mfColRow){
-#                parArgsL[[i]] <- c(parArgsL[[i]],list(mfrow = c(nrows, ncols)))
-#                eval(dN)
-#                if(i==1) do.call(par,args=parArgsL[[i]])
-#            }else{do.call(par,args=parArgsL[[i]])}
+            if(wmar) do.call(par,args=parArgsL[[i]])
 
             assign("plotInfo", plotInfo, envir = trEnv)
             do.call(plot, args=c(list(x = resc1$X, y = y0,

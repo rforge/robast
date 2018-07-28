@@ -70,8 +70,8 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         ncols <- ceiling(dims0/nrows)
 
         yaxt0 <- xaxt0 <- rep("s",dims0)
-        if(!is.null(dots$xaxt)) xaxt0 <- rep(dots$xaxt, length.out=dims0)
-        if(!is.null(dots$yaxt)) yaxt0 <- rep(dots$yaxt, length.out=dims0)
+        if(!is.null(dots$xaxt)){ xaxt1 <- eval(dots$xaxt); xaxt0 <- rep(xaxt1, length.out=dims0)}
+        if(!is.null(dots$yaxt)){ yaxt1 <- eval(dots$yaxt); yaxt0 <- rep(yaxt1, length.out=dims0)}
 
         logArg <- NULL
         if(!is.null(dots[["log"]]))
@@ -182,13 +182,29 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         w0 <- getOption("warn")
         options(warn = -1)
         on.exit(options(warn = w0))
-        if (!withSweave)
-             devNew()
-        
+
         opar <- par(no.readonly = TRUE)
         omar <- par("mar")
-        if(mfColRow){ on.exit(par(opar));
-           par(mfrow = c(nrows, ncols),mar = c(bmar,omar[2],tmar,omar[4])) }
+        on.exit(par(opar))
+
+        if(mfColRow) par(mfrow = c(nrows, ncols)) else{
+           if(!withSweave && length(dev.list())>0) devNew()
+        }
+
+
+        wmar <- FALSE
+        if(!missing(bmar)||!missing(tmar)){
+             lpA <- max(dims0,1)
+             parArgsL <- vector("list",lpA)
+             wmar <- TRUE
+             if(missing(bmar)) bmar <- omar[1]
+             if(missing(tmar)) bmar <- omar[3]
+             bmar <- rep(bmar, length.out=lpA)
+             tmar <- rep(tmar, length.out=lpA)
+             for( i in 1:lpA)
+                  parArgsL[[i]] <- list(mar = c(bmar[i],omar[2],tmar[i],omar[4]))
+             plotInfo$parArgsL <- parArgsL
+        }
 
         dotsT$main <- dotsT$cex.main <- dotsT$col.main <- dotsT$line <- NULL
 
@@ -235,10 +251,13 @@ setMethod("plot", signature(x = "IC", y = "missing"),
             }
 
 
+            if(wmar) do.call(par,args=parArgsL[[i]])
+
             plotInfo$PlotArgs[[i]] <- c(list(x=x.vec1, y=y.vec1, type = plty, lty = lty,
                                       xlab = .mpresubs(xlab), ylab = .mpresubs(ylab),
                                       panel.first = pF[[i]],
                                       panel.last = pL), dotsP[[i]])
+
             do.call(plot, args=c(list(x=x.vec1, y=y.vec1, type = plty, lty = lty,
                                       xlab = .mpresubs(xlab), ylab = .mpresubs(ylab),
                                       panel.first = pF[[i]],
@@ -356,6 +375,8 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
           adj.lbs <- matrix(rep(adj.lbs, length.out= dims0*2),nrow=2,ncol=dims0)
     }
 
+    lab.pts <- if(is.null(lab.pts)) paste(1:n) else rep(lab.pts,length.out=n)
+
     if(attr.pre){
        if(missing(pch.pts)) pch.pts <- 1
        if(!length(pch.pts)==n)
@@ -374,7 +395,6 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
        if(missing(col.lbs)) col.lbs <- col.pts
        if(!length(col.lbs)==n)
           col.lbs <- rep(col.lbs, length.out= n)
-       lab.pts <- if(is.null(lab.pts)) paste(1:n) else rep(lab.pts,length.out=n)
     }
 
 
@@ -399,7 +419,7 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
 
     sel <- .SelectOrderData(y, ICabs.f, which.lbs, which.Order, which.nonlbs)
     plotInfo$sel <- sel
-    plotInfo$obj <- sel$ind1
+    plotInfo$obj <- sel$ind
 
     i.d <- sel$ind
     i0.d <- sel$ind1
@@ -408,6 +428,7 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
     i.d.ns <- sel$ind.ns
     n.ns <- length(i.d.ns)
 
+    lab.pts <- lab.pts[sel$ind]
     if(attr.pre){
        col.pts <- col.pts[sel$ind]
        col.npts <- col.pts[sel$ind.ns]
@@ -415,7 +436,6 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
        pch.pts <- pch.pts[sel$ind]
        cex.npts <- cex.pts[sel$ind.ns]
        cex.pts <- cex.pts[sel$ind]
-       lab.pts <- lab.pts[sel$ind]
        cex.lbs <-  cex.lbs[sel$ind,]
        col.lbs <-  col.lbs[sel$ind]
     }else{
@@ -428,7 +448,6 @@ setMethod("plot", signature(x = "IC",y = "numeric"),
        if(missing(cex.pts)) cex.pts <- 1
        if(!length(cex.pts)==n.s)
           cex.pts <- rep(cex.pts, length.out= n.s)
-       lab.pts <- if(is.null(lab.pts)) paste(1:n.s) else rep(lab.pts,length.out=n.s)
 
        if(missing(pch.npts)) pch.npts <- 1
        if(!length(pch.npts)==n.ns)

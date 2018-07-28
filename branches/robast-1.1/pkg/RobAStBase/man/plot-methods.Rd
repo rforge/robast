@@ -280,7 +280,7 @@ plot(IC2, main = TRUE, panel.first= grid(),
      ylim=c(-3,3,-1,3), xlim=c(-2,3),
      with.legend = TRUE)
 
-data <- r(N)(30)
+set.seed(12);data <- r(N)(30)
 plot(IC2, data, panel.first= grid(),
      ylim = c(-3,3,-1,3), xlim=c(-2,3),
      cex.pts = 3, pch.pts = 1:2, col.pts="green",

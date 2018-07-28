@@ -12,11 +12,9 @@
      n   <- if(dimL) nrow(data) else length(data)
      ind <- 1:n
 
-     ### function evaluation
-     y <- if(dimL) apply(data, 1, fct) else sapply(data,fct)
 
 #------------------------------------------------------------------------------
-     ## selected data : data.t
+     ## firt selection: selected data in first : data.s
 #------------------------------------------------------------------------------
 
      ### first selection
@@ -26,67 +24,51 @@
      which.lbs0 <- ind %in% which.lbs
      # the remaining nb of obs after first selection
      n.s <- sum(which.lbs0) 
+     i.s <- 1:n.s
      ## produce index for shown data after first selection
-     ind.s <- ind[which.lbs0]
-     ## function values after first selection
-     y.s <- y[ind.s]
+     ind.s <- ind1.s <- ind[which.lbs0]
+     ## first selection
+     data.s <- .SelectIndex(data,1,ind.s)
 
-     ### ordering 
-     oN.s <- order(y.s)
-     ## indices remaining after first selection ordered 
-     ##         from largest function value to smallest
-     ind1.s <- rev(ind[oN.s])
-
+#------------------------------------------------------------------------------
      ### second selection
+#------------------------------------------------------------------------------
+
+     ind2 <- ind.s
+
+     ## function values only after first selection
+     ### function evaluation
+     y.s <- if(dimL) apply(data.s, 1, fct) else sapply(data.s,fct)
+     ## simpler with ranks, see distrMod:::.labelprep
+     rky.s <- n.s+1-rank(y.s)
+     y2.s <- y.s
+     sel2 <- i.s
+     data.t <- data.s
+
      ## selection of ordered
-     if(is.null(which.Order))
-          which.Order <- 1:n.s ## if no 2nd selection performed use all remaining obs.
+     if(!is.null(which.Order)){
+        sel2 <- i.s[rky.s %in% which.Order]
+        ind2 <- ind2[sel2]
+        y2.s <- y2.s[sel2]
+        data.t <- .SelectIndex(data.s,1,sel2)
+     }
 
-     ## from ranks in remaining selection pick out those in which.order
-     in.t <- (n.s+1)-which.Order
-     in.t <- in.t[in.t>0]
-     oN.t <-  oN.s[in.t] ## use largest ones in this order
-     oN.t <- oN.t[!is.na(oN.t)]
-
-     ## remaining number of observations after 2nd selection
-     n.t <- length(oN.t)
-     ## observations indices after 2nd selection
-     ind.t <- ind.s[oN.t]  
-     ind.t <- ind.t[!is.na(ind.t)]
-     ## function values after 2nd selection
-     y.t <- y[ind.t]
-     ## data after both selections
-#     data.t <- if(dimL) data[ind.t,] else data[ind.t]
-#     # if needed recast it to matrix/array
-#     if(dimL) dim(data.t) <- c(n.t,d1[-1])
-     data.t <- .SelectIndex(data,1,ind.t)
-
+     ord2 <- order(y2.s, decreasing = TRUE)
+     ind2.s <- ind2[ord2]
+     sel2 <- sel2[ord2]
+     data.t <- .SelectIndex(data.t,1,ord2)
+     y.t <- y2.s[ord2]
 #------------------------------------------------------------------------------
      ## data not labelled: data.ns
 #------------------------------------------------------------------------------
-     if(is.null(which.nonlbs)) which.nonlbs <- 1:n
-     #### non selected obs' indices after 1st selection
-     ind.ns0 <- ind[!which.lbs0]
-     #### non selected obs' indices in 2nd selection
-     ind.nt <- if(length(oN.t)) ind.s[-oN.t] else numeric(0)
-     #### non selected obs' in total is the union of both non-selected ones
-     ind.ns1 <- unique(sort(c(ind.ns0, ind.nt)))
-     ind.ns <- ind.ns1[ind.ns1 %in% which.nonlbs]
-     ## number of non-selected obs'
-     n.ns <- length(ind.ns)
-
-#     which.lbns0 <-ind %in% ind.ns
-#     which.lbnx <- rep(which.lbns0, length.out=length(data))
-
+     ind.ns <- ind[-ind2]
+     if(length(ind.ns) && !is.null(which.nonlbs))
+         ind.ns <- ind.ns[ind.ns%in%which.nonlbs]
      ## non selected data
      data.ns <- .SelectIndex(data,1,ind.ns)
-#     data.ns <- data[which.lbnx]
-     # if needed recast it to matrix
-#     if(dimL) dim(data.ns) <- c(n.ns,d1[-1])
+     y.ns <- if(dimL) apply(data.ns, 1, fct) else sapply(data.ns,fct)
 
-     y.ns <- y[ind.ns]
-
-     return(list(data=data.t, y=y.t, ind=ind.t, ind1=ind1.s, data.ns=data.ns, y.ns=y.ns, ind.ns = ind.ns))
+     return(list(data=data.t, y=y.t, ind=ind2.s, ind1=ind1.s, data.ns=data.ns, y.ns=y.ns, ind.ns = ind.ns))
 }
 
 .SelectIndex <- function(data,index,selection){
