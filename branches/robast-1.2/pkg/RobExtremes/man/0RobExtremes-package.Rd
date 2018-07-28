@@ -18,9 +18,9 @@ Importing from packages \pkg{actuar},
 \itemize{\item Gumbel distribution
          \item Generalized Extreme Value distribution (GEVD)
          \item Generalized Pareto distribution (GPD)
-         \item Pareto distribution}\cr
+         \item Pareto distribution}
+\cr
 }
-
 \section{Functionals for Distributions}{
 
 These distributions come together with particular methods for expectations.
@@ -37,7 +37,8 @@ variances, median, IQR, skewness, kurtosis. \cr
 In addition, extending estimators \code{Sn} and \code{Qn} from package
 \pkg{robustbase}, we provide functionals for Sn and Qn. A new
 asymmetric version of the \code{mad}, \code{kMAD} gives yet another robust
-scale estimator (and functional). \cr}
+scale estimator (and functional). \cr
+}
 
 \section{Models and Estimators}{
 
@@ -69,7 +70,6 @@ We robust (high-breakdown) starting estimators for
 For all these families, of course, MLEs and Minimum-Distance-Estimators
 are also available through package "distrMod". \cr
 }
-
 \section{Diagnostics}{
 
 We bridge to the diagnostics provided by package "ismev", i.e. our
@@ -95,8 +95,8 @@ but also (adopted from package "distrMod")
   \file{"RobFitsAtRealData.R"} in the scripts folder of the package,
   accessible by
     \code{file.path(system.file(package="RobExtremes"),
-             "scripts/RobFitsAtRealData.R")}. \cr\cr
-}
+             "scripts/RobFitsAtRealData.R")}.
+\cr}
 
 \details{
 \tabular{ll}{

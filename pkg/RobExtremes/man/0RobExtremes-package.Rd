@@ -19,8 +19,8 @@ Importing from packages \pkg{actuar},
          \item Generalized Extreme Value distribution (GEVD)
          \item Generalized Pareto distribution (GPD)
          \item Pareto distribution}
-\cr}
-
+\cr
+}
 \section{Functionals for Distributions}{
 
 These distributions come together with particular methods for expectations.
@@ -39,6 +39,7 @@ In addition, extending estimators \code{Sn} and \code{Qn} from package
 asymmetric version of the \code{mad}, \code{kMAD} gives yet another robust
 scale estimator (and functional). \cr
 }
+
 \section{Models and Estimators}{
 
 As to models, we provide the
@@ -86,16 +87,16 @@ but also (adopted from package "distrMod")
 \itemize{
   \item qqplots (with confidence bands) via \code{qqplot}
   \item returnlevel plots via \code{returnlevelplot}
+}\cr
 }
-\cr}
 
 \section{Starting Point}{
  As a starting point you may look at the included script
   \file{"RobFitsAtRealData.R"} in the scripts folder of the package,
   accessible by
     \code{file.path(system.file(package="RobExtremes"),
-             "scripts/RobFitsAtRealData.R")}. \cr
-}
+             "scripts/RobFitsAtRealData.R")}.
+\cr}
 
 \details{
 \tabular{ll}{
