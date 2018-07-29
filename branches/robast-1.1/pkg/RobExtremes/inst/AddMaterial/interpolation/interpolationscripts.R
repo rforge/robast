@@ -82,6 +82,17 @@ if(FALSE){
   namPFam <- csv1$namPFam
   namInSysdata <- ".MBRE"
   .saveGridToCSV(Grid,"interpolGamma familyMBRE.csv",namPFam,namInSysdata)
+  RobAStRDA:::.saveGridToRda(fromFileCSV="interpolGamma familyMBRE.csv",toFileRDA = "sysdata.rda")
+
+myplot <- function(whichLM, plotGridRestriction = NULL,
+               df = NULL, gridRestrForSmooth = NULL, withSmooth=TRUE, ..., filen="sysdata.rda")
+       plotLM("MBRE",Famnam="Gam",whichLM=whichLM, baseDir=baseDir0, withSmooth=withSmooth,
+               plotGridRestriction=plotGridRestriction,
+               smoothtry = TRUE, df = df,
+               gridRestrForSmooth = gridRestrForSmooth, ..., rdaFilen=filen)
+
+myplot(1, gridR=c(200:700),withS=TRUE)
+myplot(1, gridR=c(1:183,228:234,242:286,293), withS=FALSE)
 }
 
 if(FALSE){

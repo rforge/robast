@@ -3,7 +3,9 @@ plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
                withSmooth = FALSE, plotGridRestriction = NULL,
                smoothtry = FALSE, df = NULL, gridRestrForSmooth = NULL,
                prehook={}, posthook={}, ylab=NULL, xlab=NULL, main = NULL,
-               lwd=NULL, lty= NULL, col =NULL, inputSmooth = FALSE, ...){
+               lwd=NULL, lty= NULL, col =NULL, inputSmooth = FALSE, ...,
+               rdaFilen = "sysdata.rda",
+               rdaRelPath = "branches/robast-1.1/pkg/RobExtremesBuffer"){
    ## Gridnam in (Sn,OMSE,RMXE,MBRE) ## uses partial matching!!
    ## Famnam in "Generalized Pareto Family", ## uses partial matching!!
    ##           "GEV Family",
@@ -55,7 +57,7 @@ plotLM <- function(Gridnam,Famnam,whichLM, baseDir="C:/rtest/robast",
 #     with columnwise restrictions of \code{Y} (and \code{NULL} entries
 #     are interpreted as no restriction). }
 
-   file <- file.path(baseDir, "branches/robast-1.0/pkg/RobExtremesBuffer/sysdata.rda")
+   file <- file.path(baseDir, rdaRelPath, rdaFilen)
 #   file <- file.path(baseDir, "branches/robast-1.0/pkg/RobAStRDA/R/sysdata.rda")
    if(!file.exists(file)) stop("Fehler mit Checkout")
    nE <- new.env()

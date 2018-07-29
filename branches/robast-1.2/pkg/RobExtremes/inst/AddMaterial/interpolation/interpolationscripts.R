@@ -5,8 +5,8 @@
 ### open R session
 require(RobExtremes)
 ### -> change this according to where you checked out the svn repo:
-#.basepath <- "C:/rtest/RobASt/branches/robast-1.0./pkg"
-.basepath <- "/p/fm/PeterRuckdeschel/rtest/RobASt/branches/robast-1.0/pkg"
+.basepath <- "C:/rtest/RobASt/branches/robast-1.1/pkg"
+#.basepath <- "/p/fm/PeterRuckdeschel/rtest/RobASt/branches/robast-1.1/pkg"
 .myFolderTo <- file.path(.basepath,"RobExtremesBuffer")
 ## <-
 oldwd <- getwd()
@@ -48,7 +48,53 @@ xiGridneg <- seq(-1/2+0.005,-0.005,length=150)
 #
 # in the end, the results are stored in files like
 #   interpol.OMSEpos1GEVUFamily.csv in
-#
+
+
+# done 20180729: recomputation MBRE grid for Gamma
+if(FALSE){
+  ## Block01::      interpol.MBREpos1Gammafamily.csv
+   PF <- GammaFamily()
+  .svInt(.MBRE.th, PFam=PF, xiGrid = xiGridpos1,namFzus="pos1")
+}
+if(FALSE){
+  ## Block02::      interpol.MBREpos2Gammafamily.csv
+   PF <- GammaFamily()
+  .svInt(.MBRE.th, PFam=PF, xiGrid = xiGridpos2,namFzus="pos2")
+}
+if(FALSE){
+  ## Block03::      interpol.MBREpos3Gammafamily.csv
+   PF <- GammaFamily()
+  .svInt(.MBRE.th, PFam=PF, xiGrid = xiGridpos3,namFzus="pos3")
+}
+if(FALSE){
+  ## Block04::      interpol.MBREpos4Gammafamily.csv
+   PF <- GammaFamily()
+  .svInt(.MBRE.th, PFam=PF, xiGrid = xiGridpos4,namFzus="pos4")
+}
+
+if(FALSE){
+##  merge blocks 1-4
+  csv1 <- .readGridFromCSV("interpol.MBREpos1Gammafamily.csv")
+  csv2 <- .readGridFromCSV("interpol.MBREpos2Gammafamily.csv")
+  csv3 <- .readGridFromCSV("interpol.MBREpos3Gammafamily.csv")
+  csv4 <- .readGridFromCSV("interpol.MBREpos4Gammafamily.csv")
+  Grid <- rbind(csv1$Grid,csv2$Grid,csv3$Grid,csv4$Grid)
+  namPFam <- csv1$namPFam
+  namInSysdata <- ".MBRE"
+  .saveGridToCSV(Grid,"interpolGamma familyMBRE.csv",namPFam,namInSysdata)
+  RobAStRDA:::.saveGridToRda(fromFileCSV="interpolGamma familyMBRE.csv",toFileRDA = "sysdata.rda")
+
+myplot <- function(whichLM, plotGridRestriction = NULL,
+               df = NULL, gridRestrForSmooth = NULL, withSmooth=TRUE, ..., filen="sysdata.rda")
+       plotLM("MBRE",Famnam="Gam",whichLM=whichLM, baseDir=baseDir0, withSmooth=withSmooth,
+               plotGridRestriction=plotGridRestriction,
+               smoothtry = TRUE, df = df,
+               gridRestrForSmooth = gridRestrForSmooth, ..., rdaFilen=filen)
+
+myplot(1, gridR=c(200:700),withS=TRUE)
+myplot(1, gridR=c(1:183,228:234,242:286,293), withS=FALSE)
+}
+
 if(FALSE){
   ## Block01::      interpol.RMXEpos1GEVUFamily.csv
    PF <- GEVFamilyMuUnknown(withPos=FALSE, ..name="GEVU Family")
