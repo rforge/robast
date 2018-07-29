@@ -1,0 +1,118 @@
+=================================================================================			 
+### distr release 2.7 ###
+=================================================================================			 
+
+Updates for the packages of the distr family are now avaialable on CRAN in 
+version >= 2.7.0. 
+
+The most important changes are:
+  - we switch from SweaveListingUtils (no longer maintained as announced
+    prior to 2015) to knitr in vignettes
+  - graphics (plot-methods) are now more stringently vectorized in their arguments
+  - internally, we use accessor q.l instead of q for the quantiles which
+    makes our packages available for use with Jupyter IRKernel and easier
+	with RStudio (both catch calls to q() and treat them differently to
+	standard R)
+
+For details please see the NEWS files in the packages, available as
+NEWS("<pkgname>").
+
+=================================================================================			 
+### RobASt release 1.1 ###
+=================================================================================			 
+
+Updates for the packages of the RobASt family are now avaialable on CRAN in 
+version >= 1.1.0
+
+Most importantly, we have (finally) released on CRAN a new package 
+
+                       "RobExtremes" 
+
+in the RobASt family of packages. 
+
++ It provides (speeded up) optimally-robust estimators [MBRE, OMSE, RMXE]
+  for Generalized Extreme Value [GEV] distributions, Generalized Pareto 
+  distributions [GPD], Pareto distributions, 
++ As other examples of L2 differentiable Scale-shape families, it also
+  provides these (speeded up) estimators for Weibull and Gamma 
+  distributions. 
++ It has robust (high-breakdown) starting estimators for 
+  - GPD (PickandsEstimator, medkMAD, medSn, medQn)
+  - GEV (PickandsEstimator)
+  - Pareto (Cramér-von-Mises-Minimum-Distance-Estimator)
+  - Weibull (the quantile based estimator of Boudt/Caliskan/Croux)
++ For all these families, of course, MLEs and Minimum-Distance-Estimators
+  are also available through package distrMod
++ We bridge to the diagnostics provided by package ismev, i.e. our
+  return objects can be plugged into the diagnostics of this package
++ We have the usual diagnostic plots from package RobAStBase, i.e.
+  - Outylingness plots 
+  - IC plots
+  - Information plots  
+  - compareIC plots
+  - Cniperpoint plots (from ROptEst)
+  but also (adopted from package distrMod)
+  - qqplots (with confidence bands)
+  - returnlevel plots
++ As a starting point you may look at the included script
+  "RobFitsAtRealData.R" in the scripts folder of the package,
+  accessible by 
+    file.path(system.file(package="RobExtremes"),
+             "scripts/RobFitsAtRealData.R")
+
+This is joint work with Nataliya Horbenko (whose PhD thesis went into this 
+package to a large extent), nataliya.horbenko@gmail.de, with contributions 
+by Dasha Pupashenko, Misha Pupashenko, Gerald Kroisandt, Eugen Massini, 
+Sascha Desmettre and Bernhard Spangl in the framework of project 
+"Robust Risk Estimation" (2011-2016) funded by Volkswagen foundation 
+(and gratefully ackknowledged). Thanks also goes to the maintainers of CRAN,
+in particully to Uwe Ligges who greatly helped us with finding an appropriate
+way to store the database of interpolating functions which allow the speed up
+-- this is now package RobAStRDA on CRAN. 
+
+References
+N. Horbenko, P. Ruckdeschel, T. Bae (2011): Robust Estimation of Operational 
+Risk. Journal of Operational Risk 6(2), 3-30. 
+Ruckdeschel, P. and Horbenko, N. (2011): Optimally-Robust Estimators in 
+Generalized Pareto Models. Statistics. 47(4), 762–791.
+Ruckdeschel, P. and Horbenko, N. (2012): Yet another breakdown point notion: 
+EFSBP –illustrated at scale-shape models. Metrika, 75(8), 1025–1047. 
+
+=================================================================================			 
+In the other packages of the RobASt family of pkgs, the most important changes are:
+
+As in distr 2.7, wherever possible we now use q.l internally instead of q to 
+      provide functionality in IRKernel
+
+
+RobAStBase:
+- we enhanced our diagnostic plots:
+  + all diagnostics (including qqplot and returnlevelplot) have adopted the same 
+    argument naming (and selection paradigm) 
+      the suffix is .lbs instead of .lbl, 
+	  the attributes of shown points have ending .pts
+	  the observations are classed into three groups:
+	  - the labelled observations selected through which.lbs and which.Order
+	  - the shown non labelled observations (which are not in the previous set)
+	    selected by which.nonlbs
+	  - the non-shown observations (the remaining ones not contained in the former 2 grps)
+	-> point attributes may either refer to prior selection or to post-selection in
+       which case we have .npts variants	
+  + wherever possible arguments are vectorized to allow point - individual attributes
+  + plot methods now return an S3 object of class \code{c("plotInfo","DiagnInfo")}, 
+    i.e., a list containing the information needed to produce the respective plot, 
+	which at a later stage could be used by different graphic engines (like, e.g. 
+    \code{ggplot}) to produce the plot in a different framework. 
+  + new methods for returnlevelplot for RobModel, InfRobModel, kStepEstimate (as qqplot) 
+ROptEst:
+  + several tweaks to speed up things:
+     - optIC gains argument withMakeIC
+     - roptest gains argument withMakeIC
+     - getStartIC-methods gain argument withMakeIC
+     - getRiskIC and getBiasIC gain argument withCheck 
+RobAStRDA:
+  + the Lagrange multiplier interpolaters allowing for speed up in our opt-robust
+    estimators have been re-built as the current .rda file was corrupted
+	
+For details please see the NEWS files in the packages, available as
+NEWS("<pkgname>").
