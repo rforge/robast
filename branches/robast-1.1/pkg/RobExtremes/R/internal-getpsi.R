@@ -18,14 +18,23 @@
 
    .dbeta <- diag(c(beta,1)); .dbeta1 <- diag(c(1/beta,1))
    b <- fct[[1]](xi)
-   a <-  c(.dbeta%*%c(fct[[2]](xi),fct[[3]](xi)))
-   aw <- c(.dbeta1%*%c(fct[[4]](xi),fct[[5]](xi)))
+
+   aa <-  c(fct[[2]](xi),fct[[3]](xi))
+   zi <-  c(fct[[4]](xi),fct[[5]](xi))
    am <- mean(c(fct[[7]](xi),fct[[8]](xi)))
-   A <-  .dbeta%*%matrix(c(fct[[6]](xi),am,am,fct[[9]](xi)),2,2)%*%.dbeta
+   Aa <- matrix(c(fct[[6]](xi),am,am,fct[[9]](xi)),2,2)
    am <- mean(c(fct[[11]](xi),fct[[12]](xi)))
-   Aw <- matrix(c(fct[[10]](xi),am,am,fct[[13]](xi)),2,2)%*%.dbeta
-
-
+   Ai <- matrix(c(fct[[10]](xi),am,am,fct[[13]](xi)),2,2)
+   if(type==".MBRE"){
+      ai <- Ai %*% zi
+      Am <- (Ai+Aa)/2; Ai <- Aa <- Am
+      am <- (ai+aa)/2; ai <- aa <- am
+      zi <- solve(Ai,ai)
+   }
+   a <-  c(.dbeta%*%aa)
+   aw <- c(.dbeta1%*%zi)
+   A <-  .dbeta%*%Aa%*%.dbeta
+   Aw <- Ai%*%.dbeta
 
    normt <- NormType()
    biast <- symmetricBias()
@@ -73,16 +82,26 @@
 
    .dbeta <- diag(c(beta,beta,1)); .dbeta1 <- diag(c(1/beta,1/beta,1))
    b <- fct[[1]](xi)
-   a <-  c(.dbeta%*%c(fct[[2]](xi),fct[[3]](xi),fct[[4]](xi)))
-   aw <- c(.dbeta1%*%c(fct[[5]](xi),fct[[6]](xi),fct[[7]](xi)))
+   aa <-  c(fct[[2]](xi),fct[[3]](xi),fct[[4]](xi))
+   zi <-  c(fct[[5]](xi),fct[[6]](xi),fct[[7]](xi))
    am1 <- mean(c(fct[[9]](xi),fct[[11]](xi)))
    am2 <- mean(c(fct[[10]](xi),fct[[14]](xi)))
    am3 <- mean(c(fct[[13]](xi),fct[[15]](xi)))
-   A <-  .dbeta%*%matrix(c(fct[[8]](xi),am1,am2,am1,fct[[12]](xi),am3,am2,am3,fct[[16]](xi)),3,3)%*%.dbeta
+   Aa <- matrix(c(fct[[8]](xi),am1,am2,am1,fct[[12]](xi),am3,am2,am3,fct[[16]](xi)),3,3)
    am1 <- mean(c(fct[[18]](xi),fct[[20]](xi)))
    am2 <- mean(c(fct[[19]](xi),fct[[23]](xi)))
    am3 <- mean(c(fct[[22]](xi),fct[[24]](xi)))
-   Aw <- matrix(c(fct[[17]](xi),am1,am2,am1,fct[[21]](xi),am3,am2,am3,fct[[25]](xi)),3,3)%*%.dbeta
+   Ai <- matrix(c(fct[[8]](xi),am1,am2,am1,fct[[17]](xi),am3,am2,am3,fct[[25]](xi)),3,3)
+   if(type==".MBRE"){
+      ai <- Ai %*% zi
+      Am <- (Ai+Aa)/2; Ai <- Aa <- Am
+      am <- (ai+aa)/2; ai <- aa <- am
+      zi <- solve(Ai,ai)
+   }
+   a <-  c(.dbeta%*%aa)
+   aw <- c(.dbeta1%*%zi)
+   A <-  .dbeta%*%Aa%*%.dbeta
+   Aw <- Ai%*%.dbeta
 
    normt <- NormType()
    biast <- symmetricBias()
