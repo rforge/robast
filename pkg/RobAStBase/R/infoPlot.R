@@ -167,7 +167,7 @@ setMethod("infoPlot", "IC",
            xlim <- .xylim$xlim; ylim <- .xylim$ylim
 
         if(missing(x.vec)) x.vec <- NULL
-        x.v.ret <- .getX.vec(distr, dims1, dots$lty, x.vec, scaleX, scaleX.fct, scaleX.inv, .xylim$xm, .xylim$xM)
+        x.v.ret <- .getX.vec(distr, dims1, eval(dots$lty), x.vec, scaleX, scaleX.fct, scaleX.inv, .xylim$xm, .xylim$xM)
               lty <- x.v.ret$lty; plty <- x.v.ret$plty; x.vec <- x.v.ret$x.vec
 
 

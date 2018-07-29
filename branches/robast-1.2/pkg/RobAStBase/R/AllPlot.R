@@ -39,6 +39,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
         dots <- match.call(call = sys.call(sys.parent(1)), 
                        expand.dots = FALSE)$"..."
         dotsLeg <- dotsT <- dotsL <- .makedotsLowLevel(dots)
+        dotsLeg$lty <- dotsLeg$lwd <- dotsLeg$col <- NULL
 
         dotsP <- dots
         dotsP$type <- dotsP$lty <- dotsP$col <- dotsP$lwd <- NULL
@@ -128,8 +129,9 @@ setMethod("plot", signature(x = "IC", y = "missing"),
            xlim <- .xylim$xlim; ylim <- .xylim$ylim
 
         if(missing(x.vec)) x.vec <- NULL
-        x.v.ret <- .getX.vec(distr, dims0, dots$lty, x.vec, scaleX, scaleX.fct, scaleX.inv, .xylim$xm, .xylim$xM)
+        x.v.ret <- .getX.vec(distr, dims0, eval(dots$lty), x.vec, scaleX, scaleX.fct, scaleX.inv, .xylim$xm, .xylim$xM)
               lty <- x.v.ret$lty; plty <- x.v.ret$plty; x.vec <- x.v.ret$x.vec
+        lwd <- if(is.null(dots$lwd))  1 else eval(dots$lwd)
 
         .pFL <- .preparePanelFirstLast(with.automatic.grid , dims0, pF.0, pL.0,
                              logArg, scaleX, scaleY, x.ticks, y.ticks,
@@ -253,12 +255,14 @@ setMethod("plot", signature(x = "IC", y = "missing"),
 
             if(wmar) do.call(par,args=parArgsL[[i]])
 
-            plotInfo$PlotArgs[[i]] <- c(list(x=x.vec1, y=y.vec1, type = plty, lty = lty,
+            plotInfo$PlotArgs[[i]] <- c(list(x=x.vec1, y=y.vec1, type = plty,
+                                      lty = lty, lwd = lwd,
                                       xlab = .mpresubs(xlab), ylab = .mpresubs(ylab),
                                       panel.first = pF[[i]],
                                       panel.last = pL), dotsP[[i]])
 
-            do.call(plot, args=c(list(x=x.vec1, y=y.vec1, type = plty, lty = lty,
+            do.call(plot, args=c(list(x=x.vec1, y=y.vec1, type = plty,
+                                      lty = lty, lwd = lwd,
                                       xlab = .mpresubs(xlab), ylab = .mpresubs(ylab),
                                       panel.first = pF[[i]],
                                       panel.last = pL), dotsP[[i]]))
@@ -294,9 +298,9 @@ setMethod("plot", signature(x = "IC", y = "missing"),
                 y.vecD <- rescD$Y
 
                 dotsL$lty <- NULL
-                do.call(lines,args=c(list(x.vecD, y.vecD,
+                do.call(lines,args=c(list(x.vecD, y.vecD, lwd = lwd,
                                           lty = "dotted"), dotsL))
-                plotInfo$PlotLinesD[[i]] <- c(list(x.vecD, y.vecD,
+                plotInfo$PlotLinesD[[i]] <- c(list(x.vecD, y.vecD, lwd = lwd,
                                           lty = "dotted"), dotsL)
             }
             do.call(title,args=c(list(main = innerT[i]), dotsT, line = lineT,
@@ -307,10 +311,12 @@ setMethod("plot", signature(x = "IC", y = "missing"),
             if(with.legend){
                legend(.legendCoord(legend.location[[i]], scaleX[i], scaleX.fct[[i]],
                         scaleY[i], scaleY.fct[[i]]), bg = legend.bg,
-                      legend = legend[[i]], dotsLeg, cex = legend.cex*fac.leg)
+                      legend = legend[[i]], dotsLeg, cex = legend.cex*fac.leg,
+                      lwd = lwd, lty = lty)
                plotInfo$Legend[[i]] <- list(.legendCoord(legend.location[[i]],
-                      scaleX[i], scaleX.fct[[i]], scaleY[i], scaleY.fct[[i]]), bg = legend.bg,
-                      legend = legend[[i]], dotsLeg, cex = legend.cex*fac.leg)
+                      scaleX[i], scaleX.fct[[i]], scaleY[i], scaleY.fct[[i]]),
+                      bg = legend.bg, legend = legend[[i]], dotsLeg,
+                      cex = legend.cex*fac.leg, lwd = lwd, lty = lty)
             }
 
         }

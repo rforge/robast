@@ -78,6 +78,7 @@ setMethod("comparePlot", signature("IC","IC"),
         dotsP$panel.last <- NULL
 
         dotsLeg <- dotsT <- dotsL <- .makedotsLowLevel(dots)
+        dotsLeg$lty <- dotsLeg$lwd <- dotsLeg$col <- NULL
         dots.points <-   .makedotsPt(dots)
         
         ncomp <- 2+ (!missing(obj3)|!is.null(obj3)) +
@@ -170,7 +171,7 @@ setMethod("comparePlot", signature("IC","IC"),
           xlim <- .xylim$xlim; ylim <- .xylim$ylim;
 
         if(missing(x.vec)) x.vec <- NULL
-        x.v.ret <- .getX.vec(distr, dims0, dots$lty, x.vec, scaleX, scaleX.fct, scaleX.inv, .xylim$xm, .xylim$xM)
+        x.v.ret <- .getX.vec(distr, dims0, eval(dots$lty), x.vec, scaleX, scaleX.fct, scaleX.inv, .xylim$xm, .xylim$xM)
               lty <- x.v.ret$lty; plty <- x.v.ret$plty; x.vec <- x.v.ret$x.vec
 
         dims <- nrow(trafo(L2Fam@param)); ID <- diag(dims)
@@ -684,10 +685,10 @@ setMethod("comparePlot", signature("IC","IC"),
            if(is.null(legend)) legend <- xc
            legend(.legendCoord(legend.location, scaleX, scaleX.fct,
                         scaleY, scaleY.fct[[i]]), col = col, bg = legend.bg,
-                      legend = legend, dotsLeg, cex = legend.cex)
+                      legend = legend, dotsLeg, cex = legend.cex, lwd = lwd, lty = lty)
            plotInfo$Legend[[i]] <- list(.legendCoord(legend.location, scaleX, scaleX.fct,
                         scaleY, scaleY.fct[[i]]), col = col, bg = legend.bg,
-                      legend = legend, dotsLeg, cex = legend.cex)
+                      legend = legend, dotsLeg, cex = legend.cex, lwd = lwd, lty = lty)
         }
 
         cex.main <- if(!hasArg(cex.main)) par("cex.main") else dots$"cex.main"
