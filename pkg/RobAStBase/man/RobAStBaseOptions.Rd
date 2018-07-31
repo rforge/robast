@@ -2,6 +2,14 @@
 \alias{RobAStBaseOptions}
 \alias{getRobAStBaseOption}
 \alias{kStepUseLast}
+\alias{modifyICwarn}
+\alias{withUpdateInKer}
+\alias{IC.UpdateInKer}
+\alias{all.verbose}
+\alias{withICList}
+\alias{withPICList}
+\alias{modifyICwarn}
+
 
 \title{Function to change the global variables of the package `RobAStBase' }
 \description{With \code{RobAStBaseOptions} you can inspect and change 
@@ -30,17 +38,20 @@ getRobAStBaseOption(x)
     the value of the one- resp. k-step estimate which may take quite a long 
     time depending on the model. }
   \item{withUpdateInKer:}{if there is a non-trivial trafo in the model with matrix \eqn{D}, shall
-  the parameter be updated on \eqn{{\rm ker}(D)}{ker(D)}? defaults to \code{FALSE}.}
+  the parameter be updated on \eqn{{\rm ker}(D)}{ker(D)}? Defaults to \code{FALSE}.}
   \item{IC.UpdateInKer:}{if there is a non-trivial trafo in the model with matrix \eqn{D},
   the IC to be used for this; if \code{NULL} the result of \code{getboundedIC(L2Fam,D)} is taken;
   this IC will then be projected onto \eqn{{\rm ker}(D)}{ker(D)}; defaults to \code{NULL}.}
   \item{all.verbose:}{argument \code{verbose} passed on by default to many calls of
   \code{optIC}, \code{radiusminimaxIC}, \code{getinfRobIC} etc.; well suited
-  for testing purposes.}
+  for testing purposes. Defaults to \code{FALSE}.}
   \item{withPICList:}{logical: shall slot \code{pICList} of return value of \code{kStepEstimator}
-  be filled?}
+  be filled? Defaults to \code{FALSE}.}
   \item{withICList:}{logical: shall slot \code{ICList} of return value of \code{kStepEstimator}
-  be filled?}
+  be filled? Defaults to \code{FALSE}.}
+  \item{modifyICwarn:}{logical: should a (warning) information be added if \code{modifyIC}
+  is applied and hence some optimality information could no longer be valid? Defaults to
+  \code{TRUE}.}
 }
 }
 %\references{}
