@@ -284,7 +284,7 @@ setMethod("plot", signature(x = "IC", y = "missing"),
                               x.ticks = x.ticks[[i]], y.ticks = y.ticks[[i]])
             if(withMBR){
                 MBR.i <- MBRB[i,]
-                if(scaleY) MBR.i <- scaleY.fct[[i]](MBR.i)
+                if(scaleY[i]) MBR.i <- scaleY.fct[[i]](MBR.i)
                 abline(h=MBR.i, col=col.MBR, lty=lty.MBR, lwd = lwd.MBR)
                 plotInfo$MBR[[i]] <- list(h=MBR.i, col=col.MBR, lty=lty.MBR, lwd = lwd.MBR)
             }

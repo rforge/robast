@@ -639,7 +639,7 @@ setMethod("comparePlot", signature("IC","IC"),
                               x.ticks = x.ticks0, y.ticks = y.ticks0)
             if(withMBR){
                 MBR.i <- MBRB[i,]
-                if(scaleY) MBR.i <- scaleY.fct[[i]](MBR.i)
+                if(scaleY[i]) MBR.i <- scaleY.fct[[i]](MBR.i)
                 abline(h=MBR.i, col=col.MBR, lty=lty.MBR, lwd = lwd.MBR)
                 plotInfo$MBR[[i]] <- list(h=MBR.i, col=col.MBR, lty=lty.MBR, lwd = lwd.MBR)
             }
