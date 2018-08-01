@@ -105,6 +105,7 @@ RobAStBase:
     \code{ggplot}) to produce the plot in a different framework. 
   + new methods for returnlevelplot for RobModel, InfRobModel, kStepEstimate (as qqplot) 
 ROptEst:
+  + new wrapper functions RMXEstimator, OBREstimator, MBREstimator, OMSEstimator
   + several tweaks to speed up things:
      - optIC gains argument withMakeIC
      - roptest gains argument withMakeIC
