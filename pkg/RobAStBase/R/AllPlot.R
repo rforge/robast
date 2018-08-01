@@ -243,11 +243,11 @@ setMethod("plot", signature(x = "IC", y = "missing"),
             y.vec1 <- resc$Y
 
             finiteEndpoints <- rep(FALSE,4)
-            if(scaleX){
+            if(scaleX[i]){
                finiteEndpoints[1] <- is.finite(scaleX.inv[[i]](min(x.vec1, xlim[1,i])))
                finiteEndpoints[2] <- is.finite(scaleX.inv[[i]](max(x.vec1, xlim[2,i])))
             }
-            if(scaleY){
+            if(scaleY[i]){
                finiteEndpoints[3] <- is.finite(scaleY.inv[[i]](min(y.vec1, ylim[1,i])))
                finiteEndpoints[4] <- is.finite(scaleY.inv[[i]](max(y.vec1, ylim[2,i])))
             }
