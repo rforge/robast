@@ -1,14 +1,10 @@
 setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRisk"),
-           function(model, risk, ...){
+           function(model, risk, ..., withMakeIC = FALSE, ..debug=FALSE,
+           modifyICwarn = NULL){
 
     mc <- match.call(call = sys.call(sys.parent(1)))
-    dots <- match.call(call = sys.call(sys.parent(1)),
-                       expand.dots = FALSE)$"..."
     mc$risk <- if(type(risk)==".MBRE") asMSE() else asBias()
     mc$neighbor <- ContNeighborhood(radius=0.5)
-
-    withMakeIC <- FALSE
-    if(!is.null(dots$withMakeIC)) withMakeIC <- dots$withMakeIC
 
     gridn <- gsub("\\.","",type(risk))
 
@@ -76,15 +72,13 @@ setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRi
     })
 
 setMethod("getStartIC",signature(model = "L2LocScaleShapeUnion", risk = "interpolRisk"),
-           function(model, risk, ...){
+           function(model, risk, ..., withMakeIC = FALSE, ..debug=FALSE,
+           modifyICwarn = NULL){
 
     mc <- match.call(call = sys.call(sys.parent(1)))
-    dots <- match.call(call = sys.call(sys.parent(1)),
-                       expand.dots = FALSE)$"..."
     mc$risk <- if(type(risk)==".MBRE") asMSE() else asBias()
     mc$neighbor <- ContNeighborhood(radius=0.5)
 
-    withMakeIC <- FALSE
 
     gridn <- gsub("\\.","",type(risk))
 

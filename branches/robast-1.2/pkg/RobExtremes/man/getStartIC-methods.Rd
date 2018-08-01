@@ -12,12 +12,25 @@
 argument \code{ICstart} in \code{kStepEstimator}.}
 
 \usage{getStartIC(model, risk, ...)
+\S4method{getStartIC}{L2ScaleShapeUnion,interpolRisk}(model, risk, ...,
+   withMakeIC = FALSE, ..debug=FALSE, modifyICwarn = NULL)
+\S4method{getStartIC}{L2LocScaleShapeUnion,interpolRisk}(model, risk, ...,
+   withMakeIC = FALSE, ..debug=FALSE, modifyICwarn = NULL)
+\S4method{getStartIC}{ParetoFamily,interpolRisk}(model, risk, ...,
+   withMakeIC = FALSE)
 }
 
 \arguments{
   \item{model}{normtype of class \code{NormType}}
   \item{risk}{normtype of class \code{NormType}}
   \item{\dots}{ further arguments to be passed to specific methods.}
+  \item{withMakeIC}{logical; if \code{TRUE} the IC is passed through
+        \code{makeIC} before return.}
+  \item{..debug}{logical; if \code{TRUE} information for debugging is issued.}
+  \item{modifyICwarn}{logical: should a (warning) information be added if
+     \code{modifyIC} is applied and hence some optimality information could
+     no longer be valid? Defaults to \code{NULL} in which case this value
+     is taken from \code{RobAStBaseOptions}.}
 }
 \section{Methods}{\describe{
 \item{getStartIC}{\code{signature(model = "L2ScaleShapeUnion", risk = "interpolRisk")}:

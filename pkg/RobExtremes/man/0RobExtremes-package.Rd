@@ -19,7 +19,7 @@ Importing from packages \pkg{actuar},
          \item Generalized Extreme Value distribution (GEVD)
          \item Generalized Pareto distribution (GPD)
          \item Pareto distribution}
-\cr
+%\cr
 }
 \section{Functionals for Distributions}{
 
@@ -37,7 +37,7 @@ variances, median, IQR, skewness, kurtosis. \cr
 In addition, extending estimators \code{Sn} and \code{Qn} from package
 \pkg{robustbase}, we provide functionals for Sn and Qn. A new
 asymmetric version of the \code{mad}, \code{kMAD} gives yet another robust
-scale estimator (and functional). \cr
+scale estimator (and functional). %\cr
 }
 
 \section{Models and Estimators}{
@@ -68,7 +68,7 @@ We robust (high-breakdown) starting estimators for
 }
 
 For all these families, of course, MLEs and Minimum-Distance-Estimators
-are also available through package "distrMod". \cr
+are also available through package "distrMod". %\cr
 }
 \section{Diagnostics}{
 
@@ -87,7 +87,7 @@ but also (adopted from package "distrMod")
 \itemize{
   \item qqplots (with confidence bands) via \code{qqplot}
   \item returnlevel plots via \code{returnlevelplot}
-}\cr
+}%\cr
 }
 
 \section{Starting Point}{
@@ -96,13 +96,14 @@ but also (adopted from package "distrMod")
   accessible by
     \code{file.path(system.file(package="RobExtremes"),
              "scripts/RobFitsAtRealData.R")}.
-\cr}
+%\cr
+}
 
 \details{
 \tabular{ll}{
 Package: \tab RobExtremes \cr
 Version: \tab 1.1.0 \cr
-Date: \tab 2018-07-25 \cr
+Date: \tab 2018-07-19 \cr
 Title: \tab Optimally Robust Estimation for Extreme Value Distributions\cr
 Description: \tab Optimally robust estimation for extreme value distributions
 using S4 classes and methods \cr
@@ -114,10 +115,11 @@ Imports: \tab actuar, RobAStRDA, distr, distrEx, RandVar, RobAStBase, startupmsg
 Authors:
 \tab Bernhard Spangl [contributed smoothed grid values of the Lagrange multipliers]\cr
 \tab Sascha Desmettre [contributed smoothed grid values of the Lagrange multipliers]\cr
-\tab Eugen Massini [contributed an interactive smoothing routine for smoothing the
-     Lagrange multipliers and smoothed grid values of the Lagrange multipliers] \cr
+\tab Eugen Massini [contributed an interactive smoothing routine for smoothing the\cr
+\tab       Lagrange multipliers and smoothed grid values of the Lagrange multipliers] \cr
 \tab Daria Pupashenko [contributed MDE-estimation for GEV distribution in
-the framework of her PhD thesis 2011--14]\cr
+the framework of\cr
+\tab       her PhD thesis 2011--14]\cr
 \tab Gerald Kroisandt [contributed testing routines]\cr
 \tab Nataliya Horbenko ["aut","cph"] \cr
 \tab Matthias Kohl ["aut", "cph"]\cr
@@ -128,7 +130,7 @@ LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
 Encoding: \tab latin1 \cr
-VCS/SVNRevision: \tab 1057 \cr
+VCS/SVNRevision: \tab 940 \cr
 }
 }
 
@@ -136,7 +138,8 @@ VCS/SVNRevision: \tab 1057 \cr
 \preformatted{
 
 [*]: there is a generating function with the same name in RobExtremes
-[**]:  generating function from distrMod, but with (speeded-up) opt.rob-estimators in RobExtremes
+[**]:  generating function from distrMod, but with (speeded-up)
+       opt.rob-estimators in RobExtremes
 
 ##########################
 Distribution Classes
@@ -188,7 +191,8 @@ slots: [<name>(<class>)]
 \section{Functions}{
 
 \preformatted{
-LDEstimator   Estimators for scale-shape models based on location and dispersion
+LDEstimator     Estimators for scale-shape models based on
+                location and dispersion
 medSn                    loc=median disp=Sn
 medQn                    loc=median disp=Qn
 medkMAD                  loc=median disp=kMAD
@@ -219,13 +223,15 @@ WeibullFamily           Generating function for WeibullFamily-class
 \preformatted{
 
 Functionals:
-E                       Generic function for the computation of  (conditional) expectations
+E                       Generic function for the computation of
+                        (conditional) expectations
 var                     Generic functions for the computation of functionals
 IQR                     Generic functions for the computation of functionals
 median                  Generic functions for the computation of functionals
 skewness                Generic functions for the computation of functionals
 kurtosis                Generic functions for the computation of functionals
-Sn                      Generic function for the computation of (conditional) expectations
+Sn                      Generic function for the computation of (conditional)
+                        expectations
 Qn                      Generic functions for the computation of functionals
 
 }
@@ -247,8 +253,8 @@ project "Robust Risk Estimation" (2011-2016) funded by Volkswagen foundation
 (and gratefully ackknowledged). Thanks also goes to the maintainers of CRAN,
 in particully to Uwe Ligges who greatly helped us with finding an appropriate
 way to store the database of interpolating functions which allow the speed up
--- this is now package RobAStRDA on CRAN.\cr}
-
+-- this is now package RobAStRDA on CRAN. %\cr
+}
 
 \author{
 Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},\cr

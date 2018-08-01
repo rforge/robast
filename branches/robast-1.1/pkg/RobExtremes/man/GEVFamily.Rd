@@ -8,9 +8,9 @@
 }
 \usage{
 GEVFamily(loc = 0, scale = 1, shape = 0.5, of.interest = c("scale", "shape"),
-              p = NULL, N = NULL, trafo = NULL, start0Est = NULL, withPos = TRUE,
-              secLevel = 0.7, withCentL2 = FALSE, withL2derivDistr  = FALSE,
-              withMDE = FALSE, ..ignoreTrafo = FALSE, ..withWarningGEV = TRUE)
+          p = NULL, N = NULL, trafo = NULL, start0Est = NULL, withPos = TRUE,
+          secLevel = 0.7, withCentL2 = FALSE, withL2derivDistr  = FALSE,
+          withMDE = FALSE, ..ignoreTrafo = FALSE, ..withWarningGEV = TRUE)
 }
 \arguments{
   \item{loc}{ real: known/fixed threshold/location parameter }

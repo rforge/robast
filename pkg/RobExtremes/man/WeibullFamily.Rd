@@ -8,8 +8,8 @@
 }
 \usage{
 WeibullFamily(scale = 1, shape = 0.5, of.interest = c("scale", "shape"),
-              p = NULL, N = NULL, trafo = NULL, start0Est = NULL, withPos = TRUE,
-              withCentL2 = FALSE, withL2derivDistr  = FALSE, ..ignoreTrafo = FALSE)
+       p = NULL, N = NULL, trafo = NULL, start0Est = NULL, withPos = TRUE,
+       withCentL2 = FALSE, withL2derivDistr  = FALSE, ..ignoreTrafo = FALSE)
 }
 \arguments{
   \item{scale}{ positive real: scale parameter }

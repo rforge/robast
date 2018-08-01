@@ -138,7 +138,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     retV@estimate.call <- mc
     tim <- attr(retV,"timings")
 
-    retV <- as(retV, "ORobEstimate")
+    retV <- as(as(retV,"kStepEstimate"), "ORobEstimate")
     retV <- .checkEstClassForParamFamily(L2Fam,retV)
     attr(retV,"timings") <- tim
     retV@roptestCall <- mc

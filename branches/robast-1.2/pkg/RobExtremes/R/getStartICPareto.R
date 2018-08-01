@@ -1,12 +1,5 @@
 setMethod("getStartIC",signature(model = "ParetoFamily", risk = "interpolRisk"),
-           function(model, risk, ...){
-
-    mc <- match.call(call = sys.call(sys.parent(1)))
-    dots <- match.call(call = sys.call(sys.parent(1)),
-                       expand.dots = FALSE)$"..."
-
-    withMakeIC <- FALSE
-    if(!is.null(dots$withMakeIC)) withMakeIC <- dots$withMakeIC
+           function(model, risk, ..., withMakeIC = FALSE){
 
     param1 <- param(model)
     xi <- main(param1)

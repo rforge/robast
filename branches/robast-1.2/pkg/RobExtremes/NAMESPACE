@@ -31,7 +31,8 @@ exportClasses("ParamWithLocAndScaleAndShapeFamParameter")
 exportClasses("L2LocScaleShapeUnion")
 exportClasses("GPDEstimate","GPDMCEstimate","GPDLDEstimate",
               "GPDkStepEstimate","GEVEstimate","GEVLDEstimate",
-			  "GEVkStepEstimate","GEVMCEstimate")			  
+			  "GEVkStepEstimate","GEVMCEstimate",
+			  "GPDORobEstimate","GEVORobEstimate")			  
 exportMethods("initialize", "show", "rescaleFunction") 
 exportMethods("loc", "loc<-", "kMAD", "Sn", "Qn")
 exportMethods("validParameter",

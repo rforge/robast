@@ -6,14 +6,17 @@
 \alias{.checkEstClassForParamFamily,GParetoFamily,LDEstimate-method}
 \alias{.checkEstClassForParamFamily,GParetoFamily,MCEstimate-method}
 \alias{.checkEstClassForParamFamily,GParetoFamily,kStepEstimate-method}
+\alias{.checkEstClassForParamFamily,GParetoFamily,ORobEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamily,Estimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamily,MCEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamily,LDEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamily,kStepEstimate-method}
+\alias{.checkEstClassForParamFamily,GEVFamily,ORobEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,Estimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,MCEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,LDEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,kStepEstimate-method}
+\alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,ORobEstimate-method}
 \title{ Methods for Function .checkEstClassForParamFamily in Package `RobExtremes' }
 \description{.checkEstClassForParamFamily-methods}
 %\usage{.checkEstClassForParamFamily(PFam, estimator)
@@ -41,29 +44,29 @@ a model-specific subclass with particular methods.
 
 \value{
 The \code{GParetoFamily,Estimate}-method returns the estimator cast to
-S4 class \code{GPDEstimate},
+S4 class \code{GPDEstimate},\cr
 the \code{GParetoFamily,LDEstimate}-method cast to
-S4 class  \code{GPDLDEstimate},
+S4 class  \code{GPDLDEstimate},\cr
 the \code{GParetoFamily,MCEstimate}-method cast to
-S4 class  \code{GPDMCEstimate},
+S4 class  \code{GPDMCEstimate},\cr
 the \code{GParetoFamily,kStepEstimate}-method cast to
-S4 class  \code{GPDkStepstimate},
+S4 class  \code{GPDkStepstimate},\cr
 the \code{GEVFamily,Estimate}-method cast to
-S4 class  \code{GEVEstimate},
+S4 class  \code{GEVEstimate},\cr
 the \code{GEVFamily,LDEstimate}-method cast to
-S4 class  \code{GEVLDEstimate},
+S4 class  \code{GEVLDEstimate},\cr
 the \code{GEVFamily,MCEstimate}-method cast to
-S4 class  \code{GEVMCEstimate},
+S4 class  \code{GEVMCEstimate},\cr
 the \code{GEVFamily,kStepEstimate}-method cast to
-S4 class  \code{GEVkStepstimate}.
+S4 class  \code{GEVkStepstimate},\cr
 the \code{GEVFamilyMuUnknown,Estimate}-method cast to
-S4 class  \code{GEVEstimate},
+S4 class  \code{GEVEstimate},\cr
 the \code{GEVFamilyMuUnknown,LDEstimate}-method cast to
-S4 class  \code{GEVLDEstimate},
+S4 class  \code{GEVLDEstimate},\cr
 the \code{GEVFamilyMuUnknown,MCEstimate}-method cast to
-S4 class  \code{GEVMCEstimate},
+S4 class  \code{GEVMCEstimate},\cr
 the \code{GEVFamilyMuUnknown,kStepEstimate}-method cast to
-S4 class  \code{GEVkStepstimate}.
+S4 class  \code{GEVkStepstimate}.\cr
 }
 \author{
   Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
