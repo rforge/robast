@@ -81,7 +81,7 @@ getInfRobIC(L2deriv, risk, neighbor, ...)
 
 \S4method{getInfRobIC}{UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(
                        L2deriv, risk, neighbor, symm, Finfo, trafo,
-                       upper, lower, maxiter, tol, warn, ...)
+                       upper, lower, maxiter, tol, warn, verbose = NULL, ...)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 

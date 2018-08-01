@@ -25,9 +25,9 @@ getModifyIC(L2FamIC, neighbor, risk,...)
 \S4method{getModifyIC}{L2LocationFamily,UncondNeighborhood,fiUnOvShoot}(L2FamIC,
           neighbor, risk, ...)
 \S4method{getModifyIC}{L2ScaleFamily,UncondNeighborhood,asGRisk}(L2FamIC,
-          neighbor, risk, ...)
+          neighbor, risk, ..., modifyICwarn = NULL)
 \S4method{getModifyIC}{L2LocationScaleFamily,UncondNeighborhood,asGRisk}(L2FamIC,
-          neighbor, risk, ...)
+          neighbor, risk, ..., modifyICwarn = NULL)
 
 scaleUpdateIC(neighbor,...)
 \S4method{scaleUpdateIC}{UncondNeighborhood}(neighbor, sdneu, sdalt, IC)
@@ -42,6 +42,10 @@ scaleUpdateIC(neighbor,...)
   \item{sdneu}{positive numeric of length one; the new scale.}
   \item{sdalt}{positive numeric of length one; the new scale.}
   \item{IC}{a Hampel-IC to be updated.}
+  \item{modifyICwarn}{logical: should a (warning) information be added if
+     \code{modifyIC} is applied and hence some optimality information could
+     no longer be valid? Defaults to \code{NULL} in which case this value
+     is taken from \code{RobAStBaseOptions}.}
 }
 \details{ This function is used for internal computations.
  By setting \code{RobAStBaseOption("all.verbose" = TRUE)} somewhere

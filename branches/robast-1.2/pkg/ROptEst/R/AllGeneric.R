@@ -90,3 +90,6 @@ if(!isGeneric("get.asGRisk.fct")){
 if(!isGeneric("getStartIC")){
     setGeneric("getStartIC", function(model, risk, ...) standardGeneric("getStartIC"))
 }
+if(!isGeneric("roptestCall")){
+    setGeneric("roptestCall", function(object) standardGeneric("roptestCall"))
+}

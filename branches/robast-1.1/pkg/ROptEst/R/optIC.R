@@ -6,12 +6,14 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
              lower = 1e-4, OptOrIter = "iterate",
              maxiter = 50, tol = .Machine$double.eps^0.4,
              warn = TRUE, noLow = FALSE, verbose = NULL, ...,
-             .withEvalAsVar = TRUE, withMakeIC = FALSE, returnNAifProblem = FALSE){
+             .withEvalAsVar = TRUE, withMakeIC = FALSE,
+             returnNAifProblem = FALSE, modifyICwarn = NULL){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         L2derivDim <- numberOfMaps(model@center@L2deriv)
         ow <- options("warn")
         on.exit(options(ow))
+        if(missing(warn)|| is.null(warn)) warn <- TRUE
         #L2Fam <- model@center
         #model@center <- moveL2Fam2RefParam(L2Fam)
         if(L2derivDim == 1){
@@ -22,10 +24,11 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                         Finfo = model@center@FisherInfo, trafo = trafo(model@center@param), 
                         upper = upper, lower = lower, maxiter = maxiter, tol = tol, warn = warn,
                         noLow = noLow, verbose = verbose, ...)
-            res$info <- c("optIC", res$info)
-            res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
-                                                 neighbor = model@neighbor, 
-                                                 risk = risk))
+            linfo <- length(res$info)
+            res$info <- if(linfo>1) c(rep("optIC",linfo),res$info) else c("optIC", res$info)
+            res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center,
+                                                 neighbor = model@neighbor,
+                                                 risk = risk, warn = warn, verbose = verbose))
             if(returnNAifProblem) if(!is.null(res$problem)) if(res$problem) return(NA)
             IC.o <- generateIC(model@neighbor, model@center, res)
         }else{
@@ -60,11 +63,11 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
                             verbose = verbose, ...,.withEvalAsVar = .withEvalAsVar)
                 options(ow)
                 if(returnNAifProblem) if(!is.null(res$problem)) if(res$problem) return(NA)
-                res$info <- c("optIC", res$info)
-                res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
-                                                     neighbor = model@neighbor, 
-                                                     risk = risk, verbose = verbose,
-                                                     ...))
+                linfo <- length(res$info)
+                res$info <- if(linfo>1) c(rep("optIC",linfo),res$info) else c("optIC", res$info)
+                res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center,
+                                                 neighbor = model@neighbor,
+                                                 risk = risk, warn = warn, verbose = verbose))
                 IC.o <- generateIC(model@neighbor, model@center, res)
             }else{
                 stop("not yet implemented")
@@ -81,10 +84,12 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
 ###############################################################################
 setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
     function(model, risk, upper = 1e4, lower = 1e-4, maxiter = 50,
-             tol = .Machine$double.eps^0.4, withMakeIC = FALSE, warn = TRUE, verbose = NULL){
+             tol = .Machine$double.eps^0.4, withMakeIC = FALSE,
+             warn = TRUE, verbose = NULL, modifyICwarn = NULL){
         L2derivDistr <- model@center@L2derivDistr[[1]]
         ow <- options("warn")
         on.exit(options(ow))
+        if(missing(warn)|| is.null(warn)) warn <- TRUE
         if((length(model@center@L2derivDistr) == 1) & is(L2derivDistr, "UnivariateDistribution")){
             if(identical(all.equal(model@neighbor@radius, 0), TRUE)){
                return(optIC(model@center, risk = asCov(), withMakeIC = withMakeIC))
@@ -96,13 +101,17 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
                         Finfo = model@center@FisherInfo, trafo = trafo(model@center@param), 
                         upper = upper, maxiter = maxiter, tol = tol, warn = warn)
                options(ow)
-               if(is(model@neighbor, "ContNeighborhood"))
-                  res$info <- c("optIC", "optIC", res$info, "Optimal IC for 'InfRobModel' with 'ContNeighborhood'!!!")
-               else
-                  res$info <- c("optIC", res$info)
-               res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
-                                                    neighbor = model@neighbor, 
-                                                    risk = risk, verbose = verbose))
+               linfo <- length(res$info)
+               if(is(model@neighbor, "ContNeighborhood")){
+                  res$info <- c(rep("optIC",linfo+1),res$info,
+                      "Optimal IC for 'InfRobModel' with 'ContNeighborhood'!!!")
+               }else{
+                  res$info <- if(linfo>1) c(rep("optIC",linfo),
+                                            res$info) else c("optIC", res$info)
+               }
+               res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center,
+                                                 neighbor = model@neighbor,
+                                                 risk = risk, warn = warn, verbose = verbose))
                IC.o <- generateIC(TotalVarNeighborhood(radius = model@neighbor@radius), model@center, res)
                if(withMakeIC) IC.o <- makeIC(IC.o, model)
                return(IC.o)
@@ -119,11 +128,12 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
 setMethod("optIC", signature(model = "FixRobModel", risk = "fiUnOvShoot"),
     function(model, risk, sampleSize, upper = 1e4, lower = 1e-4, maxiter = 50,
              tol = .Machine$double.eps^0.4, withMakeIC = FALSE, warn = TRUE, Algo = "A",
-             cont = "left", verbose = NULL){
+             cont = "left", verbose = NULL, modifyICwarn = NULL){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         ow <- options("warn")
         on.exit(options(ow))
+        if(missing(warn)|| is.null(warn)) warn <- TRUE
         if(!identical(all.equal(sampleSize, trunc(sampleSize)), TRUE))
             stop("'sampleSize' has to be an integer > 0")
         if(is(model@center@distribution, "UnivariateDistribution")){
@@ -133,13 +143,17 @@ setMethod("optIC", signature(model = "FixRobModel", risk = "fiUnOvShoot"),
                         sampleSize = sampleSize, upper = upper, maxiter = maxiter, 
                         tol = tol, warn = warn, Algo = Algo, cont = cont)
             options(ow)
-            if(is(model@neighbor, "ContNeighborhood"))
-                res$info <- c("optIC", "optIC", res$info, "Optimal IC for 'FixRobModel' with 'ContNeighborhood'!!!")
-            else
-                res$info <- c("optIC", res$info)
-            res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center, 
-                                                 neighbor = model@neighbor, 
-                                                 risk = risk, verbose = verbose))
+            linfo <- length(res$info)
+            if(is(model@neighbor, "ContNeighborhood")){
+               res$info <- c(rep("optIC",linfo+1),res$info,
+                   "Optimal IC for 'InfRobModel' with 'ContNeighborhood'!!!")
+            }else{
+               res$info <- if(linfo>1) c(rep("optIC",linfo),
+                                         res$info) else c("optIC", res$info)
+            }
+            res <- c(res, modifyIC = getModifyIC(L2FamIC = model@center,
+                                                 neighbor = model@neighbor,
+                                                 risk = risk, warn = warn, verbose = verbose))
             IC.o <- generateIC(TotalVarNeighborhood(radius = model@neighbor@radius), model@center, res)
             if(withMakeIC) IC.o <- makeIC(IC.o, model)
             return(IC.o)

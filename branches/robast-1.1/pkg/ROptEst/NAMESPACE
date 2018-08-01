@@ -38,13 +38,14 @@ exportMethods("optIC",
               "getModifyIC")
 exportMethods("updateNorm", "scaleUpdateIC", "eff", 
               "get.asGRisk.fct", "getStartIC", "plot",
-			  "comparePlot", "getRiskFctBV")
+			  "comparePlot", "getRiskFctBV", "roptestCall")
 export("getL2normL2deriv",
        "asAnscombe", "asL1", "asL4", 
 	   "getReq", "getMaxIneff", "getRadius")
 export("roptest","roptest.old", "robest",
+       "OBREstimator", "RMXEstimator", "MBREstimator", "OMSEstimator",
        "getLagrangeMultByOptim","getLagrangeMultByIter")
-export("genkStepCtrl", "genstartCtrl", "gennbCtrl")
+export("genkStepCtrl", "genstartCtrl", "genstartICCtrl", "gennbCtrl")
 export("cniperCont", "cniperPoint", "cniperPointPlot")
 export(".generateInterpGrid",".getLMGrid",".saveGridToCSV", ".readGridFromCSV")
 export(".RMXE.th",".OMSE.th", ".MBRE.th")

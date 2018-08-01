@@ -9,6 +9,7 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
                       verbose = NULL, warnit = TRUE){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
+        if(missing(warnit)|| is.null(warnit)) warnit <- TRUE
         LMcall <- match.call()
 
         ## initialization

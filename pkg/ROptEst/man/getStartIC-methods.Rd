@@ -6,6 +6,7 @@
 \alias{getStartIC,L2ParamFamily,asGRisk-method}
 \alias{getStartIC,L2ParamFamily,asBias-method}
 \alias{getStartIC,L2ParamFamily,asCov-method}
+\alias{getStartIC,L2ParamFamily,asAnscombe-method}
 \alias{getStartIC,L2ParamFamily,trAsCov-method}
 
 \title{Methods for Function getStartIC in Package `ROptEst' }
@@ -16,10 +17,17 @@ argument \code{ICstart} in \code{kStepEstimator}.}
 \usage{getStartIC(model, risk, ...)
 \S4method{getStartIC}{ANY,ANY}(model, risk, ...)
 \S4method{getStartIC}{L2ParamFamily,asGRisk}(model, risk, ...,
-                      withEvalAsVar = TRUE, withMakeIC = FALSE, ..debug=FALSE)
-\S4method{getStartIC}{L2ParamFamily,asBias}(model, risk, ..., withMakeIC = FALSE, ..debug=FALSE)
-\S4method{getStartIC}{L2ParamFamily,asCov}(model, risk, ..., withMakeIC = FALSE, ..debug=FALSE)
-\S4method{getStartIC}{L2ParamFamily,trAsCov}(model, risk, ..., withMakeIC = FALSE, ..debug=FALSE)
+                      withEvalAsVar = TRUE, withMakeIC = FALSE, ..debug=FALSE,
+                      modifyICwarn = NULL)
+\S4method{getStartIC}{L2ParamFamily,asBias}(model, risk, ..., withMakeIC = FALSE,
+        ..debug=FALSE, modifyICwarn = NULL)
+\S4method{getStartIC}{L2ParamFamily,asCov}(model, risk, ..., withMakeIC = FALSE,
+    ..debug=FALSE)
+\S4method{getStartIC}{L2ParamFamily,trAsCov}(model, risk, ..., withMakeIC = FALSE,
+    ..debug=FALSE)
+\S4method{getStartIC}{L2ParamFamily,asAnscombe}(model, risk, ...,
+                      withEvalAsVar = TRUE, withMakeIC = FALSE, ..debug=FALSE,
+                      modifyICwarn = NULL)
 }
 
 \arguments{
@@ -32,6 +40,10 @@ argument \code{ICstart} in \code{kStepEstimator}.}
   \item{withMakeIC}{logical; if \code{TRUE} the IC is passed through
         \code{makeIC} before return.}
   \item{..debug}{logical; if \code{TRUE} information for debugging is issued.}
+  \item{modifyICwarn}{logical: should a (warning) information be added if
+     \code{modifyIC} is applied and hence some optimality information could
+     no longer be valid? Defaults to \code{NULL} in which case this value
+     is taken from \code{RobAStBaseOptions}.}
 }
 \section{Methods}{\describe{
 \item{getStartIC}{\code{signature(model = "ANY", risk = "ANY")}:

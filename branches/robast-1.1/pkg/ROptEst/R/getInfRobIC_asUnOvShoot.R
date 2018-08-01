@@ -5,7 +5,12 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    risk = "asUnOvShoot", 
                                    neighbor = "UncondNeighborhood"),
     function(L2deriv, risk, neighbor, symm, Finfo, trafo, 
-            upper, lower, maxiter, tol, warn, ...){
+            upper, lower, maxiter, tol, warn, verbose = NULL, ...){
+
+        if(missing(verbose)|| is.null(verbose))
+           verbose <- getRobAStBaseOption("all.verbose")
+        if(missing(warn)|| is.null(warn)) warn <- FALSE
+
         biastype <- biastype(risk)
         radius <- neighbor@radius
         if(identical(all.equal(radius, 0), TRUE)){
@@ -115,7 +120,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             if(S) break
             if(max(abs(z - z.old), abs(c0-c0.old)) < tol) break
             if(iter > maxiter){
-                cat("maximum iterations reached!\n", "achieved precision:\t", abs(c0 - c0.old), "\n")
+                if(warn) cat("maximum iterations reached!\n", "achieved precision:\t", abs(c0 - c0.old), "\n")
                 break
             }
         }

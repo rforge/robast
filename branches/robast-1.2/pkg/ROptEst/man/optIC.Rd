@@ -18,19 +18,19 @@ optIC(model, risk, ...)
                                      tol = .Machine$double.eps^0.4, warn = TRUE, 
                                      noLow = FALSE, verbose = NULL, ...,
                                      .withEvalAsVar = TRUE, withMakeIC = FALSE,
-                                     returnNAifProblem = FALSE)
+                                     returnNAifProblem = FALSE, modifyICwarn = NULL)
 
 \S4method{optIC}{InfRobModel,asUnOvShoot}(model, risk, upper = 1e4,
                                           lower = 1e-4, maxiter = 50,
                                           tol = .Machine$double.eps^0.4,
                                           withMakeIC = FALSE, warn = TRUE,
-                                          verbose = NULL)
+                                          verbose = NULL, modifyICwarn = NULL)
 
 \S4method{optIC}{FixRobModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, lower = 1e-4,
                                           maxiter = 50, tol = .Machine$double.eps^0.4, 
                                           withMakeIC = FALSE, warn = TRUE,
                                           Algo = "A", cont = "left",
-                                          verbose = NULL)
+                                          verbose = NULL, modifyICwarn = NULL)
 }
 \arguments{
   \item{model}{ probability model. }
@@ -65,6 +65,10 @@ optIC(model, risk, ...)
   \item{returnNAifProblem}{logical (of length 1):
      if \code{TRUE} (not the default), in case of convergence problems in
      the algorithm, returns \code{NA}. }
+  \item{modifyICwarn}{logical: should a (warning) information be added if
+     \code{modifyIC} is applied and hence some optimality information could
+     no longer be valid? Defaults to \code{NULL} in which case this value
+     is taken from \code{RobAStBaseOptions}.}
 }
 \details{ In case of the finite-sample risk \code{"fiUnOvShoot"} one can choose
   between two algorithms for the computation of this risk where the least favorable

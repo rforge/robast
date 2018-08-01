@@ -10,6 +10,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
 
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
+        if(missing(warn)|| is.null(warn)) warn <- FALSE
 
         biastype <- biastype(risk)
         normtype <- normtype(risk)
@@ -20,7 +21,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
         if(checkBounds){
         bmax <- abs(as.vector(A))*max(abs(q.l(L2deriv)(0)), q.l(L2deriv)(1))
         if(b >= bmax){
-            if(warn) cat("'b >= maximum asymptotic bias' => (classical) optimal IC\n", 
+            if(warn) cat("'b >= maximum asymptotic bias' => (classical) optimal IC\n",
                          "in sense of Cramer-Rao bound is returned\n")
             res <- getInfRobIC(L2deriv = L2deriv, risk = asCov(), 
                                neighbor = neighbor, Finfo = Finfo, trafo = trafo,
@@ -43,7 +44,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                trafo = trafo, maxiter = maxiter, tol = tol, Finfo = Finfo,
                                warn = warn, verbose = verbose)
             bmin <- res$b
-            cat("minimal bound:\t", bmin, "\n")
+            if(verbose)cat("minimal bound:\t", bmin, "\n")
             }else{ 
                 bmin <- b/2
             }
@@ -98,7 +99,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                     print(round(c(A=A,z=z),3))
             }
             if(iter > maxiter){
-                cat("maximum iterations reached!\n", "achieved precision:\t", 
+                if(verbose) cat("maximum iterations reached!\n", "achieved precision:\t",
                     max(abs(as.vector(A-A.old)), abs(z-z.old)), "\n")
                 break
             }
@@ -153,6 +154,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
+        if(missing(warn)|| is.null(warn)) warn <- FALSE
 
         mc <- match.call()
 
@@ -237,7 +239,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                       w.start = w,
                       std = std, z.comp = z.comp,
                       A.comp = A.comp, maxiter = maxiter, tol = tol,
-                      verbose = verbose)
+                      warnit = warn, verbose = verbose)
         }
 
         ## read out solution
@@ -331,6 +333,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                         L2derivDistrSymm, z.start, A.start, trafo, maxiter,
                         tol, QuadForm, verbose, nrvalpts, warn){
 
+            if(missing(warn)|| is.null(warn)) warn <- FALSE
             ClassIC <- trafo %*% solve(Finfo) %*% L2deriv
 
             lower.x <- getLow(Distr)
@@ -338,7 +341,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             x <- seq(from = lower.x, to = upper.x, length = nrvalpts)
             bmax <- sapply(x,function(x) evalRandVar(ClassIC,x))
             bmax <- sqrt(max(colSums(as.matrix(bmax^2))))
-            cat("numerical approximation of maximal bound:\t", bmax, "\n")
+            if (verbose) cat("numerical approximation of maximal bound:\t", bmax, "\n")
 
             if(b >= bmax){
                 if(warn) cat("'b >= maximum asymptotic bias' => (classical) optimal IC\n",
@@ -368,7 +371,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                          verbose = verbose)
             bmin <- res$b
 
-            cat("minimal bound:\t", bmin, "\n")
+            if(verbose) cat("minimal bound:\t", bmin, "\n")
             if(b <= bmin){
                 if(warn) cat("'b <= minimum asymptotic bias'\n",
                              "=> the minimum asymptotic bias (lower case) solution is returned\n")

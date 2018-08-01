@@ -18,7 +18,8 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         withPICList = getRobAStBaseOption("withPICList"),
         na.rm = TRUE, initial.est.ArgList, ...,
         withLogScale = TRUE, ..withCheck = FALSE, withTimings = FALSE,
-        withMDE = NULL, withEvalAsVar = NULL, withMakeIC = FALSE)
+        withMDE = NULL, withEvalAsVar = NULL, withMakeIC = FALSE,
+        modifyICwarn = NULL)
 roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
         distance = CvMDist, startPar = NULL, verbose = NULL,
@@ -47,7 +48,8 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   \item{neighbor}{ object of class \code{"UncondNeighborhood"} }
   \item{risk}{ object of class \code{"RiskType"} }
   \item{steps}{ positive integer: number of steps used for k-steps construction }
-  \item{distance}{ distance function }
+  \item{distance}{ distance function used in \code{MDEstimator}, which in turn
+        is used as (default) starting estimator. }
   \item{startPar}{ initial information used by \code{optimize} resp. \code{optim};
     i.e; if (total) parameter is of length 1, \code{startPar} is 
     a search interval, else it is an initial parameter value; if \code{NULL}
@@ -101,6 +103,10 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
        this decision.}
   \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
         \code{makeIC} before return.}
+  \item{modifyICwarn}{logical: should a (warning) information be added if
+     \code{modifyIC} is applied and hence some optimality information could
+     no longer be valid? Defaults to \code{NULL} in which case this value
+     is taken from \code{RobAStBaseOptions}.}
 }
 \details{
   Computes the optimally robust estimator for a given L2 differentiable
@@ -196,7 +202,8 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
 ## 1. Binomial data
 #############################
 ## generate a sample of contaminated data
-ind <- rbinom(100, size=1, prob=0.05) 
+set.seed(123)
+ind <- rbinom(100, size=1, prob=0.05)
 x <- rbinom(100, size=25, prob=(1-ind)*0.25 + ind*0.9)
 
 ## ML-estimate

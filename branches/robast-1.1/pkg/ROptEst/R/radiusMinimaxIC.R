@@ -10,11 +10,12 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
              OptOrIter = "iterate", maxiter = 50,
              tol = .Machine$double.eps^0.4, warn = FALSE,
              verbose = NULL, loRad0 = 1e-3, ..., returnNAifProblem = FALSE,
-             loRad.s = NULL, upRad.s = NULL){
+             loRad.s = NULL, upRad.s = NULL, modifyICwarn = NULL){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         ow <- options("warn")
         on.exit(options(ow))
+        if(missing(warn)|| is.null(warn)) warn <- FALSE
         if(length(loRad) != 1)
             stop("'loRad' is not of length == 1")
         if(length(upRad) != 1)
@@ -209,6 +210,6 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                         round(ineff, 3), sep="")))
         res <- c(res, modifyIC = getModifyIC(L2FamIC = L2Fam,
                                              neighbor = neighbor,
-                                             risk = risk))
+                                             risk = risk, verbose = verbose, warn = warn))
         return(generateIC(neighbor, L2Fam, res))
             })

@@ -8,6 +8,8 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
              upper = NULL, lower = NULL, maxiter, tol, warn, noLow = FALSE,
              verbose = NULL, checkBounds = TRUE, ...){
 
+        if(missing(warn)|| is.null(warn)) warn <- FALSE
+
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
 
@@ -55,7 +57,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                              normtype = normtype(risk))
              upBerg <- getInfRobIC(L2deriv, risk.b, neighbor, symm, Finfo, trafo, 
                                    upper = 3*upper, lower = lower, maxiter = maxi, 
-                                   tol = toli, warn, noLow = noLow,
+                                   tol = toli, warn = warn, noLow = noLow,
                                    verbose = FALSE, checkBounds = FALSE) 
              trV <- upBerg$risk$trAsCov$value
              if(!is.na(trV)) e.up <- FI/trV
@@ -72,7 +74,8 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
           toli <- min(tol*100^(1/it.erg),1e-3)
           checkBounds <- checkBounds & it.erg>10
           erg <<- getInfRobIC(L2deriv, risk.b, neighbor, symm, Finfo, trafo, 
-             upper = upper, lower = lower, maxiter = maxi, tol = toli, warn, noLow = noLow,
+             upper = upper, lower = lower, maxiter = maxi, tol = toli,
+             warn = warn, noLow = noLow,
              verbose = verbose, checkBounds = checkBounds)
           trV <- erg$risk$trAsCov$value
           if(verbose) cat("Outer iteration:", it.erg,"  b_0=", round(b0,3), 
@@ -87,7 +90,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
         b <- uniroot(funb, interval=c(lower,upper), f.lower=f.low, 
                      f.upper=e.up-eff,tol=tol,maxiter=maxiter)
         erg$info <- c(erg$info,
-                  paste("optimally bias-robust IC for ARE", eff, " in the ideal model"))
+                  paste("optimally bias-robust IC for ARE", eff, " in the ideal model" ,collapse="", sep=" "))
 
         erg$risk$eff <- b$f.root+eff
         return(erg)
@@ -167,7 +170,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                  L2derivDistrSymm, Finfo, trafo, onesetLM = onesetLM,
                  z.start, A.start, upper = upper, lower = lower,
                  OptOrIter = OptOrIter, maxiter=maxi, 
-                 tol=toli, warn,
+                 tol=toli, warn = warn,
                  verbose = FALSE, checkBounds = FALSE, ...)
              trV <- lowBerg$risk$trAsCov$value
              f.low <- trV.ML/trV -eff 
@@ -189,7 +192,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                  L2derivDistrSymm, Finfo, trafo, onesetLM = onesetLM,
                  z.start, A.start, upper = upper, lower = lower,
                  OptOrIter = OptOrIter, maxiter=maxi, 
-                 tol=toli, warn,
+                 tol=toli, warn = warn,
                  verbose = FALSE, checkBounds = FALSE, ...)
            trV <- upBerg$risk$trAsCov$value
            e.up <- trV.ML/trV
@@ -213,18 +216,19 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
              Distr, DistrSymm, L2derivSymm,
              L2derivDistrSymm, Finfo, trafo, onesetLM = onesetLM,
              z.start, A.start, upper = upper, lower = lower,
-             OptOrIter = OptOrIter, maxiter = maxi, tol = toli , warn,
+             OptOrIter = OptOrIter, maxiter = maxi, tol = toli , warn = warn,
              verbose = verbL, checkBounds = chkbd, ...)
           trV <- erg$risk$trAsCov$value
           if(verbose) cat("Outer iteration:", it.erg,"  b_0=", round(b0,3), 
                           " eff=", round(trV.ML/trV,3), "\n")  
           return(trV.ML/trV-eff)
           }
-        print(c(lower,upper, f.lower=f.low, f.upper=e.up-eff))
+        if(verbose) print(c(lower,upper, f.lower=f.low, f.upper=e.up-eff))
         b <- uniroot(funb, interval=c(lower,upper), f.lower=f.low, 
                      f.upper=e.up-eff,tol=tol,maxiter=maxiter)
         erg$info <- c(erg$info,
-                  paste("optimally bias-robust IC for ARE", eff, " in the ideal model"))
+                  paste("optimally bias-robust IC for ARE", eff, " in the ideal model",
+                         collapse="", sep=" "))
 
         erg$risk$eff <- b$f.root+eff
         erg$call <- mc 

@@ -15,7 +15,8 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
         upper = NULL, lower = NULL, OptOrIter = "iterate",
         maxiter = 50, tol = .Machine$double.eps^0.4,
         warn = FALSE, verbose = NULL, loRad0 = 1e-3, ...,
-        returnNAifProblem = FALSE, loRad.s = NULL, upRad.s = NULL)
+        returnNAifProblem = FALSE, loRad.s = NULL, upRad.s = NULL,
+        modifyICwarn = NULL)
 }
 \arguments{
   \item{L2Fam}{ L2-differentiable family of probability measures. }
@@ -57,6 +58,10 @@ radiusMinimaxIC(L2Fam, neighbor, risk, ...)
   \item{upRad.s}{ the upper end point of the interval to be searched in the
                    outer optimization (for the user-guessed radius); if
                    \code{NULL} (default) set to \code{upRad} in the algorithm. }
+  \item{modifyICwarn}{logical: should a (warning) information be added if
+     \code{modifyIC} is applied and hence some optimality information could
+     no longer be valid? Defaults to \code{NULL} in which case this value
+     is taken from \code{RobAStBaseOptions}.}
 }
 \details{
 In case the neighborhood radius is unknown, Rieder et al. (2001, 2008)

@@ -26,3 +26,33 @@ setClass("asL4", contains = "asGRisk",
 ## asymptotic L1 error
 setClass("asL1", contains = "asGRisk",
             prototype = prototype(type = "asymptotic mean absolute error"))
+
+setClass("ORobEstimate",
+         representation(roptestCall = "OptionalCall"),
+         prototype(name = "Optimally robust asymptotically linear estimate",
+                   estimate = numeric(0),
+                   samplesize = numeric(0),
+                   completecases = logical(0),
+                   estimate.call = call("{}"),
+                   steps = integer(0),
+                   asvar = NULL,
+                   asbias = NULL,
+                   pIC = NULL,
+                   pICList = NULL,
+                   ICList = NULL,
+                   ksteps = NULL,
+                   uksteps = NULL,
+                   start = matrix(0),
+                   startval = matrix(0),
+                   ustartval = matrix(0),
+                   nuis.idx = NULL,
+                   trafo = list(fct = function(x){
+                                      list(fval = x, mat = matrix(1))},
+                                mat = matrix(1)), ### necessary for comparison with unit matrix
+                   Infos = matrix(c(character(0),character(0)), ncol=2,
+                                  dimnames=list(character(0), c("method", "message"))),
+                   untransformed.estimate = NULL,
+                   untransformed.asvar = NULL,
+                   robestCall = NULL,
+                   roptestCall = NULL),
+         contains = "kStepEstimate")

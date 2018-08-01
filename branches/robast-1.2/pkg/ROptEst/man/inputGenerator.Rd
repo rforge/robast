@@ -2,6 +2,7 @@
 \alias{inputGenerators}
 \alias{gennbCtrl}
 \alias{genstartCtrl}
+\alias{genstartICCtrl}
 \alias{genkStepCtrl}
 \title{Input generating functions for function 'robest'}
 \description{
@@ -18,6 +19,7 @@ genkStepCtrl(useLast = getRobAStBaseOption("kStepUseLast"),
 genstartCtrl(initial.est = NULL, initial.est.ArgList = NULL,
                         startPar = NULL, distance = CvMDist, withMDE = NULL)
 gennbCtrl(neighbor = ContNeighborhood(), eps, eps.lower, eps.upper)
+genstartICCtrl(withMakeIC = FALSE, withEvalAsVar = NULL, modifyICwarn = NULL)
 }
 \arguments{
   \item{useLast}{ which parameter estimate (initial estimate or
@@ -43,6 +45,10 @@ gennbCtrl(neighbor = ContNeighborhood(), eps, eps.lower, eps.upper)
        this decision.}
   \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
         \code{makeIC} before return.}
+  \item{modifyICwarn}{logical: should a (warning) information be added if
+     \code{modifyIC} is applied and hence some optimality information could
+     no longer be valid? Defaults to \code{NULL} in which case this value
+     is taken from \code{RobAStBaseOptions}.}
   \item{initial.est}{ initial estimate for unknown parameter. If missing
         minimum distance estimator is computed. }
   \item{initial.est.ArgList}{a list of arguments to be given to argument \code{start} if the latter
@@ -84,6 +90,7 @@ gennbCtrl(neighbor = ContNeighborhood(), eps, eps.lower, eps.upper)
           \code{\link[distrMod]{RiskType-class}} }
 \examples{
 genkStepCtrl()
+genstartICCtrl()
 genstartCtrl()
 gennbCtrl()
 }

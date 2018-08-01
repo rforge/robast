@@ -1,52 +1,68 @@
-\name{roptest}
-\alias{roptest}
-\alias{roptest.old}
-\title{ Optimally robust estimation }
+\name{RMXEOMSEMBREOBRE}
+\alias{RMXEstimator}
+\alias{OMSEstimator}
+\alias{OBREstimator}
+\alias{MBREstimator}
+\title{ Optimally robust estimation: RMXE, OMSE, MBRE, and OBRE }
 \description{
-  Function to compute optimally robust estimates for L2-differentiable
-  parametric families via k-step construction.
+  These are wrapper functions to 'roptest' to compute
+  optimally robust estimates, more specifically RMXEs, OMSEs, MBREs, and OBREs,
+  for L2-differentiable parametric families via k-step construction.
 }
 \usage{
-roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est, 
-        neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L, 
-        distance = CvMDist, startPar = NULL, verbose = NULL,
-        OptOrIter = "iterate",
-        useLast = getRobAStBaseOption("kStepUseLast"),
-        withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
-        IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
-        withICList = getRobAStBaseOption("withICList"),
-        withPICList = getRobAStBaseOption("withPICList"),
-        na.rm = TRUE, initial.est.ArgList, ...,
-        withLogScale = TRUE, ..withCheck = FALSE, withTimings = FALSE,
-        withMDE = NULL, withEvalAsVar = NULL, withMakeIC = FALSE,
-        modifyICwarn = NULL)
-roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
-        neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
-        distance = CvMDist, startPar = NULL, verbose = NULL,
-        OptOrIter = "iterate",
-        useLast = getRobAStBaseOption("kStepUseLast"),
-        withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
-        IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
-        withICList = getRobAStBaseOption("withICList"),
-        withPICList = getRobAStBaseOption("withPICList"),
-        na.rm = TRUE, initial.est.ArgList, ...,
-        withLogScale = TRUE)
+RMXEstimator(x, L2Fam, fsCor = 1, initial.est, neighbor = ContNeighborhood(),
+             steps = 1L, distance = CvMDist, startPar = NULL, verbose = NULL,
+             OptOrIter = "iterate", useLast = getRobAStBaseOption("kStepUseLast"),
+             withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+             IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+             withICList = getRobAStBaseOption("withICList"),
+             withPICList = getRobAStBaseOption("withPICList"), na.rm = TRUE,
+             initial.est.ArgList, ..., withLogScale = TRUE, ..withCheck=FALSE,
+             withTimings = FALSE, withMDE = NULL, withEvalAsVar = NULL,
+             withMakeIC = FALSE, modifyICwarn = NULL)
+OMSEstimator(x, L2Fam, eps=0.5, fsCor = 1, initial.est, neighbor = ContNeighborhood(),
+             steps = 1L, distance = CvMDist, startPar = NULL, verbose = NULL,
+             OptOrIter = "iterate", useLast = getRobAStBaseOption("kStepUseLast"),
+             withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+             IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+             withICList = getRobAStBaseOption("withICList"),
+             withPICList = getRobAStBaseOption("withPICList"), na.rm = TRUE,
+             initial.est.ArgList, ..., withLogScale = TRUE, ..withCheck=FALSE,
+             withTimings = FALSE, withMDE = NULL, withEvalAsVar = NULL,
+             withMakeIC = FALSE, modifyICwarn = NULL)
+OBREstimator(x, L2Fam, eff=0.95, fsCor = 1, initial.est, neighbor = ContNeighborhood(),
+             steps = 1L, distance = CvMDist, startPar = NULL, verbose = NULL,
+             OptOrIter = "iterate", useLast = getRobAStBaseOption("kStepUseLast"),
+             withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+             IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+             withICList = getRobAStBaseOption("withICList"),
+             withPICList = getRobAStBaseOption("withPICList"), na.rm = TRUE,
+             initial.est.ArgList, ..., withLogScale = TRUE, ..withCheck=FALSE,
+             withTimings = FALSE, withMDE = NULL, withEvalAsVar = NULL,
+             withMakeIC = FALSE, modifyICwarn = NULL)
+MBREstimator(x, L2Fam, fsCor = 1, initial.est, neighbor = ContNeighborhood(),
+             steps = 1L, distance = CvMDist, startPar = NULL, verbose = NULL,
+             OptOrIter = "iterate", useLast = getRobAStBaseOption("kStepUseLast"),
+             withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
+             IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
+             withICList = getRobAStBaseOption("withICList"),
+             withPICList = getRobAStBaseOption("withPICList"), na.rm = TRUE,
+             initial.est.ArgList, ..., withLogScale = TRUE, ..withCheck=FALSE,
+             withTimings = FALSE, withMDE = NULL, withEvalAsVar = NULL,
+             withMakeIC = FALSE, modifyICwarn = NULL)
 }
 \arguments{
   \item{x}{ sample }
   \item{L2Fam}{ object of class \code{"L2ParamFamily"} }
-  \item{eps}{ positive real (0 < \code{eps} <= 0.5): amount of gross errors. 
+  \item{eff}{ positive real (0 <= \code{eff} <= 1): amount of asymptotic
+     efficiency loss in the ideal model. See details below. }
+  \item{eps}{ positive real (0 < \code{eps} <= 0.5): amount of gross errors.
           See details below. }
-  \item{eps.lower}{ positive real (0 <= \code{eps.lower} <= \code{eps.upper}): 
-        lower bound for the amount of gross errors. See details below. }
-  \item{eps.upper}{ positive real (\code{eps.lower} <= \code{eps.upper} <= 0.5): 
-        upper bound for the amount of gross errors. See details below. }
   \item{fsCor}{ positive real: factor used to correct the neighborhood radius;
         see details. }
   \item{initial.est}{ initial estimate for unknown parameter. If missing 
         minimum distance estimator is computed. }
   \item{neighbor}{ object of class \code{"UncondNeighborhood"} }
-  \item{risk}{ object of class \code{"RiskType"} }
   \item{steps}{ positive integer: number of steps used for k-steps construction }
   \item{distance}{ distance function used in \code{MDEstimator}, which in turn
         is used as (default) starting estimator. }
@@ -109,36 +125,33 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
      is taken from \code{RobAStBaseOptions}.}
 }
 \details{
-  Computes the optimally robust estimator for a given L2 differentiable
-  parametric family. The computation uses a k-step construction with an 
+  The functions compute optimally robust estimator for a given L2 differentiable
+  parametric family; more specifically they are RMXEs, OMSEs, MBREs, and OBREs.
+  The computation uses a k-step construction with an
   appropriate initial estimate; cf. also \code{\link[RobAStBase]{kStepEstimator}}. 
   Valid candidates are e.g. Kolmogorov(-Smirnov) or von Mises minimum 
   distance estimators (default); cf. Rieder (1994) and Kohl (2005).
 
-  Before package version 0.9, this computation was done with the code of
-  function \code{roptest.old} (with the same formals). From package version
-  0.9 on, this function uses the modularized function \code{\link{robest}}
-  internally.
-
-  If the amount of gross errors (contamination) is known, it can be 
-  specified by \code{eps}. The radius of the corresponding infinitesimal 
+  For OMSE, i.e., the asymptotically linear estimator with minimax mean squared
+  error on this neighborhood of given size, the amount of gross errors
+  (contamination) is assumed to be known, and is specified by \code{eps}.
+  The radius of the corresponding infinitesimal
   contamination neighborhood is obtained by multiplying \code{eps} 
   by the square root of the sample size. 
 
-  If the amount of gross errors (contamination) is unknown, try to find a 
-  rough estimate for the amount of gross errors, such that it lies 
-  between \code{eps.lower} and \code{eps.upper}.
-
-  In case \code{eps.lower} is specified and \code{eps.upper} is missing, 
-  \code{eps.upper} is set to 0.5. In case \code{eps.upper} is specified and
-  \code{eps.lower} is missing, \code{eps.lower} is set to 0.
-
-  If neither \code{eps} nor \code{eps.lower} and/or \code{eps.upper} is 
-  specified, \code{eps.lower} and \code{eps.upper} are set to 0 and 0.5, 
-  respectively.
-
-  If \code{eps} is missing, the radius-minimax estimator in sense of 
+  If the amount of gross errors (contamination) is unknown, RMXE should be used,
+  i.e., the radius-minimax estimator in the sense of
   Rieder et al. (2001, 2008), respectively Section 2.2 of Kohl (2005) is returned.
+
+  The OBRE, i.e., the optimal bias-robust (asymptotically linear) estimator;
+  (terminology due to Hampel et al (1985)), expects an efficiency loss (at the
+  ideal model) to be specified and then, according to an (asymptotic) Anscombe
+  criterion computes the the bias bound achieving this efficiency loss.
+
+  The MBRE, i.e., the most bias-robust (asymptotically linear) estimator;
+  (terminology due to Hampel et al (1985)), uses the influence curve with
+  minimal possible bias bound, hence minimaxes bias on these neighborhoods
+  (in an infinitesimal sense)..
 
   Finite-sample and higher order results suggest that the asymptotically
   optimal procedure is to liberal. Using \code{fsCor} the radius can be
@@ -162,6 +175,9 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
 
   If \code{useLast} is set to \code{TRUE} the computation of \code{asvar}, 
   \code{asbias} and \code{IC} is based on the k-step estimate.
+
+  All these estimators are realized as wrappers to function \code{roptest}.
+
 }
 \value{Object of class \code{"kStepEstimate"}.  In addition, it has
        an attribute \code{"timings"} where computation time is stored.}
@@ -191,13 +207,7 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
 \author{Matthias Kohl \email{Matthias.Kohl@stamats.de},\cr
         Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 %\note{}
-\seealso{ \code{\link[RobLox]{roblox}}, 
-          \code{\link[distrMod]{L2ParamFamily-class}}
-          \code{\link[RobAStBase]{UncondNeighborhood-class}},
-          \code{\link[distrMod]{RiskType-class}} }
 \examples{
-## Don't run to reduce check time on CRAN
-\dontrun{
 #############################
 ## 1. Binomial data
 #############################
@@ -207,125 +217,70 @@ ind <- rbinom(100, size=1, prob=0.05)
 x <- rbinom(100, size=25, prob=(1-ind)*0.25 + ind*0.9)
 
 ## ML-estimate
-MLest <- MLEstimator(x, BinomFamily(size = 25))
-estimate(MLest)
-confint(MLest)
+MLE.bin <- MLEstimator(x, BinomFamily(size = 25))
+## compute optimally robust estimators
+OMSE.bin <- OMSEstimator(x, BinomFamily(size = 25), steps = 3)
+MBRE.bin <- MBREstimator(x, BinomFamily(size = 25), steps = 3)
+estimate(MLE.bin)
+estimate(MBRE.bin)
+estimate(OMSE.bin)
 
-## compute optimally robust estimator (known contamination)
-robest1 <- roptest(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
-robest1.0 <- roptest.old(x, BinomFamily(size = 25), eps = 0.05, steps = 3)
-identical(robest1,robest1.0)
-estimate(robest1)
-confint(robest1, method = symmetricBias())
-## neglecting bias
-confint(robest1)
-plot(pIC(robest1))
-tmp <- qqplot(x, robest1, cex.pch=1.5, exp.cex2.pch = -.25,
-              exp.fadcol.pch = .55, jit.fac=.9)
-
-## compute optimally robust estimator (unknown contamination)
-robest2 <- roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.2, steps = 3)
-estimate(robest2)
-confint(robest2, method = symmetricBias())
-plot(pIC(robest2))
-
-## total variation neighborhoods (known deviation)
-robest3 <- roptest(x, BinomFamily(size = 25), eps = 0.025, 
-                   neighbor = TotalVarNeighborhood(), steps = 3)
-estimate(robest3)
-confint(robest3, method = symmetricBias())
-plot(pIC(robest3))
-
-## total variation neighborhoods (unknown deviation)
-robest4 <- roptest(x, BinomFamily(size = 25), eps.lower = 0, eps.upper = 0.1, 
-                   neighbor = TotalVarNeighborhood(), steps = 3)
-estimate(robest4)
-confint(robest4, method = symmetricBias())
-plot(pIC(robest4))
-
+\donttest{  ## to reduce time load at CRAN tests
+RMXE.bin <- RMXEstimator(x, BinomFamily(size = 25), steps = 3)
+OBRE.bin <- OBREstimator(x, BinomFamily(size = 25), steps = 3)
+estimate(RMXE.bin)
+estimate(OBRE.bin)
+}
+\donttest{  ## to reduce time load at CRAN tests
 #############################
 ## 2. Poisson data
 #############################
+
 ## Example: Rutherford-Geiger (1910); cf. Feller~(1968), Section VI.7 (a)
-x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532), 
-       rep(5, 408), rep(6, 273), rep(7, 139), rep(8, 45), rep(9, 27), 
+x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532),
+       rep(5, 408), rep(6, 273), rep(7, 139), rep(8, 45), rep(9, 27),
        rep(10, 10), rep(11, 4), rep(12, 0), rep(13, 1), rep(14, 1))
 
 ## ML-estimate
-MLest <- MLEstimator(x, PoisFamily())
-estimate(MLest)
-confint(MLest)
-
-## compute optimally robust estimator (unknown contamination)
-robest <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
-estimate(robest)
-confint(robest, symmetricBias())
-
-plot(pIC(robest))
-tmp <- qqplot(x, robest, cex.pch=1.5, exp.cex2.pch = -.25,
-              exp.fadcol.pch = .55, jit.fac=.9)
- 
-## total variation neighborhoods (unknown deviation)
-robest1 <- roptest(x, PoisFamily(), eps.upper = 0.05, 
-                  neighbor = TotalVarNeighborhood(), steps = 3)
-estimate(robest1)
-confint(robest1, symmetricBias())
-plot(pIC(robest1))
+MLE.pois <- MLEstimator(x, PoisFamily())
+OBRE.pois <- OBREstimator(x, PoisFamily(), steps = 3)
+OMSE.pois <- OMSEstimator(x, PoisFamily(), steps = 3)
+MBRE.pois <- MBREstimator(x, PoisFamily(), steps = 3)
+RMXE.pois <- RMXEstimator(x, PoisFamily(), steps = 3)
+estimate(MLE.pois)
+estimate(OBRE.pois)
+estimate(RMXE.pois)
+estimate(MBRE.pois)
+estimate(OMSE.pois)
 }
 
+\donttest{ ## to reduce time load at CRAN tests
 #############################
 ## 3. Normal (Gaussian) location and scale
 #############################
 ## 24 determinations of copper in wholemeal flour
 library(MASS)
 data(chem)
-plot(chem, main = "copper in wholemeal flour", pch = 20)
 
-## ML-estimate
-MLest <- MLEstimator(chem, NormLocationScaleFamily())
-estimate(MLest)
-confint(MLest)
+MLE.n <- MLEstimator(chem, NormLocationScaleFamily())
+MBRE.n <- MBREstimator(chem, NormLocationScaleFamily(), steps = 3)
+OMSE.n <- OMSEstimator(chem, NormLocationScaleFamily(), steps = 3)
+OBRE.n <- OBREstimator(chem, NormLocationScaleFamily(), steps = 3)
+RMXE.n <- RMXEstimator(chem, NormLocationScaleFamily(), steps = 3)
 
-## Don't run to reduce check time on CRAN
-\donttest{
-## compute optimally robust estimator (known contamination)
-## takes some time -> you can use package RobLox for normal 
-## location and scale which is optimized for speed
-robest <- roptest(chem, NormLocationScaleFamily(), eps = 0.05, steps = 3)
-estimate(robest)
-confint(robest, symmetricBias())
-plot(pIC(robest))
-## plot of relative and absolute information; cf. Kohl (2005)
-infoPlot(pIC(robest))
-
-tmp <- qqplot(chem, robest, cex.pch=1.5, exp.cex2.pch = -.25,
-              exp.fadcol.pch = .55, withLab = TRUE, which.Order=1:4,
-              exp.cex2.lbl = .12,exp.fadcol.lbl = .45,
-              nosym.pCI = TRUE, adj.lbl=c(1.7,.2),
-              exact.pCI = FALSE, log ="xy")
-
-## finite-sample correction
-if(require(RobLox)){
-    n <- length(chem)
-    r <- 0.05*sqrt(n)
-    r.fi <- finiteSampleCorrection(n = n, r = r)
-    fsCor <- r.fi/r
-    robest <- roptest(chem, NormLocationScaleFamily(), eps = 0.05, 
-                      fsCor = fsCor, steps = 3)
-    estimate(robest)
-}
-
-## compute optimally robust estimator (unknown contamination)
-## takes some time -> use package RobLox!
-robest1 <- roptest(chem, NormLocationScaleFamily(), eps.lower = 0.05, 
-                   eps.upper = 0.1, steps = 3)
-estimate(robest1)
-confint(robest1, symmetricBias())
-plot(pIC(robest1))
-## plot of relative and absolute information; cf. Kohl (2005)
-infoPlot(pIC(robest1))
+estimate(MLE.n)
+estimate(MBRE.n)
+estimate(OMSE.n)
+estimate(OBRE.n)
+estimate(RMXE.n)
 }
 }
+
+\seealso{ \code{\link{roptest}}, \code{\link{robest}},
+          \code{\link[RobLox]{roblox}},
+          \code{\link[distrMod]{L2ParamFamily-class}}
+          \code{\link[RobAStBase]{UncondNeighborhood-class}},
+          \code{\link[distrMod]{RiskType-class}} }
 \concept{k-step construction}
 \concept{optimally robust estimation}
 \keyword{robust}

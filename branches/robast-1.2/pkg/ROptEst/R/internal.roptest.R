@@ -235,3 +235,10 @@ gennbCtrl <- function(neighbor = ContNeighborhood(),
   es.list <- .fix.in.defaults(es.list,gennbCtrl)
  return(es.list)
 }
+genstartICCtrl <- function(withMakeIC = FALSE, withEvalAsVar = NULL,
+                           modifyICwarn = NULL){
+  es.call <- match.call()
+  es.list <- as.list(es.call[-1])
+  es.list <- .fix.in.defaults(es.list,genstartICCtrl)
+ return(es.list)
+}

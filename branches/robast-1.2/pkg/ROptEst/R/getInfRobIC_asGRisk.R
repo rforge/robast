@@ -11,6 +11,8 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
 
+        if(missing(warn)|| is.null(warn)) warn <- FALSE
+
         biastype <- biastype(risk)
         normtype <- normtype(risk)
         radius <- neighbor@radius
@@ -133,13 +135,13 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
             if(abs(prec.old - prec) < 1e-10){
                 if(iter>1)
                    problem <- TRUE
-                   cat("algorithm did not converge!\n", "achieved precision:\t", prec, "\n")
+                   if(warn) cat("algorithm did not converge!\n", "achieved precision:\t", prec, "\n")
                 break
             }
             if(iter > maxiter){
                 if(iter>1)
                    problem <- TRUE
-                   cat("maximum iterations reached!\n", "achieved precision:\t", prec, "\n")
+                   if(warn) cat("maximum iterations reached!\n", "achieved precision:\t", prec, "\n")
                 break
             }
         }
@@ -375,7 +377,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                               a.start = a, z.start = z, A.start = A, w.start = w,
                               std = std, z.comp = z.comp,
                               A.comp = A.comp, maxiter = maxit2, tol = tol,
-                              verbose = verbose, warnit = (OptOrIter!=2))
+                              verbose = verbose, warnit = warn&(OptOrIter!=2))
 
                  ## read out solution
                  w <- erg$w
@@ -405,12 +407,12 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                  if(prec < tol) break
                  if(abs(prec.old - prec) < 1e-10){
                      problem <- TRUE
-                     cat("algorithm did not converge!\n", "achieved precision:\t", prec, "\n")
+                     if(warn) cat("algorithm did not converge!\n", "achieved precision:\t", prec, "\n")
                      break
                  }
                  if(iter > maxiter){
                      problem <- TRUE
-                     cat("maximum iterations reached!\n", "achieved precision:\t", prec, "\n")
+                     if(warn) cat("maximum iterations reached!\n", "achieved precision:\t", prec, "\n")
                      break
                  }
             }

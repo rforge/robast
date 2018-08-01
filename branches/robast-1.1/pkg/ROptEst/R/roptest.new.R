@@ -27,7 +27,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     na.rm = TRUE, initial.est.ArgList, ...,
                     withLogScale = TRUE,..withCheck=FALSE,
                     withTimings = FALSE, withMDE = NULL,
-                    withEvalAsVar = NULL){
+                    withEvalAsVar = NULL, modifyICwarn = NULL){
     es.call <- es.call.e <- match.call()
     es.call.e <- (as.list(es.call.e))
     es.call.e[["..."]] <- NULL
@@ -76,6 +76,9 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
 ### end of dead end.
 #####################################################################
 
+setMethod("roptestCall", "ORobEstimate", function(object) object@roptestCall)
+
+
 roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
                     distance = CvMDist, startPar = NULL, verbose = NULL,
@@ -88,7 +91,8 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     na.rm = TRUE, initial.est.ArgList, ...,
                     withLogScale = TRUE,..withCheck=FALSE,
                     withTimings = FALSE, withMDE = NULL,
-                    withEvalAsVar = NULL, withMakeIC = FALSE){
+                    withEvalAsVar = NULL, withMakeIC = FALSE,
+                    modifyICwarn = NULL){
     mc <- match.call(expand.dots=FALSE)
     dots <- mc[["..."]]
     scalename <- dots[["scalename"]]
@@ -97,6 +101,12 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     if(!missing(eps)) nbCtrl[["eps"]] <- eps
     if(!missing(eps.lower)) nbCtrl[["eps.lower"]] <- eps.lower
     if(!missing(eps.upper)) nbCtrl[["eps.upper"]] <- eps.upper
+
+    startICCtrl <- list()
+    startICCtrl[["withMakeIC"]] <- if(!missing(withMakeIC)) withMakeIC else FALSE
+    startICCtrl[["withEvalAsVar"]] <- if(!missing(withEvalAsVar)) withEvalAsVar else NULL
+    startICCtrl[["modifyICwarn"]] <- if(!missing(modifyICwarn)) modifyICwarn else FALSE
+
 
     startCtrl <- list()
     if(!missing(initial.est)) startCtrl[["initial.est"]] <- initial.est
@@ -120,11 +130,18 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     retV <- robest(x=x, L2Fam=L2Fam,  fsCor = fsCor,
            risk = risk, steps = steps, verbose = verbose,
            OptOrIter = OptOrIter, nbCtrl = nbCtrl,
-           startCtrl = startCtrl, kStepCtrl = kStepCtrl,
-           na.rm = na.rm, ..., debug = ..withCheck,
+           startCtrl = startCtrl, startICCtrl = startICCtrl,
+           kStepCtrl = kStepCtrl, na.rm = na.rm, ...,
+           debug = ..withCheck,
            withTimings = withTimings)
-    retV@robestCall <- retV@estimate.call
+    retV@robestCall <- quote(retV@estimate.call)
     retV@estimate.call <- mc
+    tim <- attr(retV,"timings")
+
+    retV <- as(retV, "ORobEstimate")
+    retV <- .checkEstClassForParamFamily(L2Fam,retV)
+    attr(retV,"timings") <- tim
+    retV@roptestCall <- mc
     return(retV)
 }
 #roptest(x=1:10,L2Fam=GammaFamily(),also=3,..withCheck=TRUE)
@@ -137,6 +154,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
                     OptOrIter = "iterate",
                     nbCtrl = gennbCtrl(),
                     startCtrl = genstartCtrl(),
+                    startICCtrl = genstartICCtrl(),
                     kStepCtrl = genkStepCtrl(),
                     na.rm = TRUE, ..., debug = FALSE,
                     withTimings = FALSE){
@@ -158,9 +176,11 @@ robest <- function(x, L2Fam,  fsCor = 1,
 
     if(missing(nbCtrl)||is.null(nbCtrl))          nbCtrl <- gennbCtrl()
     if(missing(startCtrl)||is.null(startCtrl)) startCtrl <- genstartCtrl()
+    if(missing(startICCtrl)||is.null(startICCtrl)) startICCtrl <- genstartICCtrl()
     if(missing(kStepCtrl)||is.null(kStepCtrl)) kStepCtrl <- genkStepCtrl()
     nbCtrl    <- .fix.in.defaults(nbCtrl, gennbCtrl)
     startCtrl <- .fix.in.defaults(startCtrl, genstartCtrl)
+    startICCtrl <- .fix.in.defaults(startICCtrl, genstartICCtrl)
     kStepCtrl <- .fix.in.defaults(kStepCtrl, genkStepCtrl)
 
     if(missing(L2Fam))
@@ -168,10 +188,17 @@ robest <- function(x, L2Fam,  fsCor = 1,
     if(!is(L2Fam, "L2ParamFamily"))
         stop("'L2Fam' must be of class 'L2ParamFamily'.")
 
-    withEvalAsVar <- kStepCtrl$withEvalAsVar
-    if(is.null(withEvalAsVar)) withEvalAsVar <- L2Fam@.withEvalAsVar
-    withMakeIC <- kStepCtrl$withMakeIC
-    if(is.null(withMakeIC)) withMakeIC <- FALSE
+    withEvalAsVarSIC <- startICCtrl$withEvalAsVar
+    if(is.null(withEvalAsVarSIC)) withEvalAsVarSIC <- L2Fam@.withEvalAsVar
+    withMakeICSIC <- startICCtrl$withMakeIC
+    if(is.null(withMakeICSIC)) withMakeICSIC <- FALSE
+    modifyICwarnSIC <- startICCtrl$modifyICwarn
+    if(is.null(modifyICwarnSIC)) modifyICwarnSIC <- getRobAStBaseOption("modifyICwarn")
+
+    withEvalAsVarkStep <- kStepCtrl$withEvalAsVar
+    if(is.null(withEvalAsVarkStep)) withEvalAsVarkStep <- L2Fam@.withEvalAsVar
+    withMakeICkStep <- kStepCtrl$withMakeIC
+    if(is.null(withMakeICkStep)) withMakeICkStep <- FALSE
 
 
     es.list <- as.list(es.call0[-1])
@@ -180,7 +207,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
     es.list0 <-  c(es.list,dots)
 
     if(missing(verbose)|| is.null(verbose))
-           es.list$verbose <- getRobAStBaseOption("all.verbose")
+           es.list$verbose <- verbose <- getRobAStBaseOption("all.verbose")
 
     res.x <- .pretreat(x,na.rm)
     x <- res.x$x
@@ -272,6 +299,8 @@ robest <- function(x, L2Fam,  fsCor = 1,
     neighbor <- eval(es.list0$neighbor)
     es.list0$neighbor <- NULL
     es.list0$kStepCtrl <- NULL
+    es.list0$debug <- NULL
+    es.list0$startICCtrl <- NULL
     es.list0$startCtrl <- NULL
     es.list0$distance <- NULL
     es.list0$x <- NULL
@@ -281,19 +310,20 @@ robest <- function(x, L2Fam,  fsCor = 1,
     es.list0$withEvalAsVar <- NULL
     es.list0$na.rm <- NULL
     es.list0$fsCor <- eval(es.list0$fsCor)
+    es.list0$OptOrIter <- eval(es.list0$OptOrIter)
 
     if(debug) {cat("\n\n\n::::\n\n")
     argList <- c(list(model=L2Fam,risk=risk,neighbor=neighbor,
-                      withEvalAsVar = withEvalAsVar, withMakeIC = withMakeIC),
-                                             es.list0)
+                      withEvalAsVar = withEvalAsVarSIC, withMakeIC = withMakeICSIC,
+                      modifyICwarn = modifyICwarnSIC), es.list0)
     print(argList)
     cat("\n\n\n")
     }
     if(!debug){
       sy.getStartIC <-  system.time({
        ICstart <- do.call(getStartIC, args=c(list(model=L2FamStart,risk=risk,
-                              neighbor=neighbor, withEvalAsVar = withEvalAsVar,
-                              withMakeIC = withMakeIC),
+                              neighbor=neighbor, withEvalAsVar = withEvalAsVarSIC,
+                              withMakeIC = withMakeICSIC, modifyICwarn = modifyICwarnSIC),
                               es.list0))
      })
      if (withTimings) print(sy.getStartIC)
@@ -311,8 +341,8 @@ robest <- function(x, L2Fam,  fsCor = 1,
                             na.rm = na.rm,
                             scalename = kStepCtrl$scalename,
                             withLogScale = kStepCtrl$withLogScale,
-                            withEvalAsVar = withEvalAsVar,
-                            withMakeIC = withMakeIC)
+                            withEvalAsVar = withEvalAsVarkStep,
+                            withMakeIC = withMakeICkStep)
          print(argList) }
       sy.kStep <- system.time({
          res <- kStepEstimator(x, IC = ICstart, start = initial.est, steps = steps,
@@ -324,8 +354,8 @@ robest <- function(x, L2Fam,  fsCor = 1,
                             na.rm = na.rm,
                             scalename = kStepCtrl$scalename,
                             withLogScale = kStepCtrl$withLogScale,
-                            withEvalAsVar = withEvalAsVar,
-                            withMakeIC = withMakeIC)
+                            withEvalAsVar = withEvalAsVarkStep,
+                            withMakeIC = withMakeICkStep)
                             })
        if (withTimings) print(sy.kStep)
 

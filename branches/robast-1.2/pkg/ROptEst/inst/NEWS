@@ -12,6 +12,7 @@ version 1.1
 #######################################
 
 user-visible CHANGES:
++ new wrapper functions RMXEstimator, OBREstimator, MBREstimator, OMSEstimator
 + plot-methods now have arguments .nonlb to only plot (but not label) some points
 + plot-methods are vectorized to a higher extent in all arguments
 + plot methods now return an S3 object of class \code{c("plotInfo","DiagnInfo")}, i.e., a list containing the 
@@ -27,6 +28,7 @@ user-visible CHANGES:
 + getRiskIC and getBiasIC gain argument withCheck to speed up things if one does not want to call checkIC 
 
 Return value of "roptest"
+
 + the return value of "roptest", an object of class "kStepEstimate" has a slot "estimate.call" which
   contains the (matched) call to "roptest"; internally "roptest" calls "robest"; the call to "robest"
   may be of interest, too, so we have a new slot "robestCall" of class "OptionalCall", ie a call  
@@ -36,9 +38,13 @@ Bugfix:
 + argument withMakeIC was not correctly used in roptest.new 
 
 under the hood:
++ try to minimize interim output while using roptest- and friends
++ new return class ORobEstimate for optimally robust estimators
 + wherever possible also use q.l internally instead of q to 
   provide functionality in IRKernel
 + fixed all scripts
++ by means of argument modifyICwarn the filling of info slots with warnings is controlled;
+  over all at most one warning is written into the info string 
 
 #######################################
 version 1.0.1
