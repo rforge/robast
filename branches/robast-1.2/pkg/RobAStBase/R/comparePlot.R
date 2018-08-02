@@ -592,11 +592,11 @@ setMethod("comparePlot", signature("IC","IC"),
             y0[1:2] <- c(ym,yM)
 
             finiteEndpoints <- rep(FALSE,4)
-            if(scaleX){
+            if(scaleX[i]){
                finiteEndpoints[1] <- is.finite(scaleX.inv[[i]](min(x.vec[[i]], xlim[1,i],na.rm=TRUE)))
                finiteEndpoints[2] <- is.finite(scaleX.inv[[i]](max(x.vec[[i]], xlim[2,i],na.rm=TRUE)))
             }
-            if(scaleY){
+            if(scaleY[i]){
                finiteEndpoints[3] <- is.finite(scaleY.inv[[i]](min(ym, ylim[1,i],na.rm=TRUE)))
                finiteEndpoints[4] <- is.finite(scaleY.inv[[i]](max(yM, ylim[2,i],na.rm=TRUE)))
             }
@@ -639,7 +639,7 @@ setMethod("comparePlot", signature("IC","IC"),
                               x.ticks = x.ticks0, y.ticks = y.ticks0)
             if(withMBR){
                 MBR.i <- MBRB[i,]
-                if(scaleY) MBR.i <- scaleY.fct[[i]](MBR.i)
+                if(scaleY[i]) MBR.i <- scaleY.fct[[i]](MBR.i)
                 abline(h=MBR.i, col=col.MBR, lty=lty.MBR, lwd = lwd.MBR)
                 plotInfo$MBR[[i]] <- list(h=MBR.i, col=col.MBR, lty=lty.MBR, lwd = lwd.MBR)
             }
