@@ -1,6 +1,6 @@
 Package: RobExtremes
 Version: 1.1.0
-Date: 2018-08-01
+Date: 2018-08-03
 Title: Optimally Robust Estimation for Extreme Value Distributions
 Description: Optimally robust estimation for extreme value distributions using S4 classes and
         methods (based on packages 'distr', 'distrEx', 'distrMod', 'RobAStBase', and
@@ -26,4 +26,4 @@ Encoding: latin1
 URL: http://robast.r-forge.r-project.org/
 LastChangedDate: {$LastChangedDate$}
 LastChangedRevision: {$LastChangedRevision$}
-VCS/SVNRevision: 1081
+VCS/SVNRevision: 1091
