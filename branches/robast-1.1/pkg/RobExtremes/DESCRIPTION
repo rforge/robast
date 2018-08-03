@@ -4,7 +4,7 @@ Date: 2018-07-19
 Title: Optimally Robust Estimation for Extreme Value Distributions
 Description: Optimally robust estimation for extreme value distributions using S4 classes and
         methods (based on packages 'distr', 'distrEx', 'distrMod', 'RobAStBase', and 'ROptEst').
-Depends: R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 1.0), robustbase, evd
+Depends: R (>= 2.14.0), methods, distrMod(>= 2.7.0), ROptEst(>= 1.1.0), robustbase, evd
 Suggests: RUnit (>= 0.4.26), ismev (>= 1.39)
 Imports: RobAStRDA, distr, distrEx, RandVar, RobAStBase, startupmsg, actuar
 Authors@R: c(person("Nataliya", "Horbenko", role=c("aut","cph")), person("Bernhard", "Spangl",
