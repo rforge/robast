@@ -51,6 +51,8 @@ Note: The first two numbers of package versions do not necessarily reflect
  information.
 }
 \examples{
+## don't run to reduce check time on CRAN
+\donttest{
 library(ROptEst)
 
 ## Example: Rutherford-Geiger (1910); cf. Feller~(1968), Section VI.7 (a)
@@ -76,5 +78,6 @@ plot(pIC(robEst))
 confint(robEst)
 ## confidence interval based on LAN - including bias
 confint(robEst, method = symmetricBias())
+}
 }
 \keyword{package}
