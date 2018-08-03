@@ -51,7 +51,7 @@ Note: The first two numbers of package versions do not necessarily reflect
  information.
 }
 \examples{
-## don't run to reduce check time on CRAN
+## don't test to reduce check time on CRAN
 \donttest{
 library(ROptEst)
 
