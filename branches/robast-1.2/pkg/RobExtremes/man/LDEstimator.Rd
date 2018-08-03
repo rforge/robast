@@ -145,10 +145,10 @@ medSn(x = x, ParamFamily = G, q.lo = 0.5, q.up = 4)
 LDEstimator(x, loc.est = median, disp.est = Sn, loc.fctal = median,
             disp.fctal = getMethod("Sn","UnivariateDistribution"),
             ParamFamily = G, disp.est.ctrl = list(constant=1))
-}
 
 medkMAD(x = x, ParamFamily = G)
 medkMADhybr(x = x, ParamFamily = G)
+}
 medkMAD(x = x, k=10, ParamFamily = G)
 
 ##not at all robust:

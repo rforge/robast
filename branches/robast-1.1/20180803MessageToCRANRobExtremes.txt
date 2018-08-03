@@ -1,0 +1,94 @@
+Hi, 
+
+this is the third part of a somewhat larger release block... 
+
+For internal dependencies it has to be done step by step in four steps. All packages are already ready for submission, so this could be done within the next few days. 
+
+We have started with distrMod (2.7.0) and RobAStRDA (1.1.0). In our second step, Matthias Kohl, Matthias.Kohl@stamats.de, has submitted RandVar, RobAStBase, ROptEst in version 1.1.0 to CRAN.
+
+In this third step, it is back to me, and I will submit RobExtremes. 
+
+The final fourth step then will be Matthias again to release RobLox, RobLoxBioC, RobRex, ROptEstOld, and ROptRegTS. 
+
+For RobExtremes, we still see (minor) timing NOTEs as to examples in Windows and in Linux (see below). As these timings are close to the bound of 5s, we have left them as is for the time being, but could also move some more examples to \donttest if requested:
+
+Best regards, Peter Ruckdeschel (and Matthias Kohl)
+
+%----------------------------------------------------
+Windows:
+%----------------------------------------------------
+** running examples for arch 'i386' ... NOTE
+Examples with CPU or elapsed time > 5s
+                        user system elapsed
+ismevgpdgevdiag-methods 5.37   0.58     6.6
+** running examples for arch 'x64' ... NOTE
+Examples with CPU or elapsed time > 5s
+                        user system elapsed
+ismevgpdgevdiag-methods 6.12   0.45    7.89
+
+> sessionInfo()
+R version 3.5.1 RC (2018-06-24 r74935)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 17134)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=German_Germany.1252  LC_CTYPE=German_Germany.1252   
+[3] LC_MONETARY=German_Germany.1252 LC_NUMERIC=C                   
+[5] LC_TIME=German_Germany.1252    
+
+attached base packages:
+[1] stats4    stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] RobExtremes_1.1.0 evd_2.3-3         ROptEst_1.1.0     RobAStBase_1.1.0 
+ [5] rrcov_1.4-4       robustbase_0.93-1 distrMod_2.8.0    MASS_7.3-50      
+ [9] RandVar_1.1.0     distrEx_2.8.0     distr_2.8.0       sfsmisc_1.1-2    
+[13] startupmsg_0.9.6 
+
+loaded via a namespace (and not attached):
+ [1] RobAStRDA_1.1.0 lattice_0.20-35 mvtnorm_1.0-8   grid_3.5.1     
+ [5] pcaPP_1.9-73    expint_0.1-5    actuar_2.3-1    tools_3.5.1    
+ [9] DEoptimR_1.0-8  compiler_3.5.1  cluster_2.0.7-1
+%----------------------------------------------------
+Linux:
+%----------------------------------------------------
+Examples with CPU or elapsed time > 5s
+                         user system elapsed
+ismevgpdgevdiag-methods 8.512  0.517   9.342
+LDEstimator             4.430  0.199   5.210
+
+> sessionInfo()
+R Under development (unstable) (2018-08-02 r75051)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: openSUSE Leap 42.3
+
+Matrix products: default
+BLAS: /usr/local/lib64/R/lib/libRblas.so
+LAPACK: /usr/local/lib64/R/lib/libRlapack.so
+
+locale:
+ [1] LC_CTYPE=de_DE.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=de_DE.UTF-8        LC_COLLATE=de_DE.UTF-8    
+ [5] LC_MONETARY=de_DE.UTF-8    LC_MESSAGES=de_DE.UTF-8   
+ [7] LC_PAPER=de_DE.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=de_DE.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats4    stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] RobExtremes_1.1.0 evd_2.3-3         ROptEst_1.1.0     RobAStBase_1.1.0 
+ [5] rrcov_1.4-4       robustbase_0.93-2 distrMod_2.7.0    MASS_7.3-50      
+ [9] RandVar_1.1.0     distrEx_2.7.0     distr_2.7.0       sfsmisc_1.1-2    
+[13] startupmsg_0.9.5 
+
+loaded via a namespace (and not attached):
+ [1] RobAStRDA_1.1.0 lattice_0.20-35 mvtnorm_1.0-8   grid_3.6.0     
+ [5] pcaPP_1.9-73    expint_0.1-5    actuar_2.3-1    DEoptimR_1.0-8 
+ [9] compiler_3.6.0  cluster_2.0.7-1
+

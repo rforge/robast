@@ -227,8 +227,9 @@ IQR(G)
 
 ## note the timing
 system.time(print(Sn(GPareto(shape=0.5,scale=2))))
+\donttest{
 system.time(print(Sn(as(GPareto(shape=0.5,scale=2),"AbscontDistribution"))))
-
+}
 }
 \seealso{\code{\link[distrEx]{Var}},\cr
  \code{\link[stats]{sd}}, \code{\link[stats:cor]{var}}, \code{\link[stats]{IQR}},\cr
