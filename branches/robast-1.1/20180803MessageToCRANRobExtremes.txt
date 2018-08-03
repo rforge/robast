@@ -10,9 +10,9 @@ In this third step, it is back to me, and I will submit RobExtremes.
 
 The final fourth step then will be Matthias again to release RobLox, RobLoxBioC, RobRex, ROptEstOld, and ROptRegTS. 
 
-For RobExtremes, we still see (minor) timing NOTEs as to examples in Windows and in Linux (see below). As these timings are close to the bound of 5s, we have left them as is for the time being, but could also move some more examples to \donttest if requested:
-
 Best regards, Peter Ruckdeschel (and Matthias Kohl)
+
+obsolete:
 
 %----------------------------------------------------
 Windows:

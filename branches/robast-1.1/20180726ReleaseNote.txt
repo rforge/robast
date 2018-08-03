@@ -24,7 +24,8 @@ NEWS("<pkgname>").
 Updates for the packages of the RobASt family are now avaialable on CRAN in 
 version >= 1.1.0
 
-Most importantly, we have (finally) released on CRAN a new package 
+Most importantly, we have (finally) released on CRAN a (long announced) new 
+package 
 
                        "RobExtremes" 
 
@@ -117,3 +118,7 @@ RobAStRDA:
 	
 For details please see the NEWS files in the packages, available as
 NEWS("<pkgname>").
+
+Best regards from the main developpers & maintainers, 
+Peter Ruckdeschel (peter.ruckdeschel@uni-oldenburg.de) &
+Matthias Kohl (matthias.kohl@stamats.de)
