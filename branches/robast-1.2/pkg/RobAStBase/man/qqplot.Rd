@@ -125,11 +125,12 @@ for negative exponents the same is true for decreasing weight; higher
 }
 
 \examples{
+## \donttest to reduce check time
+\donttest{
 qqplot(rnorm(40, mean = 15, sd = sqrt(30)), Chisq(df=15))
 RobM <- InfRobModel(center = NormLocationFamily(mean=13,sd=sqrt(28)),
                     neighbor = ContNeighborhood(radius = 0.4))
-\donttest{
-## \donttest to reduce check time
+
 x <- rnorm(20, mean = 15, sd = sqrt(30))
 qqplot(x, RobM)
 qqplot(x, RobM, alpha.CI=0.9, add.points.CI=FALSE)

@@ -87,6 +87,8 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
 %\note{}
 \seealso{\code{\link{IC-class}}, \code{\link{kStepEstimate-class}} }
 \examples{
+## don't run to reduce check time on CRAN
+\donttest{
 if(require(ROptEst)){
 ## 1. generate a contaminated sample
 ind <- rbinom(100, size=1, prob=0.05)
@@ -105,8 +107,6 @@ ksteps(est1)
 pICList(est1)
 start(est1)
 
-## don't run to reduce check time on CRAN
-\donttest{
 ## a transformed model
 tfct <- function(x){
     nms0 <- c("mean","sd")

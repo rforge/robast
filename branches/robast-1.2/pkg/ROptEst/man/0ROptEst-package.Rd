@@ -12,9 +12,9 @@ using S4 classes and methods.
 \details{
 \tabular{ll}{
 Package: \tab ROptEst \cr
-Version: \tab 1.2.0 \cr
-Date: \tab 2018-07-25 \cr
-Depends: \tab R(>= 2.14.0), methods, distr(>= 2.5.2), distrEx(>= 2.5), distrMod(>= 2.5.2),
+Version: \tab 1.1.0 \cr
+Date: \tab 2018-08-01 \cr
+Depends: \tab R(>= 2.14.0), methods, distr(>= 2.5.2), distrEx(>= 2.5), distrMod(>= 2.5.2), 
 RandVar(>= 0.9.2), RobAStBase(>= 1.0) \cr
 Suggests: \tab RobLox\cr
 Imports: \tab startupmsg, MASS, stats, graphics, utils, grDevices \cr
@@ -22,7 +22,7 @@ ByteCompile: \tab yes \cr
 Encoding: \tab latin1 \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-VCS/SVNRevision: \tab 1058 \cr
+VCS/SVNRevision: \tab 1081 \cr
 }
 }
 \author{
@@ -51,6 +51,8 @@ Note: The first two numbers of package versions do not necessarily reflect
  information.
 }
 \examples{
+## don't test to reduce check time on CRAN
+\donttest{
 library(ROptEst)
 
 ## Example: Rutherford-Geiger (1910); cf. Feller~(1968), Section VI.7 (a)
@@ -76,5 +78,6 @@ plot(pIC(robEst))
 confint(robEst)
 ## confidence interval based on LAN - including bias
 confint(robEst, method = symmetricBias())
+}
 }
 \keyword{package}
