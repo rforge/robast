@@ -49,10 +49,13 @@ rgsOptIC.ALc(r, K, theta, scale = 1, A.rg.start, a.sc.start, A.sc.start = 0.5,
 %\note{}
 \seealso{\code{Av1CondContIC-class}}
 \examples{
+## don't test to reduce check time
+\donttest{
 K <- DiscreteDistribution(1:5) # = Unif({1,2,3,4,5})
 IC1 <- rgsOptIC.ALc(r = 0.1, K = K)
 checkIC(IC1)
 Risks(IC1)
+}
 }
 \concept{regression and scale}
 \concept{influence curve}
