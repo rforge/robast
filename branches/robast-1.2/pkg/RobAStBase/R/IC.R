@@ -149,7 +149,7 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
 
 
         if(!is.function(IC@modifyIC))
-            IC@modifyIC <- function(L2Fam, IC, withMakeIC) return(makeIC(IC,L2Fam))
+            IC@modifyIC <- function(L2Fam, IC, withMakeIC = FALSE) return(makeIC(IC,L2Fam))
 #              modifyIC <- ..modifnew
 #           }else{
 #              .modifyIC <- IC@modifyIC

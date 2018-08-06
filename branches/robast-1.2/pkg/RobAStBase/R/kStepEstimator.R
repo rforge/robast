@@ -132,8 +132,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         ### update - function
         updateStep <- function(u.theta, theta, IC, L2Fam, Param,
                                withPreModif = FALSE,
-                               withPostModif = TRUE, with.u.var = FALSE,
-                               oldmodifIC = NULL
+                               withPostModif = TRUE, with.u.var = FALSE
                                ){
 
                 if(withPreModif){
@@ -146,7 +145,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                                .withL2derivDistr = L2Fam@.withEvalL2derivDistr)
 #                   print(L2Fam)
                    IC <- modifyIC(IC)(L2Fam, IC, withMakeIC = FALSE)
-                   if(steps==1L &&withMakeIC){
+                   if(steps==1L && withMakeIC){
                       IC <- makeIC(IC, L2Fam)
 #                      IC@modifyIC <- oldmodifIC
                     }
@@ -272,14 +271,13 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         rownames(uksteps) <- u.est.names
         if(!is(modifyIC(IC), "NULL") ){
            for(i in 1:steps){
-               modif.old <- modifyIC(IC)
+#               modif.old <- modifyIC(IC)
                if(i>1){
                   IC <- upd$IC
                   L2Fam <- upd$L2Fam
-                  if((i==steps)&&withMakeIC){
-                     IC <- makeIC(IC,L2Fam)
+                  if((i==steps)&&withMakeIC) IC <- makeIC(IC,L2Fam)
 #                     IC@modifyIC <- modif.old
-                  }
+
                   Param <- upd$Param
                   tf <- trafo(L2Fam, Param)
                   withPre <- FALSE
@@ -287,7 +285,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                upd <- updateStep(u.theta,theta,IC, L2Fam, Param,
                                  withPreModif = withPre,
                                  withPostModif = (steps>i) | useLast,
-                                 with.u.var = i==steps, oldmodifIC = modif.old)
+                                 with.u.var = (i==steps), oldmodifIC = modif.old)
                uksteps[,i] <- u.theta <- upd$u.theta
 #               print(str(upd$theta))
 #               print(nrow(ksteps))

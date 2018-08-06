@@ -74,7 +74,7 @@ setMethod("gpd.profxi",  "GPDEstimate", function(z,  xlow, xup, npy=365,
             es.call <- z@estimate.call
             nm.call <- names(es.call)
             if("pIC" %in% names(getSlots(class(z)))){
-               PFam0 <- eval(z@pIC@CallL2Fam)
+               PFam0 <- eval(pIC(z)@CallL2Fam)
             }else{
                   PFam <- NULL
                   if("ParamFamily" %in% nm.call)
