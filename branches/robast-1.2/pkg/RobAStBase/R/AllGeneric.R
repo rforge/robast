@@ -247,3 +247,6 @@ if(!isGeneric("getFiRisk")){
     setGeneric("getFiRisk", 
         function(risk, Distr, neighbor, ...) standardGeneric("getFiRisk"))
 }
+if(!isGeneric("getPIC")){
+    setGeneric("getPIC", function(estimator) standardGeneric("getPIC"))
+}

@@ -8,6 +8,36 @@
  information)
 
 #######################################
+version 1.2
+#######################################
+
+
+
+under the hood
++ new S4 (estimator) class "MCALEstimate" containing both 
+  "MCEstimate" and "ALEstimate" to make accessible pIC-methods
+  to CvMMDEstimators...
++ new .checkEstClassForParamFamily method to force (expost)
+      casting to MCALEstimate (with pIC)
++ to speed up things slot pIC is filled with a promise only 
+  which is only forced when called through accessor pIC 
+  (and then the slot is filled with the actual pIC)
++ technically this is realized by a slot pIC of 
+  class OptionalInfluenceCurveOrCall  
++ internal function .getPIC is the workhorse: it takes the 
+  estimator evaluates its argument ParamFamily from slot estimate.call
+  and moves it to the parameter value which was estimated;
+  at this parameter value, the IC is constructed 
++ new internal helper method getPIC to get hand on the pIC 
+  --> for MLE it computes it by optIC  
+  --> for CvMMDEstimators -- it uses the name of the estimator; 
+  more specifically it relies on tag
+  * "( mu = emp. cdf )" => this uses .CvMMDCovarianceWithMux
+  * "( mu = model distr. )" => this uses .CvMMDCovariance with no argument mu
+  * "( mu = <muname> )" => this uses .CvMMDCovariance with argument mu
+  to get the pIC  
+
+#######################################
 version 1.1
 #######################################
 

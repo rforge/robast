@@ -177,10 +177,15 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                                  as(projker %*% IC.UpdateInKer@Curve,
                                     "EuclRandVariable")
                             IC.tot.0 <- IC.tot1 + IC.tot2
-                     }else{
-                            IC.tot.0 <- if(!is.null(IC.UpdateInKer.0))
-                              IC.tot1 + as(projker %*% IC.UpdateInKer.0@Curve,
-                                    "EuclRandVariable") else NULL
+                     }else{ if(!is.null(IC.UpdateInKer.0)){
+                               IC.tot.0 <- NULL
+                            }else{
+                                if(is.call(IC.UpdateInKer.0))
+                                   IC.UpdateInKer.0 <- eval(IC.UpdateInKer.0)
+                                IC.tot.0 <- IC.tot1 + as(projker %*%
+                                         IC.UpdateInKer.0@Curve,
+                                                "EuclRandVariable")
+                            }
                      }
                      IC.tot <- IC.tot1 + IC.tot2
                      correct <- rowMeans(evalRandVar(IC.tot, x0), na.rm = na.rm)

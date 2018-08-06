@@ -216,6 +216,7 @@ setClass("TotalVarIC",
 ## ALEstimate
 setClassUnion("OptionalCall", c("call","NULL"))
 setClassUnion("OptionalInfluenceCurve", c("InfluenceCurve", "NULL"))
+setClassUnion("OptionalInfluenceCurveOrCall", c("InfluenceCurve", "NULL", "call"))
 setClassUnion("StartClass", c("numeric", "matrix", "function", "Estimate"))
 setClass("pICList",
           prototype = prototype(list()),
@@ -231,7 +232,7 @@ setClass("pICList",
             })
 setClassUnion("OptionalpICList", c("pICList", "NULL"))
 setClass("ALEstimate",
-         representation(pIC = "OptionalInfluenceCurve",
+         representation(pIC = "OptionalInfluenceCurveOrCall", #"OptionalInfluenceCurve",
                         asbias = "OptionalNumeric"),
          prototype(name = "Asymptotically linear estimate",
                    estimate = numeric(0),
@@ -250,6 +251,16 @@ setClass("ALEstimate",
                    untransformed.estimate = NULL,
                    untransformed.asvar = NULL),
          contains = "Estimate")
+
+setClass("MCALEstimate",
+         representation(pIC = "OptionalInfluenceCurveOrCall",
+                        asbias = "OptionalNumeric"),
+         prototype(name = "Minimum criterion estimate (which is asy. linear)",
+                   asbias = NULL,
+                   pIC = NULL),
+         contains = c("ALEstimate","MCEstimate")
+)
+
 setClass("kStepEstimate", 
          representation(steps = "integer",
                         pICList = "OptionalpICList",

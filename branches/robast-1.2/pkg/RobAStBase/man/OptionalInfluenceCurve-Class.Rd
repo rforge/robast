@@ -1,6 +1,7 @@
 \name{OptionalInfluenceCurve-class}
 \docType{class}
 \alias{OptionalInfluenceCurve-class}
+\alias{OptionalInfluenceCurveOrCall-class}
 \alias{OptionalpICList-class}
 \alias{StartClass-class}
 \alias{pICList-class}
@@ -13,7 +14,9 @@ Classes \code{OptionalInfluenceCurve}, \code{OptionalpICList},
 \code{StartClass}, \code{pICList}}
 \section{Class Unions}{
   \code{OptionalInfluenceCurve} is a class union of classes
-  \code{InfluenceCurve} and \code{NULL} --- it is the slot
+  \code{InfluenceCurve} and \code{NULL};
+  \code{OptionalInfluenceCurveOrCall} is a class union of classes
+  \code{InfluenceCurve}, \code{call}, and \code{NULL} --- it is the slot
   class of slot \code{pIC} in \code{ALEstimate};
   \code{OptionalpICList} is a class union of classes
   \code{pICList} and \code{NULL} --- it is the slot
