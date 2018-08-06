@@ -108,7 +108,7 @@ setMethod("show", "ALEstimate",
 setMethod("show", "kStepEstimate", 
     function(object){
         digits <- getOption("digits")
-        getMethod("show","kStepEstimate")(object)
+        getMethod("show","ALEstimate")(object)
         if(getdistrModOption("show.details") != "minimal"){
             cat("steps:\n")
             print(steps(object), quote = FALSE)
