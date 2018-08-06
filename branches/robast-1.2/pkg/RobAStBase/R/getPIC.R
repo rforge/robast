@@ -52,7 +52,7 @@ setMethod("getPIC","CvMMDEstimate", function(estimator){
        L2Fam <- .getL2Fam(estimator)
        param.0 <- param(L2Fam)
        ecl <- as.list(estimator@estimate.call)[-1]
-       print(system.time({
+#       print(system.time({
        if(grepl("mu = model distr",name(estimator))){
           res <- .CvMMDCovariance(L2Fam=L2Fam, param=param.0,withpreIC=TRUE, N = 2000)
        }else{
@@ -64,7 +64,7 @@ setMethod("getPIC","CvMMDEstimate", function(estimator){
              res <- .CvMMDCovariance(L2Fam=L2Fam, param=param.0,x=x,withpreIC=TRUE, mu=mu, N = 2000)
           }
        }
-       }))
+#       }))
        ICCurve <- res$preIC
        ICname <- "IC of CvM MDE"
        ICCallL2Fam <- L2Fam@fam.call

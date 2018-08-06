@@ -95,7 +95,7 @@ setMethod("show", "TotalVarIC",
 setMethod("show", "ALEstimate", 
     function(object){
         digits <- getOption("digits")
-        show(as(object,"Estimate"))
+        getMethod("show","Estimate")(object)
         if(getdistrModOption("show.details") != "minimal"){
             cat("asymptotic bias:\n")
             print(asbias(object), quote = FALSE)
@@ -108,7 +108,7 @@ setMethod("show", "ALEstimate",
 setMethod("show", "kStepEstimate", 
     function(object){
         digits <- getOption("digits")
-        show(as(object,"ALEstimate"))
+        getMethod("show","kStepEstimate")(object)
         if(getdistrModOption("show.details") != "minimal"){
             cat("steps:\n")
             print(steps(object), quote = FALSE)
@@ -117,7 +117,7 @@ setMethod("show", "kStepEstimate",
 setMethod("show", "MEstimate", 
     function(object){
         digits <- getOption("digits")
-        show(as(object,"ALEstimate"))
+        getMethod("show","ALEstimate")(object)
         if(getdistrModOption("show.details") != "minimal"){
             cat("value of M equation:\n")
             print(Mroot(object), quote = FALSE)
