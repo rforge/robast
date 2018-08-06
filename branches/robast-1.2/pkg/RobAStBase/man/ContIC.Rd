@@ -40,8 +40,9 @@ ContIC(name, CallL2Fam = call("L2ParamFamily"),
   \item{biastype}{ BiasType: type of the bias}
   \item{normtype}{ NormType: type of the norm}
   \item{modifyIC}{ object of class \code{"OptionalFunction"}:
-    function of two arguments, which are an L2 parametric family 
-    and an optional influence curve. Returns an object of 
+    function of three arguments, which are an L2 parametric family
+    and an optional influence curve, and a logical argument
+    whether to enforce the IC side conditions by \code{makeIC}. Returns an object of
     class \code{"IC"}. This function is mainly used for internal
     computations! }
 }

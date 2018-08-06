@@ -11,7 +11,10 @@
 version 1.2
 #######################################
 
-
+user-visible CHANGES:
++ slot function modifyIC of the different IC classes gains
+  an argument withMakeIC to be able to adjust this to a
+  higher granularity
 
 under the hood
 + new S4 (estimator) class "MCALEstimate" containing both 

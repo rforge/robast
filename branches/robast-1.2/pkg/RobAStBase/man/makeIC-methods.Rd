@@ -33,10 +33,10 @@ makeIC(IC, L2Fam, ...)
   \item{Infos}{ matrix of characters with two columns 
     named \code{method} and \code{message}: additional informations. }
   \item{modifyIC}{ Object of class \code{"OptionalFunction"}:
-    function of two arguments, which are an L2 parametric family 
-    and an optional influence curve. Returns an object of 
-    class \code{"IC"} at the parameter value of the L2 parametric
-    family. This function is mainly used for internal
+    function of three arguments, which are an L2 parametric family
+    and an optional influence curve, and a logical argument
+    whether to enforce the IC side conditions by \code{makeIC}. Returns an object of
+    class \code{"IC"}. This function is mainly used for internal
     computations! }
   \item{\dots}{ additional parameters }
 }

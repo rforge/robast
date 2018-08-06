@@ -145,10 +145,10 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                    L2Fam <- modifyModel(L2Fam, Param,
                                .withL2derivDistr = L2Fam@.withEvalL2derivDistr)
 #                   print(L2Fam)
-                   IC <- modifyIC(IC)(L2Fam, IC)
+                   IC <- modifyIC(IC)(L2Fam, IC, withMakeIC = FALSE)
                    if(steps==1L &&withMakeIC){
                       IC <- makeIC(IC, L2Fam)
-                      IC@modifyIC <- oldmodifIC
+#                      IC@modifyIC <- oldmodifIC
                     }
  #                  print(IC)
                 }
@@ -246,7 +246,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                    L2Fam <- modifyModel(L2Fam, Param,
                                .withL2derivDistr = L2Fam@.withEvalL2derivDistr)
 #                   print(L2Fam)
-                   IC <- modifyIC(IC)(L2Fam, IC)
+                   IC <- modifyIC(IC)(L2Fam, IC, withMakeIC = withMakeIC)
 #                   print(IC)
                 }
 
@@ -278,7 +278,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                   L2Fam <- upd$L2Fam
                   if((i==steps)&&withMakeIC){
                      IC <- makeIC(IC,L2Fam)
-                     IC@modifyIC <- modif.old
+#                     IC@modifyIC <- modif.old
                   }
                   Param <- upd$Param
                   tf <- trafo(L2Fam, Param)
