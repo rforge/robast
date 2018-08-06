@@ -29,9 +29,9 @@ exportClasses("GParetoFamily", "GumbelLocationFamily", "WeibullFamily",
 exportClasses("DistributionsIntegratingByQuantiles")
 exportClasses("ParamWithLocAndScaleAndShapeFamParameter")
 exportClasses("L2LocScaleShapeUnion")
-exportClasses("GPDEstimate","GPDMCEstimate","GPDLDEstimate",
+exportClasses("GPDEstimate","GPDMCEstimate","GPDMCALEstimate","GPDLDEstimate",
               "GPDkStepEstimate","GEVEstimate","GEVLDEstimate",
-			  "GEVkStepEstimate","GEVMCEstimate",
+			  "GEVkStepEstimate","GEVMCEstimate", "GEVMCALEstimate",
 			  "GPDORobEstimate","GEVORobEstimate")			  
 exportMethods("initialize", "show", "rescaleFunction") 
 exportMethods("loc", "loc<-", "kMAD", "Sn", "Qn")
@@ -45,7 +45,7 @@ exportMethods("validParameter",
 exportMethods(".checkEstClassForParamFamily")
 exportMethods("locscaleshapename","locscalename","scaleshapename",
               "locationname","scalename","shapename","locscaleshapename<-")
-exportMethods("modifyModel", "getStartIC")
+exportMethods("modifyModel", "getStartIC", "coerce")
 exportMethods("moveL2Fam2RefParam",
 			  "moveICBackFromRefParam")			  
 exportMethods("checkIC", "makeIC")

@@ -1,3 +1,8 @@
+## copied form distrEx from distrEx 2.8.0 and branch 1.2.0 on
+
+## .qtlIntegrate is moved from RobExtremes (slightly modified) to distrEx
+#   as of versions distrEx 2.8.0 and RobExtremes 1.2.0
+
 
 setMethod("E", signature(object = "Pareto", 
                          fun = "missing", 
@@ -52,56 +57,11 @@ setMethod("E", signature(object = "DistributionsIntegratingByQuantiles",
              upperTruncQuantile = getdistrExOption("EupperTruncQuantile"),
              IQR.fac = max(1e4,getdistrExOption("IQR.fac")), ...
              ){
-
-        dots <- list(...)
-        dots.withoutUseApply <- dots
-        useApply <- TRUE
-        if(!is.null(dots$useApply)) useApply <- dots$useApply
-
-        dots.withoutUseApply$useApply <- NULL
-        dots.withoutUseApply$stop.on.error <- NULL
-
-        integrand <- function(x, dfun, ...){   di <- dim(x)
-                                               y <- q.l(object)(x)##quantile transformation
-                                               if(useApply){
-                                                    funy <- sapply(y,fun, ...)
-                                                    dim(y) <- di
-                                                    dim(funy) <- di
-                                               }else funy <- fun(y,...)
-                                        return(funy) }
-
-         if(is.null(low)) low <- -Inf
-         if(is.null(upp)) upp <- Inf
-
-         Ib <- .getIntbounds(object, low, upp, lowerTruncQuantile,
-               upperTruncQuantile, IQR.fac)
-         low <- p(object)(Ib["low"])
-         upp <- p(object)(Ib["upp"])
-         if(is.nan(low)) low <- 0
-         if(is.nan(upp)) upp <- 1
-
-         if(upp < 0.98){
-           int <- do.call(distrExIntegrate, c(list(f = integrand,
-                    lower = low,
-                    upper = upp,
-                    rel.tol = rel.tol, stop.on.error = FALSE,
-                    distr = object, dfun = dunif), dots.withoutUseApply))
-         }else{
-           int1 <- do.call(distrExIntegrate, c(list(f = integrand,
-                    lower = low,
-                    upper = 0.98,
-                    rel.tol = rel.tol, stop.on.error = FALSE,
-                    distr = object, dfun = dunif), dots.withoutUseApply))
-           int2 <- do.call(distrExIntegrate, c(list(f = integrand,
-                    lower = 0.98,
-                    upper = upp,
-                    rel.tol = rel.tol, stop.on.error = FALSE,
-                    distr = object, dfun = dunif), dots.withoutUseApply))
-           int <- int1+int2
-         }
-
-         return(int)
-
+    .qtlIntegrate(object = object, fun = fun, low = low, upp = upp,
+             rel.tol= rel.tol, lowerTruncQuantile = lowerTruncQuantile,
+             upperTruncQuantile = upperTruncQuantile,
+             IQR.fac = IQR.fac, ...,
+             .withLeftTail = FALSE, .withRightTail = TRUE)
     })
 
 setMethod("E", signature(object = "GPareto",
@@ -165,12 +125,15 @@ setMethod("E", signature(object = "GEV", fun = "function", cond = "missing"),
            signature(object = "DistributionsIntegratingByQuantiles",
                      fun = "function", cond = "missing")))
 
-setMethod("E", signature(object = "Weibull", fun = "function", cond = "missing"),
-           getMethod("E",
-           signature(object = "DistributionsIntegratingByQuantiles",
-                     fun = "function", cond = "missing")))
+## these routines are moved back to package distrEx from distrEx 2.8.0 / RobExtremes 1.2.0 on
 
-setMethod("E", signature(object = "Gammad", fun = "function", cond = "missing"),
-           getMethod("E",
-           signature(object = "DistributionsIntegratingByQuantiles",
-                     fun = "function", cond = "missing")))
+#setMethod("E", signature(object = "Weibull", fun = "function", cond = "missing"),
+#           getMethod("E",
+#           signature(object = "DistributionsIntegratingByQuantiles",
+#                     fun = "function", cond = "missing")))
+
+#setMethod("E", signature(object = "Gammad", fun = "function", cond = "missing"),
+#           getMethod("E",
+#           signature(object = "DistributionsIntegratingByQuantiles",
+#                     fun = "function", cond = "missing")))
+#

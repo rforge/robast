@@ -7,16 +7,28 @@
 \alias{.checkEstClassForParamFamily,GParetoFamily,MCEstimate-method}
 \alias{.checkEstClassForParamFamily,GParetoFamily,kStepEstimate-method}
 \alias{.checkEstClassForParamFamily,GParetoFamily,ORobEstimate-method}
+\alias{.checkEstClassForParamFamily,GParetoFamily,MCALEstimate-method}
+\alias{.checkEstClassForParamFamily,GParetoFamily,MLEstimate-method}
+\alias{.checkEstClassForParamFamily,GParetoFamily,MDEstimate-method}
+\alias{.checkEstClassForParamFamily,GParetoFamily,CvMMDEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamily,Estimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamily,MCEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamily,LDEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamily,kStepEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamily,ORobEstimate-method}
+\alias{.checkEstClassForParamFamily,GEVFamily,MCALEstimate-method}
+\alias{.checkEstClassForParamFamily,GEVFamily,MLEstimate-method}
+\alias{.checkEstClassForParamFamily,GEVFamily,MDEstimate-method}
+\alias{.checkEstClassForParamFamily,GEVFamily,CvMMDEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,Estimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,MCEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,LDEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,kStepEstimate-method}
 \alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,ORobEstimate-method}
+\alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,MCALEstimate-method}
+\alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,MLEstimate-method}
+\alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,MDEstimate-method}
+\alias{.checkEstClassForParamFamily,GEVFamilyMuUnknown,CvMMDEstimate-method}
 \title{ Methods for Function .checkEstClassForParamFamily in Package `RobExtremes' }
 \description{.checkEstClassForParamFamily-methods}
 %\usage{.checkEstClassForParamFamily(PFam, estimator)
@@ -48,7 +60,7 @@ S4 class \code{GPDEstimate},\cr
 the \code{GParetoFamily,LDEstimate}-method cast to
 S4 class  \code{GPDLDEstimate},\cr
 the \code{GParetoFamily,MCEstimate}-method cast to
-S4 class  \code{GPDMCEstimate},\cr
+S4 class  \code{GPDMCALEstimate},\cr
 the \code{GParetoFamily,kStepEstimate}-method cast to
 S4 class  \code{GPDkStepstimate},\cr
 the \code{GEVFamily,Estimate}-method cast to
@@ -56,7 +68,7 @@ S4 class  \code{GEVEstimate},\cr
 the \code{GEVFamily,LDEstimate}-method cast to
 S4 class  \code{GEVLDEstimate},\cr
 the \code{GEVFamily,MCEstimate}-method cast to
-S4 class  \code{GEVMCEstimate},\cr
+S4 class  \code{GEVMCALEstimate},\cr
 the \code{GEVFamily,kStepEstimate}-method cast to
 S4 class  \code{GEVkStepstimate},\cr
 the \code{GEVFamilyMuUnknown,Estimate}-method cast to
@@ -64,7 +76,7 @@ S4 class  \code{GEVEstimate},\cr
 the \code{GEVFamilyMuUnknown,LDEstimate}-method cast to
 S4 class  \code{GEVLDEstimate},\cr
 the \code{GEVFamilyMuUnknown,MCEstimate}-method cast to
-S4 class  \code{GEVMCEstimate},\cr
+S4 class  \code{GEVMCALEstimate},\cr
 the \code{GEVFamilyMuUnknown,kStepEstimate}-method cast to
 S4 class  \code{GEVkStepstimate}.\cr
 }

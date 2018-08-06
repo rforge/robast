@@ -7,10 +7,10 @@
 \alias{E,GPareto,missing,missing-method}
 \alias{E,GPareto,function,missing-method}
 \alias{E,GEV,function,missing-method}
-\alias{E,Weibull,function,missing-method}
+%\alias{E,Weibull,function,missing-method} % moved to distrEx
 \alias{E,GEV,missing,missing-method}
 \alias{E,Pareto,missing,missing-method}
-\alias{E,Gammad,function,missing-method}
+%\alias{E,Gammad,function,missing-method} % moved to distrEx
 \alias{E,Pareto,function,missing-method}
 
 \title{Generic Function for the Computation of (Conditional) Expectations}
@@ -84,7 +84,7 @@ E(object, fun, cond, ...)
   \item{object = "Pareto", fun = "missing", cond = "missing":}{
     exact evaluation using explicit expressions.}
 }}
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de} and Peter Ruckdeschel \email{peter.ruckdeschel@uni-bayreuth.de}}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de} and Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
 \seealso{\code{\link{distrExIntegrate}}, \code{\link{m1df}}, \code{\link{m2df}},
     \code{\link[distr]{Distribution-class}}}
 \examples{

@@ -3,14 +3,14 @@ setMethod("getStartIC",signature(model = "ParetoFamily", risk = "interpolRisk"),
 
     param1 <- param(model)
     xi <- main(param1)
-    .modifyIC0 <- function(L2Fam, IC){
+    .modifyIC0 <- function(L2Fam, IC, withMakeIC){
               xi0 <- main(param(L2Fam))
               return(.getPsi.P(xi0, L2Fam, type(risk), withMakeIC))
     }
     attr(.modifyIC0,"hasMakeICin.modifyIC") <- TRUE
-    .modifyIC <- function(L2Fam,IC){
-         psi.0 <- .modifyIC0(L2Fam,IC)
-         psi.0@modifyIC <- .modifyIC
+    .modifyIC <- function(L2Fam,IC, withMakeIC){
+         psi.0 <- .modifyIC0(L2Fam,IC, withMakeIC)
+         psi.0@modifyIC <- .modifyIC0
          return(psi.0)
     }
     attr(.modifyIC,"hasMakeICin.modifyIC") <- TRUE

@@ -26,38 +26,22 @@ setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRi
     if(length(nsng)){
        if(gridn %in% nsng){
           interpolfct <- famg[[gridn]][[.versionSuff("fun")]]
-          if(withMakeIC){
-            .modifyIC0 <- function(L2Fam, IC){
+          .modifyIC0 <- function(L2Fam, IC, withMakeIC){
                     para <- param(L2Fam)
                     if(!.is.na.Psi(para, interpolfct, shnam))
                        return(.getPsi(para, interpolfct, L2Fam, type(risk), withMakeIC))
                     else{
                        IC0 <- do.call(getStartIC, as.list(mc[-1]),
                               envir=parent.frame(2))
-                       IC0 <- makeIC(IC0, L2Fam)
+                       if(withMakeIC) IC0 <- makeIC(IC0, L2Fam)
                        return(IC0)
                     }
-            }
-          }else{
-            .modifyIC0 <- function(L2Fam, IC){
-                    para <- param(L2Fam)
-                    if(!.is.na.Psi(para, interpolfct, shnam))
-                       return(.getPsi(para, interpolfct, L2Fam, type(risk), withMakeIC))
-                    else{
-                       IC0 <- do.call(getStartIC, as.list(mc[-1]),
-                              envir=parent.frame(2))
-                       return(IC0)
-                    }
-            }
           }
-          if(withMakeIC) attr(.modifyIC0,"hasMakeICin.modifyIC") <- TRUE
-
-          .modifyIC <- function(L2Fam,IC){
-               psi.0 <- .modifyIC0(L2Fam,IC)
-               psi.0@modifyIC <- .modifyIC
+          .modifyIC <- function(L2Fam,IC, withMakeIC){
+               psi.0 <- .modifyIC0(L2Fam,IC, withMakeIC)
+               psi.0@modifyIC <- .modifyIC0
                return(psi.0)
           }
-          if(withMakeIC) attr(.modifyIC,"hasMakeICin.modifyIC") <- TRUE
 
           if(!.is.na.Psi(param1, interpolfct, shnam)){
              IC0 <- .getPsi(param1, interpolfct, model, type(risk), withMakeIC)
