@@ -8,6 +8,9 @@
 \alias{getStartIC,L2ParamFamily,asCov-method}
 \alias{getStartIC,L2ParamFamily,asAnscombe-method}
 \alias{getStartIC,L2ParamFamily,trAsCov-method}
+\alias{getStartIC,L2LocationFamily,interpolRisk-method}
+\alias{getStartIC,L2ScaleFamily,interpolRisk-method}
+\alias{getStartIC,L2LocationScaleFamily,interpolRisk-method}
 
 \title{Methods for Function getStartIC in Package `ROptEst' }
 
@@ -28,6 +31,9 @@ argument \code{ICstart} in \code{kStepEstimator}.}
 \S4method{getStartIC}{L2ParamFamily,asAnscombe}(model, risk, ...,
                       withEvalAsVar = TRUE, withMakeIC = FALSE, ..debug=FALSE,
                       modifyICwarn = NULL)
+\S4method{getStartIC}{L2LocationFamily,interpolRisk}(model, risk, ...)
+\S4method{getStartIC}{L2ScaleFamily,interpolRisk}(model, risk, ...)
+\S4method{getStartIC}{L2LocationScaleFamily,interpolRisk}(model, risk, ...)
 }
 
 \arguments{

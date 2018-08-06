@@ -13,6 +13,7 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
     }else fsCor <- 1
     if("eps" %in% names(dots)){
        eps <- dots[["eps"]]
+       names(eps) <- gsub("eps\\.","",names(eps))
        dots$eps <- NULL
     }else eps <- NULL
     if("neighbor" %in% names(dots)){
@@ -20,6 +21,7 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
        dots$neighbor <- NULL
     }else neighbor <- ContNeighborhood()
 
+#    cat("......\n");print(eps);cat(":......\n")
 
     if(is.null(eps[["e"]])){
         sm.rmx <- selectMethod("radiusMinimaxIC", signature(
@@ -82,13 +84,19 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asBias"),
     mc <- match.call(expand.dots=FALSE, call = sys.call(sys.parent(1)))
     dots <- as.list(mc$"...")
 
+    #print(mc)
+    #print(dots)
+
     if("neighbor" %in% names(dots)){
        neighbor <- eval(dots[["neighbor"]])
        dots$neighbor <- NULL
     }else neighbor <- ContNeighborhood()
+
     if("warn" %in% names(dots)) dots$warn <- NULL
 
     infMod <- InfRobModel(center = model, neighbor = neighbor)
+    #print(list(c(list(infMod, risk), dots, list(warn = FALSE,
+    #            withMakeIC = withMakeIC, modifyICwarn = modifyICwarn))))
     return(do.call(optIC, c(list(infMod, risk), dots, list(warn = FALSE,
                 withMakeIC = withMakeIC, modifyICwarn = modifyICwarn)),
                 envir=parent.frame(2)))

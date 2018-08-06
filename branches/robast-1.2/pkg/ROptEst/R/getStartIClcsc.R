@@ -2,7 +2,7 @@
 setMethod("getStartIC",signature(model = "L2LocationFamily", risk = "interpolRisk"),
            function(model, risk, ...) .getStIC(model, risk, ..., intfct=.getPsi.loc, pkg="ROptEst"))
 
-setMethod("getStartIC",signature(model = "L2LocationFamily", risk = "interpolRisk"),
+setMethod("getStartIC",signature(model = "L2ScaleFamily", risk = "interpolRisk"),
            function(model, risk, ...) .getStIC(model, risk, ..., intfct=.getPsi.sca, pkg="ROptEst"))
 
 setMethod("getStartIC",signature(model = "L2LocationScaleFamily", risk = "interpolRisk"),
@@ -10,8 +10,8 @@ setMethod("getStartIC",signature(model = "L2LocationScaleFamily", risk = "interp
 
 .getStIC <- function(model,risk, ..., intfct, pkg="ROptEst"){
 
-    mc <- match.call(call = sys.call(sys.parent(2)))
-    dots <- match.call(call = sys.call(sys.parent(2)),
+    mc <- match.call(call = sys.call(sys.parent(1)))
+    dots <- match.call(call = sys.call(sys.parent(1)),
                        expand.dots = FALSE)$"..."
 
     gridn <- gsub("\\.","",type(risk))
@@ -44,9 +44,22 @@ setMethod("getStartIC",signature(model = "L2LocationScaleFamily", risk = "interp
           return(IC0)
        }
     }
-    IC <- do.call(getStartIC, as.list(mc[-1]), envir=parent.frame(2))
-    mc$risk <- if(type(risk)==".MBRE") asMSE() else asBias()
-    mc$neighbor <- ContNeighborhood(radius=0.5)
+    mc1 <- as.list(mc)[-1]
+    mc1[["risk"]] <- if(type(risk)==".MBRE") asBias() else asMSE()
+    mc1[["neighbor"]] <- ContNeighborhood(radius=0.5)
+    mc1[["verbose"]] <- FALSE
+    if(type(risk)==".MBRE") mc1[["eps"]] <- list(e=40)
+    if(type(risk)==".OMSE"){
+        n <- length(get("x", envir=parent.frame(2)))
+        eps <- list("e" =0.5/sqrt(n), "sqn"= sqrt(n))
+        mc1[["eps"]] <- eps
+    }
+    if(type(risk)==".RMXE"){
+        n <- length(get("x", envir=parent.frame(2)))
+        eps <- list("eps.lower"=0, "eps.upper"=20, "sqn"= sqrt(n))
+        mc1[["eps"]] <- eps
+    }
+    IC <- do.call(getStartIC, mc1, envir=parent.frame(2))
     return(IC)
 }
 

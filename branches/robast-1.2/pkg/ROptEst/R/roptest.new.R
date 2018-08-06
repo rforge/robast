@@ -220,6 +220,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
 
     .isOKsteps(steps)
 
+    dots$.with.checkEstClassForParamFamily <- NULL
     if(debug){
       if(is.null(startCtrl$initial.est)){
        print(substitute(MDEstimator(x = x0, ParamFamily = L2Fam0,
@@ -235,13 +236,16 @@ robest <- function(x, L2Fam,  fsCor = 1,
                          L2Fam@startPar else startCtrl$startPar
          wMDE <- if(is.null(startCtrl$withMDE))
                          L2Fam@.withMDE else startCtrl$withMDE
-         if(is(startPar0, "function")) if(!wMDE){
-            startCtrl$initial.est <- function(x,...)startPar0(x)
-         }else
-            startCtrl$initial.est <- MDEstimator(x = x, ParamFamily = L2Fam,
-                                  distance = startCtrl$distance,
-                                  startPar = startCtrl$startPar, ...)
-
+         if(is(startPar0, "function") && (!wMDE)){
+               startCtrl$initial.est <- function(x,...)startPar0(x)
+         }else{
+               if(is(startPar0, "function")) startPar0 <- startPar0(x)
+               argListMDE <- c(list(x = x, ParamFamily = L2Fam,
+                            distance = startCtrl$distance,
+                            startPar = startPar0), dots,
+                            list(.with.checkEstClassForParamFamily = FALSE))
+               startCtrl$initial.est <- do.call(MDEstimator, argListMDE)
+         }
       }
     }
     nrvalues <-  length(L2Fam@param)
