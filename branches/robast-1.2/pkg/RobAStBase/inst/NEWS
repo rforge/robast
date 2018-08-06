@@ -20,6 +20,7 @@ under the hood
 + new S4 (estimator) class "MCALEstimate" containing both 
   "MCEstimate" and "ALEstimate" to make accessible pIC-methods
   to CvMMDEstimators...
++ some unnecessary coercions (with informatino loss) in show methods
 + new .checkEstClassForParamFamily method to force (expost)
       casting to MCALEstimate (with pIC)
 + to speed up things slot pIC is filled with a promise only 

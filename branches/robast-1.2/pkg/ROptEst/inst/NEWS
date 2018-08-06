@@ -8,6 +8,26 @@
  information)
 
 #######################################
+version 1.2
+#######################################
+
+user-visible CHANGES:
++ slot function modifyIC of the different IC classes gains
+  an argument withMakeIC to be able to adjust this to a
+  higher granularity
++ require more recent versions in DESCRIPTION
+
+under the hood
+
++ L2LocationFamily, L2LocationScaleFamily, and L2LocationScaleFamily gain methods for interpolRisk
+  ~> speed up is prepared (only need to store the reference LMs in sysdata.rda) 
+  => due to affine equivariance, we only have to store one set of LM's 
++ comparePlot has a try catch now for MBRE
++ some buglets in getStartIC 
++ some tedious debugging in getStartIClcsc.R
++ clarified if clauses in roptest.new (and removed .with.checkEstClassForParamFamily from dots to be sure)
+
+#######################################
 version 1.1
 #######################################
 
