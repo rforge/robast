@@ -197,7 +197,7 @@ setMethod("evalRandVar", signature(RandVar = "EuclRandVariable",
         nrvalues <- length(RandVar)
         res <- matrix(NA, nrow = nrvalues, ncol = RandVar@Range@dimension)
         
-        if(liesInSupport(distr, x))
+        if(liesInSupport(distr, x, checkFin = TRUE))
             for(i in 1:nrvalues) res[i,] <- RandVar@Map[[i]](x)
         
         return(res)
@@ -219,7 +219,7 @@ setMethod("evalRandVar", signature(RandVar = "EuclRandVariable",
         for(i in 1:nrvalues){
             fun <- RandVar@Map[[i]]
             for(j in 1:nrow(x))
-                if(!liesInSupport(distr, x[j,]))
+                if(!liesInSupport(distr, x[j,], checkFin = TRUE))
                     next
                 else
                     res[i,j,] <- fun(x[j,])
@@ -282,7 +282,7 @@ setMethod("evalRandVar", signature(RandVar = "EuclRandMatrix",
         d <- RandVar@Dim
         res <- array(NA, c(d[1], d[2], RandVar@Range@dimension))
 
-        if(liesInSupport(distr, x)){
+        if(liesInSupport(distr, x, checkFin = TRUE)){
             for(i in 1:d[1])
                 for(j in 1:d[2])
                     res[i,j,] <- RandVar@Map[[(i-1)*d[2] + j]](x)
@@ -308,7 +308,7 @@ setMethod("evalRandVar", signature(RandVar = "EuclRandMatrix",
             for(j in 1:d[2]){
                 fun <- RandVar@Map[[(i-1)*d[2] + j]]
                 for(k in 1:nrow(x))
-                    if(!liesInSupport(distr, x[k,]))
+                    if(!liesInSupport(distr, x[k,], checkFin = TRUE))
                         next
                     else
                         res[i,j,k,] <- fun(x[k,])

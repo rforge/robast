@@ -8,6 +8,18 @@
  information)
 
 #######################################
+version 1.2
+#######################################
+
+user-visible CHANGES:
++ require more recent distr/distrEx versions
+
+under the hood:
++ for consistency to the univariate methods, the liesInSupport() method for
+  DiscreteMVDistribution is called with an extra argument checkFin, 
+  which is not yet used.
+
+#######################################
 version 1.1
 #######################################
 
