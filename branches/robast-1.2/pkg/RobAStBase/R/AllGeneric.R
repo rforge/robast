@@ -43,6 +43,9 @@ if(!isGeneric("checkIC")){
 if(!isGeneric("evalIC")){
     setGeneric("evalIC", function(IC, x) standardGeneric("evalIC"))
 }
+if(!isGeneric("evalIC.v")){
+    setGeneric("evalIC.v", function(IC, x) standardGeneric("evalIC.v"))
+}
 if(!isGeneric("makeIC")){
     setGeneric("makeIC", function(IC, L2Fam, ...) standardGeneric("makeIC"))
 }

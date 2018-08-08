@@ -4,7 +4,7 @@ TotalVarIC <- function(name, CallL2Fam = call("L2ParamFamily"),
                     Risks, Infos, clipLo = -Inf, clipUp = Inf, stand = as.matrix(1),
                     lowerCase = NULL, neighborRadius = 0, w = new("BdStWeight"),
                     normtype = NormType(), biastype = symmetricBias(),
-                    modifyIC = NULL){
+                    modifyIC = NULL, .fastFct = NULL){
 
     if(missing(name))
         name <- "IC of total variation type"
@@ -37,6 +37,7 @@ TotalVarIC <- function(name, CallL2Fam = call("L2ParamFamily"),
     IC1@biastype <- biastype
     IC1@normtype <- normtype
     IC1@modifyIC <- modifyIC
+    IC1@.fastFct <- .fastFct
 
     return(IC1)
 }
@@ -65,6 +66,7 @@ setMethod("generateIC", signature(neighbor = "TotalVarNeighborhood",
                 name = "IC of total variation type", 
                 CallL2Fam = L2call,
                 Curve = generateIC.fct(neighbor, L2Fam, res),
+                .fastFct = generateIC.fast.fct(neighbor, L2Fam, res),
                 clipUp = clipUp,
                 clipLo = clipLo,
                 stand = A,

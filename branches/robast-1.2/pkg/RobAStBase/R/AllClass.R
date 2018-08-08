@@ -127,6 +127,11 @@ setClass("IC", representation(CallL2Fam = "call",
 
                 return(TRUE)
             })
+
+## internal class
+setClass(".fastIC", representation(.fastFct = "OptionalFunction"),
+           prototype(.fastFct = NULL), contains="IC")
+
 ## HampIC -- common mother class to ContIC and TotalVarIC 
 setClass("HampIC", 
             representation(stand = "matrix",
@@ -134,7 +139,7 @@ setClass("HampIC",
                            neighborRadius = "numeric",
                            weight = "RobWeight",
                            biastype = "BiasType",
-                           normtype = "NormType"), 
+                           normtype = "NormType"),
             prototype(name = "IC of total-var or contamination type",
                       Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}), 
                                                     Domain = Reals())),
@@ -148,7 +153,7 @@ setClass("HampIC",
                       neighborRadius = 0, 
                       biastype = symmetricBias(), 
                       NormType = NormType()),
-            contains = "IC",
+            contains = ".fastIC",
             validity = function(object){
                 if(any(object@neighborRadius < 0)) # radius vector?!
                     stop("'neighborRadius' has to be in [0, Inf]")

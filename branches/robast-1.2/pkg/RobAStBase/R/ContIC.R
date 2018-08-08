@@ -5,7 +5,7 @@ ContIC <- function(name, CallL2Fam = call("L2ParamFamily"),
                    Risks, Infos, clip = Inf, cent = 0, stand = as.matrix(1), 
                    lowerCase = NULL, neighborRadius = 0, w = new("HampelWeight"),
                    normtype = NormType(), biastype = symmetricBias(),
-                   modifyIC = NULL){
+                   modifyIC = NULL, .fastFct = NULL){
     if(missing(name))
         name <- "IC of contamination type"
     if(missing(Risks))
@@ -42,6 +42,7 @@ ContIC <- function(name, CallL2Fam = call("L2ParamFamily"),
     contIC@biastype <- biastype
     contIC@normtype <- normtype
     contIC@modifyIC <- modifyIC
+    contIC@.fastFct <- .fastFct
 
     return(contIC)
 #    return(new("ContIC", name = name, Curve = Curve, Risks = Risks, Infos = Infos,
@@ -66,6 +67,7 @@ setMethod("generateIC", signature(neighbor = "ContNeighborhood",
                 name = "IC of contamination type", 
                 CallL2Fam = L2call,
                 Curve = generateIC.fct(neighbor, L2Fam, res),
+                .fastFct = generateIC.fast.fct(neighbor, L2Fam, res),
                 clip = b,
                 cent = a,
                 stand = A,
@@ -170,3 +172,5 @@ setReplaceMethod("CallL2Fam", "ContIC",
         addInfo(object) <- c("CallL2Fam<-", "The entries in 'Risks' and 'Infos' may be wrong")
         object
     })
+
+

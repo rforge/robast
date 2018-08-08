@@ -18,3 +18,22 @@ setReplaceMethod("neighborRadius", "HampIC",
         object
     })
 
+## evaluate IC
+setMethod("evalIC.v", signature(IC = ".fastIC", x = "numeric"),
+    function(IC, x){
+        if(is.null(IC@.fastFct)){
+           res <- setMethod("evalIC.v", signature(IC = "IC", x = "numeric"))(IC,x)
+           ## cast to matrix ICdim x nobs
+        }else{
+           res <- IC@.fastFct(x)
+        }
+    })
+setMethod("evalIC.v", signature(IC = ".fastIC", x = "matrix"),
+    function(IC, x){
+        if(is.null(IC@.fastFct)){
+           res <- setMethod("evalIC.v", signature(IC = "IC", x = "matrix"))(IC,x)
+           ## cast to matrix ICdim x nobs
+        }else{
+           res <- IC@.fastFct(x)
+        }
+    })

@@ -18,7 +18,7 @@ TotalVarIC(name, CallL2Fam = call("L2ParamFamily"),
            Risks, Infos, clipLo = -Inf, clipUp = Inf, stand = as.matrix(1), 
            lowerCase = NULL, neighborRadius = 0, w = new("BdStWeight"),
            normtype = NormType(), biastype = symmetricBias(),
-           modifyIC = NULL)
+           modifyIC = NULL, .fastFct = NULL)
 }
 \arguments{
   \item{name}{ object of class \code{"character"}. }
@@ -45,6 +45,10 @@ TotalVarIC(name, CallL2Fam = call("L2ParamFamily"),
     whether to enforce the IC side conditions by \code{makeIC}. Returns an object of
     class \code{"IC"}. This function is mainly used for internal
     computations! }
+ \item{.fastFct}{ either \code{NULL} or a function of one argument;
+   may contain a mere  \emph{vector-valued} function, realizing the influence function;
+   is used internally in the \code{evalIC} method for this class
+   to speed up things.}
 }
 %\details{}
 \value{Object of class \code{"TotalVarIC"}}

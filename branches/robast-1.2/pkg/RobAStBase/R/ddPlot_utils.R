@@ -266,9 +266,15 @@
           ndata.y0[!isna] <- jitter(ndata.y0[!isna], factor=jitter.pts[2])
 
       pdots$col <- col
+      inax <- is.na(ndata.x)
+      inay <- is.na(ndata.y)
+
+      nonina <- !inax&!inay
+
       retV <- list(id.x=id0.x, id.y= id0.y, id.xy = id0.xy,
-             qtx = quantile(ndata.x), qty = quantile(ndata.y),
-             cutoff.x.v = co.x, cutoff.y.v = co.y)
+                   qtx = quantile(ndata.x[nonina]),
+                   qty = quantile(ndata.y[nonina]),
+                   cutoff.x.v = co.x, cutoff.y.v = co.y)
 
       if(doplot){
         plotInfo<- list("plotArgs"=NULL)

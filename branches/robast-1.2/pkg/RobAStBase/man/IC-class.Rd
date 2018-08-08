@@ -9,6 +9,7 @@
 \alias{modifyIC,IC-method}
 \alias{checkIC,IC,missing-method}
 \alias{checkIC,IC,L2ParamFamily-method}
+\alias{evalIC.v,IC,numeric-method}
 \alias{evalIC,IC,numeric-method}
 \alias{evalIC,IC,matrix-method}
 \alias{show,IC-method}
@@ -26,10 +27,11 @@
       creates an object of the underlying L2-differentiable 
       parametric family. }
     \item{\code{modifyIC}}{ Object of class \code{"OptionalFunction"}:
-      function of two arguments, which are an L2 parametric family 
-      and an optional influence curve. Returns an object of 
-      class \code{"IC"}. This slot is mainly used for internal
-      computations! }
+   function of three arguments, which are an L2 parametric family
+    and an optional influence curve, and a logical argument
+    whether to enforce the IC side conditions by \code{makeIC}. Returns an object of
+    class \code{"IC"}. This function is mainly used for internal
+    computations! }
     \item{\code{name}}{Object of class \code{"character"}. }
     \item{\code{Curve}}{Object of class \code{"EuclRandVarList"}.}
     \item{\code{Risks}}{Object of class \code{"list"}: 
@@ -68,7 +70,10 @@ Class \code{"InfluenceCurve"}, directly.
     \item{evalIC}{\code{signature(IC = "IC", x = "matrix")}: 
       evaluate \code{IC} at the rows of \code{x}. }
 
-    \item{infoPlot}{\code{signature(object = "IC")}: 
+    \item{evalIC.v}{\code{signature(IC = "IC", x = "numeric")}:
+      a vectorized version \code{evalIC} for numeric \code{x}. }
+
+    \item{infoPlot}{\code{signature(object = "IC")}:
       Plot absolute and relative information of \code{IC}. }
 
     \item{plot}{\code{signature(x = "IC", y = "missing")}}

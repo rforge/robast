@@ -1,6 +1,7 @@
 \name{HampIC-class}
 \docType{class}
 \alias{HampIC-class}
+\alias{.fastIC-class}
 \alias{lowerCase}
 \alias{lowerCase,HampIC-method}
 \alias{neighborRadius}
@@ -13,6 +14,10 @@
 \alias{weight,HampIC-method}
 \alias{biastype,HampIC-method}
 \alias{normtype,HampIC-method}
+\alias{evalIC.v}
+%\alias{evalIC.v-methods}
+\alias{evalIC.v,.fastIC,numeric-method}
+\alias{evalIC.v,.fastIC,matrix-method}
 
 \title{Influence curve of Hampel type}
 \description{Class of (partial) influence curves of Hampel (= total variation or contamination) type;
@@ -31,12 +36,21 @@ used as common mother class for classes \code{ContIC} and \code{TotalVarIC}.
 
     \item{\code{Curve}}{ object of class \code{"EuclRandVarList"}}
 
-    \item{\code{modifyIC}}{ Object of class \code{"OptionalFunction"}:
+    \item{\code{modifyIC}}{ object of class \code{"OptionalFunction"}:
     function of three arguments, which are an L2 parametric family
     and an optional influence curve, and a logical argument
     whether to enforce the IC side conditions by \code{makeIC}. Returns an object of
     class \code{"IC"}. This function is mainly used for internal
     computations! }
+
+    \item{\code{.fastFct}}{ object of class \code{"OptionalFunction"}:
+    \code{NULL} or function of one argument; may contain a mere
+    \emph{vector-valued} function, realizing the influence function;
+    is used internally in the \code{evalIC} method for this class
+    to speed up things. More precisely, this extra slot with respect
+    to mother class \code{"IC"} is introduced by the intermediate,
+    internal S4 class \code{".fastIC"}, which is the direct parent
+    of class \code{"HampIC"}.}
 
     \item{\code{Risks}}{ object of class \code{"list"}:
       list of risks; cf. \code{\link[distrMod]{RiskType-class}}. }
@@ -93,6 +107,13 @@ Class \code{"InfluenceCurve"}, by class \code{"IC"}.
 
     \item{neighborRadius}{\code{signature(object = "ANY")}:
       returns \code{NULL}. }
+
+    \item{evalIC.v}{\code{signature(IC=".fastIC", x="numeric")}:
+      returns an ICdim x nobs matrix; if internal slot
+      \code{.fastFct} is not \code{NULL} it uses this function;
+      otherwise it uses the \code{evalIC.v}-method for class
+      \code{IC}, using 'RandVar'-infrastructure.}
+
   }
 }
 \references{
