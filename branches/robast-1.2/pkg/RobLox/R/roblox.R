@@ -362,7 +362,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                        biastype = symmetricBias(), 
                                        normW = NormType())
                 mse <- robEst$A1 + robEst$A2
-                modIC <- function(L2Fam, IC){
+                modIC <- function(L2Fam, IC, withMakeIC){
                     ICL2Fam <- eval(CallL2Fam(IC))
                     if(is(L2Fam, "L2LocationScaleFamily") && is(distribution(L2Fam), "Norm")){
                         sdneu <- main(L2Fam)[2]
@@ -391,8 +391,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                     modifyIC = modifyIC(IC))
                         IC <- generateIC(neighbor = ContNeighborhood(radius = r),
                                         L2Fam = L2Fam, res = res)
-                        addInfo(IC) <- c("modifyIC", "The IC has been modified")
-                        addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
+                        if(!any(grepl("Some entries in 'Infos' may be wrong", Infos(IC)[,2]))){
+                           addInfo(IC) <- c("modifyIC", "The IC has been modified")
+                           addInfo(IC) <- c("modifyIC", "Some entries in 'Infos' may be wrong")
+                        }
                         return(IC)
                     }else{
                         makeIC(L2Fam, IC)
@@ -489,7 +491,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                        biastype = symmetricBias(), 
                                        normW = NormType())
                 mse <- robEst$A1 + robEst$A2
-                modIC <- function(L2Fam, IC){
+                modIC <- function(L2Fam, IC, withMakeIC){
                     ICL2Fam <- eval(CallL2Fam(IC))
                     if(is(L2Fam, "L2LocationScaleFamily") && is(distribution(L2Fam), "Norm")){
                         sdneu <- main(L2Fam)[2]
@@ -518,8 +520,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                     modifyIC = modifyIC(IC))
                         IC <- generateIC(neighbor = ContNeighborhood(radius = r),
                                         L2Fam = L2Fam, res = res)
-                        addInfo(IC) <- c("modifyIC", "The IC has been modified")
-                        addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
+                        if(!any(grepl("Some entries in 'Infos' may be wrong", Infos(IC)[,2]))){
+                           addInfo(IC) <- c("modifyIC", "The IC has been modified")
+                           addInfo(IC) <- c("modifyIC", "Some entries in 'Infos' may be wrong")
+                        }
                         return(IC)
                     }else{
                         makeIC(L2Fam, IC)
@@ -597,7 +601,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                            biastype = symmetricBias(), 
                                            normW = NormType())
-                    modIC <- function(L2Fam, IC){
+                    modIC <- function(L2Fam, IC, withMakeIC){
                         if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), "Norm")){
                             CallL2New <- call("NormLocationFamily", 
                                               mean = main(L2Fam))
@@ -686,7 +690,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
-                    modIC <- function(L2Fam, IC){
+                    modIC <- function(L2Fam, IC, withMakeIC){
                         if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), "Norm")){
                             CallL2New <- call("NormLocationFamily", 
                                               mean = main(L2Fam))
@@ -773,7 +777,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
-                    modIC <- function(L2Fam, IC){
+                    modIC <- function(L2Fam, IC, withMakeIC){
                         ICL2Fam <- eval(CallL2Fam(IC))
                         if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
                             sdneu <- main(L2Fam)
@@ -795,8 +799,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                         modifyIC = modifyIC(IC))
                             IC <- generateIC(neighbor = ContNeighborhood(radius = r),
                                             L2Fam = L2Fam, res = res)
-                            addInfo(IC) <- c("modifyIC", "The IC has been modified")
-                            addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
+                            if(!any(grepl("Some entries in 'Infos' may be wrong", Infos(IC)[,2]))){
+                                addInfo(IC) <- c("modifyIC", "The IC has been modified")
+                                addInfo(IC) <- c("modifyIC", "Some entries in 'Infos' may be wrong")
+                            }
                             return(IC)
                         }else{
                             makeIC(L2Fam, IC)
@@ -884,7 +890,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
-                    modIC <- function(L2Fam, IC){
+                    modIC <- function(L2Fam, IC, withMakeIC){
                         ICL2Fam <- eval(CallL2Fam(IC))
                         if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
                             sdneu <- main(L2Fam)
@@ -906,8 +912,10 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                         modifyIC = modifyIC(IC))
                             IC <- generateIC(neighbor = ContNeighborhood(radius = r),
                                             L2Fam = L2Fam, res = res)
-                            addInfo(IC) <- c("modifyIC", "The IC has been modified")
-                            addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
+                            if(!any(grepl("Some entries in 'Infos' may be wrong", Infos(IC)[,2]))){
+                               addInfo(IC) <- c("modifyIC", "The IC has been modified")
+                               addInfo(IC) <- c("modifyIC", "Some entries in 'Infos' may be wrong")
+                            }
                             return(IC)
                         }else{
                             makeIC(L2Fam, IC)
