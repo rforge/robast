@@ -26,6 +26,9 @@ under the hood
 + some buglets in getStartIC 
 + some tedious debugging in getStartIClcsc.R
 + clarified if clauses in roptest.new (and removed .with.checkEstClassForParamFamily from dots to be sure)
++ inserted code for time checking (which is inactive usually; only if in kStepEstimator.R in 
+  RobAStBase, the respective ##-t-## lines are de-commented the timings are visible as
+  attribute "kStepTimings" in the result of roptest ...)
 
 #######################################
 version 1.1

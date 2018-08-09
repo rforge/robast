@@ -137,10 +137,12 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     retV@robestCall <- quote(retV@estimate.call)
     retV@estimate.call <- mc
     tim <- attr(retV,"timings")
+    timK <- attr(retV,"kStepTimings")
 
     retV <- as(as(retV,"kStepEstimate"), "ORobEstimate")
     retV <- .checkEstClassForParamFamily(L2Fam,retV)
     attr(retV,"timings") <- tim
+    attr(retV,"kStepTimings") <- timK
     retV@roptestCall <- mc
     return(retV)
 }
@@ -361,8 +363,9 @@ robest <- function(x, L2Fam,  fsCor = 1,
                             withEvalAsVar = withEvalAsVarkStep,
                             withMakeIC = withMakeICkStep)
                             })
+       sy.OnlykStep <- attr(res,"timings")
        if (withTimings) print(sy.kStep)
-
+       if (withTimings && !is.null(sy.OnlykStep)) print(sy.OnlykStep)
     if(!debug){
          if(mwt) es.call$withTimings <- withTimings
          res@estimate.call <- es.call
@@ -393,5 +396,6 @@ robest <- function(x, L2Fam,  fsCor = 1,
     res@completecases <- completecases
     res@start <- initial.est
     attr(res, "timings") <- sy
+    attr(res, "kStepTimings") <- sy.OnlykStep
     return(res)
 }
