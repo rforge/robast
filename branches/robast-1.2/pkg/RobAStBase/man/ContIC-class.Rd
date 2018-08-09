@@ -41,12 +41,6 @@
 
     \item{\code{Curve}:}{ object of class \code{"EuclRandVarList"}}
 
-    \item{\code{.fastFct}}{ object of class \code{"OptionalFunction"}:
-    \code{NULL} or function of one argument; may contain a mere
-    \emph{vector-valued} function, realizing the influence function;
-    is used internally in the \code{evalIC} method for this class
-    to speed up things.}
-
 
     \item{\code{modifyIC}:}{ object of class \code{"OptionalFunction"}:
     function of three arguments, which are an L2 parametric family

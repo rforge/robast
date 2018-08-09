@@ -9,7 +9,6 @@
 \alias{modifyIC,IC-method}
 \alias{checkIC,IC,missing-method}
 \alias{checkIC,IC,L2ParamFamily-method}
-\alias{evalIC.v,IC,numeric-method}
 \alias{evalIC,IC,numeric-method}
 \alias{evalIC,IC,matrix-method}
 \alias{show,IC-method}
@@ -69,9 +68,6 @@ Class \code{"InfluenceCurve"}, directly.
 
     \item{evalIC}{\code{signature(IC = "IC", x = "matrix")}: 
       evaluate \code{IC} at the rows of \code{x}. }
-
-    \item{evalIC.v}{\code{signature(IC = "IC", x = "numeric")}:
-      a vectorized version \code{evalIC} for numeric \code{x}. }
 
     \item{infoPlot}{\code{signature(object = "IC")}:
       Plot absolute and relative information of \code{IC}. }

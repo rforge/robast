@@ -8,70 +8,68 @@ setMethod("generateIC.fct", signature(neighbor = "UncondNeighborhood", L2Fam = "
         d <- if(!is.null(res$d)) res$d else 0
         w <- weight(res$w)
         nrvalues <- nrow(A)
-        dim <- ncol(A)
+        dims <- ncol(A)
         ICfct <- vector(mode = "list", length = nrvalues)
-        L <- as(diag(dim)%*%L2Fam@L2deriv, "EuclRandVariable")
+        L <- as(diag(dims)%*%L2Fam@L2deriv, "EuclRandVariable")
         distr <- distribution(L2Fam)
+
         L.fct <- function(x) evalRandVar(L,x)
         if(nrvalues == 1){
             if(!is.null(res$d)){
                 ICfct[[1]] <- function(x){}
-                if(all(dim(trafo(L2Fam@param)) == c(1, 1))){
+                if(dims==1L){
                     body(ICfct[[1]]) <- substitute(
-                                            { indS <- liesInSupport(Di,x,checkFin=TRUE)
-                                              Lx <- L(x)
+                                            { Lx <- L(x)
                                               Yx <- A %*% Lx - a
                                               ind <- 1-.eq(Yx)
-                                              (Yx*w(Lx) + zi*(1-ind)*d*b)*indS },
+                                              (Yx*w(Lx) + zi*(1-ind)*d*b) },
                                             list(L = L.fct, w = w, b = b, d = d, A = A, a = a,
-                                                zi = sign(trafo(L2Fam@param)), .eq = .eq, Di = distr))
+                                                zi = sign(trafo(L2Fam@param)), .eq = .eq))
                 }else{
                     body(ICfct[[1]]) <- substitute(
-                                            { indS <- liesInSupport(Di,x,checkFin=TRUE)
-                                              Lx <- L(x)
+                                            { Lx <- L(x)
                                               Yx <- A %*% Lx - a
                                               ind <- 1-.eq(Yx)
-                                              ifelse(ind, Yx*w(Lx), NA)*indS },
+                                              ifelse(ind, Yx*w(Lx), NA) },
                                             list(L = L.fct, w = w, b = b, d = d, A = A, a = a,
-                                                 .eq = .eq, Di = distr))
+                                                 .eq = .eq))
                 }
             }else{
                 ICfct[[1]] <- function(x){}
-                body(ICfct[[1]]) <- substitute({ indS <- liesInSupport(Di,x,checkFin=TRUE)
-                                                 Lx <- L(x)
+                body(ICfct[[1]]) <- substitute({ Lx <- L(x)
                                                  Yx <- A %*% Lx - a
-                                                 Yx*w(Lx)*indS },
-                                                 list(L = L.fct, A = A, a = a, w = w, Di = distr))
+                                                 Yx*w(Lx) },
+                                                 list(L = L.fct, A = A, a = a, w = w))
             }
         }else{
             if(!is.null(res$d))
                 for(i in 1:nrvalues){
                     ICfct[[i]] <- function(x){}
-                    body(ICfct[[i]]) <- substitute({indS <- liesInSupport(Di,x,checkFin=TRUE)
-                                                    Lx <- L(x)
+                    body(ICfct[[i]]) <- substitute({Lx <- L(x)
                                                     Yix <- Ai %*% Lx - ai
                                                     ind <- 1-.eq(Yix)
-                                                    (ind*Yix*w(Lx) + (1-ind)*di)*indS
+                                                    (ind*Yix*w(Lx) + (1-ind)*di)
                                                     },
                                                  list(L = L.fct, Ai = A[i,,drop=FALSE], ai = a[i], w = w,
-                                                      di = d[i], Di = distr))#,  .eq = .eq))
+                                                      di = d[i]))#,  .eq = .eq))
                 }
             else
                 for(i in 1:nrvalues){
                     ICfct[[i]] <- function(x){}
-                    body(ICfct[[i]]) <- substitute({indS <- liesInSupport(Di,x,checkFin=TRUE)
-                                                    Lx <- L(x)
+                    body(ICfct[[i]]) <- substitute({Lx <- L(x)
                                                     Yix <- Ai %*% Lx - ai
-                                                    Yix*w(Lx)*indS  },
-                                                 list(L = L.fct, Ai = A[i,,drop=FALSE], ai = a[i], w = w, Di = distr))
+                                                    Yix*w(Lx)  },
+                                                 list(L = L.fct, Ai = A[i,,drop=FALSE], ai = a[i], w = w))
                 }
         }
         return(EuclRandVarList(EuclRandVariable(Map = ICfct, Domain = L@Domain,
                                          Range = Reals()))) # EuclideanSpace(dimension = nrvalues))))
     })
 
+## comment 20180809: reverted changes in rev 1110 as to generate.fast.fc:
 ## generate fast IC fct
 ## for internal use only!
+if(FALSE){
 generateIC.fast.fct <- function(neighbor, L2Fam, res){
         A <- as.matrix(res$A)
         a <- if(is(neighbor,"TotalVarNeighborhood")) 0 else res$a
@@ -102,4 +100,13 @@ generateIC.fast.fct <- function(neighbor, L2Fam, res){
                                              .eq = .eq, Di = distr))
         return(fastFct)
     }
+}
 
+.fixInLiesInSupport<- function(IC, distr){
+   MapL <- IC@Curve[[1]]@Map
+   for(i in 1:length(MapL))
+      body(IC@Curve[[1]]@Map[[i]]) <- substitute({
+         liesInSupport(distr,x,checkFin=TRUE)*fct(x)
+      }, list(fct = MapL[[i]], distr=distr))
+   return(IC)
+}

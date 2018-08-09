@@ -105,6 +105,20 @@ setMethod("show", "ALEstimate",
             show(pIC(object))
         }
     })
+setMethod("show", "MCALEstimate",
+    function(object){
+        digits <- getOption("digits")
+        getMethod("show","MCEstimate")(object)
+        if(getdistrModOption("show.details") != "minimal"){
+            cat("asymptotic bias:\n")
+            print(asbias(object), quote = FALSE)
+        }
+        if(getdistrModOption("show.details") == "maximal" && !is.null(pIC(object))){
+            cat("(partial) influence curve:\n")
+            show(pIC(object))
+        }
+    })
+
 setMethod("show", "kStepEstimate", 
     function(object){
         digits <- getOption("digits")

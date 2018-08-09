@@ -5,20 +5,22 @@
 
 setMethod("pIC", "ALEstimate", function(object){
            pIC0 <- .getPIC(object)
-           eval.parent(substitute(object@pIC <- pIC0))
+           if(is(pIC0,"IC")) eval.parent(substitute(object@pIC <- pIC0))
            return(pIC0)
 })
 
 setMethod("pIC", "MCEstimate", function(object){
        if("pIC" %in% slotNames(class(object))){
            pIC0 <- .getPIC(object)
-           eval.parent(substitute(object@pIC <- pIC0))
+           if(is(pIC0,"IC")) eval.parent(substitute(object@pIC <- pIC0))
            return(pIC0)
        }else{
            return(getPIC(object))
        }})
 
 setMethod("pIC", "MCALEstimate", getMethod("pIC", "ALEstimate"))
+setMethod("pIC", "ML.ALEstimate", getMethod("pIC", "ALEstimate"))
+setMethod("pIC", "CvMMD.ALEstimate", getMethod("pIC", "ALEstimate"))
 
 setMethod("asbias", "ALEstimate", function(object) object@asbias)
 setMethod("steps", "kStepEstimate", function(object) object@steps)

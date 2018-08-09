@@ -48,12 +48,6 @@
     class \code{"IC"}. This function is mainly used for internal
     computations! }
 
-    \item{\code{.fastFct}}{ object of class \code{"OptionalFunction"}:
-    \code{NULL} or function of one argument; may contain a mere
-    \emph{vector-valued} function, realizing the influence function;
-    is used internally in the \code{evalIC} method for this class
-    to speed up things.}
-
     \item{\code{Risks}}{ object of class \code{"list"}:
       list of risks; cf. \code{\link[distrMod]{RiskType-class}}. }
 

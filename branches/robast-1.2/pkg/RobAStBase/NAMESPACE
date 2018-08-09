@@ -20,12 +20,13 @@ exportClasses("RobModel",
               "FixRobModel", 
               "InfRobModel") 
 exportClasses("InfluenceCurve", 
-              "IC", "HampIC", ".fastIC",
+              "IC", "HampIC",
               "ContIC", 
               "TotalVarIC")
-exportClasses("RobAStControl", "RobWeight", "BoundedWeight",
+exportClasses("RobAStControl", "RobWeight", "BoundedWeight", 
               "BdStWeight", "HampelWeight")
-exportClasses("ALEstimate", "MCALEstimate", "kStepEstimate", "MEstimate")
+exportClasses("ALEstimate", "MCALEstimate", "kStepEstimate", "MEstimate",
+              "CvMMD.ALEstimate", "ML.ALEstimate"  )
 exportClasses("cutoff")
 exportClasses("interpolRisk", "OMSRRisk","MBRRisk","RMXRRisk")
 exportClasses("StartClass", "pICList", "OptionalpICList", "OptionalCall",
@@ -44,7 +45,7 @@ exportMethods("Curve",
               "modifyIC", 
               "generateIC", 
               "checkIC",
-              "evalIC", "evalIC.v",
+              "evalIC",
               "clip", "clip<-", 
               "cent", "cent<-", 
               "stand", "stand<-", 
@@ -88,3 +89,4 @@ export("getRiskFctBV")
 export(".rescalefct",".plotRescaledAxis",".makedotsP",".makedotsLowLevel",".SelectOrderData")
 export(".merge.lists")
 export("InfoPlot", "ComparePlot", "PlotIC")
+export(".fixInLiesInSupport")

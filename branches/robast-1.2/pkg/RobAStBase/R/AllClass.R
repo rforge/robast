@@ -105,6 +105,7 @@ setClass("InfluenceCurve",
                     stop("'Infos' must have two columns")
                 else TRUE
             })
+## comment 20180809: reverted changes in rev 1110
 ## partial incluence curve
 setClass("IC", representation(CallL2Fam = "call",
                               modifyIC = "OptionalFunction"),
@@ -127,11 +128,6 @@ setClass("IC", representation(CallL2Fam = "call",
 
                 return(TRUE)
             })
-
-## internal class
-setClass(".fastIC", representation(.fastFct = "OptionalFunction"),
-           prototype(.fastFct = NULL), contains="IC")
-
 ## HampIC -- common mother class to ContIC and TotalVarIC 
 setClass("HampIC", 
             representation(stand = "matrix",
@@ -139,7 +135,7 @@ setClass("HampIC",
                            neighborRadius = "numeric",
                            weight = "RobWeight",
                            biastype = "BiasType",
-                           normtype = "NormType"),
+                           normtype = "NormType"), 
             prototype(name = "IC of total-var or contamination type",
                       Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}), 
                                                     Domain = Reals())),
@@ -153,7 +149,7 @@ setClass("HampIC",
                       neighborRadius = 0, 
                       biastype = symmetricBias(), 
                       NormType = NormType()),
-            contains = ".fastIC",
+            contains = "IC",
             validity = function(object){
                 if(any(object@neighborRadius < 0)) # radius vector?!
                     stop("'neighborRadius' has to be in [0, Inf]")
@@ -265,6 +261,8 @@ setClass("MCALEstimate",
                    pIC = NULL),
          contains = c("ALEstimate","MCEstimate")
 )
+setClass("CvMMD.ALEstimate",contains = c("MCALEstimate","CvMMDEstimate"))
+setClass("ML.ALEstimate",contains = c("MCALEstimate","MLEstimate"))
 
 setClass("kStepEstimate", 
          representation(steps = "integer",

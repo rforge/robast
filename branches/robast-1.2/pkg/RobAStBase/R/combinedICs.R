@@ -1,3 +1,9 @@
+################################################################################
+if(FALSE){
+################################################################################
+## 20180809: reverted changes from rev 1110
+################################################################################
+
 combineOrthPICs <- function(pIC1, pIC2, combinedName = "combined IC", dim){
   ## adds to complementary pICs to give one IC
   ## the orthogonality is not checked here
@@ -50,4 +56,8 @@ if(is.null(.fastFct)||missing(.fastFct)){
 }
 fastIC@.fastFct <- .fastFct
 return(fastIC)
+}
+################################################################################
+## end if(FALSE)
+################################################################################
 }

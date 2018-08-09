@@ -2,13 +2,18 @@
 \docType{class}
 \alias{ALEstimate-class}
 \alias{MCALEstimate-class}
+\alias{ML.ALEstimate-class}
+\alias{CvMMD.ALEstimate-class}
 \alias{pIC}
 \alias{pIC,ALEstimate-method}
 \alias{pIC,MCEstimate-method}
+\alias{pIC,MLEstimate-method}
+\alias{pIC,CvMMDEstimate-method}
 \alias{pIC,MCALEstimate-method}
 \alias{asbias}
 \alias{asbias,ALEstimate-method}
 \alias{show,ALEstimate-method}
+\alias{show,MCALEstimate-method}
 \alias{confint,ALEstimate,missing-method}
 \alias{confint,ALEstimate,symmetricBias-method}
 \alias{confint,ALEstimate,onesidedBias-method}
@@ -63,6 +68,12 @@
 Class \code{ALEstimate} extends class \code{"Estimate"}, directly.
 Class \code{MCALEstimate} extends classes
 \code{"ALEstimate"}, and \code{"MCEstimate"} directly.
+Class \code{ML.ALEstimate} extends classes
+\code{"ALEstimate"}, and \code{"MLEstimate"} directly.
+Class \code{CvM.ALEstimate} extends classes
+\code{"ALEstimate"}, and \code{"CvMMDEstimate"} directly.
+The last two classes are to be used for method dispatch, later;
+they have an identical slot structure to class \code{MCALEstimate}.
 }
 \section{Methods}{
   \describe{
@@ -102,17 +113,17 @@ Class \code{MCALEstimate} extends classes
    there is class \code{MCALEstimate} extending \code{MCEstimate} by
    extra slots \code{pIC} and \code{asbias} (only filled optionally with
    non-\code{NULL} values). Again all the diagnostics for influence
-   functions are then available.
+   functions are then available. Classes \code{ML.ALEstimate} and
+   class \code{CvMMD.ALEstimate} are nominal subclasses of class
+   \code{MCALEstimate}, nominal in the sense that they have no extra slots,
+   but they might have particular methods later on.
 
    Helper method \code{getPIC} by means of the estimator class, and, in
    case of estimators of class \code{CvMMDEstimate}, also the name
    (in slot \code{name}) produces the (partial) influence function:
-
-    calling
-   \code{.CvMMDCovariance} -- either directly or through wrapper
+    calling \code{.CvMMDCovariance} -- either directly or through wrapper
    \code{.CvMMDCovarianceWithMux}. This is used  in the corresponding
-   \code{coerce} / \code{setAs} method, which by
-   \code{setAs(object, "MCALEstimate")} coerces \code{object} from
+   \code{.checkEstClassForParamFamily} method, which coerces \code{object} from
    class \code{"MCEstimate"} to \code{"MCALEstimate"}.
    }
 

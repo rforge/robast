@@ -19,14 +19,19 @@ user-visible CHANGES:
 
 bugfixes  
 + and a forgotten no longer used instance of oldmodif in kStepEstimator
-  
++  set.seed(123)
+   xn1 <- rnbinom(100,size=25,prob=0.2)
+   N1.w <- NbinomwithSizeFamily(size = 25, prob = 0.25)
+   print(CvMMDEstimator(xn1,N1.w,.withEvalAsVar=FALSE))
+
 under the hood
 + new S4 (estimator) class "MCALEstimate" containing both 
   "MCEstimate" and "ALEstimate" to make accessible pIC-methods
   to CvMMDEstimators...
 + some unnecessary coercions (with informatino loss) in show methods
 + new .checkEstClassForParamFamily method to force (expost)
-      casting to MCALEstimate (with pIC)
+      casting to MCALEstimate (with pIC) 
+	  {[with subclasses ML.ALEstimate, CvMMD.ALEstimate]}
 + to speed up things slot pIC is filled with a promise only 
   which is only forced when called through accessor pIC 
   (and then the slot is filled with the actual pIC)
@@ -36,6 +41,7 @@ under the hood
   estimator evaluates its argument ParamFamily from slot estimate.call
   and moves it to the parameter value which was estimated;
   at this parameter value, the IC is constructed 
++ extended accuracy in NbinomFamily 
 + new internal helper method getPIC to get hand on the pIC 
   --> for MLE it computes it by optIC  
   --> for CvMMDEstimators -- it uses the name of the estimator; 
@@ -45,44 +51,17 @@ under the hood
   * "( mu = <muname> )" => this uses .CvMMDCovariance with argument mu
   to get the pIC  
 + force optimal ICs to respect the support of the model distribution
-+ in kStepEstimator got back from RandVar-evaluation to IC - evaluation
-  background: updates should be fast (I saw examples with 60s for 3step...
-  with fast LMs...) -> to this end: 
-  (a) (for internal purposes) introduce new intermediate S4 class ".fastIC" 
-      (with non-exported generator .fastIC in file combinedICs.R) which is 
-      inbetween class IC and HampIC and has a new slot ".fastFct".
-      ".fastFct" is an optional (= can be NULL) mere function in one argument 
-      which returns the vector-valued IC; this way coordinatewise repeated 
-      checking whether x is in support of distr (and evaluation of the weight) 
-      can be avoided
-  (b) new slot ".fastFct" is filled automatically for our Hamepl-type 
-      ICs in generators ContIC and TotalVarIC by analogue generateIC.fast.fct
-      to generateIC.fct in file generateICfct.R. 
-  (c) class .fastIC is intermediate as we need it, too, for non-Hampel type ICs
-      as arise when either the covariance of our opt-rob IC is singular or 
-      one works with pICs and has to reconstruct full ICs by filling the parts
-      in the orthogonal complement of Range IC; 
-  (d) to this last issue instead of adding two random variables, as was done 
-      beforehand in kStepEstimator, one uses the new helper function combineOrthPICs
-      in file combinedICs.R which combines (without checking orthogonality) two
-      pICs to one full IC by adding the curves (and the fast functions). 
-  (e) in kStepEstimator, we now use evalIC.v, a (sapply-)vectorized version
-      of evalIC; this is an exported method and has a particular method for
-      class ".fastIC" which uses slot ".fastFct" instead of the evaluation 
-      of the pIC through evalRandVar ...
-  (f) generateIC.fct has also been revised: it avoids using random variable
-      Y(x)/Yi(x) and instead computes them right away from Lambda;
-	  this also has as background that checkIC/makeIC should be enhanced;
-	  ultimately, this enhancement is passed to ROptEst -- idea is to
-	  reuse infrastructure from getInfStand getInfCent which automatically
-	  does symmetry checking ...
-TBD: documentation for 
-     generateIC.fast.fct
-     evalIC.v
-     combineOrthPICs
-     .fastIC generator
-     .fastIC class 
-	  
+  careful testing gave: during evaluation of kStepEstimator it is
+  prohibitive to put line liesInSupport in each of the coordinate functions
+  as this blows up the integration time for covariances; 
+  instead, we use helper .fixInLiesInSupport in file generateICfct.R
+  which after computation of variances inserts this in the Maps of the IC
++ for time checking use file TimingChecks.R (with the preparation that 
+  the lines commented out by ##-t-## in kStepEstimator.R have to be activated;
+  this uses helper function .addTime to produce a matrix with detailed timing
+  information which can be read out as argument ) -- it is in package 
+  system folder "chkTimeCode" (in inst/chkTimeCode in r-forge)
+  
 #######################################
 version 1.1
 #######################################

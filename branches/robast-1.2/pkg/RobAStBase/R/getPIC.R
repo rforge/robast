@@ -5,13 +5,21 @@ setMethod(".checkEstClassForParamFamily",
 
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="ANY",estimator="MCEstimate"),
-              function(PFam, estimator){
+              function(PFam, estimator) .extendbyPIC(PFam, estimator, "MCALEstimate"))
+setMethod(".checkEstClassForParamFamily",
+              signature=signature(PFam="ANY",estimator="MLEstimate"),
+              function(PFam, estimator) .extendbyPIC(PFam, estimator, "ML.ALEstimate"))
+setMethod(".checkEstClassForParamFamily",
+              signature=signature(PFam="ANY",estimator="CvMMDEstimate"),
+              function(PFam, estimator) .extendbyPIC(PFam, estimator, "CvMMD.ALEstimate"))
+
+.extendbyPIC <- function(PFam, estimator, toClass){
                  fromSlotNames <- slotNames(class(estimator))
-                 to <- new("MCALEstimate")
+                 to <- new(toClass)
                  for(item in fromSlotNames) slot(to, item) <- slot(estimator,item)
                  to@pIC <- substitute(getPIC(estimator0), list(estimator0=estimator))
                  to
-              } )
+              }
 
 .getPIC <- function(object){
        if(is.null(object@pIC)) return(NULL)

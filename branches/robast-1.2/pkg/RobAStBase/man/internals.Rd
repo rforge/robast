@@ -3,6 +3,7 @@
 \alias{.eq}
 \alias{.getDistr}
 \alias{.msapply}
+\alias{.fixInLiesInSupport}
 
 \title{Internal / Helper functions of package RobAStBase}
 
@@ -14,6 +15,7 @@ These functions are used internally by package RobAStBase.}
 .getDistr(L2Fam)
 .evalListRec(list0)
 .msapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
+.fixInLiesInSupport(IC, distr)
 }
 \arguments{
   \item{x}{a (numeric) vector}
@@ -29,6 +31,8 @@ These functions are used internally by package RobAStBase.}
   should the result be simplified to a vector, matrix or higher dimensional array if possible? See also \code{\link[base:lapply]{sapply}}}
   \item{USE.NAMES}{like \code{sapply}: logical; if \code{TRUE} and if \code{X} is character,
   use \code{X} as names for the result unless it had names already.}
+  \item{IC}{an object of class \code{IC}, i.e., it expects a slot \code{Curve} like an IC.}
+  \item{distr}{a distribution}
 }
 
 \details{
@@ -37,6 +41,10 @@ These functions are used internally by package RobAStBase.}
 \code{.evalListRec} recursively goes through the entries of a list, evaluating
    each entry.
 \code{.msapply} like \code{base::.sapply} but catches \code{NULL}/zero-length arguments \code{X}.
+\code{.fixInLiesInSupport} inserts a check into the function(s) in the \code{Map} slot of
+the influence curve (IC), whether the arguments at which the IC is to be evaluated lie
+in the support of the distribution and accordingly either returns the function value
+of the IC, or \code{0}; the check is done via  calling \code{\link[distr]{liesInSupport}}.
 }
 
 
