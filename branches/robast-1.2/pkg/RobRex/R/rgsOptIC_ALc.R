@@ -209,14 +209,14 @@ rgsOptIC.ALc <- function(r, K, theta, scale = 1, A.rg.start, a.sc.start,
     body(fct1) <- substitute({ numeric(k) }, list(k = k))
     if(is(K, "DiscreteMVDistribution")){
         fct2 <- function(x){ 
-            if(liesInSupport(K, x[1:k])){
+            if(liesInSupport(K, x[1:k], checkFin = TRUE)){
                 ind <- colSums(apply(supp, 1, "==", x[1:k])) == k
                 return(a.sc[ind])
             }else{
                 return(NA)
             }
         }
-        body(fct2) <- substitute({ if(liesInSupport(K, x[1:k])){
+        body(fct2) <- substitute({ if(liesInSupport(K, x[1:k], checkFin = TRUE)){
                                        ind <- colSums(apply(supp, 1, "==", x[1:k])) == k
                                        return(a.sc[ind])
                                    }else{
@@ -225,7 +225,7 @@ rgsOptIC.ALc <- function(r, K, theta, scale = 1, A.rg.start, a.sc.start,
     }
     if(is(K, "DiscreteDistribution")){
         fct2 <- function(x){ 
-            if(liesInSupport(K, x[1])){
+            if(liesInSupport(K, x[1], checkFin = TRUE)){
                 ind <- (round(x[1], 8) == round(supp, 8))
                 return(a.sc[ind])
             }else{
