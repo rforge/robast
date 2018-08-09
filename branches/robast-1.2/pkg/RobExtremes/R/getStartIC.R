@@ -26,6 +26,7 @@ setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRi
     if(length(nsng)){
        if(gridn %in% nsng){
           interpolfct <- famg[[gridn]][[.versionSuff("fun")]]
+          rm(famg, nsgn, gridn)
           .modifyIC0 <- function(L2Fam, IC, withMakeIC = FALSE){
                     para <- param(L2Fam)
                     if(!.is.na.Psi(para, interpolfct, shnam))
@@ -49,8 +50,10 @@ setMethod("getStartIC",signature(model = "L2ScaleShapeUnion", risk = "interpolRi
              IC0@modifyIC <- .modifyIC
              return(IC0)
           }
+          rm(mc)
        }
     }
+    rm(famg, nsgn,gridn)
     IC <- do.call(getStartIC, as.list(mc[-1]), envir=parent.frame(2))
     if(withMakeIC) IC <- makeIC(IC,model)
     return(IC)
