@@ -1,0 +1,42 @@
++ in kStepEstimator got back from RandVar-evaluation to IC - evaluation
+  background: updates should be fast (I saw examples with 60s for 3step...
+  with fast LMs...) -> to this end: 
+  (a) (for internal purposes) introduce new intermediate S4 class ".fastIC" 
+      (with non-exported generator .fastIC in file combinedICs.R) which is 
+      inbetween class IC and HampIC and has a new slot ".fastFct".
+      ".fastFct" is an optional (= can be NULL) mere function in one argument 
+      which returns the vector-valued IC; this way coordinatewise repeated 
+      checking whether x is in support of distr (and evaluation of the weight) 
+      can be avoided
+  (b) new slot ".fastFct" is filled automatically for our Hamepl-type 
+      ICs in generators ContIC and TotalVarIC by analogue generateIC.fast.fct
+      to generateIC.fct in file generateICfct.R. 
+  (c) class .fastIC is intermediate as we need it, too, for non-Hampel type ICs
+      as arise when either the covariance of our opt-rob IC is singular or 
+      one works with pICs and has to reconstruct full ICs by filling the parts
+      in the orthogonal complement of Range IC; 
+  (d) to this last issue instead of adding two random variables, as was done 
+      beforehand in kStepEstimator, one uses the new helper function combineOrthPICs
+      in file combinedICs.R which combines (without checking orthogonality) two
+      pICs to one full IC by adding the curves (and the fast functions). 
+  (e) in kStepEstimator, we now use evalIC.v, a (sapply-)vectorized version
+      of evalIC; this is an exported method and has a particular method for
+      class ".fastIC" which uses slot ".fastFct" instead of the evaluation 
+      of the pIC through evalRandVar ...
+  (f) generateIC.fct has also been revised: it avoids using random variable
+      Y(x)/Yi(x) and instead computes them right away from Lambda;
+	  this also has as background that checkIC/makeIC should be enhanced;
+	  ultimately, this enhancement is passed to ROptEst -- idea is to
+	  reuse infrastructure from getInfStand getInfCent which automatically
+	  does symmetry checking ...
+TBD: documentation for 
+     generateIC.fast.fct
+     evalIC.v
+     combineOrthPICs
+     .fastIC generator
+     .fastIC class 
+
+	 fu <- function(x){x=4; return(x)}
+	 li <- list(a=3)
+	 b <- fu(li$x)
+	 b; li 
