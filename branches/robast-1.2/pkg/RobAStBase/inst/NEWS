@@ -50,6 +50,10 @@ under the hood
   * "( mu = model distr. )" => this uses .CvMMDCovariance with no argument mu
   * "( mu = <muname> )" => this uses .CvMMDCovariance with argument mu
   to get the pIC  
++ only MLEs and CvMMDEs (of class MCEstimate) are automatically cast to ALEstimate 
+   / surrogate classes ML.ALEstimate / CvMMD.ALEstimate 
+  i.e., the ".checkEstClassForParamFamily" for MCEstimate is removed 
+  / set to trivial identity 
 + force optimal ICs to respect the support of the model distribution
   careful testing gave: during evaluation of kStepEstimator it is
   prohibitive to put line liesInSupport in each of the coordinate functions

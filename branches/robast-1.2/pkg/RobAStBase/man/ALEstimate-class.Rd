@@ -18,7 +18,8 @@
 \alias{confint,ALEstimate,symmetricBias-method}
 \alias{confint,ALEstimate,onesidedBias-method}
 \alias{confint,ALEstimate,asymmetricBias-method}
-\alias{.checkEstClassForParamFamily,ANY,MCEstimate-method}
+\alias{.checkEstClassForParamFamily,ANY,MLEstimate-method}
+\alias{.checkEstClassForParamFamily,ANY,CvMMDEstimate-method}
 \alias{getPIC}
 \alias{getPIC,ANY-method}
 \alias{getPIC,MLEstimate-method}

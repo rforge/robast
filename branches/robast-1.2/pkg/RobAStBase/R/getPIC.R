@@ -3,9 +3,9 @@ setMethod(".checkEstClassForParamFamily",
               function(PFam, estimator)estimator)
 
 
-setMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="ANY",estimator="MCEstimate"),
-              function(PFam, estimator) .extendbyPIC(PFam, estimator, "MCALEstimate"))
+#setMethod(".checkEstClassForParamFamily",
+#              signature=signature(PFam="ANY",estimator="MCEstimate"),
+#              function(PFam, estimator) .extendbyPIC(PFam, estimator, "MCALEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="ANY",estimator="MLEstimate"),
               function(PFam, estimator) .extendbyPIC(PFam, estimator, "ML.ALEstimate"))
