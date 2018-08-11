@@ -65,6 +65,8 @@ under the hood
   this uses helper function .addTime to produce a matrix with detailed timing
   information which can be read out as argument ) -- it is in package 
   system folder "chkTimeCode" (in inst/chkTimeCode in r-forge)
++ now specified that we want to use distr::solve
++ now generateIC.fct produces vectorized functions (can now use useApply=FALSE in E()) 
   
 #######################################
 version 1.1

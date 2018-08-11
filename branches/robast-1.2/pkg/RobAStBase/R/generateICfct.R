@@ -13,7 +13,7 @@ setMethod("generateIC.fct", signature(neighbor = "UncondNeighborhood", L2Fam = "
         L <- as(diag(dims)%*%L2Fam@L2deriv, "EuclRandVariable")
         distr <- distribution(L2Fam)
 
-        L.fct <- function(x) evalRandVar(L,x)
+        L.fct <- function(x) evalRandVar(L,as.matrix(x))[,,1]
         if(nrvalues == 1){
             if(!is.null(res$d)){
                 ICfct[[1]] <- function(x){}
@@ -80,7 +80,7 @@ generateIC.fast.fct <- function(neighbor, L2Fam, res){
         dims <- ncol(A)
         L <- as(diag(dims)%*%L2Fam@L2deriv, "EuclRandVariable")
         distr <- distribution(L2Fam)
-        L.fct <- function(x) evalRandVar(L,x)
+        L.fct <- function(x) evalRandVar(L,as.matrix(x))[,,1]
         fastFct <- function(x){}
         if(nrvalues==1L){
            d0 <- if(dims==1L) d else NA

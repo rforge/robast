@@ -142,7 +142,7 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
 
         E10 <- E(L2Fam, IC1 %*% t(L2deriv))
         E1 <- matrix(E10, dims, dims)
-        stand <- trafo %*% solve(E1) 
+        stand <- trafo %*% distr::solve(E1)
         Y <- as(stand %*% IC1, "EuclRandVariable")
         #ICfct <- vector(mode = "list", length = dims)
         #ICfct[[1]] <- function(x){Y(x)}

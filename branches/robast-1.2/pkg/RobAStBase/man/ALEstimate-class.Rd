@@ -10,6 +10,8 @@
 \alias{pIC,MLEstimate-method}
 \alias{pIC,CvMMDEstimate-method}
 \alias{pIC,MCALEstimate-method}
+\alias{pIC,ML.ALEstimate-method}
+\alias{pIC,CvMMD.ALEstimate-method}
 \alias{asbias}
 \alias{asbias,ALEstimate-method}
 \alias{show,ALEstimate-method}

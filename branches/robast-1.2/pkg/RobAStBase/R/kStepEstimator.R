@@ -203,7 +203,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 #                print(Dtau)
                 if(!.isUnitMatrix(Dtau)){
  #                    print("HU1!")
-                     Dminus <- solve(Dtau, generalized = TRUE)
+                     Dminus <- distr::solve(Dtau, generalized = TRUE)
                      projker <- diag(k) - Dminus %*% Dtau
 
                      IC.tot1 <- Dminus %*% IC.c

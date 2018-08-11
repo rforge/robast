@@ -1,6 +1,6 @@
 getBoundedIC <- function(L2Fam, D=trafo(L2Fam@param)){
         FI <- FisherInfo(L2Fam)
-        bm <- sum(diag(solve(FI)))
+        bm <- sum(diag(distr::solve(FI)))
         w <- new("BoundedWeight", clip = bm, weight = function(x){
                    norm0 <- EuclideanNorm(as.matrix(x))
                    ind2 <- (norm0 < bm/2)
@@ -30,6 +30,6 @@ getBoundedIC <- function(L2Fam, D=trafo(L2Fam@param)){
         L2w0 <- L2w - cent
 
         E1 <- matrix(E(D1, L2w0 %*% t(L2deriv-cent)), dims, dims)
-        stand <- as.matrix(D %*% solve(E1, generalized = TRUE))
+        stand <- as.matrix(D %*% distr::solve(E1, generalized = TRUE))
         return(as(stand %*% L2w0, "EuclRandVariable"))
         }

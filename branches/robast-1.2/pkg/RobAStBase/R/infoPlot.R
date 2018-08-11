@@ -207,7 +207,7 @@ setMethod("infoPlot", "IC",
             QFc <- diag(dimsA)
             if(is(object,"ContIC") & dimsA>1 )
                {if (is(normtype(object),"QFNorm")) QFc <- QuadForm(normtype(object))
-                QFc0 <- solve( trafo %*% solve(L2Fam@FisherInfo) %*% t(trafo ))
+                QFc0 <- distr::solve( trafo %*% distr::solve(L2Fam@FisherInfo) %*% t(trafo ))
                 if (is(normtype(object),"SelfNorm")|is(normtype(object),"InfoNorm")) 
                     QFc <- QFc0
                }
@@ -223,7 +223,7 @@ setMethod("infoPlot", "IC",
 
             QFc.5 <- sqrt(PosSemDefSymmMatrix(QFc))
 
-            classIC <- as(trafo %*% solve(L2Fam@FisherInfo) %*% L2Fam@L2deriv, "EuclRandVariable")
+            classIC <- as(trafo %*% distr::solve(L2Fam@FisherInfo) %*% L2Fam@L2deriv, "EuclRandVariable")
             absInfoClass.f <- t(classIC) %*% QFc %*% classIC
 #            absInfoClass <- absInfoEval(x.vec, absInfoClass.f)
 

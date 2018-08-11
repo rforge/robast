@@ -111,7 +111,7 @@ outlyingPlotIC <- function(data,
          devIC <- data.frame(t(evIC[1:dimevIC,,drop=FALSE]))
          CMcd <- PosSemDefSymmMatrix(rrcov::getCov(rrcov::CovMcd(devIC,alpha=0.5)))
          asVar <- CMcd
-#         asVar <- solve(CMcd)
+#         asVar <- distr::solve(CMcd)
 #         cat("\n", sep="", gettext("Robust asVar"), ":\n")
 #         print(asVar)
       }
@@ -129,8 +129,8 @@ outlyingPlotIC <- function(data,
                    }
        }
     
-#       asVar <- PosSemDefSymmMatrix(solve(asVar))
-       mc$dist.x <- QFNorm(name = gettext("Mahalonobis-Norm"), QuadForm = PosSemDefSymmMatrix(solve(asVar)))
+#       asVar <- PosSemDefSymmMatrix(distr::solve(asVar))
+       mc$dist.x <- QFNorm(name = gettext("Mahalonobis-Norm"), QuadForm = PosSemDefSymmMatrix(distr::solve(asVar)))
       }
 
      if(missing(dist.y)){
@@ -161,7 +161,7 @@ outlyingPlotIC <- function(data,
        }
      
           mc$dist.y <- QFNorm(name = gettext("Mahalonobis-Norm"), 
-                              QuadForm =  PosSemDefSymmMatrix(solve(asVar)))
+                              QuadForm =  PosSemDefSymmMatrix(distr::solve(asVar)))
      }
 
 
