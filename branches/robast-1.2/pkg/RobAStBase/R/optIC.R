@@ -4,7 +4,7 @@
 setMethod("optIC", signature(model = "L2ParamFamily", risk = "asCov"),
     function(model, risk, withMakeIC = FALSE){
         Curve <- as((trafo(model@param) %*% distr::solve(model@FisherInfo)) %*% model@L2deriv, "EuclRandVariable")
-        asCov <- trafo(model@param) %*% solve(model@FisherInfo) %*% t(trafo(model@param))
+        asCov <- trafo(model@param) %*% distr::solve(model@FisherInfo) %*% t(trafo(model@param))
 
         modifyIC <- function(L2Fam, IC, withMakeIC=FALSE){ optIC(L2Fam, asCov()) }
         L2call <- model@fam.call
