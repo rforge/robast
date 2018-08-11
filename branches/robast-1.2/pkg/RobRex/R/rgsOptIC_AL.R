@@ -92,7 +92,7 @@
 .ALrgsGetAz <- function(K, b, A.rg, z.sc, A.sc){
     A.rg1 <- E(K, .ALrgsGetArg, b = b, A.rg = A.rg, 
                 z.sc = z.sc, A.sc = A.sc)
-    A.rg <- solve(A.rg1)
+    A.rg <- distr::solve(A.rg1)
 
     A.sc1 <- E(K, .ALrgsGetAsc, b = b, A.rg = A.rg, 
                 z.sc = z.sc, A.sc = A.sc)    
@@ -139,7 +139,7 @@ rgsOptIC.AL <- function(r, K, theta, scale = 1, A.rg.start, a.sc.start = 0,
 
     A.sc <- A.sc.start; z.sc <- a.sc.start/A.sc + 1
     if(missing(A.rg.start))
-        A.rg <- solve(Reg2Mom)
+        A.rg <- distr::solve(Reg2Mom)
     else
         A.rg <- A.rg.start
 

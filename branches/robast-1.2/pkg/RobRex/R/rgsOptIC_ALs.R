@@ -76,7 +76,7 @@
 .ALsrgsGetArg <- function(K, b.rg, A.rg){
     A.rg1 <- E(K, .ALsrgsGetArg1, b.rg = b.rg, A.rg = A.rg)
 
-    return(solve(A.rg1))
+    return(distr::solve(A.rg1))
 }
 
 
@@ -104,7 +104,7 @@ rgsOptIC.ALs <- function(r, K, A.rg.start, b.rg.Up = 1000, delta=1e-06,
              "is (numerically) not positive definite")
 
     if(missing(A.rg.start))
-        A.rg <- solve(Reg2Mom)
+        A.rg <- distr::solve(Reg2Mom)
     else
         A.rg <- A.rg.start
 

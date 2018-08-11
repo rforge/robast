@@ -88,7 +88,7 @@
     for(i in 1:nrow(supp)){
         summe <- summe + prob[i]*supp[i,]%*%t(supp[i,])*A.rg1[i]
     }
-    A.rg <- solve(summe)
+    A.rg <- distr::solve(summe)
     
     A.sc1 <- apply(z.sc.x, 1, .ALcrgsGetAsc, b = b, A.rg = A.rg, A.sc = A.sc)
     A.sc <- 1/sum(prob*A.sc1)
@@ -141,7 +141,7 @@ rgsOptIC.ALc <- function(r, K, theta, scale = 1, A.rg.start, a.sc.start,
     else
         z.sc <- a.sc.start/A.sc + 1
     if(missing(A.rg.start))
-        A.rg <- solve(Reg2Mom)
+        A.rg <- distr::solve(Reg2Mom)
     else
         A.rg <- A.rg.start
 
