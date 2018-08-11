@@ -8,6 +8,15 @@
  information)
 
 #######################################
+version 1.2
+#######################################
+
+under the hood
++ the modifyIC functions gain argument withMakeIC to be consistent with the signature in RobAStBase
+  (the arg is ignored in the RobLox Code)
++ The warnings as to moved ICs have been condensed
+
+#######################################
 version 1.1
 #######################################
 
