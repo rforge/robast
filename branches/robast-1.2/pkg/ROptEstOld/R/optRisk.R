@@ -3,7 +3,7 @@
 ###############################################################################
 setMethod("optRisk", signature(model = "L2ParamFamily", risk = "asCov"),
     function(model, risk){
-        return(list(asCov = solve(model@FisherInfo)))
+        return(list(asCov = distr::solve(model@FisherInfo)))
     })
 
 ###############################################################################

@@ -3,8 +3,8 @@
 ###############################################################################
 setMethod("optIC", signature(model = "L2ParamFamily", risk = "asCov"),
     function(model, risk){
-        Curve <- as((model@param@trafo %*% solve(model@FisherInfo)) %*% model@L2deriv, "EuclRandVariable")
-        asCov <- model@param@trafo %*% solve(model@FisherInfo) %*% t(model@param@trafo)
+        Curve <- as((model@param@trafo %*% distr::solve(model@FisherInfo)) %*% model@L2deriv, "EuclRandVariable")
+        asCov <- model@param@trafo %*% distr::solve(model@FisherInfo) %*% t(model@param@trafo)
 
         return(IC(
             name = paste("Classical optimal influence curve for", model@name), 
