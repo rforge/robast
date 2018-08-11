@@ -92,7 +92,7 @@ setMethod("getInfStandRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
             res <- E(Regressor, Afct, clip = clip, stand = stand, D1 = ErrorL2deriv)
         }
 
-        return(trafo %*% solve(res))
+        return(trafo %*% distr::solve(res))
     })
 setMethod("getInfStandRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                                         Regressor = "UnivariateDistribution", 
@@ -142,7 +142,7 @@ setMethod("getInfStandRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
             res <- E(Regressor, Afct, clip = clip, stand = stand, D1 = ErrorL2deriv)
         }
 
-        return(trafo %*% solve(res))
+        return(trafo %*% distr::solve(res))
     })
 setMethod("getInfStandRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
                                         Regressor = "Distribution", 
@@ -180,7 +180,7 @@ setMethod("getInfStandRegTS", signature(ErrorL2deriv = "UnivariateDistribution",
 
             return((x %*% t(x))*(m2df(D1, cx) - m2df(D1, gx) + gx*m1df(D1, gx) - cx*m1df(D1, cx)))
         }
-        return(trafo %*% solve(E(Regressor, Afct, cent = cent, clip = clip, 
+        return(trafo %*% distr::solve(E(Regressor, Afct, cent = cent, clip = clip,
                                  stand = stand, D1 = ErrorL2deriv)))
     })
 setMethod("getInfStandRegTS", signature(ErrorL2deriv = "RealRandVariable",
@@ -263,7 +263,7 @@ setMethod("getInfStandRegTS", signature(ErrorL2deriv = "RealRandVariable",
             }
         res[col(res) < row(res)] <- res[col(res) > row(res)]
 
-        return(trafo %*% solve(res))
+        return(trafo %*% distr::solve(res))
     })
 setMethod("getInfStandRegTS", signature(ErrorL2deriv = "RealRandVariable",
                                         Regressor = "Distribution", 
@@ -334,5 +334,5 @@ setMethod("getInfStandRegTS", signature(ErrorL2deriv = "RealRandVariable",
             }
         res[col(res) < row(res)] <- res[col(res) > row(res)]
 
-        return(trafo %*% solve(res))
+        return(trafo %*% distr::solve(res))
     })

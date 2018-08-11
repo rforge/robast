@@ -3,7 +3,7 @@
 ###############################################################################
 setMethod("optIC", signature(model = "L2RegTypeFamily", risk = "asCov"),
     function(model, risk){
-        Curve <- as((model@param@trafo %*% solve(model@FisherInfo)) %*% model@L2deriv, "EuclRandVariable")
+        Curve <- as((model@param@trafo %*% distr::solve(model@FisherInfo)) %*% model@L2deriv, "EuclRandVariable")
         return(IC(
             name = paste("Classical optimal influence curve for", model@name), 
             CallL2Fam = call("L2RegTypeFamily", 
@@ -24,7 +24,7 @@ setMethod("optIC", signature(model = "L2RegTypeFamily", risk = "asCov"),
                             ErrorL2derivDistrSymm = model@ErrorL2derivDistrSymm,
                             FisherInfo = model@FisherInfo),
             Curve = EuclRandVarList(Curve), 
-            Risks = list(asCov = model@param@trafo %*% solve(model@FisherInfo) %*% t(model@param@trafo)),
+            Risks = list(asCov = model@param@trafo %*% distr::solve(model@FisherInfo) %*% t(model@param@trafo)),
             Infos = matrix(c("optIC", "optimal IC in sense of Cramer-Rao bound"), 
                         ncol = 2, dimnames = list(character(0), c("method", "message")))))
     })

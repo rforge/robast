@@ -19,7 +19,7 @@ setMethod("getAsRiskRegTS", signature(risk = "asMSE",
         if(!is.finite(neighbor@radius))
             return(list(asMSE = Inf))
         else{
-            K.inv <- solve(E(Regressor, fun = function(x){ x %*% t(x) }))
+            K.inv <- distr::solve(E(Regressor, fun = function(x){ x %*% t(x) }))
             return(list(asMSE = stand * sum(diag(t(trafo) %*% K.inv))))
         }
     })
@@ -178,7 +178,7 @@ setMethod("getAsRiskRegTS", signature(risk = "asBias",
         K <- E(Regressor, fun = function(x){ x %*% t(x) })
         z <- q.l(ErrorL2deriv)(0.5)
         Eu <- E(ErrorL2deriv, function(x, z){abs(x - z)}, z = z)
-        b <- sqrt(sum(diag(trafo %*% solve(K) %*% t(trafo))))/Eu
+        b <- sqrt(sum(diag(trafo %*% distr::solve(K) %*% t(trafo))))/Eu
         
         return(list(asBias = b))        
     })

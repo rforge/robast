@@ -90,7 +90,7 @@ setMethod("getIneffDiff", signature(radius = "numeric",
                         trafo = L2Fam@param@trafo, upper = upper.b, maxiter = MaxIter, 
                         tol = eps, warn = warn)
             trafo <- L2Fam@param@trafo
-            K.inv <- solve(E(L2Fam@RegDistr, fun = function(x){ x %*% t(x) }))
+            K.inv <- distr::solve(E(L2Fam@RegDistr, fun = function(x){ x %*% t(x) }))
             ineffLo <- (res$A*sum(diag(t(trafo) %*% K.inv)) - res$b^2*(radius^2-loRad^2))/loRisk
             if(upRad == Inf)
                 ineffUp <- res$b^2/upRisk

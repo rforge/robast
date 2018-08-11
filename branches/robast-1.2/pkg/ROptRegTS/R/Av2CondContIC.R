@@ -29,7 +29,7 @@ setMethod("generateIC", signature(neighbor = "Av2CondContNeighborhood",
         ICfct <- vector(mode = "list", length = 1)
         L2 <- L2Fam@ErrorL2deriv[[1]]
         k <- dimension(img(L2Fam@RegDistr))
-        K.inv <- solve(E(L2Fam@RegDistr, fun = function(x){ x %*% t(x) }))
+        K.inv <- distr::solve(E(L2Fam@RegDistr, fun = function(x){ x %*% t(x) }))
         trafo <- L2Fam@param@trafo
 
         if(!is.null(d)){

@@ -114,7 +114,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
         K <- E(Regressor, fun = function(x){ x %*% t(x) })
         z <- q.l(ErrorL2deriv)(0.5)
         Eu <- E(ErrorL2deriv, function(x, z){abs(x - z)}, z = z)
-        b <- sqrt(sum(diag(trafo %*% solve(K) %*% t(trafo))))/Eu
+        b <- sqrt(sum(diag(trafo %*% distr::solve(K) %*% t(trafo))))/Eu
         
         if(is(ErrorL2deriv, "AbscontDistribution")){
             ws0 <- 0
