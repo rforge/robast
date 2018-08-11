@@ -10,7 +10,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                verbose <- getRobAStBaseOption("all.verbose")
 
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
             
             b <- abs(as.vector(A))*max(abs(q.l(L2deriv)(1)),abs(q.l(L2deriv)(0)))
             
@@ -43,7 +43,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                verbose <- getRobAStBaseOption("all.verbose")
 
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
             b <- abs(as.vector(A))*(q.l(L2deriv)(1)-q.l(L2deriv)(0))
             a <- -abs(as.vector(A))*q.l(L2deriv)(0)
             asCov <- A %*% t(trafo)
@@ -80,7 +80,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             if(! Cont && p>1)
                  stop("Not yet implemented")
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
             IC <- A %*% L2deriv
             if(is(Distr, "UnivariateDistribution")){
                 lower <- ifelse(is.finite(q.l(Distr)(0)), q.l(Distr)(1e-8), q.l(Distr)(0))

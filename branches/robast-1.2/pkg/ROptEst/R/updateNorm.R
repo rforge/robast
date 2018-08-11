@@ -6,7 +6,7 @@ setMethod("updateNorm", "SelfNorm", function(normtype, L2, neighbor, biastype,
            {Cv <- getInfV(L2deriv = L2, neighbor = neighbor, 
                        biastype = biastype, Distr = Distr, 
                        V.comp = V.comp, cent = cent, stand = stand,  w = w)
-            QuadForm(normtype) <- PosSemDefSymmMatrix(solve(Cv)) 
+            QuadForm(normtype) <- PosSemDefSymmMatrix(distr::solve(Cv))
             normtype})
 
                                                        

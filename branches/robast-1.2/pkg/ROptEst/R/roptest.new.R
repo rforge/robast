@@ -318,7 +318,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
     es.list0$fsCor <- eval(es.list0$fsCor)
     es.list0$OptOrIter <- eval(es.list0$OptOrIter)
 
-    if(debug) {cat("\n\n\n::::\n\n")
+    if(debug) {cat("\n\n\n:::: args for getStartIC\n\n")
     argList <- c(list(model=L2Fam,risk=risk,neighbor=neighbor,
                       withEvalAsVar = withEvalAsVarSIC, withMakeIC = withMakeICSIC,
                       modifyICwarn = modifyICwarnSIC), es.list0)
@@ -337,7 +337,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
 
 
       if(debug){
-         ICstart <- "BUL"
+         ICstart <- "ICstart-result-debug"
          argList <- list(x, IC = ICstart, start = initial.est, steps = steps,
                             useLast = kStepCtrl$useLast,
                             withUpdateInKer = kStepCtrl$withUpdateInKer,

@@ -18,7 +18,7 @@
                             A.comp[i,j] <- FALSE
                 }
             }
-        A.comp[col(A.comp) < row(A.comp)] <- A.comp[col(A.comp) > row(A.comp)]
+        A.comp[col(A.comp) < row(A.comp)] <- FALSE
         return(list(A.comp = A.comp, z.comp = z.comp))
 
 }

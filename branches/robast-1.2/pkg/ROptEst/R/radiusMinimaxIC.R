@@ -123,10 +123,10 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                Finfo <- L2Fam@FisherInfo
 
                p <- nrow(trafo)
-               FI0 <- trafo%*%solve(Finfo)%*%t(trafo)
+               FI0 <- trafo%*%distr::solve(Finfo)%*%t(trafo)
 
                if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") )
-                    {QuadForm(normtype) <- PosSemDefSymmMatrix(solve(FI0));
+                    {QuadForm(normtype) <- PosSemDefSymmMatrix(distr::solve(FI0));
                      normtype(risk) <- normtype}
                std <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(p)
                loRisk <- sum(diag(std%*%FI0))

@@ -101,7 +101,7 @@ setMethod("getStartIC",signature(model = "L2LocationScaleFamily", risk = "interp
          LM0$Aw <- LM0$A <- (Aa+Ai+t(Ai)+t(Aa))/4
          ai <- Ai %*% zi
          LM0$a <- (ai+aa)/2
-         LM0$aw <- solve(LM0$A, LM0$a)
+         LM0$aw <- distr::solve(LM0$A, LM0$a)
 }
 
 .xiMkLM <- function(LMset,xi){

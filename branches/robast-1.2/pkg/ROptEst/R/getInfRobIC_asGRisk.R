@@ -21,7 +21,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
         k <- ncol(trafo)
 
         ## non-standard norms
-        FI <- solve(trafo%*%matrix(1/Finfo,1,1)%*%t(trafo))
+        FI <- distr::solve(trafo%*%matrix(1/Finfo,1,1)%*%t(trafo))
         if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") ){
            QuadForm(normtype) <- PosSemDefSymmMatrix(FI)
            normtype(risk) <- normtype
@@ -221,7 +221,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
            stop("Not yet implemented")
 
         ## non-standard norms
-        FI <- solve(trafo%*%solve(Finfo)%*%t(trafo))
+        FI <- distr::solve(trafo%*%distr::solve(Finfo)%*%t(trafo))
         if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") ){
            QuadForm(normtype) <- PosSemDefSymmMatrix(FI)
            normtype(risk) <- normtype
@@ -232,7 +232,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         ## starting values
         if(is.null(z.start)) z.start <- numeric(k)
-        if(is.null(A.start)) A.start <- trafo %*% solve(Finfo)
+        if(is.null(A.start)) A.start <- trafo %*% distr::solve(Finfo)
         a.start <- as.numeric(A.start %*% z.start)
 
         ## sort out upper solution if radius = 0
@@ -288,7 +288,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                    verbose = verbose)
                lower <- lowBerg$b}
             #if(is.null(upper))
-               upper <- 5*max(solve(Finfo))
+               upper <- 5*max(distr::solve(Finfo))
 
             OptIterCall <- numeric(1)
             Cov <- 0
@@ -510,7 +510,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
             b <- res$b
             res <- c(res, list(biastype = biastype, normtype = normtype))
             if(!is(risk, "asMSE")){
-                    FI <- trafo%*%solve(Finfo)%*%t(trafo)
+                    FI <- trafo%*%distr::solve(Finfo)%*%t(trafo)
                     FI <- sum(diag(QuadForm %*% FI))
                 Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,
                                   biastype = biastype, normtype = normtype, 
@@ -549,7 +549,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                    verbose = verbose)
                 normtype(risk) <- res$normtype
                 if(!is(risk, "asMSE")){
-                    FI <- trafo%*%solve(Finfo)%*%t(trafo)
+                    FI <- trafo%*%distr::solve(Finfo)%*%t(trafo)
                     FI <- sum(diag(QuadForm %*% FI))
                     Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,
                                       biastype = biastype(risk), normtype = normtype(risk),
@@ -665,14 +665,14 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 #        if( is(neighbor,"TotalVarNeighborhood") && p>1)
 #           stop("Not yet implemented")
 #
-#        FI <- solve(trafo%*%solve(Finfo)%*%t(trafo))
+#        FI <- distr::solve(trafo%*%distr::solve(Finfo)%*%t(trafo))
 #        if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") )
 #           {QuadForm(normtype) <- PosSemDefSymmMatrix(FI);
 #            normtype(risk) <- normtype}
 #        QF <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(nrow(trafo))
 #
 #        if(is.null(z.start)) z.start <- numeric(ncol(trafo))
-#        if(is.null(A.start)) A.start <- trafo %*% solve(Finfo)
+#        if(is.null(A.start)) A.start <- trafo %*% distr::solve(Finfo)
 #
 #        radius <- neighbor@radius
 #        if(identical(all.equal(radius, 0), TRUE)){
@@ -791,7 +791,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 #
 #            if(is(neighbor,"TotalVarNeighborhood")){
 #                  a <- z
-#                  z <- solve(A,a)
+#                  z <- distr::solve(A,a)
 #                  zc <- numeric(ncol(trafo))
 #            }else if(is(neighbor,"ContNeighborhood")) {
 #                  zc <- z

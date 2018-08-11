@@ -170,7 +170,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
            stop("Not yet implemented")
 
         ## non-standard norms
-        FI <- solve(trafo%*%solve(Finfo)%*%t(trafo))
+        FI <- distr::solve(trafo%*%distr::solve(Finfo)%*%t(trafo))
         if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") ){
            QuadForm(normtype) <- PosSemDefSymmMatrix(FI)
            normtype(risk) <- normtype
@@ -180,7 +180,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
         ## starting values
         if(is.null(z.start)) z.start <- numeric(k)
-        if(is.null(A.start)) A.start <- trafo%*%solve(Finfo)
+        if(is.null(A.start)) A.start <- trafo%*%distr::solve(Finfo)
         a.start <- as.numeric(A.start %*% z.start)
 
         ## initialize
@@ -334,7 +334,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                         tol, QuadForm, verbose, nrvalpts, warn){
 
             if(missing(warn)|| is.null(warn)) warn <- FALSE
-            ClassIC <- trafo %*% solve(Finfo) %*% L2deriv
+            ClassIC <- trafo %*% distr::solve(Finfo) %*% L2deriv
 
             lower.x <- getLow(Distr)
             upper.x <- getUp(Distr)
@@ -405,7 +405,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 #        if(! is(neighbor,"ContNeighborhood") && p>1)
 #           stop("Not yet implemented")
 #
-#        FI <- solve(trafo%*%solve(Finfo)%*%t(trafo))
+#        FI <- distr::solve(trafo%*%distr::solve(Finfo)%*%t(trafo))
 #        if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") )
 #           {QuadForm(normtype) <- PosSemDefSymmMatrix(FI); normtype(risk) <- normtype}
 #
@@ -416,7 +416,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 #        b <- risk@bound
 #
 #        if(checkBounds){
-#            ClassIC <- trafo %*% solve(Finfo) %*% L2deriv
+#            ClassIC <- trafo %*% distr::solve(Finfo) %*% L2deriv
 #            lower.x <- getLow(Distr)
 #            upper.x <- getUp(Distr)
 #            x <- seq(from = lower.x, to = upper.x, length = 5000)
@@ -502,7 +502,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 #
 #            if(is(neighbor,"TotalVarNeighborhood")){
 #                  a <- z
-#                  z <- solve(A,a)
+#                  z <- distr::solve(A,a)
 #                  zc <- numeric(ncol(trafo))
 #            }else if(is(neighbor,"ContNeighborhood")) {
 #                  zc <- z

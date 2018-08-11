@@ -82,7 +82,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         }
 #        }
 
-        FI <- solve(trafo%*%solve(Finfo)%*%t(trafo))
+        FI <- distr::solve(trafo%*%distr::solve(Finfo)%*%t(trafo))
         if(is(normtype,"QFNorm")) 
            {QuadForm(normtype) <- PosSemDefSymmMatrix(FI); 
             normtype(risk) <- normtype}

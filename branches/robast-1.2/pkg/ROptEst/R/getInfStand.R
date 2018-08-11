@@ -42,7 +42,7 @@ setMethod("getInfStand", signature(L2deriv = "RealRandVariable",
 
         erg[col(erg) < row(erg)] <- erg[col(erg) > row(erg)]
 
-        return(trafo %*% solve(erg))
+        return(trafo %*% distr::solve(erg))
     })
 ###############################################################################
 ## standardizing constant for one-sided bias

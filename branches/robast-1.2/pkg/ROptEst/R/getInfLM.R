@@ -47,7 +47,7 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
         #     print(c("z"=z))
             if(is(neighbor,"TotalVarNeighborhood")){
                   a <- z
-                  z <- as.numeric(solve(A,a))
+                  z <- as.numeric(distr::solve(A,a))
                   zc <- numeric(ncol(trafo))
             }else if(is(neighbor,"ContNeighborhood")) {
                   zc <- z
@@ -159,7 +159,7 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
 
 #            print(list(A0vecA,A0,a0))
 
-            z0 <- as.numeric(solve(A0,a0))
+            z0 <- as.numeric(distr::solve(A0,a0))
             std0 <- stdC
             w0 <- w1
             risk0 <- risk1

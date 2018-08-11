@@ -9,7 +9,7 @@
         w <- new("HampelWeight")
 
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
-        if(is.null(A.start)) A.start <- trafo%*%solve(as.matrix(Finfo))
+        if(is.null(A.start)) A.start <- trafo%*%distr::solve(as.matrix(Finfo))
         if(is.null(A.comp)) 
            A.comp <- matrix(TRUE, nrow = nrow(trafo), ncol = ncol(trafo))
         if(is.null(z.comp)) 
@@ -109,7 +109,7 @@
         w <- new("BdStWeight")
         k <- ncol(trafo)
 
-        if(is.null(A.start)) A.start <- trafo%*%solve(Finfo)
+        if(is.null(A.start)) A.start <- trafo%*%distr::solve(Finfo)
 
         pos.fct <- function(x, L2, stand){
             X <- evalRandVar(L2, as.matrix(x))[,,1]

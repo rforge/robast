@@ -20,8 +20,8 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
         normtype <- normtype(risk)
 
         trafo <- trafo(L2Fam@param)
-        FI0 <- trafo%*%solve(L2Fam@FisherInfo)%*%t(trafo)
-        FI <- solve(FI0)
+        FI0 <- trafo%*%distr::solve(L2Fam@FisherInfo)%*%t(trafo)
+        FI <- distr::solve(FI0)
         if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") )
            {QuadForm(normtype) <- PosSemDefSymmMatrix(FI);
             normtype(risk) <- normtype}

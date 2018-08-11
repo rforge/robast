@@ -21,7 +21,7 @@ getMaxIneff <- function(IC, neighbor, biastype = symmetricBias(),
             Finfo <- L2Fam@FisherInfo
             L2derivDim <- numberOfMaps(L2Fam@L2deriv)
             
-            FI0 <- trafo%*%solve(Finfo)%*%t(trafo)
+            FI0 <- trafo%*%distr::solve(Finfo)%*%t(trafo)
             std <- if(is(normtype,"QFNorm")) 
                       QuadForm(normtype) else diag(nrow(trafo))
             s0 <- sum(diag(std%*%FI0))

@@ -29,6 +29,11 @@ under the hood
 + inserted code for time checking (which is inactive usually; only if in kStepEstimator.R in 
   RobAStBase, the respective ##-t-## lines are de-commented the timings are visible as
   attribute "kStepTimings" in the result of roptest ...)
++ now specified that we want to use distr::solve
++ internal function .getComp, determining by symmetry slots which entries in LMs a and A 
+  have to be computed, now fills the lower triangle of A with FALSE (was not used so far,
+  but can be used in a faster computation method for checkIC makeIC to determine whether
+  it is cleverer to integrate in k or in p space)
 
 #######################################
 version 1.1

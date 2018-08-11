@@ -132,9 +132,9 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
            stop("Not yet implemented")
 
         ## non-standard norms
-        FI1 <- trafo%*%solve(Finfo)
+        FI1 <- trafo%*%distr::solve(Finfo)
         FI0 <- FI1%*%t(trafo)
-        FI <- solve(FI0)
+        FI <- distr::solve(FI0)
         if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") ){
            QuadForm(normtype) <- PosSemDefSymmMatrix(FI)
            normtype(risk) <- normtype

@@ -36,12 +36,12 @@ setMethod("getInfV", signature(L2deriv = "RealRandVariable",
             (weight(w)(evalRandVar(L2deriv, as.matrix(x)) [,,1]))^2 
         }
         
-        .solve <- function(A0, b0) solve(A0,b0)
-        if(is.matrix(stand)){
-          if(nrow(stand)!=ncol(stand))
-             .solve <- function(A0,b0) MASS::ginv(A0)%*%b0
-        }
-        cent0 <- .solve(stand, cent)
+#        .solve <- function(A0, b0) distr::solve(A0,b0)
+#        if(is.matrix(stand)){
+#          if(nrow(stand)!=ncol(stand))
+#             .solve <- function(A0,b0) MASS::ginv(A0)%*%b0
+#        }
+        cent0 <- distr::solve(stand, cent, generalized = TRUE)
 
 
         integrandV <- function(x, L2.i, L2.j, i, j){
