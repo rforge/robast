@@ -92,7 +92,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     withLogScale = TRUE,..withCheck=FALSE,
                     withTimings = FALSE, withMDE = NULL,
                     withEvalAsVar = NULL, withMakeIC = FALSE,
-                    modifyICwarn = NULL){
+                    modifyICwarn = NULL, E.argList = NULL){
     mc <- match.call(expand.dots=FALSE)
     dots <- mc[["..."]]
     scalename <- dots[["scalename"]]
@@ -106,6 +106,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     startICCtrl[["withMakeIC"]] <- if(!missing(withMakeIC)) withMakeIC else FALSE
     startICCtrl[["withEvalAsVar"]] <- if(!missing(withEvalAsVar)) withEvalAsVar else NULL
     startICCtrl[["modifyICwarn"]] <- if(!missing(modifyICwarn)) modifyICwarn else FALSE
+    startICCtrl[["E.argList"]] <- if(!missing(E.argList)) E.argList else NULL
 
 
     startCtrl <- list()
@@ -115,6 +116,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     startCtrl[["startPar"]] <- if(!missing(startPar)) startPar else NULL
     startCtrl[["distance"]] <- if(!missing(distance)) distance else NULL
     startCtrl[["withMDE"]] <- if(!missing(withMDE)) withMDE else NULL
+    startCtrl[["E.argList"]] <- if(!missing(E.argList)) E.argList else NULL
 
     kStepCtrl <- list()
     kStepCtrl[["useLast"]] <- if(!missing(useLast)) useLast else getRobAStBaseOption("kStepUseLast")
@@ -126,6 +128,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     kStepCtrl[["withLogScale"]] <- if(!missing(withLogScale)) withLogScale else TRUE
     kStepCtrl[["withEvalAsVar"]] <- if(!missing(withEvalAsVar)) withEvalAsVar else NULL
     kStepCtrl[["withMakeIC"]] <- if(!missing(withMakeIC)) withMakeIC else FALSE
+    kStepCtrl[["E.argList"]] <- if(!missing(E.argList)) E.argList else NULL
 
     retV <- robest(x=x, L2Fam=L2Fam,  fsCor = fsCor,
            risk = risk, steps = steps, verbose = verbose,
@@ -246,6 +249,10 @@ robest <- function(x, L2Fam,  fsCor = 1,
                             distance = startCtrl$distance,
                             startPar = startPar0), dots,
                             list(.with.checkEstClassForParamFamily = FALSE))
+               if(!is.null(startCtrl$E.arglist)){
+                  nms <- names(startCtrl$E.arglist)
+                  for(nmi in nms) argListMDE[[nmi]] <- startCtrl$E.arglist[[nmi]]
+               }
                startCtrl$initial.est <- do.call(MDEstimator, argListMDE)
          }
       }
@@ -326,11 +333,16 @@ robest <- function(x, L2Fam,  fsCor = 1,
     cat("\n\n\n")
     }
     if(!debug){
-      sy.getStartIC <-  system.time({
-       ICstart <- do.call(getStartIC, args=c(list(model=L2FamStart,risk=risk,
-                              neighbor=neighbor, withEvalAsVar = withEvalAsVarSIC,
-                              withMakeIC = withMakeICSIC, modifyICwarn = modifyICwarnSIC),
-                              es.list0))
+       sy.getStartIC <-  system.time({
+       getStartICArgList <- c(list(model = L2FamStart, risk = risk,
+           neighbor = neighbor, withEvalAsVar = withEvalAsVarSIC,
+           withMakeIC = withMakeICSIC, modifyICwarn = modifyICwarnSIC),
+           es.list0)
+       if(!is.null(startICCtrl$E.arglist)){
+           nms <- names(startICCtrl$E.arglist)
+           for(nmi in nms) getStartICArgList[[nmi]] <- startICCtrl$E.arglist[[nmi]]
+       }
+       ICstart <- do.call(getStartIC, args=getStartICArgList)
      })
      if (withTimings) print(sy.getStartIC)
      }
@@ -351,17 +363,21 @@ robest <- function(x, L2Fam,  fsCor = 1,
                             withMakeIC = withMakeICkStep)
          print(argList) }
       sy.kStep <- system.time({
-         res <- kStepEstimator(x, IC = ICstart, start = initial.est, steps = steps,
-                            useLast = kStepCtrl$useLast,
-                            withUpdateInKer = kStepCtrl$withUpdateInKer,
-                            IC.UpdateInKer = kStepCtrl$IC.UpdateInKer,
-                            withICList = kStepCtrl$withICList,
-                            withPICList = kStepCtrl$withPICList,
-                            na.rm = na.rm,
-                            scalename = kStepCtrl$scalename,
-                            withLogScale = kStepCtrl$withLogScale,
-                            withEvalAsVar = withEvalAsVarkStep,
-                            withMakeIC = withMakeICkStep)
+         kStepArgList <- list(x, IC = ICstart, start = initial.est,
+              steps = steps, useLast = kStepCtrl$useLast,
+              withUpdateInKer = kStepCtrl$withUpdateInKer,
+              IC.UpdateInKer = kStepCtrl$IC.UpdateInKer,
+              withICList = kStepCtrl$withICList,
+              withPICList = kStepCtrl$withPICList,
+              na.rm = na.rm, scalename = kStepCtrl$scalename,
+              withLogScale = kStepCtrl$withLogScale,
+              withEvalAsVar = withEvalAsVarkStep,
+              withMakeIC = withMakeICkStep)
+         if(!is.null(kStepCtrl$E.arglist)){
+             nms <- names(kStepCtrl$E.arglist)
+             for(nmi in nms) kStepArgList[[nmi]] <- kStepCtrl$E.arglist[[nmi]]
+         }
+         res <- do.call(kStepEstimator, kStepArgList)
                             })
        sy.OnlykStep <- attr(res,"timings")
        if (withTimings) print(sy.kStep)

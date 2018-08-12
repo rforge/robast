@@ -31,11 +31,11 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
 
 \S4method{minmaxBias}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv,
      neighbor, biastype, normtype, Distr, z.start, A.start,  z.comp, A.comp,
-     Finfo, trafo, maxiter, tol, verbose = NULL)
+     Finfo, trafo, maxiter, tol, verbose = NULL, ...)
 
 \S4method{minmaxBias}{RealRandVariable,TotalVarNeighborhood,BiasType}(L2deriv,
      neighbor, biastype, normtype, Distr, z.start, A.start,  z.comp, A.comp,
-     Finfo, trafo, maxiter, tol, verbose = NULL)
+     Finfo, trafo, maxiter, tol, verbose = NULL, ...)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
@@ -43,7 +43,7 @@ minmaxBias(L2deriv, neighbor, biastype, ...)
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{biastype}{ object of class \code{"BiasType"}. }
   \item{normtype}{ object of class \code{"NormType"}. }
-  \item{\dots}{ additional parameters. }
+  \item{\dots}{ additional arguments to be passed to \code{E} }
   \item{Distr}{ object of class \code{"Distribution"}. }
   \item{symm}{ logical: indicating symmetry of \code{L2deriv}. }
   \item{z.start}{ initial value for the centering constant. }

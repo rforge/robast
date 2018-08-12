@@ -74,7 +74,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
             }
         }
         #IC.o <- moveICBackFromRefParam(IC.o,L2Fam)
-        if(withMakeIC) IC.o <- makeIC(IC.o, model)
+        if(withMakeIC) IC.o <- makeIC(IC.o, model, ...)
         return(IC.o)
     })
 
@@ -85,7 +85,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asRisk"),
 setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
     function(model, risk, upper = 1e4, lower = 1e-4, maxiter = 50,
              tol = .Machine$double.eps^0.4, withMakeIC = FALSE,
-             warn = TRUE, verbose = NULL, modifyICwarn = NULL){
+             warn = TRUE, verbose = NULL, modifyICwarn = NULL, ...){
         L2derivDistr <- model@center@L2derivDistr[[1]]
         ow <- options("warn")
         on.exit(options(ow))
@@ -113,7 +113,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
                                                  neighbor = model@neighbor,
                                                  risk = risk, warn = warn, verbose = verbose))
                IC.o <- generateIC(TotalVarNeighborhood(radius = model@neighbor@radius), model@center, res)
-               if(withMakeIC) IC.o <- makeIC(IC.o, model)
+               if(withMakeIC) IC.o <- makeIC(IC.o, model, ...)
                return(IC.o)
            }    
         }else{
@@ -128,7 +128,7 @@ setMethod("optIC", signature(model = "InfRobModel", risk = "asUnOvShoot"),
 setMethod("optIC", signature(model = "FixRobModel", risk = "fiUnOvShoot"),
     function(model, risk, sampleSize, upper = 1e4, lower = 1e-4, maxiter = 50,
              tol = .Machine$double.eps^0.4, withMakeIC = FALSE, warn = TRUE, Algo = "A",
-             cont = "left", verbose = NULL, modifyICwarn = NULL){
+             cont = "left", verbose = NULL, modifyICwarn = NULL, ...){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         ow <- options("warn")
@@ -155,7 +155,7 @@ setMethod("optIC", signature(model = "FixRobModel", risk = "fiUnOvShoot"),
                                                  neighbor = model@neighbor,
                                                  risk = risk, warn = warn, verbose = verbose))
             IC.o <- generateIC(TotalVarNeighborhood(radius = model@neighbor@radius), model@center, res)
-            if(withMakeIC) IC.o <- makeIC(IC.o, model)
+            if(withMakeIC) IC.o <- makeIC(IC.o, model, ...)
             return(IC.o)
         }else{
             stop("restricted to 1-dimensional parametric models")

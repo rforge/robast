@@ -2,7 +2,7 @@ getMaxIneff <- function(IC, neighbor, biastype = symmetricBias(),
                         normtype = NormType(), z.start = NULL, 
                         A.start = NULL, maxiter = 50, 
                         tol = .Machine$double.eps^0.4,
-                        warn = TRUE, verbose = NULL){
+                        warn = TRUE, verbose = NULL,...){
             if(!is(IC,"IC")) 
                stop("Argument IC must be of class 'IC'.")
 
@@ -64,7 +64,7 @@ getMaxIneff <- function(IC, neighbor, biastype = symmetricBias(),
                             trafo = trafo, z.start = z.start, A.start = A.start, 
                             maxiter = maxiter, tol = tol, warn = warn, 
                             Finfo = Finfo,
-                            verbose = verbose)$risk$asBias$value^2
+                            verbose = verbose,...)$risk$asBias$value^2
               }else{
                 stop("not yet implemented")
               }

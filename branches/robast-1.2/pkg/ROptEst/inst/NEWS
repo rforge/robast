@@ -16,6 +16,30 @@ user-visible CHANGES:
   an argument withMakeIC to be able to adjust this to a
   higher granularity
 + require more recent versions in DESCRIPTION
++ getBiasIC for signature {HampIC,UncondNeighborhood} no longer has argument withCheck
++ getRiskIC gains argument "..." to pass on arguments to E()
++ the help to robest is more explicit about the usage of argument E.argList at 
+  various places in the generator 
++ the help to roptest has an extra paragraph explicating the usage of initial.est
+  and start.Par and the different steps done in roptest 
++ the input generators genkStepCtrl, genstartCtrl, genstartICCtrl gain argument
+  E.argList to pass on arguments to E()
++ roptest gains an argument E.argList for arguments to be passed to E() from (a) 
+  \code{MDEstimator} (here this additional argument is only used if \code{initial.est}  
+   is missing), (b) \code{getStartIC}, and (c) \code{kStepEstimator}. Potential clashes with
+   arguments of the same name in \code{\dots} are resolved by inserting the items of argument 
+   list \code{E.argList} as named items, so in case of collisions the item of \code{E.argList} 
+   overwrites the existing one from \code{\dots}.
+
+bug fixes
+
++ an embarrassing error when computing E(X t(X)) (saving the lower half by symmetry) 
+  in getInfStand: a[row(a)>col(a)] <- a[row(a)<col(a)] in general is not symmetric...
+  did not bite us so far as the highest dim we considered so far was 3, and the 
+  recipe is exact exactly up to dim 3... the exact formula would have been (and is now
+  in the code) a[row(a)>col(a)] <- t(a)[row(a)>col(a)]
++ fix an argument collision in MBRE-method / in call to getInfRobIC_asGRisk, when called
+  from OptIC through getInfRobIC_asBias ("upper" got into ...)
 
 under the hood
 
@@ -34,6 +58,20 @@ under the hood
   have to be computed, now fills the lower triangle of A with FALSE (was not used so far,
   but can be used in a faster computation method for checkIC makeIC to determine whether
   it is cleverer to integrate in k or in p space)
++ particular checkIC and makeIC methods for ContICs which allow for speed up 
+  if in k space many entries of the LMs can be skipped due to symmetry
++ several methods (getRiskIC, getBiasIC, getBoundedIC, makeIC, checkIC, modifyIC) 
+  gain argument "..." to pass on arguments to E(). This holds in particular for the
+  functions used to compute the optimally-robust ICs, i.e. getInfRob_asBias, getInfRob_asHampel,
+  getInfRob_asGRisk, getInfRob_asAnscombe, leastFavorableRadius, radiusMinimaxIC, and
+  geInfGamma, getInfRad, getInfClip, getInfCent, getInfStand, getInfV, getAsRisk, getReq,
+  (at least as far as multivariate ICs are concerned), .LowerCaseMultivariate, getMaxIneff, 
+  getInfRad, getLagrangeMultByIter and getLagrangeMultByOptim
++ new internal helper function .filterEarg by means of constant ..IntegrateArgs (exported 
+  from package RobAStBase) is used to filter out arguments from dots which are meant for E() 
++ the local .modifyIC0 functions only used to produce the new IC but not for filling
+  slot modifyIC loose argument withMakeIC (and dots) -- this is now done in the outer
+  modifyIC function
 
 #######################################
 version 1.1

@@ -15,11 +15,14 @@ genkStepCtrl(useLast = getRobAStBaseOption("kStepUseLast"),
                     withICList = getRobAStBaseOption("withICList"),
                     withPICList = getRobAStBaseOption("withPICList"),
                     scalename = "scale", withLogScale = TRUE,
-                    withEvalAsVar = NULL, withMakeIC = FALSE)
+                    withEvalAsVar = NULL, withMakeIC = FALSE,
+                    E.argList = NULL)
 genstartCtrl(initial.est = NULL, initial.est.ArgList = NULL,
-                        startPar = NULL, distance = CvMDist, withMDE = NULL)
+                        startPar = NULL, distance = CvMDist, withMDE = NULL,
+                        E.argList = NULL)
 gennbCtrl(neighbor = ContNeighborhood(), eps, eps.lower, eps.upper)
-genstartICCtrl(withMakeIC = FALSE, withEvalAsVar = NULL, modifyICwarn = NULL)
+genstartICCtrl(withMakeIC = FALSE, withEvalAsVar = NULL, modifyICwarn = NULL,
+               E.argList = NULL)
 }
 \arguments{
   \item{useLast}{ which parameter estimate (initial estimate or
@@ -75,6 +78,19 @@ genstartICCtrl(withMakeIC = FALSE, withEvalAsVar = NULL, modifyICwarn = NULL)
         lower bound for the amount of gross errors. See details below. }
   \item{eps.upper}{ positive real (\code{eps.lower} <= \code{eps.upper} <= 0.5):
         upper bound for the amount of gross errors. See details below. }
+
+  \item{E.argList}{\code{NULL} (default) or a list of arguments to be passed
+        to calls to \code{E}; appears (and may vary from instance to instance)
+        as argument in the generators \code{genkStepCtrl}, \code{genstartCtrl}
+        \code{genstartICCtrl}. The one in \code{genstartCtrl} is used for
+        \code{MDEstimator} in case \code{initial.est} is \code{NULL} only.
+        Arguments for calls to \code{E} in an explicit function argument
+        \code{initial.est} should be entered to argument \code{initial.est.ArgList}.
+        Potential clashes with arguments of the same name in \code{\dots}
+        are resolved by inserting the items of argument list \code{E.argList}
+        as named items to the argument lists, so in case of collisions the
+        item of \code{E.argList} overwrites the
+        existing one from \code{\dots}.}
 }
 \details{
   All these functions bundle their respective input to (reusable) lists

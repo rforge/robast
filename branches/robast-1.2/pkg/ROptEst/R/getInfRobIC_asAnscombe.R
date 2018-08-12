@@ -109,6 +109,9 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
              OptOrIter = "iterate", maxiter, tol, warn,
              verbose = NULL, checkBounds = TRUE, ...){
 
+        dotsI <- .filterEargs(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
 
@@ -156,7 +159,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                    trafo = trafo, maxiter = maxiter, 
                                    tol = tol,
                                    warn = FALSE, Finfo = Finfo, 
-                                   QuadForm = std, verbose = verbose)
+                                   QuadForm = std, verbose = verbose,...)
 
         if(is.null(lower)||(lower< lowBerg$b))
            {lower <- lowBerg$b
@@ -212,12 +215,12 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
           chkbd <- if(it.erg<25) FALSE else checkBounds
           verbL <- if(it.erg<25) FALSE else verbose
           
-          erg <<- getInfRobIC(L2deriv, risk.b, neighbor, 
+          erg <<- do.call(getInfRobIC, c(list(L2deriv, risk.b, neighbor,
              Distr, DistrSymm, L2derivSymm,
              L2derivDistrSymm, Finfo, trafo, onesetLM = onesetLM,
              z.start, A.start, upper = upper, lower = lower,
              OptOrIter = OptOrIter, maxiter = maxi, tol = toli , warn = warn,
-             verbose = verbL, checkBounds = chkbd, ...)
+             verbose = verbL, checkBounds = chkbd), dotsI))
           trV <- erg$risk$trAsCov$value
           if(verbose) cat("Outer iteration:", it.erg,"  b_0=", round(b0,3), 
                           " eff=", round(trV.ML/trV,3), "\n")  

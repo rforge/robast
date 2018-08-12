@@ -22,12 +22,12 @@ getInfV(L2deriv, neighbor, biastype, ...)
          neighbor, biastype, clip, cent, stand)
 \S4method{getInfV}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv, 
          neighbor, biastype, Distr, V.comp, cent, stand, 
-         w)
+         w, ...)
 \S4method{getInfV}{RealRandVariable,TotalVarNeighborhood,BiasType}(L2deriv,
          neighbor, biastype, Distr, V.comp, cent, stand,
-         w)
+         w, ...)
 \S4method{getInfV}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv,
-         neighbor, biastype, clip, cent, stand)
+         neighbor, biastype, clip, cent, stand, ...)
 \S4method{getInfV}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(L2deriv, 
          neighbor, biastype, clip, cent, stand)
 }
@@ -35,15 +35,15 @@ getInfV(L2deriv, neighbor, biastype, ...)
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
     of probability measures. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
-  \item{biastype}{ object of class \code{"BiasType"} }
-  \item{\dots}{ additional parameters. }
+  \item{biastype}{ object of class \code{"BiasType"}. }
+  \item{\dots}{ additional parameters, in particular for expectation \code{E}. }
   \item{clip}{ positive real: clipping bound }
   \item{cent}{ optimal centering constant. }
   \item{stand}{ standardizing matrix. }
   \item{Distr}{ standardizing matrix. }
   \item{V.comp}{ matrix: indication which components of the standardizing
     matrix have to be computed. }
-  \item{w}{object of class \code{RobWeight}; current weight}  
+  \item{w}{object of class \code{RobWeight}; current weight. }
 }
 %\details{}
 \value{The asymptotic variance of an ALE to IC of Hampel type is computed.}

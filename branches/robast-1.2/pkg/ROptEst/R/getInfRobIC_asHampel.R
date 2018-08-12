@@ -201,7 +201,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                z.start = z.start, A.start = A.start,
                                trafo = trafo, maxiter = maxiter, tol = tol,
                                QuadForm = std, verbose = verbose,
-                               nrvalpts = 5000, warn = warn)
+                               nrvalpts = 5000, warn = warn, ...)
             if(chk$up || chk$low) return(chk$res)
         }
 
@@ -277,13 +277,13 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
 
         ### determine Covariance of pIC
-        Cov <- substitute(do.call(getInfV, args = list(L2deriv = L2deriv0,
+        Cov <- substitute(do.call(getInfV, args = c(list(L2deriv = L2deriv0,
                           neighbor = neighbor0, biastype = biastype0,
                           Distr = Distr0, V.comp = A.comp0, cent = a0,
-                          stand = A0, w = w0)), list(L2deriv0 = L2deriv,
+                          stand = A0, w = w0),dots0)), list(L2deriv0 = L2deriv,
                           neighbor0 = neighbor, biastype0 = biastype,
                           Distr0 = Distr, A.comp0 = A.comp, a0 = a,
-                          A0 = A, w0 = w))
+                          A0 = A, w0 = w, dots0 = list(...)))
 
         rifct <- function(std0, Cov0, rad0, b0){
                      sum(diag(std0%*%eval(Cov0))) + rad0^2 * b0^2}
@@ -331,7 +331,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 .checkUpLow <- function(L2deriv, b, risk, neighbor, biastype, normtype,
                         Distr, Finfo, DistrSymm, L2derivSymm,
                         L2derivDistrSymm, z.start, A.start, trafo, maxiter,
-                        tol, QuadForm, verbose, nrvalpts, warn){
+                        tol, QuadForm, verbose, nrvalpts, warn, ...){
 
             if(missing(warn)|| is.null(warn)) warn <- FALSE
             ClassIC <- trafo %*% distr::solve(Finfo) %*% L2deriv
@@ -368,7 +368,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                          L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm,
                          z.start = z.start, A.start = A.start, trafo = trafo,
                          maxiter = maxiter, tol = tol, warn = warn, Finfo = Finfo,
-                         verbose = verbose)
+                         verbose = verbose, ... )
             bmin <- res$b
 
             if(verbose) cat("minimal bound:\t", bmin, "\n")

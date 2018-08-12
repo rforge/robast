@@ -25,10 +25,10 @@ getInfGamma(L2deriv, risk, neighbor, biastype, ...)
      risk, neighbor, biastype, cent, clip)
 
 \S4method{getInfGamma}{RealRandVariable,asMSE,ContNeighborhood,BiasType}(L2deriv, 
-     risk, neighbor, biastype, Distr, stand, cent, clip, power = 1L)
+     risk, neighbor, biastype, Distr, stand, cent, clip, power = 1L, ...)
 
 \S4method{getInfGamma}{RealRandVariable,asMSE,TotalVarNeighborhood,BiasType}(L2deriv,
-     risk, neighbor, biastype, Distr, stand, cent, clip, power = 1L)
+     risk, neighbor, biastype, Distr, stand, cent, clip, power = 1L, ...)
 
 \S4method{getInfGamma}{UnivariateDistribution,asUnOvShoot,ContNeighborhood,BiasType}(L2deriv,
      risk, neighbor, biastype, cent, clip)
@@ -44,8 +44,8 @@ getInfGamma(L2deriv, risk, neighbor, biastype, ...)
     of probability measures. }
   \item{risk}{ object of class \code{"RiskType"}. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
-  \item{biastype}{ object of class \code{"BiasType"} }
-  \item{\dots}{ additional parameters }
+  \item{biastype}{ object of class \code{"BiasType"}. }
+  \item{\dots}{ additional parameters, in particular for expectation \code{E}. }
   \item{cent}{ optimal centering constant. }
   \item{clip}{ optimal clipping bound. }
   \item{stand}{ standardizing matrix. }

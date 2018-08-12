@@ -51,6 +51,18 @@ robest(x, L2Fam,  fsCor = 1, risk = asMSE(), steps = 1L,
 \details{
   A new, more structured interface to the former function \code{\link{roptest}}.
   For details, see this function.
+
+  In some respects this functions allows for more granular arguments,
+  in the sense that the different steps (a) computation of the inital estimator,
+  resp. (a') in case \code{initial.est} is missing computation of the initial
+  MDE, (b) computation of the optimal IC and (c) computation of the k-step
+  estimator each can have individial arguments \code{E.arglist} to be
+  passed on to calls to expectation operator \code{E} within each step.
+
+  These different arguments are passed through the input generating functions
+  \code{\link[=inputGenerators]{genstartCtrl}},
+  \code{\link[=inputGenerators]{genstartICCtrl}}, and
+  \code{\link[=inputGenerators]{kStepCtrl}}
 }
 \value{Object of class \code{"kStepEstimate"}. In addition, it has
        an attribute \code{"timings"} where computation time is stored.}

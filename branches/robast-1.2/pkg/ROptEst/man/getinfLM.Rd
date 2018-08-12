@@ -15,7 +15,7 @@ getLagrangeMultByIter(b, L2deriv, risk, trafo,
                       neighbor, biastype, normtype, Distr,
                       a.start, z.start, A.start, w.start, std, z.comp,
                       A.comp, maxiter, tol, verbose = NULL,
-                      warnit = TRUE)
+                      warnit = TRUE, ...)
 getLagrangeMultByOptim(b, L2deriv, risk, FI, trafo,
                       neighbor, biastype, normtype, Distr,
                       a.start, z.start, A.start, w.start,  std, z.comp,
@@ -50,7 +50,7 @@ getLagrangeMultByOptim(b, L2deriv, risk, FI, trafo,
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed. }
   \item{warnit}{ logical: if \code{TRUE} warning is issued if
                   maximal number of iterations is reached. }
-  \item{\dots}{ additional parameters for \code{optim}. }
+  \item{\dots}{ additional parameters for \code{optim} and \code{E}. }
 }
 %\details{}
 \value{a list with items

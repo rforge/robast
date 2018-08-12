@@ -25,13 +25,13 @@ setMethod("getStartIC",signature(model = "L2LocationScaleFamily", risk = "interp
     if(length(nsng)){
        if(gridn %in% nsng){
           LMref <- famg[[gridn]]
-          .modifyIC0 <- function(L2Fam, IC, withMakeIC = FALSE){
+          .modifyIC0 <- function(L2Fam, IC){
                     para <- param(L2Fam)
                     return(intfct(para, LMref, L2Fam, type(risk)))
           }
 
-          .modifyIC <- function(L2Fam,IC, withMakeIC = FALSE){
-               psi.0 <- .modifyIC0(L2Fam,IC, withMakeIC = withMakeIC)
+          .modifyIC <- function(L2Fam,IC, withMakeIC = FALSE, ...){
+               psi.0 <- .modifyIC0(L2Fam,IC)
                psi.0@modifyIC <- .modifyIC
                return(psi.0)
           }

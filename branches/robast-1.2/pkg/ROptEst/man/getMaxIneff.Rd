@@ -9,7 +9,7 @@
                         normtype = NormType(), z.start = NULL, 
                         A.start = NULL, maxiter = 50, 
                         tol = .Machine$double.eps^0.4,
-                        warn = TRUE, verbose = NULL)}
+                        warn = TRUE, verbose = NULL, ...)}
 \arguments{
   \item{IC}{some IC of class \code{IC}}
   \item{neighbor}{ object of class \code{Neighborhood}; 
@@ -22,6 +22,8 @@
   \item{tol}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }  
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
+  \item{\dots}{ additional arguments to be passed to \code{E} }
+
 }
 %\details{}
 \value{The maximal inefficiency, i.e.; a number in [1,Inf).}

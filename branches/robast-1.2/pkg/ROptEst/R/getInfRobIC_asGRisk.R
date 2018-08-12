@@ -285,7 +285,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                    z.start = z.start, A.start = A.start,
                                    trafo = trafo, maxiter = maxiter, tol = tol,
                                    warn = FALSE, Finfo = Finfo, QuadForm = std, 
-                                   verbose = verbose)
+                                   verbose = verbose, ...)
                lower <- lowBerg$b}
             #if(is.null(upper))
                upper <- 5*max(distr::solve(Finfo))
@@ -355,7 +355,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                              lower = lower, upper = upper,
                              tol = tol, L2deriv = L2deriv, risk = risk,
                              biastype = biastype, Distr = Distr, neighbor = neighbor,
-                             stand = A, cent = z, trafo = trafo)$root, silent = TRUE)
+                             stand = A, cent = z, trafo = trafo, ...)$root, silent = TRUE)
 
                 ## if no solution return lower case:
                 if(!is.numeric(b))
@@ -367,7 +367,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                        z.start = z.start, A.start = A.start,
                                        trafo = trafo, maxiter = maxiter, tol = tol,
                                        warn = warn, Finfo = Finfo, QuadForm = std, 
-                                       verbose = verbose)
+                                       verbose = verbose, ...)
                            )
 
                 maxit2 <- if(OptOrIter==2) 0 else maxiter
@@ -440,13 +440,13 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
           if(verbose && withPICcheck) print(list(A=A,a=a,w=w))
         }
 
-        Cov <- substitute(do.call(getInfV, args = list(L2deriv = L2deriv0,
+        Cov <- substitute(do.call(getInfV, args = c(list(L2deriv = L2deriv0,
                           neighbor = neighbor0, biastype = biastype0,
                           Distr = Distr0, V.comp = A.comp0, cent = a0,
-                          stand = A0, w = w0)), list(L2deriv0 = L2deriv,
+                          stand = A0, w = w0), dots0)), list(L2deriv0 = L2deriv,
                           neighbor0 = neighbor, biastype0 = biastype,
                           Distr0 = Distr, A.comp0 = A.comp, a0 = a,
-                          A0 = A, w0 = w))
+                          A0 = A, w0 = w, dots0=list(...)))
 
         rifct <- function(std0, Cov0, rad0, b0){
                      sum(diag(std0%*%eval(Cov0))) + rad0^2 * b0^2}
@@ -500,7 +500,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 ### helper function to return the upper case solution if r=0
 .getUpperSol <- function(L2deriv, radius, risk, neighbor, biastype,
                        normtype, Distr, Finfo, trafo,
-                       QuadForm, verbose, warn){
+                       QuadForm, verbose, warn, ...){
 
             if(warn) cat("'radius == 0' => (classical) optimal IC\n",
                          "in sense of Cramer-Rao bound is returned\n")
@@ -515,7 +515,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                 Risk <- getAsRisk(risk = risk, L2deriv = L2deriv, neighbor = neighbor,
                                   biastype = biastype, normtype = normtype, 
                                   cent = res$a, stand = res$A, trafo = trafo,
-                                  FI = FI)
+                                  FI = FI, ...)
                 res$risk <- c(Risk, res$risk)
             }
             trAsCov <- sum(diag(QuadForm%*%res$risk$asCov));
@@ -533,7 +533,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 .getLowerSol  <- function(L2deriv, risk, neighbor, Distr, DistrSymm,
                          L2derivSymm, L2derivDistrSymm,
                          z.start, A.start, trafo,
-                         maxiter, tol, warn, Finfo, QuadForm, verbose){
+                         maxiter, tol, warn, Finfo, QuadForm, verbose,...){
                 if(warn) cat("Could not determine optimal clipping bound!\n",
                              "'radius >= maximum radius' for the given risk?\n",
                              "=> the minimum asymptotic bias (lower case) solution is returned\n",
@@ -546,7 +546,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                    L2derivSymm = L2derivSymm, L2derivDistrSymm = L2derivDistrSymm,
                                    z.start = z.start, A.start = A.start, trafo = trafo,
                                    maxiter = round(maxiter), tol = tol, warn = warn, Finfo = Finfo,
-                                   verbose = verbose)
+                                   verbose = verbose,...)
                 normtype(risk) <- res$normtype
                 if(!is(risk, "asMSE")){
                     FI <- trafo%*%distr::solve(Finfo)%*%t(trafo)
@@ -596,6 +596,10 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
 
 .checkPIC <- function(L2deriv, neighbor, Distr, trafo, z, A, w, z.comp, A.comp, ...){
+
+         dotsI <- .filterEargs(list(...))
+         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
          cat("some check:\n-----------\n")
          nrvalues <- ncol(trafo)
          pvalues <- nrow(trafo)
@@ -608,38 +612,38 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
          w.f <- function(x) weight(w)(L2v.f(x))
 
-         integrand0 <- function(x,...,ixx){
+         integrand0 <- function(x,ixx){
            L2v <- as.matrix(L2v.f(x)) - zx
            wv <- w.f(x)
            as.numeric(L2v[ixx,]*wv)
            }
 
-         integrand1 <- function(x,...,ixx){
+         integrand1 <- function(x,ixx){
            L2v <- as.matrix(L2v.f(x)) - zx
            AL2v <- A %*% L2v
            wv <- w.f(x)
            as.numeric(AL2v[ixx,]*wv)
            }
 
-         integrand2 <- function(x,...,ixx,jxx){
+         integrand2 <- function(x,ixx,jxx){
            L2v <- as.matrix(L2v.f(x)) - zx
-           AL2v <- integrand1(x,...,ixx = ixx)
+           AL2v <- integrand1(x,ixx = ixx)
            as.numeric(AL2v*L2v[jxx,])
            }
 
          cent0 <- numeric(nrvalues)
          for(i in 1:nrvalues)
-             if(z.comp[i]) cent0[i] <- E(Distr,integrand0,...,ixx=i)
+             if(z.comp[i]) cent0[i] <- do.call(E,c(list(Distr,integrand0,ixx=i), dotsI))
 
          cent1 <- numeric(pvalues)
          for(i in 1:pvalues)
-             cent1[i] <- E(Distr,integrand1,...,ixx=i)
+             cent1[i] <- do.call(E,c(list(Distr,integrand1,ixx=i), dotsI))
 
          consist <- 0*trafo
          for(i in 1:pvalues){
              for(j in 1:nrvalues){
                  if(A.comp[i,j])
-                    consist[i,j] <- E(Distr,integrand2,...,ixx=i,jxx=j)
+                    consist[i,j] <- do.call(E,c(list(Distr,integrand2,ixx=i,jxx=j), dotsI))
              }
          }
          consist <- consist-trafo

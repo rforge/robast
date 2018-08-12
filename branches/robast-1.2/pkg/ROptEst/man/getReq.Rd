@@ -7,7 +7,7 @@
  respectively the number of (worst-case) outliers interval where IC1 is
  better than IC2.
 }
-\usage{getReq(Risk,neighbor,IC1,IC2,n=1,upper=15, radOrOutl=c("radius","Outlier"))}
+\usage{getReq(Risk,neighbor,IC1,IC2,n=1,upper=15, radOrOutl=c("radius","Outlier"), ...)}
 \arguments{
   \item{Risk}{an object of class \code{"asGRisk"} -- the risk at which IC1 is better than IC2.}
   \item{neighbor}{ object of class \code{"Neighborhood"}; the neighborhood at which to compute the bias. }
@@ -20,6 +20,7 @@
   \item{radOrOutl}{ a character string specifying whether an interval of
           radii  or a number of outliers is returned; must be one
           of "radius" (default) and "Outlier". }
+  \item{\dots}{further arguments to be passed on \code{E()}.}
 }
 %\details{}
 \value{The radius interval (given by its endpoints) where \code{IC1} is better than \code{IC2}

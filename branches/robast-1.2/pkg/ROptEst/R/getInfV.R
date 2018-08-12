@@ -31,7 +31,11 @@ setMethod("getInfV", signature(L2deriv = "RealRandVariable",
                                    neighbor = "ContNeighborhood",
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, Distr, V.comp, 
-             cent, stand, w){
+             cent, stand, w, ...){
+
+        dotsI <- .filterEargs(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         w.fct <- function(x){
             (weight(w)(evalRandVar(L2deriv, as.matrix(x)) [,,1]))^2 
         }
@@ -52,13 +56,13 @@ setMethod("getInfV", signature(L2deriv = "RealRandVariable",
         erg <- matrix(0, ncol = nrvalues, nrow = nrvalues)
         for(i in 1:nrvalues)
             for(j in i:nrvalues)
-                if(V.comp[i,j])
-                    erg[i, j] <- E(object = Distr, fun = integrandV, 
-                                   L2.i = L2deriv@Map[[i]], 
-                                   L2.j = L2deriv@Map[[j]], i = i, j = j, 
-                                   useApply = FALSE)
-
-        erg[col(erg) < row(erg)] <- erg[col(erg) > row(erg)]
+                if(V.comp[i,j]){
+                    eArgs <- c(list(object = Distr, fun = integrandV,
+                                   L2.i = L2deriv@Map[[i]],
+                                   L2.j = L2deriv@Map[[j]], i = i, j = j), dotsI)
+                    erg[i, j] <- do.call(E,eArgs)
+                }
+        erg[col(erg) < row(erg)] <- t(erg)[col(erg) < row(erg)]
 
         return(as.matrix(stand %*% erg %*% t(stand)))
     })
@@ -66,7 +70,11 @@ setMethod("getInfV", signature(L2deriv = "RealRandVariable",
                                    neighbor = "TotalVarNeighborhood",
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, Distr, V.comp,
-             cent, stand, w){
+             cent, stand, w, ...){
+
+        dotsI <- .filterEargs(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         w.fct <- function(x){
             (weight(w)(evalRandVar(L2deriv, as.matrix(x)) [,,1]))^2
         }
@@ -78,8 +86,8 @@ setMethod("getInfV", signature(L2deriv = "RealRandVariable",
             return(Y^2 * w.fct(x = x))
         }
 
-        return(matrix(E(object = Distr, fun = integrandV, useApply = FALSE),
-                        ncol = 1, nrow = 1))
+        res <- do.call(E,c(list(object = Distr, fun = integrandV), dotsI))
+        return(matrix(res, ncol = 1, nrow = 1))
 
     })
 ###############################################################################
@@ -88,11 +96,16 @@ setMethod("getInfV", signature(L2deriv = "RealRandVariable",
 setMethod("getInfV", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "ContNeighborhood",
                                    biastype = "onesidedBias"),
-    function(L2deriv, neighbor, biastype, clip, cent, stand){
+    function(L2deriv, neighbor, biastype, clip, cent, stand, ...){
+
+        dotsI <- .filterEargs(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         c1 <- if (sign(biastype)<0) cent - clip else -Inf
         c2 <- if (sign(biastype)>0) cent + clip else Inf
         V1 <- if (sign(biastype)<0) m2df(L2deriv, c1) else 0
-        V2 <- if (sign(biastype)>0) m2df(L2deriv, c2) else E(L2deriv, function(x)x^2)
+        V2 <- if (sign(biastype)>0) m2df(L2deriv, c2) else{
+             do.call(E,c(list(object=L2deriv, fun=function(x)x^2), dotsI)) }
         E1 <- if (sign(biastype)<0) m2df(L2deriv, c1) else 0
         E2 <- if (sign(biastype)>0) m2df(L2deriv, c2) else 0
         F1 <- if (sign(biastype)<0) p(L2deriv)(c1) else 0

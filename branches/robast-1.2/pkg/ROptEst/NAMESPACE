@@ -39,7 +39,8 @@ exportMethods("optIC",
               "getModifyIC")
 exportMethods("updateNorm", "scaleUpdateIC", "eff", 
               "get.asGRisk.fct", "getStartIC", "plot",
-			  "comparePlot", "getRiskFctBV", "roptestCall")
+			  "comparePlot", "getRiskFctBV", "roptestCall",
+			  "checkIC", "makeIC")
 export("getL2normL2deriv",
        "asAnscombe", "asL1", "asL4", 
 	   "getReq", "getMaxIneff", "getRadius")
