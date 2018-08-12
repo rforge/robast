@@ -19,36 +19,34 @@ setMethod("generateIC.fct", signature(neighbor = "UncondNeighborhood", L2Fam = "
                 ICfct[[1]] <- function(x){}
                 if(dims==1L){
                     body(ICfct[[1]]) <- substitute(
-                                            { Lx <- L(x)
+                                            { Lx <- L(x); wx <- w(Lx)
+                                              print(str(a)); print(str(A));print(str(Lx)); print(str(w(Lx)))
                                               Yx <- A %*% Lx - a
-                                              ind <- 1-.eq(Yx)
-                                              (Yx*w(Lx) + zi*(1-ind)*d*b) },
+                                              ifelse(.eq(Yx),zi*d*b,as.numeric(Yx*w(Lx))) },
                                             list(L = L.fct, w = w, b = b, d = d, A = A, a = a,
                                                 zi = sign(trafo(L2Fam@param)), .eq = .eq))
                 }else{
                     body(ICfct[[1]]) <- substitute(
-                                            { Lx <- L(x)
+                                            { Lx <- L(x); wx <- w(Lx)
                                               Yx <- A %*% Lx - a
-                                              ind <- 1-.eq(Yx)
-                                              ifelse(ind, Yx*w(Lx), NA) },
+                                              ifelse(.eq(Yx), NA, as.numeric(Yx*w(Lx))) },
                                             list(L = L.fct, w = w, b = b, d = d, A = A, a = a,
                                                  .eq = .eq))
                 }
             }else{
                 ICfct[[1]] <- function(x){}
-                body(ICfct[[1]]) <- substitute({ Lx <- L(x)
+                body(ICfct[[1]]) <- substitute({ Lx <- L(x); wx <- w(Lx); #Lx <- as.matrix(Lx)
                                                  Yx <- A %*% Lx - a
-                                                 Yx*w(Lx) },
+                                                 as.numeric(Yx*wx) },
                                                  list(L = L.fct, A = A, a = a, w = w))
             }
         }else{
             if(!is.null(res$d))
                 for(i in 1:nrvalues){
                     ICfct[[i]] <- function(x){}
-                    body(ICfct[[i]]) <- substitute({Lx <- L(x)
+                    body(ICfct[[i]]) <- substitute({Lx <- L(x);wx <- w(Lx)
                                                     Yix <- Ai %*% Lx - ai
-                                                    ind <- 1-.eq(Yix)
-                                                    (ind*Yix*w(Lx) + (1-ind)*di)
+                                                    ifelse(.eq(Yix), di, as.numeric(Yix*wx))
                                                     },
                                                  list(L = L.fct, Ai = A[i,,drop=FALSE], ai = a[i], w = w,
                                                       di = d[i]))#,  .eq = .eq))
@@ -56,9 +54,9 @@ setMethod("generateIC.fct", signature(neighbor = "UncondNeighborhood", L2Fam = "
             else
                 for(i in 1:nrvalues){
                     ICfct[[i]] <- function(x){}
-                    body(ICfct[[i]]) <- substitute({Lx <- L(x)
+                    body(ICfct[[i]]) <- substitute({Lx <- L(x);wx <- w(Lx)
                                                     Yix <- Ai %*% Lx - ai
-                                                    Yix*w(Lx)  },
+                                                    as.numeric(Yix*wx)  },
                                                  list(L = L.fct, Ai = A[i,,drop=FALSE], ai = a[i], w = w))
                 }
         }

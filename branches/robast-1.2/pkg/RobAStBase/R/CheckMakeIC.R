@@ -24,10 +24,10 @@
             return(IC.i(x)*L2.j(x))
         }
 
-        erg <- matrix(0, ncol = nrvalues, nrow = nrvalues)
+        erg <- matrix(0, ncol = dims, nrow = nrvalues)
 
         for(i in 1:nrvalues)
-            for(j in 1:nrvalues){
+            for(j in 1:dims){
                   Eargs <- c(list(object = Distr, fun = integrandA,
                                   IC.i = IC.v@Map[[i]], L2.j = L2deriv@Map[[j]]),
                                   dotsI)
