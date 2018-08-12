@@ -362,7 +362,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                        biastype = symmetricBias(), 
                                        normW = NormType())
                 mse <- robEst$A1 + robEst$A2
-                modIC <- function(L2Fam, IC, withMakeIC){
+                modIC <- function(L2Fam, IC, withMakeIC, ...){
                     ICL2Fam <- eval(CallL2Fam(IC))
                     if(is(L2Fam, "L2LocationScaleFamily") && is(distribution(L2Fam), "Norm")){
                         sdneu <- main(L2Fam)[2]
@@ -397,7 +397,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                         }
                         return(IC)
                     }else{
-                        makeIC(L2Fam, IC)
+                        makeIC(L2Fam, IC, ...)
                     }
                 }
                 L2Fam <- substitute(NormLocationScaleFamily(mean = m1, sd = s1), 
@@ -491,7 +491,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                                        biastype = symmetricBias(), 
                                        normW = NormType())
                 mse <- robEst$A1 + robEst$A2
-                modIC <- function(L2Fam, IC, withMakeIC){
+                modIC <- function(L2Fam, IC, withMakeIC, ...){
                     ICL2Fam <- eval(CallL2Fam(IC))
                     if(is(L2Fam, "L2LocationScaleFamily") && is(distribution(L2Fam), "Norm")){
                         sdneu <- main(L2Fam)[2]
@@ -526,7 +526,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                         }
                         return(IC)
                     }else{
-                        makeIC(L2Fam, IC)
+                        makeIC(L2Fam, IC, ...)
                     }
                 }
                 L2Fam <- substitute(NormLocationScaleFamily(mean = m1, sd = s1), 
@@ -601,14 +601,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                            biastype = symmetricBias(), 
                                            normW = NormType())
-                    modIC <- function(L2Fam, IC, withMakeIC){
+                    modIC <- function(L2Fam, IC, withMakeIC, ...){
                         if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), "Norm")){
                             CallL2New <- call("NormLocationFamily", 
                                               mean = main(L2Fam))
                             CallL2Fam(IC) <- CallL2New
                             return(IC)
                         }else{
-                            makeIC(L2Fam, IC)
+                            makeIC(L2Fam, IC, ...)
                         }
                     }
                     L2Fam <- substitute(NormLocationFamily(mean = m1, sd = s1), 
@@ -690,14 +690,14 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
-                    modIC <- function(L2Fam, IC, withMakeIC){
+                    modIC <- function(L2Fam, IC, withMakeIC, ...){
                         if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), "Norm")){
                             CallL2New <- call("NormLocationFamily", 
                                               mean = main(L2Fam))
                             CallL2Fam(IC) <- CallL2New
                             return(IC)
                         }else{
-                            makeIC(L2Fam, IC)
+                            makeIC(L2Fam, IC, ...)
                         }
                     }
                     L2Fam <- substitute(NormLocationFamily(mean = m1, sd = s1), 
@@ -777,7 +777,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
-                    modIC <- function(L2Fam, IC, withMakeIC){
+                    modIC <- function(L2Fam, IC, withMakeIC, ...){
                         ICL2Fam <- eval(CallL2Fam(IC))
                         if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
                             sdneu <- main(L2Fam)
@@ -805,7 +805,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                             }
                             return(IC)
                         }else{
-                            makeIC(L2Fam, IC)
+                            makeIC(L2Fam, IC, ...)
                         }
                     }
                     L2Fam <- substitute(NormScaleFamily(mean = m1, sd = s1), 
@@ -890,7 +890,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                     weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = r), 
                                        biastype = symmetricBias(), 
                                        normW = NormType())
-                    modIC <- function(L2Fam, IC, withMakeIC){
+                    modIC <- function(L2Fam, IC, withMakeIC, ...){
                         ICL2Fam <- eval(CallL2Fam(IC))
                         if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
                             sdneu <- main(L2Fam)
@@ -918,7 +918,7 @@ roblox <- function(x, mean, sd, eps, eps.lower, eps.upper, initial.est, k = 1L,
                             }
                             return(IC)
                         }else{
-                            makeIC(L2Fam, IC)
+                            makeIC(L2Fam, IC, ...)
                         }
                     }
                     L2Fam <- substitute(NormScaleFamily(mean = m1, sd = s1), 

@@ -70,7 +70,7 @@ rsOptIC <- function(r, mean = 0, sd = 1, bUp = 1000, delta = 1e-6, itmax = 100,
                                biastype = symmetricBias(), 
                                normW = NormType())
 
-        modIC <- function(L2Fam, IC, withMakeIC){
+        modIC <- function(L2Fam, IC, withMakeIC, ...){
             ICL2Fam <- eval(CallL2Fam(IC))
             if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
                 sdneu <- main(L2Fam)
@@ -97,7 +97,7 @@ rsOptIC <- function(r, mean = 0, sd = 1, bUp = 1000, delta = 1e-6, itmax = 100,
                 }
                 return(IC)
             }else{
-                makeIC(IC, L2Fam)
+                makeIC(IC, L2Fam, ...)
             }
         }
 

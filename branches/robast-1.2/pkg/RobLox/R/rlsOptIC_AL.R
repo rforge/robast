@@ -157,7 +157,7 @@ rlsOptIC.AL <- function(r, mean = 0, sd = 1, A.loc.start = 1, a.sc.start = 0,
                                biastype = symmetricBias(), 
                                normW = NormType())
 
-        modIC <- function(L2Fam, IC, withMakeIC){
+        modIC <- function(L2Fam, IC, withMakeIC, ...){
             ICL2Fam <- eval(CallL2Fam(IC))
             if(is(L2Fam, "L2LocationScaleFamily") && is(distribution(L2Fam), "Norm")){
                 sdneu <- main(L2Fam)[2]
@@ -191,7 +191,7 @@ rlsOptIC.AL <- function(r, mean = 0, sd = 1, A.loc.start = 1, a.sc.start = 0,
                 }
                 return(IC)
             }else{
-                makeIC(IC, L2Fam)
+                makeIC(IC, L2Fam, ...)
             }
         }
 
