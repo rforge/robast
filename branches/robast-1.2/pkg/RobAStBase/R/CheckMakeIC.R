@@ -179,5 +179,14 @@ setMethod("makeIC", signature(IC = "function", L2Fam = "L2ParamFamily"),
 .filterEargs <- function(dots){
         dotsI <- list()
         for(item in ..IntegrateArgs) dotsI[[item]] <- dots[[item]]
+        if(!is.null(dots[["E.argList"]])){
+           E.argList <- dots[["E.argList"]]
+           if(is.call(E.argList)) eval(E.argList)
+           if(is.list(E.argList) && length(E.argList)>0){
+              nms.E.argList <- names(E.argList)
+              for( item in nms.E.argList) dotsI[[item]] <- E.argList[[item]]
+           }
+        }
+
         return(dotsI)
 }

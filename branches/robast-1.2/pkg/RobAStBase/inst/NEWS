@@ -86,6 +86,9 @@ under the hood
   used for integration, i.e., currently, c("lowerTruncQuantile", "upperTruncQuantile",
   "IQR.fac", "subdivisions", "rel.tol", "abs.tol", "stop.on.error", "order", "useApply")
   this is used to filter out arguments from dots which are meant for E() 
+  by means of exported helper function .filterEargs(); in addition, .filterEargs()
+  also checks if an argument "E.argList" is hidden in "..." and if so, filters in 
+  its entries (and in case of collision overwrites existing entries).
 + getboundedIC now uses coordinate-wise integration with useApply = FALSE and 
   only computing the upper half of E LL'w 
   
