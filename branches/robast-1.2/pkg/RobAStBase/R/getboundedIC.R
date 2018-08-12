@@ -1,9 +1,7 @@
 getBoundedIC <- function(L2Fam, D=trafo(L2Fam@param),...){
 
-        dots <- list(...)
-        dotsI <- list()
-        for(item in ..IntegrateArgs) dotsI[[item]] <- dots[[item]]
-        if(!is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+        dotsI <- .filterEargs(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         FI <- FisherInfo(L2Fam)
         bm <- sum(diag(distr::solve(FI)))

@@ -18,6 +18,7 @@ These functions are used internally by package RobAStBase.}
 .msapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 .fixInLiesInSupport(IC, distr)
 ..IntegrateArgs
+.filterEargs(dots)
 }
 \arguments{
   \item{x}{a (numeric) vector}
@@ -35,6 +36,7 @@ These functions are used internally by package RobAStBase.}
   use \code{X} as names for the result unless it had names already.}
   \item{IC}{an object of class \code{IC}, i.e., it expects a slot \code{Curve} like an IC.}
   \item{distr}{a distribution}
+  \item{dots}{a list, obtained by \code{list(...)}.}
 }
 
 \details{
@@ -50,6 +52,8 @@ of the IC, or \code{0}; the check is done via  calling \code{\link[distr]{liesIn
 \code{..IntegrateArgs} is an internal constant, containing the names of all arguments
   used for integration, i.e., currently, \code{c("lowerTruncQuantile", "upperTruncQuantile",
   "IQR.fac", "subdivisions", "rel.tol", "abs.tol", "stop.on.error", "order", "useApply")}.
+\code{.filterEargs} filters out of \code{dots} all named arguments which have names
+    contained in \code{..IntegrateArgs} and returns a list with these items.
 }
 
 

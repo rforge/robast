@@ -7,10 +7,8 @@
         nrvalues <- nrow(trafo)
         Distr <- L2Fam@distribution
 
-        dots <- list(...)
-        dotsI <- list()
-        for(item in ..IntegrateArgs) dotsI[[item]] <- dots[[item]]
-        if(!is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+        dotsI <- .filterEargs(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
 
         IC.v <- as(diag(nrvalues) %*% IC@Curve, "EuclRandVariable")
@@ -176,3 +174,9 @@ setMethod("makeIC", signature(IC = "function", L2Fam = "L2ParamFamily"),
 ..IntegrateArgs <- c("lowerTruncQuantile", "upperTruncQuantile",
            "IQR.fac", "subdivisions", "rel.tol", "abs.tol", "stop.on.error",
            "order", "useApply")
+
+.filterEargs <- function(dots){
+        dotsI <- list()
+        for(item in ..IntegrateArgs) dotsI[[item]] <- dots[[item]]
+        return(dotsI)
+}

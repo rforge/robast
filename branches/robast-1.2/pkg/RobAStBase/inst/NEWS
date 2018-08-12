@@ -85,6 +85,7 @@ under the hood
 + new internal constant ..IntegrateArgs which contains the names of all arguments 
   used for integration, i.e., currently, c("lowerTruncQuantile", "upperTruncQuantile",
   "IQR.fac", "subdivisions", "rel.tol", "abs.tol", "stop.on.error", "order", "useApply")
+  this is used to filter out arguments from dots which are meant for E() 
 + getboundedIC now uses coordinate-wise integration with useApply = FALSE and 
   only computing the upper half of E LL'w 
   
