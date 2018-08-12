@@ -2,7 +2,7 @@
    xi <- main(param)[nam]
    return(is.na(fct[[1]](xi)))
 }
-.getPsi <- function(param, fct, L2Fam , type, withMakeIC = FALSE){
+.getPsi <- function(param, fct, L2Fam , type){
 
    scshnm <- scaleshapename(L2Fam)
    shnam <- scshnm["shape"]
@@ -29,7 +29,7 @@
       ai <- Ai %*% zi
       Am <- (Ai+Aa)/2; Ai <- Aa <- Am
       am <- (ai+aa)/2; ai <- aa <- am
-      zi <- solve(Ai,ai)
+      zi <- distr::solve(Ai,ai)
    }
    a <-  c(.dbeta%*%aa)
    aw <- c(.dbeta1%*%zi)
@@ -61,12 +61,11 @@
 
 
    IC <- generateIC(nb, L2Fam, res)
-   if(withMakeIC) IC <- makeIC(IC,L2Fam)
    return(IC)
 }
 
 
-.getPsi.wL <- function(param, fct, L2Fam , type, withMakeIC = FALSE){
+.getPsi.wL <- function(param, fct, L2Fam , type){
 
    scshnm <- scaleshapename(L2Fam)
    shnam <- scshnm["shape"]
@@ -96,7 +95,7 @@
       ai <- Ai %*% zi
       Am <- (Ai+Aa)/2; Ai <- Aa <- Am
       am <- (ai+aa)/2; ai <- aa <- am
-      zi <- solve(Ai,ai)
+      zi <- distr::solve(Ai,ai)
    }
    a <-  c(.dbeta%*%aa)
    aw <- c(.dbeta1%*%zi)
@@ -128,7 +127,6 @@
 
 
    IC <- generateIC(nb, L2Fam, res)
-   if(withMakeIC) IC <- makeIC(IC,L2Fam)
    return(IC)
 }
 
