@@ -53,7 +53,7 @@ system.time(RMXi <- RMXEstimator(portpiriei, GEVFam))
 ## little to the situation where we enforce IC conditions
 checkIC(pIC(RMXi))
 system.time(RMXiw <- RMXEstimator(portpiriei, GEVFam,withMakeIC=TRUE))
-checkIC(pIC(RMXiw))
+checkIC(pIC(RMXiw), forceContICMethod = TRUE)
 ## uses contIC 0 - 1 standardization...
 ## for a moment remove this method
 oldM <- setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"))
