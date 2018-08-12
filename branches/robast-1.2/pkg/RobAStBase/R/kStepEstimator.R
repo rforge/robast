@@ -161,7 +161,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                         Eres[i,j] <- E(L2@distribution,
                            fun = function(x) L2M[[i]](x)*L2M[[j]](x),
                            useApply = FALSE)
-                return(res)}
+                return(Eres)}
 
 ##-t-##    updStp <- 0
         ### update - function
