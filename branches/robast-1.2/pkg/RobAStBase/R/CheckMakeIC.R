@@ -100,7 +100,8 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
         cent <- res$E.IC
         stand <- trafo %*% distr::solve(res$E.IC.L, generalized = TRUE)
 
-        Y <- as(stand %*% (IC1 - cent), "EuclRandVariable")
+        IC1.0 <- IC1 - cent
+        Y <- as(stand %*% IC1.0, "EuclRandVariable")
 
         modifyIC <- IC@modifyIC
 
@@ -123,7 +124,7 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
 ## make some L2function a pIC at a model
 setMethod("makeIC", signature(IC = "IC", L2Fam = "missing"),
     function(IC, ...){
-        L2Fam0 <- eval(IC@CallL2Fam)
+        L2Fam <- eval(IC@CallL2Fam)
         getMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"))(
               IC = IC, L2Fam = L2Fam, ...)
     })

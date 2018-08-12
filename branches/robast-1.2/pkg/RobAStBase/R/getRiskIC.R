@@ -30,15 +30,33 @@ setMethod("getRiskIC", signature(IC = "IC",
         if(dimension(Domain(IC@Curve[[1]])) != dimension(img(L2Fam@distribution)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
+        dotsI <- .filterEargs(list(...))
+        if(!is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         if(missing(withCheck)) withCheck <- TRUE
         IC1 <- as(diag(dimension(IC@Curve)) %*% IC@Curve, "EuclRandVariable")
 
-        bias <- E(L2Fam, IC1, ...)
-        Cov <- E(L2Fam, IC1 %*% t(IC1), ...)
+        Distr  <- L2Fam@distribution
+        nrvalues <- nrow(trafo(L2Fam))
 
-        if(withCheck) .checkICWithWarning(IC, L2Fam, tol, ...)
+        cent <- numeric(nrvalues)
+        for(i in 1:nrvalues){
+            cent[i] <- do.call(E,c(list(object = Distr, fun = IC1@Map[[i]]), dotsI))
+        }
 
-        return(list(asCov = list(distribution = .getDistr(L2Fam), value = Cov - bias %*% t(bias))))
+        Cova <- matrix(0, ncol = nrvalues, nrow = nrvalues)
+
+        for(i in 1:nrvalues){
+            for(j in i:nrvalues){
+                Cova[i,j] <- do.call(E,c(list(object = Distr,
+                    fun = function(x){
+                    return((IC1@Map[[i]](x)-cent[i])*(IC1@Map[[j]](x)-cent[j]))}),
+                    dotsI))
+            }
+        }
+        Cova[col(Cova) < row(Cova)] <- t(Cova)[col(Cova) < row(Cova)]
+        # if(withCheck) .checkICWithWarning(IC, L2Fam, tol, ...)
+        return(list(asCov = list(distribution = .getDistr(L2Fam), value = Cova)))
     })
 
 ###############################################################################

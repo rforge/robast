@@ -152,17 +152,16 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         pICList <- if(withPICList) vector("list", steps) else NULL
         ICList  <- if(withICList)  vector("list", steps) else NULL
 
-        cvar.fct <- function(L2, IC, dim, dimn =NULL){}
-        body(cvar.fct) <- substitute({
-                EcallArgs <- c(list(L2, IC %*% t(IC)), E.argList0)
-                Eres <- do.call(E,EcallArgs)
-
-                if(is.null(dimn)){
-                   return(matrix(Eres,dim,dim))
-                }else{
-                   return(matrix(Eres,dim,dim, dimnames = dimn))
-                }
-        }, list(E.argList0 = E.argList))
+        cvar.fct <- function(L2, IC, dim, dimn =NULL){
+                Eres <- matrix(NA,dim,dim)
+                if(!is.null(dimn)) dimnames(Eres) <- dimn
+                L2M <- L2@Curve[[1]]@Map
+                for(i in 1: dim)
+                    for(j in i: dim)
+                        Eres[i,j] <- E(L2@distribution,
+                           fun = function(x) L2M[[i]](x)*L2M[[j]](x),
+                           useApply = FALSE)
+                return(res)}
 
 ##-t-##    updStp <- 0
         ### update - function
@@ -483,8 +482,8 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                 getRiskICasVarArgs <- c(list(IC, risk = asCov(), withCheck = FALSE),E.argList)
                 riskAsVar <- do.call(getRiskIC, getRiskICasVarArgs)
                 asVar <- riskAsVar$asCov$value
-           }
 ##-t-##        })
+           }
 ##-t-##        sytm <- .addTime(sytm,syt,"getRiskIC-Var")
 
         }else asVar <- var0
