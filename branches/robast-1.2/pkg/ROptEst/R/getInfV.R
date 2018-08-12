@@ -51,7 +51,6 @@ setMethod("getInfV", signature(L2deriv = "RealRandVariable",
         integrandV <- function(x, L2.i, L2.j, i, j){
             return((L2.i(x) - cent0[i])*(L2.j(x) - cent0[j])*w.fct(x = x))
         }
-
         nrvalues <- length(L2deriv)
         erg <- matrix(0, ncol = nrvalues, nrow = nrvalues)
         for(i in 1:nrvalues)

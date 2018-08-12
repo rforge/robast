@@ -26,7 +26,8 @@ setMethod("checkIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
         A <- stand(IC);  a <- cent(IC)
         G1 <- res$G1;  G2 <- res$G2;  G3 <- res$G3
         Delta1 <- A%*%G2- a*G1
-        Delta2 <- A%*%G3 - a%*%t(G2) - trafo(L2Fam@param)
+        Delta2 <- A%*%G3 - a%*%t(G2)
+        Delta2 <- Delta2 - trafo(L2Fam)
 
         if(out)
             cat("precision of centering:\t", Delta1, "\n")
@@ -52,6 +53,7 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
         if( dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
+        dims <- nrow(trafo(L2Fam))
         if(dimension(IC@Curve) != dims)
            stop("Dimension of IC and parameter must be equal")
 
@@ -71,34 +73,32 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
                               L2Fam = "L2ParamFamily"))(IC,L2Fam))
 
         G1 <- res$G1;  G2 <- res$G2;  G3 <- res$G3
-        trafo <- trafo(L2Fam@param)
-        nrvalues <- nrow(trafo)
-        dims <- ncol(trafo)
+        trafO <- trafo(L2Fam@param)
+        nrvalues <- nrow(trafO)
+        dims <- ncol(trafO)
 
-        cent0 <- G2/G1
-        stand1 <- trafo%*%distr::solve(G3-cent0%*%t(G2))
-        cent1 <- stand1%*%cent0
-
-        L2deriv <- as(diag(dims) %*% L2Fam@L2deriv, "EuclRandVariable")
+        cent0 <- c(G2/G1)
+        stand1 <- trafO%*%distr::solve(G3-cent0%*%t(G2))
+        cent1 <- c(stand1%*%cent0)
+#        print(list(stand1,stand(IC),cent1,cent(IC)))
+        L2.f <- as(diag(nrvalues) %*% L2Fam@L2deriv , "EuclRandVariable")
         D1 <- L2Fam@distribution
 
-        IC1.0 <- stand1%*%L2deriv
-        IC1.1 <- IC1.0 -cent1
-        IC1.f <- function(x) evalRandVar(IC1.1,x)
+        IC1.f <- function(x){ indS <- liesInSupport(D1,x,checkFin=TRUE)
+                              Lx <- sapply(x, function(y) evalRandVar(L2.f,y))
+                              indS* (stand1%*%Lx-cent1) * weight(IC@weight)(Lx)}
 
         IC1.l <- vector("list",nrvalues)
         for(i in 1:nrvalues){
             IC1.l[[i]] <- function(x){}
-            body(IC.l[[i]]) <- substitute({indS <- liesInSupport(D0,x,checkFin=TRUE)
-                                           indS*((IC1.s(x))[i])
-                                           }, list(IC1.s=IC1.f, D0=D1, i=i))
+            body(IC1.l[[i]]) <- substitute( c((IC1.s(x))[i,]), list(IC1.s=IC1.f, i=i))
         }
-        IC1.c <- EuclRandVariable(Map = IC1.l, Domain = IC@Curve[[1]],
+        IC1.c <- EuclRandVariable(Map = IC1.l, Domain = Domain(IC@Curve[[1]]),
                                 Range = Reals())
 
         cIC1 <- new("ContIC")
-        cIC1@name <- name
-        cIC1@Curve <- IC1.c
+        cIC1@name <- IC@name
+        cIC1@Curve <- EuclRandVarList(IC1.c)
         cIC1@Risks <- IC@Risks
         cIC1@Infos <- IC@Infos
         cIC1@CallL2Fam <- L2Fam@fam.call
@@ -131,6 +131,7 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
 
         z.comp <- rep(TRUE,dims)
         A.comp <- matrix(TRUE, dims, dims)
+#        print(list(z.comp,A.comp))
         # otherwise if trafo == unitMatrix may use symmetry info
         if(.isUnitMatrix(trafo)){
             comp <- .getComp(L2deriv, L2Fam@distrSymm, L2Fam@L2derivSymm, L2Fam@L2derivDistrSymm)
