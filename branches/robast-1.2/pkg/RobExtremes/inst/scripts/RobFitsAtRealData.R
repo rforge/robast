@@ -64,7 +64,7 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily")) <- oldM
 
 estimate(RMXi)
 estimate(RMXiw)
-estimate(RMXiw2)
+estimate(RMXiw)
 
 ## our output:
 mlEi
@@ -359,13 +359,13 @@ qqplot(grbsc, RMX4c, log="xy")
 
 GF <- GammaFamily()
 system.time(mlE5i <- MLEstimator(grbsi, GF))
-system.time(OMS5i <- MBREstimator(grbsi, GF))
-system.time(RMX5i <- OMSEstimator(grbsi, GF))
-system.time(MBR5i <- RMXEstimator(grbsi, GF))
+system.time(MBR5i <- MBREstimator(grbsi, GF))
+system.time(OMS5i <- OMSEstimator(grbsi, GF))
+system.time(RMX5i <- RMXEstimator(grbsi, GF))
 system.time(mlE5c <- MLEstimator(grbsc, GF))
-system.time(OMS5c <- MBREstimator(grbsc, GF))
-system.time(RMX5c <- OMSEstimator(grbsc, GF))
-system.time(MBR5c <- RMXEstimator(grbsc, GF))
+system.time(MBR5c <- MBREstimator(grbsc, GF))
+system.time(OMS5c <- OMSEstimator(grbsc, GF))
+system.time(RMX5c <- RMXEstimator(grbsc, GF))
 estimate(mlE5i)
 estimate(RMX5i)
 estimate(OMS5i)
