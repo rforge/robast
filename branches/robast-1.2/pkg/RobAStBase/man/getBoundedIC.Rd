@@ -6,11 +6,12 @@
   Generates a bounded influence curve.
 }
 \usage{
-getBoundedIC(L2Fam, D=trafo(L2Fam@param))
+getBoundedIC(L2Fam, D=trafo(L2Fam@param), ...)
 }
 \arguments{
   \item{L2Fam}{object of class \code{"L2ParamFamily"}}
   \item{D}{matrix with as many columns as \code{length(L2Fam@param)}}
+  \item{...}{further arguments to be passed to \code{E}}
 }
 %\details{}
 \value{(a bounded) pIC (to matrix \code{D}) given as object of class

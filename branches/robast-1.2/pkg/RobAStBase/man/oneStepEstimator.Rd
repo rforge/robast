@@ -10,7 +10,8 @@ oneStepEstimator(x, IC, start = NULL,
       useLast = getRobAStBaseOption("kStepUseLast"),
       withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
       IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
-      na.rm = TRUE, startArgList = NULL, withMakeIC = FALSE, ...)
+      na.rm = TRUE, startArgList = NULL, withMakeIC = FALSE, ...,
+      E.argList = NULL)
 }
 \arguments{
   \item{x}{ sample }
@@ -37,7 +38,13 @@ oneStepEstimator(x, IC, start = NULL,
    to \code{NULL}.}
   \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
         \code{makeIC} before return.}
-  \item{...}{ additional arguments }
+  \item{\dots}{ additional arguments }
+  \item{E.argList}{\code{NULL} (default) or a named list of arguments to be passed
+        to calls to \code{E} from \code{kStepEstimator}; potential clashes with
+        arguments of the same name in \code{\dots} are resolved by inserting
+        the items of argument list \code{E.argList} as named items  to the
+        argument lists, so in case of collisions the item of \code{E.argList} overwrites the
+        existing one from \code{\dots}.}
 }
 \details{
   Given an initial estimation \code{start}, a sample \code{x} 

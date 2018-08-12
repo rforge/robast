@@ -5,7 +5,7 @@ setMethod("getBiasIC", signature(IC = "IC",
                                  neighbor = "UncondNeighborhood"),
     function(IC, neighbor, L2Fam, biastype = symmetricBias(),
              normtype = NormType(), tol = .Machine$double.eps^0.25,
-             numbeval = 1e5, withCheck = TRUE){
+             numbeval = 1e5, withCheck = TRUE, ...){
 
         misF <- FALSE
         if(missing(L2Fam)){
@@ -24,7 +24,7 @@ setMethod("getBiasIC", signature(IC = "IC",
         Bias <- .evalBiasIC(IC = IC, neighbor = neighbor, biastype = biastype,
                             normtype = normtype, x = x, trafo = trafo(L2Fam@param))
 
-        if(withCheck) if(misF) .checkICWithWarning(IC, tol=tol) else .checkICWithWarning(IC, L2Fam, tol=tol)
+        if(withCheck) if(misF) .checkICWithWarning(IC, tol=tol, ...) else .checkICWithWarning(IC, L2Fam, tol=tol, ...)
         return(list(asBias = list(distribution = .getDistr(L2Fam),
                     neighborhood = neighbor@type, value = Bias)))
     })

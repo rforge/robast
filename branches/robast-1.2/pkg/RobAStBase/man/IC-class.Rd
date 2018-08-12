@@ -7,8 +7,8 @@
 \alias{CallL2Fam<-,IC-method}
 \alias{modifyIC}
 \alias{modifyIC,IC-method}
-\alias{checkIC,IC,missing-method}
-\alias{checkIC,IC,L2ParamFamily-method}
+%\alias{checkIC,IC,missing-method}
+%\alias{checkIC,IC,L2ParamFamily-method}
 \alias{evalIC,IC,numeric-method}
 \alias{evalIC,IC,matrix-method}
 \alias{show,IC-method}
@@ -25,10 +25,12 @@
     \item{\code{CallL2Fam}}{Object of class \code{"call"}:
       creates an object of the underlying L2-differentiable 
       parametric family. }
-    \item{\code{modifyIC}}{ Object of class \code{"OptionalFunction"}:
-   function of three arguments, which are an L2 parametric family
-    and an optional influence curve, and a logical argument
-    whether to enforce the IC side conditions by \code{makeIC}. Returns an object of
+    \item{\code{modifyIC}}{ object of class \code{"OptionalFunction"}:
+    function of four arguments: (1) \code{L2Fam} an L2 parametric family
+    (2) \code{IC} an optional influence curve, (3) \code{withMakeIC}
+    a logical argument whether to enforce the IC side conditions
+    by \code{makeIC}, and (4) \code{\dots} for arguments to be passed to
+    calls to \code{E} in \code{makeIC}. Returns an object of
     class \code{"IC"}. This function is mainly used for internal
     computations! }
     \item{\code{name}}{Object of class \code{"character"}. }

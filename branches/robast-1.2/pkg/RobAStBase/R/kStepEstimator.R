@@ -34,6 +34,7 @@ setMethod("neighborRadius","ANY",function(object)NA)
 .ensureDim2 <- function(x){
     d <- dim(x)
     if(length(d)==3L && d[3]==1L) dim(x) <- d[1:2]
+    if(length(d)==4L && d[2]==1L && d[4] == 1L) dim(x) <- d[c(1,3)]
     x }
 
 ### no dispatch on top layer -> keep product structure of dependence
@@ -45,12 +46,15 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                            withPICList = getRobAStBaseOption("withPICList"),
                            na.rm = TRUE, startArgList = NULL, ...,
                            withLogScale = TRUE, withEvalAsVar = TRUE,
-                           withMakeIC = FALSE){
+                           withMakeIC = FALSE, E.argList = NULL){
 
         if(missing(IC.UpdateInKer)) IC.UpdateInKer <- NULL
 ## save call
         es.call <- match.call()
         es.call[[1]] <- as.name("kStepEstimator")
+
+        if(is.null(E.argList)) E.argList <- list()
+        if(is.null(E.argList$useApply)) E.argList$useApply <- FALSE
 
 ## get some dimensions
 ##-t-##        syt <- system.time({
@@ -148,13 +152,17 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         pICList <- if(withPICList) vector("list", steps) else NULL
         ICList  <- if(withICList)  vector("list", steps) else NULL
 
-        cvar.fct <- function(L2, IC, dim, dimn =NULL){
+        cvar.fct <- function(L2, IC, dim, dimn =NULL){}
+        body(cvar.fct) <- substitute({
+                EcallArgs <- c(list(L2, IC %*% t(IC)), E.argList0)
+                Eres <- do.call(E,EcallArgs)
+
                 if(is.null(dimn)){
-                   return(matrix(E(L2, IC %*% t(IC)),dim,dim))
+                   return(matrix(Eres,dim,dim))
                 }else{
-                   return(matrix(E(L2, IC %*% t(IC)),dim,dim, dimnames = dimn))
+                   return(matrix(Eres,dim,dim, dimnames = dimn))
                 }
-        }
+        }, list(E.argList0 = E.argList))
 
 ##-t-##    updStp <- 0
         ### update - function
@@ -178,12 +186,14 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 ##-t-##        sytm <<- .addTime(sytm,syt,paste("modifyModel-PreModif-",updStp))
 #                   print(L2Fam)
 ##-t-##        syt <- system.time({
-                   IC <- modifyIC(IC)(L2Fam, IC, withMakeIC = FALSE)
+                   modifyICargs <- c(list(L2Fam, IC, withMakeIC = FALSE), E.argList)
+                   IC <- do.call(modifyIC(IC),modifyICargs)
 ##-t-##        })
 ##-t-##        sytm <<- .addTime(sytm,syt,paste("modifyIC-PreModif-",updStp))
                    if(steps==1L && withMakeIC){
 ##-t-##        syt <- system.time({
-                      IC <- makeIC(IC, L2Fam)
+                      makeICargs <- c(list(IC, L2Fam),E.argList)
+                      IC <- do.call(makeIC, makeICargs)
 ##-t-##        })
 ##-t-##        sytm <<- .addTime(sytm,syt,paste("modifyIC-makeIC-",updStp))
 #                      IC@modifyIC <- oldmodifIC
@@ -216,7 +226,8 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                                warning("'IC.UpdateInKer' is not of class 'IC'; we use default instead.")
                             if(is.null(IC.UpdateInKer)){
 ##-t-##        syt <- system.time({
-                                 IC.tot2 <- getBoundedIC(L2Fam, D = projker)
+                                 getBoundedICargs <- c(list(L2Fam, D = projker),E.argList)
+                                 IC.tot2 <- do.call(getBoundedIC, getBoundedICargs)
 ##-t-##        })
 ##-t-##        sytm <<- .addTime(sytm,syt,paste("getBoundedIC-",updStp))
                             }else{
@@ -247,6 +258,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                      if(!IC.tot2.isnull) IC.tot <- IC.tot1 + IC.tot2
 ##-t-##        syt <- system.time({
                      indS <- liesInSupport(distribution(L2Fam),x0,checkFin=TRUE)
+#                     print(str(evalRandVar(IC.tot, x0)))
                      correct <- rowMeans(t(t(.ensureDim2(evalRandVar(IC.tot, x0)))*indS), na.rm = na.rm)
 ##-t-##        })
 ##-t-##        sytm <<- .addTime(sytm,syt,paste("Dtau-not-Unit:correct <- rowMeans-",updStp))
@@ -327,7 +339,8 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 ##-t-##        sytm <<- .addTime(sytm,syt,paste("modifyModel-PostModif-",updStp))
 #                   print(L2Fam)
 ##-t-##        syt <- system.time({
-                   IC <- modifyIC(IC)(L2Fam, IC, withMakeIC = withMakeIC)
+                   modifyICargs <- c(list(L2Fam, IC, withMakeIC = withMakeIC), E.argList)
+                   IC <- do.call(modifyIC(IC),modifyICargs)
 ##-t-##        })
 ##-t-##        sytm <<- .addTime(sytm,syt,paste("modifyIC-PostModif-",updStp))
 #                   print(IC)
@@ -364,7 +377,10 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                   IC <- upd$IC
                   L2Fam <- upd$L2Fam
 ##-t-##        syt <- system.time({
-                  if((i==steps)&&withMakeIC) IC <- makeIC(IC,L2Fam)
+                  if((i==steps)&&withMakeIC){
+                      makeICargs <- c(list(IC, L2Fam),E.argList)
+                      IC <- do.call(makeIC, makeICargs)
+                  }
 ##-t-##        })
 ##-t-##        sytm <- .addTime(sytm,syt,paste("makeIC-",i))
 #                     IC@modifyIC <- modif.old
@@ -412,7 +428,10 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
               Infos <- rbind(Infos, c("kStepEstimator",
                "computation of IC, trafo, asvar and asbias via useLast = TRUE"))
 ##-t-##        syt <- system.time({
-              if(withMakeIC) IC <- makeIC(IC, L2Fam)
+              if(withMakeIC){
+                  makeICargs <- c(list(IC, L2Fam),E.argList)
+                  IC <- do.call(makeIC, makeICargs)
+              }
 ##-t-##        })
 ##-t-##        sytm <- .addTime(sytm,syt,"makeIC-useLast")
            }else{
@@ -456,14 +475,15 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         ## some risks
 #        print(list(u.theta=u.theta,theta=theta,u.var=u.var,var=var0))
         if(var.to.be.c){
-           if("asCov" %in% names(Risks(IC)))
-                if(is.matrix(Risks(IC)$asCov) || length(Risks(IC)$asCov) == 1)
-                    asVar <- Risks(IC)$asCov
-                else
-                    asVar <- Risks(IC)$asCov$value
-           else
+           if("asCov" %in% names(Risks(IC))){
+              asVar <- if(is.matrix(Risks(IC)$asCov) || length(Risks(IC)$asCov) == 1)
+                       Risks(IC)$asCov else Risks(IC)$asCov$value
+           }else{
 ##-t-##        syt <- system.time({
-                asVar <- getRiskIC(IC, risk = asCov(), withCheck = FALSE)$asCov$value
+                getRiskICasVarArgs <- c(list(IC, risk = asCov(), withCheck = FALSE),E.argList)
+                riskAsVar <- do.call(getRiskIC, getRiskICasVarArgs)
+                asVar <- riskAsVar$asCov$value
+           }
 ##-t-##        })
 ##-t-##        sytm <- .addTime(sytm,syt,"getRiskIC-Var")
 

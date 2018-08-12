@@ -16,7 +16,17 @@ user-visible CHANGES:
   an argument withMakeIC to be able to adjust this to a
   higher granularity
 + updated required package versions in DESCRIPTION  
-
++ kStepEstimator and oneStepEstimator gain argument E.argList
+  which is NULL (default) or a named list of arguments to be passed
+  to calls to \code{E} from kStepEstimator; potential clashes with
+  arguments of the same name in "..." are resolved by inserting
+  the items of list E.argList as named items to the argument
+  lists, so in case of collisions the item of E.argList overwrites 
+  the existing one from "..."  
++ particular checkIC methods are now documented in documentation 
+  object checkIC (and no longer with class IC); there argument out
+  is documented
+  
 bugfixes  
 + and a forgotten no longer used instance of oldmodif in kStepEstimator
 +  set.seed(123)
@@ -67,6 +77,16 @@ under the hood
   system folder "chkTimeCode" (in inst/chkTimeCode in r-forge)
 + now specified that we want to use distr::solve
 + now generateIC.fct produces vectorized functions (can now use useApply=FALSE in E()) 
++ checkIC and makeIC now both use helper function .preparedirectCheckMakeIC
+  which allows for extra arguments for E() and integrates coordinate wise with
+  useApply = FALSE to gain speed (code has moved from file IC.R to file CheckMakeIC.R)
++ several methods (getRiskIC, getBiasIC, getBoundedIC, makeIC, checkIC, modifyIC) 
+  gain argument "..." to pass on arguments to E()
++ new internal constant ..IntegrateArgs which contains the names of all arguments 
+  used for integration, i.e., currently, c("lowerTruncQuantile", "upperTruncQuantile",
+  "IQR.fac", "subdivisions", "rel.tol", "abs.tol", "stop.on.error", "order", "useApply")
++ getboundedIC now uses coordinate-wise integration with useApply = FALSE and 
+  only computing the upper half of E LL'w 
   
 #######################################
 version 1.1

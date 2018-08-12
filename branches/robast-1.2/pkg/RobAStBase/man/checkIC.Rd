@@ -1,5 +1,7 @@
 \name{checkIC}
 \alias{checkIC}
+\alias{checkIC,IC,missing-method}
+\alias{checkIC,IC,L2ParamFamily-method}
 
 \title{Generic Function for Checking ICs}
 \description{
@@ -8,10 +10,13 @@
 }
 \usage{
 checkIC(IC, L2Fam, ...)
+\S4method{checkIC}{IC,missing}(IC, out = TRUE, ...)
+\S4method{checkIC}{IC,L2ParamFamily}(IC, L2Fam, out = TRUE,...)
 }
 \arguments{
   \item{IC}{ object of class \code{"IC"} }
   \item{L2Fam}{ L2-differentiable family of probability measures. }
+  \item{out}{ logical: Should the values of the checks be printed out?}
   \item{\dots}{ additional parameters }
 }
 \details{ 

@@ -10,12 +10,13 @@
 \usage{
 optIC(model, risk, ...)
 
-\S4method{optIC}{L2ParamFamily,asCov}(model, risk, withMakeIC = FALSE)
+\S4method{optIC}{L2ParamFamily,asCov}(model, risk, withMakeIC = FALSE, ...)
 }
 \arguments{
   \item{model}{ probability model. }
   \item{risk}{ object of class \code{"RiskType"}. }
-  \item{\dots}{ additional parameters. }
+  \item{\dots}{ additional parameters (here used for \code{makeIC},
+  resp. for \code{E}). }
   \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
         \code{makeIC} before return.}
 }

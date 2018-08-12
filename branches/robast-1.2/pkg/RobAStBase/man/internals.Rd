@@ -4,6 +4,7 @@
 \alias{.getDistr}
 \alias{.msapply}
 \alias{.fixInLiesInSupport}
+\alias{..IntegrateArgs}
 
 \title{Internal / Helper functions of package RobAStBase}
 
@@ -16,6 +17,7 @@ These functions are used internally by package RobAStBase.}
 .evalListRec(list0)
 .msapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 .fixInLiesInSupport(IC, distr)
+..IntegrateArgs
 }
 \arguments{
   \item{x}{a (numeric) vector}
@@ -45,6 +47,9 @@ These functions are used internally by package RobAStBase.}
 the influence curve (IC), whether the arguments at which the IC is to be evaluated lie
 in the support of the distribution and accordingly either returns the function value
 of the IC, or \code{0}; the check is done via  calling \code{\link[distr]{liesInSupport}}.
+\code{..IntegrateArgs} is an internal constant, containing the names of all arguments
+  used for integration, i.e., currently, \code{c("lowerTruncQuantile", "upperTruncQuantile",
+  "IQR.fac", "subdivisions", "rel.tol", "abs.tol", "stop.on.error", "order", "useApply")}.
 }
 
 

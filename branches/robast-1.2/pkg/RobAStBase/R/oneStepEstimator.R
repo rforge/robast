@@ -6,7 +6,8 @@ oneStepEstimator <- function(x, IC, start = NULL,
                              useLast = getRobAStBaseOption("kStepUseLast"),
                              withUpdateInKer = getRobAStBaseOption("withUpdateInKer"),
                              IC.UpdateInKer = getRobAStBaseOption("IC.UpdateInKer"),
-                             na.rm = TRUE, startArgList = NULL, withMakeIC = FALSE, ...){
+                             na.rm = TRUE, startArgList = NULL, withMakeIC = FALSE, ...,
+                             E.argList = NULL){
         es.call <- match.call()
         es.call[[1]] <- as.name("oneStepEstimator")
 
@@ -17,7 +18,8 @@ oneStepEstimator <- function(x, IC, start = NULL,
             erg <- kStepEstimator(x = x, IC = IC, start = start, steps = 1L,
                            useLast = useLast, withUpdateInKer = withUpdateInKer,
                            IC.UpdateInKer = IC.UpdateInKer, na.rm = na.rm,
-                           startArgList = startArgList, withMakeIC = withMakeIC, ...)
+                           startArgList = startArgList, withMakeIC = withMakeIC, ...,
+                           E.argList = E.argList)
             Infos(erg) <- gsub("kStep","oneStep", Infos(erg))
             erg@estimate.call <- es.call
             return(erg)

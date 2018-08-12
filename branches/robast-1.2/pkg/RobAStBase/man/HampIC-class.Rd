@@ -32,9 +32,11 @@ used as common mother class for classes \code{ContIC} and \code{TotalVarIC}.
     \item{\code{Curve}}{ object of class \code{"EuclRandVarList"}}
 
     \item{\code{modifyIC}}{ object of class \code{"OptionalFunction"}:
-    function of three arguments, which are an L2 parametric family
-    and an optional influence curve, and a logical argument
-    whether to enforce the IC side conditions by \code{makeIC}. Returns an object of
+    function of four arguments: (1) \code{L2Fam} an L2 parametric family
+    (2) \code{IC} an optional influence curve, (3) \code{withMakeIC}
+    a logical argument whether to enforce the IC side conditions
+    by \code{makeIC}, and (4) \code{\dots} for arguments to be passed to
+    calls to \code{E} in \code{makeIC}. Returns an object of
     class \code{"IC"}. This function is mainly used for internal
     computations! }
 

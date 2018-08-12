@@ -14,7 +14,7 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
       withPICList = getRobAStBaseOption("withPICList"),
       na.rm = TRUE, startArgList = NULL, ...,
       withLogScale = TRUE, withEvalAsVar = TRUE,
-      withMakeIC = FALSE)
+      withMakeIC = FALSE, E.argList = NULL)
 }
 \arguments{
   \item{x}{ sample }
@@ -42,7 +42,7 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
   be filled?}
   \item{withICList}{logical: shall slot \code{ICList} of return value
   be filled?}
-  \item{...}{ additional parameters }
+  \item{\dots}{ additional parameters }
   \item{withLogScale}{logical; if \code{TRUE}, a scale component (if existing
    and found with name \code{scalename}) is computed on log-scale and
    backtransformed afterwards (default). This avoids crossing 0. }
@@ -50,6 +50,12 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
    the asymptotic variance or just to produces a call to do so.}
   \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
         \code{makeIC} before return.}
+  \item{E.argList}{\code{NULL} (default) or a named list of arguments to be passed
+        to calls to \code{E} from \code{kStepEstimator}; potential clashes with
+        arguments of the same name in \code{\dots} are resolved by inserting
+        the items of argument list \code{E.argList} as named items to the argument
+        lists, so in case of collisions the item of \code{E.argList} overwrites the
+        existing one from \code{\dots}.}
 }
 \details{
   Given an initial estimation \code{start}, a sample \code{x} 
