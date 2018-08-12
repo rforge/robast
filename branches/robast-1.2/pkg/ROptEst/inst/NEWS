@@ -58,8 +58,6 @@ under the hood
   have to be computed, now fills the lower triangle of A with FALSE (was not used so far,
   but can be used in a faster computation method for checkIC makeIC to determine whether
   it is cleverer to integrate in k or in p space)
-+ particular checkIC and makeIC methods for ContICs which allow for speed up 
-  if in k space many entries of the LMs can be skipped due to symmetry
 + several methods (getRiskIC, getBiasIC, getBoundedIC, makeIC, checkIC, modifyIC) 
   gain argument "..." to pass on arguments to E(). This holds in particular for the
   functions used to compute the optimally-robust ICs, i.e. getInfRob_asBias, getInfRob_asHampel,
@@ -72,6 +70,11 @@ under the hood
 + the local .modifyIC0 functions only used to produce the new IC but not for filling
   slot modifyIC loose argument withMakeIC (and dots) -- this is now done in the outer
   modifyIC function
++ particular checkIC, makeIC methods for ContICs: They compute the integrals E w, E L w,
+  E LL w using symmetry information through .getComp, and based on these numbers computes 
+  does checking / the affine transformation to give the proper pIC. These methods by 
+  default are only used if it pays off, i.e., if the number of computed integrals is smaller
+  than in the default method. This can be overriden by argument forceContICMethod. 
 
 #######################################
 version 1.1

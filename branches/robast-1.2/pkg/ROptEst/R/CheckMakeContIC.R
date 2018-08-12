@@ -2,13 +2,13 @@
 ## faster check for ContICs
 
 setMethod("checkIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
-    function(IC, L2Fam, out = TRUE, ...){
+    function(IC, L2Fam, out = TRUE, forceContICMethod = FALSE, ...){
 
         D1 <- L2Fam@distribution
         if( dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
-         res <- .prepareCheckMakeIC(L2Fam, w = IC@weight, ...)
+         res <- .prepareCheckMakeIC(L2Fam, w = IC@weight, forceContICMethod, ...)
          ## if it pays off to use symmetry/ to compute integrals in L2deriv space
         ## we compute the following integrals:
         ## G1 = E w, G2 = E Lambda w, G3 = E Lambda Lambda' w
@@ -47,7 +47,7 @@ setMethod("checkIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
 
 ## make some L2function a pIC at a model
 setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
-    function(IC, L2Fam, ...){
+    function(IC, L2Fam, forceContICMethod = FALSE, ...){
 
         D1 <- L2Fam@distribution
         if( dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
@@ -57,7 +57,7 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
         if(dimension(IC@Curve) != dims)
            stop("Dimension of IC and parameter must be equal")
 
-        res <- .prepareCheckMakeIC(L2Fam, w = IC@weight, ...)
+        res <- .prepareCheckMakeIC(L2Fam, w = IC@weight, forceContICMethod, ...)
 
         ## if it pays off to use symmetry/ to compute integrals in L2deriv space
         ## we compute the following integrals:
@@ -70,7 +70,7 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
 
         if(is.null(res))
            return(getMethod("makeIC", signature(IC = "IC",
-                              L2Fam = "L2ParamFamily"))(IC,L2Fam))
+                              L2Fam = "L2ParamFamily"))(IC,L2Fam,...))
 
         G1 <- res$G1;  G2 <- res$G2;  G3 <- res$G3
         trafO <- trafo(L2Fam@param)
@@ -116,7 +116,7 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
         return(cIC1)
     })
 
-.prepareCheckMakeIC <- function(L2Fam, w, ...){
+.prepareCheckMakeIC <- function(L2Fam, w, forceContICMethod, ...){
 
         dims <- length(L2Fam@param)
         trafo <- trafo(L2Fam@param)
@@ -132,15 +132,16 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
         z.comp <- rep(TRUE,dims)
         A.comp <- matrix(TRUE, dims, dims)
 #        print(list(z.comp,A.comp))
-        # otherwise if trafo == unitMatrix may use symmetry info
-        if(.isUnitMatrix(trafo)){
+        # otherwise if  nrvalues > 1 # formerly: trafo == unitMatrix #
+        #           may use symmetry info
+        if(dims>1){
             comp <- .getComp(L2deriv, L2Fam@distrSymm, L2Fam@L2derivSymm, L2Fam@L2derivDistrSymm)
             z.comp <- comp$"z.comp"
             A.comp <- comp$"A.comp"
             t.comp.i <- sum(z.comp)+sum(A.comp)+1
         }
 
-        if(to.comp.a < to.comp.i) return(NULL)
+        if(to.comp.a < to.comp.i && !forceContICMethod) return(NULL)
 
 
         res <- .getG1G2G3Stand(L2deriv = L2deriv, Distr = L2Fam@distribution,

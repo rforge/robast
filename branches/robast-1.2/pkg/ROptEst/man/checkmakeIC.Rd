@@ -11,13 +11,32 @@
   IC possibly violating the conditions so far.
 }
 \usage{
-\S4method{checkIC}{ContIC,L2ParamFamily}(IC, L2Fam, out = TRUE,...)
-\S4method{makeIC}{ContIC,L2ParamFamily}(IC, L2Fam, ...)
+\S4method{checkIC}{ContIC,L2ParamFamily}(IC, L2Fam, out = TRUE,
+              forceContICMethod = FALSE, ...)
+\S4method{makeIC}{ContIC,L2ParamFamily}(IC, L2Fam,
+              forceContICMethod = FALSE, ...)
 }
 \arguments{
   \item{IC}{ object of class \code{"IC"} }
   \item{L2Fam}{ L2-differentiable family of probability measures. }
   \item{out}{ logical: Should the values of the checks be printed out?}
+  \item{forceContICMethod}{ logical: Should we force to use the method for
+  signature \code{ContIC,L2ParamFamily}
+  in any case (even if it is not indicated by symmetry arguments)?
+  Otherwise it uses internal method \code{.getComp} to compute the number
+  of integrals to be computed, taking care of symmetries as indicated through
+  the symmetry slots of the model \code{L2Fam}. Only if this
+  number is smaller than the  number of integrals to be computed in the range
+  of the pIC the present method is used, otherwise it switches back to the
+  \code{IC,L2ParamFamily}  method.
+  -- The \code{ContIC,L2ParamFamily} up to skipped entries due to further
+  symmetry arguments is $\code{(k+1)k/2+k+1=(k+1)(k+2)/2} for \code{k} the
+  length of the unknown parameter / length of slot \code{L2deriv} of \code{L2Fam},
+  while the number of integrals on the pIC scale underlying the more general
+  method for   signature \code{ContIC,L2ParamFamily} is \code{p (k+1)} where
+  \code{p} is the length of the pIC / the length of the parameter of interest
+  as indicated in the number of rows in the \code{trafo} slot of the underlying
+  slot \code{param} of \code{L2Fam}.}
   \item{\dots}{ additional parameters to be passed on to expectation
   \code{E}. }
 }
