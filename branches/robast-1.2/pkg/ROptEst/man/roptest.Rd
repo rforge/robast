@@ -194,6 +194,10 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
 
   If \code{useLast} is set to \code{TRUE} the computation of \code{asvar}, 
   \code{asbias} and \code{IC} is based on the k-step estimate.
+
+  Timings for the steps run through in \code{roptest} are available
+  in attributes \code{timings}, and for the step of the
+  \code{kStepEstimator} in \code{kStepTimings}.
 }
 \value{Object of class \code{"kStepEstimate"}.  In addition, it has
        an attribute \code{"timings"} where computation time is stored.}

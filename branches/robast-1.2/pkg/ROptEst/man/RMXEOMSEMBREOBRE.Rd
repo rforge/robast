@@ -178,6 +178,10 @@ MBREstimator(x, L2Fam, fsCor = 1, initial.est, neighbor = ContNeighborhood(),
 
   All these estimators are realized as wrappers to function \code{roptest}.
 
+  Timings for the steps run through in these estimators are available
+  in attributes \code{timings}, and for the step of the
+  \code{kStepEstimator} in \code{kStepTimings}.
+
 }
 \value{Object of class \code{"kStepEstimate"}.  In addition, it has
        an attribute \code{"timings"} where computation time is stored.}
