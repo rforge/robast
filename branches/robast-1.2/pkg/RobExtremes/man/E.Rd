@@ -20,21 +20,21 @@
 \usage{
 E(object, fun, cond, ...)
 
-\S4method{E}{GEV,missing,missing}(object, low = NULL, upp = NULL, ...)
+\S4method{E}{GEV,missing,missing}(object, low = NULL, upp = NULL, ..., diagnostic = FALSE)
 \S4method{E}{DistributionsIntegratingByQuantiles,function,missing}(object,
          fun, low = NULL, upp = NULL,
          rel.tol= getdistrExOption("ErelativeTolerance"),
          lowerTruncQuantile = getdistrExOption("ElowerTruncQuantile"),
          upperTruncQuantile = getdistrExOption("EupperTruncQuantile"),
-         IQR.fac = max(1e4,getdistrExOption("IQR.fac")), ...)
-\S4method{E}{Gumbel,missing,missing}(object, low = NULL, upp = NULL, ...)
-\S4method{E}{GPareto,missing,missing}(object, low = NULL, upp = NULL, ...)
+         IQR.fac = max(1e4,getdistrExOption("IQR.fac")), ..., diagnostic = FALSE)
+\S4method{E}{Gumbel,missing,missing}(object, low = NULL, upp = NULL, ..., diagnostic = FALSE)
+\S4method{E}{GPareto,missing,missing}(object, low = NULL, upp = NULL, ..., diagnostic = FALSE)
 \S4method{E}{GPareto,function,missing}(object, fun, low = NULL, upp = NULL,
              rel.tol= getdistrExOption("ErelativeTolerance"),
              lowerTruncQuantile = getdistrExOption("ElowerTruncQuantile"),
              upperTruncQuantile = getdistrExOption("EupperTruncQuantile"),
-             IQR.fac = max(1e4,getdistrExOption("IQR.fac")), ...)
-\S4method{E}{Pareto,missing,missing}(object, low = NULL, upp = NULL, ...)
+             IQR.fac = max(1e4,getdistrExOption("IQR.fac")), ..., diagnostic = FALSE)
+\S4method{E}{Pareto,missing,missing}(object, low = NULL, upp = NULL, ..., diagnostic = FALSE)
 }
 \arguments{
   \item{object}{ object of class \code{"Distribution"}}
@@ -50,6 +50,12 @@ E(object, fun, cond, ...)
   \item{IQR.fac}{factor for scale based integration range (i.e.; 
   median of the distribution \eqn{\pm}{+-}\code{IQR.fac}\eqn{\times}{*}IQR).}
   \item{\dots}{ additional arguments to \code{fun} }
+  \item{diagnostic}{ logical; if \code{TRUE}, the return value obtains
+    an attribute \code{"diagnostic"} with diagnostic information on the
+    integration, i.e., a list with entries \code{method} (\code{"integrate"}
+    or \code{"GLIntegrate"}), \code{call}, \code{result} (the complete return
+    value of the method),  \code{args} (the args with which the
+    method was called), and \code{time} (the time to compute the integral). }
 }
 \details{The precision of the computations can be controlled via 
   certain global options; cf. \code{\link{distrExOptions}}. 

@@ -1,3 +1,19 @@
+.castToALE <- function(PFam, estimator, toclass){
+                 fromSlotNames <- slotNames(class(estimator))
+                 to <- new(toclass)
+                 for(item in fromSlotNames) slot(to, item) <- slot(estimator,item)
+                 to@pIC <- substitute(getPIC(estimator0), list(estimator0=estimator))
+                 return(to)
+}
+
+setClass("GPDEstimate", contains="Estimate")
+setClass("GPDLDEstimate", contains=c("LDEstimate", "GPDEstimate"))
+setClass("GPDkStepEstimate", contains=c("kStepEstimate", "GPDEstimate"))
+setClass("GPDORobEstimate", contains=c("ORobEstimate", "GPDkStepEstimate"))
+setClass("GPDMCEstimate", contains=c("MCEstimate", "GPDEstimate"))
+setClass("GPDML.ALEstimate", contains=c("ML.ALEstimate", "GPDEstimate"))
+setClass("GPDCvMMD.ALEstimate", contains=c("CvMMD.ALEstimate", "GPDEstimate"))
+
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GParetoFamily",estimator="Estimate"),
               function(PFam, estimator) as(estimator,"GPDEstimate"))
@@ -12,28 +28,13 @@ setMethod(".checkEstClassForParamFamily",
               function(PFam, estimator) as(estimator,"GPDORobEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GParetoFamily",estimator="MCEstimate"),
-              function(PFam, estimator){# ret0 <- as(estimator,"GPDMCEstimate")
-                 fromSlotNames <- slotNames(class(estimator))
-                 to <- new("GPDMCALEstimate")
-                 for(item in fromSlotNames) slot(to, item) <- slot(estimator,item)
-                 to@pIC <- substitute(getPIC(estimator0), list(estimator0=estimator))
-                 return(to)
-              })
+              function(PFam, estimator) as(estimator,"GPDMCEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GParetoFamily",estimator="MLEstimate"),
-              getMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GParetoFamily",estimator="MCEstimate")))
-setMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GParetoFamily",estimator="MDEstimate"),
-              getMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GParetoFamily",estimator="MCEstimate")))
+              function(PFam,estimator) .castToALE(PFam, estimator, "GPDML.ALEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GParetoFamily",estimator="CvMMDEstimate"),
-              getMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GParetoFamily",estimator="MCEstimate")))
-setMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GParetoFamily",estimator="MCALEstimate"),
-              function(PFam, estimator) as(estimator,"GPDMCALEstimate"))
+              function(PFam,estimator) .castToALE(PFam, estimator, "GPDCvMMD.ALEstimate"))
 
 
 setMethod(".checkEstClassForParamFamily",
@@ -50,28 +51,13 @@ setMethod(".checkEstClassForParamFamily",
               function(PFam, estimator) as(estimator,"GEVORobEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamily",estimator="MCEstimate"),
-              function(PFam, estimator){ #ret0 <- as(estimator,"GEVMCEstimate")
-                 fromSlotNames <- slotNames(class(estimator))
-                 to <- new("GEVMCALEstimate")
-                 for(item in fromSlotNames) slot(to, item) <- slot(estimator,item)
-                 to@pIC <- substitute(getPIC(estimator0), list(estimator0=estimator))
-                 return(to)
-              })
+              function(PFam, estimator) as(estimator,"GEVMCEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamily",estimator="MLEstimate"),
-              getMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GEVFamily",estimator="MCEstimate")))
-setMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GEVFamily",estimator="MDEstimate"),
-              getMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GEVFamily",estimator="MCEstimate")))
+              function(PFam,estimator) .castToALE(PFam, estimator, "GEVML.ALEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamily",estimator="CvMMDEstimate"),
-              getMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GEVFamily",estimator="MCEstimate")))
-setMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GEVFamily",estimator="MCALEstimate"),
-              function(PFam, estimator) as(estimator,"GEVMCALEstimate"))
+              function(PFam,estimator) .castToALE(PFam, estimator, "GPDCvMMD.ALEstimate"))
 
 
 setMethod(".checkEstClassForParamFamily",
@@ -88,25 +74,10 @@ setMethod(".checkEstClassForParamFamily",
               function(PFam, estimator) as(estimator,"GEVORobEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamilyMuUnknown",estimator="MCEstimate"),
-              function(PFam, estimator){ #ret0 <- as(estimator,"GEVMCEstimate")
-                 fromSlotNames <- slotNames(class(estimator))
-                 to <- new("GEVMCALEstimate")
-                 for(item in fromSlotNames) slot(to, item) <- slot(estimator,item)
-                 to@pIC <- substitute(getPIC(estimator0), list(estimator0=estimator))
-                 return(to)
-              })
+              function(PFam, estimator) as(estimator,"GEVMCEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamilyMuUnknown",estimator="MLEstimate"),
-              getMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GEVFamilyMuUnknown",estimator="MCEstimate")))
-setMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GEVFamilyMuUnknown",estimator="MDEstimate"),
-              getMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GEVFamilyMuUnknown",estimator="MCEstimate")))
+              function(PFam,estimator) .castToALE(PFam, estimator, "GEVML.ALEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamilyMuUnknown",estimator="CvMMDEstimate"),
-              getMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GEVFamilyMuUnknown",estimator="MCEstimate")))
-setMethod(".checkEstClassForParamFamily",
-              signature=signature(PFam="GEVFamilyMuUnknown",estimator="MCALEstimate"),
-              function(PFam, estimator) as(estimator,"GEVMCALEstimate"))
+              function(PFam,estimator) .castToALE(PFam, estimator, "GPDCvMMD.ALEstimate") )

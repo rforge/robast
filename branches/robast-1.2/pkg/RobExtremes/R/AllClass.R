@@ -284,15 +284,20 @@ setClass("LDEstimate",
 
 setOldClass("gev.fit")
 setOldClass("gpd.fit")
+
 setClass("GPDEstimate", contains="Estimate")
 setClass("GPDMCEstimate", contains=c("MCEstimate", "GPDEstimate"))
-setClass("GPDMCALEstimate", contains=c("MCALEstimate", "GPDEstimate"))
+setClass("GPDML.ALEstimate", contains=c("ML.ALEstimate", "GPDEstimate"))
+setClass("GPDCvMMD.ALEstimate", contains=c("CvMMD.ALEstimate", "GPDEstimate"))
 setClass("GPDLDEstimate", contains=c("LDEstimate", "GPDEstimate"))
 setClass("GPDkStepEstimate", contains=c("kStepEstimate", "GPDEstimate"))
 setClass("GPDORobEstimate", contains=c("ORobEstimate", "GPDkStepEstimate"))
+
 setClass("GEVEstimate", contains="Estimate")
 setClass("GEVLDEstimate", contains=c("LDEstimate", "GEVEstimate"))
 setClass("GEVkStepEstimate", contains=c("kStepEstimate", "GEVEstimate"))
 setClass("GEVORobEstimate", contains=c("ORobEstimate", "GEVkStepEstimate"))
 setClass("GEVMCEstimate", contains=c("MCEstimate", "GEVEstimate"))
-setClass("GEVMCALEstimate", contains=c("MCALEstimate", "GEVEstimate"))
+setClass("GEVML.ALEstimate", contains=c("ML.ALEstimate", "GEVEstimate"))
+setClass("GEVCvMMD.ALEstimate", contains=c("CvMMD.ALEstimate", "GEVEstimate"))
+

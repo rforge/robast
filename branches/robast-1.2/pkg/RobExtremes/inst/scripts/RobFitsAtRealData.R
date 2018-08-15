@@ -56,7 +56,7 @@ system.time(RMXiw <- RMXEstimator(portpiriei, GEVFam,withMakeIC=TRUE))
 checkIC(pIC(RMXiw), forceContICMethod = TRUE)
 ## uses contIC 0 - 1 standardization...
 ## for a moment remove this method
-oldM <- setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"))
+oldM <- getMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"))
 removeMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"))
 system.time(RMXiw2 <- RMXEstimator(portpiriei, GEVFam,withMakeIC=TRUE))
 checkIC(pIC(RMXiw2))
@@ -64,7 +64,7 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily")) <- oldM
 
 estimate(RMXi)
 estimate(RMXiw)
-estimate(RMXiw)
+estimate(RMXiw2)
 
 ## our output:
 mlEi

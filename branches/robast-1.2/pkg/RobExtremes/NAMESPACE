@@ -29,10 +29,13 @@ exportClasses("GParetoFamily", "GumbelLocationFamily", "WeibullFamily",
 exportClasses("DistributionsIntegratingByQuantiles")
 exportClasses("ParamWithLocAndScaleAndShapeFamParameter")
 exportClasses("L2LocScaleShapeUnion")
-exportClasses("GPDEstimate","GPDMCEstimate","GPDMCALEstimate","GPDLDEstimate",
+exportClasses("GPDEstimate","GPDMCEstimate","GPDLDEstimate",
               "GPDkStepEstimate","GEVEstimate","GEVLDEstimate",
-			  "GEVkStepEstimate","GEVMCEstimate", "GEVMCALEstimate",
-			  "GPDORobEstimate","GEVORobEstimate")			  
+			  "GEVkStepEstimate","GEVMCEstimate",
+			  "GPDORobEstimate","GEVORobEstimate",
+			  GEVCvMMD.ALEstimate,GEVML.ALEstimate,
+			  GPDCvMMD.ALEstimate,GPDML.ALEstimate)			  
+
 exportMethods("initialize", "show", "rescaleFunction") 
 exportMethods("loc", "loc<-", "kMAD", "Sn", "Qn")
 exportMethods("validParameter",

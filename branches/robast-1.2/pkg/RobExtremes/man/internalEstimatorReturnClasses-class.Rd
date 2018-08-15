@@ -5,14 +5,16 @@
 \alias{GEVEstimate-class}
 \alias{GPDMCEstimate-class}
 \alias{GEVMCEstimate-class}
-\alias{GPDMCALEstimate-class}
-\alias{GEVMCALEstimate-class}
 \alias{GPDLDEstimate-class}
 \alias{GEVLDEstimate-class}
 \alias{GPDkStepEstimate-class}
 \alias{GEVkStepEstimate-class}
 \alias{GPDORobEstimate-class}
 \alias{GEVORobEstimate-class}
+\alias{GPDCvMMD.ALEstimate-class}
+\alias{GEVCvMMD.ALEstimate-class}
+\alias{GPDML.ALEstimate-class}
+\alias{GEVML.ALEstimate-class}
 \title{Internal Estimator Return Classes in 'RobExtremes'}
 \description{S4 classes for return values of estimators
 in package \pkg{RobExtremes} defined for internal
@@ -21,10 +23,11 @@ in package \pkg{RobExtremes} defined for internal
  \section{Described classes}{
 The S4 classes described here are \code{GPDEstimate}, \code{GEVEstimate},
  \code{GPDMCEstimate}, \code{GEVMCEstimate},
- \code{GPDMCALEstimate}, \code{GEVMCALEstimate},
  \code{GPDLDEstimate}, \code{GEVLDEstimate},
- \code{GPDkStepEstimate}, \code{GEVkStepEstimate}
- \code{GPDORobEstimate}, \code{GEVORobEstimate}.}
+ \code{GPDkStepEstimate}, \code{GEVkStepEstimate},
+ \code{GPDORobEstimate}, \code{GEVORobEstimate},
+\code{GPDML.ALEstimate}, \code{GEVML.ALEstimate},
+\code{GPDCvMMD.ALEstimate}, \code{GEVCvMMD.ALEstimate}.}
 
 \section{Objects from the Class}{These classes are used internally
 to provide specific S4 methods for different estimators later on;
@@ -55,6 +58,14 @@ Class \code{GPDORobEstimate} extends classes \code{GPDkStepEstimate},
 \code{ORobEstimate}, directly.\cr
 Class \code{GEVORobEstimate} extends classes \code{GEVkStepEstimate},
 \code{ORobEstimate}, directly.\cr
+Class \code{GPDML.ALEstimate} extends classes \code{GPDEstimate},
+\code{ML.ALEstimate}, directly.\cr
+Class \code{GEVML.ALEstimate} extends classes \code{GEVEstimate},
+\code{ML.ALEstimate}, directly.\cr
+Class \code{GPDCvMMD.ALEstimate} extends classes \code{GPDEstimate},
+\code{CvMMD.ALEstimate}, directly.\cr
+Class \code{GEVCvMMD.ALEstimate} extends classes \code{GEVEstimate},
+\code{CvMMD.ALEstimate}, directly.\cr
 }
 %\references{}
 \author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}

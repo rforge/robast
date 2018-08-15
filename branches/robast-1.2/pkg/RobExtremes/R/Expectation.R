@@ -7,7 +7,7 @@
 setMethod("E", signature(object = "Pareto", 
                          fun = "missing", 
                          cond = "missing"),
-    function(object, low = NULL, upp = NULL, ...){
+    function(object, low = NULL, upp = NULL, ..., diagnostic = FALSE){
     if(!is.null(low)) if(low <= Min(object)) low <- NULL
     a <- shape(object); b <- Min(object)
     if(is.null(low) && is.null(upp)){
@@ -15,7 +15,8 @@ setMethod("E", signature(object = "Pareto",
         else return(b*a/(a-1))
      }   
     else
-        return(E(as(object,"AbscontDistribution"), low=low, upp=upp, ...))    
+        return(E(object=object,fun=function(x)x, low=low, upp=upp, ...,
+                    diagnostic = diagnostic))
     })
 
 ### source http://mathworld.wolfram.com/ParetoDistribution.html
@@ -24,18 +25,20 @@ setMethod("E", signature(object = "Pareto",
 setMethod("E", signature(object = "Gumbel", 
                          fun = "missing", 
                          cond = "missing"),
-    function(object, low = NULL, upp = NULL, ...){a <- loc(object); b <- scale(object)
+    function(object, low = NULL, upp = NULL, ..., diagnostic = FALSE){
+    a <- loc(object); b <- scale(object)
     if(is.null(low) && is.null(upp))
            return(a- EULERMASCHERONICONSTANT * b)
     else
-        return(E(as(object,"AbscontDistribution"), low=low, upp=upp, ...))    
+        return(E(object=object,fun=function(x)x, low=low, upp=upp, ...,
+                    diagnostic = diagnostic))
     })
 ## http://mathworld.wolfram.com/GumbelDistribution.html
 
 setMethod("E", signature(object = "GPareto", 
                          fun = "missing", 
                          cond = "missing"),
-    function(object, low = NULL, upp = NULL, ...){
+    function(object, low = NULL, upp = NULL, ..., diagnostic = FALSE){
     if(!is.null(low)) if(low <= Min(object)) low <- NULL
     k <- shape(object); s <- scale(object); mu <- loc(object)
     if(is.null(low) && is.null(upp)){
@@ -43,7 +46,8 @@ setMethod("E", signature(object = "GPareto",
         else return(mu+s/(1-k))
      }   
     else
-        return(E(as(object,"AbscontDistribution"), low=low, upp=upp, ...))    
+        return(E(object=object,fun=function(x)x, low=low, upp=upp, ...,
+                    diagnostic = diagnostic))
     })
 
 ### source http://en.wikipedia.org/wiki/Pareto_distribution
@@ -55,13 +59,20 @@ setMethod("E", signature(object = "DistributionsIntegratingByQuantiles",
              rel.tol= getdistrExOption("ErelativeTolerance"),
              lowerTruncQuantile = getdistrExOption("ElowerTruncQuantile"),
              upperTruncQuantile = getdistrExOption("EupperTruncQuantile"),
-             IQR.fac = max(1e4,getdistrExOption("IQR.fac")), ...
-             ){
-    .qtlIntegrate(object = object, fun = fun, low = low, upp = upp,
+             IQR.fac = max(1e4,getdistrExOption("IQR.fac")), ...,
+             diagnostic = FALSE){
+
+     dots <- list(...)
+     dotsI <- .filterEargs(dots)
+     dotsFun <- .filterFunargs(dots,fun)
+     funwD <- function(x) do.call(fun, c(list(x=x),dotsFun))
+
+     do.call(.qtlIntegrate, c(list(object = object, fun = funwD, low = low, upp = upp,
              rel.tol= rel.tol, lowerTruncQuantile = lowerTruncQuantile,
              upperTruncQuantile = upperTruncQuantile,
              IQR.fac = IQR.fac, ...,
-             .withLeftTail = FALSE, .withRightTail = TRUE)
+             .withLeftTail = FALSE, .withRightTail = TRUE,
+             diagnostic = diagnostic),dotsI))
     })
 
 setMethod("E", signature(object = "GPareto",
@@ -71,11 +82,11 @@ setMethod("E", signature(object = "GPareto",
              rel.tol= getdistrExOption("ErelativeTolerance"),
              lowerTruncQuantile = getdistrExOption("ElowerTruncQuantile"),
              upperTruncQuantile = getdistrExOption("EupperTruncQuantile"),
-             IQR.fac = max(1e4,getdistrExOption("IQR.fac")), ...
-             ){
+             IQR.fac = max(1e4,getdistrExOption("IQR.fac")), ...,
+             diagnostic = FALSE){
 
         dots <- list(...)
-        dots.withoutUseApply <- dots
+        dots.withoutUseApply <- .filterEargs(dots)
         useApply <- TRUE
         if(!is.null(dots$useApply)) useApply <- dots$useApply
         dots.withoutUseApply$useApply <- NULL
@@ -100,7 +111,8 @@ setMethod("E", signature(object = "GPareto",
                     lower = low,
                     upper = upp,
                     rel.tol = rel.tol,
-                    distr = object, dfun = d(object)), dots.withoutUseApply)))
+                    distr = object, dfun = d(object)), dots.withoutUseApply,
+                    diagnostic = diagnostic)))
 
     })
 
@@ -108,7 +120,7 @@ setMethod("E", signature(object = "GPareto",
 setMethod("E", signature(object = "GEV",
                          fun = "missing", 
                          cond = "missing"),
-    function(object, low = NULL, upp = NULL, ...){
+    function(object, low = NULL, upp = NULL, ..., diagnostic = FALSE){
     if(!is.null(low)) if(low <= Min(object)) low <- NULL
     xi <- shape(object); sigma <- scale(object); mu <- loc(object)
     if(is.null(low) && is.null(upp)){
@@ -117,7 +129,8 @@ setMethod("E", signature(object = "GEV",
         else return(mu+sigma*(gamma(1-xi)-1)/xi)
         }       
     else
-        return(E(object, low=low, upp=upp, fun = function(x)x, ...))
+        return(E(object, low=low, upp=upp, fun = function(x)x, ...,
+                 diagnostic = diagnostic))
     })
 
 setMethod("E", signature(object = "GEV", fun = "function", cond = "missing"),
