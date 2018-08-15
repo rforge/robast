@@ -79,6 +79,9 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
   used to re-compute the IC for a different parameter), the 
   computation of \code{asvar}, \code{asbias} and \code{IC} is 
   based on the k-step estimate.
+
+  Timings for the several substeps are available as attribute
+  \code{timings} of the return value.
 }
 \value{Object of class \code{"kStepEstimate"}.}
 
@@ -112,6 +115,7 @@ estimate(est1)
 ksteps(est1)
 pICList(est1)
 start(est1)
+attr(est1,"timings")
 
 ## a transformed model
 tfct <- function(x){

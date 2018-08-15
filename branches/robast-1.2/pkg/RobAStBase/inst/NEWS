@@ -73,8 +73,12 @@ under the hood
 + for time checking use file TimingChecks.R (with the preparation that 
   the lines commented out by ##-t-## in kStepEstimator.R have to be activated;
   this uses helper function .addTime to produce a matrix with detailed timing
-  information which can be read out as argument ) -- it is in package 
-  system folder "chkTimeCode" (in inst/chkTimeCode in r-forge)
+  information which can be read out as argument ) 
++ for time checking in kStepEstimator, the preliminary solution with timings 
+  to be commented (special comments ##-t-##) in and out has been replaced by 
+  permanent calls to proc.time(); this way we avoid creating new environments 
+  (which is time-consuming!) through functions calls to system.time.
+  helper function .addTime has been adapted accordingly 
 + now specified that we want to use distr::solve
 + now generateIC.fct produces vectorized functions (can now use useApply=FALSE in E()) 
 + checkIC and makeIC now both use helper function .preparedirectCheckMakeIC
@@ -82,13 +86,11 @@ under the hood
   useApply = FALSE to gain speed (code has moved from file IC.R to file CheckMakeIC.R)
 + several methods (getRiskIC, getBiasIC, getBoundedIC, makeIC, checkIC, modifyIC) 
   gain argument "..." to pass on arguments to E()
-+ new internal constant ..IntegrateArgs which contains the names of all arguments 
-  used for integration, i.e., currently, c("lowerTruncQuantile", "upperTruncQuantile",
-  "IQR.fac", "subdivisions", "rel.tol", "abs.tol", "stop.on.error", "order", "useApply")
-  this is used to filter out arguments from dots which are meant for E() 
-  by means of exported helper function .filterEargs(); in addition, .filterEargs()
-  also checks if an argument "E.argList" is hidden in "..." and if so, filters in 
-  its entries (and in case of collision overwrites existing entries).
++ .filterEargs from distrEx is used to  filter out arguments from dots which are 
+  meant for E(); this is extended in RobAStBase::.filterEargsWEargList(): 
+  .filterEargsWEargList() also checks if an argument "E.argList" is hidden 
+  in "..." and if so, filters in its entries (and in case of collision 
+  overwrites existing entries).
 + getboundedIC now uses coordinate-wise integration with useApply = FALSE and 
   only computing the upper half of E LL'w 
   

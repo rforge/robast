@@ -1,6 +1,6 @@
 getBoundedIC <- function(L2Fam, D=trafo(L2Fam@param),...){
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         FI <- FisherInfo(L2Fam)

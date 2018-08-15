@@ -7,7 +7,7 @@
         nrvalues <- nrow(trafo)
         Distr <- L2Fam@distribution
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
 
@@ -20,17 +20,13 @@
             res[i] <- do.call(E, Eargs)
         }
 
-        integrandA <- function(x, IC.i, L2.j){
-            return(IC.i(x)*L2.j(x))
-        }
 
         erg <- matrix(0, ncol = dims, nrow = nrvalues)
 
         for(i in 1:nrvalues)
             for(j in 1:dims){
-                  Eargs <- c(list(object = Distr, fun = integrandA,
-                                  IC.i = IC.v@Map[[i]], L2.j = L2deriv@Map[[j]]),
-                                  dotsI)
+                integrandA <- function(x)IC.v@Map[[i]](x)*L2deriv@Map[[j]](x)
+                Eargs <- c(list(object = Distr, fun = integrandA),dotsI)
                   erg[i, j] <- do.call(E, Eargs)
             }
 
@@ -172,13 +168,8 @@ setMethod("makeIC", signature(IC = "function", L2Fam = "L2ParamFamily"),
     })
 ## comment 20180809: reverted changes in rev 1110
 
-..IntegrateArgs <- c("lowerTruncQuantile", "upperTruncQuantile",
-           "IQR.fac", "subdivisions", "rel.tol", "abs.tol", "stop.on.error",
-           "order", "useApply")
-
-.filterEargs <- function(dots){
-        dotsI <- list()
-        for(item in ..IntegrateArgs) dotsI[[item]] <- dots[[item]]
+.filterEargsWEargList <- function(dots){
+        dotsI <- .filterEargs(dots)
         if(!is.null(dots[["E.argList"]])){
            E.argList <- dots[["E.argList"]]
            if(is.call(E.argList)) eval(E.argList)

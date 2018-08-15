@@ -4,7 +4,6 @@
 \alias{.getDistr}
 \alias{.msapply}
 \alias{.fixInLiesInSupport}
-\alias{..IntegrateArgs}
 
 \title{Internal / Helper functions of package RobAStBase}
 
@@ -17,8 +16,7 @@ These functions are used internally by package RobAStBase.}
 .evalListRec(list0)
 .msapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 .fixInLiesInSupport(IC, distr)
-..IntegrateArgs
-.filterEargs(dots)
+.filterEargsWEargList(dots)
 }
 \arguments{
   \item{x}{a (numeric) vector}
@@ -49,11 +47,13 @@ These functions are used internally by package RobAStBase.}
 the influence curve (IC), whether the arguments at which the IC is to be evaluated lie
 in the support of the distribution and accordingly either returns the function value
 of the IC, or \code{0}; the check is done via  calling \code{\link[distr]{liesInSupport}}.
-\code{..IntegrateArgs} is an internal constant, containing the names of all arguments
-  used for integration, i.e., currently, \code{c("lowerTruncQuantile", "upperTruncQuantile",
-  "IQR.fac", "subdivisions", "rel.tol", "abs.tol", "stop.on.error", "order", "useApply")}.
-\code{.filterEargs} filters out of \code{dots} all named arguments which have names
-    contained in \code{..IntegrateArgs} and returns a list with these items.
+\code{.filterEargsWEargList} calls \code{distrEx::.filterEargs} to filter out of \code{dots} 
+all relevant arguments for the integrators, \code{integrate}, \code{GLIntegrate},
+and \code{distrExIntegrate}; in addition, \code{.filterEargsWEargList} 
+checks if an argument "E.argList" is hidden in the \code{dots} argument 
+and if so, filters in its entries; in case of collisions with entries filtered
+from \code{distrEx::.filterEargs}, it overwrites existing entries. In the 
+end it returns a list with the filtered items.
 }
 
 

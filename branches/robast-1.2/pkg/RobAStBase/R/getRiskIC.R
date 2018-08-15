@@ -30,7 +30,7 @@ setMethod("getRiskIC", signature(IC = "IC",
         if(dimension(Domain(IC@Curve[[1]])) != dimension(img(L2Fam@distribution)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(!is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         if(missing(withCheck)) withCheck <- TRUE
