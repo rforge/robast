@@ -24,7 +24,7 @@ setMethod("getInfStand", signature(L2deriv = "RealRandVariable",
     function(L2deriv, neighbor, biastype, 
              Distr, A.comp, cent, trafo, w, ...){
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         w.fct <- function(x){
@@ -54,7 +54,7 @@ setMethod("getInfStand", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "ContNeighborhood",
                                    biastype = "onesidedBias"),
     function(L2deriv, neighbor, biastype, clip, cent, trafo, ...){
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
         c1 <- if (sign(biastype)<0) cent - clip else -Inf
         c2 <- if (sign(biastype)>0) cent + clip else Inf

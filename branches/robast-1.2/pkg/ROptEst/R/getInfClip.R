@@ -157,7 +157,7 @@ setMethod("getInfClip", signature(clip = "numeric",
                                   neighbor = "ContNeighborhood"),
     function(clip, L2deriv, risk, neighbor, biastype, cent,  symm, trafo, ...){
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         biastype <- if(sign(risk)==1) positiveBias() else negativeBias()

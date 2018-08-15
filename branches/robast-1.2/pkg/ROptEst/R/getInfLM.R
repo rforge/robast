@@ -113,7 +113,7 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
         ### manipulate dots in call -> set control argument for optim
         dots <- list(...)
 
-        dotsI <- .filterEargs(dots)
+        dotsI <- .filterEargsWEargList(dots)
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         if(is.null(dots$method)) dots$method <- "L-BFGS-B"

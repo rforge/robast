@@ -109,7 +109,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
              OptOrIter = "iterate", maxiter, tol, warn,
              verbose = NULL, checkBounds = TRUE, ...){
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         if(missing(verbose)|| is.null(verbose))

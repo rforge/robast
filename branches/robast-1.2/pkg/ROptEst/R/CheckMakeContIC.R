@@ -153,7 +153,7 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
 
 .getG1G2G3Stand <- function(L2deriv, Distr, A.comp, z.comp, w, ...){
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         w.fct <- function(x){

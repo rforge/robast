@@ -17,7 +17,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
         if((rho <= 0)||(rho >= 1))
             stop("'rho' not in (0,1)")
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         biastype <- biastype(risk)

@@ -9,7 +9,7 @@ setMethod("getL1normL2deriv", signature(L2deriv = "UnivariateDistribution"),
 setMethod("getL1normL2deriv", signature(L2deriv = "RealRandVariable"),
     function(L2deriv, cent, stand, Distr, normtype, ...){
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         integrandG <- function(x, L2, stand, cent){

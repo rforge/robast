@@ -597,7 +597,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
 
 .checkPIC <- function(L2deriv, neighbor, Distr, trafo, z, A, w, z.comp, A.comp, ...){
 
-         dotsI <- .filterEargs(list(...))
+         dotsI <- .filterEargsWEargList(list(...))
          if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
          cat("some check:\n-----------\n")

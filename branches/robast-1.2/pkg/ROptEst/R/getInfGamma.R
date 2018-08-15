@@ -31,7 +31,7 @@ setMethod("getInfGamma", signature(L2deriv = "RealRandVariable",
     function(L2deriv, risk, neighbor, biastype, Distr, 
              stand, cent, clip, power = 1L, ...){
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         integrandG <- function(x, L2, stand, cent, clip){
@@ -54,7 +54,7 @@ setMethod("getInfGamma", signature(L2deriv = "RealRandVariable",
     function(L2deriv, risk, neighbor, biastype, Distr,
              stand, cent, clip, power = 1L, ...){
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         integrandG <- function(x, L2, stand, cent, clip){

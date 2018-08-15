@@ -41,7 +41,7 @@ setMethod("getInfCent", signature(L2deriv = "RealRandVariable",
     function(L2deriv, neighbor, biastype, Distr, z.comp, w,
              tol.z = .Machine$double.eps^.5, ...){
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         stand <- stand(w)
@@ -70,7 +70,7 @@ setMethod("getInfCent", signature(L2deriv = "RealRandVariable",
     function(L2deriv, neighbor, biastype, Distr, z.comp, w,
              tol.z = .Machine$double.eps^.5, ...){
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         integrand1 <- function(x){

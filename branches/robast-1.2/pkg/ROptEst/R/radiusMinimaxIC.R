@@ -12,7 +12,7 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
              verbose = NULL, loRad0 = 1e-3, ..., returnNAifProblem = FALSE,
              loRad.s = NULL, upRad.s = NULL, modifyICwarn = NULL){
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         if(missing(verbose)|| is.null(verbose))

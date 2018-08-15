@@ -3,7 +3,7 @@
              A.start = NULL, z.comp = NULL, A.comp = NULL, maxiter, tol,
              verbose = NULL, ...){
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         if(missing(verbose)|| is.null(verbose))
@@ -106,7 +106,7 @@
              A.start = NULL,  maxiter, tol,
              verbose = NULL, ...){
 
-        dotsI <- .filterEargs(list(...))
+        dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         if(missing(verbose)|| is.null(verbose))
