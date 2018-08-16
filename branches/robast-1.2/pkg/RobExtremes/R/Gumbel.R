@@ -9,6 +9,9 @@ setReplaceMethod("loc", "GumbelParameter",
 setReplaceMethod("scale", "GumbelParameter", 
     function(object, value){ object@scale <- value; object})
 
+setMethod("liesInSupport", signature(object = "Gumbel",
+                                     x = "numeric"),
+  function(object, x, checkFin = TRUE){is.finite(x)})
 
 ## generating function
 Gumbel <- function(loc = 0, scale = 1){ new("Gumbel", loc = loc, scale = scale) }

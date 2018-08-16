@@ -27,6 +27,14 @@ under the hood
 + the timings are now about ~ 2s per estimator for GEV and GPD and check/makeIC are much faster
 + script updated 
 + the makeIC methods for GPD/GEV... also gain an "..." argument 
++ fixed minor issues in scripts/RobFitsAtRealData.R
++ expectation E() of Pareto, GPD, and GEV gain argument diagnostic and use dot-filtering (like in distrEx)
++ minor bugfixes in .getBetaXiGEW 
++ new S4 classes
+  "GPDML.ALEstimate", "GPDCvMMD.ALEstimate", and "GEVML.ALEstimate", "GEVCvMMD.ALEstimate"
+  deleted classes "GPDMCALEstimate", "GEVMCALEstimate" as not every MCE is an ALE -> this gave misleading error messages
++ warning/caveat in the help to GEVFamily/GEVFamilyMuUnknown as to the accuracy of PickandsEstimator for GEV 
++ introduced particular liesInSupport methods for Gumbel, Pareto, GPareto, and GEV 
   
 #######################################
 version 1.1

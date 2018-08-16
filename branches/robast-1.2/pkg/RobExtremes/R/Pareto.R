@@ -36,6 +36,10 @@ setValidity("ParetoParameter", function(object){
   else return(TRUE)
 })
 
+setMethod("liesInSupport", signature(object = "Pareto",
+                                     x = "numeric"),
+  function(object, x, checkFin = TRUE){is.finite(x)&(x>=0)})
+
 ################################
 ##            .Object@img <- new("Naturals")
 

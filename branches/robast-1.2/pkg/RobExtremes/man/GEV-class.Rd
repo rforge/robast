@@ -12,7 +12,7 @@
 \alias{shape<-,GEV-method}
 \alias{+,GEV,numeric-method}
 \alias{*,GEV,numeric-method}
-
+\alias{liesInSupport,GEV,numeric-method}
 
 \title{Generalized EV distribution}
 \description{[borrowed from \pkg{evd}]:
@@ -95,6 +95,8 @@ Class \code{"Distribution"}, by class \code{"AbscontDistribution"}.
     \item{kurtosis}{\code{signature(signature(x = "GEV")}:
     exact evaluation using explicit expressions.}
 
+    \item{liesInSupport}{\code{signature(object = "GEV", x = "numeric")}:
+      checks if \code{x} lies in the support of the respective distribution. }
 
   }
 }

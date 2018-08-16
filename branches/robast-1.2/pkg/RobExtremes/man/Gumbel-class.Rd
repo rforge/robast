@@ -8,6 +8,7 @@
 \alias{scale<-,Gumbel-method}
 \alias{+,Gumbel,numeric-method}
 \alias{*,Gumbel,numeric-method}
+\alias{liesInSupport,Gumbel,numeric-method}
 
 \title{Gumbel distribution}
 \description{The Gumbel cumulative distribution function with 
@@ -91,6 +92,10 @@ Class \code{"Distribution"}, by class \code{"AbscontDistribution"}.
 
      \item{IQR}{\code{signature(x = "Gumbel")}: 
       exact evaluation of expectation using explicit expressions.}
+
+    \item{liesInSupport}{\code{signature(object = "Gumbel", x = "numeric")}:
+      checks if \code{x} lies in the support of the respective distribution. }
+
   }
 }
 \references{Johnson et al. (1995) \emph{Continuous Univariate Distributions. Vol. 2. 2nd ed.}
