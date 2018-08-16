@@ -93,6 +93,9 @@ under the hood
   overwrites existing entries).
 + getboundedIC now uses coordinate-wise integration with useApply = FALSE and 
   only computing the upper half of E LL'w 
++ getboundedIC, getRiskIC for signature (IC, asCov, missing, L2ParamFamily),
+  checkIC and makeIC gain argument diagnostic to be able to show diagnostic 
+  information on integrations
   
 #######################################
 version 1.1

@@ -26,12 +26,14 @@ setMethod("getRiskIC", signature(IC = "IC",
                                  risk = "asCov",
                                  neighbor = "missing",
                                  L2Fam = "L2ParamFamily"),
-    function(IC, risk, L2Fam, tol = .Machine$double.eps^0.25, withCheck = TRUE, ...){
+    function(IC, risk, L2Fam, tol = .Machine$double.eps^0.25, withCheck = TRUE, ...,
+             diagnostic = FALSE){
         if(dimension(Domain(IC@Curve[[1]])) != dimension(img(L2Fam@distribution)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
         dotsI <- .filterEargsWEargList(list(...))
         if(!is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+        dotsI$diagnostic <- diagnostic
 
         if(missing(withCheck)) withCheck <- TRUE
         IC1 <- as(diag(dimension(IC@Curve)) %*% IC@Curve, "EuclRandVariable")
@@ -46,16 +48,23 @@ setMethod("getRiskIC", signature(IC = "IC",
 
         Cova <- matrix(0, ncol = nrvalues, nrow = nrvalues)
 
+        diagn <- if(diagnostic) vector("list",nrvalues*(nrvalues+1)/2) else NULL
+        k <- 0
         for(i in 1:nrvalues){
             for(j in i:nrvalues){
-                Cova[i,j] <- do.call(E,c(list(object = Distr,
+                Cova[i,j] <- buf <- do.call(E,c(list(object = Distr,
                     fun = function(x){
                     return((IC1@Map[[i]](x)-cent[i])*(IC1@Map[[j]](x)-cent[j]))}),
                     dotsI))
+                if(diagnostic){
+                    k <- k + 1
+                    diagn[[k]] <- attr(buf, "diagnostic")
+                }
             }
         }
         Cova[col(Cova) < row(Cova)] <- t(Cova)[col(Cova) < row(Cova)]
         # if(withCheck) .checkICWithWarning(IC, L2Fam, tol, ...)
+        if(diagnostic) attr(Cova,"diagnostic") <- diagn
         return(list(asCov = list(distribution = .getDistr(L2Fam), value = Cova)))
     })
 

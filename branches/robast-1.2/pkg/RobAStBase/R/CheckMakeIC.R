@@ -1,6 +1,6 @@
 ## new helper function for make and check IC to speed up things
 
-.preparedirectCheckMakeIC <- function(L2Fam, IC, ...){
+.preparedirectCheckMakeIC <- function(L2Fam, IC, ..., diagnostic = FALSE){
 
         dims <- length(L2Fam@param)
         trafo <- trafo(L2Fam@param)
@@ -14,12 +14,17 @@
         IC.v <- as(diag(nrvalues) %*% IC@Curve, "EuclRandVariable")
         L2deriv <- as(diag(dims) %*% L2Fam@L2deriv, "EuclRandVariable")
 
+        diagn <- if(diagnostic) vector("list",(nrvalues+3)*nrvalues/2) else NULL
+        if(diagnostic) dotsI$diagnostic <- TRUE
+        k <- 0
+
         res <- numeric(nrvalues)
         for(i in 1:nrvalues){
             Eargs <- c(list(object = Distr, fun = IC.v@Map[[i]]), dotsI)
-            res[i] <- do.call(E, Eargs)
+            res[i] <- buf <- do.call(E, Eargs)
+            if(diagnostic){ k <- k + 1; diagn[[k]] <- attr(buf,"diagnostic") }
         }
-
+        if(diagnostic) attr(res, "diagnostic") <- diagn[1:nrvalues]
 
         erg <- matrix(0, ncol = dims, nrow = nrvalues)
 
@@ -27,8 +32,10 @@
             for(j in 1:dims){
                 integrandA <- function(x)IC.v@Map[[i]](x)*L2deriv@Map[[j]](x)
                 Eargs <- c(list(object = Distr, fun = integrandA),dotsI)
-                  erg[i, j] <- do.call(E, Eargs)
+                erg[i, j] <- buf <- do.call(E, Eargs)
+                if(diagnostic){ k <- k + 1; diagn[[k]] <- attr(buf,"diagnostic") }
             }
+        if(diagnostic) attr(erg, "diagnostic") <- diagn[-(1:nrvalues)]
 
         return(list(E.IC=res,E.IC.L=erg))
 }
@@ -37,22 +44,22 @@
 
 ## check centering and Fisher consistency
 setMethod("checkIC", signature(IC = "IC", L2Fam = "missing"),
-    function(IC, out = TRUE, ...){
+    function(IC, out = TRUE, ..., diagnostic = FALSE){
         L2Fam <- eval(IC@CallL2Fam)
         getMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"))(
-              IC = IC, L2Fam = L2Fam, out = out, ...)
+              IC = IC, L2Fam = L2Fam, out = out, ..., diagnostic = diagnostic)
     })
 
 ## check centering and Fisher consistency
 setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
-    function(IC, L2Fam, out = TRUE, ...){
+    function(IC, L2Fam, out = TRUE, ..., diagnostic = FALSE){
         D1 <- L2Fam@distribution
         if(dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
         trafo <- trafo(L2Fam@param)
 
-        res <- .preparedirectCheckMakeIC(L2Fam, IC, ...)
+        res <- .preparedirectCheckMakeIC(L2Fam, IC, ..., diagnostic = diagnostic)
 
         cent <- res$E.IC
         if(out)
@@ -71,13 +78,18 @@ setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
         prec <- max(abs(cent), abs(consist))
         names(prec) <- "maximum deviation"
 
+        if(diagnostic && out){
+           print(attr(res$E.IC,"diagnostic"))
+           print(attr(res$E.IC.L,"diagnostic"))
+        }
+
         return(prec)
     })
 
 
 ## make some L2function a pIC at a model
 setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
-    function(IC, L2Fam, ...){
+    function(IC, L2Fam, ..., diagnostic = FALSE){
 
         dims <- length(L2Fam@param)
         if(dimension(IC@Curve) != dims)
@@ -89,7 +101,12 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
 
         trafo <- trafo(L2Fam@param)
 
-        res <- .preparedirectCheckMakeIC(L2Fam, IC, ...)
+        res <- .preparedirectCheckMakeIC(L2Fam, IC, ..., diagnostic = diagnostic)
+
+        if(diagnostic){
+           print(attr(res$E.IC,"diagnostic"))
+           print(attr(res$E.IC.L,"diagnostic"))
+        }
 
         IC1 <- as(diag(dimension(IC@Curve)) %*% IC@Curve, "EuclRandVariable")
 
@@ -119,14 +136,14 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
 
 ## make some L2function a pIC at a model
 setMethod("makeIC", signature(IC = "IC", L2Fam = "missing"),
-    function(IC, ...){
+    function(IC, ..., diagnostic = FALSE){
         L2Fam <- eval(IC@CallL2Fam)
         getMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"))(
-              IC = IC, L2Fam = L2Fam, ...)
+              IC = IC, L2Fam = L2Fam, ..., diagnostic = diagnostic)
     })
 
 setMethod("makeIC", signature(IC = "list", L2Fam = "L2ParamFamily"),
-    function(IC, L2Fam, forceIC = TRUE, name, Risks, Infos, modifyIC = NULL,...){
+    function(IC, L2Fam, forceIC = TRUE, name, Risks, Infos, modifyIC = NULL,..., diagnostic = FALSE){
         mc <- match.call(call = sys.call(sys.parent(1)), expand.dots = FALSE)[-1]
         mc0 <- as.list(mc)
         mc0$IC <- NULL
@@ -142,14 +159,15 @@ setMethod("makeIC", signature(IC = "list", L2Fam = "L2ParamFamily"),
         mc0$CallL2Fam <- substitute(L2Fam@fam.call)
 
         IC.0 <- do.call(.IC,mc0)
-        if(forceIC) IC.0 <- makeIC(IC.0, L2Fam,...)
+        if(forceIC) IC.0 <- makeIC(IC.0, L2Fam,..., diagnostic = diagnostic)
         return(IC.0)
     })
 
 
 
 setMethod("makeIC", signature(IC = "function", L2Fam = "L2ParamFamily"),
-    function(IC, L2Fam, forceIC = TRUE, name, Risks, Infos, modifyIC = NULL,...){
+    function(IC, L2Fam, forceIC = TRUE, name, Risks, Infos,
+             modifyIC = NULL,..., diagnostic = FALSE){
         mc <- match.call(call = sys.call(sys.parent(1)), expand.dots = FALSE)[-1]
         mc0 <- as.list(mc)
         mc0$IC <- NULL

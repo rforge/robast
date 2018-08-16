@@ -1,4 +1,4 @@
-getBoundedIC <- function(L2Fam, D=trafo(L2Fam@param),...){
+getBoundedIC <- function(L2Fam, D=trafo(L2Fam@param),..., diagnostic = FALSE){
 
         dotsI <- .filterEargsWEargList(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
@@ -33,21 +33,35 @@ getBoundedIC <- function(L2Fam, D=trafo(L2Fam@param),...){
         cent <- numeric(dims)
         stand.0 <- matrix(0,dims,dims)
 
+        diagn <- if(diagnostic) vector("list", dims*(dims+3)/2) else NULL
+        k <- 0
+        if(diagnostic) dotsI$diagnostic <- TRUE
+
         for(i in 1:dims){
             fun <- function(x) {Lx <- L.fct(x); wx <- weight(w)(Lx); return(Lx[i,]*wx)}
             Eargs <- c(list(object=D1, fun=fun), dotsI)
-            cent[i] <- do.call(E,Eargs)
+            cent[i] <- buf <- do.call(E,Eargs)
+            if(diagnostic){
+               k <- k + 1
+               diagn[[k]] <- attr(buf,"diagnostic")
+            }
         }
         for(i in 1:dims)
            for(j in i:dims){
             fun <- function(x) {Lx <- L.fct(x); wx <- weight(w)(Lx)
                                 return((Lx[i,]-cent[i])*(Lx[j,]-cent[j])*wx)}
             Eargs <- c(list(object=D1, fun=fun), dotsI)
-            stand.0[i,j] <- do.call(E,Eargs)
+            stand.0[i,j] <- buf <- do.call(E,Eargs)
+            if(diagnostic){
+               k <- k + 1
+               diagn[[k]] <- attr(buf,"diagnostic")
+            }
            }
         stand.0[row(stand.0)>col(stand.0)] <- t(stand.0)[row(stand.0)>col(stand.0)]
 
         stand <- as.matrix(D %*% distr::solve(stand.0, generalized = TRUE))
         L2w0 <- L2w - cent
-        return(as(stand %*% L2w0, "EuclRandVariable"))
+        res <- as(stand %*% L2w0, "EuclRandVariable")
+        if(diagnostic) attr(res,"diagnostic") <- diagn
+        return(res)
 }

@@ -14,11 +14,11 @@
 \usage{
 makeIC(IC, L2Fam, ...)
 %\S4method{makeIC}{IC,missing}(IC, ...)
-\S4method{makeIC}{IC,L2ParamFamily}(IC, L2Fam, ...)
+\S4method{makeIC}{IC,L2ParamFamily}(IC, L2Fam, ..., diagnostic = FALSE)
 \S4method{makeIC}{list,L2ParamFamily}(IC, L2Fam, forceIC = TRUE, name, Risks,
-                  Infos, modifyIC = NULL, ...)
+                  Infos, modifyIC = NULL, ..., diagnostic = FALSE)
 \S4method{makeIC}{function,L2ParamFamily}(IC, L2Fam, forceIC = TRUE, name, 
-                  Risks, Infos, modifyIC = NULL, ...)
+                  Risks, Infos, modifyIC = NULL, ..., diagnostic = FALSE)
 }
 \arguments{
   \item{IC}{ object of class \code{"IC"} for signature \code{IC="IC"}, respectively
@@ -43,6 +43,8 @@ makeIC(IC, L2Fam, ...)
     class \code{"IC"}. This function is mainly used for internal
     computations! }
   \item{\dots}{ additional parameters to be passed to expectation \code{E} }
+  \item{diagnostic}{ logical; if \code{TRUE},
+    diagnostic information on the integration is printed. }
 }
 \value{An IC of class \code{"IC"} at the model.}
 \section{Methods}{\describe{

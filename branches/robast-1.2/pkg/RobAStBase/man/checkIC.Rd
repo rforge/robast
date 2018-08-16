@@ -10,14 +10,16 @@
 }
 \usage{
 checkIC(IC, L2Fam, ...)
-\S4method{checkIC}{IC,missing}(IC, out = TRUE, ...)
-\S4method{checkIC}{IC,L2ParamFamily}(IC, L2Fam, out = TRUE,...)
+\S4method{checkIC}{IC,missing}(IC, out = TRUE, ..., diagnostic = FALSE)
+\S4method{checkIC}{IC,L2ParamFamily}(IC, L2Fam, out = TRUE,..., diagnostic = FALSE)
 }
 \arguments{
   \item{IC}{ object of class \code{"IC"} }
   \item{L2Fam}{ L2-differentiable family of probability measures. }
   \item{out}{ logical: Should the values of the checks be printed out?}
   \item{\dots}{ additional parameters }
+  \item{diagnostic}{ logical; if \code{TRUE} and \code{out==TRUE},
+    diagnostic information on the integration is printed. }
 }
 \details{ 
   The precisions of the centering and the Fisher consistency
