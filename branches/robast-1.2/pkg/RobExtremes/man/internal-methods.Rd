@@ -54,25 +54,45 @@ S4 class \code{GPDEstimate},\cr
 the \code{GParetoFamily,LDEstimate}-method cast to
 S4 class  \code{GPDLDEstimate},\cr
 the \code{GParetoFamily,MCEstimate}-method cast to
-S4 class  \code{GPDMCALEstimate},\cr
+S4 class  \code{GPDMCEstimate},\cr
 the \code{GParetoFamily,kStepEstimate}-method cast to
-S4 class  \code{GPDkStepstimate},\cr
-the \code{GEVFamily,Estimate}-method cast to
-S4 class  \code{GEVEstimate},\cr
+S4 class  \code{GPDkStepEstimate},\cr
+the \code{GParetoFamily,ORobEstimate}-method cast to
+S4 class  \code{GPDORobEstimate},\cr
+the \code{GParetoFamily,MLEstimate}-method cast to
+S4 class  \code{GPDML.ALEstimate},\cr
+the \code{GParetoFamily,CvMMDEstimate}-method cast to
+S4 class  \code{GPDCvMMD.ALEstimate},\cr
+
+The \code{GEVFamily,Estimate}-method returns the estimator cast to
+S4 class \code{GEVEstimate},\cr
 the \code{GEVFamily,LDEstimate}-method cast to
 S4 class  \code{GEVLDEstimate},\cr
 the \code{GEVFamily,MCEstimate}-method cast to
-S4 class  \code{GEVMCALEstimate},\cr
+S4 class  \code{GEVMCEstimate},\cr
 the \code{GEVFamily,kStepEstimate}-method cast to
-S4 class  \code{GEVkStepstimate},\cr
+S4 class  \code{GEVkStepEstimate},\cr
+the \code{GEVFamily,ORobEstimate}-method cast to
+S4 class  \code{GEVORobEstimate},\cr
+the \code{GEVFamily,MLEstimate}-method cast to
+S4 class  \code{GEVML.ALEstimate},\cr
+the \code{GEVFamily,CvMMDEstimate}-method cast to
+S4 class  \code{GEVCvMMD.ALEstimate},\cr
+
 the \code{GEVFamilyMuUnknown,Estimate}-method cast to
 S4 class  \code{GEVEstimate},\cr
 the \code{GEVFamilyMuUnknown,LDEstimate}-method cast to
 S4 class  \code{GEVLDEstimate},\cr
 the \code{GEVFamilyMuUnknown,MCEstimate}-method cast to
-S4 class  \code{GEVMCALEstimate},\cr
+S4 class  \code{GEVMCEstimate},\cr
 the \code{GEVFamilyMuUnknown,kStepEstimate}-method cast to
 S4 class  \code{GEVkStepstimate}.\cr
+the \code{GEVFamilyMuUnknown,ORobEstimate}-method cast to
+S4 class  \code{GEVORobEstimate},\cr
+the \code{GEVFamilyMuUnknown,MLEstimate}-method cast to
+S4 class  \code{GEVML.ALEstimate},\cr
+the \code{GEVFamilyMuUnknown,CvMMDEstimate}-method cast to
+S4 class  \code{GEVCvMMD.ALEstimate}.
 }
 \author{
   Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}

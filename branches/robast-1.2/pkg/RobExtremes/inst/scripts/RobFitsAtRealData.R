@@ -60,7 +60,7 @@ oldM <- getMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"))
 removeMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"))
 system.time(RMXiw2 <- RMXEstimator(portpiriei, GEVFam,withMakeIC=TRUE))
 checkIC(pIC(RMXiw2))
-setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily")) <- oldM
+setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),oldM)
 
 estimate(RMXi)
 estimate(RMXiw)
@@ -80,6 +80,7 @@ estimate(RMXi)
 estimate(RMXiw)
 ### where do the robust estimators spend their time?
 attr(MBRi, "timings")
+attr(MBRi, "kStepTimings")
 
 ## our return values can be plugged into ismev-diagnostics:
 devNew()
