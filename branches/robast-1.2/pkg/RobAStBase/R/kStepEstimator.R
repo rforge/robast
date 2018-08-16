@@ -473,6 +473,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         estres <- .checkEstClassForParamFamily(L2Fam,estres)
 
         attr(estres,"timings") <- apply(sytm,2,diff)
+        on.exit()
         return(estres)
 
 }
