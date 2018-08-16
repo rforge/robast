@@ -14,7 +14,7 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
       withPICList = getRobAStBaseOption("withPICList"),
       na.rm = TRUE, startArgList = NULL, ...,
       withLogScale = TRUE, withEvalAsVar = TRUE,
-      withMakeIC = FALSE, E.argList = NULL)
+      withMakeIC = FALSE, E.argList = NULL, diagnostic = FALSE)
 }
 \arguments{
   \item{x}{ sample }
@@ -56,6 +56,10 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
         the items of argument list \code{E.argList} as named items to the argument
         lists, so in case of collisions the item of \code{E.argList} overwrites the
         existing one from \code{\dots}.}
+  \item{diagnostic}{ logical; if \code{TRUE},
+    diagnostic information on the performed integrations is gathered and
+    shipped out as an attribute \code{diagnostic} of the return value
+    of \code{kStepEstimator}. }
 }
 \details{
   Given an initial estimation \code{start}, a sample \code{x} 

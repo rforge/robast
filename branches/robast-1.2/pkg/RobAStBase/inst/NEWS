@@ -26,6 +26,10 @@ user-visible CHANGES:
 + particular checkIC methods are now documented in documentation 
   object checkIC (and no longer with class IC); there argument out
   is documented
++ kStepEstimator, getboundedIC, getRiskIC for signature (IC, asCov, missing, L2ParamFamily),
+  checkIC and makeIC gain argument diagnostic to be able to show diagnostic 
+  information on integrations; this information (if argument "diagnostic" is TRUE)
+  is stored in attribute "diagnostic" of the return value
   
 bugfixes  
 + and a forgotten no longer used instance of oldmodif in kStepEstimator
@@ -93,9 +97,6 @@ under the hood
   overwrites existing entries).
 + getboundedIC now uses coordinate-wise integration with useApply = FALSE and 
   only computing the upper half of E LL'w 
-+ getboundedIC, getRiskIC for signature (IC, asCov, missing, L2ParamFamily),
-  checkIC and makeIC gain argument diagnostic to be able to show diagnostic 
-  information on integrations
   
 #######################################
 version 1.1
@@ -128,7 +129,8 @@ user-visible CHANGES:
 + getRiskIC and getBiasIC gain argument withCheck to speed up things if one does not want to call checkIC 
 + in kStepEstimator, withCheck is set to FALSE when getRiskIC is called, and makeIC is only called just 
   before the last update, and, if useLast == TRUE for the last update (of course, only if withMakeIC ==TRUE)
-
++ kStepEstimator, 
+  
 Return value of "roptest"
 + the return value of "roptest", an object of class "kStepEstimate" has a slot "estimate.call" which
   contains the (matched) call to "roptest"; internally "roptest" calls "robest"; the call to "robest"

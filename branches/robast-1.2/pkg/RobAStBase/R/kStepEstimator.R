@@ -55,7 +55,8 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                            withPICList = getRobAStBaseOption("withPICList"),
                            na.rm = TRUE, startArgList = NULL, ...,
                            withLogScale = TRUE, withEvalAsVar = TRUE,
-                           withMakeIC = FALSE, E.argList = NULL){
+                           withMakeIC = FALSE, E.argList = NULL,
+                           diagnostic = FALSE){
 
         time <- proc.time()
         on.exit(message("Timing stopped at: ", ppt(proc.time() - time)))
@@ -65,6 +66,11 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 
         if(is.null(E.argList)) E.argList <- list()
         if(is.null(E.argList$useApply)) E.argList$useApply <- FALSE
+        diagn <- NULL
+        if(diagnostic){
+           E.argList$diagnostic <- TRUE
+           diagn <- list()
+        }
         if(missing(IC.UpdateInKer)) IC.UpdateInKer <- NULL
 
 ## get some dimensions
@@ -185,15 +191,22 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 #                   print(L2Fam)
                    L2Fam <- modifyModel(L2Fam, Param,
                                .withL2derivDistr = L2Fam@.withEvalL2derivDistr)
-                   sytm <<- .addTime(sytm,paste("modifyModel-PreModif-",updStp))
-#                   print(L2Fam)
+                   mmPreNm <- paste("modifyModel-PreModif-",updStp)
+                   sytm <<- .addTime(sytm,mmPreNm)
+                   if(diagnostic) diagn[[mmPreNm]] <<- attr(L2Fam,"diagnostic")
+# print(L2Fam)
+
                    modifyICargs <- c(list(L2Fam, IC, withMakeIC = FALSE), E.argList)
                    IC <- do.call(modifyIC(IC),modifyICargs)
-                   sytm <<- .addTime(sytm,paste("modifyIC-PreModif-",updStp))
+                   mmPreICNm <- paste("modifyIC-PreModif-",updStp)
+                   sytm <<- .addTime(sytm,mmPreICNm)
+                   if(diagnostic) diagn[[mmPreICNm]] <<- attr(IC,"diagnostic")
                    if(steps==1L && withMakeIC){
                       makeICargs <- c(list(IC, L2Fam),E.argList)
                       IC <- do.call(makeIC, makeICargs)
-                      sytm <<- .addTime(sytm,paste("modifyIC-makeIC-",updStp))
+                      mmPreMkICNm <- paste("modifyIC-makeIC-",updStp)
+                      sytm <<- .addTime(sytm,mmPreMkICNm)
+                      if(diagnostic) diagn[[mmPreMkICNm]] <<- attr(IC,"diagnostic")
                     }
                 }
 
@@ -220,10 +233,14 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                             if(is.null(IC.UpdateInKer)){
                                  getBoundedICargs <- c(list(L2Fam, D = projker),E.argList)
                                  IC.tot2 <- do.call(getBoundedIC, getBoundedICargs)
-                                 sytm <<- .addTime(sytm,paste("getBoundedIC-",updStp))
+                                 mmgtBDICNm <- paste("getBoundedIC-",updStp)
+                                 sytm <<- .addTime(sytm,mmgtBDICNm)
+                                 if(diagnostic) diagn[[mmgtBDICNm]] <<- attr(IC.tot2,"diagnostic")
                             }else{
                                  IC.tot2 <- as(projker %*% IC.UpdateInKer@Curve, "EuclRandVariable")
-                                 sytm <<- .addTime(sytm,paste("IC.tot2<-as(projker...-",updStp))
+                                 mmgtAsPrICNm <- paste("IC.tot2<-as(projker...-",updStp)
+                                 sytm <<- .addTime(sytm,mmgtAsPrICNm)
+                                 if(diagnostic) diagn[[mmgtAsPrICNm]] <<- attr(IC.tot2,"diagnostic")
                             }
                             IC.tot2.isnull <- FALSE
                             IC.tot.0 <- IC.tot1 + IC.tot2
@@ -281,16 +298,24 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                                    L2F0 = L2Fam, IC0 = IC.tot.0, dim0 = k,
                                    dimn0 = list(cnms,cnms)))
                       sytm <<- .addTime(sytm,paste("u.var-",updStp))
-                      if(withEvalAsVar.0) u.var <- eval(u.var)
-                      sytm <<- .addTime(sytm,paste("u.var-eval-",updStp))
+                      if(withEvalAsVar.0){
+                         u.var <- eval(u.var)
+                         uvEvnm <- paste("u.var-eval-",updStp)
+                         sytm <<- .addTime(sytm,uvEvnm)
+                         if(diagnostic) diagn[[uvEvnm]] <<- attr(u.var,"diagnostic")
+                      }
                    }
                    if(!var.to.be.c){
                       var0 <- substitute(do.call(cfct, args = list(L2F0, IC0,
                                    dim0, dimn0)), list(cfct = cvar.fct,
                                    L2F0 = L2Fam, IC0 = IC.c, dim0 = p))
                       sytm <<- .addTime(sytm,paste("var0-",updStp))
-                      if(withEvalAsVar.0) var0 <- eval(var0)
-                      sytm <<- .addTime(sytm,paste("var0-eval-",updStp))
+                      if(withEvalAsVar.0) {
+                         var0 <- eval(var0)
+                         vEvnm <- paste("var0-eval-",updStp)
+                         sytm <<- .addTime(sytm,paste("var0-eval-",updStp))
+                         if(diagnostic) diagn[[vEvnm]] <<- attr(var0,"diagnostic")
+                      }
                    }
                 }
                 if(withPostModif){
@@ -298,10 +323,15 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                    if (lnx) nuisance(Param)[] <- .deleteDim(u.theta[nuis.idx])
                    L2Fam <- modifyModel(L2Fam, Param,
                                .withL2derivDistr = L2Fam@.withEvalL2derivDistr)
-                   sytm <<- .addTime(sytm,paste("modifyModel-PostModif-",updStp))
+                   mmPostNm <- paste("modifyModel-PostModif-",updStp)
+                   sytm <<- .addTime(sytm,mmPostNm)
+                   if(diagnostic) diagn[[mmPostNm]] <<- attr(L2Fam,"diagnostic")
+
                    modifyICargs <- c(list(L2Fam, IC, withMakeIC = withMakeIC), E.argList)
                    IC <- do.call(modifyIC(IC),modifyICargs)
-                   sytm <<- .addTime(sytm,paste("modifyIC-PostModif-",updStp))
+                   mmPostICNm <- paste("modifyIC-PostModif-",updStp)
+                   sytm <<- .addTime(sytm,mmPostICNm)
+                   if(diagnostic) diagn[[mmPostICNm]] <<- attr(IC,"diagnostic")
                 }
 
                 li <- list(IC = IC, Param = Param, L2Fam = L2Fam,
@@ -331,7 +361,9 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                   if((i==steps)&&withMakeIC){
                       makeICargs <- c(list(IC, L2Fam),E.argList)
                       IC <- do.call(makeIC, makeICargs)
-                      sytm <- .addTime(sytm,paste("makeIC-",i))
+                      mkICnm <- paste("makeIC-",i)
+                      sytm <- .addTime(sytm,mkICnm)
+                      if(diagnostic) diagn[[mkICnm]] <- attr(IC,"diagnostic")
                   }
 
                   Param <- upd$Param
@@ -372,7 +404,9 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
               if(withMakeIC){
                   makeICargs <- c(list(IC, L2Fam),E.argList)
                   IC <- do.call(makeIC, makeICargs)
-                  sytm <- .addTime(sytm,"makeIC-useLast")
+                  mkICULnm <- paste("makeIC-useLast")
+                  sytm <- .addTime(sytm,mkICULnm)
+                  if(diagnostic) diagn[[mkICULnm]] <- attr(IC,"diagnostic")
               }
            }else{
               Infos <- rbind(Infos, c("kStepEstimator",
@@ -420,6 +454,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                 riskAsVar <- do.call(getRiskIC, getRiskICasVarArgs)
                 asVar <- riskAsVar$asCov$value
                 sytm <- .addTime(sytm,"getRiskIC-Var")
+                if(diagnostic) diagn[["getRiskICVar"]] <- attr(asVar,"diagnostic")
            }
 
         }else asVar <- var0
@@ -473,6 +508,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         estres <- .checkEstClassForParamFamily(L2Fam,estres)
 
         attr(estres,"timings") <- apply(sytm,2,diff)
+        if(diagnostic) attr(estres,"diagnostic") <- diagn
         on.exit()
         return(estres)
 
