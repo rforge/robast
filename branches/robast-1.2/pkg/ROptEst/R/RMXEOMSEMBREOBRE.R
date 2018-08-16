@@ -31,8 +31,7 @@ RMXEstimator <- function(x, L2Fam, fsCor = 1, initial.est,
                        withLogScale = withLogScale, ..withCheck = ..withCheck,
                        withTimings = withTimings, withMDE = withMDE,
                        withEvalAsVar = withEvalAsVar, withMakeIC = withMakeIC,
-                       modifyICwarn = modifyICwarn, E.argList = NULL,
-                       diagnostic = FALSE, E.argList = E.argList,
+                       modifyICwarn = modifyICwarn, E.argList = E.argList,
                        diagnostic = diagnostic)
 
    if(!is.null(dots)) roptestArgList <- c(roptestArgList, dots)
