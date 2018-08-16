@@ -10,7 +10,8 @@ RMXEstimator <- function(x, L2Fam, fsCor = 1, initial.est,
                     na.rm = TRUE, initial.est.ArgList, ..., withLogScale = TRUE,
                     ..withCheck=FALSE, withTimings = FALSE, withMDE = NULL,
                     withEvalAsVar = NULL, withMakeIC = FALSE,
-                    modifyICwarn = NULL){
+                    modifyICwarn = NULL, E.argList = NULL,
+                    diagnostic = FALSE){
 
    mc <- match.call(expand.dots=FALSE)
    dots <- mc$"..."
@@ -30,7 +31,9 @@ RMXEstimator <- function(x, L2Fam, fsCor = 1, initial.est,
                        withLogScale = withLogScale, ..withCheck = ..withCheck,
                        withTimings = withTimings, withMDE = withMDE,
                        withEvalAsVar = withEvalAsVar, withMakeIC = withMakeIC,
-                       modifyICwarn = modifyICwarn)
+                       modifyICwarn = modifyICwarn, E.argList = NULL,
+                       diagnostic = FALSE, E.argList = E.argList,
+                       diagnostic = diagnostic)
 
    if(!is.null(dots)) roptestArgList <- c(roptestArgList, dots)
    if(!missing(initial.est)) roptestArgList$initial.est <- initial.est
@@ -54,7 +57,8 @@ OMSEstimator <- function(x, L2Fam, eps =0.5, fsCor = 1, initial.est,
                     na.rm = TRUE, initial.est.ArgList, ..., withLogScale = TRUE,
                     ..withCheck=FALSE, withTimings = FALSE, withMDE = NULL,
                     withEvalAsVar = NULL, withMakeIC = FALSE,
-                    modifyICwarn = NULL){
+                    modifyICwarn = NULL, E.argList = NULL,
+                    diagnostic = FALSE){
 
    if(!is.numeric(eps)||length(eps)>1||any(eps<0))
       stop("Radius 'eps' must be given, of length 1 and non-negative.")
@@ -76,7 +80,8 @@ OMSEstimator <- function(x, L2Fam, eps =0.5, fsCor = 1, initial.est,
                        withLogScale = withLogScale, ..withCheck = ..withCheck,
                        withTimings = withTimings, withMDE = withMDE,
                        withEvalAsVar = withEvalAsVar, withMakeIC = withMakeIC,
-                       modifyICwarn = modifyICwarn)
+                       modifyICwarn = modifyICwarn, E.argList = E.argList,
+                       diagnostic = diagnostic)
 
    if(!is.null(dots)) roptestArgList <- c(roptestArgList, dots)
    if(!missing(initial.est)) roptestArgList$initial.est <- initial.est
@@ -100,7 +105,8 @@ OBREstimator <- function(x, L2Fam, eff=0.95, fsCor = 1, initial.est,
                     na.rm = TRUE, initial.est.ArgList, ..., withLogScale = TRUE,
                     ..withCheck=FALSE, withTimings = FALSE, withMDE = NULL,
                     withEvalAsVar = NULL, withMakeIC = FALSE,
-                    modifyICwarn = NULL){
+                    modifyICwarn = NULL, E.argList = NULL,
+                    diagnostic = FALSE){
 
    if(!is.numeric(eff)||length(eff)>1||any(eff<0|eff>1))
       stop("Efficiency loss (in the ideal model) 'eff' must be given, of length 1 and in [0,1].")
@@ -118,7 +124,8 @@ OBREstimator <- function(x, L2Fam, eff=0.95, fsCor = 1, initial.est,
                        withLogScale = withLogScale, ..withCheck = ..withCheck,
                        withTimings = withTimings, withMDE = withMDE,
                        withEvalAsVar = withEvalAsVar, withMakeIC = withMakeIC,
-                       modifyICwarn = modifyICwarn)
+                       modifyICwarn = modifyICwarn, E.argList = E.argList,
+                       diagnostic = diagnostic)
 
    if(!is.null(dots)) roptestArgList <- c(roptestArgList, dots)
    if(!missing(initial.est)) roptestArgList$initial.est <- initial.est
@@ -142,7 +149,8 @@ MBREstimator <- function(x, L2Fam, fsCor = 1, initial.est,
                     na.rm = TRUE, initial.est.ArgList, ..., withLogScale = TRUE,
                     ..withCheck=FALSE, withTimings = FALSE, withMDE = NULL,
                     withEvalAsVar = NULL, withMakeIC = FALSE,
-                    modifyICwarn = NULL){
+                    modifyICwarn = NULL, E.argList = NULL,
+                    diagnostic = FALSE){
 
    mc <- match.call(expand.dots=FALSE)
    dots <- mc$"..."
@@ -162,7 +170,8 @@ MBREstimator <- function(x, L2Fam, fsCor = 1, initial.est,
                        withLogScale = withLogScale, ..withCheck = ..withCheck,
                        withTimings = withTimings, withMDE = withMDE,
                        withEvalAsVar = withEvalAsVar, withMakeIC = withMakeIC,
-                       modifyICwarn = modifyICwarn)
+                       modifyICwarn = modifyICwarn, E.argList = E.argList,
+                       diagnostic = diagnostic)
 
    if(!is.null(dots)) roptestArgList <- c(roptestArgList, dots)
    if(!missing(initial.est)) roptestArgList$initial.est <- initial.est

@@ -19,7 +19,7 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         na.rm = TRUE, initial.est.ArgList, ...,
         withLogScale = TRUE, ..withCheck = FALSE, withTimings = FALSE,
         withMDE = NULL, withEvalAsVar = NULL, withMakeIC = FALSE,
-        modifyICwarn = NULL, E.argList = NULL)
+        modifyICwarn = NULL, E.argList = NULL, diagnostic = FALSE)
 roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
         distance = CvMDist, startPar = NULL, verbose = NULL,
@@ -116,6 +116,11 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         the items of argument list \code{E.argList} as named items, so
         in case of collisions the item of \code{E.argList} overwrites the
         existing one from \code{\dots}.}
+  \item{diagnostic}{ logical; if \code{TRUE},
+    diagnostic information on the performed integrations is gathered and
+    shipped out as attributes \code{kStepDiagnostic} (for the kStepEstimator-step)
+    and \code{diagnostic} for the remaining steps of the return value
+    of \code{roptest}. }
 }
 \details{
   Computes the optimally robust estimator for a given L2 differentiable
@@ -198,6 +203,7 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   Timings for the steps run through in \code{roptest} are available
   in attributes \code{timings}, and for the step of the
   \code{kStepEstimator} in \code{kStepTimings}.
+
 }
 \value{Object of class \code{"kStepEstimate"}.  In addition, it has
        an attribute \code{"timings"} where computation time is stored.}

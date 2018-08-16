@@ -10,7 +10,7 @@ robest(x, L2Fam,  fsCor = 1, risk = asMSE(), steps = 1L,
         verbose = NULL, OptOrIter = "iterate", nbCtrl = gennbCtrl(),
         startCtrl = genstartCtrl(), startICCtrl = genstartICCtrl(),
         kStepCtrl = genkStepCtrl(), na.rm = TRUE, ..., debug = FALSE,
-        withTimings = FALSE)
+        withTimings = FALSE, diagnostic = FALSE)
 }
 \arguments{
   \item{x}{ sample }
@@ -47,6 +47,11 @@ robest(x, L2Fam,  fsCor = 1, risk = asMSE(), steps = 1L,
    timings for the three steps evaluating the starting value, finding
    the starting influence curve, and evaluating the k-step estimator is
    issued.}
+  \item{diagnostic}{ logical; if \code{TRUE},
+    diagnostic information on the performed integrations is gathered and
+    shipped out as attributes \code{kStepDiagnostic} (for the kStepEstimator-step)
+    and \code{diagnostic} for the remaining steps of the return value
+    of \code{robest}. }
 }
 \details{
   A new, more structured interface to the former function \code{\link{roptest}}.

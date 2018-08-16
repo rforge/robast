@@ -92,7 +92,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
                     withLogScale = TRUE,..withCheck=FALSE,
                     withTimings = FALSE, withMDE = NULL,
                     withEvalAsVar = NULL, withMakeIC = FALSE,
-                    modifyICwarn = NULL, E.argList = NULL){
+                    modifyICwarn = NULL, E.argList = NULL, diagnostic = FALSE){
     mc <- match.call(expand.dots=FALSE)
     dots <- mc[["..."]]
     scalename <- dots[["scalename"]]
@@ -102,12 +102,13 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     if(!missing(eps.lower)) nbCtrl[["eps.lower"]] <- eps.lower
     if(!missing(eps.upper)) nbCtrl[["eps.upper"]] <- eps.upper
 
+    if(diagnostic) if(!missing(E.argList)&&!is.null(E.argList)) E.argList[["diagnostic"]] <- TRUE
+
     startICCtrl <- list()
     startICCtrl[["withMakeIC"]] <- if(!missing(withMakeIC)) withMakeIC else FALSE
     startICCtrl[["withEvalAsVar"]] <- if(!missing(withEvalAsVar)) withEvalAsVar else NULL
     startICCtrl[["modifyICwarn"]] <- if(!missing(modifyICwarn)) modifyICwarn else FALSE
     startICCtrl[["E.argList"]] <- if(!missing(E.argList)) E.argList else NULL
-
 
     startCtrl <- list()
     if(!missing(initial.est)) startCtrl[["initial.est"]] <- initial.est
@@ -136,16 +137,20 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
            startCtrl = startCtrl, startICCtrl = startICCtrl,
            kStepCtrl = kStepCtrl, na.rm = na.rm, ...,
            debug = ..withCheck,
-           withTimings = withTimings)
+           withTimings = withTimings, diagnostic = diagnostic)
     retV@robestCall <- quote(retV@estimate.call)
     retV@estimate.call <- mc
     tim <- attr(retV,"timings")
     timK <- attr(retV,"kStepTimings")
+    diagn <-  attr(retV,"diagnostic")
+    kStpDiagn <- attr(retV,"kStepDiagnostic")
 
     retV <- as(as(retV,"kStepEstimate"), "ORobEstimate")
     retV <- .checkEstClassForParamFamily(L2Fam,retV)
     attr(retV,"timings") <- tim
     attr(retV,"kStepTimings") <- timK
+    attr(retV,"diagnostic") <- diagn
+    attr(retV,"kStepDiagnostic") <- kStpDiagn
     retV@roptestCall <- mc
     return(retV)
 }
@@ -162,7 +167,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
                     startICCtrl = genstartICCtrl(),
                     kStepCtrl = genkStepCtrl(),
                     na.rm = TRUE, ..., debug = FALSE,
-                    withTimings = FALSE){
+                    withTimings = FALSE, diagnostic = FALSE){
 
 
 #### TOBEDONE: set default for risk depending on L2Fam,
@@ -205,6 +210,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
     withMakeICkStep <- kStepCtrl$withMakeIC
     if(is.null(withMakeICkStep)) withMakeICkStep <- FALSE
 
+    diagn <- if(diagnostic) list() else NULL
 
     es.list <- as.list(es.call0[-1])
     es.list <- c(es.list,nbCtrl)
@@ -253,7 +259,8 @@ robest <- function(x, L2Fam,  fsCor = 1,
                   nms <- names(startCtrl$E.arglist)
                   for(nmi in nms) argListMDE[[nmi]] <- startCtrl$E.arglist[[nmi]]
                }
-               startCtrl$initial.est <- do.call(MDEstimator, argListMDE)
+               startCtrl$initial.est <- buf <- do.call(MDEstimator, argListMDE)
+               if(diagnostic) diagn[["startEst"]] <- attr(buf,"diagnostic")
          }
       }
     }
@@ -301,6 +308,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
     if(!debug){
        main(newParam)[] <- as.numeric(initial.est)
        L2FamStart <- modifyModel(L2Fam, newParam)
+       if(diagnostic) diagn[["modifyModel"]] <- attr(L2FamStart,"diagnostic")
     }
     if(debug) print(risk)
 
@@ -343,6 +351,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
            for(nmi in nms) getStartICArgList[[nmi]] <- startICCtrl$E.arglist[[nmi]]
        }
        ICstart <- do.call(getStartIC, args=getStartICArgList)
+       if(diagnostic) diagn[["ICstart"]] <- attr(ICstart,"diagnostic")
      })
      if (withTimings) print(sy.getStartIC)
      }
@@ -380,6 +389,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
          res <- do.call(kStepEstimator, kStepArgList)
                             })
        sy.OnlykStep <- attr(res,"timings")
+       kStpDiagn <- attr(res,"diagnostic")
        if (withTimings) print(sy.kStep)
        if (withTimings && !is.null(sy.OnlykStep)) print(sy.OnlykStep)
     if(!debug){
@@ -413,5 +423,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
     res@start <- initial.est
     attr(res, "timings") <- sy
     attr(res, "kStepTimings") <- sy.OnlykStep
+    if(diagnostic) attr(res,"kStepDiagnostic") <- kStpDiagn
+    if(diagnostic) attr(res,"diagnostic") <- diagn
     return(res)
 }

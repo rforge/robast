@@ -41,7 +41,8 @@
   \code{E}. }
   \item{diagnostic}{ logical; if \code{TRUE} (and in case \code{checkIC} if
       argument \code{out==TRUE}), diagnostic information on the integration
-      is printed. }
+      is printed and returned as attribute \code{diagnostic} of the return value. }
+
 }
 \details{ 
   In \code{checkIC}, the precisions of the centering and the Fisher consistency

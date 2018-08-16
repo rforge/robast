@@ -24,12 +24,16 @@ user-visible CHANGES:
   and start.Par and the different steps done in roptest 
 + the input generators genkStepCtrl, genstartCtrl, genstartICCtrl gain argument
   E.argList to pass on arguments to E()
-+ roptest gains an argument E.argList for arguments to be passed to E() from (a) 
-  \code{MDEstimator} (here this additional argument is only used if \code{initial.est}  
-   is missing), (b) \code{getStartIC}, and (c) \code{kStepEstimator}. Potential clashes with
-   arguments of the same name in \code{\dots} are resolved by inserting the items of argument 
-   list \code{E.argList} as named items, so in case of collisions the item of \code{E.argList} 
-   overwrites the existing one from \code{\dots}.
++ roptest and the wrappers RMX|OBR|MBR|OMSEstimator gain an argument E.argList for arguments 
+  to be passed to E() from (a) \code{MDEstimator} (here this additional argument is only 
+   used if \code{initial.est}  is missing), (b) \code{getStartIC}, and (c) \code{kStepEstimator}. 
+   Potential clashes with arguments of the same name in \code{\dots} are resolved by inserting 
+   the items of argument list \code{E.argList} as named items, so in case of collisions the 
+   item of \code{E.argList} overwrites the existing one from \code{\dots}.
++ roptest and its wrappers RMX|OBR|MBR|OMSEstimator, getStartIC for asGRisk, asBias, RMX, and
+  asAnscombe, as well as the particular checkIC/makeIC methods for ContIC gain argument 
+  diagnostic to be able to show diagnostic information on integrations; this information 
+  (if argument "diagnostic" is TRUE) is stored in attribute "diagnostic" of the return value
 
 bug fixes
 
@@ -65,8 +69,8 @@ under the hood
   geInfGamma, getInfRad, getInfClip, getInfCent, getInfStand, getInfV, getAsRisk, getReq,
   (at least as far as multivariate ICs are concerned), .LowerCaseMultivariate, getMaxIneff, 
   getInfRad, getLagrangeMultByIter and getLagrangeMultByOptim
-+ new internal helper function .filterEarg by means of constant ..IntegrateArgs (exported 
-  from package RobAStBase) is used to filter out arguments from dots which are meant for E() 
++ new internal helper function .filterEargWEargList is used to filter out arguments 
+  from dots which are meant for E() 
 + the local .modifyIC0 functions only used to produce the new IC but not for filling
   slot modifyIC loose argument withMakeIC (and dots) -- this is now done in the outer
   modifyIC function
@@ -77,6 +81,7 @@ under the hood
   than in the default method. This can be overriden by argument forceContICMethod. 
 + the particular checkIC and makeIC methods gain argument diagnostic to be able to 
   show diagnostic information on integrations
+  
 
 #######################################
 version 1.1
