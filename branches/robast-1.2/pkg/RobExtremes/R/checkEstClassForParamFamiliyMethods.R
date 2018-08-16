@@ -23,6 +23,9 @@ setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GParetoFamily",estimator="MCEstimate"),
               function(PFam, estimator) as(estimator,"GPDMCEstimate"))
 setMethod(".checkEstClassForParamFamily",
+              signature=signature(PFam="GParetoFamily",estimator="MDEstimate"),
+              function(PFam, estimator) as(estimator,"GPDMDEstimate"))
+setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GParetoFamily",estimator="MLEstimate"),
               function(PFam,estimator) .castToALE(PFam, estimator, "GPDML.ALEstimate"))
 setMethod(".checkEstClassForParamFamily",
@@ -46,6 +49,9 @@ setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamily",estimator="MCEstimate"),
               function(PFam, estimator) as(estimator,"GEVMCEstimate"))
 setMethod(".checkEstClassForParamFamily",
+              signature=signature(PFam="GEVFamily",estimator="MDEstimate"),
+              function(PFam, estimator) as(estimator,"GEVMDEstimate"))
+setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamily",estimator="MLEstimate"),
               function(PFam,estimator) .castToALE(PFam, estimator, "GEVML.ALEstimate"))
 setMethod(".checkEstClassForParamFamily",
@@ -68,6 +74,9 @@ setMethod(".checkEstClassForParamFamily",
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamilyMuUnknown",estimator="MCEstimate"),
               function(PFam, estimator) as(estimator,"GEVMCEstimate"))
+setMethod(".checkEstClassForParamFamily",
+              signature=signature(PFam="GEVFamilyMuUnknown",estimator="MDEstimate"),
+              function(PFam, estimator) as(estimator,"GEVMDEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamilyMuUnknown",estimator="MLEstimate"),
               function(PFam,estimator) .castToALE(PFam, estimator, "GEVML.ALEstimate"))

@@ -5,6 +5,8 @@
 \alias{GEVEstimate-class}
 \alias{GPDMCEstimate-class}
 \alias{GEVMCEstimate-class}
+\alias{GPDMDEstimate-class}
+\alias{GEVMDEstimate-class}
 \alias{GPDLDEstimate-class}
 \alias{GEVLDEstimate-class}
 \alias{GPDkStepEstimate-class}
@@ -23,6 +25,7 @@ in package \pkg{RobExtremes} defined for internal
  \section{Described classes}{
 The S4 classes described here are \code{GPDEstimate}, \code{GEVEstimate},
  \code{GPDMCEstimate}, \code{GEVMCEstimate},
+ \code{GPDMDEstimate}, \code{GEVMDEstimate},
  \code{GPDLDEstimate}, \code{GEVLDEstimate},
  \code{GPDkStepEstimate}, \code{GEVkStepEstimate},
  \code{GPDORobEstimate}, \code{GEVORobEstimate},
@@ -42,6 +45,10 @@ Class \code{GPDMCEstimate} extends classes \code{GPDEstimate},
 \code{MCEstimate}, directly.\cr
 Class \code{GEVMCEstimate} extends classes \code{GEVEstimate},
 \code{MCEstimate}, directly.\cr
+Class \code{GPDMDEstimate} extends classes \code{GPDEstimate},
+\code{MDEstimate}, directly.\cr
+Class \code{GEVMDEstimate} extends classes \code{GEVEstimate},
+\code{MDEstimate}, directly.\cr
 Class \code{GPDMCALEstimate} extends classes \code{GPDEstimate},
 \code{MCALEstimate}, directly.\cr
 Class \code{GEVMCALEstimate} extends classes \code{GEVEstimate},

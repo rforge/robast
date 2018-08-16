@@ -11,6 +11,10 @@
 version 1.2
 #######################################
 
+bugfixes:
++ Bernhard discovered a bug in ".checkEstClassForParamFamily" for GEV (was GPD instead of GEV)
++ there were no classes [GPD/GEV]MDEstimate -> fixed now
+
 under the hood
 + moved quantile integration methods for expectation for Weibull and
   Gamma distribution to pkg distrEx (>= 2.8.0)
@@ -35,6 +39,7 @@ under the hood
   deleted classes "GPDMCALEstimate", "GEVMCALEstimate" as not every MCE is an ALE -> this gave misleading error messages
 + warning/caveat in the help to GEVFamily/GEVFamilyMuUnknown as to the accuracy of PickandsEstimator for GEV 
 + introduced particular liesInSupport methods for Gumbel, Pareto, GPareto, and GEV 
+
   
 #######################################
 version 1.1
