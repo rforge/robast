@@ -52,7 +52,7 @@ under the hood
 + clarified if clauses in roptest.new (and removed .with.checkEstClassForParamFamily from dots to be sure)
 + inserted code for time checking (which is inactive usually; only if in kStepEstimator.R in 
   RobAStBase, the respective ##-t-## lines are de-commented the timings are visible as
-  attribute "kStepTimings" in the result of roptest ...)
+  attribute "kStepTimings" in the result of roptest ...) changed now: is always active....
 + now specified that we want to use distr::solve
 + internal function .getComp, determining by symmetry slots which entries in LMs a and A 
   have to be computed, now fills the lower triangle of A with FALSE (was not used so far,
@@ -75,6 +75,8 @@ under the hood
   does checking / the affine transformation to give the proper pIC. These methods by 
   default are only used if it pays off, i.e., if the number of computed integrals is smaller
   than in the default method. This can be overriden by argument forceContICMethod. 
++ the particular checkIC and makeIC methods gain argument diagnostic to be able to 
+  show diagnostic information on integrations
 
 #######################################
 version 1.1

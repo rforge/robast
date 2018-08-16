@@ -2,13 +2,13 @@
 ## faster check for ContICs
 
 setMethod("checkIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
-    function(IC, L2Fam, out = TRUE, forceContICMethod = FALSE, ...){
+    function(IC, L2Fam, out = TRUE, forceContICMethod = FALSE, ..., diagnostic = FALSE){
 
         D1 <- L2Fam@distribution
         if( dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
-         res <- .prepareCheckMakeIC(L2Fam, w = IC@weight, forceContICMethod, ...)
+         res <- .prepareCheckMakeIC(L2Fam, w = IC@weight, forceContICMethod, ..., diagnostic = diagnostic)
          ## if it pays off to use symmetry/ to compute integrals in L2deriv space
         ## we compute the following integrals:
         ## G1 = E w, G2 = E Lambda w, G3 = E Lambda Lambda' w
@@ -20,7 +20,7 @@ setMethod("checkIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
 
         if(is.null(res))
            return(getMethod("checkIC", signature(IC = "IC",
-                              L2Fam = "L2ParamFamily"))(IC,L2Fam, out = out, ...))
+                              L2Fam = "L2ParamFamily"))(IC,L2Fam, out = out, ..., diagnostic = diagnostic))
 
 
         A <- stand(IC);  a <- cent(IC)
@@ -37,6 +37,12 @@ setMethod("checkIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
             print(Delta2)
             cat("precision of Fisher consistency - relative error [%]:\n")
             print(100*Delta2/trafo)
+
+            if(diagnostic){
+               print(attr(res$G1, "diagnostic"))
+               print(attr(res$G2, "diagnostic"))
+               print(attr(res$G3, "diagnostic"))
+            }
         }
 
         prec <- max(abs(Delta1), abs(Delta2))
@@ -47,7 +53,7 @@ setMethod("checkIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
 
 ## make some L2function a pIC at a model
 setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
-    function(IC, L2Fam, forceContICMethod = FALSE, ...){
+    function(IC, L2Fam, forceContICMethod = FALSE, ..., diagnostic = FALSE){
 
         D1 <- L2Fam@distribution
         if( dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
@@ -57,7 +63,13 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
         if(dimension(IC@Curve) != dims)
            stop("Dimension of IC and parameter must be equal")
 
-        res <- .prepareCheckMakeIC(L2Fam, w = IC@weight, forceContICMethod, ...)
+        res <- .prepareCheckMakeIC(L2Fam, w = IC@weight, forceContICMethod, ..., diagnostic = diagnostic)
+
+        if(diagnostic &&!is.null(res)){
+               print(attr(res$G1, "diagnostic"))
+               print(attr(res$G2, "diagnostic"))
+               print(attr(res$G3, "diagnostic"))
+        }
 
         ## if it pays off to use symmetry/ to compute integrals in L2deriv space
         ## we compute the following integrals:
@@ -70,7 +82,7 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
 
         if(is.null(res))
            return(getMethod("makeIC", signature(IC = "IC",
-                              L2Fam = "L2ParamFamily"))(IC,L2Fam,...))
+                              L2Fam = "L2ParamFamily"))(IC,L2Fam,..., diagnostic = diagnostic))
 
         G1 <- res$G1;  G2 <- res$G2;  G3 <- res$G3
         trafO <- trafo(L2Fam@param)
@@ -116,7 +128,7 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
         return(cIC1)
     })
 
-.prepareCheckMakeIC <- function(L2Fam, w, forceContICMethod, ...){
+.prepareCheckMakeIC <- function(L2Fam, w, forceContICMethod, ..., diagnostic = FALSE){
 
         dims <- length(L2Fam@param)
         trafo <- trafo(L2Fam@param)
@@ -145,15 +157,16 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
 
 
         res <- .getG1G2G3Stand(L2deriv = L2deriv, Distr = L2Fam@distribution,
-                               A.comp = A.comp, z.comp = z.comp, w = w, ...)
+                               A.comp = A.comp, z.comp = z.comp, w = w, ...,
+                               diagnostic = diagnostic)
         return(res)
 }
 
 
 
-.getG1G2G3Stand <- function(L2deriv, Distr, A.comp, z.comp, w, ...){
+.getG1G2G3Stand <- function(L2deriv, Distr, A.comp, z.comp, w, ..., diagnostic = FALSE){
 
-        dotsI <- .filterEargsWEargList(list(...))
+        dotsI <- .filterEargs(list(...))
         if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         w.fct <- function(x){
@@ -165,21 +178,25 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
             return(L2.i(x)*w.fct(x))
         }
 
+        diagn <- if(diagnostic) vector("list", sum(z.comp)+sum(A.comp))
+        if(diagnostic) dotsI$diagnostic <- TRUE
         Eargs <- c(list(object = Distr, fun = w.fct), dotsI)
         res1 <- do.call(E,Eargs)
 
+        k <- 0
         nrvalues <- length(L2deriv)
         res2 <- numeric(nrvalues)
         for(i in 1:nrvalues){
             if(z.comp[i]){
                  Eargs <- c(list(object = Distr, fun = integrand2,
                                  L2.i = L2deriv@Map[[i]]), dotsI)
-                 res2[i] <- do.call(E,Eargs)
+                 res2[i] <- buf <- do.call(E,Eargs)
+                 if(diagnostic){k <- k + 1; diagn[[k]] <- attr(buf,"diagnostic")}
             }else{
                 res2[i] <- 0
             }
         }
-
+        if(diagnostic) {k1 <- k; attr(res2, "diagnostic") <- diagn[(1:k1)]}
         cent <- res2/res1
 
         integrandA <- function(x, L2.i, L2.j, i, j){
@@ -195,11 +212,13 @@ setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
                     Eargs <- c(list(object = Distr, fun = integrandA,
                                    L2.i = L2deriv@Map[[i]],
                                    L2.j = L2deriv@Map[[j]], i = i, j = j), dotsI)
-                    erg[i, j] <- do.call(E,Eargs)
+                    erg[i, j] <- buf <- do.call(E,Eargs)
+                    if(diagnostic){k <- k + 1; diagn[[k]] <- attr(buf,"diagnostic")}
                 }
             }
         }
         erg[col(erg) < row(erg)] <- t(erg)[col(erg) < row(erg)]
+        if(diagnostic) {k1 <- k; attr(erg, "diagnostic") <- diagn[-(1:k1)]}
 
         return(list(G1=res1,G2=res2, G3=erg))
     }

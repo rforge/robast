@@ -12,9 +12,9 @@
 }
 \usage{
 \S4method{checkIC}{ContIC,L2ParamFamily}(IC, L2Fam, out = TRUE,
-              forceContICMethod = FALSE, ...)
+              forceContICMethod = FALSE, ..., diagnostic = FALSE)
 \S4method{makeIC}{ContIC,L2ParamFamily}(IC, L2Fam,
-              forceContICMethod = FALSE, ...)
+              forceContICMethod = FALSE, ..., diagnostic = FALSE)
 }
 \arguments{
   \item{IC}{ object of class \code{"IC"} }
@@ -39,6 +39,9 @@
   slot \code{param} of \code{L2Fam}.}
   \item{\dots}{ additional parameters to be passed on to expectation
   \code{E}. }
+  \item{diagnostic}{ logical; if \code{TRUE} (and in case \code{checkIC} if
+      argument \code{out==TRUE}), diagnostic information on the integration
+      is printed. }
 }
 \details{ 
   In \code{checkIC}, the precisions of the centering and the Fisher consistency
