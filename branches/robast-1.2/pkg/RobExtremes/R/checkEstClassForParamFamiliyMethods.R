@@ -6,13 +6,6 @@
                  return(to)
 }
 
-setClass("GPDEstimate", contains="Estimate")
-setClass("GPDLDEstimate", contains=c("LDEstimate", "GPDEstimate"))
-setClass("GPDkStepEstimate", contains=c("kStepEstimate", "GPDEstimate"))
-setClass("GPDORobEstimate", contains=c("ORobEstimate", "GPDkStepEstimate"))
-setClass("GPDMCEstimate", contains=c("MCEstimate", "GPDEstimate"))
-setClass("GPDML.ALEstimate", contains=c("ML.ALEstimate", "GPDEstimate"))
-setClass("GPDCvMMD.ALEstimate", contains=c("CvMMD.ALEstimate", "GPDEstimate"))
 
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GParetoFamily",estimator="Estimate"),
@@ -57,7 +50,7 @@ setMethod(".checkEstClassForParamFamily",
               function(PFam,estimator) .castToALE(PFam, estimator, "GEVML.ALEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamily",estimator="CvMMDEstimate"),
-              function(PFam,estimator) .castToALE(PFam, estimator, "GPDCvMMD.ALEstimate"))
+              function(PFam,estimator) .castToALE(PFam, estimator, "GEVCvMMD.ALEstimate"))
 
 
 setMethod(".checkEstClassForParamFamily",
@@ -80,4 +73,4 @@ setMethod(".checkEstClassForParamFamily",
               function(PFam,estimator) .castToALE(PFam, estimator, "GEVML.ALEstimate"))
 setMethod(".checkEstClassForParamFamily",
               signature=signature(PFam="GEVFamilyMuUnknown",estimator="CvMMDEstimate"),
-              function(PFam,estimator) .castToALE(PFam, estimator, "GPDCvMMD.ALEstimate") )
+              function(PFam,estimator) .castToALE(PFam, estimator, "GEVCvMMD.ALEstimate") )
