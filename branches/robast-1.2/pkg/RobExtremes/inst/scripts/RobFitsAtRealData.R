@@ -61,6 +61,8 @@ removeMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"))
 system.time(RMXiw2 <- RMXEstimator(portpiriei, GEVFam,withMakeIC=TRUE))
 checkIC(pIC(RMXiw2))
 setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),oldM)
+getMethod("checkIC", signature(IC = "IC", L2Fam = "missing"))(pIC(RMXiw2),
+           out=TRUE, diagnostic=TRUE)
 
 estimate(RMXi)
 estimate(RMXiw)
@@ -174,13 +176,9 @@ devNew()
 gev.profxi(mlEc, -0.3, 0.3)
 
 ## diagnostics from pkg 'distrMod'/'RobAStBase'
-devNew()
 qqplot(portpiriec,MBRc)
-devNew()
 qqplot(portpiriec,MBRc,ylim=c(3.5,5))
-devNew()
 returnlevelplot(portpiriec,MBRc)
-devNew()
 returnlevelplot(portpiriec,MBRc,ylim=c(3.5,5))
 
 ## here the MBR-IC looks as follows
@@ -247,48 +245,33 @@ gpd.profxi(mlE2c, -0.02, 0.02)
 devNew()
 plot(pIC(MBR2c))
 
-devNew()
 qqplot(rainc,MBR2c)
-devNew()
 qqplot(rainc,MBR2c,ylim=c(5,100))
-devNew()
 qqplot(rainc,MBR2c,xlim=c(5,100),ylim=c(5,100),log="xy")
-devNew()
 qqplot(rainc,MBR2c,xlim=c(5,100),ylim=c(5,100),log="xy",
        cex.pts=2,col.pts="blue",with.lab=TRUE,cex.lbs=.9,which.Order=1:3)
 
-devNew()
 returnlevelplot(raini,MBR2i,MaxOrPot="POT",threshold=0)
-devNew()
 returnlevelplot(raini,MBR2i,MaxOrPot="POT",threshold=0, withLab=TRUE, cex.lbl=0.8)
-devNew()
 returnlevelplot(rainc,MBR2c,MaxOrPot="POT",threshold=0)
-devNew()
 returnlevelplot(rainc,MBR2c,ylim=c(10,100),MaxOrPot="POT",threshold=0)
 #
 L2F <- eval(MBR2c@pIC@CallL2Fam)
 dI2c <- L2F@distribution
-devNew()
 qqplot(rainc,dI2c)
 rainc.10 <- rainc-10
-devNew()
 qqplot(rainc.10,dI2c-10)
-devNew()
 returnlevelplot(rainc.10,dI2c-10,MaxOrPot="POT",threshold=0)
 
 ## wrong data set
 dI2i <- distribution(eval(MBR2i@pIC@CallL2Fam))
 loc(dI2i) <- 0
-devNew()
 qqplot(portpiriei-10,dI2i)
-devNew()
 qqplot(portpiriec,MBR2c)
 ### all points are red
 
 ## right data set
-devNew()
 qqplot(raini-10,dI2i)
-devNew()
 qqplot(rainc,MBR2c)
 
 
@@ -301,11 +284,8 @@ xc <- c(x, 1e15,1e12,1e69, 2.001,2.00000001)
 PM <- ParetoFamily(Min=2)
 mlE3i <- MLEstimator(x,PM)
 mlE3c <- MLEstimator(xc,PM)
-devNew()
 qqplot(x, mlE3i, log="xy")
-devNew()
 qqplot(xc, mlE3c, log="xy")
-devNew()
 returnlevelplot(x, mlE3i, MaxOrPOT="POT",ylim=c(1,1e5),log="y")
 
 system.time(MBR3i <- MBREstimator(x, PM))
@@ -349,9 +329,7 @@ devNew()
 plot(pIC(MBR4i))
 devNew()
 plot(pIC(RMX4i))
-devNew()
 qqplot(grbsi, RMX4i)
-devNew()
 qqplot(grbsc, RMX4c, log="xy")
 
 #######################################################
@@ -381,7 +359,5 @@ devNew()
 plot(pIC(RMX5i))
 devNew()
 plot(pIC(MBR5i))
-devNew()
 qqplot(grbsi, RMX5i)
-devNew()
 qqplot(grbsc, RMX5c, log="xy")
