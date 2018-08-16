@@ -19,7 +19,9 @@ checkIC(IC, L2Fam, ...)
   \item{out}{ logical: Should the values of the checks be printed out?}
   \item{\dots}{ additional parameters }
   \item{diagnostic}{ logical; if \code{TRUE} and \code{out==TRUE},
-    diagnostic information on the integration is printed. }
+    diagnostic information on the integration is printed; independent
+    of \code{out}, if \code{diagnostic==TRUE}, this information is
+    returned as attribute \code{diagnostic} of the return value. . }
 }
 \details{ 
   The precisions of the centering and the Fisher consistency

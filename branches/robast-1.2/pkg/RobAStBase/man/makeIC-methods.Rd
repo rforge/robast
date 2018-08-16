@@ -44,7 +44,8 @@ makeIC(IC, L2Fam, ...)
     computations! }
   \item{\dots}{ additional parameters to be passed to expectation \code{E} }
   \item{diagnostic}{ logical; if \code{TRUE},
-    diagnostic information on the integration is printed. }
+    diagnostic information on the integration is printed and returned
+    as attribute \code{diagnostic} of the return value. }
 }
 \value{An IC of class \code{"IC"} at the model.}
 \section{Methods}{\describe{
