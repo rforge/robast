@@ -11,7 +11,10 @@
                if(diagnostic) diagn[[i]] <- attr(buf, "diagnostic")
                if(nrdim>1) res[i,] <- buf else res[i] <- buf
         }
-        if(!is.null(diagn)) attr(res,"diagnostic") <- diagn
+        if(!is.null(diagn)){
+           attr(res,"diagnostic") <- diagn
+           class(attr(res,"diagnostic")) <- "DiagnosticClass"
+        }
         return(res)
     }
 
@@ -34,7 +37,10 @@
             res[i] <- buf <- do.call(E, Eargs)
             if(diagnostic) diagn[[i]] <- attr(buf, "diagnostic")
         }
-        if(!is.null(diagn)) attr(res,"diagnostic") <- diagn
+        if(!is.null(diagn)){
+           attr(res,"diagnostic") <- diagn
+           class(attr(res,"diagnostic")) <- "DiagnosticClass"
+        }
         return(res)
    }
 
@@ -53,7 +59,10 @@
         res <- E(object, as(fun, "EuclRandVariable"), useApply = useApply, ..., diagnostic = diagnostic)
         if(diagnostic) diagn <- attr(res, "diagnostic")
         res <- matrix(res, nrow = nrow(fun))
-        if(!is.null(diagn)) attr(res,"diagnostic") <- diagn
+        if(!is.null(diagn)){
+           attr(res,"diagnostic") <- diagn
+           class(attr(res,"diagnostic")) <- "DiagnosticClass"
+        }
         return(res)
     }
 .locElistfun <- function(object, fun, useApply = TRUE, ..., diagnostic = FALSE){
@@ -66,7 +75,10 @@
                res[[i]] <- buf <- E(object, fun = fun[[i]], useApply = useApply, ..., diagnostic = diagnostic)
                if(diagnostic) diagn[[i]] <- attr(buf, "diagnostic")
         }
-        if(!is.null(diagn)) attr(res,"diagnostic") <- diagn
+        if(!is.null(diagn)){
+           attr(res,"diagnostic") <- diagn
+           class(attr(res,"diagnostic")) <- "DiagnosticClass"
+        }
         return(res)
     }
 
@@ -107,7 +119,10 @@
                  withCond = withCond, useApply = useApply, ..., diagnostic = diagnostic)
         if(diagnostic) diagn <- attr(res, "diagnostic")
         res <- matrix(res, nrow = nrow(fun))
-        if(!is.null(diagn)) attr(res,"diagnostic") <- diagn
+        if(!is.null(diagn)){
+           attr(res,"diagnostic") <- diagn
+           class(attr(res,"diagnostic")) <- "DiagnosticClass"
+        }
         return(res)
     }
 
@@ -119,7 +134,10 @@
             res[[i]] <- buf <- E(object, fun=fun[[i]], cond = cond, withCond = withCond, useApply = useApply, ..., diagnostic = diagnostic)
             if(diagnostic) diagn[[i]] <- attr(buf, "diagnostic")
         }
-        if(!is.null(diagn)) attr(res,"diagnostic") <- diagn
+        if(!is.null(diagn)){
+           attr(res,"diagnostic") <- diagn
+           class(attr(res,"diagnostic")) <- "DiagnosticClass"
+        }
         return(res)
     }
 
@@ -137,6 +155,7 @@ setMethod("E", signature(object = "UnivariateDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- mc
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
@@ -151,6 +170,7 @@ setMethod("E", signature(object = "AbscontDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- match.call()
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
@@ -173,6 +193,7 @@ setMethod("E", signature(object = "UnivariateDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- match.call()
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
@@ -188,6 +209,7 @@ setMethod("E", signature(object = "AbscontDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- match.call()
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
@@ -211,6 +233,7 @@ setMethod("E", signature(object = "UnivariateDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- match.call()
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
@@ -226,6 +249,7 @@ setMethod("E", signature(object = "AbscontDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- match.call()
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
@@ -249,6 +273,7 @@ setMethod("E", signature(object = "MultivariateDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- match.call()
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
@@ -275,6 +300,7 @@ setMethod("E", signature(object = "MultivariateDistribution",
            diagn[["call"]] <- match.call()
            res <- array(res, c(nrow(fun), ncol(fun), fun@Range@dimension))
            attr(res, "diagnostic") <- diagn
+           class(attr(res,"diagnostic")) <- "DiagnosticClass"
            return(res)
         }
     })
@@ -296,6 +322,7 @@ setMethod("E", signature(object = "MultivariateDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- match.call()
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
@@ -320,6 +347,7 @@ setMethod("E", signature(object = "UnivariateCondDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- match.call()
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
@@ -336,6 +364,7 @@ setMethod("E", signature(object = "AbscontCondDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- match.call()
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
@@ -361,6 +390,7 @@ setMethod("E", signature(object = "UnivariateCondDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- match.call()
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
@@ -377,6 +407,7 @@ setMethod("E", signature(object = "AbscontCondDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- match.call()
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
@@ -402,6 +433,7 @@ setMethod("E", signature(object = "UnivariateCondDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- match.call()
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
@@ -418,6 +450,7 @@ setMethod("E", signature(object = "AbscontCondDistribution",
                 diagn <- attr(res,"diagnostic")
                 diagn[["call"]] <- match.call()
                 attr(res,"diagnostic") <- diagn
+                class(attr(res,"diagnostic")) <- "DiagnosticClass"
              }
              return(res)
           })
