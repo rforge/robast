@@ -48,6 +48,24 @@ makeIC(IC, L2Fam, ...)
     as attribute \code{diagnostic} of the return value. }
 }
 \value{An IC of class \code{"IC"} at the model.}
+\details{
+  Argument \code{IC} is transformed affinely such that the transformed IC
+  satisfies the defining side conditions of an IC, i.e., centeredness and
+  Fisher consistency:
+
+  \deqn{\mathop{\mbox{\boldmath$E$}}[{\rm IC}]=0}{E[IC]=0}
+  \deqn{\mathop{\mbox{\boldmath$E$}}[{\rm IC}\,\Lambda^\tau]= D}{E[IC Lambda'] = D}
+
+  where \eqn{\Lambda}{Lambda} is the L2 derivative of the model and D is
+  the Jacobian of transformation \code{trafo}.
+
+  Diagnostics on the involved integrations are available if argument
+  \code{diagnostic} is \code{TRUE}. Then there is attribute \code{diagnostic}
+  attached to the return value, which may be inspected
+  and accessed through \code{\link[distrEx:distrExIntegrate]{showDiagnostic}} and
+  \code{\link[distrEx:distrExIntegrate]{getDiagnostic}}.
+}
+
 \section{Methods}{\describe{
 \item{makeIC}{\code{signature(IC = "IC", L2Fam = "missing"}: creates 
           an object of class \code{"IC"} at the parametric model of its own

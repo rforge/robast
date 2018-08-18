@@ -508,7 +508,10 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         estres <- .checkEstClassForParamFamily(L2Fam,estres)
 
         attr(estres,"timings") <- apply(sytm,2,diff)
-        if(diagnostic) attr(estres,"diagnostic") <- diagn
+        if(diagnostic){
+           attr(estres,"diagnostic") <- diagn
+           class(attr(estres,"diagnostic")) <- "DiagnosticClass"
+        }
         on.exit()
         return(estres)
 

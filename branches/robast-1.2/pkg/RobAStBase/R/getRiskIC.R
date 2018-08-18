@@ -64,7 +64,10 @@ setMethod("getRiskIC", signature(IC = "IC",
         }
         Cova[col(Cova) < row(Cova)] <- t(Cova)[col(Cova) < row(Cova)]
         # if(withCheck) .checkICWithWarning(IC, L2Fam, tol, ...)
-        if(diagnostic) attr(Cova,"diagnostic") <- diagn
+        if(diagnostic){
+           attr(Cova,"diagnostic") <- diagn
+           class(attr(Cova,"diagnostic")) <- "DiagnosticClass"
+        }
         return(list(asCov = list(distribution = .getDistr(L2Fam), value = Cova)))
     })
 

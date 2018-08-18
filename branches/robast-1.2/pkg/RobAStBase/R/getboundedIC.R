@@ -62,6 +62,9 @@ getBoundedIC <- function(L2Fam, D=trafo(L2Fam@param),..., diagnostic = FALSE){
         stand <- as.matrix(D %*% distr::solve(stand.0, generalized = TRUE))
         L2w0 <- L2w - cent
         res <- as(stand %*% L2w0, "EuclRandVariable")
-        if(diagnostic) attr(res,"diagnostic") <- diagn
+        if(diagnostic){
+           attr(res,"diagnostic") <- diagn
+           class(attr(res,"diagnostic")) <- "DiagnosticClass"
+        }
         return(res)
 }

@@ -75,7 +75,7 @@ exportMethods("moveL2Fam2RefParam",
 exportMethods("ddPlot", "qqplot", "returnlevelplot")
 exportMethods("cutoff.quantile", "cutoff.quantile<-")
 exportMethods("samplesize<-", "samplesize")
-exportMethods("getRiskFctBV", "getFiRisk", "getPIC")
+exportMethods("getRiskFctBV", "getFiRisk", "getPIC", "timings")
 export("oneStepEstimator", "kStepEstimator")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 

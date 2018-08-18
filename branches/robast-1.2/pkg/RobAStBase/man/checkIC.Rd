@@ -26,6 +26,12 @@ checkIC(IC, L2Fam, ...)
 \details{ 
   The precisions of the centering and the Fisher consistency
   are computed.
+
+  Diagnostics on the involved integrations are available if argument
+  \code{diagnostic} is \code{TRUE}. Then there is attribute \code{diagnostic}
+  attached to the return value, which may be inspected
+  and accessed through \code{\link[distrEx:distrExIntegrate]{showDiagnostic}} and
+  \code{\link[distrEx:distrExIntegrate]{getDiagnostic}}.
 }
 \value{The maximum deviation from the IC properties is returned.}
 \references{

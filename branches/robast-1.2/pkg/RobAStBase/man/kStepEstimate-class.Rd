@@ -20,6 +20,8 @@
 \alias{ustartval}
 \alias{ustartval,kStepEstimate-method}
 \alias{show,kStepEstimate-method}
+\alias{timings}
+\alias{timings,kStepEstimate-method}
 
 \title{kStepEstimate-class.}
 \description{Class of asymptotically linear estimates.}
@@ -128,11 +130,15 @@ Class \code{"Estimate"}, by class \code{"ALEstimate"}
     \item{robestCall}{\code{signature(object = "kStepEstimate")}:
       accessor function for slot \code{robestCall}. }
 
+    \item{timings}{\code{signature(object = "kStepEstimate")}:
+      accessor function for attribute \code{"timings"}. }
+
     \item{show}{\code{signature(object = "kStepEstimate")}: a show method; }
   }
 }
 %\references{}
-\author{Matthias Kohl \email{Matthias.Kohl@stamats.de}}
+\author{Matthias Kohl \email{Matthias.Kohl@stamats.de} and
+Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenurg.de}}
 %\note{}
 \seealso{\code{\link{ALEstimate-class}}}
 %\examples{}

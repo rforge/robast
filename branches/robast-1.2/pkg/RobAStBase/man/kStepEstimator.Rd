@@ -86,6 +86,13 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
 
   Timings for the several substeps are available as attribute
   \code{timings} of the return value.
+
+  Diagnostics on the involved integrations are available if argument
+  \code{diagnostic} is \code{TRUE}. Then there is attribute \code{diagnostic}
+  attached to the return value, which may be inspected
+  and accessed through \code{\link[distrEx:distrExIntegrate]{showDiagnostic}} and
+  \code{\link[distrEx:distrExIntegrate]{getDiagnostic}}.
+
 }
 \value{Object of class \code{"kStepEstimate"}.}
 

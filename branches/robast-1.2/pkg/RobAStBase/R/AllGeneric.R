@@ -251,3 +251,6 @@ if(!isGeneric("getFiRisk")){
 if(!isGeneric("getPIC")){
     setGeneric("getPIC", function(estimator) standardGeneric("getPIC"))
 }
+if(!isGeneric("timings")){
+    setGeneric("timings", function(object, ...) standardGeneric("timings"))
+}

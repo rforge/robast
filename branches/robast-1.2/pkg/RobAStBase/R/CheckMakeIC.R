@@ -24,8 +24,10 @@
             res[i] <- buf <- do.call(E, Eargs)
             if(diagnostic){ k <- k + 1; diagn[[k]] <- attr(buf,"diagnostic") }
         }
-        if(diagnostic) attr(res, "diagnostic") <- diagn[1:nrvalues]
-
+        if(diagnostic){
+           attr(res, "diagnostic") <- diagn[1:nrvalues]
+           class(attr(res,"diagnostic")) <- "DiagnosticClass"
+        }
         erg <- matrix(0, ncol = dims, nrow = nrvalues)
 
         for(i in 1:nrvalues)
@@ -35,8 +37,10 @@
                 erg[i, j] <- buf <- do.call(E, Eargs)
                 if(diagnostic){ k <- k + 1; diagn[[k]] <- attr(buf,"diagnostic") }
             }
-        if(diagnostic) attr(erg, "diagnostic") <- diagn[-(1:nrvalues)]
-
+        if(diagnostic){
+           attr(erg, "diagnostic") <- diagn[-(1:nrvalues)]
+           class(attr(erg,"diagnostic")) <- "DiagnosticClass"
+        }
         return(list(E.IC=res,E.IC.L=erg))
 }
 
@@ -83,9 +87,11 @@ setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
            print(attr(res$E.IC.L,"diagnostic"))
         }
 
-        if(diagnostic)
+        if(diagnostic){
            attr(prec,"diagnostic") <- c(attr(res$E.IC,"diagnostic"),
                                         attr(res$E.IC.L,"diagnostic"))
+           class(attr(prec,"diagnostic")) <- "DiagnosticClass"
+        }
         return(prec)
     })
 
@@ -136,9 +142,11 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
                   CallL2Fam = CallL2Fam,
                   modifyIC = modifyIC)
 
-        if(diagnostic)
+        if(diagnostic){
            attr(IC.0,"diagnostic") <- c(attr(res$E.IC,"diagnostic"),
                                         attr(res$E.IC.L,"diagnostic"))
+           class(attr(IC.0,"diagnostic")) <- "DiagnosticClass"
+        }
         return(IC.0)
     })
 

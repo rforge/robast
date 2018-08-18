@@ -30,6 +30,7 @@ user-visible CHANGES:
   checkIC and makeIC gain argument diagnostic to be able to show diagnostic 
   information on integrations; this information (if argument "diagnostic" is TRUE)
   is stored in attribute "diagnostic" of the return value
++ accessor "timings" to attribute "timings" of an object of class "kStepEstimate"
   
 bugfixes  
 + and a forgotten no longer used instance of oldmodif in kStepEstimator
@@ -97,6 +98,9 @@ under the hood
   overwrites existing entries).
 + getboundedIC now uses coordinate-wise integration with useApply = FALSE and 
   only computing the upper half of E LL'w 
++ kStepEstimator, checkIC/makeIC, getRiskIC (for signature (IC, asCov, missing, L2ParamFamily)) 
+  and getboundedIC now if (diagnostic==TRUE) return diagnostic attributes of S3 class 
+  "DiagnosticClass"
   
 #######################################
 version 1.1
@@ -129,7 +133,6 @@ user-visible CHANGES:
 + getRiskIC and getBiasIC gain argument withCheck to speed up things if one does not want to call checkIC 
 + in kStepEstimator, withCheck is set to FALSE when getRiskIC is called, and makeIC is only called just 
   before the last update, and, if useLast == TRUE for the last update (of course, only if withMakeIC ==TRUE)
-+ kStepEstimator, 
   
 Return value of "roptest"
 + the return value of "roptest", an object of class "kStepEstimate" has a slot "estimate.call" which
