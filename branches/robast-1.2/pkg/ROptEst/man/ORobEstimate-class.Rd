@@ -21,6 +21,9 @@
 \alias{ustartval}
 \alias{ustartval,ORobEstimate-method}
 \alias{show,ORobEstimate-method}
+\alias{timings,ORobEstimate-method}
+\alias{kStepTimings}
+\alias{kStepTimings,ORobEstimate-method}
 
 \title{ORobEstimate-class.}
 \description{Class of optimally robust asymptotically linear estimates.}
@@ -136,6 +139,17 @@ class \code{"kStepstimate"}. All slots and methods marked with [*] are inherited
 
     \item{roptestCall}{\code{signature(object = "ORobEstimate")}:
       accessor function for slot \code{roptestCall}. }
+
+    \item{timings}{\code{signature(object = "ORobEstimate")}:
+      accessor function for attribute \code{"timings"}.
+      with additional argument \code{withKStep} defaulting to \code{FALSE};
+      in case argument \code{withKStep==TRUE}, the return value is a list
+      with items \code{timings} and \code{kStepTimings} combining the
+      two timing informaion attributes.
+      }
+
+    \item{kSteptimings}{\code{signature(object = "ORobEstimate")}:
+      accessor function for attribute \code{"timings"}. }
 
     \item{show}{\code{signature(object = "ORobEstimate")}: a show method; [*]}
   }

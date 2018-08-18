@@ -68,6 +68,12 @@ robest(x, L2Fam,  fsCor = 1, risk = asMSE(), steps = 1L,
   \code{\link[=inputGenerators]{genstartCtrl}},
   \code{\link[=inputGenerators]{genstartICCtrl}}, and
   \code{\link[=inputGenerators]{kStepCtrl}}
+
+  Diagnostics on the involved integrations are available if argument
+  \code{diagnostic} is \code{TRUE}. Then there are attributes \code{diagnostic}
+  and \code{kStepDiagnostic} attached to the return value, which may be inspected
+  and assessed through \code{\link[distrEx:distrExIntegrate]{showDiagnostic}} and
+  \code{\link[distrEx:distrExIntegrate]{getDiagnostic}}.
 }
 \value{Object of class \code{"kStepEstimate"}. In addition, it has
        an attribute \code{"timings"} where computation time is stored.}

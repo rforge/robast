@@ -77,6 +77,14 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
 #####################################################################
 
 setMethod("roptestCall", "ORobEstimate", function(object) object@roptestCall)
+setMethod("timings", "ORobEstimate", function(object, withKStep = FALSE ,...){
+   if(!withKStep) return(attr(object,"timings")) else{
+     return(list(timings = attr(object,"timings"),
+                 kStepTimings = attr(object,"kStepTimings")))
+   }
+})
+setMethod("timings", "ORobEstimate", function(object,...) attr(object,"kStepTimings"))
+
 
 
 roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
@@ -104,12 +112,15 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
 
     if(diagnostic) if(!missing(E.argList)&&!is.null(E.argList)) E.argList[["diagnostic"]] <- TRUE
 
+    if(is.null(dots$startICCtrl)){
     startICCtrl <- list()
     startICCtrl[["withMakeIC"]] <- if(!missing(withMakeIC)) withMakeIC else FALSE
     startICCtrl[["withEvalAsVar"]] <- if(!missing(withEvalAsVar)) withEvalAsVar else NULL
     startICCtrl[["modifyICwarn"]] <- if(!missing(modifyICwarn)) modifyICwarn else FALSE
     startICCtrl[["E.argList"]] <- if(!missing(E.argList)) E.argList else NULL
+    }else startICCtrl <- dots$startICCtrl
 
+    if(is.null(dots$startCtrl)){
     startCtrl <- list()
     if(!missing(initial.est)) startCtrl[["initial.est"]] <- initial.est
     if(!missing(initial.est.ArgList))
@@ -118,7 +129,9 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     startCtrl[["distance"]] <- if(!missing(distance)) distance else NULL
     startCtrl[["withMDE"]] <- if(!missing(withMDE)) withMDE else NULL
     startCtrl[["E.argList"]] <- if(!missing(E.argList)) E.argList else NULL
+    }else startCtrl <- dots$startCtrl
 
+    if(is.null(dots$kStepCtrl)){
     kStepCtrl <- list()
     kStepCtrl[["useLast"]] <- if(!missing(useLast)) useLast else getRobAStBaseOption("kStepUseLast")
     kStepCtrl[["withUpdateInKer"]] <- if(!missing(withUpdateInKer)) withUpdateInKer else getRobAStBaseOption("withUpdateInKer")
@@ -130,6 +143,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     kStepCtrl[["withEvalAsVar"]] <- if(!missing(withEvalAsVar)) withEvalAsVar else NULL
     kStepCtrl[["withMakeIC"]] <- if(!missing(withMakeIC)) withMakeIC else FALSE
     kStepCtrl[["E.argList"]] <- if(!missing(E.argList)) E.argList else NULL
+    }else kStepCtrl <- dots$kStepCtrl
 
     retV <- robest(x=x, L2Fam=L2Fam,  fsCor = fsCor,
            risk = risk, steps = steps, verbose = verbose,
@@ -149,8 +163,12 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     retV <- .checkEstClassForParamFamily(L2Fam,retV)
     attr(retV,"timings") <- tim
     attr(retV,"kStepTimings") <- timK
-    attr(retV,"diagnostic") <- diagn
-    attr(retV,"kStepDiagnostic") <- kStpDiagn
+    if(diagnostic){
+       attr(retV,"diagnostic") <- diagn
+       class(attr(retV,"diagnostic")) <- "DiagnosticClass"
+       attr(retV,"kStepDiagnostic") <- kStpDiagn
+       class(attr(retV,"kStepDiagnostic")) <- "DiagnosticClass"
+    }
     retV@roptestCall <- mc
     return(retV)
 }
@@ -423,7 +441,11 @@ robest <- function(x, L2Fam,  fsCor = 1,
     res@start <- initial.est
     attr(res, "timings") <- sy
     attr(res, "kStepTimings") <- sy.OnlykStep
-    if(diagnostic) attr(res,"kStepDiagnostic") <- kStpDiagn
-    if(diagnostic) attr(res,"diagnostic") <- diagn
+    if(diagnostic){
+          attr(res,"kStepDiagnostic") <- kStpDiagn
+          class(attr(res,"kStepDiagnostic")) <- "DiagnosticClass"
+          attr(res,"diagnostic") <- diagn
+          class(attr(res,"diagnostic")) <- "DiagnosticClass"
+    }
     return(res)
 }

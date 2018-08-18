@@ -199,6 +199,21 @@ MBREstimator(x, L2Fam, fsCor = 1, initial.est, neighbor = ContNeighborhood(),
   in attributes \code{timings}, and for the step of the
   \code{kStepEstimator} in \code{kStepTimings}.
 
+  One may also use the arguments \code{startCtrl}, \code{startICCtrl}, and
+  \code{kStepCtrl} of function \code{\link{robest}}. This allows for individual
+  settings of \code{E.argList}, \code{withEvalAsVar}, and
+  \code{withMakeIC} for the different steps. If any of the three arguments
+  \code{startCtrl}, \code{startICCtrl}, and \code{kStepCtrl} is used, the
+  respective attributes set in the correspondig argument are used and, if
+  colliding with arguments directly passed to the estimator function, the directly
+  passed ones are ignored.
+
+  Diagnostics on the involved integrations are available if argument
+  \code{diagnostic} is \code{TRUE}. Then there are attributes \code{diagnostic}
+  and \code{kStepDiagnostic} attached to the return value, which may be inspected
+  and assessed through \code{\link[distrEx:distrExIntegrate]{showDiagnostic}} and
+  \code{\link[distrEx:distrExIntegrate]{getDiagnostic}}.
+
 }
 \value{Object of class \code{"kStepEstimate"}.  In addition, it has
        an attribute \code{"timings"} where computation time is stored.}

@@ -93,3 +93,6 @@ if(!isGeneric("getStartIC")){
 if(!isGeneric("roptestCall")){
     setGeneric("roptestCall", function(object) standardGeneric("roptestCall"))
 }
+if(!isGeneric("kStepTimings")){
+    setGeneric("kStepTimings", function(object, ...) standardGeneric("kStepTimings"))
+}

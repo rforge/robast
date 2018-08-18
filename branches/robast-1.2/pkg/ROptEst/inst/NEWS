@@ -30,10 +30,17 @@ user-visible CHANGES:
    Potential clashes with arguments of the same name in \code{\dots} are resolved by inserting 
    the items of argument list \code{E.argList} as named items, so in case of collisions the 
    item of \code{E.argList} overwrites the existing one from \code{\dots}.
++ roptest and its wrappers RMX|OBR|MBR|OMSEstimator can now also digest robest-arguments
+  arguments \code{startCtrl}, \code{startICCtrl}, and \code{kStepCtrl}, in which case
+  information in these arguments in case of collision overrides information given through
+  the "usual" arguments; this allows for individual settings of \code{E.argList}, 
+  \code{withEvalAsVar}, and \code{withMakeIC} for the different steps.
 + roptest and its wrappers RMX|OBR|MBR|OMSEstimator, getStartIC for asGRisk, asBias, RMX, and
   asAnscombe, as well as the particular checkIC/makeIC methods for ContIC gain argument 
   diagnostic to be able to show diagnostic information on integrations; this information 
   (if argument "diagnostic" is TRUE) is stored in attribute "diagnostic" of the return value
++ accessors "timings" and "kStepTimings" to attributes "timings" and and "kStepTimings"
+  of an object of class "ORobEstimate"
 
 bug fixes
 
@@ -81,6 +88,8 @@ under the hood
   than in the default method. This can be overriden by argument forceContICMethod. 
 + the particular checkIC and makeIC methods gain argument diagnostic to be able to 
   show diagnostic information on integrations
++ roptest, robest, and particular checkIC/makeIC methods for ContIC now if (diagnostic==TRUE)
+  return diagnostic attributes of S3 class "DiagnosticClass"
   
 
 #######################################
