@@ -64,7 +64,8 @@ getBoundedIC <- function(L2Fam, D=trafo(L2Fam@param),..., diagnostic = FALSE){
         res <- as(stand %*% L2w0, "EuclRandVariable")
         if(diagnostic){
            attr(res,"diagnostic") <- diagn
-           class(attr(res,"diagnostic")) <- "DiagnosticClass"
+           if(!is.null(attr(res,"diagnostic")))
+              class(attr(res,"diagnostic")) <- "DiagnosticClass"
         }
         return(res)
 }

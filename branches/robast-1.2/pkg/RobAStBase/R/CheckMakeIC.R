@@ -26,7 +26,7 @@
         }
         if(diagnostic){
            attr(res, "diagnostic") <- diagn[1:nrvalues]
-           class(attr(res,"diagnostic")) <- "DiagnosticClass"
+           if(!is.null(diagn)) class(attr(res,"diagnostic")) <- "DiagnosticClass"
         }
         erg <- matrix(0, ncol = dims, nrow = nrvalues)
 
@@ -39,7 +39,7 @@
             }
         if(diagnostic){
            attr(erg, "diagnostic") <- diagn[-(1:nrvalues)]
-           class(attr(erg,"diagnostic")) <- "DiagnosticClass"
+           if(!is.null(diagn)) class(attr(erg,"diagnostic")) <- "DiagnosticClass"
         }
         return(list(E.IC=res,E.IC.L=erg))
 }
@@ -90,7 +90,8 @@ setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
         if(diagnostic){
            attr(prec,"diagnostic") <- c(attr(res$E.IC,"diagnostic"),
                                         attr(res$E.IC.L,"diagnostic"))
-           class(attr(prec,"diagnostic")) <- "DiagnosticClass"
+           if(!is.null(attr(prec,"diagnostic")))
+              class(attr(prec,"diagnostic")) <- "DiagnosticClass"
         }
         return(prec)
     })
@@ -145,7 +146,8 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
         if(diagnostic){
            attr(IC.0,"diagnostic") <- c(attr(res$E.IC,"diagnostic"),
                                         attr(res$E.IC.L,"diagnostic"))
-           class(attr(IC.0,"diagnostic")) <- "DiagnosticClass"
+           if(!is.null(attr(IC.0,"diagnostic")))
+              class(attr(IC.0,"diagnostic")) <- "DiagnosticClass"
         }
         return(IC.0)
     })
