@@ -401,7 +401,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
               na.rm = na.rm, scalename = kStepCtrl$scalename,
               withLogScale = kStepCtrl$withLogScale,
               withEvalAsVar = withEvalAsVarkStep,
-              withMakeIC = withMakeICkStep)
+              withMakeIC = withMakeICkStep, diagnostic = diagnostic)
          if(!is.null(kStepCtrl$E.arglist)){
              nms <- names(kStepCtrl$E.arglist)
              for(nmi in nms) kStepArgList[[nmi]] <- kStepCtrl$E.arglist[[nmi]]

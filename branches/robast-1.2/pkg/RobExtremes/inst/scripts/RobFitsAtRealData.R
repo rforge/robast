@@ -7,8 +7,8 @@ require(ismev)
 require(fitdistrplus) ## for dataset groundbeef
 
 
-help(package="RobExtremes")
-help("RobExtremes-package")
+#help(package="RobExtremes")
+#help("RobExtremes-package")
 
 #----------------------------------------
 ## data sets
@@ -46,6 +46,17 @@ system.time(mlEi10ALE <- roptest(portpiriei, GEVFam,risk=asCov(),steps=10))
 system.time(MBRi <- MBREstimator(portpiriei, GEVFam))
 ## synonymous to
 ## system.time(MBRi0 <- roptest(portpiriei, GEVFam,risk=MBRRisk()))
+
+## some diagnostics as to timings and integrations:
+system.time(MBRiD <- MBREstimator(portpiriei, GEVFam, diagnostic = TRUE))
+showDiagnostic(MBRiD)
+timings(MBRiD)
+kStepTimings(MBRiD)
+(int.times <- getDiagnostic(MBRiD, what="time"))
+
+IC <- pIC(MBRiD)
+es <- checkIC(IC,diagnostic = TRUE)
+
 system.time(RMXi <- RMXEstimator(portpiriei, GEVFam))
 ## synonymous to
 ## system.time(RMXi <- roptest(portpiriei, GEVFam,risk=RMXRRisk()))
@@ -61,7 +72,7 @@ removeMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"))
 system.time(RMXiw2 <- RMXEstimator(portpiriei, GEVFam,withMakeIC=TRUE))
 checkIC(pIC(RMXiw2))
 setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),oldM)
-getMethod("checkIC", signature(IC = "IC", L2Fam = "missing"))(pIC(RMXiw2),
+erg <- getMethod("checkIC", signature(IC = "IC", L2Fam = "missing"))(pIC(RMXiw2),
            out=TRUE, diagnostic=TRUE)
 
 estimate(RMXi)
@@ -80,9 +91,6 @@ estimate(mlEi10ALE) ### similar after 10 steps
 estimate(MBRi)
 estimate(RMXi)
 estimate(RMXiw)
-### where do the robust estimators spend their time?
-attr(MBRi, "timings")
-attr(MBRi, "kStepTimings")
 
 ## our return values can be plugged into ismev-diagnostics:
 devNew()

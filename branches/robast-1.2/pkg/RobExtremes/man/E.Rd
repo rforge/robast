@@ -70,6 +70,13 @@ E(object, fun, cond, ...)
   classes \code{"GPareto"}, \code{"Pareto"}, \code{"Weibull"}, \code{"GEV"}.
   In addition, the specific method for \code{"GPareto", "function", "missing"}
   uses integration on [0,1] via the substitution method (y := log(x)).
+
+  Diagnostics on the involved integrations are available
+  if argument   \code{diagnostic} is \code{TRUE}. Then there is attribute
+  \code{diagnostic} attached to the return value, which may be inspected
+  and accessed through \code{\link[distrEx:distrExIntegrate]{showDiagnostic}} and
+  \code{\link[distrEx:distrExIntegrate]{getDiagnostic}}.
+
   }
 
 \value{
