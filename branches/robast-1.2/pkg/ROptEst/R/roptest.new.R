@@ -157,7 +157,7 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     tim <- attr(retV,"timings")
     timK <- attr(retV,"kStepTimings")
     diagn <-  attr(retV,"diagnostic")
-    kStpDiagn <- attr(retV,"kStepDiagnostic")
+    kStepDiagn <- attr(retV,"kStepDiagnostic")
 
     retV <- as(as(retV,"kStepEstimate"), "ORobEstimate")
     retV <- .checkEstClassForParamFamily(L2Fam,retV)
@@ -165,9 +165,11 @@ roptest <- function(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
     attr(retV,"kStepTimings") <- timK
     if(diagnostic){
        attr(retV,"diagnostic") <- diagn
-       class(attr(retV,"diagnostic")) <- "DiagnosticClass"
-       attr(retV,"kStepDiagnostic") <- kStpDiagn
-       class(attr(retV,"kStepDiagnostic")) <- "DiagnosticClass"
+       if(!is.null(attr(retV,"diagnostic")))
+           class(attr(retV,"diagnostic")) <- "DiagnosticClass"
+       attr(retV,"kStepDiagnostic") <- kStepDiagn
+       if(!is.null(attr(retV,"kStepDiagnostic")))
+           class(attr(retV,"kStepDiagnostic")) <- "DiagnosticClass"
     }
     retV@roptestCall <- mc
     return(retV)
@@ -407,7 +409,7 @@ robest <- function(x, L2Fam,  fsCor = 1,
          res <- do.call(kStepEstimator, kStepArgList)
                             })
        sy.OnlykStep <- attr(res,"timings")
-       kStpDiagn <- attr(res,"diagnostic")
+       kStepDiagn <- attr(res,"diagnostic")
        if (withTimings) print(sy.kStep)
        if (withTimings && !is.null(sy.OnlykStep)) print(sy.OnlykStep)
     if(!debug){
@@ -442,10 +444,12 @@ robest <- function(x, L2Fam,  fsCor = 1,
     attr(res, "timings") <- sy
     attr(res, "kStepTimings") <- sy.OnlykStep
     if(diagnostic){
-          attr(res,"kStepDiagnostic") <- kStpDiagn
-          class(attr(res,"kStepDiagnostic")) <- "DiagnosticClass"
+          attr(res,"kStepDiagnostic") <- kStepDiagn
+          if(!is.null(attr(res,"kStepDiagnostic")))
+              class(attr(res,"kStepDiagnostic")) <- "DiagnosticClass"
           attr(res,"diagnostic") <- diagn
-          class(attr(res,"diagnostic")) <- "DiagnosticClass"
+          if(!is.null(attr(res,"diagnostic")))
+              class(attr(res,"diagnostic")) <- "DiagnosticClass"
     }
     return(res)
 }
