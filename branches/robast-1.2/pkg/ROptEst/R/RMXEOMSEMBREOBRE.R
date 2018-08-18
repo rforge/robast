@@ -39,7 +39,7 @@ RMXEstimator <- function(x, L2Fam, fsCor = 1, initial.est,
    if(!missing(initial.est.ArgList)) roptestArgList$initial.est.ArgList <- initial.est
 
    res <- do.call(roptest, roptestArgList)
-   res@roptestCall <- quote(res@estimate.call)
+   res@roptestCall <- res@estimate.call
    res@estimate.call <- mc
    return(res)
 }
@@ -87,7 +87,7 @@ OMSEstimator <- function(x, L2Fam, eps =0.5, fsCor = 1, initial.est,
    if(!missing(initial.est.ArgList)) roptestArgList$initial.est.ArgList <- initial.est
 
    res <- do.call(roptest, roptestArgList)
-   res@roptestCall <- quote(res@estimate.call)
+   res@roptestCall <- res@estimate.call
    res@estimate.call <- mc
    return(res)
 }
@@ -131,7 +131,7 @@ OBREstimator <- function(x, L2Fam, eff=0.95, fsCor = 1, initial.est,
    if(!missing(initial.est.ArgList)) roptestArgList$initial.est.ArgList <- initial.est
 
    res <- do.call(roptest, roptestArgList)
-   res@roptestCall <- quote(res@estimate.call)
+   res@roptestCall <- res@estimate.call
    res@estimate.call <- mc
    return(res)
 }
@@ -177,7 +177,7 @@ MBREstimator <- function(x, L2Fam, fsCor = 1, initial.est,
    if(!missing(initial.est.ArgList)) roptestArgList$initial.est.ArgList <- initial.est
 
    res <- do.call(roptest, roptestArgList)
-   res@roptestCall <- quote(res@estimate.call)
+   res@roptestCall <- res@estimate.call
    res@estimate.call <- mc
    return(res)
 

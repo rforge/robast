@@ -83,7 +83,7 @@ setMethod("timings", "ORobEstimate", function(object, withKStep = FALSE ,...){
                  kStepTimings = attr(object,"kStepTimings")))
    }
 })
-setMethod("timings", "ORobEstimate", function(object,...) attr(object,"kStepTimings"))
+setMethod("kStepTimings", "ORobEstimate", function(object,...) attr(object,"kStepTimings"))
 
 
 
