@@ -66,11 +66,13 @@ setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
         res <- .preparedirectCheckMakeIC(L2Fam, IC, ..., diagnostic = diagnostic)
 
         cent <- res$E.IC
+        attr(cent,"diagnostic") <- NULL
         if(out)
             cat("precision of centering:\t", cent, "\n")
 
 
         consist <- res$E.IC.L - trafo
+        attr(consist,"diagnostic") <- NULL
 
         if(out){
             cat("precision of Fisher consistency:\n")
@@ -83,8 +85,8 @@ setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
         names(prec) <- "maximum deviation"
 
         if(diagnostic && out){
-           print(attr(res$E.IC,"diagnostic"))
-           print(attr(res$E.IC.L,"diagnostic"))
+           print(attr(res$E.IC,"diagnostic"),xname="E.IC")
+           print(attr(res$E.IC.L,"diagnostic"),xname="E.IC.L")
         }
 
         if(diagnostic){
@@ -114,8 +116,8 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
         res <- .preparedirectCheckMakeIC(L2Fam, IC, ..., diagnostic = diagnostic)
 
         if(diagnostic){
-           print(attr(res$E.IC,"diagnostic"))
-           print(attr(res$E.IC.L,"diagnostic"))
+           print(attr(res$E.IC,"diagnostic"), xname="E.IC")
+           print(attr(res$E.IC.L,"diagnostic"), xname="E.IC.L")
         }
 
         IC1 <- as(diag(dimension(IC@Curve)) %*% IC@Curve, "EuclRandVariable")
@@ -195,10 +197,10 @@ setMethod("makeIC", signature(IC = "function", L2Fam = "L2ParamFamily"),
         mc0$Curve <- EuclRandVarList(RealRandVariable(Map = list(IC.1),
                          Domain = Reals()))
         mc0$CallL2Fam <- substitute(L2Fam@fam.call)
-        print(mc0)
+#        print(mc0)
 
         IC.0 <- do.call(.IC,mc0)
-        print(IC.0)
+#        print(IC.0)
         if(forceIC) IC.0 <- makeIC(IC.0, L2Fam,...)
         return(IC.0)
     })

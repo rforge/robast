@@ -202,7 +202,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                    sytm <<- .addTime(sytm,mmPreICNm)
                    if(diagnostic) diagn[[mmPreICNm]] <<- attr(IC,"diagnostic")
                    if(steps==1L && withMakeIC){
-                      makeICargs <- c(list(IC, L2Fam),E.argList)
+                      makeICargs <- list(IC, L2Fam, diagnostic=diagnostic, E.argList=E.argList)
                       IC <- do.call(makeIC, makeICargs)
                       mmPreMkICNm <- paste("modifyIC-makeIC-",updStp)
                       sytm <<- .addTime(sytm,mmPreMkICNm)
@@ -231,7 +231,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                             if(!is.null(IC.UpdateInKer)&&!is(IC.UpdateInKer,"IC"))
                                warning("'IC.UpdateInKer' is not of class 'IC'; we use default instead.")
                             if(is.null(IC.UpdateInKer)){
-                                 getBoundedICargs <- c(list(L2Fam, D = projker),E.argList)
+                                 getBoundedICargs <- list(L2Fam, D = projker, diagnostic=diagnostic,E.argList=E.argList)
                                  IC.tot2 <- do.call(getBoundedIC, getBoundedICargs)
                                  mmgtBDICNm <- paste("getBoundedIC-",updStp)
                                  sytm <<- .addTime(sytm,mmgtBDICNm)
@@ -359,7 +359,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                   IC <- upd$IC
                   L2Fam <- upd$L2Fam
                   if((i==steps)&&withMakeIC){
-                      makeICargs <- c(list(IC, L2Fam),E.argList)
+                      makeICargs <- list(IC, L2Fam, diagnostic=diagnostic, E.argList=E.argList)
                       IC <- do.call(makeIC, makeICargs)
                       mkICnm <- paste("makeIC-",i)
                       sytm <- .addTime(sytm,mkICnm)
@@ -402,7 +402,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
               Infos <- rbind(Infos, c("kStepEstimator",
                "computation of IC, trafo, asvar and asbias via useLast = TRUE"))
               if(withMakeIC){
-                  makeICargs <- c(list(IC, L2Fam),E.argList)
+                  makeICargs <- list(IC, L2Fam, diagnostic=diagnostic, E.argList=E.argList)
                   IC <- do.call(makeIC, makeICargs)
                   mkICULnm <- paste("makeIC-useLast")
                   sytm <- .addTime(sytm,mkICULnm)
@@ -450,7 +450,8 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
               asVar <- if(is.matrix(Risks(IC)$asCov) || length(Risks(IC)$asCov) == 1)
                        Risks(IC)$asCov else Risks(IC)$asCov$value
            }else{
-                getRiskICasVarArgs <- c(list(IC, risk = asCov(), withCheck = FALSE),E.argList)
+                getRiskICasVarArgs <- list(IC, risk = asCov(), withCheck = FALSE,
+                                        diagnostic=diagnostic, E.argList = E.argList)
                 riskAsVar <- do.call(getRiskIC, getRiskICasVarArgs)
                 asVar <- riskAsVar$asCov$value
                 sytm <- .addTime(sytm,"getRiskIC-Var")
