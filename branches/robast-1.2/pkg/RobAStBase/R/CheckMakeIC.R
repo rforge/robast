@@ -82,7 +82,15 @@ setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
         }
 
         prec <- max(abs(cent), abs(consist))
+
+        ## PR 20190222:
+		## deleting all digits beyond 1e-12 (as numeric fuzz) -- 
+		## but check for relative accuracy by means of the "size" of the Fisher information 
+		## measured in by the max(trafo)
+
         names(prec) <- "maximum deviation"
+		relPrec <- 12-round(log(max(trafo),10))
+		prec <- round(prec*10^relPrec)/10^relPrec
 
         if(diagnostic && out){
            print(attr(res$E.IC,"diagnostic"),xname="E.IC")
