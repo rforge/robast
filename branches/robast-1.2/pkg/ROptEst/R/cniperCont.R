@@ -17,6 +17,8 @@
 ){
                dotsP <- .makedotsP(dots)
                dotsP$attr.pre <- NULL
+               dotsP$col.pts <- dotsP$cex.pts <- dotsP$pch.pts <- NULL
+               dotsP$col.npts <- dotsP$cex.npts <- dotsP$pch.npts <- NULL
 
                al <- dotsP$alpha.trsp
                if(!is.null(al)) if(!is.na(al))
@@ -24,9 +26,9 @@
                                             addAlphTrsp2col, alpha=al)
 
                n <- if(!is.null(dim(data))) nrow(data) else length(data)
-               if(!is.null(dots$lab.pts))
-                    lab.pts <- rep(lab.pts, length.out=n)
 
+               lab.pts <- if(!is.null(dots$lab.pts))
+                              rep(dots$lab.pts, length.out=n) else 1:n
 
                sel <- .SelectOrderData(data, function(x)sapply(x,fun),
                                        dots$which.lbs, dots$which.Order,
@@ -43,33 +45,43 @@
 
     if(dots$attr.pre){
        col.pts <- col.pts[sel$ind]
-       col.npts <- col.pts[sel$ind.ns]
        pch.pts <- pch.pts[sel$ind]
-       pch.npts <- pch.pts[sel$ind.ns]
        cex.pts <- cex.pts[sel$ind]
-       cex.npts <- cex.pts[sel$ind.ns]
        lab.pts <- lab.pts[sel$ind]
+       if(n.ns) {
+         col.npts <- col.pts[sel$ind.ns]
+         pch.npts <- pch.pts[sel$ind.ns]
+         cex.npts <- cex.pts[sel$ind.ns]
+       }
     }else{
-       if(missing(pch.pts)) pch.pts <- 1
+       pch.pts <- dots$pch.pts
+       if(is.null(pch.pts)) pch.pts <- 1
        if(!length(pch.pts)==n)
           pch.pts <- rep(pch.pts, length.out= n)
-       if(missing(col.pts)) col.pts <- par("col")
+       col.pts <- dots$col.pts
+       if(is.null(col.pts)) col.pts <- par("col")
        if(!length(col.pts)==n)
           col.pts <- rep(col.pts, length.out= n)
-       if(missing(cex.pts)) cex.pts <- 1
+       cex.pts <- dots$cex.pts
+       if(is.null(cex.pts)) cex.pts <- 1
        if(!length(cex.pts)==n)
           cex.pts <- rep(cex.pts, length.out= n)
        lab.pts <- if(is.null(lab.pts)) paste(1:n) else rep(lab.pts,length.out=n)
 
-       if(missing(pch.npts)) pch.npts <- 1
-       if(!length(pch.npts)==n.ns)
-          pch.npts <- rep(pch.npts, length.out= n.ns)
-       if(missing(col.npts)) col.npts <- par("col")
-       if(!length(col.npts)==n.ns)
-          col.npts <- rep(col.npts, length.out= n.ns)
-       if(missing(cex.npts)) cex.npts <- 1
-       if(!length(cex.npts)==n.ns)
-          cex.npts <- rep(cex.npts, length.out= n.ns)
+       if(n.ns) {
+          pch.npts <- dots$pch.npts
+          if(is.null(pch.npts)) pch.npts <- 1
+          if(!length(pch.npts)==n.ns)
+             pch.npts <- rep(pch.npts, length.out= n.ns)
+          col.npts <- dots$col.npts
+          if(is.null(col.npts)) col.npts <- par("col")
+          if(!length(col.npts)==n.ns)
+             col.npts <- rep(col.npts, length.out= n.ns)
+          cex.npts <- dots$cex.npts
+          if(is.null(cex.npts)) cex.npts <- 1
+          if(!length(cex.npts)==n.ns)
+             cex.npts <- rep(cex.npts, length.out= n.ns)
+       }
     }
     pL <- dots$panel.last
     dotsP$panel.last <- NULL
@@ -81,22 +93,24 @@
                               dots$xlim, dots$ylim, dots)
 
                plotInfo$resc.dat <- resc.dat
-               resc.dat.ns <- .rescalefct(x.d.ns, function(x) sapply(x,fun),
+               if(n.ns){
+                  resc.dat.ns <- .rescalefct(x.d.ns, function(x) sapply(x,fun),
                               dots$scaleX, dots$scaleX.fct, dots$scaleX.inv,
                               dots$scaleY, dots$scaleY.fct,
                               dots$xlim, dots$ylim, dots)
 
-               plotInfo$resc.dat.ns <- resc.dat.ns
-
+                  plotInfo$resc.dat.ns <- resc.dat.ns
+               }
                if(any(.isReplicated(resc.dat$X, jit.tol))&&jit.fac>0)
                        resc.dat$X <- jitter(resc.dat$X, factor = jit.fac)
                if(any(.isReplicated(resc.dat$Y, jit.tol))&&jit.fac>0)
                        resc.dat$Y <- jitter(resc.dat$Y, factor = jit.fac)
-               if(any(.isReplicated(resc.dat.ns$X, jit.tol))&&jit.fac>0)
+               if(n.ns){
+                  if(any(.isReplicated(resc.dat.ns$X, jit.tol))&&jit.fac>0)
                        resc.dat.ns$X <- jitter(resc.dat.ns$X, factor = jit.fac)
-               if(any(.isReplicated(resc.dat.ns$Y, jit.tol))&&jit.fac>0)
+                  if(any(.isReplicated(resc.dat.ns$Y, jit.tol))&&jit.fac>0)
                        resc.dat.ns$Y <- jitter(resc.dat.ns$Y, factor = jit.fac)
-
+               }
                dotsP$scaleX <- dotsP$scaleY <- dotsP$scaleN <-NULL
                dotsP$scaleX.fct <- dotsP$scaleY.fct <- NULL
                dotsP$scaleX.inv <- dotsP$scaleY.inv <- NULL
@@ -131,16 +145,19 @@
 
                dotsT$pch <- NULL
                dotsT$labels <- if(is.null(dots$lab.pts)) i.d else dots$lab.pts[i.d]
+               print(dotsP)
                do.call(points,dotsP)
-               plotInfo$PointSArg <- dotsP
-               dotsP$x <- resc.dat.ns$X
-               dotsP$y <- resc.dat.ns$Y
-               dotsP$cex <- .cexscale(absy,absy,cex=dots$cex.npts, fun = dots$cex.npts.fun)
-               dotsP$col <- dots$col.npts
-               dotsP$pch <- dots$pch.npts
-               do.call(points,dotsP)
-               plotInfo$PointSnsArg <- dotsP
 
+               plotInfo$PointSArg <- dotsP
+               if(n.ns){
+                  dotsP$x <- resc.dat.ns$X
+                  dotsP$y <- resc.dat.ns$Y
+                  dotsP$cex <- .cexscale(absy,absy,cex=dots$cex.npts, fun = dots$cex.npts.fun)
+                  dotsP$col <- dots$col.npts
+                  dotsP$pch <- dots$pch.npts
+                  do.call(points,dotsP)
+                  plotInfo$PointSnsArg <- dotsP
+               }
                plotInfo$labArg <- dotsT
 
                if(!is.null(dots$with.lab))
