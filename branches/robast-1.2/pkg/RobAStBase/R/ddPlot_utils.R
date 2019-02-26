@@ -139,6 +139,14 @@
       if((missing(font.abline)|| is.null(font.abline)) && !is.null(dots$font)) font.abline <- dots$font
       if((missing(font.abline)|| is.null(font.abline))) font.abline <- par("font")
 
+      titdots <- NULL
+      titdots$main <- dots$main
+      titdots$sub <- dots$sub
+      titdots$col.main <- dots$col.main
+      titdots$col.sub <- dots$col.sub
+      titdots$outer <- dots$outer
+      titdots$line <- dots$line
+
       pdots <- .makedotsLowLevel(dots)
       pdots$pch <- if(is.null(dots$pch)) "." else dots$pch
       pdots$cex <- cex.pts
@@ -279,7 +287,7 @@
       if(doplot){
         plotInfo<- list("plotArgs"=NULL)
 
-        plotInfo$PlotArgs <- c(list(x = ndata.x0, y=ndata.y0, type = "p"), pdots)
+        plotInfo$PlotArgs <- c(list(x = ndata.x0, y=ndata.y0, type = "p"), pdots, titdots)
         plotInfo$BoxArgs <- c(adots)
 
         do.call(plot, args = plotInfo$PlotArgs)

@@ -176,7 +176,10 @@ setMethod("plot", signature(x = "IC", y = "missing"),
           }
           if(is.null(legend)){
              legend <- vector("list",dims0)
+#             legend <- .fillList(as.list(xc),dims0)
              legend <- .fillList(as.list(xc),dims0)
+          }else{
+             if(!is.list(legend)) legend <- .fillList(legend,dims0)
           }
         }
 
@@ -298,9 +301,11 @@ setMethod("plot", signature(x = "IC", y = "missing"),
                 y.vecD <- rescD$Y
 
                 dotsL$lty <- NULL
-                do.call(lines,args=c(list(x.vecD, y.vecD, lwd = lwd,
+
+                if(is.null(dotsL$lwd)) dotsL$lwd <- lwd
+                do.call(lines,args=c(list(x.vecD, y.vecD,
                                           lty = "dotted"), dotsL))
-                plotInfo$PlotLinesD[[i]] <- c(list(x.vecD, y.vecD, lwd = lwd,
+                plotInfo$PlotLinesD[[i]] <- c(list(x.vecD, y.vecD,
                                           lty = "dotted"), dotsL)
             }
             do.call(title,args=c(list(main = innerT[i]), dotsT, line = lineT,

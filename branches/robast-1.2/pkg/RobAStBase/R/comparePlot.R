@@ -619,6 +619,7 @@ setMethod("comparePlot", signature("IC","IC"),
                     col = col), dots.points)
             }
 
+            if(!is.null(dotsL$lwd)) dotsL$lwd <- NULL
             do.call(matlines, args = c(list( x = resc1$X, y = matp,
                     lty = lty, col = col, lwd = lwd), dotsL))
             plotInfo$PlotLines[[i]] <- c(list( x = resc1$X, y = matp,
@@ -645,7 +646,7 @@ setMethod("comparePlot", signature("IC","IC"),
             }
 
             if(is(distr, "DiscreteDistribution")){
-                 rescD.args <- c(list(x.vecD, "fc"=fct1, scaleX[i], scaleX.fct[[i]],
+                 rescD.args <- c(list(x.vecD[[i]], "fc"=fct1, scaleX[i], scaleX.fct[[i]],
                                 scaleX.inv[[i]], scaleY[i], scaleY.fct[[i]], xlim[,i],
                                 ylim[,i], dotsP[[i]]))
                  resc1D <- do.call(.rescalefct, rescD.args)
@@ -667,9 +668,11 @@ setMethod("comparePlot", signature("IC","IC"),
                     plotInfo$resc.D[[(i-1)*ncomp+4]] <- resc4D
                     matpD  <- cbind(matpD, resc4D$Y)
                  }
-                 do.call(matlines, c(list(resc1D$X, matpD, lty = lty,
+
+                 if(!is.null(dotsL$lwd)) dotsL$lwd <- NULL
+                 do.call(matlines, c(list(x=resc1D$X, y=matpD, lty = lty,
                          col = col, lwd = lwd), dotsL))
-                 plotInfo$PlotLinesD[[i]] <- c(list(resc1D$X, matpD, lty = lty,
+                 plotInfo$PlotLinesD[[i]] <- c(list(x=resc1D$X, y=matpD, lty = lty,
                          col = col, lwd = lwd), dotsL)
             }
 

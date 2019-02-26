@@ -183,6 +183,8 @@ setMethod("infoPlot", "IC",
              legend <- vector("list",dims1)
              legend <- .fillList(list(as.list(c("class. opt. IC", objectc))),
                                                  dims1)
+          }else{
+             if(!is.list(legend)) legend <- .fillList(legend,dims1)
           }
         }
 
@@ -772,10 +774,11 @@ setMethod("infoPlot", "IC",
                plotInfo <- get("plotInfo", envir = trEnv)
                plotInfo$absPlotUsr <- par("usr")
 
+               if(!is.null(dotsL$lwd)) dotsL$lwd <- NULL
                do.call(lines, args=c(list(resc$X, resc$Y, type = plty,
-                       lty = lty, lwd = lwd, col = col), dotsL))
+                       lty = lty, col = col, lwd = lwd), dotsL))
                plotInfo$absPlotCArgs <- c(list(resc$X, resc$Y, type = plty,
-                       lty = lty, lwd = lwd, col = col), dotsL)
+                       lty = lty, col = col, lwd = lwd), dotsL)
 
                x.ticks0 <- if(xaxt0[1]!="n") x.ticks[[1]] else NULL
                y.ticks0 <- if(yaxt0[1]!="n") y.ticks[[1]] else NULL
@@ -898,6 +901,7 @@ setMethod("infoPlot", "IC",
                     plotInfo <- get("plotInfo", envir = trEnv)
                     plotInfo$relPlotUsr[[i]] <- par("usr")
 
+                    if(!is.null(dotsL$lwd)) dotsL$lwd <- NULL
                     plotInfo$relPlotCArgs[[i]] <- c(list(resc.C$X, resc.C$Y, type = plty,
                             lty = ltyI, col = colI, lwd = lwdI), dotsL)
                     do.call(lines, args = c(list(resc.C$X, resc.C$Y, type = plty,

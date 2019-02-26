@@ -134,7 +134,7 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
                      ,tmar = substitute(par("mar")[3])
                      ,with.automatic.grid = substitute(TRUE)
                      ,with.legend = substitute(TRUE)
-                     ,legend = substitute(NULL)
+                     ,legend = c("class. opt. IC",as.character(deparse(match.call()$IC)))
                      ,legend.bg = substitute("white")
                      ,legend.location = substitute("bottomright")
                      ,legend.cex = substitute(0.8)
@@ -171,7 +171,7 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
                      ,ylab.rel= substitute("relative information")
                      ,adj = substitute(0.5)
                      ,cex.main = substitute(1.5)
-                     ,cex.lab = substitute(1.5)
+                     ,cex.lab = substitute(1)
                      ,cex = substitute(1.5)
                      ,bty = substitute("o")
                      ,panel.first= substitute(NULL)
@@ -319,7 +319,7 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,tmar = substitute(par("mar")[3])
                      ,with.automatic.grid = substitute(TRUE)
                      ,with.legend = substitute(TRUE)
-                     ,legend = substitute(NULL)
+                     ,legend = as.character(deparse(match.call()$IC))
                      ,legend.bg = substitute("white")
                      ,legend.location = substitute("bottomright")
                      ,legend.cex = substitute(0.8)
@@ -341,14 +341,14 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,to.draw.arg = substitute(NULL)
                      ,adj = substitute(0.5)
                      ,cex.main = substitute(1.5)
-                     ,cex.lab = substitute(1.5)
+                     ,cex.lab = substitute(1)
                      ,cex = substitute(1.5)
                      ,bty = substitute("o")
                      ,panel.first= substitute(NULL)
                      ,panel.last= substitute(NULL)
                      ,withSubst = substitute(TRUE)
     ), scaleList)
-  if(!missing(y)){c(argsList, y = substitute(y)
+  if(!missing(y)){argsList <- c(argsList, list(y = substitute(y)
                      ,cex.pts = substitute(1)
                      ,cex.pts.fun = substitute(NULL)
                      ,col.pts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), substitute(alpha.trsp)))
@@ -371,11 +371,10 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,attr.pre = substitute(FALSE)
                      ,adj = substitute(0.5)
                      ,cex.main = substitute(1.5)
-                     ,cex.lab = substitute(1.5)
+                     ,cex.lab = substitute(1)
                      ,cex = substitute(1.5)
-                     ,bty = substitute("o"))
+                     ,bty = substitute("o")))
   }
-
 
   ##parameter for plotting
   if(mc$with.legend)
@@ -514,10 +513,16 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
   ## Scaling of the axes
   scaleList <- rescaleFunction(eval(IC1@CallL2Fam), iny, rescale)
 
-  argsList <- .merge.lists(list(obj1 = substitute(IC1)
-                     ,obj2 = substitute(IC2)
-                     ,obj3 = NULL
-                     ,obj4 = NULL
+  leg <- c(as.character(deparse(mc$IC1)),
+           as.character(deparse(mc$IC2)))
+  if(!is.null(mc$IC3)) leg <- c(leg, as.character(deparse(mc$IC3)))
+  if(!is.null(mc$IC4)) leg <- c(leg, as.character(deparse(mc$IC4)))
+
+
+  argsList <- .merge.lists(list(obj1 = IC1
+                     ,obj2 = IC2
+                     ,obj3 = if(is.null(mc$IC3)) NULL else mc$IC3
+                     ,obj4 = if(is.null(mc$IC4)) NULL else mc$IC4
                      ,forceSameModel = FALSE
                      ,data = NULL
                      ,lwd = substitute(par("lwd"))
@@ -532,7 +537,7 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
                      ,tmar = substitute(par("mar")[3])
                      ,with.automatic.grid = substitute(TRUE)
                      ,with.legend = substitute(FALSE)
-                     ,legend = substitute(NULL)
+                     ,legend = leg
                      ,legend.bg = substitute("white")
                      ,legend.location = substitute("bottomright")
                      ,legend.cex = substitute(0.8)
@@ -573,7 +578,7 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
                      ,return.Order = substitute(FALSE)
                      ,adj = substitute(0.5)
                      ,cex.main = substitute(1.5)
-                     ,cex.lab = substitute(1.5)
+                     ,cex.lab = substitute(1)
                      ,cex = substitute(1.5)
                      ,bty = substitute("o")
                      ,col = substitute("blue")
