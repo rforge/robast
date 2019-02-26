@@ -101,12 +101,13 @@ setMethod("qqplot", signature(x = "ANY", y = "InfRobModel"),
 
 
 
+    mcl$n <- n
+
     if(is.null(mcl$n.CI)) mcl$n.CI <- n
     if(n.adj){
        r <- radius(neighbor(y))
-       n <- floor((1-r/sqrt(n))*n)
+       mcl$n.CI <- floor((1-r/sqrt(n))*n)
     }
-    mcl$n <- n
     mcl$y <- y@center
     mcl$legend.pref <- paste(mcl$legend.pref,"outlier-adjusted",sep="")
     
