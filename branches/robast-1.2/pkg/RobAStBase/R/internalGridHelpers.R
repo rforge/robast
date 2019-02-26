@@ -308,7 +308,7 @@
                 #stop("Argument 'inner' must either be 'logical' or a 'list'")
                 if(!is.list(inner))
                     inner <- as.list(inner)
-                inner <- lapply(.mpresubs,inner)
+                inner <- lapply(inner,.mpresubs)
                 innerT <- .fillList(inner,(type=="info")+dims)
                 inf1 <- 0
                 if(type=="info"){ if(1 %in% to.draw) inf1 <- 1}
@@ -377,8 +377,8 @@
                         scaleX[i] <- scaleX[i] & !grepl("x",logArg[i])
                         scaleY[i] <- scaleY[i] & !grepl("y",logArg[i])
                      }
-                     if(with.automatic.grid[i]&&
-                        (scaleX[i]||scaleY[i])
+                     if(with.automatic.grid[i] # &&
+                       # (scaleX[i]||scaleY[i])
                      ){
                         pF[[i]] <-  .producePanelFirstSn(
                              pF.L[[i]],
