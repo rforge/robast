@@ -144,8 +144,8 @@ outlyingPlotIC <- function(data,
             devIC <- data.frame(t(evIC[1:dimevIC,,drop=FALSE]))
             CMcd <- PosSemDefSymmMatrix(rrcov::getCov(rrcov::CovMcd(devIC,alpha=0.5)))
             asVar <- CMcd
-            cat("Fall 1\n\n")
-            print(asVar)
+#            cat("Fall 1\n\n")
+#            print(asVar)
           }
        }else{
             if("asCov" %in% names(Risks(IC.y)))
@@ -156,8 +156,8 @@ outlyingPlotIC <- function(data,
                    }
                 else{asVar <- getRiskIC(IC.y, risk = asCov())$asCov$value
                    }
-            cat("Fall 2\n\n")
-            print(asVar)
+#            cat("Fall 2\n\n")
+#            print(asVar)
        }
      
           mc$dist.y <- QFNorm(name = gettext("Mahalonobis-Norm"), 

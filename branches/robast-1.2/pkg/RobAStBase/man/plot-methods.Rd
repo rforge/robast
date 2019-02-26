@@ -40,7 +40,7 @@
   \item{main}{logical: is a main title to be used? or \cr
               just as argument \code{main} in \code{\link{plot.default}}.}
   \item{inner}{logical: do panels have their own titles? or \cr
-               character vector of / cast to length 'number of plotted 
+               character vector of inner titles/ cast to length 'number of plotted
                dimensions';
                if argument \code{to.draw.arg} is used, this refers to 
                a vector of length \code{length(to.draw.arg)}, the 
