@@ -419,7 +419,7 @@ setMethod("infoPlot", "IC",
                colC.pts <- col.pts[,2]
                col.pts <- col.pts[,1]
 
-               if(missing(col.npts)) col.pts <- c(col, colI)
+               if(missing(col.npts)) col.npts <- c(col, colI)
                if(!is.matrix(col.npts))
                   col.npts <- t(matrix(rep(col.npts, length.out= 2*n.ns),2,n.ns))
                colC.npts <- col.npts[,2]
