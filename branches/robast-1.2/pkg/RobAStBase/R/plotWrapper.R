@@ -116,7 +116,7 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
   ## Scaling of the axes
   scaleList <- rescaleFunction(eval(IC@CallL2Fam), FALSE, mc$rescale)
 
-  argsList <- c(list(object = substitute(IC)
+  argsList.unev <- c(list(object = substitute(IC)
                      ,data = substitute(data)
                      ,withSweave = substitute(getdistrOption("withSweave"))
                      ,col = substitute(par("col"))
@@ -140,8 +140,8 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
                      ,legend.cex = substitute(0.8)
                      ,scaleX.fct = NULL
                      ,scaleX.inv = NULL
-                     ,scaleY.fct = pnorm
-                     ,scaleY.inv=qnorm
+                     ,scaleY.fct = substitute(pnorm)
+                     ,scaleY.inv= substitute(qnorm)
                      ,scaleN = substitute(9)
                      ,x.ticks = NULL
                      ,y.ticks = NULL
@@ -149,11 +149,11 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
                      ,to.draw.arg = substitute(NULL)
                      ,cex.pts = substitute(1)
                      ,cex.pts.fun = substitute(NULL)
-                     ,col.pts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), substitute(alpha.trsp)))
+                     ,col.pts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), alpha.trsp))
                      ,pch.pts = substitute(19)
                      ,cex.npts = substitute(2)
                      ,cex.npts.fun = substitute(NULL)
-                     ,col.npts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), substitute(alpha.trsp)))
+                     ,col.npts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), alpha.trsp))
                      ,pch.npts = substitute(20)
                      ,jitter.fac = substitute(1)
                      ,with.lab = substitute(FALSE)
@@ -179,25 +179,92 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
                      ,col = substitute("blue")
                      ,withSubst = substitute(TRUE)
     ), scaleList)
+  argsList.ev <- c(list(object = IC
+                     ,data = data
+                     ,withSweave = getdistrOption("withSweave")
+                     ,col = par("col")
+                     ,lwd = par("lwd")
+                     ,lty = "solid"
+                     ,colI = grey(0.5)
+                     ,lwdI = 0.7*par("lwd")
+                     ,ltyI = "dotted"
+                     ,main = FALSE
+                     ,inner = TRUE
+                     ,sub = FALSE
+                     ,col.inner = par("col.main")
+                     ,cex.inner = 0.8
+                     ,bmar = par("mar")[1]
+                     ,tmar = par("mar")[3]
+                     ,with.automatic.grid = TRUE
+                     ,with.legend = TRUE
+                     ,legend = c("class. opt. IC",as.character(deparse(match.call()$IC)))
+                     ,legend.bg = "white"
+                     ,legend.location = "bottomright"
+                     ,legend.cex = 0.8
+                     ,scaleX.fct = NULL
+                     ,scaleX.inv = NULL
+                     ,scaleY.fct = pnorm
+                     ,scaleY.inv=qnorm
+                     ,scaleN = 9
+                     ,x.ticks = NULL
+                     ,y.ticks = NULL
+                     ,mfColRow = TRUE
+                     ,to.draw.arg = NULL
+                     ,cex.pts = 1
+                     ,cex.pts.fun = NULL
+                     ,col.pts = addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), alpha.trsp)
+                     ,pch.pts = 19
+                     ,cex.npts = 2
+                     ,cex.npts.fun = NULL
+                     ,col.npts = addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), alpha.trsp)
+                     ,pch.npts = 20
+                     ,jitter.fac = 1
+                     ,with.lab = FALSE
+                     ,cex.lbs = 1
+                     ,adj.lbs = c(0,0)
+                     ,col.lbs = par("col")
+                     ,lab.pts = NULL
+                     ,lab.font = NULL
+                     ,alpha.trsp = alpha.trsp
+                     ,which.lbs = NULL
+                     ,which.Order  = NULL
+                     ,which.nonlbs = NULL
+                     ,return.Order = FALSE
+                     ,ylab.abs = "absolute information"
+                     ,ylab.rel= "relative information"
+                     ,adj = 0.5
+                     ,cex.main = 1.5
+                     ,cex.lab = 1
+                     ,cex = 1.5
+                     ,bty = "o"
+                     ,panel.first= NULL
+                     ,panel.last= NULL
+                     ,col = "blue"
+                     ,withSubst = TRUE
+    ), scaleList)
 
   ##parameter for plotting
   if(mc$with.legend)
   {
-    argsList$col.main <- "black"
-    argsList$col.lab <- "black"
+    argsList.unev$col.main <- argsList.ev$col.main <- "black"
+    argsList.unev$col.lab <- argsList.ev$col.lab <-"black"
   }
   else
   {
-    argsList$col.main <- "white"
-    argsList$col.lab <- "white"
+    argsList.unev$col.main <- argsList.ev$col.main <- "white"
+    argsList.unev$col.lab <- argsList.ev$col.lab <-"white"
   }
 
-  args <- .merge.lists(argsList, dots)
+  args.unev <- .merge.lists(argsList.unev, dots)
+  args.ev <- .merge.lists(argsList.ev, dots)
+
+  wn <- which(names(args.unev) == "object")
+  args.unev <- c(args.unev[wn],args.unev[-wn])
 
   ###
   ### 3. build up the call but grab it and write it into an object
   ###
-  cl <- substitute(do.call(infoPlot,args0), list(args0=args))
+  cl <- substitute(do.call(infoPlot,args0), list(args0=args.unev))
   ### manipulate it so that the wrapper do.call is ommitted
   cl0 <- as.list(cl)[-1]
   mycall <- c(cl0[1],unlist(cl0[-1]))
@@ -205,7 +272,7 @@ InfoPlot <- function(IC, data,...,alpha.trsp = 100,with.legend = TRUE, rescale =
   ###
   ### 4. evaluate the call (i.e., produce the graphic)
   ###
-  retV <- eval(mycall)
+  retV <- do.call(infoPlot,args.ev)
   retV$wrapcall <- mc
   retV$wrappedcall <- mycall
   ###
@@ -305,7 +372,7 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
   ## Scaling of the axes
   scaleList <- rescaleFunction(eval(IC@CallL2Fam), !missing(y), mc$rescale)
 
-  argsList <- c(list(x = substitute(IC)
+  argsList.unev <- c(list(x = substitute(IC)
                      ,withSweave = substitute(getdistrOption("withSweave"))
                      ,col = substitute(par("col"))
                      ,lwd = substitute(par("lwd"))
@@ -332,8 +399,8 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,x.vec = substitute(NULL)
                      ,scaleX.fct = NULL
                      ,scaleX.inv = NULL
-                     ,scaleY.fct = pnorm
-                     ,scaleY.inv=qnorm
+                     ,scaleY.fct = substitute(pnorm)
+                     ,scaleY.inv=substitute(qnorm)
                      ,scaleN = substitute(9)
                      ,x.ticks = NULL
                      ,y.ticks = NULL
@@ -348,14 +415,57 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,panel.last= substitute(NULL)
                      ,withSubst = substitute(TRUE)
     ), scaleList)
-  if(!missing(y)){argsList <- c(argsList, list(y = substitute(y)
+  argsList.ev <- c(list(x = IC
+                     ,withSweave = getdistrOption("withSweave")
+                     ,col = par("col")
+                     ,lwd = par("lwd")
+                     ,lty = "solid"
+                     ,main = FALSE
+                     ,inner = TRUE
+                     ,sub = FALSE
+                     ,col.inner = par("col.main")
+                     ,cex.inner = 0.8
+                     ,bmar = par("mar")[1]
+                     ,tmar = par("mar")[3]
+                     ,with.automatic.grid = TRUE
+                     ,with.legend = TRUE
+                     ,legend = as.character(deparse(match.call()$IC))
+                     ,legend.bg = "white"
+                     ,legend.location = "bottomright"
+                     ,legend.cex = 0.8
+                     ,withMBR = FALSE
+                     ,MBRB = NA
+                     ,MBR.fac = 2
+                     ,col.MBR = par("col")
+                     ,lty.MBR = "dashed"
+                     ,lwd.MBR = 0.8
+                     ,x.vec = NULL
+                     ,scaleX.fct = NULL
+                     ,scaleX.inv = NULL
+                     ,scaleY.fct = pnorm
+                     ,scaleY.inv=qnorm
+                     ,scaleN = substitute(9)
+                     ,x.ticks = NULL
+                     ,y.ticks = NULL
+                     ,mfColRow = TRUE
+                     ,to.draw.arg = NULL
+                     ,adj = 0.5
+                     ,cex.main = 1.5
+                     ,cex.lab = 1
+                     ,cex = 1.5
+                     ,bty = "o"
+                     ,panel.first= NULL
+                     ,panel.last= NULL
+                     ,withSubst = TRUE
+    ), scaleList)
+  if(!missing(y)){argsList.unev <- c(argsList.unev, list(y = substitute(y)
                      ,cex.pts = substitute(1)
                      ,cex.pts.fun = substitute(NULL)
-                     ,col.pts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), substitute(alpha.trsp)))
+                     ,col.pts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), alpha.trsp))
                      ,pch.pts = substitute(19)
                      ,cex.npts = substitute(2)
                      ,cex.npts.fun = substitute(NULL)
-                     ,col.npts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), substitute(alpha.trsp)))
+                     ,col.npts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), alpha.trsp))
                      ,pch.npts = substitute(20)
                      ,jitter.fac = substitute(1)
                      ,with.lab = substitute(FALSE)
@@ -374,25 +484,58 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
                      ,cex.lab = substitute(1)
                      ,cex = substitute(1.5)
                      ,bty = substitute("o")))
+                 argsList.ev <- c(argsList.ev, list(y = y
+                     ,cex.pts = 1
+                     ,cex.pts.fun = NULL
+                     ,col.pts = addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), alpha.trsp)
+                     ,pch.pts = 19
+                     ,cex.npts = 2
+                     ,cex.npts.fun = NULL
+                     ,col.npts = addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), substitute(alpha.trsp))
+                     ,pch.npts = 20
+                     ,jitter.fac = 1
+                     ,with.lab = FALSE
+                     ,cex.lbs = 1
+                     ,adj.lbs = c(0,0)
+                     ,col.lbs = par("col")
+                     ,lab.pts = NULL
+                     ,lab.font = NULL
+                     ,alpha.trsp = alpha.trsp
+                     ,which.lbs = NULL
+                     ,which.Order  = NULL
+                     ,which.nonlbs = NULL
+                     ,attr.pre = FALSE
+                     ,adj = 0.5
+                     ,cex.main = 1.5
+                     ,cex.lab = 1
+                     ,cex = 1.5
+                     ,bty = "o"))
   }
 
   ##parameter for plotting
   if(mc$with.legend)
   {
-    argsList$col.main <- "black"
-    argsList$col.lab <- "black"
+    argsList.unev$col.main <- argsList.ev$col.main <- "black"
+    argsList.unev$col.lab <- argsList.ev$col.lab <-"black"
   }
   else
   {
-    argsList$col.main <- "white"
-    argsList$col.lab <- "white"
+    argsList.unev$col.main <- argsList.ev$col.main <- "white"
+    argsList.unev$col.lab <- argsList.ev$col.lab <-"white"
   }
 
-  args <- .merge.lists(argsList, dots)
+  args.ev <- .merge.lists(argsList.ev, dots)
+  print(args.ev)
+  wn <- which(names(args.ev) %in% c("x","y"))
+  args.ev <- c(args.ev[wn],args.ev[-wn])
+
+  args.unev <- .merge.lists(argsList.unev, dots)
+  wn <- which(names(args.unev) %in% c("x","y"))
+  args.unev <- c(args.unev[wn],args.unev[-wn])
   ###
   ### 3. build up the call but grab it and write it into an object
   ###
-  cl <- substitute(do.call(plot,args0), list(args0=args))
+  cl <- substitute(do.call(plot,args0), list(args0=args.unev))
   ### manipulate it so that the wrapper do.call is ommitted
   cl0 <- as.list(cl)[-1]
   mycall <- c(cl0[1],unlist(cl0[-1]))
@@ -400,7 +543,7 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
   ###
   ### 4. evaluate the call (i.e., produce the graphic)
   ###
-  retV <- eval(mycall)
+  retV <- do.call(plot,args.ev)
   retV$wrapcall <- mc
   retV$wrappedcall <- mycall
   ###
@@ -415,7 +558,7 @@ PlotIC <- function(IC, y,...,alpha.trsp = 100, with.legend = TRUE, rescale = FAL
 
 ##########################################
 ##                                      ##
-##    Wrapper for comparePlot)          ##
+##    Wrapper for comparePlot          ##
 ##                                      ##
 ##########################################
 
@@ -519,12 +662,9 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
   if(!is.null(mc$IC4)) leg <- c(leg, as.character(deparse(mc$IC4)))
 
 
-  argsList <- .merge.lists(list(obj1 = IC1
-                     ,obj2 = IC2
-                     ,obj3 = if(is.null(mc$IC3)) NULL else mc$IC3
-                     ,obj4 = if(is.null(mc$IC4)) NULL else mc$IC4
+  argsList.unev <- c(list(obj1 = mc$IC1
+                     ,obj2 = mc$IC2
                      ,forceSameModel = FALSE
-                     ,data = NULL
                      ,lwd = substitute(par("lwd"))
                      ,lty = substitute("solid")
                      ,withSweave = substitute(getdistrOption("withSweave"))
@@ -549,8 +689,8 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
                      ,lwd.MBR = substitute(0.8)
                      ,scaleX.fct = NULL
                      ,scaleX.inv = NULL
-                     ,scaleY.fct = pnorm
-                     ,scaleY.inv=qnorm
+                     ,scaleY.fct = substitute(pnorm)
+                     ,scaleY.inv= substitute(qnorm)
                      ,scaleN = 9
                      ,x.ticks = NULL
                      ,y.ticks = NULL
@@ -562,7 +702,7 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
                      ,pch.pts = substitute(19)
                      ,cex.npts = substitute(2)
                      ,cex.npts.fun = substitute(NULL)
-                     ,col.npts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), substitute(alpha.trsp)))
+                     ,col.npts = substitute(addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), alpha.trsp))
                      ,pch.npts = substitute(20)
                      ,jitter.fac = substitute(1)
                      ,with.lab = substitute(FALSE)
@@ -586,31 +726,102 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
                      ,panel.last= substitute(NULL)
                      ,withSubst = substitute(TRUE)
     ), scaleList)
-    
-    if(!is.null(IC3)) argsList$obj3 <- substitute(IC3)
-    if(!is.null(IC4)) argsList$obj4 <- substitute(IC4)
+  argsList.ev <- c(list(obj1 = IC1
+                     ,obj2 = IC2
+                     ,obj3 = IC3
+                     ,obj4 = IC4
+                     ,data = if(!missing(y)) y else NULL
+                     ,forceSameModel = FALSE
+                     ,lwd = par("lwd")
+                     ,lty = "solid"
+                     ,withSweave = getdistrOption("withSweave")
+                     ,main = FALSE
+                     ,inner = TRUE
+                     ,sub = FALSE
+                     ,col.inner = par("col.main")
+                     ,cex.inner = 0.8
+                     ,bmar = par("mar")[1]
+                     ,tmar = par("mar")[3]
+                     ,with.automatic.grid = TRUE
+                     ,with.legend = FALSE
+                     ,legend = leg
+                     ,legend.bg = "white"
+                     ,legend.location = "bottomright"
+                     ,legend.cex = 0.8
+                     ,withMBR = FALSE
+                     ,MBRB = NA
+                     ,MBR.fac = 2
+                     ,col.MBR = par("col")
+                     ,lty.MBR = "dashed"
+                     ,lwd.MBR = 0.8
+                     ,scaleX.fct = NULL
+                     ,scaleX.inv = NULL
+                     ,scaleY.fct = pnorm
+                     ,scaleY.inv=qnorm
+                     ,scaleN = 9
+                     ,x.ticks = NULL
+                     ,y.ticks = NULL
+                     ,mfColRow = TRUE
+                     ,to.draw.arg = NULL
+                     ,cex.pts = 1
+                     ,cex.pts.fun = NULL
+                     ,col.pts = c(1,2,3,4)
+                     ,pch.pts = 19
+                     ,cex.npts = 2
+                     ,cex.npts.fun = NULL
+                     ,col.npts = addAlphTrsp2col(rgb(0,255,0,maxColorValue=255), alpha.trsp)
+                     ,pch.npts = 20
+                     ,jitter.fac = 1
+                     ,with.lab = FALSE
+                     ,cex.lbs = 1
+                     ,adj.lbs = c(0,0)
+                     ,col.lbs = par("col")
+                     ,lab.pts = NULL
+                     ,lab.font = NULL
+                     ,alpha.trsp = alpha.trsp
+                     ,which.lbs = NULL
+                     ,which.Order  = NULL
+                     ,which.nonlbs = NULL
+                     ,return.Order = FALSE
+                     ,adj = 0.5
+                     ,cex.main = 1.5
+                     ,cex.lab = 1
+                     ,cex = 1.5
+                     ,bty = "o"
+                     ,col = "blue"
+                     ,panel.first= NULL
+                     ,panel.last= NULL
+                     ,withSubst = TRUE
+    ), scaleList)
 
-    if(!missing(y))  argsList$data <- substitute(y)
+    if(!is.null(IC3)) argsList.unev$obj3 <- mc$IC3
+    if(!is.null(IC4)) argsList.unev$obj4 <- mc$IC4
+
+    if(!missing(y))  argsList.unev$data <- substitute(y)
 
   ##parameter for plotting
   if(mc$with.legend)
   {
-    argsList$col.main <- "black"
-    argsList$col.lab <- "black"
+    argsList.unev$col.main <- argsList.ev$col.main <- "black"
+    argsList.unev$col.lab <- argsList.ev$col.lab <-"black"
   }
   else
   {
-    argsList$col.main <- "white"
-    argsList$col.lab <- "white"
+    argsList.unev$col.main <- argsList.ev$col.main <- "white"
+    argsList.unev$col.lab <- argsList.ev$col.lab <-"white"
   }
 
-  args <- .merge.lists(argsList, dots)
-  wn <- which(names(args) %in% c("obj1", "obj2"))
-  args <- c(args[wn],args[-wn])
+  args.unev <- .merge.lists(argsList.unev, dots)
+  wn <- which(names(args.unev) %in% c("obj1", "obj2"))
+  args.unev <- c(args.unev[wn],args.unev[-wn])
+
+  args.ev <- .merge.lists(argsList.ev, dots)
+  wn <- which(names(args.ev) %in% c("obj1", "obj2"))
+  args.ev <- c(args.ev[wn],args.ev[-wn])
   ###
   ### 3. build up the call but grab it and write it into an object
   ###
-  cl <- substitute(do.call(comparePlot,args0), list(args0=args))
+  cl <- substitute(do.call(comparePlot,args0), list(args0=args.unev))
   ### manipulate it so that the wrapper do.call is ommitted
   cl0 <- as.list(cl)[-1]
   mycall <- c(cl0[1],unlist(cl0[-1]))
@@ -618,7 +829,7 @@ ComparePlot <- function(IC1, IC2, y, ..., IC3=NULL, IC4=NULL,
   ###
   ### 4. evaluate the call (i.e., produce the graphic)
   ###
-  retV <- eval(mycall)
+  retV <- do.call(comparePlot,args.ev)
   retV$wrapcall <- mc
   retV$wrappedcall <- mycall
   ###
