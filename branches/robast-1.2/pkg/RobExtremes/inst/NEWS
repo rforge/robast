@@ -11,6 +11,10 @@
 version 1.2
 #######################################
 
+user-visible CHANGES:
++ return object of roptest (with interpolRisks) now contains information on its bias,
+  so can, e.g., be used in confint with accounting for possible bias
+
 bugfixes:
 + Bernhard discovered a bug in ".checkEstClassForParamFamily" for GEV (was GPD instead of GEV)
 + there were no classes [GPD/GEV]MDEstimate -> fixed now
@@ -110,7 +114,7 @@ user-visible CHANGES:
   realized in startEstGEV.R : a CvM-MDE with xi varying on a grid...
 + provide wrapper for ismev-diagnostics ie gev.diag, gev.prof, gev.profxi, 
   gpd.diag, gpd.prof, gpd.profxi
-
+  
 GENERAL ENHANCEMENTS:
 
 under the hood:

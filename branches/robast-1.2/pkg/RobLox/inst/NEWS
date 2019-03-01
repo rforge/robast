@@ -11,6 +11,10 @@
 version 1.2
 #######################################
 
+user-visible CHANGES:
++ roblox now returns correct slots trafo, untransformed.estimate, and untransformed.asvar
+  so its return value can now e.g. be used with qqplot
+
 under the hood
 + the modifyIC functions gain argument withMakeIC to be consistent with the signature in RobAStBase
   (the arg is ignored in the RobLox Code)

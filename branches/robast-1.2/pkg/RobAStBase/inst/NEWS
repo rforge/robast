@@ -31,6 +31,9 @@ user-visible CHANGES:
   information on integrations; this information (if argument "diagnostic" is TRUE)
   is stored in attribute "diagnostic" of the return value
 + accessor "timings" to attribute "timings" of an object of class "kStepEstimate"
++ triggered by a mail by K. Hornik who spotted output in checkIC varying from architecture to architecture,
+  (which is below machine accuracy hence to be ignored) we now delete non-significant digits in centering 
++ refined Rd for outlyingPlotIC (with cutoff.quant())
   
 bugfixes  
 + and a forgotten no longer used instance of oldmodif in kStepEstimator
@@ -38,6 +41,20 @@ bugfixes
    xn1 <- rnbinom(100,size=25,prob=0.2)
    N1.w <- NbinomwithSizeFamily(size = 25, prob = 0.25)
    print(CvMMDEstimator(xn1,N1.w,.withEvalAsVar=FALSE))
++ lapply was called in the wrong order in .prepareTitles
++ grids can now also be drawn if with.automatic.grid == TRUE if 
+  neither scaleX nor scaleY is TRUE
++ wrong initialization of col.npts in infoPlot
++ mixed up n.CI and n in qqplot
++ in ddPlot_utils, argument main was not passed through 
++ in plot-method for ICs, legend is now recylced when given as argument
++ possible double argument lwd is caught in plot-method for ICs, in comparePlot, and in infoPlot
++ x.vecD was not used as list in comparePlot, arguments x, y were not named in call to matlines in comparePlot
++ in plotWrappers, legend is now adapted to different wrappers, cex.lab=1, in PlotIC argument y was not passed 
++ taken up Kornelius' suggestions to better capsulate our code, in our plot wrapper functions, we now avoid 
+  evaluation of the unevaluated call within the wrapper function; instead, we now have two argsLists, one 
+  evaluated for subsequent use in do.call (where all list items are evaluated, as as rule in the parent env) 
+  and an unevaluated one for use to create a call to be issued
 
 under the hood
 + new S4 (estimator) class "MCALEstimate" containing both 
