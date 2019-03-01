@@ -63,9 +63,13 @@ setMethod("getStartIC",signature(model = "ParetoFamily", risk = "interpolRisk"),
    }else weight(w) <- minbiasweight(w, neighbor = nb, biastype = biast,
                           normW = normt)
 
+   Risk <- list(asBias = list(value = b, biastype = biast,
+                                       normtype = normt,
+                                       neighbortype = class(nb)))
+
    res <- list(a = a, A = A, b = b, d = 0*a,
                normtype = normt, biastype = biast, w = w,
-               info = c("optIC", ICT), risk = list(),
+               info = c("optIC", ICT), risk = Risk,
                modifyIC = NULL)
 
 
