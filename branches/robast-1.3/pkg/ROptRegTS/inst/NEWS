@@ -1,0 +1,89 @@
+###############################################################################
+##  News: to package ROptRegTS
+###############################################################################
+
+(first two numbers of package versions do not necessarily reflect package-individual 
+ development, but rather are chosen for the RobAStXXX family as a whole in order 
+ to ease updating "depends" information)
+
+#######################################
+version 1.2
+#######################################
+
+under the hood
++ now specified that we want to use distr::solve
++ for compatibility with the new capsulation of E()-arguments, we removed additional 
+  functional arguments f1 from calls to E() and replaced them by the actual maps
+
+#######################################
+version 1.1
+#######################################
+
+user-visible CHANGES:
++ DESCRIPTION tag SVNRevision changed to VCS/SVNRevision
+
+under the hood:
++ wherever possible also use q.l internally instead of q to provide functionality in 
+  IRKernel
++ changed calls to formerly exported objects from NAMESPACE distr to getdistrOption("<object>")
++ fixed large parts of the scripts
+  
+#######################################
+version 1.0
+#######################################
+
+user-visible CHANGES:
++ title changed to title style / capitalization
+
+#######################################
+version 0.9
+#######################################
+
+no changes this time
+
+#######################################
+version 0.8
+#######################################
+
+no changes this time
++ DESCRIPTION files and package-help files gain a tag SVNRevision to be filled by 
+  get[All]RevNr.R from utils in distr
+
+#######################################
+version 0.7
+#######################################
+
+user-visible CHANGES:
+
++ now depends on ROptEstOld!
+
+GENERAL ENHANCEMENTS:
+
++ added tests/Examples folder with file ROptRegTS-Ex.Rout.save to have
+  some automatic testing
++ added TOBEDONE (sic!) files; in English (for possible collaborators) 
++ added keyword robust and made some minor corrections ...
++ added/updated NEWS files, updated CITATION files using code by A. Zeileis
+
++ Rd-parsing:
+  * patch for Brian Ripley's
+    Re: [Rd] Warning: missing text for item ... in \describe?
+  * fixed errors / warnings in .Rd files detected by parser 2 
+    (c.f. [Rd] More intensive checking of R help files, Prof Brian Ripley, 09.01.2009 10:25)
+
++ svn-revision-tags 
+  * added in all DESCRIPTION files
+  * added field "Encoding: latin1" to all DESCRIPTION files because
+    substituting $LastChangedDate by svn would cause problems for
+    packages built under Windows (German) local when checking under Linux.
+
++ removed pdf-file from version control - Rnw-file is sufficient
+
+#######################################
+version 0.6.1
+#######################################
++ introduced option("newDevice") to control new opening of graphic devices
++ use of on.exit() to restore old settings for options() and par() at the end 
+  of functions
++ introduction of NEWS-file
++ update of CITATION-file (based on code provided by A. Zeileis on R help)

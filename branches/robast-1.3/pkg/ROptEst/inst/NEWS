@@ -1,0 +1,578 @@
+###############################################################################
+##  News: to package ROptEst
+###############################################################################
+
+(first two numbers of package versions do not necessarily reflect 
+ package-individual development, but rather are chosen for the 
+ RobAStXXX family as a whole in order to ease updating "depends" 
+ information)
+
+#######################################
+version 1.2
+#######################################
+
+user-visible CHANGES:
++ slot function modifyIC of the different IC classes gains
+  an argument withMakeIC to be able to adjust this to a
+  higher granularity
++ require more recent versions in DESCRIPTION
++ getBiasIC for signature {HampIC,UncondNeighborhood} no longer has argument withCheck
++ getRiskIC gains argument "..." to pass on arguments to E()
++ the help to robest is more explicit about the usage of argument E.argList at 
+  various places in the generator 
++ the help to roptest has an extra paragraph explicating the usage of initial.est
+  and start.Par and the different steps done in roptest 
++ the input generators genkStepCtrl, genstartCtrl, genstartICCtrl gain argument
+  E.argList to pass on arguments to E()
++ roptest and the wrappers RMX|OBR|MBR|OMSEstimator gain an argument E.argList for arguments 
+  to be passed to E() from (a) \code{MDEstimator} (here this additional argument is only 
+   used if \code{initial.est}  is missing), (b) \code{getStartIC}, and (c) \code{kStepEstimator}. 
+   Potential clashes with arguments of the same name in \code{\dots} are resolved by inserting 
+   the items of argument list \code{E.argList} as named items, so in case of collisions the 
+   item of \code{E.argList} overwrites the existing one from \code{\dots}.
++ roptest and its wrappers RMX|OBR|MBR|OMSEstimator can now also digest robest-arguments
+  arguments \code{startCtrl}, \code{startICCtrl}, and \code{kStepCtrl}, in which case
+  information in these arguments in case of collision overrides information given through
+  the "usual" arguments; this allows for individual settings of \code{E.argList}, 
+  \code{withEvalAsVar}, and \code{withMakeIC} for the different steps.
++ roptest and its wrappers RMX|OBR|MBR|OMSEstimator, getStartIC for asGRisk, asBias, RMX, and
+  asAnscombe, as well as the particular checkIC/makeIC methods for ContIC gain argument 
+  diagnostic to be able to show diagnostic information on integrations; this information 
+  (if argument "diagnostic" is TRUE) is stored in attribute "diagnostic" of the return value
++ accessors "timings" and "kStepTimings" to attributes "timings" and and "kStepTimings"
+  of an object of class "ORobEstimate"
+
+bug fixes
+
++ an embarrassing error when computing E(X t(X)) (saving the lower half by symmetry) 
+  in getInfStand: a[row(a)>col(a)] <- a[row(a)<col(a)] in general is not symmetric...
+  did not bite us so far as the highest dim we considered so far was 3, and the 
+  recipe is exact exactly up to dim 3... the exact formula would have been (and is now
+  in the code) a[row(a)>col(a)] <- t(a)[row(a)>col(a)]
++ fix an argument collision in MBRE-method / in call to getInfRobIC_asGRisk, when called
+  from OptIC through getInfRobIC_asBias ("upper" got into ...)
+
+under the hood
+
++ L2LocationFamily, L2LocationScaleFamily, and L2LocationScaleFamily gain methods for interpolRisk
+  ~> speed up is prepared (only need to store the reference LMs in sysdata.rda) 
+  => due to affine equivariance, we only have to store one set of LM's 
++ comparePlot has a try catch now for MBRE
++ some buglets in getStartIC 
++ some tedious debugging in getStartIClcsc.R
++ clarified if clauses in roptest.new (and removed .with.checkEstClassForParamFamily from dots to be sure)
++ inserted code for time checking (which is inactive usually; only if in kStepEstimator.R in 
+  RobAStBase, the respective ##-t-## lines are de-commented the timings are visible as
+  attribute "kStepTimings" in the result of roptest ...) changed now: is always active....
++ now specified that we want to use distr::solve
++ internal function .getComp, determining by symmetry slots which entries in LMs a and A 
+  have to be computed, now fills the lower triangle of A with FALSE (was not used so far,
+  but can be used in a faster computation method for checkIC makeIC to determine whether
+  it is cleverer to integrate in k or in p space)
++ several methods (getRiskIC, getBiasIC, getBoundedIC, makeIC, checkIC, modifyIC) 
+  gain argument "..." to pass on arguments to E(). This holds in particular for the
+  functions used to compute the optimally-robust ICs, i.e. getInfRob_asBias, getInfRob_asHampel,
+  getInfRob_asGRisk, getInfRob_asAnscombe, leastFavorableRadius, radiusMinimaxIC, and
+  geInfGamma, getInfRad, getInfClip, getInfCent, getInfStand, getInfV, getAsRisk, getReq,
+  (at least as far as multivariate ICs are concerned), .LowerCaseMultivariate, getMaxIneff, 
+  getInfRad, getLagrangeMultByIter and getLagrangeMultByOptim
++ new internal helper function .filterEargWEargList is used to filter out arguments 
+  from dots which are meant for E() 
++ the local .modifyIC0 functions only used to produce the new IC but not for filling
+  slot modifyIC loose argument withMakeIC (and dots) -- this is now done in the outer
+  modifyIC function
++ particular checkIC, makeIC methods for ContICs: They compute the integrals E w, E L w,
+  E LL w using symmetry information through .getComp, and based on these numbers computes 
+  does checking / the affine transformation to give the proper pIC. These methods by 
+  default are only used if it pays off, i.e., if the number of computed integrals is smaller
+  than in the default method. This can be overriden by argument forceContICMethod. 
++ the particular checkIC and makeIC methods gain argument diagnostic to be able to 
+  show diagnostic information on integrations
++ roptest, robest, and particular checkIC/makeIC methods for ContIC now if (diagnostic==TRUE)
+  return diagnostic attributes of S3 class "DiagnosticClass"
+  
+
+#######################################
+version 1.1
+#######################################
+
+user-visible CHANGES:
++ new wrapper functions RMXEstimator, OBREstimator, MBREstimator, OMSEstimator
++ plot-methods now have arguments .nonlb to only plot (but not label) some points
++ plot-methods are vectorized to a higher extent in all arguments
++ plot methods now return an S3 object of class \code{c("plotInfo","DiagnInfo")}, i.e., a list containing the 
+  information needed to produce the respective plot, which at a later stage could be used by different 
+  graphic engines (like, e.g. \code{ggplot}) to produce the plot in a different framework. A more detailed 
+  description will follow in a subsequent version.
++ optIC gains argument withMakeIC
++ roptest gains argument withMakeIC
++ getStartIC-methods gain argument withMakeIC
++ cniperPointPlot gains argument withMakeIC
++ genkStepCtrl gains argument withMakeIC
++ DESCRIPTION tag SVNRevision changed to VCS/SVNRevision
++ getRiskIC and getBiasIC gain argument withCheck to speed up things if one does not want to call checkIC 
+
+Return value of "roptest"
+
++ the return value of "roptest", an object of class "kStepEstimate" has a slot "estimate.call" which
+  contains the (matched) call to "roptest"; internally "roptest" calls "robest"; the call to "robest"
+  may be of interest, too, so we have a new slot "robestCall" of class "OptionalCall", ie a call  
+  or NULL (default); it can be accessed via function robestCall() 
+
+Bugfix: 
++ argument withMakeIC was not correctly used in roptest.new 
+
+under the hood:
++ try to minimize interim output while using roptest- and friends
++ new return class ORobEstimate for optimally robust estimators
++ wherever possible also use q.l internally instead of q to 
+  provide functionality in IRKernel
++ fixed all scripts
++ by means of argument modifyICwarn the filling of info slots with warnings is controlled;
+  over all at most one warning is written into the info string 
+
+#######################################
+version 1.0.1
+#######################################
+user-visible CHANGES:
++ moved getFiRisk from ROptEst to RobAstBase
+
+#######################################
+version 1.0
+#######################################
+
+user-visible CHANGES:
++ title changed to title style / capitalization
++ cniperPointPlot gains capacity to deal with "interpolRisk" - risks
++ cniperPointPlot gains optional pattern substitution (like plot) 
+  which can be switched off by argument withSubst
+
+GENERAL ENHANCEMENTS:
+
+under the hood:
++ preparations for evalation of LMs on xi grid for GEVFamilyMuUnknown. 
++ new methods for normtype and biastype for interpolRisk, as well as getRiskFctBV
+  => now cniperPointPlot should work for GPD-type data 
++ removed ::: internal dependencies (within distr&robast-Fam's of pkgs) by 
+  copying respective routines
++ adjusted plot-Method for ICs to include the new argument x.vec
++ enhanced imports in DESCRIPTION by explicating second order imports
+
+  
+BUGFIXES:
++ two bugs in plotWrapper.R in pkgs RobAStBase and ROptEst detected by Misha
++ needed version of RandVar was wrongly specified in ROptEst in the branch 1.0
++ fixed errors detected by Matthias / Misha in AllPlot.R, comparePlot.R, getReq.R
++ fixed issue with updateStep in kStepEstimator when using interpol risks 
+  (somehow modifyIC had not been attached in prior steps...)
++ labels did not work correctly, warnings due to calling plot with "withMaxRisk"
++ fixed issue with points plotting in Cniperpoint-plots
++ in wrapper function CniperPointPlot, arguments 'data'  and 'alpha.trsp' had not 
+  been passed on correctly
++ some changes in wrapper to cniperpointplot
++ fixed an error in cniperPointPlot() -- default for argument risk had not 
+  been passed on correctly to cniperCont()
+#######################################
+version 0.9
+#######################################
+
+user-visible CHANGES:
+
++ new wrapper function CniperPointPlot
+
++ new more modularized user-interface robest
++ roptest (the new one) gains argument withMDE to skip call to MDE
+  when starting estimator is robust anyway;
++ roptest gains argument withEvalAsVar
++ roptest may force logscale when calling kStepEstimator
++ removed argument scalename from arglist of roptest -- 
+  it is computed automatically now.
+
++ added new function 'showdown' to compare some estimator with 
+  our rmx estimator by some Monte-Carlo study. 
+
++ assigned result of qqplot to some variable to reduce output
+
++ generating function genkStepCtrl for control arguments for kStepEstimator
+  gains argument withEvalAsVar
+
++ similarly genstartCtrl() gains optional argument withMDE
+
++ optIC gains argument .withEvalAsVar
+
++ new functionality to determine "optimal" radius (getRadius, getInfRad (the latter an S4method));
+
+GENERAL ENHANCEMENTS:
+
++ RobASt-Pkgs: DESCRIPTION depends become stricter (requiring distrMod, distrEx, distr >=2.4 to be on the safe side)
++ cleaned DESCRIPTION and NAMESPACE file as to Imports/Depends
++ deleted chm folders --- they are no longer needed
+
++ delayed evaluation is done to speed up things
+
++ added argument no.readonly = TRUE in all assignments of type opar <- par();
++ commented out all assignments of type omar$cin <- NULL
++ removed calls to require from R sources and replaced it by directives in the NAMESPACE file
++ all packages get a DESCRIPTION tag "ByteCompile"
++ Suggests field with RobLox and MASS due to a warning by R CMD check
+
+
+under the hood:
+
++ added .Rbuildignore
+
++ Had to add 'importFrom(distr, q)' to NAMESPACE to avoid error with 
+  function 'q' inside of 'showdown' - why?!
+
++ replaced former interface roptest by a new, more modularized one
++ timings in roptest, robest are now optional; at any rate are attached as attribute
+
++ moved asL1, asL4 risk methods from RobAStBase to ROptEst
+
++ getStartIC.R 
+  * cleaned up (deleted unnecessary diagnostic prints) 
+    skipped unnecessary steps when dealing with MBRE
+  * getStartIC for signature L2ParamFamily,asGRisk gains argument withEvalAsVar
++ getStartIC - method for interpolRisks (and hence internal-getpsi, too) moved
+  from ROptEst to RobExtremes
++ getStartIC now also dispatches on asCov, trASCov, and asBias risk
+
++ getRiskIC gains example and for signature(IC = "HampIC", risk = "asCov",                  
+     neighbor = "missing", L2Fam = "L2ParamFamily") in 1dim case now uses getInfV() .
++ getRiskIC is careful and first evaluates covariance objects
+
++++ optIC already contains stubs to use moveL2Fam2RefParam,
+    moveICBackFromRefParam
+   (still some checking necessary before using this really...)
+
++ modified interval search in leastFavorableRadius and radiusMinimaxIC 
+  in case uniroot fails to find zeroes 
++ some more try-catches for radiusMinimaxIC (to keep this clean rewritten, with call
+  manipulations) and leastFavorableRadius (only minimal call manipulations -> got longer)
+
++ getIneffDiff now returns a vector (if called as from radiusMinimaxIC, leastFavorableRadius)
+  with lower and upper inefficiency; difference is computed in local functions now
+
++ getInfRobIC_asGRisk getInfRobIC_asHampel now get argument .withEvalAsVar and,
+  accordingly only produce calls to generate asyVariances or evaluate them as
+  well
+
++ getInfClip, signature(clip = "numeric", L2deriv = "UnivariateDistribution",
+     risk = "asSemivar",   neighbor = "ContNeighborhood") regains argument 
+	 biastype as it is called this way in getInfRobIC_asGRisk.R 
+
++ getInfV now always returns a matrix
+
+	 
++ interpolation infrastructure:
+  * .mergeF
+  * .copyGrid
+  * .renameGridName
+  * .MakeGridList
+  * .saveInterpGrid (with new argument structure / new defaults)
+  * .recomputeInterpolators
+  * .getLMGrid
+  * .RMXE.th
+  * .MBRE.th
+  * .OMSE.th
++ .recomputeInterpolators, .saveInterpGrid gain argument sysdataWriteFile to be
+   able to write to other files (other than sysdata.rda) => no need anymore to
+   write in separate folders when creating new grids in parallel
+
++ use of unit tests
+
+BUGFIXES:
++ a minimal correction in getInfRobIC_asGRisk.R
++ in roptest forgot to treat the case when additional arguments 
+  are passed to the initial estimator
++ two silly errors in roptest.new.R -> threw error when passed on S4-estimators 
+  as starting estimators
++ fixed a bug in in leastFavorableRadius and radiusMinimaxIC
++ .evalListRec was not prepared for length 0
++ some substitute functions have not been passed as arguments...
++ functions where identical in grid..!) 
++ a minor error in helper function .check.eps
++ fixed two bugs (for radius 0) in "getInfRobIC", signature(L2deriv = "RealRandVariable", 
+  risk = "asGRisk",neighbor = "UncondNeighborhood")
++ cleared bug from ticket #131
+
+#######################################
+version 0.8
+#######################################
+
+USER-VISIBLE CHANGES:
+
+  functions/classes:
+  + added new Risk class asAnscombe for determining OBRE to given ARE in 
+    the ideal model 
+  + now Anscombe-Risk also works with information standardization 
+   ( but is not suited for self-standardization!)
+
+  + new risk asL1 asL4 (for asy. mean absolute error and asy mean power 4 error) 
+    with generators etc
+
+  + new method get.asGRisk.fct to obtain a function in r,s,b (s=var^.5) 
+    to compute respective as. G-Risk
+  
+  + getAsRisk now has (almost) the same signature for different methods 
+    (so that in can easily be called when the actual risk is not clear)
+
+  + new helper methods makeIC to apply to functions or list of functions 
+         for easily producing (suboptimal) ICs
+
+  + new function getReq for two ICs IC1 and IC2 to compute a radius 
+    interval where IC1 is better than IC2 acc. to G-Risk
+
+  + new function getMaxIneff() to compute for any IC of class 
+    'IC' the maximal inefficiency on r in [0,Inf)
+
+  scripts/examples:
+  + uploaded Script for NbinomFamily
+  + added demo script for Normal Location case
+  + added calls to getMaxIneff() and getReq() in script to Normal Location
+  + examples for asAnscombe (see examples in inst folder (Binomial, Gamma, Nbinom, 
+    NormalLocationScale, NormalScale, Poisson);
+  + Integrated new example to getReq.Rd and new script AnscombeOrNot.R 
+
+  + some modifications/additions needed for the revised version 
+    of the corresponding manuscript.
+    names of added scripts were wrong ...
+
+  documentation:
+  + new references included in help files
+  + DESCRIPTION files and package-help files gain a tag SVNRevision 
+    to be filled by get[All]RevNr.R from utils in distr
+  
+  enhancements:
+  + filled Feature Request #919 / 
+         cniperPointPlot now digests arbitrary plot arguments.
+
+
+BUG FIXES
+
+  + fixed an issue with lower case solution in 
+    information/self-standardization;
+
+  + committed some missing Rd files for Anscombe class
+  + fixed some bug in Anscombe-risk for univariate L2deriv
+
+  + fixed a bug in multivariate version of getMaxIneff()
+    included respective examples to Rd file (with sin,cos-IC)
+  + a buglet in getInfClip.R
+
+  + fixed the asL1, asL4 issue --- getInfGamma beforehand was 
+         defined for asMSE not for asGRisk
+
+  + fixed two bugs in calculation of risks: 
+         trAsCov and asCov (for total variation)
+
+  + fixed a little bug in comparePlot if we want to plot pIC's
+ 
+  + fixed a buglet in asL1 asL4 risks
+
+  + fixed yet another buglet in asL1 risks
+
+  + fixed a little bug in getMaxIneff.R
+  + lower and upper interval bounds for search in clipping height 
+    in getInfRobIC_asGRisk.R are now selected differently for 
+    univariate L2-deriv according to whether risk is asMSE() or not
+   
+  + for restoring old par() values, not all attributes may 
+    be set; hence deleted them from stored value in plot 
+	functions by something like
+        opar$cin <- opar$cra <- opar$csi <- opar$cxy <-  opar$din <- NULL
+
+		 
+#######################################
+version 0.7
+#######################################
+
+USER-VISIBLE CHANGES:
+
+
+*** DUALITY BASED optIC-ALGORITHM
+
+-> optional use of alternative algorithm to obtain Lagrange multipliers
+   using duality based optimization 
+-> rewritten algorithm:
++  getInfRob_asGRisk.R     now have both an iterative and an optimization
++  getInfRob_asHampel.R    algorithm to obtain Lagrange Multipliers;
+       --- i.e. depending on argument OptOrIter (default: iteration as before...)
+       they call  getLagrangeMultByOptim resp. getLagrangeMultByIter
+       (unfortunately: optimization is slow; only L-BFGS-B works satisfactory)
++ getInfLM now gains (unfortunately not a good idea as to speed!) the new 
+  MSE - optimization routines for obtaining LagrangeMultipliers
+
+*** optIC Solution for general trafo / with nuisance
+
++ we now can digest case p=1, k>1 for asymmetric biastypes as well as for total variation
++ implemented lower Case solution for *=v p=1 k>1
++ roptest gains arguments withUpdateInKer, IC.UpdateInKer, na.rm
+
+*** others
+
++ added argument fsCor to function roptest enabling a finite-sample correction of the radius ...
++ added QQ plots in examples to roptest
+
+SCRIPTS
+
++ all scripts do run now without (obvious) error ---
+    at the exception of NormalLocationScaleModel.R --- 
+    and there the radiusminimax solution for self-standardization ...
++ in script GammaModel.R,  added comment due to new E method in distrEx 
+  which increases precision of certain computations.
++ scripts in part now with R output in comment
++ new example with k=15 steps in script PoissonModel.R
++ example for lower Case solution for *=v p=1 k>1 added in script NormalLocationScaleModel.R
++ new example for trafo-based model in script NormalLocationScaleModel.R
++ inserted some new lines in script NormalLocationScaleModel.R
+  --- now has an example with nuisance parameters
+
+GENERAL ENHANCEMENTS:
+
++ added tests/Examples folder with file ROptEst-Ex.Rout.save to have
+  some automatic testing
++ added TOBEDONE (sic!) files; in English (for possible collaborators) 
++ added keyword robust and made some minor corrections ...
++ added/updated NEWS files, updated CITATION files using code by A. Zeileis
+
++ Rd-parsing:
+  * patch for Brian Ripley's
+    Re: [Rd] Warning: missing text for item ... in \describe?
+  * fixed errors / warnings in .Rd files detected by parser 2 
+    (c.f. [Rd] More intensive checking of R help files, Prof Brian Ripley, 09.01.2009 10:25)
+
++ svn-revision-tags 
+  * added in all DESCRIPTION files
+  * added field "Encoding: latin1" to all DESCRIPTION files because
+    substituting $LastChangedDate by svn would cause problems for
+    packages built under Windows (German) local when checking under Linux.
+
++ removed pdf-file from version control - Rnw-file is sufficient
+
+
+INTERNALLY:
+
++ k dimension / p dimension  -- trafo & nuisance
+  * lower case and Hampel now seem to work with trafo
+  * in getInfRob_asHampel: added argument checkBounds, setting this to FALSE 
+    clearly speeds up computations for asHampel Risk
+  * cniper contamination now also available for partial ICs
+  * slightly modified b search range in MSE problem -- in the hope it will do 
+    for Totalvariation neighborhood, p=1, k>1 
+  * new: getAsRisk for "asBias", "RealRandVariable", "TotalVarNeighborhood" and "ANY"
+  * getModifyIC has been changed so that also nuisance parameter models
+    can be covered.
+
++ new IC algorithm 
+  * upper by default is now set to NULL in getInfRobIC_asGRisk, getInfRobIC_asHampel, getIneffDiff
+  * slightly modified b search range in MSE problem -- in the hope it will do 
+    for Totalvariation neighborhood, p=1, k>1 
+  * outsourced several steps in getInfRob_asGRisk.R and getInfRob_asHampel.R  
+    into internal, non-exported functions
+    .getLowUpB() .getLowerSol() .getUpperSol() .checkUpLow()
+  * radiusMinimaxIC gains argument loRad0 to be able to adjust 
+    the lower search bound (for getIneffDiff) case by case.
+  * getInfCent, getInfGamma 
+    - uses getLow/getUp now
+    - changed search interval for getInfCent Totalvariation one-dim
+    - use of lower.tail = FALSE instead of 1-p in 
+  * verbosity:
+    - for rob.-opt. ICs: in verbose mode now an automatic check for [p]IC is done
+    - optIC, getIneffDiff, getInfLM, getInfRob, 
+      leastFavorableRadius, .LowerCaseMultivariate.R[TV],
+      radiusMinimaxIC gain default NULL for argument verbose
+      in these function we check for is.null and if so set it
+      to getRobAStBaseOption("all.verbose")
+    - new helper function .checkPIC for checking within getInfRobIC
+    - work on pretty printing if verbose == TRUE, ...
+    - getIneffDiff now inhibits permanent checks for IC even if verbose==TRUE
+    - in addition to precision information, current Lagrange multipliers are issued if verbose==TRUE
+      (but only every 5 iterations in asGRisk- and every 15 in asBias-method for getInfRobIC)
+  * lowerCase solutions now count the number of iterations
+  * changed detault search interval for r in radiusMinimaxIC.R
+  * changed default search interval for b in getInfRobIC_asGRisk (one-dim)
+  * getLagrangeMultBy[...]() gain arg a.start to transmit the actual 
+    centering / clipping modification in transformed models
+
++ Risk slot
+  * made Risk slot slightly more consistent (no longer double asMSE),
+    in particular in case there is no convergence.
+
++ roptest 
+  * now has an argument initial.est.ArgList to transmit arguments
+     for a call to initial.est (for those familiar with it: 
+     similarly to startEstArgList in roptest.gpareto...)
+  * roptest gains arguments withUpdateInKer, IC.UpdateInKer, na.rm
+
++ getmodifyIC
+  * new generic scaleUpdateIC  for scale-Update in 
+    location/scale/locscale models
+    -> to avoid similar code for the many variants
+    ScaleModel, LocationScaleModel, LocationUnknownScaleModel,
+    ScaleUnknownLocationModel; in the latter two also
+    totalvariation nbds are allowed
+  * getModifyIC gains ... argument
+    and for signature((L2FamIC = "L2ParamFamily", 
+                       neighbor = "Neighborhood", risk ="asRisk")
+    inserts a verbose= getRobAStBaseOption("all.verbose")
+    into modifyIC-slot
+
+
+BUGFIXES:
+
+
++ scripts
+  * two minor buglets in scripts NormalLocationScaleModel.R & UnderOverShootRisk.R
+  * small shape parameters in GammaModel.R 
+    lead to functions which are hard to integrate numerically; 
+    added some code to demonstrate this ...
+ 
++ k dimension / p dimension issues
+  * fixed issues with polymorph nature of slot param of ParamFamParameter:
+    now we can determine opt-rob ICs for trafos; annotation gets right;
+    see example(comparePlot)
+  * Symmetry slots did not work correctly for non-trivial trafos 
+    (at least would have to be reworked); now: all entries are computed
+  * in ..asHampel: bmax had to be converted to matrix in case p=1, k>1
+
++ new IC algorithm issues
+  * in MSE-method (as iter <= 1 always), clipping bounds in weights 
+    in Total Variation case (p=1, k>1) were never updated 
+    -> new helper functino .isVirginW
+  * small bugs removed in getInfRobIC_asGRisk, getInfRobIC_asHampel, getInfClip
+  * std (standardization in non-standard norms) was not updated correctly in getLagrangeMultBy[...]
+
++ roptest
+  * modifies slot start of return value to become initial.est argument
+
++ others:
+  * definition of weight was missing in getInfRobIC_asCov.R
+  * small bug in getAsRisk. Now radiusMinimaxIC works for models with trafo.
+  * corrected a simple bug in scaleUpdateIC for UncondNeighborhoods 
+  * fixed an error in getModifyIC in the computation of the transferred risks
+  * fixed a buglet in getModifyIC.R:
+    had to cast out a second appearance of argument verbose (within ...) ...
+  * getAsRisk for "asBias", "RealRandVariable", "ContNeighborhood" and "ANY" 
+    was lacking argument Finfo and did not check for verbose
+  * minor documentation bug in radiusMinimaxIC.Rd
+
+
+TO BE CHECKED 
+
++ remains to be done: self standardization does not yet work...
++ total variation nbd: case 1=p<k works but still some checking needed.
++ to be checked: symm for total variation
+
+
+
+#######################################
+version 0.6.2
+#######################################
++ added functions to compute and plot cniper contamination and cniper points, 
+  respectively.
++ introduced option("newDevice") to control new opening of graphic devices
++ use of on.exit() to restore old settings for options() and par() at the end 
+  of functions
++ introduction of NEWS-file
++ update of CITATION-file (based on code provided by A. Zeileis on R help)

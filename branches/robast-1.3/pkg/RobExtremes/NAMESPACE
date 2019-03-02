@@ -1,0 +1,71 @@
+useDynLib(RobExtremes, .registration = TRUE, .fixes = "C_")
+
+import("methods")
+import("RobAStRDA")
+import("distr")
+import("distrEx")
+import("RandVar")
+import("distrMod")
+import("robustbase")
+import("RobAStBase")
+import("ROptEst")
+importFrom("actuar", "qpareto1", "ppareto1", "dpareto1", "rpareto1")
+importFrom("evd", "qgumbel", "pgumbel", "dgumbel", "rgumbel",
+           "qgpd", "pgpd", "dgpd", "rgpd",
+		   "qgev", "pgev", "dgev", "rgev")
+importFrom("startupmsg", "buildStartupMessage", "infoShow")
+importFrom("stats", "dunif", "integrate", "optimize", "pnorm",
+             "predict", "qnorm", "quantile", "smooth.spline", "uniroot")
+importFrom("utils", "getFromNamespace")
+
+exportClasses("GumbelParameter",
+              "ParetoParameter",
+			  "GParetoParameter",
+			  "GEVParameter",
+			  "LDEstimate")
+exportClasses("Gumbel", "Pareto", "GPareto", "GEV")
+exportClasses("GParetoFamily", "GumbelLocationFamily", "WeibullFamily",
+              "ParetoFamily", "GEVFamily", "GEVFamilyMuUnknown")
+exportClasses("DistributionsIntegratingByQuantiles")
+exportClasses("ParamWithLocAndScaleAndShapeFamParameter")
+exportClasses("L2LocScaleShapeUnion")
+exportClasses("GPDEstimate","GPDMCEstimate","GPDLDEstimate",
+              "GPDkStepEstimate","GEVEstimate","GEVLDEstimate",
+			  "GEVkStepEstimate","GEVMCEstimate",
+			  "GPDORobEstimate","GEVORobEstimate",
+			  GEVCvMMD.ALEstimate,GEVML.ALEstimate,
+			  GPDCvMMD.ALEstimate,GPDML.ALEstimate)			  
+
+exportMethods("initialize", "show", "rescaleFunction") 
+exportMethods("loc", "loc<-", "kMAD", "Sn", "Qn")
+exportMethods("validParameter",
+              "location", "location<-", 
+              "scale", "scale<-",
+              "shape", "shape<-",
+              "+", "*",
+              "Min", "Min<-",
+              "E", "var", "IQR", "skewness", "kurtosis", "median", "dispersion")
+exportMethods(".checkEstClassForParamFamily")
+exportMethods("locscaleshapename","locscalename","scaleshapename",
+              "locationname","scalename","shapename","locscaleshapename<-")
+exportMethods("modifyModel", "getStartIC", "coerce")
+exportMethods("moveL2Fam2RefParam",
+			  "moveICBackFromRefParam")			  
+exportMethods("checkIC", "makeIC", "liesInSupport")
+export("EULERMASCHERONICONSTANT","APERYCONSTANT")
+export("getCVaR", "getVaR", "getEL")
+export("Gumbel", "Pareto", "GPareto", "GEV")
+export("GParetoFamily", "GumbelLocationFamily", "WeibullFamily", "GEVFamily",
+       "ParetoFamily", "GEVFamilyMuUnknown")
+export("LDEstimator", "medkMAD", "medSn", "medQn", "medkMADhybr")
+export("getShapeGrid", "getSnGrid", 
+       "PickandsEstimator","QuantileBCCEstimator")
+export("loc", "loc<-", "kMAD", "Sn", "Qn", 
+       "asvarMedkMAD","asvarPickands", "asvarQBCC")
+exportMethods("rescaleFunction")			  
+S3method(print, riskMeasure)
+exportMethods("gev.diag", "gpd.diag","gev.prof", "gpd.prof",
+              "gev.profxi", "gpd.profxi")
+export("gev.diag", "gpd.diag","gev.prof", "gpd.prof",
+              "gev.profxi", "gpd.profxi")
+			  
