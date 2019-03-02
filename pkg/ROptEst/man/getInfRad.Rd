@@ -43,7 +43,7 @@ getInfRad(clip, L2deriv, risk, neighbor, ...)
           clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
 
 \S4method{getInfRad}{numeric,EuclRandVariable,asMSE,UncondNeighborhood}(
-          clip, L2deriv, risk, neighbor, biastype, Distr, stand, cent, trafo)
+          clip, L2deriv, risk, neighbor, biastype, Distr, stand, cent, trafo, ...)
 
 \S4method{getInfRad}{numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(
           clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)

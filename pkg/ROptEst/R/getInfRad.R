@@ -30,10 +30,10 @@ setMethod("getInfRad", signature(clip = "numeric",
                                   risk = "asMSE",
                                   neighbor = "UncondNeighborhood"),
     function(clip, L2deriv, risk, neighbor, biastype,
-             Distr, stand, cent, trafo){
+             Distr, stand, cent, trafo, ...){
         gamm <- getInfGamma(L2deriv = L2deriv, risk = risk, neighbor = neighbor,
                             biastype = biastype, Distr = Distr, stand = stand,
-                            cent = cent, clip = clip)
+                            cent = cent, clip = clip, ...)
         return((-gamm/clip)^.5)
     })
 

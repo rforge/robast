@@ -29,7 +29,11 @@ setMethod("getInfGamma", signature(L2deriv = "RealRandVariable",
                                    neighbor = "ContNeighborhood",
                                    biastype = "BiasType"),
     function(L2deriv, risk, neighbor, biastype, Distr, 
-             stand, cent, clip, power = 1L){
+             stand, cent, clip, power = 1L, ...){
+
+        dotsI <- .filterEargsWEargList(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         integrandG <- function(x, L2, stand, cent, clip){
             X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
             Y <- stand %*% X
@@ -38,8 +42,9 @@ setMethod("getInfGamma", signature(L2deriv = "RealRandVariable",
             return((res > 0)*res^power)
         }
 
-        return(-E(object = Distr, fun = integrandG, L2 = L2deriv, 
-                  stand = stand, cent = cent, clip = clip, useApply = FALSE))
+        res <- do.call(E, c(list(object = Distr, fun = integrandG, L2 = L2deriv,
+                  stand = stand, cent = cent, clip = clip),dotsI))
+        return(-res)
     })
 
 setMethod("getInfGamma", signature(L2deriv = "RealRandVariable",
@@ -47,7 +52,11 @@ setMethod("getInfGamma", signature(L2deriv = "RealRandVariable",
                                    neighbor = "TotalVarNeighborhood",
                                    biastype = "BiasType"),
     function(L2deriv, risk, neighbor, biastype, Distr,
-             stand, cent, clip, power = 1L){
+             stand, cent, clip, power = 1L, ...){
+
+        dotsI <- .filterEargsWEargList(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         integrandG <- function(x, L2, stand, cent, clip){
             X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
             Y <- stand %*% X
@@ -56,8 +65,9 @@ setMethod("getInfGamma", signature(L2deriv = "RealRandVariable",
             return((res > 0)*res^power)
         }
 
-        return(-E(object = Distr, fun = integrandG, L2 = L2deriv,
-                  stand = stand, cent = cent, clip = clip, useApply = FALSE))
+        res <- do.call(E, c(list(object = Distr, fun = integrandG, L2 = L2deriv,
+                  stand = stand, cent = cent, clip = clip),dotsI))
+        return(-res)
     })
 ###############################################################################
 ## gamma in case of asymptotic under-/overshoot risk

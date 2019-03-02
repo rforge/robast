@@ -24,18 +24,21 @@ optIC(model, risk, ...)
                                           lower = 1e-4, maxiter = 50,
                                           tol = .Machine$double.eps^0.4,
                                           withMakeIC = FALSE, warn = TRUE,
-                                          verbose = NULL, modifyICwarn = NULL)
+                                          verbose = NULL, modifyICwarn = NULL, ...)
 
 \S4method{optIC}{FixRobModel,fiUnOvShoot}(model, risk, sampleSize, upper = 1e4, lower = 1e-4,
                                           maxiter = 50, tol = .Machine$double.eps^0.4, 
                                           withMakeIC = FALSE, warn = TRUE,
                                           Algo = "A", cont = "left",
-                                          verbose = NULL, modifyICwarn = NULL)
+                                          verbose = NULL, modifyICwarn = NULL, ...)
 }
 \arguments{
   \item{model}{ probability model. }
   \item{risk}{ object of class \code{"RiskType"}. }
-  \item{\dots}{ additional parameters. }
+  \item{\dots}{additional arguments; e.g. are passed on to \code{E} via
+     e.g. \code{makeIC} in case of all signature,
+     and, in addition, to \code{getInfRobIC} in case of
+     \code{signature("InfRobModel","asRisk")}.}
   \item{z.start}{ initial value for the centering constant. }
   \item{A.start}{ initial value for the standardizing matrix. }
   \item{upper}{ upper bound for the optimal clipping bound. }

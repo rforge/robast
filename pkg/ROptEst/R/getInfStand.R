@@ -22,7 +22,11 @@ setMethod("getInfStand", signature(L2deriv = "RealRandVariable",
                                    neighbor = "UncondNeighborhood",
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, 
-             Distr, A.comp, cent, trafo, w){
+             Distr, A.comp, cent, trafo, w, ...){
+
+        dotsI <- .filterEargsWEargList(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         w.fct <- function(x){
             weight(w)(evalRandVar(L2deriv, as.matrix(x)) [,,1]) 
         }
@@ -34,15 +38,14 @@ setMethod("getInfStand", signature(L2deriv = "RealRandVariable",
         erg <- matrix(0, ncol = nrvalues, nrow = nrvalues)
         for(i in 1:nrvalues)
             for(j in i:nrvalues)
-                if(A.comp[i,j])
-                    erg[i, j] <- E(object = Distr, fun = integrandA, 
+                if(A.comp[i,j]){
+                    erg[i, j] <- do.call(E, c(list(object = Distr, fun = integrandA,
                                    L2.i = L2deriv@Map[[i]], 
-                                   L2.j = L2deriv@Map[[j]], i = i, j = j, 
-                                   useApply = FALSE)
+                                   L2.j = L2deriv@Map[[j]], i = i, j = j), dotsI))
+                }
+        erg[col(erg) < row(erg)] <- t(erg)[col(erg) < row(erg)]
 
-        erg[col(erg) < row(erg)] <- erg[col(erg) > row(erg)]
-
-        return(trafo %*% solve(erg))
+        return(trafo %*% distr::solve(erg))
     })
 ###############################################################################
 ## standardizing constant for one-sided bias
@@ -50,11 +53,14 @@ setMethod("getInfStand", signature(L2deriv = "RealRandVariable",
 setMethod("getInfStand", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "ContNeighborhood",
                                    biastype = "onesidedBias"),
-    function(L2deriv, neighbor, biastype, clip, cent, trafo){
+    function(L2deriv, neighbor, biastype, clip, cent, trafo, ...){
+        dotsI <- .filterEargsWEargList(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
         c1 <- if (sign(biastype)<0) cent - clip else -Inf
         c2 <- if (sign(biastype)>0) cent + clip else Inf
         m1 <- if (sign(biastype)<0) m2df(L2deriv, c1) else 0
-        m2 <- if (sign(biastype)>0) m2df(L2deriv, c2) else E(L2deriv, function(x)x^2)
+        m2 <- if (sign(biastype)>0) m2df(L2deriv, c2) else{
+         do.call(E, c(list(L2deriv, function(x)x^2),dotsI))}
         c10 <- if (sign(biastype)<0) c1*m1df(L2deriv, c1) else 0
         c20 <- if (sign(biastype)>0) c2*m1df(L2deriv, c2) else 0
         return(trafo/(m2 - m1 + c10 - c20))

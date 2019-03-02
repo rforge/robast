@@ -8,6 +8,9 @@
 \alias{getStartIC,L2ParamFamily,asCov-method}
 \alias{getStartIC,L2ParamFamily,asAnscombe-method}
 \alias{getStartIC,L2ParamFamily,trAsCov-method}
+\alias{getStartIC,L2LocationFamily,interpolRisk-method}
+\alias{getStartIC,L2ScaleFamily,interpolRisk-method}
+\alias{getStartIC,L2LocationScaleFamily,interpolRisk-method}
 
 \title{Methods for Function getStartIC in Package `ROptEst' }
 
@@ -18,16 +21,19 @@ argument \code{ICstart} in \code{kStepEstimator}.}
 \S4method{getStartIC}{ANY,ANY}(model, risk, ...)
 \S4method{getStartIC}{L2ParamFamily,asGRisk}(model, risk, ...,
                       withEvalAsVar = TRUE, withMakeIC = FALSE, ..debug=FALSE,
-                      modifyICwarn = NULL)
+                      modifyICwarn = NULL, diagnostic = FALSE)
 \S4method{getStartIC}{L2ParamFamily,asBias}(model, risk, ..., withMakeIC = FALSE,
-        ..debug=FALSE, modifyICwarn = NULL)
+        ..debug=FALSE, modifyICwarn = NULL, diagnostic = FALSE)
 \S4method{getStartIC}{L2ParamFamily,asCov}(model, risk, ..., withMakeIC = FALSE,
     ..debug=FALSE)
 \S4method{getStartIC}{L2ParamFamily,trAsCov}(model, risk, ..., withMakeIC = FALSE,
     ..debug=FALSE)
 \S4method{getStartIC}{L2ParamFamily,asAnscombe}(model, risk, ...,
                       withEvalAsVar = TRUE, withMakeIC = FALSE, ..debug=FALSE,
-                      modifyICwarn = NULL)
+                      modifyICwarn = NULL, diagnostic = FALSE)
+\S4method{getStartIC}{L2LocationFamily,interpolRisk}(model, risk, ...)
+\S4method{getStartIC}{L2ScaleFamily,interpolRisk}(model, risk, ...)
+\S4method{getStartIC}{L2LocationScaleFamily,interpolRisk}(model, risk, ...)
 }
 
 \arguments{
@@ -44,6 +50,10 @@ argument \code{ICstart} in \code{kStepEstimator}.}
      \code{modifyIC} is applied and hence some optimality information could
      no longer be valid? Defaults to \code{NULL} in which case this value
      is taken from \code{RobAStBaseOptions}.}
+  \item{diagnostic}{ logical; if \code{TRUE},
+    diagnostic information on the performed integrations is gathered and
+    shipped out as an attribute \code{diagnostic} of the return value
+    of the estimators. }
 }
 \section{Methods}{\describe{
 \item{getStartIC}{\code{signature(model = "ANY", risk = "ANY")}:

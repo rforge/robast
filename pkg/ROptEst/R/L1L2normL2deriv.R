@@ -8,6 +8,10 @@ setMethod("getL1normL2deriv", signature(L2deriv = "UnivariateDistribution"),
 
 setMethod("getL1normL2deriv", signature(L2deriv = "RealRandVariable"),
     function(L2deriv, cent, stand, Distr, normtype, ...){
+
+        dotsI <- .filterEargsWEargList(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         integrandG <- function(x, L2, stand, cent){
             X <- evalRandVar(L2, as.matrix(x))[,,1] - cent
             Y <- apply(X, 2, "%*%", t(stand))
@@ -15,6 +19,7 @@ setMethod("getL1normL2deriv", signature(L2deriv = "RealRandVariable"),
             return((res > 0)*res)
         }
 
-        return(E(object = Distr, fun = integrandG, L2 = L2deriv,
-                  stand = stand, cent = cent, useApply = FALSE))
+
+        return(do.call(E, c(list(object = Distr, fun = integrandG, L2 = L2deriv,
+                  stand = stand, cent = cent),dotsI)))
     })

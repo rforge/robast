@@ -1,16 +1,16 @@
-.getSB <- function(IC,neighbor)
-   list(s = getRiskIC(IC,risk=trAsCov())$trAsCov$value^.5,
-        b = getRiskIC(IC,risk=asBias(),neighbor=neighbor)$asBias$value)
+.getSB <- function(IC,neighbor, ...)
+   list(s = getRiskIC(IC,risk=trAsCov(),...)$trAsCov$value^.5,
+        b = getRiskIC(IC,risk=asBias(),neighbor=neighbor,...)$asBias$value)
 
 getReq <- function(Risk,neighbor,IC1,IC2,n=1,upper=15,
-                   radOrOutl=c("radius","Outlier")){
+                   radOrOutl=c("radius","Outlier"),...){
             radOrOutl <- match.arg(radOrOutl)
             if(!is(IC1,"IC")||!is(IC2,"IC"))
                stop("Arguments IC1, IC2 must be of class 'IC'.")
             if(!identical(IC1@CallL2Fam,IC2@CallL2Fam))
                stop("Arguments IC1, IC2 must be of defined for the same model.")
-            sb1 <- .getSB(IC1,neighbor)
-            sb2 <- .getSB(IC2,neighbor)
+            sb1 <- .getSB(IC1,neighbor,...)
+            sb2 <- .getSB(IC2,neighbor,...)
             if(abs(sb1$s-sb2$s)+ abs(sb1$b-sb2$b)<1e-6){
                cat(gettext("IC1 is just as good as IC2.\n"))
                return(c(0,Inf))

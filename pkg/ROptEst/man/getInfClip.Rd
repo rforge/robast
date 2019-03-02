@@ -39,13 +39,13 @@ getInfClip(clip, L2deriv, risk, neighbor, ...)
      clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
 
 \S4method{getInfClip}{numeric,EuclRandVariable,asMSE,UncondNeighborhood}(
-     clip, L2deriv, risk, neighbor, biastype, Distr, stand, cent, trafo)
+     clip, L2deriv, risk, neighbor, biastype, Distr, stand, cent, trafo, ...)
 
 \S4method{getInfClip}{numeric,UnivariateDistribution,asUnOvShoot,UncondNeighborhood}(
      clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
 
 \S4method{getInfClip}{numeric,UnivariateDistribution,asSemivar,ContNeighborhood}(
-     clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo)
+     clip, L2deriv, risk, neighbor, biastype, cent, symm, trafo,...)
 }
 \arguments{
   \item{clip}{ positive real: clipping bound }
@@ -53,7 +53,7 @@ getInfClip(clip, L2deriv, risk, neighbor, ...)
     of probability measures. }
   \item{risk}{ object of class \code{"RiskType"}. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
-  \item{\dots}{ additional parameters. }
+  \item{\dots}{ additional parameters, in particular for expectation \code{E} }
   \item{biastype}{ object of class \code{"BiasType"} }
   \item{cent}{ optimal centering constant. }
   \item{stand}{ standardizing matrix. }

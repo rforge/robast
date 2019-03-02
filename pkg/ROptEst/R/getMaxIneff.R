@@ -2,7 +2,7 @@ getMaxIneff <- function(IC, neighbor, biastype = symmetricBias(),
                         normtype = NormType(), z.start = NULL, 
                         A.start = NULL, maxiter = 50, 
                         tol = .Machine$double.eps^0.4,
-                        warn = TRUE, verbose = NULL){
+                        warn = TRUE, verbose = NULL,...){
             if(!is(IC,"IC")) 
                stop("Argument IC must be of class 'IC'.")
 
@@ -21,7 +21,7 @@ getMaxIneff <- function(IC, neighbor, biastype = symmetricBias(),
             Finfo <- L2Fam@FisherInfo
             L2derivDim <- numberOfMaps(L2Fam@L2deriv)
             
-            FI0 <- trafo%*%solve(Finfo)%*%t(trafo)
+            FI0 <- trafo%*%distr::solve(Finfo)%*%t(trafo)
             std <- if(is(normtype,"QFNorm")) 
                       QuadForm(normtype) else diag(nrow(trafo))
             s0 <- sum(diag(std%*%FI0))
@@ -64,7 +64,7 @@ getMaxIneff <- function(IC, neighbor, biastype = symmetricBias(),
                             trafo = trafo, z.start = z.start, A.start = A.start, 
                             maxiter = maxiter, tol = tol, warn = warn, 
                             Finfo = Finfo,
-                            verbose = verbose)$risk$asBias$value^2
+                            verbose = verbose,...)$risk$asBias$value^2
               }else{
                 stop("not yet implemented")
               }

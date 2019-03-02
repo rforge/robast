@@ -73,9 +73,12 @@ setMethod("comparePlot", signature("IC","IC"),
 
         MBRB <- matrix(rep(t(MBRB), length.out=dims0*2),ncol=2, byrow=T)
         if(withMBR && all(is.na(MBRB))){
-           robModel <- InfRobModel(center = L2Fam, neighbor =
+           ICmbr <- try(getStartIC(model = L2Fam, risk = MBRRisk()), silent=TRUE)
+           if(is(ICmbr,"try-error")){
+              robModel <- InfRobModel(center = L2Fam, neighbor =
                              ContNeighborhood(radius = 0.5))
-           ICmbr <- try(optIC(model = robModel, risk = asBias()), silent=TRUE)
+              ICmbr <- try(optIC(model = robModel, risk = asBias()), silent=TRUE)
+           }
            if(!is(ICmbr,"try-error"))
               MBRB <- .getExtremeCoordIC(ICmbr, distribution(L2Fam), to.draw,
                                          n=n.MBR)

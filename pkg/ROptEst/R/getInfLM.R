@@ -6,7 +6,7 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
                       neighbor, biastype, normtype, Distr,
                       a.start, z.start, A.start, w.start, std,
                       z.comp, A.comp, maxiter, tol,
-                      verbose = NULL, warnit = TRUE){
+                      verbose = NULL, warnit = TRUE, ...){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         if(missing(warnit)|| is.null(warnit)) warnit <- TRUE
@@ -43,11 +43,11 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
             ## update centering
             z <- getInfCent(L2deriv = L2deriv, neighbor = neighbor,
                             biastype = biastype, Distr = Distr, z.comp = z.comp,
-                            w = w, tol.z = .Machine$double.eps^.5)
+                            w = w, tol.z = .Machine$double.eps^.5, ...)
         #     print(c("z"=z))
             if(is(neighbor,"TotalVarNeighborhood")){
                   a <- z
-                  z <- as.numeric(solve(A,a))
+                  z <- as.numeric(distr::solve(A,a))
                   zc <- numeric(ncol(trafo))
             }else if(is(neighbor,"ContNeighborhood")) {
                   zc <- z
@@ -56,7 +56,7 @@ getLagrangeMultByIter <- function(b, L2deriv, risk, trafo,
             # update standardization
             A <- getInfStand(L2deriv = L2deriv, neighbor = neighbor,
                          biastype = biastype, Distr = Distr, A.comp = A.comp,
-                         cent = zc, trafo = trafo, w = w)
+                         cent = zc, trafo = trafo, w = w, ...)
 
         #     print(c("A"=A))
             ## in case of self-standardization: update norm
@@ -106,11 +106,16 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
                       a.start, z.start, A.start, w.start, std, z.comp,
                       A.comp, maxiter, tol, verbose = NULL, ...){
 
+
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         LMcall <- match.call()
         ### manipulate dots in call -> set control argument for optim
         dots <- list(...)
+
+        dotsI <- .filterEargsWEargList(dots)
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         if(is.null(dots$method)) dots$method <- "L-BFGS-B"
 
         if(!is.null(dots$control)){
@@ -159,7 +164,7 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
 
 #            print(list(A0vecA,A0,a0))
 
-            z0 <- as.numeric(solve(A0,a0))
+            z0 <- as.numeric(distr::solve(A0,a0))
             std0 <- stdC
             w0 <- w1
             risk0 <- risk1
@@ -171,7 +176,7 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
                       -getInfGamma(L2deriv = L2deriv, risk = risk0,
                                  neighbor = neighbor, biastype = biastype,
                                  Distr = Distr, stand = A0, cent = z0, clip = b1,
-                                 power = 2)+radius(neighbor)^2*b1^2
+                                 power = 2,...)+radius(neighbor)^2*b1^2
                       }
 
             b0 <- optimize(funint.opt, interval=c(1e-8,1e8))$minimum
@@ -223,7 +228,7 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
                           getInfGamma(L2deriv = L2deriv, risk = riskA,
                                  neighbor = neighbor, biastype = biastype,
                                  Distr = Distr, stand = A0, cent = z0, clip = b0,
-                                 power = 2)/2 -
+                                 power = 2,...)/2 -
                            # ~ - E[|Y_A|_Q^2 (1-w_b(|Y_A|_Q))^2]/2
                            sum(diag(std0%*%A0%*%t(trafo)) ))
                         ## ~tr_Q AD'
@@ -231,32 +236,30 @@ getLagrangeMultByOptim <- function(b, L2deriv, risk, FI, trafo,
                ## in case TotalVarNeighborhood additional correction term:
                if(is(neighbor,"TotalVarNeighborhood"))
                   val <- (val -a0^2/2 -
-                          E(Distr, fun = function(x){ ## ~ - E Y_-^2/2
+                          do.call(E, c(list(Distr, fun = function(x){ ## ~ - E Y_-^2/2
                               L2 <- evalRandVar(L2deriv, as.matrix(x)) [,,1]- z0
                               Y <- A0 %*% L2
                               return(Y^2*(Y<0))
-                              },  useApply = FALSE)/2)
+                              }),dotsI))/2)
 
             }else if(is(riskA,"asMSE")){
-               val <- (E(object = Distr, fun = function(x){
+               val <- (do.call(E, c(list(object = Distr, fun = function(x){
                           X <- evalRandVar(L2deriv, as.matrix(x))[,,1] - z0
                           Y <- A0 %*% X
                           nY <- norm(risk0)(Y)
                           return(nY^2*weight(w0)(X))
-                        },  # E|Y|^2 w
-                        useApply=FALSE) /2 -
+                        }),dotsI))/2 - # E|Y|^2 w
                        sum(diag(std0%*%A0%*%t(trafo)) ))
                      ## ~tr_Q AD'
 
                ## in case TotalVarNeighborhood additional correction term:
                if(is(neighbor,"TotalVarNeighborhood"))
                   val <- (val -a0^2/2 -
-                          E(Distr, fun = function(x){
+                          do.call(E,c(list(Distr, fun = function(x){
                               X <- evalRandVar(L2deriv, as.matrix(x))[,,1] - z0
                               Y <- A0 %*% X
                               return(Y^2*(Y<0))
-                             },
-                            useApply=FALSE)/2)
+                             }),dotsI))/2)
             }
 
             ## if this is the current optimum

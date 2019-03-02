@@ -8,6 +8,91 @@
  information)
 
 #######################################
+version 1.2
+#######################################
+
+user-visible CHANGES:
++ slot function modifyIC of the different IC classes gains
+  an argument withMakeIC to be able to adjust this to a
+  higher granularity
++ require more recent versions in DESCRIPTION
++ getBiasIC for signature {HampIC,UncondNeighborhood} no longer has argument withCheck
++ getRiskIC gains argument "..." to pass on arguments to E()
++ the help to robest is more explicit about the usage of argument E.argList at 
+  various places in the generator 
++ the help to roptest has an extra paragraph explicating the usage of initial.est
+  and start.Par and the different steps done in roptest 
++ the input generators genkStepCtrl, genstartCtrl, genstartICCtrl gain argument
+  E.argList to pass on arguments to E()
++ roptest and the wrappers RMX|OBR|MBR|OMSEstimator gain an argument E.argList for arguments 
+  to be passed to E() from (a) \code{MDEstimator} (here this additional argument is only 
+   used if \code{initial.est}  is missing), (b) \code{getStartIC}, and (c) \code{kStepEstimator}. 
+   Potential clashes with arguments of the same name in \code{\dots} are resolved by inserting 
+   the items of argument list \code{E.argList} as named items, so in case of collisions the 
+   item of \code{E.argList} overwrites the existing one from \code{\dots}.
++ roptest and its wrappers RMX|OBR|MBR|OMSEstimator can now also digest robest-arguments
+  arguments \code{startCtrl}, \code{startICCtrl}, and \code{kStepCtrl}, in which case
+  information in these arguments in case of collision overrides information given through
+  the "usual" arguments; this allows for individual settings of \code{E.argList}, 
+  \code{withEvalAsVar}, and \code{withMakeIC} for the different steps.
++ roptest and its wrappers RMX|OBR|MBR|OMSEstimator, getStartIC for asGRisk, asBias, RMX, and
+  asAnscombe, as well as the particular checkIC/makeIC methods for ContIC gain argument 
+  diagnostic to be able to show diagnostic information on integrations; this information 
+  (if argument "diagnostic" is TRUE) is stored in attribute "diagnostic" of the return value
++ accessors "timings" and "kStepTimings" to attributes "timings" and and "kStepTimings"
+  of an object of class "ORobEstimate"
+
+bug fixes
+
++ an embarrassing error when computing E(X t(X)) (saving the lower half by symmetry) 
+  in getInfStand: a[row(a)>col(a)] <- a[row(a)<col(a)] in general is not symmetric...
+  did not bite us so far as the highest dim we considered so far was 3, and the 
+  recipe is exact exactly up to dim 3... the exact formula would have been (and is now
+  in the code) a[row(a)>col(a)] <- t(a)[row(a)>col(a)]
++ fix an argument collision in MBRE-method / in call to getInfRobIC_asGRisk, when called
+  from OptIC through getInfRobIC_asBias ("upper" got into ...)
+
+under the hood
+
++ L2LocationFamily, L2LocationScaleFamily, and L2LocationScaleFamily gain methods for interpolRisk
+  ~> speed up is prepared (only need to store the reference LMs in sysdata.rda) 
+  => due to affine equivariance, we only have to store one set of LM's 
++ comparePlot has a try catch now for MBRE
++ some buglets in getStartIC 
++ some tedious debugging in getStartIClcsc.R
++ clarified if clauses in roptest.new (and removed .with.checkEstClassForParamFamily from dots to be sure)
++ inserted code for time checking (which is inactive usually; only if in kStepEstimator.R in 
+  RobAStBase, the respective ##-t-## lines are de-commented the timings are visible as
+  attribute "kStepTimings" in the result of roptest ...) changed now: is always active....
++ now specified that we want to use distr::solve
++ internal function .getComp, determining by symmetry slots which entries in LMs a and A 
+  have to be computed, now fills the lower triangle of A with FALSE (was not used so far,
+  but can be used in a faster computation method for checkIC makeIC to determine whether
+  it is cleverer to integrate in k or in p space)
++ several methods (getRiskIC, getBiasIC, getBoundedIC, makeIC, checkIC, modifyIC) 
+  gain argument "..." to pass on arguments to E(). This holds in particular for the
+  functions used to compute the optimally-robust ICs, i.e. getInfRob_asBias, getInfRob_asHampel,
+  getInfRob_asGRisk, getInfRob_asAnscombe, leastFavorableRadius, radiusMinimaxIC, and
+  geInfGamma, getInfRad, getInfClip, getInfCent, getInfStand, getInfV, getAsRisk, getReq,
+  (at least as far as multivariate ICs are concerned), .LowerCaseMultivariate, getMaxIneff, 
+  getInfRad, getLagrangeMultByIter and getLagrangeMultByOptim
++ new internal helper function .filterEargWEargList is used to filter out arguments 
+  from dots which are meant for E() 
++ the local .modifyIC0 functions only used to produce the new IC but not for filling
+  slot modifyIC loose argument withMakeIC (and dots) -- this is now done in the outer
+  modifyIC function
++ particular checkIC, makeIC methods for ContICs: They compute the integrals E w, E L w,
+  E LL w using symmetry information through .getComp, and based on these numbers computes 
+  does checking / the affine transformation to give the proper pIC. These methods by 
+  default are only used if it pays off, i.e., if the number of computed integrals is smaller
+  than in the default method. This can be overriden by argument forceContICMethod. 
++ the particular checkIC and makeIC methods gain argument diagnostic to be able to 
+  show diagnostic information on integrations
++ roptest, robest, and particular checkIC/makeIC methods for ContIC now if (diagnostic==TRUE)
+  return diagnostic attributes of S3 class "DiagnosticClass"
+  
+
+#######################################
 version 1.1
 #######################################
 

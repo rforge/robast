@@ -32,6 +32,9 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
              A.start, Finfo, trafo, maxiter, tol, warn,
              verbose = NULL, ...){
 
+        dots <- list(...)
+        dotsnames <- names(dots)
+
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
 
@@ -52,14 +55,20 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                ))
                 if(warn) cat(warntxt)
                 neighbor@radius <- 15
-                res <- getInfRobIC(L2deriv = L2deriv, 
-                        risk = asMSE(normtype = normtype), 
-                        neighbor = neighbor, Distr = Distr, 
-                        DistrSymm = DistrSymm, L2derivSymm = L2derivSymm, 
-                        L2derivDistrSymm = L2derivDistrSymm, Finfo = Finfo, 
-                        trafo = trafo, onesetLM = FALSE, z.start = z.start, 
-                        A.start = A.start, upper = 1e4, maxiter = maxiter, 
+                getInfRobICargList <- list(L2deriv = L2deriv,
+                        risk = asMSE(normtype = normtype),
+                        neighbor = neighbor, Distr = Distr,
+                        DistrSymm = DistrSymm, L2derivSymm = L2derivSymm,
+                        L2derivDistrSymm = L2derivDistrSymm, Finfo = Finfo,
+                        trafo = trafo, onesetLM = FALSE, z.start = z.start,
+                        A.start = A.start, upper = 1e4, maxiter = maxiter,
                         tol = tol, warn = warn, verbose = verbose)
+
+                for(item in dotsnames)
+                   if(!item %in% names(getInfRobICargList))
+                      getInfRobICargList[[item]] <- dots[[item]]
+
+                res <- do.call(getInfRobIC,getInfRobICargList)
                 
                 A.max <- max(abs(res$A))
                 res$A <- res$A/A.max
@@ -82,7 +91,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         }
 #        }
 
-        FI <- solve(trafo%*%solve(Finfo)%*%t(trafo))
+        FI <- distr::solve(trafo%*%distr::solve(Finfo)%*%t(trafo))
         if(is(normtype,"QFNorm")) 
            {QuadForm(normtype) <- PosSemDefSymmMatrix(FI); 
             normtype(risk) <- normtype}
@@ -189,7 +198,7 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, normtype, Distr, 
              z.start, A.start,  z.comp, A.comp, Finfo, trafo, maxiter,  tol,
-             verbose = NULL){
+             verbose = NULL, ...){
 
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
@@ -197,7 +206,7 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
         eerg <- .LowerCaseMultivariate(L2deriv = L2deriv, neighbor = neighbor,
              biastype = biastype, normtype = normtype, Distr = Distr,
              Finfo = Finfo, trafo, z.start, A.start = A.start, z.comp = z.comp,
-             A.comp = DA.comp, maxiter = maxiter, tol = tol, verbose = verbose)
+             A.comp = DA.comp, maxiter = maxiter, tol = tol, verbose = verbose, ...)
         erg <- eerg$erg
 
         b <- 1/erg$value
@@ -229,7 +238,7 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
         Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor, 
                        biastype = biastype, Distr = Distr, 
                        V.comp = A.comp, cent = a, 
-                       stand = A, w = w)
+                       stand = A, w = w, ...)
 
         std <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(p)
 
@@ -256,7 +265,7 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
                                    biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, normtype, Distr,
              z.start, A.start,  z.comp, A.comp, Finfo, trafo, maxiter,  tol,
-             verbose = NULL){
+             verbose = NULL, ...){
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
 
@@ -264,7 +273,7 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
              neighbor = neighbor, biastype = biastype,
              normtype = normtype, Distr = Distr, Finfo = Finfo, trafo = trafo,
              A.start = A.start, maxiter = maxiter,
-             tol = tol, verbose = verbose)
+             tol = tol, verbose = verbose, ...)
 
 
         p <- nrow(trafo)
@@ -289,7 +298,7 @@ setMethod("minmaxBias", signature(L2deriv = "RealRandVariable",
         Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor,
                        biastype = biastype, Distr = Distr,
                        V.comp = matrix(TRUE), cent = numeric(k),
-                       stand = A, w = w)
+                       stand = A, w = w,...)
 
         std <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(p)
 

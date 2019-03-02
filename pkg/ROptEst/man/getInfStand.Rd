@@ -23,27 +23,27 @@ getInfStand(L2deriv, neighbor, biastype, ...)
      neighbor, biastype, clip, cent, trafo)
 
 \S4method{getInfStand}{RealRandVariable,UncondNeighborhood,BiasType}(L2deriv,
-     neighbor, biastype, Distr, A.comp, cent, trafo, w)
+     neighbor, biastype, Distr, A.comp, cent, trafo, w, ...)
 
-\S4method{getInfStand}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, 
-     neighbor, biastype, clip, cent, trafo)
+\S4method{getInfStand}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv,
+     neighbor, biastype, clip, cent, trafo, ...)
 
-\S4method{getInfStand}{UnivariateDistribution,ContNeighborhood,BiasType}(L2deriv, 
+\S4method{getInfStand}{UnivariateDistribution,ContNeighborhood,asymmetricBias}(L2deriv,
      neighbor, biastype, clip, cent, trafo)
 }
 \arguments{
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
     of probability measures. }
-  \item{neighbor}{ object of class \code{"Neighborhood"} }
-  \item{biastype}{ object of class \code{"BiasType"} }
-  \item{\dots}{ additional parameters }
+  \item{neighbor}{ object of class \code{"Neighborhood"}. }
+  \item{biastype}{ object of class \code{"BiasType"}. }
+  \item{\dots}{ additional parameters, in particular for expectation \code{E}. }
   \item{clip}{ optimal clipping bound. }
   \item{cent}{ optimal centering constant. }
   \item{Distr}{ object of class \code{"Distribution"}. }
   \item{trafo}{ matrix: transformation of the parameter. }  
   \item{A.comp}{ matrix: indication which components of the standardizing
     matrix have to be computed. }
-  \item{w}{object of class \code{RobWeight}; current weight}  
+  \item{w}{object of class \code{RobWeight}; current weight. }
 }
 %\details{}
 \value{The standardizing matrix is computed.}

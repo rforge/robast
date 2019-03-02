@@ -13,17 +13,17 @@
 \usage{
 getRiskIC(IC, risk, neighbor, L2Fam, ...)
 
-\S4method{getRiskIC}{HampIC,asCov,missing,missing}(IC, risk, withCheck= TRUE)
+\S4method{getRiskIC}{HampIC,asCov,missing,missing}(IC, risk, withCheck= TRUE, ...)
 
-\S4method{getRiskIC}{HampIC,asCov,missing,L2ParamFamily}(IC, risk, L2Fam, withCheck= TRUE)
-\S4method{getRiskIC}{TotalVarIC,asCov,missing,L2ParamFamily}(IC, risk, L2Fam, withCheck = TRUE)
+\S4method{getRiskIC}{HampIC,asCov,missing,L2ParamFamily}(IC, risk, L2Fam, withCheck= TRUE, ...)
+\S4method{getRiskIC}{TotalVarIC,asCov,missing,L2ParamFamily}(IC, risk, L2Fam, withCheck = TRUE, ...)
 
 }
 \arguments{
   \item{IC}{ object of class \code{"InfluenceCurve"} }
   \item{risk}{ object of class \code{"RiskType"}. }
   \item{neighbor}{ object of class \code{"Neighborhood"}; missing in the methods described here. }
-  \item{\dots}{ additional parameters }
+  \item{\dots}{ additional parameters to be passed to \code{E} }
   \item{L2Fam}{ object of class \code{"L2ParamFamily"}. }
   \item{withCheck}{logical: should a call to \code{checkIC} be done to
                    check accuracy (defaults to \code{TRUE}; ignored

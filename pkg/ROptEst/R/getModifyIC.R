@@ -10,11 +10,14 @@ setMethod("getModifyIC", signature(L2FamIC = "L2ParamFamily",
         dots <- mcl[["..."]]
         dots$verbose <- NULL
         dots$warn <- FALSE
-        modIC <- function(L2Fam, IC){}
+        modIC <- function(L2Fam, IC, withMakeIC = FALSE, ...){}
         body(modIC) <- substitute({ verbose <- getRobAStBaseOption("all.verbose")
                                     infMod <- InfRobModel(L2Fam, nghb)
-                                    do.call(optIC, args = c(list(infMod, risk=R),
-                                                            dots0)) },
+                                    IC.0 <- do.call(optIC, args = c(list(infMod, risk=R),
+                                                            dots0))
+                                    if(withMakeIC) IC.0 <- makeIC(IC.0, L2Fam, ...)
+                                    return(IC.0)
+                                    },
                                   list(nghb = neighbor, R = risk,
                                        dots0 = eval(dots, envir=parent.frame(2))))
         return(modIC)
@@ -23,13 +26,13 @@ setMethod("getModifyIC", signature(L2FamIC = "L2ParamFamily",
 setMethod("getModifyIC", signature(L2FamIC = "L2LocationFamily", 
                                    neighbor = "UncondNeighborhood", risk = "asGRisk"),
     function(L2FamIC, neighbor, risk, ...){
-        modIC <- function(L2Fam, IC){
+        modIC <- function(L2Fam, IC, withMakeIC = FALSE, ...){
             D <- distribution(eval(CallL2Fam(IC)))
             if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), class(D))){
                 CallL2Fam(IC) <- fam.call(L2Fam)
                 return(IC)
             }else{
-                makeIC(IC, L2Fam)
+                makeIC(IC, L2Fam, ...)
             }
         }
         return(modIC)
@@ -111,7 +114,7 @@ setMethod("getModifyIC", signature(L2FamIC = "L2ScaleFamily",
     function(L2FamIC, neighbor, risk, ..., modifyICwarn = NULL){
         if(missing(modifyICwarn)|| is.null(modifyICwarn))
            modifyICwarn <- getRobAStBaseOption("modifyICwarn")
-        modIC <- function(L2Fam, IC){
+        modIC <- function(L2Fam, IC, withMakeIC = FALSE, ...){
             ICL2Fam <- eval(CallL2Fam(IC))
             if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), class(distribution(ICL2Fam)))){
                 res <- scaleUpdateIC(sdneu = main(L2Fam),
@@ -124,7 +127,7 @@ setMethod("getModifyIC", signature(L2FamIC = "L2ScaleFamily",
                 }
                 return(IC)
             }else{
-                makeIC(IC, L2Fam)
+                makeIC(IC, L2Fam, ...)
             }
         }
         return(modIC)
@@ -136,7 +139,7 @@ setMethod("getModifyIC", signature(L2FamIC = "L2LocationScaleFamily",
         if(missing(modifyICwarn)|| is.null(modifyICwarn))
            modifyICwarn <- getRobAStBaseOption("modifyICwarn")
 
-        modIC <- function(L2Fam, IC){
+        modIC <- function(L2Fam, IC, withMakeIC = FALSE, ...){
             ICL2Fam <- eval(CallL2Fam(IC))
             if(is(L2Fam, "L2LocationScaleFamily") && is(distribution(L2Fam),
                           class(distribution(ICL2Fam)))){
@@ -160,7 +163,7 @@ setMethod("getModifyIC", signature(L2FamIC = "L2LocationScaleFamily",
                 }
                 return(IC)
             }else{
-                makeIC(IC, L2Fam)
+                makeIC(IC, L2Fam, ...)
             }
         }
         return(modIC)

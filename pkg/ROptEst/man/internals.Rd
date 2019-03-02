@@ -21,18 +21,18 @@ These functions are used internally by package \pkg{ROptEst}.}
 .checkUpLow(L2deriv, b, risk, neighbor, biastype, normtype,
                         Distr, Finfo, DistrSymm, L2derivSymm,
                         L2derivDistrSymm, z.start, A.start, trafo, maxiter,
-                        tol, QuadForm, verbose, nrvalpts, warn)
+                        tol, QuadForm, verbose, nrvalpts, warn, ...)
                         
 ### helper function to return the upper case solution if r=0
 .getUpperSol(L2deriv, radius, risk, neighbor, biastype,
                        normtype, Distr, Finfo, trafo,
-                       QuadForm, verbose, warn)
+                       QuadForm, verbose, warn, ...)
 
 ### helper function to return the lower case solution if b-search was not successful
 .getLowerSol(L2deriv, risk, neighbor, Distr, DistrSymm,
                          L2derivSymm, L2derivDistrSymm,
                          z.start, A.start, trafo,
-                         maxiter, tol, warn, Finfo, QuadForm, verbose)
+                         maxiter, tol, warn, Finfo, QuadForm, verbose, ...)
 
 
 ### helper function to return upper & lower bounds for b for b-search
@@ -47,14 +47,14 @@ These functions are used internally by package \pkg{ROptEst}.}
 .LowerCaseMultivariate(L2deriv, neighbor, biastype,
              normtype, Distr, Finfo, trafo, z.start = NULL,
              A.start = NULL, z.comp = NULL, A.comp = NULL,
-             maxiter, tol, verbose = NULL)
+             maxiter, tol, verbose = NULL, ...)
 
 .LowerCaseMultivariateTV(L2deriv, neighbor, biastype,
              normtype, Distr, Finfo, trafo,
              A.start,  maxiter, tol,
-             verbose = NULL)
+             verbose = NULL, ...)
 
-.getSB(IC,neighbor)
+.getSB(IC,neighbor, ...)
 }
 
 \arguments{

@@ -39,7 +39,11 @@ setMethod("getInfCent", signature(L2deriv = "RealRandVariable",
                                   neighbor = "TotalVarNeighborhood",
                                   biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, Distr, z.comp, w,
-             tol.z = .Machine$double.eps^.5){
+             tol.z = .Machine$double.eps^.5, ...){
+
+        dotsI <- .filterEargsWEargList(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         stand <- stand(w)
         clip <- clip(w)
         b <- clip[2]-clip[1]
@@ -51,7 +55,7 @@ setMethod("getInfCent", signature(L2deriv = "RealRandVariable",
                   Y <- as.numeric(stand%*%Lx)
                   pmin(pmax(g,Y),g+c0)
                   }
-            return(E(object = Distr, fun = fct, useApply = FALSE))
+            return(do.call(E, c(list(object = Distr, fun = fct), dotsI)))
         }
         lower <- -b
         upper <- 0
@@ -64,7 +68,11 @@ setMethod("getInfCent", signature(L2deriv = "RealRandVariable",
                                   neighbor = "ContNeighborhood",
                                   biastype = "BiasType"),
     function(L2deriv, neighbor, biastype, Distr, z.comp, w,
-             tol.z = .Machine$double.eps^.5){
+             tol.z = .Machine$double.eps^.5, ...){
+
+        dotsI <- .filterEargsWEargList(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         integrand1 <- function(x){
             weight(w)(evalRandVar(L2deriv, as.matrix(x)) [,,1]) 
         }
@@ -72,13 +80,13 @@ setMethod("getInfCent", signature(L2deriv = "RealRandVariable",
             return(L2.i(x)*integrand1(x))
         }
 
-        res1 <- E(object = Distr, fun = integrand1, useApply = FALSE)
+        res1 <- do.call(E, c(list(object = Distr, fun = integrand1),dotsI))
         nrvalues <- length(L2deriv)
         res2 <- numeric(nrvalues)
         for(i in 1:nrvalues){
             if(z.comp[i]){
-                 res2[i] <- E(object = Distr, fun = integrand2, 
-                              L2.i = L2deriv@Map[[i]], useApply = FALSE)
+                 res2[i] <- do.call(E, c(list(object = Distr, fun = integrand2,
+                                              L2.i = L2deriv@Map[[i]]), dotsI))
             }else{            
                 res2[i] <- 0
             }

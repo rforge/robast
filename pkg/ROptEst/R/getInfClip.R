@@ -35,11 +35,11 @@ setMethod("getInfClip", signature(clip = "numeric",
                                   risk = "asMSE", 
                                   neighbor = "UncondNeighborhood"),
     function(clip, L2deriv, risk, neighbor, biastype, 
-             Distr, stand, cent, trafo){
+             Distr, stand, cent, trafo, ...){
         return(neighbor@radius^2*clip +
                 getInfGamma(L2deriv = L2deriv, risk = risk, neighbor = neighbor, 
                             biastype = biastype, Distr = Distr, stand = stand, 
-                            cent = cent, clip = clip))
+                            cent = cent, clip = clip, ...))
     })
 
 ###############################################################################
@@ -155,7 +155,11 @@ setMethod("getInfClip", signature(clip = "numeric",
                                   L2deriv = "UnivariateDistribution",
                                   risk = "asSemivar", 
                                   neighbor = "ContNeighborhood"),
-    function(clip, L2deriv, risk, neighbor, biastype, cent,  symm, trafo){
+    function(clip, L2deriv, risk, neighbor, biastype, cent,  symm, trafo, ...){
+
+        dotsI <- .filterEargsWEargList(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         biastype <- if(sign(risk)==1) positiveBias() else negativeBias()
         z0 <- getInfCent(L2deriv = L2deriv, risk = risk, neighbor = neighbor,
                          biastype = biastype,   
@@ -168,9 +172,9 @@ setMethod("getInfClip", signature(clip = "numeric",
         r <- neighbor@radius
 
         if (sign(risk)>0)
-            v0 <- E(L2deriv, function(x) pmin( x-z0,  clip)^2 )
+            v0 <- do.call(E,c(list(L2deriv, function(x) pmin( x-z0,  clip)^2),dotsI))
         else
-            v0 <- E(L2deriv, function(x) pmax( x-z0, -clip)^2 )        
+            v0 <- do.call(E,c(list(L2deriv, function(x) pmax( x-z0, -clip)^2),dotsI))
 
         s0 <- sqrt(v0)
         sv <- r * clip / s0

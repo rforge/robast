@@ -1,7 +1,10 @@
 .LowerCaseMultivariate <- function(L2deriv, neighbor, biastype,
              normtype, Distr, Finfo, trafo, z.start = NULL,
              A.start = NULL, z.comp = NULL, A.comp = NULL, maxiter, tol,
-             verbose = NULL){
+             verbose = NULL, ...){
+
+        dotsI <- .filterEargsWEargList(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
@@ -9,7 +12,7 @@
         w <- new("HampelWeight")
 
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
-        if(is.null(A.start)) A.start <- trafo%*%solve(as.matrix(Finfo))
+        if(is.null(A.start)) A.start <- trafo%*%distr::solve(as.matrix(Finfo))
         if(is.null(A.comp)) 
            A.comp <- matrix(TRUE, nrow = nrow(trafo), ncol = ncol(trafo))
         if(is.null(z.comp)) 
@@ -59,8 +62,8 @@
                w <<- w0
                }
 
-            E1 <- E(object = Distr, fun = abs.fct, L2 = L2deriv, stand = A,
-                     cent = z, normtype.0 = normtype, useApply = FALSE)
+            E1 <- do.call(E,c(list(object = Distr, fun = abs.fct, L2 = L2deriv, stand = A,
+                     cent = z, normtype.0 = normtype), dotsI))
             stA <- if (is(normtype,"QFNorm"))
                        QuadForm(normtype)%*%A else A
 #            erg <- E1/sum(diag(stA %*% t(trafo)))
@@ -101,7 +104,10 @@
 .LowerCaseMultivariateTV <- function(L2deriv, neighbor, biastype,
              normtype, Distr, Finfo, trafo,
              A.start = NULL,  maxiter, tol,
-             verbose = NULL){
+             verbose = NULL, ...){
+
+        dotsI <- .filterEargsWEargList(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
 
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
@@ -109,7 +115,7 @@
         w <- new("BdStWeight")
         k <- ncol(trafo)
 
-        if(is.null(A.start)) A.start <- trafo%*%solve(Finfo)
+        if(is.null(A.start)) A.start <- trafo%*%distr::solve(Finfo)
 
         pos.fct <- function(x, L2, stand){
             X <- evalRandVar(L2, as.matrix(x))[,,1]
@@ -124,8 +130,8 @@
             p <- 1
             A <- matrix(param, ncol = k, nrow = 1)
          #   print(A)
-            E1 <- E(object = Distr, fun = pos.fct, L2 = L2deriv, stand = A,
-                    useApply = FALSE)
+            E1 <- do.call(E, c(list( object = Distr, fun = pos.fct,
+                       L2 = L2deriv, stand = A), dotsI))
             erg <- E1/sum(diag(A %*% t(trafo)))
             return(erg)
         }
@@ -144,10 +150,10 @@
                   Y <- as.numeric(A %*% X)
                   return(as.numeric(pr.sign*Y>0))
                   }
-        p.p   <- E(object = Distr, fun = pr.fct, L2 = L2deriv,
-                   useApply = FALSE, pr.sign =  1)
-        m.p   <- E(object = Distr, fun = pr.fct, L2 = L2deriv,
-                   useApply = FALSE, pr.sign = -1)
+        p.p   <- do.call(E, c(list( object = Distr, fun = pr.fct, L2 = L2deriv,
+                   pr.sign =  1), dotsI))
+        m.p   <- do.call(E, c(list( object = Distr, fun = pr.fct, L2 = L2deriv,
+                   pr.sign = -1), dotsI))
 
 
         a <- -b * p.p/(p.p+m.p)

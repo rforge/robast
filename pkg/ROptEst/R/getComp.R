@@ -8,6 +8,7 @@
                 if(L2derivDistrSymm[[i]]@SymmCenter == 0)
                     z.comp[i] <- FALSE
         }
+        if(nrvalues>1){
         for(i in 1:(nrvalues-1))
             for(j in (i+1):nrvalues){
                 if(is(DistrSymm, "SphericalSymmetry")){
@@ -18,7 +19,8 @@
                             A.comp[i,j] <- FALSE
                 }
             }
-        A.comp[col(A.comp) < row(A.comp)] <- A.comp[col(A.comp) > row(A.comp)]
+        A.comp[col(A.comp) < row(A.comp)] <- FALSE
+        }
         return(list(A.comp = A.comp, z.comp = z.comp))
 
 }

@@ -11,7 +11,8 @@ importFrom("graphics", "abline", "axis", "box", "par",
            "title")
 importFrom("stats", "complete.cases", "dnorm", "na.omit", "optim",
              "optimize", "pnorm", "qnorm", "uniroot")
-importFrom("utils", "read.csv", "read.table", "str", "write.table")
+importFrom("utils", "read.csv", "read.table", "str", "write.table", 
+           "getFromNamespace")
 importFrom("graphics", "abline")
 importFrom("MASS", "ginv")
 
@@ -38,7 +39,8 @@ exportMethods("optIC",
               "getModifyIC")
 exportMethods("updateNorm", "scaleUpdateIC", "eff", 
               "get.asGRisk.fct", "getStartIC", "plot",
-			  "comparePlot", "getRiskFctBV", "roptestCall")
+			  "comparePlot", "getRiskFctBV", "roptestCall",
+			  "checkIC", "makeIC", "kStepTimings")
 export("getL2normL2deriv",
        "asAnscombe", "asL1", "asL4", 
 	   "getReq", "getMaxIneff", "getRadius")

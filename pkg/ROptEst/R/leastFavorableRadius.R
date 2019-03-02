@@ -8,7 +8,8 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
     function(L2Fam, neighbor, risk, rho, upRad = 1,
             z.start = NULL, A.start = NULL, upper = 100,
             OptOrIter = "iterate", maxiter = 100,
-            tol = .Machine$double.eps^0.4, warn = FALSE, verbose = NULL){
+            tol = .Machine$double.eps^0.4, warn = FALSE, verbose = NULL, ...){
+
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         if(length(rho) != 1)
@@ -16,12 +17,15 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
         if((rho <= 0)||(rho >= 1))
             stop("'rho' not in (0,1)")
 
+        dotsI <- .filterEargsWEargList(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         biastype <- biastype(risk)
         normtype <- normtype(risk)
 
         trafo <- trafo(L2Fam@param)
-        FI0 <- trafo%*%solve(L2Fam@FisherInfo)%*%t(trafo)
-        FI <- solve(FI0)
+        FI0 <- trafo%*%distr::solve(L2Fam@FisherInfo)%*%t(trafo)
+        FI <- distr::solve(FI0)
         if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") )
            {QuadForm(normtype) <- PosSemDefSymmMatrix(FI);
             normtype(risk) <- normtype}
@@ -161,7 +165,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
 
                     .getRisk <- function(rad, fac = 1){
                         neighbor@radius <- rad
-                        res <- getInfRobIC(L2deriv = L2deriv, neighbor = neighbor,
+                        getInfRobICArgs <- c(list(L2deriv = L2deriv, neighbor = neighbor,
                                         risk = risk, Distr = L2Fam@distribution,
                                         DistrSymm = L2Fam@distrSymm,
                                         L2derivSymm = L2derivSymm,
@@ -170,14 +174,16 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                         z.start = z.start, A.start = A.start,
                                         upper = upper.b, OptOrIter = OptOrIter,
                                         maxiter = MaxIter, tol = eps, warn = warn,
-                                        verbose = verbose)
+                                        verbose = verbose), dotsI)
+                        res <- do.call(getInfRobIC, getInfRobICArgs)
                         risk.0 <- risk
                         normtype(risk.0) <- .Norm <- res$normtype
-                        .Risk <- getAsRisk(risk = risk.0, L2deriv = L2deriv,
+                        getAsRiskArgs <- c(list(risk = risk.0, L2deriv = L2deriv,
                                           neighbor = neighbor, biastype = biastype,
                                           normtype = normtype, clip = res$b,
                                           cent = res$a, stand = res$A,
-                                          trafo = trafo)[[1]]
+                                          trafo = trafo), dotsI)
+                        .Risk <- do.call(getAsRisk, getAsRiskArgs)[[1]]
                         return(list(Risk=.Risk,Norm=.Norm))
                     }
 
@@ -192,7 +198,8 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                     }
 
                     if(upRad == Inf){
-                        biasR <- getAsRisk(risk = asBias(biastype = biastype(risk),
+                        biasR <- do.call(getAsRisk, c(list(
+                                      risk = asBias(biastype = biastype(risk),
                                       normtype = normtype), L2deriv = L2deriv,
                                       neighbor = neighbor, biastype = biastype,
                                       normtype = normtype,
@@ -203,7 +210,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                 Finfo = L2Fam@FisherInfo, trafo = trafo,
                                 z.start = z.start, A.start = A.start,
                                 maxiter = maxiter, tol = tol,
-                                warn = warn, verbose = verbose)
+                                warn = warn, verbose = verbose), dotsI))
                         bmin <- biasR$asBias
                         upRisk <- bmin^2
                         upNorm <- biasR$normtype
@@ -212,7 +219,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                         upRisk <- rL$Risk
                         upNorm <- rL$Norm
                     }
-                    args.Ie <- list(L2Fam = L2Fam,
+                    args.Ie <- c(list(L2Fam = L2Fam,
                                     neighbor = neighbor, z.start = z.start,
                                     A.start = A.start, upper.b = upper.b,
                                     risk = risk,
@@ -221,7 +228,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                                     eps = eps, OptOrIter = OptOrIter,
                                     MaxIter = MaxIter, warn = warn,
                                     loNorm = loNorm, upNorm = upNorm,
-                                    withRetIneff = TRUE)
+                                    withRetIneff = TRUE), dotsI)
                     ineff <- NULL
                     fct.Ie <- function(x){
                       args.Ie$radius  <- x

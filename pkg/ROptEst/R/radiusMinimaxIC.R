@@ -11,6 +11,10 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
              tol = .Machine$double.eps^0.4, warn = FALSE,
              verbose = NULL, loRad0 = 1e-3, ..., returnNAifProblem = FALSE,
              loRad.s = NULL, upRad.s = NULL, modifyICwarn = NULL){
+
+        dotsI <- .filterEargsWEargList(list(...))
+        if(is.null(dotsI$useApply)) dotsI$useApply <- FALSE
+
         if(missing(verbose)|| is.null(verbose))
            verbose <- getRobAStBaseOption("all.verbose")
         ow <- options("warn")
@@ -36,10 +40,12 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                        Finfo = L2Fam@FisherInfo, upper = upper, lower = lower,
                        trafo = trafo, maxiter = maxiter, tol = tol,
                        warn = warn, verbose = verbose)
+        if(L2derivDim > 1) args.IC <- c(args.IC, dotsI)
 
         args.R  <- list(risk = risk, L2deriv = NULL,
                          neighbor = neighbor, biastype = biastype,
                          normtype = normtype(risk), trafo = trafo)
+        if(L2derivDim > 1) args.R <- c(args.R, dotsI)
 
         args.Ie <- list(radius = NULL, L2Fam = L2Fam, neighbor,
                         risk = risk, upper.b = upper, lower.b = lower,
@@ -47,6 +53,8 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                         MaxIter = maxiter, warn = warn,
                         loNorm = NormType(), upNorm = NormType(),
                         verbose=verbose, withRetIneff = TRUE)
+        if(L2derivDim > 1) args.Ie <- c(args.Ie, dotsI)
+
         fct.Ie <- function(x){
                  args.Ie$radius  <- x
 #                 print(with(args.Ie, list(loRisk,upRisk,loRad,upRad)))
@@ -123,10 +131,10 @@ setMethod("radiusMinimaxIC", signature(L2Fam = "L2ParamFamily",
                Finfo <- L2Fam@FisherInfo
 
                p <- nrow(trafo)
-               FI0 <- trafo%*%solve(Finfo)%*%t(trafo)
+               FI0 <- trafo%*%distr::solve(Finfo)%*%t(trafo)
 
                if(is(normtype,"InfoNorm") || is(normtype,"SelfNorm") )
-                    {QuadForm(normtype) <- PosSemDefSymmMatrix(solve(FI0));
+                    {QuadForm(normtype) <- PosSemDefSymmMatrix(distr::solve(FI0));
                      normtype(risk) <- normtype}
                std <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(p)
                loRisk <- sum(diag(std%*%FI0))

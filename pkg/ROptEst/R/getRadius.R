@@ -23,7 +23,7 @@ getRadius <- function(IC, risk, neighbor, L2Fam){
       }else{
                     L2deriv <- diag(dimension(L2Fam@L2deriv)) %*% L2Fam@L2deriv
       }
-      z <- solve(stand(IC),cent(IC))
+      z <- distr::solve(stand(IC),cent(IC))
       r <- getInfRad(clip = clip(IC), L2deriv = L2deriv,
                      risk = risk, neighbor = neighbor, biastype = biastype(risk),
                      Distr = L2Fam@distribution, stand = stand(IC),

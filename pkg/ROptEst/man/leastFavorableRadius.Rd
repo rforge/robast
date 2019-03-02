@@ -14,13 +14,12 @@ leastFavorableRadius(L2Fam, neighbor, risk, ...)
           L2Fam, neighbor, risk, rho, upRad = 1, 
             z.start = NULL, A.start = NULL, upper = 100,
             OptOrIter = "iterate", maxiter = 100,
-            tol = .Machine$double.eps^0.4, warn = FALSE, verbose = NULL)
+            tol = .Machine$double.eps^0.4, warn = FALSE, verbose = NULL, ...)
 }
 \arguments{
   \item{L2Fam}{ L2-differentiable family of probability measures. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{risk}{ object of class \code{"RiskType"}. }
-  \item{\dots}{ additional parameters }
   \item{upRad}{ the upper end point of the radius interval to be searched. }
   \item{rho}{ The considered radius interval is: \eqn{[r \rho, r/\rho]}{[r*rho, r/rho]}
     with \eqn{\rho\in(0,1)}{0 < rho < 1}. }
@@ -40,6 +39,7 @@ leastFavorableRadius(L2Fam, neighbor, risk, ...)
   \item{tol}{ the desired accuracy (convergence tolerance).}
   \item{warn}{ logical: print warnings. }
   \item{verbose}{ logical: if \code{TRUE}, some messages are printed }
+  \item{\dots}{ additional arguments to be passed to \code{E} }
 }
 %\details{}
 \value{

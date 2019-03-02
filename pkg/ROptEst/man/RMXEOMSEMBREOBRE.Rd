@@ -19,7 +19,8 @@ RMXEstimator(x, L2Fam, fsCor = 1, initial.est, neighbor = ContNeighborhood(),
              withPICList = getRobAStBaseOption("withPICList"), na.rm = TRUE,
              initial.est.ArgList, ..., withLogScale = TRUE, ..withCheck=FALSE,
              withTimings = FALSE, withMDE = NULL, withEvalAsVar = NULL,
-             withMakeIC = FALSE, modifyICwarn = NULL)
+             withMakeIC = FALSE, modifyICwarn = NULL, E.argList = NULL,
+             diagnostic = FALSE)
 OMSEstimator(x, L2Fam, eps=0.5, fsCor = 1, initial.est, neighbor = ContNeighborhood(),
              steps = 1L, distance = CvMDist, startPar = NULL, verbose = NULL,
              OptOrIter = "iterate", useLast = getRobAStBaseOption("kStepUseLast"),
@@ -29,7 +30,8 @@ OMSEstimator(x, L2Fam, eps=0.5, fsCor = 1, initial.est, neighbor = ContNeighborh
              withPICList = getRobAStBaseOption("withPICList"), na.rm = TRUE,
              initial.est.ArgList, ..., withLogScale = TRUE, ..withCheck=FALSE,
              withTimings = FALSE, withMDE = NULL, withEvalAsVar = NULL,
-             withMakeIC = FALSE, modifyICwarn = NULL)
+             withMakeIC = FALSE, modifyICwarn = NULL, E.argList = NULL,
+             diagnostic = FALSE)
 OBREstimator(x, L2Fam, eff=0.95, fsCor = 1, initial.est, neighbor = ContNeighborhood(),
              steps = 1L, distance = CvMDist, startPar = NULL, verbose = NULL,
              OptOrIter = "iterate", useLast = getRobAStBaseOption("kStepUseLast"),
@@ -39,7 +41,8 @@ OBREstimator(x, L2Fam, eff=0.95, fsCor = 1, initial.est, neighbor = ContNeighbor
              withPICList = getRobAStBaseOption("withPICList"), na.rm = TRUE,
              initial.est.ArgList, ..., withLogScale = TRUE, ..withCheck=FALSE,
              withTimings = FALSE, withMDE = NULL, withEvalAsVar = NULL,
-             withMakeIC = FALSE, modifyICwarn = NULL)
+             withMakeIC = FALSE, modifyICwarn = NULL, E.argList = NULL,
+             diagnostic = FALSE)
 MBREstimator(x, L2Fam, fsCor = 1, initial.est, neighbor = ContNeighborhood(),
              steps = 1L, distance = CvMDist, startPar = NULL, verbose = NULL,
              OptOrIter = "iterate", useLast = getRobAStBaseOption("kStepUseLast"),
@@ -49,7 +52,8 @@ MBREstimator(x, L2Fam, fsCor = 1, initial.est, neighbor = ContNeighborhood(),
              withPICList = getRobAStBaseOption("withPICList"), na.rm = TRUE,
              initial.est.ArgList, ..., withLogScale = TRUE, ..withCheck=FALSE,
              withTimings = FALSE, withMDE = NULL, withEvalAsVar = NULL,
-             withMakeIC = FALSE, modifyICwarn = NULL)
+             withMakeIC = FALSE, modifyICwarn = NULL, E.argList = NULL,
+             diagnostic = FALSE)
 }
 \arguments{
   \item{x}{ sample }
@@ -123,6 +127,19 @@ MBREstimator(x, L2Fam, fsCor = 1, initial.est, neighbor = ContNeighborhood(),
      \code{modifyIC} is applied and hence some optimality information could
      no longer be valid? Defaults to \code{NULL} in which case this value
      is taken from \code{RobAStBaseOptions}.}
+  \item{E.argList}{\code{NULL} (default) or a list of arguments to be passed
+                   to calls to \code{E} from (a) \code{MDEstimator}
+                   (here this additional argument is only used if
+                   \code{initial.est} is missing), (b) \code{getStartIC},
+                   and (c) \code{kStepEstimator}. Potential clashes with
+        arguments of the same name in \code{\dots} are resolved by inserting
+        the items of argument list \code{E.argList} as named items, so
+        in case of collisions the item of \code{E.argList} overwrites the
+        existing one from \code{\dots}.}
+  \item{diagnostic}{ logical; if \code{TRUE},
+    diagnostic information on the performed integrations is gathered and
+    shipped out as an attribute \code{diagnostic} of the return value
+    of the estimators. }
 }
 \details{
   The functions compute optimally robust estimator for a given L2 differentiable
@@ -177,6 +194,25 @@ MBREstimator(x, L2Fam, fsCor = 1, initial.est, neighbor = ContNeighborhood(),
   \code{asbias} and \code{IC} is based on the k-step estimate.
 
   All these estimators are realized as wrappers to function \code{roptest}.
+
+  Timings for the steps run through in these estimators are available
+  in attributes \code{timings}, and for the step of the
+  \code{kStepEstimator} in \code{kStepTimings}.
+
+  One may also use the arguments \code{startCtrl}, \code{startICCtrl}, and
+  \code{kStepCtrl} of function \code{\link{robest}}. This allows for individual
+  settings of \code{E.argList}, \code{withEvalAsVar}, and
+  \code{withMakeIC} for the different steps. If any of the three arguments
+  \code{startCtrl}, \code{startICCtrl}, and \code{kStepCtrl} is used, the
+  respective attributes set in the correspondig argument are used and, if
+  colliding with arguments directly passed to the estimator function, the directly
+  passed ones are ignored.
+
+  Diagnostics on the involved integrations are available if argument
+  \code{diagnostic} is \code{TRUE}. Then there are attributes \code{diagnostic}
+  and \code{kStepDiagnostic} attached to the return value, which may be inspected
+  and assessed through \code{\link[distrEx:distrExIntegrate]{showDiagnostic}} and
+  \code{\link[distrEx:distrExIntegrate]{getDiagnostic}}.
 
 }
 \value{Object of class \code{"kStepEstimate"}.  In addition, it has

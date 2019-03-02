@@ -10,7 +10,7 @@ robest(x, L2Fam,  fsCor = 1, risk = asMSE(), steps = 1L,
         verbose = NULL, OptOrIter = "iterate", nbCtrl = gennbCtrl(),
         startCtrl = genstartCtrl(), startICCtrl = genstartICCtrl(),
         kStepCtrl = genkStepCtrl(), na.rm = TRUE, ..., debug = FALSE,
-        withTimings = FALSE)
+        withTimings = FALSE, diagnostic = FALSE)
 }
 \arguments{
   \item{x}{ sample }
@@ -47,10 +47,33 @@ robest(x, L2Fam,  fsCor = 1, risk = asMSE(), steps = 1L,
    timings for the three steps evaluating the starting value, finding
    the starting influence curve, and evaluating the k-step estimator is
    issued.}
+  \item{diagnostic}{ logical; if \code{TRUE},
+    diagnostic information on the performed integrations is gathered and
+    shipped out as attributes \code{kStepDiagnostic} (for the kStepEstimator-step)
+    and \code{diagnostic} for the remaining steps of the return value
+    of \code{robest}. }
 }
 \details{
   A new, more structured interface to the former function \code{\link{roptest}}.
   For details, see this function.
+
+  In some respects this functions allows for more granular arguments,
+  in the sense that the different steps (a) computation of the inital estimator,
+  resp. (a') in case \code{initial.est} is missing computation of the initial
+  MDE, (b) computation of the optimal IC and (c) computation of the k-step
+  estimator each can have individial arguments \code{E.arglist} to be
+  passed on to calls to expectation operator \code{E} within each step.
+
+  These different arguments are passed through the input generating functions
+  \code{\link[=inputGenerators]{genstartCtrl}},
+  \code{\link[=inputGenerators]{genstartICCtrl}}, and
+  \code{\link[=inputGenerators]{kStepCtrl}}
+
+  Diagnostics on the involved integrations are available if argument
+  \code{diagnostic} is \code{TRUE}. Then there are attributes \code{diagnostic}
+  and \code{kStepDiagnostic} attached to the return value, which may be inspected
+  and assessed through \code{\link[distrEx:distrExIntegrate]{showDiagnostic}} and
+  \code{\link[distrEx:distrExIntegrate]{getDiagnostic}}.
 }
 \value{Object of class \code{"kStepEstimate"}. In addition, it has
        an attribute \code{"timings"} where computation time is stored.}

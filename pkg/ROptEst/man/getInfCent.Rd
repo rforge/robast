@@ -26,10 +26,10 @@ getInfCent(L2deriv, neighbor, biastype, ...)
      neighbor, biastype, clip, cent, tol.z, symm, trafo)
 
 \S4method{getInfCent}{RealRandVariable,ContNeighborhood,BiasType}(L2deriv,
-     neighbor, biastype, Distr, z.comp, w, tol.z = .Machine$double.eps^.5)
+     neighbor, biastype, Distr, z.comp, w, tol.z = .Machine$double.eps^.5, ...)
 
 \S4method{getInfCent}{RealRandVariable,TotalVarNeighborhood,BiasType}(L2deriv,
-     neighbor, biastype, Distr, z.comp, w, tol.z = .Machine$double.eps^.5)
+     neighbor, biastype, Distr, z.comp, w, tol.z = .Machine$double.eps^.5,...)
 
 \S4method{getInfCent}{UnivariateDistribution,ContNeighborhood,onesidedBias}(L2deriv,
      neighbor, biastype, clip, cent, tol.z, symm, trafo)
@@ -41,8 +41,8 @@ getInfCent(L2deriv, neighbor, biastype, ...)
   \item{L2deriv}{ L2-derivative of some L2-differentiable family 
     of probability measures. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
-  \item{biastype}{ object of class \code{"BiasType"} }
-  \item{\dots}{ additional parameters. }
+  \item{biastype}{ object of class \code{"BiasType"}. }
+  \item{\dots}{ additional parameters, in particular for expectation \code{E}. }
   \item{clip}{ optimal clipping bound. }
   \item{cent}{ optimal centering constant. }
   \item{tol.z}{ the desired accuracy (convergence tolerance). }
@@ -51,7 +51,7 @@ getInfCent(L2deriv, neighbor, biastype, ...)
   \item{Distr}{object of class \code{Distribution}. }
   \item{z.comp}{ logical vector: indication which components of the 
     centering constant have to be computed. }
-  \item{w}{object of class \code{RobWeight}; current weight}
+  \item{w}{object of class \code{RobWeight}; current weight. }
 }
 %\details{}
 \value{The optimal centering constant is computed.}

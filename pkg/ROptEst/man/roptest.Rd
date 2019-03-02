@@ -19,7 +19,7 @@ roptest(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         na.rm = TRUE, initial.est.ArgList, ...,
         withLogScale = TRUE, ..withCheck = FALSE, withTimings = FALSE,
         withMDE = NULL, withEvalAsVar = NULL, withMakeIC = FALSE,
-        modifyICwarn = NULL)
+        modifyICwarn = NULL, E.argList = NULL, diagnostic = FALSE)
 roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         neighbor = ContNeighborhood(), risk = asMSE(), steps = 1L,
         distance = CvMDist, startPar = NULL, verbose = NULL,
@@ -43,7 +43,7 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
         upper bound for the amount of gross errors. See details below. }
   \item{fsCor}{ positive real: factor used to correct the neighborhood radius;
         see details. }
-  \item{initial.est}{ initial estimate for unknown parameter. If missing 
+  \item{initial.est}{ initial estimate for unknown parameter. If missing, a
         minimum distance estimator is computed. }
   \item{neighbor}{ object of class \code{"UncondNeighborhood"} }
   \item{risk}{ object of class \code{"RiskType"} }
@@ -107,6 +107,20 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
      \code{modifyIC} is applied and hence some optimality information could
      no longer be valid? Defaults to \code{NULL} in which case this value
      is taken from \code{RobAStBaseOptions}.}
+  \item{E.argList}{\code{NULL} (default) or a list of arguments to be passed
+                   to calls to \code{E} from (a) \code{MDEstimator}
+                   (here this additional argument is only used if
+                   \code{initial.est} is missing), (b) \code{getStartIC},
+                   and (c) \code{kStepEstimator}. Potential clashes with
+        arguments of the same name in \code{\dots} are resolved by inserting
+        the items of argument list \code{E.argList} as named items, so
+        in case of collisions the item of \code{E.argList} overwrites the
+        existing one from \code{\dots}.}
+  \item{diagnostic}{ logical; if \code{TRUE},
+    diagnostic information on the performed integrations is gathered and
+    shipped out as attributes \code{kStepDiagnostic} (for the kStepEstimator-step)
+    and \code{diagnostic} for the remaining steps of the return value
+    of \code{roptest}. }
 }
 \details{
   Computes the optimally robust estimator for a given L2 differentiable
@@ -148,6 +162,29 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
   corrected (enlarged) radius based on the results of large Monte-Carlo
   studies.
 
+  The logic in argument \code{initial.est} is as follows: It can be
+  a numeric vector of the length of the unknow parameter or a function or
+  it can be missing. If it is missing, one consults argument \code{startPar}
+  for a search interval (if a one dimensional unknown parameter) or a starting
+  value for the search (if the dimension of the unknown parameter is larger
+  than one). If \code{startPar} is missing, too, it takes the value from
+  the corresponding slot of argument \code{L2Fam}. Then, if argument \code{withMDE}
+  is \code{TRUE} a Minimum-Distance estimator is computed as initial value
+  \code{initial.est} with distance as specified in argument \code{distance}
+  and possibly further arguments as passed through \code{\dots}.
+
+  In the next step, the value of \code{initial.est} (either if not missing
+  from beginning or as computed through the MDE) is then passed on to
+  \code{kStepEstimator.start} which  then takes out the essential
+  information for the sequel, i.e., a numeric vector of the estimate.
+
+  At this initial value the optimal influence curve is computed through
+  interface \code{getStartIC}, which in turn, depending on the risk calls
+  \code{optIC}, \code{radiusMinimaxIC}, or computes the IC
+  from precomputed grid values in case of \code{risk} being of class
+  \code{interpolRisk}. With the obtained optimal IC, \code{kStepEstimator}
+  is called.
+
   The default value of argument \code{useLast} is set by the
   global option \code{kStepUseLast} which by default is set to 
   \code{FALSE}. In case of general models \code{useLast} 
@@ -162,6 +199,25 @@ roptest.old(x, L2Fam, eps, eps.lower, eps.upper, fsCor = 1, initial.est,
 
   If \code{useLast} is set to \code{TRUE} the computation of \code{asvar}, 
   \code{asbias} and \code{IC} is based on the k-step estimate.
+
+  Timings for the steps run through in \code{roptest} are available
+  in attributes \code{timings}, and for the step of the
+  \code{kStepEstimator} in \code{kStepTimings}.
+
+  One may also use the arguments \code{startCtrl}, \code{startICCtrl}, and
+  \code{kStepCtrl} of function \code{\link{robest}}. This allows for individual
+  settings of \code{E.argList}, \code{withEvalAsVar}, and
+  \code{withMakeIC} for the different steps. If any of the three arguments
+  \code{startCtrl}, \code{startICCtrl}, and \code{kStepCtrl} is used, the
+  respective attributes set in the correspondig argument are used and, if
+  colliding with arguments directly passed to \code{roptest}, the directly
+  passed ones are ignored.
+
+  Diagnostics on the involved integrations are available if argument
+  \code{diagnostic} is \code{TRUE}. Then there are attributes \code{diagnostic}
+  and \code{kStepDiagnostic} attached to the return value, which may be inspected
+  and assessed through \code{\link[distrEx:distrExIntegrate]{showDiagnostic}} and
+  \code{\link[distrEx:distrExIntegrate]{getDiagnostic}}.
 }
 \value{Object of class \code{"kStepEstimate"}.  In addition, it has
        an attribute \code{"timings"} where computation time is stored.}

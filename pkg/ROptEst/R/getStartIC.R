@@ -3,9 +3,10 @@ setMethod("getStartIC",signature(model = "ANY", risk = "ANY"),
 
 setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
            function(model, risk, ..., withEvalAsVar = TRUE, withMakeIC = FALSE,
-           ..debug=FALSE, modifyICwarn = NULL){
+           ..debug=FALSE, modifyICwarn = NULL, diagnostic = FALSE){
     mc <- match.call(expand.dots=FALSE, call = sys.call(sys.parent(1)))
     dots <- as.list(mc$"...")
+    diagn <- if(diagnostic) list() else NULL
     if(missing(..debug)||!is.logical(..debug)) ..debug <- FALSE
     if("fsCor" %in% names(dots)){
         fsCor <- eval(dots[["fsCor"]])
@@ -13,6 +14,7 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
     }else fsCor <- 1
     if("eps" %in% names(dots)){
        eps <- dots[["eps"]]
+       names(eps) <- gsub("eps\\.","",names(eps))
        dots$eps <- NULL
     }else eps <- NULL
     if("neighbor" %in% names(dots)){
@@ -20,6 +22,7 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
        dots$neighbor <- NULL
     }else neighbor <- ContNeighborhood()
 
+#    cat("......\n");print(eps);cat(":......\n")
 
     if(is.null(eps[["e"]])){
         sm.rmx <- selectMethod("radiusMinimaxIC", signature(
@@ -30,6 +33,7 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
         dots.rmx$risk <- NULL
         dots.rmx$modifyICwarn <- modifyICwarn
         dots.rmx[["warn"]] <- FALSE
+        if(diagnostic) dots.rmx[["diagnostic"]] <- TRUE
         if(!is.null(dots[["warn"]]))if(eval(dots[["warn"]])) dots.rmx[["warn"]] <- TRUE
 
         infMod <- InfRobModel(center = model, neighbor = neighbor)
@@ -58,6 +62,7 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asGRisk"),
         dots.optic$withMakeIC <- withMakeIC
         dots.optic$modifyICwarn <- modifyICwarn
         dots.optic[["warn"]] <- FALSE
+        if(diagnostic) dots.optic[["diagnostic"]] <- TRUE
         if(!is.null(dots[["warn"]]))if(eval(dots[["warn"]])) dots.optic[["warn"]] <- TRUE
 
         arg.optic <- c(list(model = infMod, risk = risk),
@@ -78,26 +83,33 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "trAsCov"),
 
 setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asBias"),
            function(model, risk, ..., withMakeIC = FALSE, ..debug=FALSE,
-           modifyICwarn = NULL){
+           modifyICwarn = NULL, diagnostic = FALSE){
     mc <- match.call(expand.dots=FALSE, call = sys.call(sys.parent(1)))
     dots <- as.list(mc$"...")
+
+    #print(mc)
+    #print(dots)
 
     if("neighbor" %in% names(dots)){
        neighbor <- eval(dots[["neighbor"]])
        dots$neighbor <- NULL
     }else neighbor <- ContNeighborhood()
+
     if("warn" %in% names(dots)) dots$warn <- NULL
 
     infMod <- InfRobModel(center = model, neighbor = neighbor)
+    #print(list(c(list(infMod, risk), dots, list(warn = FALSE,
+    #            withMakeIC = withMakeIC, modifyICwarn = modifyICwarn))))
     return(do.call(optIC, c(list(infMod, risk), dots, list(warn = FALSE,
-                withMakeIC = withMakeIC, modifyICwarn = modifyICwarn)),
+                withMakeIC = withMakeIC, modifyICwarn = modifyICwarn,
+                diagnostic = diagnostic)),
                 envir=parent.frame(2)))
            })
 
 
 setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asAnscombe"),
            function(model, risk, ..., withEvalAsVar = TRUE, withMakeIC = FALSE,
-           ..debug=FALSE, modifyICwarn = NULL){
+           ..debug=FALSE, modifyICwarn = NULL, diagnostic = FALSE){
     mc <- match.call(expand.dots=FALSE, call = sys.call(sys.parent(1)))
     dots <- as.list(mc$"...")
     if(missing(..debug)||!is.logical(..debug)) ..debug <- FALSE
@@ -116,6 +128,7 @@ setMethod("getStartIC",signature(model = "L2ParamFamily", risk = "asAnscombe"),
     dots.optic$withMakeIC <- withMakeIC
     dots.optic$modifyICwarn <- modifyICwarn
     dots.optic[["warn"]] <- FALSE
+    if(diagnostic) dots.optic[["diagnostic"]] <- TRUE
     if(!is.null(dots[["warn"]]))if(eval(dots[["warn"]])) dots.optic[["warn"]] <- TRUE
 
     arg.optic <- c(list(model = infMod, risk = risk), dots.optic)

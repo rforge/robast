@@ -86,7 +86,7 @@ setMethod("getAsRisk", signature(risk = "asBias",
         eerg <- .LowerCaseMultivariate(L2deriv = L2deriv, neighbor = neighbor, 
              biastype = biastype, normtype = normtype, Distr = Distr,  Finfo = Finfo,
              trafo = trafo, z.start = z.start, A.start = A.start, z.comp = z.comp,
-             A.comp = DA.comp,  maxiter = maxiter, tol = tol, verbose = verbose)
+             A.comp = DA.comp,  maxiter = maxiter, tol = tol, verbose = verbose, ...)
         erg <- eerg$erg
         bias <- 1/erg$value
         
@@ -112,7 +112,7 @@ setMethod("getAsRisk", signature(risk = "asBias",
              neighbor = neighbor, biastype = biastype,
              normtype = normtype, Distr = Distr, Finfo = Finfo, trafo = trafo,
              A.start = A.start, maxiter = maxiter,
-             tol = tol, verbose = verbose)
+             tol = tol, verbose = verbose, ...)
         erg <- eerg$b
         bias <- 1/erg$value
 
@@ -167,7 +167,7 @@ setMethod("getAsRisk", signature(risk = "asCov",
         Cov <- getInfV(L2deriv = L2deriv, neighbor = neighbor, 
                        biastype = biastype, Distr = Distr, 
                        V.comp = V.comp, cent = cent, 
-                       stand = stand, w = w)
+                       stand = stand, w = w, ...)
         if(!is.null(trafo)) Cov <- trafo%*%Cov%*%t(trafo)
         return(list(asCov = Cov))
         })
@@ -219,7 +219,7 @@ setMethod("getAsRisk", signature(risk = "trAsCov",
         Cov <- getAsRisk(risk = asCov(), L2deriv = L2deriv, neighbor = neighbor,
                          biastype = biastype, Distr = Distr, clip = clip,
                          cent = cent, stand = stand, trafo = trafo,
-                         V.comp =  V.comp, w = w)$asCov
+                         V.comp =  V.comp, w = w, ...)$asCov
 
         p <- nrow(stand)
         std <- if(is(normtype,"QFNorm")) QuadForm(normtype) else diag(p)
@@ -255,7 +255,7 @@ setMethod("getAsRisk", signature(risk = "asAnscombe",
                          biastype = biastype, normtype = normtype, 
                          Distr = Distr, clip = clip,  
                          cent = cent, stand = stand, V.comp = V.comp, 
-                         w = w)$trAsCov
+                         w = w, ...)$trAsCov
         return(list(asAnscombe = FI/trAsCov.0))
     })
 
