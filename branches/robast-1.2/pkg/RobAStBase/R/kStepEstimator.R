@@ -166,13 +166,21 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         cvar.fct <- function(L2, IC, dim, dimn =NULL){
                 Eres <- matrix(NA,dim,dim)
                 if(!is.null(dimn)) dimnames(Eres) <- dimn
-                L2M <- L2@Curve[[1]]@Map
+                ICM <- as(diag(k)%*%IC, "EuclRandVariable")@Map
                 for(i in 1: dim)
-                    for(j in i: dim)
-                        Eres[i,j] <- E(L2@distribution,
-                           fun = function(x) L2M[[i]](x)*L2M[[j]](x),
+                      Eres[i,i] <- E(L2@distribution,
+                           fun = function(x) ICM[[i]](x)^2,
                            useApply = FALSE)
+                if(dim>1){
+                  for(i in 1: (dim-1)){
+                    for(j in (i+1): dim)
+                        Eres[j,i] <- Eres[i,j] <- E(L2@distribution,
+                           fun = function(x) ICM[[i]](x)*ICM[[j]](x),
+                           useApply = FALSE)
+                  }
+                }
                 return(Eres)}
+
 
         updStp <- 0
         ### update - function
@@ -276,6 +284,9 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                      correct <- rowMeans(t(t(.ensureDim2(evalRandVar(IC.c, x0)))*indS), na.rm = na.rm)
                      sytm <<- .addTime(sytm,paste("Dtau=Unit:correct <- rowMeans-",updStp))
                      iM <- is.matrix(theta)
+#                     print(sclname)
+#                     print(names(theta))
+#                     print(str(theta))
                      names(correct) <- if(iM) rownames(theta) else names(theta)
                      if(logtrf){
                         scl <- if(iM) theta[sclname,1] else theta[sclname]
@@ -377,6 +388,8 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                                  withEvalAsVar.0 = (i==steps))
 #               print(upd$u.theta); print(upd$theta)
                uksteps[,i] <- u.theta <- upd$u.theta
+#               print(str(upd$theta))
+#               print(nrow(ksteps))
                ksteps[,i] <- theta <- upd$theta
                if(withICList)
                   ICList[[i]] <- .fixInLiesInSupport(

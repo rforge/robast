@@ -49,21 +49,25 @@
 ## check centering and Fisher consistency
 setMethod("checkIC", signature(IC = "IC", L2Fam = "missing"),
     function(IC, out = TRUE, ..., diagnostic = FALSE){
+        diagn0stic <- diagnostic
         L2Fam <- eval(IC@CallL2Fam)
         getMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"))(
-              IC = IC, L2Fam = L2Fam, out = out, ..., diagnostic = diagnostic)
+              IC = IC, L2Fam = L2Fam, out = out, ..., diagnostic = diagn0stic)
     })
 
 ## check centering and Fisher consistency
 setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
     function(IC, L2Fam, out = TRUE, ..., diagnostic = FALSE){
+
+        diagn0stic <- diagnostic
+
         D1 <- L2Fam@distribution
         if(dimension(Domain(IC@Curve[[1]])) != dimension(img(D1)))
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
         trafo <- trafo(L2Fam@param)
 
-        res <- .preparedirectCheckMakeIC(L2Fam, IC, ..., diagnostic = diagnostic)
+        res <- .preparedirectCheckMakeIC(L2Fam, IC, ..., diagnostic = diagn0stic)
 
         cent <- res$E.IC
         attr(cent,"diagnostic") <- NULL
@@ -111,6 +115,8 @@ setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
 setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
     function(IC, L2Fam, ..., diagnostic = FALSE){
 
+        diagn0stic <- diagnostic
+
         dims <- length(L2Fam@param)
         if(dimension(IC@Curve) != dims)
            stop("Dimension of IC and parameter must be equal")
@@ -121,7 +127,7 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
 
         trafo <- trafo(L2Fam@param)
 
-        res <- .preparedirectCheckMakeIC(L2Fam, IC, ..., diagnostic = diagnostic)
+        res <- .preparedirectCheckMakeIC(L2Fam, IC, ..., diagnostic = diagn0stic)
 
         if(diagnostic){
            print(attr(res$E.IC,"diagnostic"), xname="E.IC")
@@ -165,9 +171,10 @@ setMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
 ## make some L2function a pIC at a model
 setMethod("makeIC", signature(IC = "IC", L2Fam = "missing"),
     function(IC, ..., diagnostic = FALSE){
+        diagn0stic <- diagnostic
         L2Fam <- eval(IC@CallL2Fam)
         getMethod("makeIC", signature(IC = "IC", L2Fam = "L2ParamFamily"))(
-              IC = IC, L2Fam = L2Fam, ..., diagnostic = diagnostic)
+              IC = IC, L2Fam = L2Fam, ..., diagnostic = diagn0stic)
     })
 
 setMethod("makeIC", signature(IC = "list", L2Fam = "L2ParamFamily"),
@@ -177,6 +184,10 @@ setMethod("makeIC", signature(IC = "list", L2Fam = "L2ParamFamily"),
         mc0$IC <- NULL
         mc0$L2Fam <- NULL
         mc0$forceIC <- NULL
+        mc0$diagnostic <- NULL
+
+        diagn0stic <- diagnostic
+
         if(!all(as.logical(c(lapply(IC,is.function)))))
            stop("First argument must be a list of functions")
 
@@ -186,8 +197,9 @@ setMethod("makeIC", signature(IC = "list", L2Fam = "L2ParamFamily"),
         mc0$Curve <- EuclRandVarList(RealRandVariable(Map = IC.1, Domain = Reals()))
         mc0$CallL2Fam <- substitute(L2Fam@fam.call)
 
+
         IC.0 <- do.call(.IC,mc0)
-        if(forceIC) IC.0 <- makeIC(IC.0, L2Fam,..., diagnostic = diagnostic)
+        if(forceIC) IC.0 <- makeIC(IC.0, L2Fam,..., diagnostic = diagn0stic)
         return(IC.0)
     })
 
@@ -201,6 +213,9 @@ setMethod("makeIC", signature(IC = "function", L2Fam = "L2ParamFamily"),
         mc0$IC <- NULL
         mc0$L2Fam <- NULL
         mc0$forceIC <- NULL
+        mc0$diagnostic <- NULL
+        diagn0stic <- diagnostic
+
         IC.1 <- if(length(formals(IC))==0) function(x) IC(x) else IC
         mc0$Curve <- EuclRandVarList(RealRandVariable(Map = list(IC.1),
                          Domain = Reals()))
@@ -209,7 +224,7 @@ setMethod("makeIC", signature(IC = "function", L2Fam = "L2ParamFamily"),
 
         IC.0 <- do.call(.IC,mc0)
 #        print(IC.0)
-        if(forceIC) IC.0 <- makeIC(IC.0, L2Fam,...)
+        if(forceIC) IC.0 <- makeIC(IC.0, L2Fam,...,diagnostic=diagn0stic)
         return(IC.0)
     })
 ## comment 20180809: reverted changes in rev 1110

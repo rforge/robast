@@ -113,7 +113,7 @@
 
 .producePanelFirstSn <- function(panelFirst,
                                 x.ticks, scaleX, scaleX.fct,
-                                y.ticks, scaleY, scaleY.fct){
+                                y.ticks, scaleY, scaleY.fct, logArg){
 
 
   if(is.null(scaleX.fct)) scaleX.fct <- pnorm
@@ -122,13 +122,15 @@
   if(!is.null(x.ticks)){
      .xticksS <- substitute({.x.ticks <- x0}, list(x0 = if(scaleX) x.ticks else scaleX.fct(x.ticks)))
   }else{
+     logx <- FALSE
+     if(!is.null(logArg)) if(grepl("x",logArg)) logx <- TRUE
      if(!scaleX){
-        .xticksS <- substitute({
-               .x.ticks <- axTicks(1, axp=par("xaxp"), usr=par("usr"))
-               })
+        .xticksS <- if(logx)
+                    substitute(.x.ticks <- axTicks(1, log=TRUE)) else
+                    substitute(.x.ticks <- axTicks(1, axp=par("xaxp"), usr=par("usr")))
      }else{
         .xticksS <- substitute({
-               .x.ticks <- fct(axTicks(1, axp=par("xaxp"), usr=par("usr")))
+                   .x.ticks <- fct(axTicks(1, axp=par("xaxp"), usr=par("usr")))
                 },list(fct=scaleX.fct))
     }
   }
@@ -136,10 +138,12 @@
   if(!is.null(y.ticks)){
      .yticksS <- substitute({.y.ticks <- y0}, list(y0 = if(scaleY) y.ticks else scaleY.fct(y.ticks)))
   }else{
+     logy <- FALSE
+     if(!is.null(logArg)) if(grepl("y",logArg)) logy <- TRUE
      if(!scaleY){
-        .yticksS <- substitute({
-               .y.ticks <- axTicks(2, axp=par("yaxp"), usr=par("usr"))
-               })
+        .yticksS <- if(logy)
+                    substitute(.y.ticks <- axTicks(2, log=TRUE)) else
+                    substitute(.y.ticks <- axTicks(2, axp=par("yaxp"), usr=par("usr")))
      }else{
         .yticksS <- substitute({
                .y.ticks <- fct(axTicks(2, axp=par("yaxp"), usr=par("usr")))
@@ -385,7 +389,7 @@
                               x.ticks = x.ticks[[i]], scaleX = scaleX[i],
                                   scaleX.fct = scaleX.fct[[i]],
                               y.ticks = y.ticks[[i]], scaleY = scaleY[i],
-                                  scaleY.fct = scaleY.fct[[i]])
+                                  scaleY.fct = scaleY.fct[[i]], logArg[i])
                      }
             }
 

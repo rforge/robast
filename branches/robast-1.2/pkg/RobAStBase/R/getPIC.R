@@ -39,9 +39,13 @@ setMethod(".checkEstClassForParamFamily",
           lnx <- length(nuisance(param.0))
           idx.n <- rev(rev(idx)[1:lnx])
           idx.m <- idx[-idx.n]
-          param.0@nuisance <- theta[idx.m]
+          th.nuis <- theta[idx.n]
+          names(th.nuis) <- names(nuisance(param.0))
+          param.0@nuisance <- th.nuis
        }
-       param.0@main <- theta[idx.m]
+       th.main <- theta[idx.m]
+       names(th.main)<-  names(main(param.0))
+       param.0@main <- th.main
        param.0@trafo <- trafo(estimator)$mat
        L2Fam <- modifyModel(L2Fam0, param.0)
        return(L2Fam)
