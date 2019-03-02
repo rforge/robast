@@ -22,7 +22,7 @@ setMethod("infoPlot", "IC",
 
             trafo <- L2Fam@param@trafo
             dims <- nrow(trafo)
-            classIC <- as(trafo %*% solve(L2Fam@FisherInfo) %*% L2Fam@L2deriv, "EuclRandVariable")
+            classIC <- as(trafo %*% distr::solve(L2Fam@FisherInfo) %*% L2Fam@L2deriv, "EuclRandVariable")
             absInfoClass <- classIC %*% classIC
             absInfoClass <- sapply(x.vec, absInfoClass@Map[[1]])
             IC1 <- as(diag(dims) %*% object@Curve, "EuclRandVariable")

@@ -243,10 +243,10 @@
     
     k <- dimension(img(K))
     Gk <- .duplicationMatrix(dimn = k)
-    Hk <- solve(t(Gk) %*% Gk)%*%t(Gk)
+    Hk <- distr::solve(t(Gk) %*% Gk)%*%t(Gk)
     h5 <- Hk %*% h5 %*% Gk
 
-    vech.B <- solve(h5) %*% vech.D
+    vech.B <- distr::solve(h5) %*% vech.D
     B <- matrix(0, nrow = k , ncol = k)
     B[row(B) >= col(B)] <- vech.B
     B[row(B) < col(B)] <- B[row(B) > col(B)]
@@ -305,7 +305,7 @@
 ###############################################################################
 .MrgsGetba1a3B <- function(r, K, A, gg, a1, a3, B, bUp, delta, itmax){
     C1 <- E(K, .MrgsGetC1, A = A, gg = gg)
-    C2 <- solve(A) - gg^2*E(K, .MrgsGetC2, A = A, gg = gg)
+    C2 <- distr::solve(A) - gg^2*E(K, .MrgsGetC2, A = A, gg = gg)
     C3 <- 1 + 1/gg - gg^2*E(K, .MrgsGetC3, A = A, gg = gg)
     
     b <- try(uniroot(.MrgsGetr, lower = gg, upper = bUp, 
@@ -442,7 +442,7 @@ rgsOptIC.M <- function(r, K, A.start, gg.start = 0.6, a1.start = -0.25,
             stop("Regressor is a.e. K concentrated on a conic")
 
     if(missing(A.start))
-        A <- solve(Reg2Mom)
+        A <- distr::solve(Reg2Mom)
     else
         A <- A.start
 
@@ -474,7 +474,7 @@ rgsOptIC.M <- function(r, K, A.start, gg.start = 0.6, a1.start = -0.25,
     
     if(check){
         C1 <- E(K, .MrgsGetC1, A = A, gg = gg)
-        C2 <- solve(A) - gg^2*E(K, .MrgsGetC2, A = A, gg = gg)
+        C2 <- distr::solve(A) - gg^2*E(K, .MrgsGetC2, A = A, gg = gg)
         C3 <- 1 + 1/gg - gg^2*E(K, .MrgsGetC3, A = A, gg = gg)
 
         kont1 <- try(E(K, .MrgsGetch1, A = A, gg = gg, b = b, a1 = a1, 

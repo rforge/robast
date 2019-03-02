@@ -6,7 +6,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "ContNeighborhood"),
     function(L2deriv, risk, neighbor, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
             b <- abs(as.vector(A))*max(abs(q.l(L2deriv)(1)),abs(q.l(L2deriv)(0)))
             Risk <- list(asCov = A %*% t(trafo), asBias = b)
 
@@ -17,7 +17,7 @@ setMethod("getInfRobIC", signature(L2deriv = "UnivariateDistribution",
                                    neighbor = "TotalVarNeighborhood"),
     function(L2deriv, risk, neighbor, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
             b <- abs(as.vector(A))*(q.l(L2deriv)(1)-q.l(L2deriv)(0))
             Risk <- list(asCov = A %*% t(trafo), asBias = b)
 
@@ -28,7 +28,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
                                    neighbor = "ContNeighborhood"),
     function(L2deriv, risk, neighbor, Distr, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
             IC <- A %*% L2deriv
             if(is(Distr, "UnivariateDistribution")){
                 lower <- ifelse(is.finite(q.l(Distr)(0)), q.l(Distr)(1e-8), q.l(Distr)(0))

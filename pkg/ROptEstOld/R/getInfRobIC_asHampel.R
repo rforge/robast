@@ -69,7 +69,7 @@ setMethod("getInfRobIC", signature(L2deriv = "RealRandVariable",
         if(is.null(z.start)) z.start <- numeric(ncol(trafo))
         if(is.null(A.start)) A.start <- trafo
 
-        ClassIC <- trafo %*% solve(Finfo) %*% L2deriv
+        ClassIC <- trafo %*% distr::solve(Finfo) %*% L2deriv
         lower <- q.l(Distr)(getdistrOption("TruncQuantile"))
         upper <- q.l(Distr)(1-getdistrOption("TruncQuantile"))
         x <- seq(from = lower, to = upper, by = 0.01)

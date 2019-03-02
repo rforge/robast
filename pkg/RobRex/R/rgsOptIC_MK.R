@@ -37,7 +37,7 @@ rgsOptIC.MK <- function(r, K, ggLo = 0.5, ggUp = 1.0, a1.start = -0.25,
         if(.rgsRegressorCheck(K))
             stop("Regressor is a.e. K concentrated on a conic")
 
-    A <- solve(Reg2Mom)
+    A <- distr::solve(Reg2Mom)
     if(missing(B.start)) B.start <- A %*% A
 
     res <- optimize(.MKrgsGetmse, lower = ggLo, upper = ggUp, 
@@ -54,7 +54,7 @@ rgsOptIC.MK <- function(r, K, ggLo = 0.5, ggUp = 1.0, a1.start = -0.25,
 
     if(check){
         C1 <- E(K, .MrgsGetC1, A = A, gg = gg)
-        C2 <- solve(A) - gg^2*E(K, .MrgsGetC2, A = A, gg = gg)
+        C2 <- distr::solve(A) - gg^2*E(K, .MrgsGetC2, A = A, gg = gg)
         C3 <- 1 + 1/gg - gg^2*E(K, .MrgsGetC3, A = A, gg = gg)
 
         kont1 <- try(E(K, .MrgsGetch1, A = A, gg = gg, b = b, a1 = a1, 

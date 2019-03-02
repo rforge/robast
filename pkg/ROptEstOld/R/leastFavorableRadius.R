@@ -109,7 +109,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2ParamFamily",
                     trafo <- L2Fam@param@trafo
                     if(identical(all.equal(loRad, 0), TRUE)){
                         loRad <- 0
-                        loRisk <- sum(diag(solve(L2Fam@FisherInfo)))
+                        loRisk <- sum(diag(distr::solve(L2Fam@FisherInfo)))
                     }else{
                         neighbor@radius <- loRad
                         resLo <- getInfRobIC(L2deriv = L2deriv, neighbor = neighbor, risk = risk, 

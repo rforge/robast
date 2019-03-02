@@ -8,6 +8,15 @@
  information)
 
 #######################################
+version 1.2
+#######################################
+
+under the hood
++ now specified that we want to use distr::solve
++ the calls to liesInSupport gain argument "checkFin" for consistency with 
+  the method in distr/distrEx (it is not used in RobRex, though). 
+
+#######################################
 version 1.1
 #######################################
 

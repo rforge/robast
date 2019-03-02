@@ -41,9 +41,8 @@ setMethod("checkIC", signature(IC = "CondIC", L2Fam = "missing"),
         IC1 <- as(diag(nrow(trafo)) %*% IC@Curve, "EuclRandVariable")
         cent <- array(0, c(length(IC1), length(cond), nrow(trafo)))
         for(i in 1:length(IC1)){
-            fct <- function(x, cond, f1){ f1(cbind(t(cond),x)) }
-            cent[i,,] <- apply(cond, 1, .condE, D1 = L2Fam@distribution, fct = fct, 
-                            f1 = IC1@Map[[i]])
+            fct <- function(x, cond){ IC1@Map[[i]](cbind(t(cond),x)) }
+            cent[i,,] <- apply(cond, 1, .condE, D1 = L2Fam@distribution, fct = fct)
         }
         if(out)
             cat("precision of conditional centering:\t", max(abs(cent)), "\n")
@@ -54,9 +53,8 @@ setMethod("checkIC", signature(IC = "CondIC", L2Fam = "missing"),
             IC.L2 <- IC1 %*% t(L2deriv)
             res <- numeric(length(IC.L2))
             for(i in 1:length(IC.L2)){
-                fct <- function(x, cond, f1){ f1(cbind(t(cond),x)) }
-                res[i] <- E(K, .condE, D1 = L2Fam@distribution, fct = fct, 
-                               f1 = IC.L2@Map[[i]])
+                fct <- function(x, cond){ IC.L2@Map[[i]](cbind(t(cond),x)) }
+                res[i] <- E(K, .condE, D1 = L2Fam@distribution, fct = fct)
             }            
             consist <- matrix(res, nrow = nrow(trafo)) - trafo
             if(out){
@@ -90,9 +88,8 @@ setMethod("checkIC", signature(IC = "CondIC", L2Fam = "L2RegTypeFamily"),
         IC1 <- as(diag(nrow(trafo)) %*% IC@Curve, "EuclRandVariable")
         cent <- array(0, c(length(IC1), length(cond), nrow(trafo)))
         for(i in 1:length(IC1)){
-            fct <- function(x, cond, f1){ f1(cbind(t(cond),x)) }
-            cent[i,,] <- apply(cond, 1, .condE, D1 = L2Fam@distribution, fct = fct, 
-                            f1 = IC1@Map[[i]])
+            fct <- function(x, cond){ IC1@Map[[i]](cbind(t(cond),x)) }
+            cent[i,,] <- apply(cond, 1, .condE, D1 = L2Fam@distribution, fct = fct)
         }
         if(out)
             cat("precision of conditional centering:\t", max(abs(cent)), "\n")
@@ -103,9 +100,8 @@ setMethod("checkIC", signature(IC = "CondIC", L2Fam = "L2RegTypeFamily"),
             IC.L2 <- IC1 %*% t(L2deriv)
             res <- numeric(length(IC.L2))
             for(i in 1:length(IC.L2)){
-                fct <- function(x, cond, f1){ f1(cbind(t(cond),x)) }
-                res[i] <- E(K, .condE, D1 = L2Fam@distribution, fct = fct, 
-                               f1 = IC.L2@Map[[i]])                
+                fct <- function(x, cond) IC.L2@Map[[i]](cbind(t(cond),x))
+                res[i] <- E(K, .condE, D1 = L2Fam@distribution, fct = fct)
             }            
             consist <- matrix(res, nrow = nrow(trafo)) - trafo
             if(out){

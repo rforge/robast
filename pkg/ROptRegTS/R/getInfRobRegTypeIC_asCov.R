@@ -8,7 +8,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
     function(ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm, 
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
             b <- max(abs(as.vector(A)))*max(q.l(ErrorL2deriv)(1),abs(q.l(ErrorL2deriv)(0)))
             if(is(Regressor, "UnivariateDistribution"))
                 b <- b*max(abs(q.l(Regressor)(1)), abs(q.l(Regressor)(0)))
@@ -24,7 +24,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
     function(ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm, 
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
             b <- abs(as.vector(A))*(q.l(ErrorL2deriv)(1) - q.l(ErrorL2deriv)(0))
             b <- b*(abs(q.l(Regressor)(1)) + abs(q.l(Regressor)(0)))
             Risk <- list(asCov = A %*% t(trafo), asBias = b)
@@ -38,7 +38,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
     function(ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm, 
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
             b <- max(abs(as.vector(A)))*max(q.l(ErrorL2deriv)(1),abs(q.l(ErrorL2deriv)(0)))
             if(is(Regressor, "UnivariateDistribution"))
                 b <- b*max(abs(q.l(Regressor)(1)), abs(q.l(Regressor)(0)))
@@ -57,7 +57,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
     function(ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm, 
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
             b <- abs(as.vector(A))*(q.l(ErrorL2deriv)(1) - q.l(ErrorL2deriv)(0))
             if(is(Regressor, "UnivariateDistribution"))
                 b <- b*(abs(q.l(Regressor)(1)) + abs(q.l(Regressor)(0)))
@@ -80,7 +80,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
     function(ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm, 
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
             b <- max(abs(as.vector(A)))*max(q.l(ErrorL2deriv)(1),abs(q.l(ErrorL2deriv)(0)))
             if(is(Regressor, "UnivariateDistribution"))
                 b <- b*max(abs(q.l(Regressor)(1)), abs(q.l(Regressor)(0)))
@@ -100,7 +100,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
     function(ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm, 
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
             b <- max(abs(as.vector(A)))*max(q.l(ErrorL2deriv)(1),abs(q.l(ErrorL2deriv)(0)))
             if(is(Regressor, "UnivariateDistribution"))
                 b <- b*max(abs(q.l(Regressor)(1)), abs(q.l(Regressor)(0)))
@@ -115,7 +115,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
     function(ErrorL2deriv, Regressor, risk, neighbor, ErrorL2derivDistrSymm, 
              RegSymm, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
             b <- max(abs(as.vector(A)))*abs(q.l(ErrorL2deriv)(1) - q.l(ErrorL2deriv)(0))
             if(is(Regressor, "UnivariateDistribution"))
                 b <- b*(q.l(Regressor)(1) - q.l(Regressor)(0))
@@ -132,7 +132,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "RealRandVariable",
                                           neighbor = "ContNeighborhood"),
     function(ErrorL2deriv, Regressor, risk, neighbor, ErrorDistr, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
 
             if(is(ErrorDistr, "UnivariateDistribution")){
                 lower <- ifelse(is.finite(q.l(ErrorDistr)(0)), q.l(ErrorDistr)(1e-8), q.l(ErrorDistr)(0))
@@ -155,7 +155,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "RealRandVariable",
                                           neighbor = "Av1CondContNeighborhood"),
     function(ErrorL2deriv, Regressor, risk, neighbor, ErrorDistr, Finfo, trafo){
             info <- c("optimal IC in sense of Cramer-Rao bound")
-            A <- trafo %*% solve(Finfo)
+            A <- trafo %*% distr::solve(Finfo)
 
             if(is(ErrorDistr, "UnivariateDistribution")){
                 lower <- ifelse(is.finite(q.l(ErrorDistr)(0)), q.l(ErrorDistr)(1e-8), q.l(ErrorDistr)(0))

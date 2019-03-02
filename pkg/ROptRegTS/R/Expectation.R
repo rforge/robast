@@ -9,12 +9,12 @@ setMethod("E", signature(object = "L2RegTypeFamily",
                          fun = "EuclRandVariable", 
                          cond = "missing"),
     function(object, fun){
-        fct <- function(x, cond, f1){ f1(cbind(t(cond),x)) }
-        
+#        fct <- function(x, cond, f1){ f1(cbind(t(cond),x)) }
         res <- numeric(length(fun))
         for(i in 1:length(fun)){
+            fct <- function(x,cond) fun@Map[[i]](cbind(t(cond),x))
             res[i] <- E(object@RegDistr, .condE, D1 = object@distribution, 
-                        fct = fct, f1 = fun@Map[[i]])
+                        fct = fct)
         }
         
         return(res)

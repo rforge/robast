@@ -7,6 +7,15 @@
  to ease updating "depends" information)
 
 #######################################
+version 1.2
+#######################################
+
+under the hood
++ now specified that we want to use distr::solve
++ for compatibility with the new capsulation of E()-arguments, we removed additional 
+  functional arguments f1 from calls to E() and replaced them by the actual maps
+
+#######################################
 version 1.1
 #######################################
 

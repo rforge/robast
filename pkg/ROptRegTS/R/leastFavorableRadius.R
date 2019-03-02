@@ -122,7 +122,7 @@ setMethod("leastFavorableRadius", signature(L2Fam = "L2RegTypeFamily",
                     trafo <- L2Fam@param@trafo
                     if(identical(all.equal(loRad, 0), TRUE)){
                         loRad <- 0
-                        loRisk <- sum(diag(solve(L2Fam@FisherInfo)))
+                        loRisk <- sum(diag(distr::solve(L2Fam@FisherInfo)))
                     }else{
                         neighbor@radius <- loRad
                         resLo <- getInfRobRegTypeIC(ErrorL2deriv = ErrorL2deriv, 

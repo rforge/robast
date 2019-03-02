@@ -72,7 +72,7 @@ setMethod("getInfRobRegTypeIC", signature(ErrorL2deriv = "UnivariateDistribution
         A <- getInfStandRegTS(ErrorL2deriv = ErrorL2deriv, Regressor = Regressor,
                     neighbor = neighbor, z.comp = z.comp, clip = c0, cent = z, 
                     stand = A, trafo = trafo)
-        b <- c0*A*sqrt(sum(diag(solve(E(Regressor, fun = function(x){ x %*% t(x) })))))
+        b <- c0*A*sqrt(sum(diag(distr::solve(E(Regressor, fun = function(x){ x %*% t(x) })))))
         
         info <- paste("optimally robust IC for", sQuote(class(risk)[1]))
         Risk <- getAsRiskRegTS(risk = risk, ErrorL2deriv = ErrorL2deriv, 
