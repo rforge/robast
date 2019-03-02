@@ -23,12 +23,14 @@ exportClasses("InfluenceCurve",
               "IC", "HampIC",
               "ContIC", 
               "TotalVarIC")
-exportClasses("RobAStControl", "RobWeight", "BoundedWeight",
+exportClasses("RobAStControl", "RobWeight", "BoundedWeight", 
               "BdStWeight", "HampelWeight")
-exportClasses("ALEstimate", "kStepEstimate", "MEstimate")
+exportClasses("ALEstimate", "MCALEstimate", "kStepEstimate", "MEstimate",
+              "CvMMD.ALEstimate", "ML.ALEstimate"  )
 exportClasses("cutoff")
 exportClasses("interpolRisk", "OMSRRisk","MBRRisk","RMXRRisk")
-exportClasses("StartClass", "pICList", "OptionalpICList", "OptionalCall")
+exportClasses("StartClass", "pICList", "OptionalpICList", "OptionalCall",
+              "OptionalInfluenceCurveOrCall")
 exportMethods("show", 
               "plot")
 exportMethods("type", "radius", "radius<-")
@@ -73,7 +75,7 @@ exportMethods("moveL2Fam2RefParam",
 exportMethods("ddPlot", "qqplot", "returnlevelplot")
 exportMethods("cutoff.quantile", "cutoff.quantile<-")
 exportMethods("samplesize<-", "samplesize")
-exportMethods("getRiskFctBV", "getFiRisk")
+exportMethods("getRiskFctBV", "getFiRisk", "getPIC", "timings")
 export("oneStepEstimator", "kStepEstimator")
 export("ContNeighborhood", "TotalVarNeighborhood") 
 export("FixRobModel", "InfRobModel") 
@@ -87,3 +89,4 @@ export("getRiskFctBV")
 export(".rescalefct",".plotRescaledAxis",".makedotsP",".makedotsLowLevel",".SelectOrderData")
 export(".merge.lists")
 export("InfoPlot", "ComparePlot", "PlotIC")
+export(".fixInLiesInSupport", ".filterEargsWEargList")

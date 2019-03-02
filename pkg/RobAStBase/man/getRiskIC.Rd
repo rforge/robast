@@ -20,21 +20,29 @@
 \usage{
 getRiskIC(IC, risk, neighbor, L2Fam, ...)
 
-\S4method{getRiskIC}{IC,asCov,missing,missing}(IC, risk, tol = .Machine$double.eps^0.25, withCheck = TRUE)
+\S4method{getRiskIC}{IC,asCov,missing,missing}(IC, risk,
+    tol = .Machine$double.eps^0.25, withCheck = TRUE, ...)
 
-\S4method{getRiskIC}{IC,asCov,missing,L2ParamFamily}(IC, risk, L2Fam, tol = .Machine$double.eps^0.25, withCheck = TRUE)
+\S4method{getRiskIC}{IC,asCov,missing,L2ParamFamily}(IC, risk, L2Fam,
+    tol = .Machine$double.eps^0.25, withCheck = TRUE, ..., diagnostic = FALSE)
 
-\S4method{getRiskIC}{IC,trAsCov,missing,missing}(IC, risk, tol = .Machine$double.eps^0.25, withCheck = TRUE)
+\S4method{getRiskIC}{IC,trAsCov,missing,missing}(IC, risk,
+    tol = .Machine$double.eps^0.25, withCheck = TRUE, ...)
 
-\S4method{getRiskIC}{IC,trAsCov,missing,L2ParamFamily}(IC, risk, L2Fam, tol = .Machine$double.eps^0.25, withCheck = TRUE)
+\S4method{getRiskIC}{IC,trAsCov,missing,L2ParamFamily}(IC, risk, L2Fam,
+    tol = .Machine$double.eps^0.25, withCheck = TRUE, ...)
 
-\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,missing}(IC, risk, neighbor, tol = .Machine$double.eps^0.25, withCheck = TRUE)
+\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,missing}(IC, risk, neighbor,
+    tol = .Machine$double.eps^0.25, withCheck = TRUE, ...)
 
-\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25, withCheck = TRUE)
+\S4method{getRiskIC}{IC,asBias,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam,
+    tol = .Machine$double.eps^0.25, withCheck = TRUE, ...)
 
-\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,missing}(IC, risk, neighbor,  tol = .Machine$double.eps^0.25, withCheck = TRUE)
+\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,missing}(IC, risk, neighbor,
+    tol = .Machine$double.eps^0.25, withCheck = TRUE, ...)
 
-\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam, tol = .Machine$double.eps^0.25, withCheck = TRUE)
+\S4method{getRiskIC}{IC,asMSE,UncondNeighborhood,L2ParamFamily}(IC, risk, neighbor, L2Fam,
+    tol = .Machine$double.eps^0.25, withCheck = TRUE, ...)
 
 \S4method{getRiskIC}{TotalVarIC,asUnOvShoot,UncondNeighborhood,missing}(IC, risk, neighbor)
 
@@ -47,13 +55,16 @@ getRiskIC(IC, risk, neighbor, L2Fam, ...)
   \item{risk}{ object of class \code{"RiskType"}. }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
   \item{L2Fam}{ object of class \code{"L2ParamFamily"}. }
-  \item{\dots}{ additional parameters }
+  \item{\dots}{ additional parameters (e.g. to be passed to \code{E}). }
   \item{tol}{ the desired accuracy (convergence tolerance).}  
   \item{sampleSize}{ integer: sample size. }
   \item{Algo}{ "A" or "B". }
   \item{cont}{ "left" or "right". }
   \item{withCheck}{logical: should a call to \code{checkIC} be done to
                    check accuracy (defaults to \code{TRUE}).}
+  \item{diagnostic}{ logical; if \code{TRUE}, the return value obtains
+    an attribute \code{"diagnostic"} with diagnostic information on the
+    integration. }
 }
 \details{To make sure that the results are valid, it is recommended
   to include an additional check of the IC properties of \code{IC} 

@@ -8,6 +8,24 @@
  information)
 
 #######################################
+version 1.2
+#######################################
+
+user-visible CHANGES:
++ require more recent distr/distrEx versions
++ E methods for RandVariables gain argument diagnostic
+  (like E()-methods in distrEx v 2.8.0)
+
+under the hood:
++ for consistency to the univariate methods, the liesInSupport() method for
+  DiscreteMVDistribution is called with an extra argument checkFin, 
+  which is not yet used.
++ E methods for RandVariables use filtering of dots arguments
+  (like E()-methods in distrEx v 2.8.0)
++ E methods for RandVariables if (diagnostic==TRUE) return diagnostic attributes 
+  of S3 class  "DiagnosticClass"
+
+#######################################
 version 1.1
 #######################################
 

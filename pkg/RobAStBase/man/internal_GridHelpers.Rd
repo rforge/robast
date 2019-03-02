@@ -16,7 +16,7 @@ These functions are internally used helper functions for \code{\link{plot}},
                                 x.ticks, scaleX, scaleX.fct,
                                 y.ticks, scaleY, scaleY.fct)
 .producePanelFirstSn(panelFirst, x.ticks, scaleX, scaleX.fct,
-                                y.ticks, scaleY, scaleY.fct)
+                                y.ticks, scaleY, scaleY.fct, logArg)
 }
 \arguments{
   \item{L2Fam}{the model at which the plot is produced (of class \code{L2ParamFamily}).}
@@ -46,6 +46,7 @@ These functions are internally used helper functions for \code{\link{plot}},
   \item{IC}{object of class \code{"InfluenceCurve"} }
   \item{isInfoPlot}{logical; is this function to be used in \code{infoPlot} or
                     (\code{TRUE}) in another plot (\code{FALSE})? }
+  \item{logArg}{a character with \code{log}-arguments for  \code{plot}. }
 }
 \details{
 \code{.getDimsTD} computes the number of panels to be plotted.

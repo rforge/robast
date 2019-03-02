@@ -170,3 +170,4 @@ setReplaceMethod("CallL2Fam", "TotalVarIC",
         addInfo(object) <- c("CallL2Fam<-", "The entries in 'Risks' and 'Infos' may be wrong")
         object
     })
+## comment 20180809: reverted changes in rev 1110

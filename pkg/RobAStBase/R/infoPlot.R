@@ -183,6 +183,8 @@ setMethod("infoPlot", "IC",
              legend <- vector("list",dims1)
              legend <- .fillList(list(as.list(c("class. opt. IC", objectc))),
                                                  dims1)
+          }else{
+             if(!is.list(legend)) legend <- .fillList(legend,dims1)
           }
         }
 
@@ -207,7 +209,7 @@ setMethod("infoPlot", "IC",
             QFc <- diag(dimsA)
             if(is(object,"ContIC") & dimsA>1 )
                {if (is(normtype(object),"QFNorm")) QFc <- QuadForm(normtype(object))
-                QFc0 <- solve( trafo %*% solve(L2Fam@FisherInfo) %*% t(trafo ))
+                QFc0 <- distr::solve( trafo %*% distr::solve(L2Fam@FisherInfo) %*% t(trafo ))
                 if (is(normtype(object),"SelfNorm")|is(normtype(object),"InfoNorm")) 
                     QFc <- QFc0
                }
@@ -223,7 +225,7 @@ setMethod("infoPlot", "IC",
 
             QFc.5 <- sqrt(PosSemDefSymmMatrix(QFc))
 
-            classIC <- as(trafo %*% solve(L2Fam@FisherInfo) %*% L2Fam@L2deriv, "EuclRandVariable")
+            classIC <- as(trafo %*% distr::solve(L2Fam@FisherInfo) %*% L2Fam@L2deriv, "EuclRandVariable")
             absInfoClass.f <- t(classIC) %*% QFc %*% classIC
 #            absInfoClass <- absInfoEval(x.vec, absInfoClass.f)
 
@@ -419,7 +421,7 @@ setMethod("infoPlot", "IC",
                colC.pts <- col.pts[,2]
                col.pts <- col.pts[,1]
 
-               if(missing(col.npts)) col.pts <- c(col, colI)
+               if(missing(col.npts)) col.npts <- c(col, colI)
                if(!is.matrix(col.npts))
                   col.npts <- t(matrix(rep(col.npts, length.out= 2*n.ns),2,n.ns))
                colC.npts <- col.npts[,2]
@@ -772,10 +774,11 @@ setMethod("infoPlot", "IC",
                plotInfo <- get("plotInfo", envir = trEnv)
                plotInfo$absPlotUsr <- par("usr")
 
+               if(!is.null(dotsL$lwd)) dotsL$lwd <- NULL
                do.call(lines, args=c(list(resc$X, resc$Y, type = plty,
-                       lty = lty, lwd = lwd, col = col), dotsL))
+                       lty = lty, col = col, lwd = lwd), dotsL))
                plotInfo$absPlotCArgs <- c(list(resc$X, resc$Y, type = plty,
-                       lty = lty, lwd = lwd, col = col), dotsL)
+                       lty = lty, col = col, lwd = lwd), dotsL)
 
                x.ticks0 <- if(xaxt0[1]!="n") x.ticks[[1]] else NULL
                y.ticks0 <- if(yaxt0[1]!="n") y.ticks[[1]] else NULL
@@ -898,6 +901,7 @@ setMethod("infoPlot", "IC",
                     plotInfo <- get("plotInfo", envir = trEnv)
                     plotInfo$relPlotUsr[[i]] <- par("usr")
 
+                    if(!is.null(dotsL$lwd)) dotsL$lwd <- NULL
                     plotInfo$relPlotCArgs[[i]] <- c(list(resc.C$X, resc.C$Y, type = plty,
                             lty = ltyI, col = colI, lwd = lwdI), dotsL)
                     do.call(lines, args = c(list(resc.C$X, resc.C$Y, type = plty,

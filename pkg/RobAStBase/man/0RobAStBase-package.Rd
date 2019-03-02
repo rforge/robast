@@ -11,8 +11,8 @@ Base S4-classes and functions for robust asymptotic statistics.
 \details{
 \tabular{ll}{
 Package: \tab RobAStBase \cr
-Version: \tab 1.1.0 \cr
-Date: \tab 2018-08-01 \cr
+Version: \tab 1.2.0 \cr
+Date: \tab 2019-03-01 \cr
 Depends: \tab R(>= 2.14.0), methods, rrcov, distr(>= 2.5.2), distrEx(>= 2.5),
         distrMod(>= 2.5.2), RandVar(>= 0.9.2)\cr
 Suggests: \tab ROptEst, RUnit (>= 0.4.26)\cr
@@ -21,7 +21,7 @@ ByteCompile: \tab yes \cr
 Encoding: \tab  latin1 \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-VCS/SVNRevision: \tab 1081 \cr
+VCS/SVNRevision: \tab 1178 \cr
 }
 }
 \author{

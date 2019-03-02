@@ -8,6 +8,101 @@
  information)
 
 #######################################
+version 1.2
+#######################################
+
+user-visible CHANGES:
++ slot function modifyIC of the different IC classes gains
+  an argument withMakeIC to be able to adjust this to a
+  higher granularity
++ updated required package versions in DESCRIPTION  
++ kStepEstimator and oneStepEstimator gain argument E.argList
+  which is NULL (default) or a named list of arguments to be passed
+  to calls to \code{E} from kStepEstimator; potential clashes with
+  arguments of the same name in "..." are resolved by inserting
+  the items of list E.argList as named items to the argument
+  lists, so in case of collisions the item of E.argList overwrites 
+  the existing one from "..."  
++ particular checkIC methods are now documented in documentation 
+  object checkIC (and no longer with class IC); there argument out
+  is documented
++ kStepEstimator, getboundedIC, getRiskIC for signature (IC, asCov, missing, L2ParamFamily),
+  checkIC and makeIC gain argument diagnostic to be able to show diagnostic 
+  information on integrations; this information (if argument "diagnostic" is TRUE)
+  is stored in attribute "diagnostic" of the return value
++ accessor "timings" to attribute "timings" of an object of class "kStepEstimate"
+  
+bugfixes  
++ and a forgotten no longer used instance of oldmodif in kStepEstimator
++  set.seed(123)
+   xn1 <- rnbinom(100,size=25,prob=0.2)
+   N1.w <- NbinomwithSizeFamily(size = 25, prob = 0.25)
+   print(CvMMDEstimator(xn1,N1.w,.withEvalAsVar=FALSE))
+
+under the hood
++ new S4 (estimator) class "MCALEstimate" containing both 
+  "MCEstimate" and "ALEstimate" to make accessible pIC-methods
+  to CvMMDEstimators...
++ some unnecessary coercions (with informatino loss) in show methods
++ new .checkEstClassForParamFamily method to force (expost)
+      casting to MCALEstimate (with pIC) 
+	  {[with subclasses ML.ALEstimate, CvMMD.ALEstimate]}
++ to speed up things slot pIC is filled with a promise only 
+  which is only forced when called through accessor pIC 
+  (and then the slot is filled with the actual pIC)
++ technically this is realized by a slot pIC of 
+  class OptionalInfluenceCurveOrCall  
++ internal function .getPIC is the workhorse: it takes the 
+  estimator evaluates its argument ParamFamily from slot estimate.call
+  and moves it to the parameter value which was estimated;
+  at this parameter value, the IC is constructed 
++ extended accuracy in NbinomFamily 
++ new internal helper method getPIC to get hand on the pIC 
+  --> for MLE it computes it by optIC  
+  --> for CvMMDEstimators -- it uses the name of the estimator; 
+  more specifically it relies on tag
+  * "( mu = emp. cdf )" => this uses .CvMMDCovarianceWithMux
+  * "( mu = model distr. )" => this uses .CvMMDCovariance with no argument mu
+  * "( mu = <muname> )" => this uses .CvMMDCovariance with argument mu
+  to get the pIC  
++ only MLEs and CvMMDEs (of class MCEstimate) are automatically cast to ALEstimate 
+   / surrogate classes ML.ALEstimate / CvMMD.ALEstimate 
+  i.e., the ".checkEstClassForParamFamily" for MCEstimate is removed 
+  / set to trivial identity 
++ force optimal ICs to respect the support of the model distribution
+  careful testing gave: during evaluation of kStepEstimator it is
+  prohibitive to put line liesInSupport in each of the coordinate functions
+  as this blows up the integration time for covariances; 
+  instead, we use helper .fixInLiesInSupport in file generateICfct.R
+  which after computation of variances inserts this in the Maps of the IC
++ for time checking use file TimingChecks.R (with the preparation that 
+  the lines commented out by ##-t-## in kStepEstimator.R have to be activated;
+  this uses helper function .addTime to produce a matrix with detailed timing
+  information which can be read out as argument ) 
++ for time checking in kStepEstimator, the preliminary solution with timings 
+  to be commented (special comments ##-t-##) in and out has been replaced by 
+  permanent calls to proc.time(); this way we avoid creating new environments 
+  (which is time-consuming!) through functions calls to system.time.
+  helper function .addTime has been adapted accordingly 
++ now specified that we want to use distr::solve
++ now generateIC.fct produces vectorized functions (can now use useApply=FALSE in E()) 
++ checkIC and makeIC now both use helper function .preparedirectCheckMakeIC
+  which allows for extra arguments for E() and integrates coordinate wise with
+  useApply = FALSE to gain speed (code has moved from file IC.R to file CheckMakeIC.R)
++ several methods (getRiskIC, getBiasIC, getBoundedIC, makeIC, checkIC, modifyIC) 
+  gain argument "..." to pass on arguments to E()
++ .filterEargs from distrEx is used to  filter out arguments from dots which are 
+  meant for E(); this is extended in RobAStBase::.filterEargsWEargList(): 
+  .filterEargsWEargList() also checks if an argument "E.argList" is hidden 
+  in "..." and if so, filters in its entries (and in case of collision 
+  overwrites existing entries).
++ getboundedIC now uses coordinate-wise integration with useApply = FALSE and 
+  only computing the upper half of E LL'w 
++ kStepEstimator, checkIC/makeIC, getRiskIC (for signature (IC, asCov, missing, L2ParamFamily)) 
+  and getboundedIC now if (diagnostic==TRUE) return diagnostic attributes of S3 class 
+  "DiagnosticClass"
+  
+#######################################
 version 1.1
 #######################################
 
@@ -38,6 +133,12 @@ user-visible CHANGES:
 + getRiskIC and getBiasIC gain argument withCheck to speed up things if one does not want to call checkIC 
 + in kStepEstimator, withCheck is set to FALSE when getRiskIC is called, and makeIC is only called just 
   before the last update, and, if useLast == TRUE for the last update (of course, only if withMakeIC ==TRUE)
+  
+Return value of "roptest"
++ the return value of "roptest", an object of class "kStepEstimate" has a slot "estimate.call" which
+  contains the (matched) call to "roptest"; internally "roptest" calls "robest"; the call to "robest"
+  may be of interest, too, so we have a new slot "robestCall" of class "OptionalCall", ie a call  
+  or NULL (default); it can be accessed via function robestCall() 
 
 Return value of "roptest"
 + the return value of "roptest", an object of class "kStepEstimate" has a slot "estimate.call" which

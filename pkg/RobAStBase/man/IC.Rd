@@ -20,13 +20,15 @@ IC(name, Curve = EuclRandVarList(RealRandVariable(Map = list(function(x){x}),
       list of risks; cf. \code{\link[distrMod]{RiskType-class}}. }
   \item{Infos}{ matrix of characters with two columns 
     named \code{method} and \code{message}: additional informations. }
-  \item{modifyIC}{ Object of class \code{"OptionalFunction"}:
-    function of two arguments, which are an L2 parametric family 
-    and an optional influence curve. Returns an object of 
-    class \code{"IC"} at the parameter value of the L2 parametric
-    family. This function is mainly used for internal
+  \item{modifyIC}{ object of class \code{"OptionalFunction"}:
+    function of four arguments: (1) \code{L2Fam} an L2 parametric family
+    (2) \code{IC} an optional influence curve, (3) \code{withMakeIC}
+    a logical argument whether to enforce the IC side conditions
+    by \code{makeIC}, and (4) \code{\dots} for arguments to be passed to
+    calls to \code{E} in \code{makeIC}. Returns an object of
+    class \code{"IC"}. This function is mainly used for internal
     computations! }
-}
+    }
 %\details{}
 \value{Object of class \code{"IC"}}
 \references{

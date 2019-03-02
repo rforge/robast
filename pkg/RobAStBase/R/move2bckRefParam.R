@@ -109,6 +109,6 @@ setMethod("moveICBackFromRefParam", signature(IC = "IC",
 setMethod("moveICBackFromRefParam", signature(IC = "HampIC",
            L2Fam = "L2ParamFamily"), function(IC, L2Fam, ...){
               IC <- moveICBackFromRefParam(as(IC,"IC"), L2Fam,...)
-              IC@modifyIC(L2Fam, IC)
+              IC@modifyIC(L2Fam, IC, withMakeIC = FALSE, ...)
               return(IC)})
 

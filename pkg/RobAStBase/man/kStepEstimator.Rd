@@ -14,7 +14,7 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
       withPICList = getRobAStBaseOption("withPICList"),
       na.rm = TRUE, startArgList = NULL, ...,
       withLogScale = TRUE, withEvalAsVar = TRUE,
-      withMakeIC = FALSE)
+      withMakeIC = FALSE, E.argList = NULL, diagnostic = FALSE)
 }
 \arguments{
   \item{x}{ sample }
@@ -42,7 +42,7 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
   be filled?}
   \item{withICList}{logical: shall slot \code{ICList} of return value
   be filled?}
-  \item{...}{ additional parameters }
+  \item{\dots}{ additional parameters }
   \item{withLogScale}{logical; if \code{TRUE}, a scale component (if existing
    and found with name \code{scalename}) is computed on log-scale and
    backtransformed afterwards (default). This avoids crossing 0. }
@@ -50,6 +50,16 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
    the asymptotic variance or just to produces a call to do so.}
   \item{withMakeIC}{logical; if \code{TRUE} the [p]IC is passed through
         \code{makeIC} before return.}
+  \item{E.argList}{\code{NULL} (default) or a named list of arguments to be passed
+        to calls to \code{E} from \code{kStepEstimator}; potential clashes with
+        arguments of the same name in \code{\dots} are resolved by inserting
+        the items of argument list \code{E.argList} as named items to the argument
+        lists, so in case of collisions the item of \code{E.argList} overwrites the
+        existing one from \code{\dots}.}
+  \item{diagnostic}{ logical; if \code{TRUE},
+    diagnostic information on the performed integrations is gathered and
+    shipped out as an attribute \code{diagnostic} of the return value
+    of \code{kStepEstimator}. }
 }
 \details{
   Given an initial estimation \code{start}, a sample \code{x} 
@@ -73,6 +83,16 @@ kStepEstimator(x, IC, start = NULL, steps = 1L,
   used to re-compute the IC for a different parameter), the 
   computation of \code{asvar}, \code{asbias} and \code{IC} is 
   based on the k-step estimate.
+
+  Timings for the several substeps are available as attribute
+  \code{timings} of the return value.
+
+  Diagnostics on the involved integrations are available if argument
+  \code{diagnostic} is \code{TRUE}. Then there is attribute \code{diagnostic}
+  attached to the return value, which may be inspected
+  and accessed through \code{\link[distrEx:distrExIntegrate]{showDiagnostic}} and
+  \code{\link[distrEx:distrExIntegrate]{getDiagnostic}}.
+
 }
 \value{Object of class \code{"kStepEstimate"}.}
 
@@ -106,6 +126,7 @@ estimate(est1)
 ksteps(est1)
 pICList(est1)
 start(est1)
+attr(est1,"timings")
 
 ## a transformed model
 tfct <- function(x){

@@ -110,7 +110,7 @@ setReplaceMethod("cent", "ContIC",
         stopifnot(is.numeric(value))
         L2Fam <- eval(object@CallL2Fam)
         w <- object@weight
-        cent(w) <- as.vector(solve(object@stand) %*% value)
+        cent(w) <- as.vector(distr::solve(object@stand) %*% value)
         weight(w) <- getweight(w, neighbor = ContNeighborhood(radius = object@neighborRadius), 
                                biastype = object@biastype, 
                                normW = object@normtype)
@@ -170,3 +170,4 @@ setReplaceMethod("CallL2Fam", "ContIC",
         addInfo(object) <- c("CallL2Fam<-", "The entries in 'Risks' and 'Infos' may be wrong")
         object
     })
+## comment 20180809: reverted changes in rev 1110

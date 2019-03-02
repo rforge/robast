@@ -24,6 +24,28 @@
 
 setMethod("neighborRadius","ANY",function(object)NA)
 
+.addTime <- function(timold,namenew){
+   tim <- rbind(timold,proc.time())
+   rownames(tim) <- c(rownames(timold),namenew)
+   return(tim)
+}
+
+.ensureDim2 <- function(x){
+    d <- dim(x)
+    if(length(d)==3L && d[3]==1L) dim(x) <- d[1:2]
+    if(length(d)==4L && d[2]==1L && d[4] == 1L) dim(x) <- d[c(1,3)]
+    x }
+
+### taken from: base::system.time ::
+ppt <- function(y) {
+        if (!is.na(y[4L]))
+            y[1L] <- y[1L] + y[4L]
+        if (!is.na(y[5L]))
+            y[2L] <- y[2L] + y[5L]
+        paste(formatC(y[1L:3L]), collapse = " ")
+}
+
+
 ### no dispatch on top layer -> keep product structure of dependence
 kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                            useLast = getRobAStBaseOption("kStepUseLast"),
@@ -33,15 +55,28 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                            withPICList = getRobAStBaseOption("withPICList"),
                            na.rm = TRUE, startArgList = NULL, ...,
                            withLogScale = TRUE, withEvalAsVar = TRUE,
-                           withMakeIC = FALSE){
+                           withMakeIC = FALSE, E.argList = NULL,
+                           diagnostic = FALSE){
 
-        if(missing(IC.UpdateInKer)) IC.UpdateInKer <- NULL
+        time <- proc.time()
+        on.exit(message("Timing stopped at: ", ppt(proc.time() - time)))
 ## save call
         es.call <- match.call()
         es.call[[1]] <- as.name("kStepEstimator")
 
+        if(is.null(E.argList)) E.argList <- list()
+        if(is.null(E.argList$useApply)) E.argList$useApply <- FALSE
+        diagn <- NULL
+        if(diagnostic){
+           E.argList$diagnostic <- TRUE
+           diagn <- list()
+        }
+        if(missing(IC.UpdateInKer)) IC.UpdateInKer <- NULL
+
 ## get some dimensions
         L2Fam <- eval(CallL2Fam(IC))
+        sytm <- rbind(time,"eval(CallL2Fam(IC))"=proc.time())
+        colnames(sytm) <- names(time)
         Param <- param(L2Fam)
 
         tf <- trafo(L2Fam,Param)
@@ -91,11 +126,17 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 
 ### use dispatch here  (dispatch only on start)
         #a.var <- if( is(start, "Estimate")) asvar(start) else NULL
-        IC.UpdateInKer.0 <- if(is(start,"ALEstimate")) start@pIC else NULL
+
+        IC.UpdateInKer.0 <- if(is(start,"ALEstimate")) pIC(start) else NULL
+        sytm <- .addTime(sytm,"pIC(start)")
+        ## pIC(start) instead of start@pIC to potentially eval a call
+
         force(startArgList)
+
         start.val <- kStepEstimator.start(start, x=x0, nrvalues = k,
                          na.rm = na.rm, L2Fam = L2Fam,
                          startList = startArgList)
+        sytm <- .addTime(sytm,"kStepEstimator.start")
 
 ### use Logtransform here in scale models
         sclname <- ""
@@ -103,6 +144,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         logtrf <- is(L2Fam, "L2ScaleUnion") &
                      withLogScale & sclname %in% names(start.val)
 ### a starting value in k-space
+#        print(start.val)
         u.theta <- start.val
         theta <- if(is(start.val,"Estimate")) estimate(start.val)
                  else trafoF(u.theta[idx])$fval
@@ -122,20 +164,33 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         ICList  <- if(withICList)  vector("list", steps) else NULL
 
         cvar.fct <- function(L2, IC, dim, dimn =NULL){
-                if(is.null(dimn)){
-                   return(matrix(E(L2, IC %*% t(IC)),dim,dim))
-                }else{
-                   return(matrix(E(L2, IC %*% t(IC)),dim,dim, dimnames = dimn))
+                Eres <- matrix(NA,dim,dim)
+                if(!is.null(dimn)) dimnames(Eres) <- dimn
+                ICM <- as(diag(k)%*%IC, "EuclRandVariable")@Map
+                for(i in 1: dim)
+                      Eres[i,i] <- E(L2@distribution,
+                           fun = function(x) ICM[[i]](x)^2,
+                           useApply = FALSE)
+                if(dim>1){
+                  for(i in 1: (dim-1)){
+                    for(j in (i+1): dim)
+                        Eres[j,i] <- Eres[i,j] <- E(L2@distribution,
+                           fun = function(x) ICM[[i]](x)*ICM[[j]](x),
+                           useApply = FALSE)
+                  }
                 }
-        }
+                return(Eres)}
 
+
+        updStp <- 0
         ### update - function
         updateStep <- function(u.theta, theta, IC, L2Fam, Param,
                                withPreModif = FALSE,
                                withPostModif = TRUE, with.u.var = FALSE,
-                               oldmodifIC = NULL
+                               withEvalAsVar.0 = FALSE
                                ){
 
+                updStp <<- updStp + 1
                 if(withPreModif){
                    main(Param)[] <- .deleteDim(u.theta[idx])
 #                   print(Param)
@@ -144,16 +199,27 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 #                   print(L2Fam)
                    L2Fam <- modifyModel(L2Fam, Param,
                                .withL2derivDistr = L2Fam@.withEvalL2derivDistr)
-#                   print(L2Fam)
-                   IC <- modifyIC(IC)(L2Fam, IC)
-                   if(steps==1L &&withMakeIC){
-                      IC <- makeIC(IC, L2Fam)
-                      IC@modifyIC <- oldmodifIC
+                   mmPreNm <- paste("modifyModel-PreModif-",updStp)
+                   sytm <<- .addTime(sytm,mmPreNm)
+                   if(diagnostic) diagn[[mmPreNm]] <<- attr(L2Fam,"diagnostic")
+# print(L2Fam)
+
+                   modifyICargs <- c(list(L2Fam, IC, withMakeIC = FALSE), E.argList)
+                   IC <- do.call(modifyIC(IC),modifyICargs)
+                   mmPreICNm <- paste("modifyIC-PreModif-",updStp)
+                   sytm <<- .addTime(sytm,mmPreICNm)
+                   if(diagnostic) diagn[[mmPreICNm]] <<- attr(IC,"diagnostic")
+                   if(steps==1L && withMakeIC){
+                      makeICargs <- list(IC, L2Fam, diagnostic=diagnostic, E.argList=E.argList)
+                      IC <- do.call(makeIC, makeICargs)
+                      mmPreMkICNm <- paste("modifyIC-makeIC-",updStp)
+                      sytm <<- .addTime(sytm,mmPreMkICNm)
+                      if(diagnostic) diagn[[mmPreMkICNm]] <<- attr(IC,"diagnostic")
                     }
- #                  print(IC)
                 }
 
                 IC.c <- as(diag(p) %*% IC@Curve, "EuclRandVariable")
+                sytm <<- .addTime(sytm,paste("IC.c <- as(diag(p) %*%-",updStp))
 
 #                print(theta)
                 tf <- trafo(L2Fam, Param)
@@ -161,29 +227,48 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                 IC.tot.0 <- NULL
 #                print(Dtau)
                 if(!.isUnitMatrix(Dtau)){
- #                    print("HU1!")
-                     Dminus <- solve(Dtau, generalized = TRUE)
+                     Dminus <- distr::solve(Dtau, generalized = TRUE)
                      projker <- diag(k) - Dminus %*% Dtau
 
                      IC.tot1 <- Dminus %*% IC.c
-                     IC.tot2 <- 0 * IC.tot1
+#                     IC.tot2 <- 0 * IC.tot1
+                     IC.tot2.isnull <- TRUE
 
                      if(sum(diag(projker))>0.5 && ### is EM-D^-D != 0 (i.e. rk D<p)
                         withUpdateInKer){
                             if(!is.null(IC.UpdateInKer)&&!is(IC.UpdateInKer,"IC"))
                                warning("'IC.UpdateInKer' is not of class 'IC'; we use default instead.")
-                            IC.tot2 <- if(is.null(IC.UpdateInKer))
-                                 getBoundedIC(L2Fam, D = projker) else
-                                 as(projker %*% IC.UpdateInKer@Curve,
-                                    "EuclRandVariable")
+                            if(is.null(IC.UpdateInKer)){
+                                 getBoundedICargs <- list(L2Fam, D = projker, diagnostic=diagnostic,E.argList=E.argList)
+                                 IC.tot2 <- do.call(getBoundedIC, getBoundedICargs)
+                                 mmgtBDICNm <- paste("getBoundedIC-",updStp)
+                                 sytm <<- .addTime(sytm,mmgtBDICNm)
+                                 if(diagnostic) diagn[[mmgtBDICNm]] <<- attr(IC.tot2,"diagnostic")
+                            }else{
+                                 IC.tot2 <- as(projker %*% IC.UpdateInKer@Curve, "EuclRandVariable")
+                                 mmgtAsPrICNm <- paste("IC.tot2<-as(projker...-",updStp)
+                                 sytm <<- .addTime(sytm,mmgtAsPrICNm)
+                                 if(diagnostic) diagn[[mmgtAsPrICNm]] <<- attr(IC.tot2,"diagnostic")
+                            }
+                            IC.tot2.isnull <- FALSE
                             IC.tot.0 <- IC.tot1 + IC.tot2
-                     }else{
-                            IC.tot.0 <- if(!is.null(IC.UpdateInKer.0))
-                              IC.tot1 + as(projker %*% IC.UpdateInKer.0@Curve,
-                                    "EuclRandVariable") else NULL
+                     }else{ if(is.null(IC.UpdateInKer.0)){
+                               IC.tot.0 <- NULL
+                            }else{
+                                if(is.call(IC.UpdateInKer.0))
+                                   IC.UpdateInKer.0 <- eval(IC.UpdateInKer.0)
+                                sytm <<- .addTime(sytm,paste("eval(IC.UpdateInKer.0)-",updStp))
+                                IC.tot.0 <- IC.tot1 + as(projker %*%
+                                         IC.UpdateInKer.0@Curve,
+                                                "EuclRandVariable")
+                                sytm <<- .addTime(sytm,paste("IC.tot.0 <- IC.tot1 + as(proj-",updStp))
+                            }
                      }
-                     IC.tot <- IC.tot1 + IC.tot2
-                     correct <- rowMeans(evalRandVar(IC.tot, x0), na.rm = na.rm)
+                     IC.tot <- IC.tot1
+                     if(!IC.tot2.isnull) IC.tot <- IC.tot1 + IC.tot2
+                     indS <- liesInSupport(distribution(L2Fam),x0,checkFin=TRUE)
+                     correct <- rowMeans(t(t(.ensureDim2(evalRandVar(IC.tot, x0)))*indS), na.rm = na.rm)
+                     sytm <<- .addTime(sytm,paste("Dtau-not-Unit:correct <- rowMeans-",updStp))
                      iM <- is.matrix(u.theta)
                      names(correct) <- if(iM) rownames(u.theta) else names(u.theta)
                      if(logtrf){
@@ -195,8 +280,9 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 
                      theta <- (tf$fct(u.theta[idx]))$fval
                 }else{
-#                     print("HU2!")
-                     correct <- rowMeans(evalRandVar(IC.c, x0), na.rm = na.rm )
+                     indS <- liesInSupport(distribution(L2Fam),x0,checkFin=TRUE)
+                     correct <- rowMeans(t(t(.ensureDim2(evalRandVar(IC.c, x0)))*indS), na.rm = na.rm)
+                     sytm <<- .addTime(sytm,paste("Dtau=Unit:correct <- rowMeans-",updStp))
                      iM <- is.matrix(theta)
 #                     print(sclname)
 #                     print(names(theta))
@@ -213,7 +299,6 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                      IC.tot <- IC.c
                      u.theta <- theta
                 }
-#                print("HU3!")
 
                 var0 <- u.var <- NULL
                 if(with.u.var){
@@ -223,31 +308,48 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                                    dim0, dimn0)), list(cfct = cvar.fct,
                                    L2F0 = L2Fam, IC0 = IC.tot.0, dim0 = k,
                                    dimn0 = list(cnms,cnms)))
-                      if(withEvalAsVar) u.var <- eval(u.var)
-                     #         matrix(E(L2Fam, IC.tot.0 %*% t(IC.tot.0)),
-                     #             k,k, dimnames = list(cnms,cnms))
+                      sytm <<- .addTime(sytm,paste("u.var-",updStp))
+                      if(withEvalAsVar.0){
+                         u.var <- eval(u.var)
+                         uvEvnm <- paste("u.var-eval-",updStp)
+                         sytm <<- .addTime(sytm,uvEvnm)
+                         if(diagnostic) diagn[[uvEvnm]] <<- attr(u.var,"diagnostic")
+                      }
                    }
                    if(!var.to.be.c){
                       var0 <- substitute(do.call(cfct, args = list(L2F0, IC0,
                                    dim0, dimn0)), list(cfct = cvar.fct,
                                    L2F0 = L2Fam, IC0 = IC.c, dim0 = p))
-                      if(withEvalAsVar) var0 <- eval(var0)
+                      sytm <<- .addTime(sytm,paste("var0-",updStp))
+                      if(withEvalAsVar.0) {
+                         var0 <- eval(var0)
+                         vEvnm <- paste("var0-eval-",updStp)
+                         sytm <<- .addTime(sytm,paste("var0-eval-",updStp))
+                         if(diagnostic) diagn[[vEvnm]] <<- attr(var0,"diagnostic")
+                      }
                    }
                 }
                 if(withPostModif){
                    main(Param)[] <- .deleteDim(u.theta[idx])
                    if (lnx) nuisance(Param)[] <- .deleteDim(u.theta[nuis.idx])
-#                   print(L2Fam)
                    L2Fam <- modifyModel(L2Fam, Param,
                                .withL2derivDistr = L2Fam@.withEvalL2derivDistr)
-#                   print(L2Fam)
-                   IC <- modifyIC(IC)(L2Fam, IC)
-#                   print(IC)
+                   mmPostNm <- paste("modifyModel-PostModif-",updStp)
+                   sytm <<- .addTime(sytm,mmPostNm)
+                   if(diagnostic) diagn[[mmPostNm]] <<- attr(L2Fam,"diagnostic")
+
+                   modifyICargs <- c(list(L2Fam, IC, withMakeIC = withMakeIC), E.argList)
+                   IC <- do.call(modifyIC(IC),modifyICargs)
+                   mmPostICNm <- paste("modifyIC-PostModif-",updStp)
+                   sytm <<- .addTime(sytm,mmPostICNm)
+                   if(diagnostic) diagn[[mmPostICNm]] <<- attr(IC,"diagnostic")
                 }
 
-                return(list(IC = IC, Param = Param, L2Fam = L2Fam,
+                li <- list(IC = IC, Param = Param, L2Fam = L2Fam,
                             theta = theta, u.theta = u.theta, u.var = u.var,
-                            var = var0, IC.tot = IC.tot, IC.c = IC))
+                            var = var0, IC.tot = IC.tot, IC.c = IC)
+                sytm <<- .addTime(sytm,paste("li <- list(IC = IC,...-",updStp))
+                return(li)
         }
 
         Infos <- matrix(c("kStepEstimator",
@@ -258,23 +360,23 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
 
         ### iteration
 
-#        print(IC@Risks$asCov)
-#        print(Risks(IC)$asCov)
-
         ksteps  <- matrix(0,ncol=steps, nrow = p)
         uksteps <- matrix(0,ncol=steps, nrow = k)
         rownames(ksteps) <- est.names
         rownames(uksteps) <- u.est.names
         if(!is(modifyIC(IC), "NULL") ){
            for(i in 1:steps){
-               modif.old <- modifyIC(IC)
                if(i>1){
                   IC <- upd$IC
                   L2Fam <- upd$L2Fam
                   if((i==steps)&&withMakeIC){
-                     IC <- makeIC(IC,L2Fam)
-                     IC@modifyIC <- modif.old
+                      makeICargs <- list(IC, L2Fam, diagnostic=diagnostic, E.argList=E.argList)
+                      IC <- do.call(makeIC, makeICargs)
+                      mkICnm <- paste("makeIC-",i)
+                      sytm <- .addTime(sytm,mkICnm)
+                      if(diagnostic) diagn[[mkICnm]] <- attr(IC,"diagnostic")
                   }
+
                   Param <- upd$Param
                   tf <- trafo(L2Fam, Param)
                   withPre <- FALSE
@@ -282,19 +384,24 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                upd <- updateStep(u.theta,theta,IC, L2Fam, Param,
                                  withPreModif = withPre,
                                  withPostModif = (steps>i) | useLast,
-                                 with.u.var = i==steps, oldmodifIC = modif.old)
+                                 with.u.var = (i==steps),
+                                 withEvalAsVar.0 = (i==steps))
+#               print(upd$u.theta); print(upd$theta)
                uksteps[,i] <- u.theta <- upd$u.theta
 #               print(str(upd$theta))
 #               print(nrow(ksteps))
                ksteps[,i] <- theta <- upd$theta
                if(withICList)
-                  ICList[[i]] <- new("InfluenceCurve",
+                  ICList[[i]] <- .fixInLiesInSupport(
+                                  new("InfluenceCurve",
                                       name = paste(gettext("(total) IC in step"),i),
                                       Risks = list(),
                                       Infos = matrix(c("",""),ncol=2),
-                                      Curve =  EuclRandVarList(upd$IC.tot))
+                                      Curve =  EuclRandVarList(upd$IC.tot)),
+                                  distr = distribution(upd$L2Fam))
+               sytm <- .addTime(sytm,paste("ICList-",i))
                if(withPICList)
-                  pICList[[i]] <- upd$IC.c
+                  pICList[[i]] <- .fixInLiesInSupport(upd$IC.c,distribution(upd$L2Fam))
                u.var <- upd$u.var
                var0 <- upd$var
            }
@@ -307,7 +414,13 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
               tf <- trafo(L2Fam, Param)
               Infos <- rbind(Infos, c("kStepEstimator",
                "computation of IC, trafo, asvar and asbias via useLast = TRUE"))
-              if(withMakeIC) IC <- makeIC(IC, L2Fam)
+              if(withMakeIC){
+                  makeICargs <- list(IC, L2Fam, diagnostic=diagnostic, E.argList=E.argList)
+                  IC <- do.call(makeIC, makeICargs)
+                  mkICULnm <- paste("makeIC-useLast")
+                  sytm <- .addTime(sytm,mkICULnm)
+                  if(diagnostic) diagn[[mkICULnm]] <- attr(IC,"diagnostic")
+              }
            }else{
               Infos <- rbind(Infos, c("kStepEstimator",
                "computation of IC, trafo, asvar and asbias via useLast = FALSE"))
@@ -346,13 +459,17 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
         ## some risks
 #        print(list(u.theta=u.theta,theta=theta,u.var=u.var,var=var0))
         if(var.to.be.c){
-           if("asCov" %in% names(Risks(IC)))
-                if(is.matrix(Risks(IC)$asCov) || length(Risks(IC)$asCov) == 1)
-                    asVar <- Risks(IC)$asCov
-                else
-                    asVar <- Risks(IC)$asCov$value
-           else
-                asVar <- getRiskIC(IC, risk = asCov(), withCheck = FALSE)$asCov$value
+           if("asCov" %in% names(Risks(IC))){
+              asVar <- if(is.matrix(Risks(IC)$asCov) || length(Risks(IC)$asCov) == 1)
+                       Risks(IC)$asCov else Risks(IC)$asCov$value
+           }else{
+                getRiskICasVarArgs <- list(IC, risk = asCov(), withCheck = FALSE,
+                                        diagnostic=diagnostic, E.argList = E.argList)
+                riskAsVar <- do.call(getRiskIC, getRiskICasVarArgs)
+                asVar <- riskAsVar$asCov$value
+                sytm <- .addTime(sytm,"getRiskIC-Var")
+                if(diagnostic) diagn[["getRiskICVar"]] <- attr(asVar,"diagnostic")
+           }
 
         }else asVar <- var0
 #        print(asVar)
@@ -367,6 +484,7 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                     r <- neighborRadius(IC)
                     asBias <- r*getRiskIC(IC, risk = asBias(),
                                           neighbor = neighbor(IC), withCheck = FALSE)$asBias$value
+                    sytm <- .addTime(sytm,"getRiskIC-Bias")
                 }else{
                     asBias <- NULL
                 }
@@ -388,6 +506,9 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
           dimnames(asVar) <- list(nms.theta.idx, nms.theta.idx)
         }
 
+        IC <- .fixInLiesInSupport(IC, distribution(L2Fam))
+
+
         estres <- new("kStepEstimate", estimate.call = es.call,
                 name = paste(steps, "-step estimate", sep = ""),
                 estimate = theta, samplesize = nrow(x0), asvar = asVar,
@@ -397,7 +518,17 @@ kStepEstimator <- function(x, IC, start = NULL, steps = 1L,
                 steps = steps, Infos = Infos, start = start,
                 startval = start.val, ustartval = u.start.val, ksteps = ksteps,
                 uksteps = uksteps, pICList = pICList, ICList = ICList)
-        return(.checkEstClassForParamFamily(L2Fam,estres))
+        sytm <- .addTime(sytm,"new('kStepEstimate'...")
+        estres <- .checkEstClassForParamFamily(L2Fam,estres)
+
+        attr(estres,"timings") <- apply(sytm,2,diff)
+        if(diagnostic){
+           attr(estres,"diagnostic") <- diagn
+           if(!is.null(diagn))
+              class(attr(estres,"diagnostic")) <- "DiagnosticClass"
+        }
+        on.exit()
+        return(estres)
 
 }
 #  (est1.NS <- kStepEstimator(x, IC2.NS, est0, steps = 1))

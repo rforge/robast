@@ -18,3 +18,4 @@ setReplaceMethod("neighborRadius", "HampIC",
         object
     })
 
+## comment 20180809: reverted changes in rev 1110

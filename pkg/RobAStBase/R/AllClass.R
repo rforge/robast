@@ -105,6 +105,7 @@ setClass("InfluenceCurve",
                     stop("'Infos' must have two columns")
                 else TRUE
             })
+## comment 20180809: reverted changes in rev 1110
 ## partial incluence curve
 setClass("IC", representation(CallL2Fam = "call",
                               modifyIC = "OptionalFunction"),
@@ -216,6 +217,7 @@ setClass("TotalVarIC",
 ## ALEstimate
 setClassUnion("OptionalCall", c("call","NULL"))
 setClassUnion("OptionalInfluenceCurve", c("InfluenceCurve", "NULL"))
+setClassUnion("OptionalInfluenceCurveOrCall", c("InfluenceCurve", "NULL", "call"))
 setClassUnion("StartClass", c("numeric", "matrix", "function", "Estimate"))
 setClass("pICList",
           prototype = prototype(list()),
@@ -231,7 +233,7 @@ setClass("pICList",
             })
 setClassUnion("OptionalpICList", c("pICList", "NULL"))
 setClass("ALEstimate",
-         representation(pIC = "OptionalInfluenceCurve",
+         representation(pIC = "OptionalInfluenceCurveOrCall", #"OptionalInfluenceCurve",
                         asbias = "OptionalNumeric"),
          prototype(name = "Asymptotically linear estimate",
                    estimate = numeric(0),
@@ -250,6 +252,18 @@ setClass("ALEstimate",
                    untransformed.estimate = NULL,
                    untransformed.asvar = NULL),
          contains = "Estimate")
+
+setClass("MCALEstimate",
+         representation(pIC = "OptionalInfluenceCurveOrCall",
+                        asbias = "OptionalNumeric"),
+         prototype(name = "Minimum criterion estimate (which is asy. linear)",
+                   asbias = NULL,
+                   pIC = NULL),
+         contains = c("ALEstimate","MCEstimate")
+)
+setClass("CvMMD.ALEstimate",contains = c("MCALEstimate","CvMMDEstimate"))
+setClass("ML.ALEstimate",contains = c("MCALEstimate","MLEstimate"))
+
 setClass("kStepEstimate", 
          representation(steps = "integer",
                         pICList = "OptionalpICList",

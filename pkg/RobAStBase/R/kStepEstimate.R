@@ -26,3 +26,5 @@ setMethod("uksteps", "kStepEstimate", function(object, diff = FALSE) {
      colnames(mm) <- paste((1:ncol(mm))-1)
      return(mm)
 })
+setMethod("timings", "kStepEstimate", function(object, ...)
+   attr(object, "timings"))

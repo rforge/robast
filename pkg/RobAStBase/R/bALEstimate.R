@@ -2,7 +2,26 @@
 ## Functions and methods for "ALEstimate" classes and subclasses
 ###############################################################################
 
-setMethod("pIC", "ALEstimate", function(object) object@pIC)
+
+setMethod("pIC", "ALEstimate", function(object){
+           pIC0 <- .getPIC(object)
+           if(is(pIC0,"IC")) eval.parent(substitute(object@pIC <- pIC0))
+           return(pIC0)
+})
+
+setMethod("pIC", "MCEstimate", function(object){
+       if("pIC" %in% slotNames(class(object))){
+           pIC0 <- .getPIC(object)
+           if(is(pIC0,"IC")) eval.parent(substitute(object@pIC <- pIC0))
+           return(pIC0)
+       }else{
+           return(getPIC(object))
+       }})
+
+setMethod("pIC", "MCALEstimate", getMethod("pIC", "ALEstimate"))
+setMethod("pIC", "ML.ALEstimate", getMethod("pIC", "ALEstimate"))
+setMethod("pIC", "CvMMD.ALEstimate", getMethod("pIC", "ALEstimate"))
+
 setMethod("asbias", "ALEstimate", function(object) object@asbias)
 setMethod("steps", "kStepEstimate", function(object) object@steps)
 setMethod("Mroot", "MEstimate", function(object) object@Mroot)
@@ -161,3 +180,11 @@ setMethod("confint", signature(object="ALEstimate", method="asymmetricBias"),
                    fixed.estimate = fixed(object),
                    confint = ci)
 })
+
+
+#setAs("MCEstimate", "MCALEstimate", def = function(from){
+#       fromSlotNames <- slotNames(class(from))
+#       to <- new("MCALEstimate")
+#       for(item in fromSlotNames) slot(to, item) <- slot(from,item)
+#       to@pIC <- .getPIC(from)
+#       to})

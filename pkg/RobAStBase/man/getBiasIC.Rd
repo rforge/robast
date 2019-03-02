@@ -12,12 +12,11 @@ getBiasIC(IC, neighbor, ...)
 
 \S4method{getBiasIC}{IC,UncondNeighborhood}(IC, neighbor, L2Fam,
              biastype = symmetricBias(), normtype = NormType(),
-             tol = .Machine$double.eps^0.25, numbeval = 1e5, withCheck = TRUE)
+             tol = .Machine$double.eps^0.25, numbeval = 1e5, withCheck = TRUE, ...)
 }
 \arguments{
   \item{IC}{ object of class \code{"InfluenceCurve"} }
   \item{neighbor}{ object of class \code{"Neighborhood"}. }
-  \item{\dots}{ additional parameters }
   \item{L2Fam}{ object of class \code{"L2ParamFamily"}. }
   \item{biastype}{object of class \code{"BiasType"}}
   \item{normtype}{object of class \code{"NormType"}}
@@ -25,6 +24,7 @@ getBiasIC(IC, neighbor, ...)
   \item{numbeval}{number of evalation points.}
   \item{withCheck}{logical: should a call to \code{checkIC} be done to
                    check accuracy (defaults to \code{TRUE}).}
+  \item{\dots}{ additional parameters to be passed to expectation \code{E} }
 }
 %\details{}
 \value{The bias of the IC is computed.}

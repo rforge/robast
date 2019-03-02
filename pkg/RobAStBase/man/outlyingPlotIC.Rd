@@ -111,6 +111,10 @@ calls a corresponding \code{\link{ddPlot}} method to produce the plot.
   Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
   }
 
+\note{If you want to use the return value of \code{cutoff.quant()} for arguments
+ \code{cutoff.x} or \code{cutoff.y}, remember to set the arguments \code{tf.x}
+ resp. \code{tf.y} to the identity, i.e., \code{function(x)x}.}
+
 \value{
 If argument \code{doplot} is \code{FALSE}:
 A list (returned as \code{invisible()}) with items
@@ -140,9 +144,16 @@ N0 <- NormLocationScaleFamily()
 N0.IC0 <- optIC(model = N0, risk = asCov())
 N0.Rob1 <- InfRobModel(center = N0, neighbor = ContNeighborhood(radius = 0.5))
 N0.IC1 <- optIC(model = N0.Rob1, risk = asMSE())
+set.seed(123)
 xn <- c(rnorm(100),rcauchy(20)+20)
 outlyingPlotIC(xn, IC.x=N0.IC0)
 outlyingPlotIC(xn, IC.x=N0.IC1)
+
+## example for usage with cutoff.quant()
+classIC <- optIC(NormLocationScaleFamily(mean = 3.3, sd = 0.67),
+                  risk = asCov())
+outlyingPlotIC(data = chem[-17], classIC, cex.pts = 3, jitter.fac = 1,
+                cutoff.x = cutoff.quant(), tf.x =function(x)(x))
 }
 }
 \keyword{hplot}

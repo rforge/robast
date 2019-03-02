@@ -139,6 +139,14 @@
       if((missing(font.abline)|| is.null(font.abline)) && !is.null(dots$font)) font.abline <- dots$font
       if((missing(font.abline)|| is.null(font.abline))) font.abline <- par("font")
 
+      titdots <- NULL
+      titdots$main <- dots$main
+      titdots$sub <- dots$sub
+      titdots$col.main <- dots$col.main
+      titdots$col.sub <- dots$col.sub
+      titdots$outer <- dots$outer
+      titdots$line <- dots$line
+
       pdots <- .makedotsLowLevel(dots)
       pdots$pch <- if(is.null(dots$pch)) "." else dots$pch
       pdots$cex <- cex.pts
@@ -266,14 +274,20 @@
           ndata.y0[!isna] <- jitter(ndata.y0[!isna], factor=jitter.pts[2])
 
       pdots$col <- col
+      inax <- is.na(ndata.x)
+      inay <- is.na(ndata.y)
+
+      nonina <- !inax&!inay
+
       retV <- list(id.x=id0.x, id.y= id0.y, id.xy = id0.xy,
-             qtx = quantile(ndata.x), qty = quantile(ndata.y),
-             cutoff.x.v = co.x, cutoff.y.v = co.y)
+                   qtx = quantile(ndata.x[nonina]),
+                   qty = quantile(ndata.y[nonina]),
+                   cutoff.x.v = co.x, cutoff.y.v = co.y)
 
       if(doplot){
         plotInfo<- list("plotArgs"=NULL)
 
-        plotInfo$PlotArgs <- c(list(x = ndata.x0, y=ndata.y0, type = "p"), pdots)
+        plotInfo$PlotArgs <- c(list(x = ndata.x0, y=ndata.y0, type = "p"), pdots, titdots)
         plotInfo$BoxArgs <- c(adots)
 
         do.call(plot, args = plotInfo$PlotArgs)

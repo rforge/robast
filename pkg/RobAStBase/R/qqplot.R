@@ -101,19 +101,20 @@ setMethod("qqplot", signature(x = "ANY", y = "InfRobModel"),
 
 
 
+    mcl$n <- n
+
     if(is.null(mcl$n.CI)) mcl$n.CI <- n
     if(n.adj){
        r <- radius(neighbor(y))
-       n <- floor((1-r/sqrt(n))*n)
+       mcl$n.CI <- floor((1-r/sqrt(n))*n)
     }
-    mcl$n <- n
     mcl$y <- y@center
     mcl$legend.pref <- paste(mcl$legend.pref,"outlier-adjusted",sep="")
     
     FI <- PosSemDefSymmMatrix(FisherInfo(y@center))
     L2D <- as(diag(nrow(FI)) %*% L2deriv(y@center), "EuclRandVariable")
     L2Dx <- evalRandVar(L2D,matrix(x))[,,1]
-    scx <-  solve(sqrt(FI),L2Dx)
+    scx <-  distr::solve(sqrt(FI),L2Dx)
     xD <- fct(distance)(scx)
     cex.pts <- if(is.null(mcl[["cex.pts"]])){
                   if(is.null(mcl[["cex"]])){

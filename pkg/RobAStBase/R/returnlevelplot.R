@@ -99,7 +99,7 @@ setMethod("returnlevelplot", signature(x = "ANY", y = "InfRobModel"),
     FI <- PosSemDefSymmMatrix(FisherInfo(y@center))
     L2D <- as(diag(nrow(FI)) %*% L2deriv(y@center), "EuclRandVariable")
     L2Dx <- evalRandVar(L2D,matrix(x))[,,1]
-    scx <-  solve(sqrt(FI),L2Dx)
+    scx <-  distr::solve(sqrt(FI),L2Dx)
     xD <- fct(distance)(scx)
     cex.pts <- if(is.null(mcl[["cex.pts"]])){
                   if(is.null(mcl[["cex"]])){

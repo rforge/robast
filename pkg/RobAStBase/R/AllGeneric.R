@@ -46,6 +46,7 @@ if(!isGeneric("evalIC")){
 if(!isGeneric("makeIC")){
     setGeneric("makeIC", function(IC, L2Fam, ...) standardGeneric("makeIC"))
 }
+## comment 20180809: reverted changes in rev 1110
 if(!isGeneric("clip")){
     setGeneric("clip", function(x1, ...) standardGeneric("clip"))
 }
@@ -246,4 +247,10 @@ if(!isGeneric("rescaleFunction")){
 if(!isGeneric("getFiRisk")){
     setGeneric("getFiRisk", 
         function(risk, Distr, neighbor, ...) standardGeneric("getFiRisk"))
+}
+if(!isGeneric("getPIC")){
+    setGeneric("getPIC", function(estimator) standardGeneric("getPIC"))
+}
+if(!isGeneric("timings")){
+    setGeneric("timings", function(object, ...) standardGeneric("timings"))
 }
