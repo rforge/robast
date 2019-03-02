@@ -102,8 +102,8 @@ but also (adopted from package "distrMod")
 \details{
 \tabular{ll}{
 Package: \tab RobExtremes \cr
-Version: \tab 1.2.0 \cr
-Date: \tab 2019-03-01 \cr
+Version: \tab 1.3.0 \cr
+Date: \tab 2019-03-02 \cr
 Title: \tab Optimally Robust Estimation for Extreme Value Distributions\cr
 Description: \tab Optimally robust estimation for extreme value distributions
 using S4 classes and methods \cr
@@ -130,7 +130,7 @@ LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
 Encoding: \tab latin1 \cr
-VCS/SVNRevision: \tab 1178 \cr
+VCS/SVNRevision: \tab 1192 \cr
 }
 }
 

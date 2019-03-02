@@ -1,6 +1,6 @@
 Package: ROptEstOld
 Version: 1.2.0
-Date: 2019-03-01
+Date: 2019-03-02
 Title: Optimally Robust Estimation - Old Version
 Description: Optimally robust estimation using S4 classes and methods. Old version still needed
         for current versions of ROptRegTS and RobRex.
@@ -13,4 +13,4 @@ URL: http://robast.r-forge.r-project.org/
 Encoding: latin1
 LastChangedDate: {$LastChangedDate$}
 LastChangedRevision: {$LastChangedRevision$}
-VCS/SVNRevision: 1178
+VCS/SVNRevision: 1192
