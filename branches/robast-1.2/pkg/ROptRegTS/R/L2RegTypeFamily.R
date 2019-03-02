@@ -48,10 +48,12 @@ L2RegTypeFamily <- function(name, distribution = LMCondDistribution(), distrSymm
             L2.L2 <- L2deriv1 %*% t(L2deriv1)
             res <- numeric(length(L2.L2))
             for(i in 1:length(L2.L2)){
-                fct <- function(x, cond, f1){ f1(cbind(cond,x)) }
-                res[i] <- E(RegDistr, .condE, D1 = distribution, fct = fct, 
-                            f1 = L2.L2@Map[[i]])                
-            }            
+                #fct <- function(x, cond, f1){ f1(cbind(cond,x)) }
+                #res[i] <- E(RegDistr, .condE, D1 = distribution, fct = fct,
+                #            f1 = L2.L2@Map[[i]])
+                fct <- function(x,cond) L2.L2@Map[[i]](cbind(cond,x))
+                res[i] <- E(RegDistr, .condE, D1 = distribution, fct = fct)
+            }
             FisherInfo <- PosDefSymmMatrix(matrix(res, nrow = dims))
         }else{
             stop("not yet implemented")
