@@ -70,7 +70,7 @@ rsOptIC <- function(r, mean = 0, sd = 1, bUp = 1000, delta = 1e-6, itmax = 100,
                                biastype = symmetricBias(), 
                                normW = NormType())
 
-        modIC <- function(L2Fam, IC){
+        modIC <- function(L2Fam, IC, withMakeIC, ...){
             ICL2Fam <- eval(CallL2Fam(IC))
             if(is(L2Fam, "L2ScaleFamily") && is(distribution(L2Fam), "Norm")){
                 sdneu <- main(L2Fam)
@@ -91,11 +91,13 @@ rsOptIC <- function(r, mean = 0, sd = 1, bUp = 1000, delta = 1e-6, itmax = 100,
                             modifyIC = modifyIC(IC))
                 IC <- generateIC(neighbor = ContNeighborhood(radius = neighborRadius(IC)),
                                  L2Fam = L2Fam, res = res)
-                addInfo(IC) <- c("modifyIC", "The IC has been modified")
-                addInfo(IC) <- c("modifyIC", "The entries in 'Infos' may be wrong")
+                if(!any(grepl("Some entries in 'Infos' may be wrong", Infos(IC)[,2]))){
+                   addInfo(IC) <- c("modifyIC", "The IC has been modified")
+                   addInfo(IC) <- c("modifyIC", "Some entries in 'Infos' may be wrong")
+                }
                 return(IC)
             }else{
-                makeIC(IC, L2Fam)
+                makeIC(IC, L2Fam, ...)
             }
         }
 

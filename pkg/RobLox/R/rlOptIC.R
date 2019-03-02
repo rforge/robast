@@ -18,12 +18,12 @@ rlOptIC <- function(r, mean = 0, sd = 1, bUp = 1000, computeIC = TRUE){
                                biastype = symmetricBias(), 
                                normW = NormType())
 
-        modIC <- function(L2Fam, IC){
+        modIC <- function(L2Fam, IC, withMakeIC, ...){
             if(is(L2Fam, "L2LocationFamily") && is(distribution(L2Fam), "Norm")){
                 CallL2Fam(IC) <- L2Fam@fam.call
                 return(IC)
             }else{
-                makeIC(IC, L2Fam)
+                makeIC(IC, L2Fam, ...)
             }
         }
 
