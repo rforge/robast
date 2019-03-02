@@ -1,8 +1,7 @@
 
-R Under development (unstable) (2013-03-13 r62247) -- "Unsuffered Consequences"
-Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+R Under development (unstable) (2019-02-27 r76167) -- "Unsuffered Consequences"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: i386-w64-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -21,52 +20,19 @@ Type 'q()' to quit R.
 > pkgname <- "ROptRegTS"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
+> options(pager = "console")
 > library('ROptRegTS')
+Loading required package: ROptEstOld
 Loading required package: distr
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.8)
+:startupmsg>  Utilities for Start-Up Messages (version 0.9.6)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
 
 Loading required package: sfsmisc
-Loading required package: SweaveListingUtils
-:SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version
-:SweaveListingUtils>  0.6.1)
-:SweaveListingUtils> 
-:SweaveListingUtils>  NOTE: Support for this package
-:SweaveListingUtils>  will stop soon.
-:SweaveListingUtils> 
-:SweaveListingUtils>  Package 'knitr' is providing the
-:SweaveListingUtils>  same functionality in a better
-:SweaveListingUtils>  way.
-:SweaveListingUtils> 
-:SweaveListingUtils>  Some functions from package 'base'
-:SweaveListingUtils>  are intentionally masked ---see
-:SweaveListingUtils>  SweaveListingMASK().
-:SweaveListingUtils> 
-:SweaveListingUtils>  Note that global options are
-:SweaveListingUtils>  controlled by
-:SweaveListingUtils>  SweaveListingoptions() ---c.f.
-:SweaveListingUtils>  ?"SweaveListingoptions".
-:SweaveListingUtils> 
-:SweaveListingUtils>  For more information see
-:SweaveListingUtils>  ?"SweaveListingUtils",
-:SweaveListingUtils>  NEWS("SweaveListingUtils")
-:SweaveListingUtils>  There is a vignette to this
-:SweaveListingUtils>  package; try
-:SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
-
-
-Attaching package: ‘SweaveListingUtils’
-
-The following object is masked from ‘package:base’:
-
-    library, require
-
-:distr>  Object oriented implementation of distributions (version
-:distr>  2.4)
+:distr>  Object Oriented Implementation of Distributions (version
+:distr>  2.8.0)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -85,14 +51,14 @@ The following object is masked from ‘package:base’:
 :distr>  vignette("distr").
 
 
-Attaching package: ‘distr’
+Attaching package: 'distr'
 
-The following object is masked from ‘package:stats’:
+The following objects are masked from 'package:stats':
 
     df, qqplot, sd
 
 Loading required package: distrEx
-:distrEx>  Extensions of package distr (version 2.4)
+:distrEx>  Extensions of Package 'distr' (version 2.8.0)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
 :distrEx>  attached /before/ package "distrEx". See
@@ -109,14 +75,14 @@ Loading required package: distrEx
 :distrEx>  vignette("distr").
 
 
-Attaching package: ‘distrEx’
+Attaching package: 'distrEx'
 
-The following object is masked from ‘package:stats’:
+The following objects are masked from 'package:stats':
 
     IQR, mad, median, var
 
 Loading required package: RandVar
-:RandVar>  Implementation of random variables (version 0.9)
+:RandVar>  Implementation of Random Variables (version 1.2.0)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -124,17 +90,17 @@ Loading required package: RandVar
 :RandVar>  This package also includes a vignette; try
 :RandVar>  vignette("RandVar").
 
-Loading required package: ROptEstOld
 Loading required package: evd
 
-Attaching package: ‘ROptEstOld’
+Attaching package: 'ROptEstOld'
 
-The following object is masked from ‘package:graphics’:
+The following object is masked from 'package:graphics':
 
     clip
 
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 > cleanEx()
 > nameEx("Av1CondContIC-class")
 > ### * Av1CondContIC-class
@@ -158,19 +124,19 @@ The following object is masked from ‘package:graphics’:
 > 
 > IC1 <- new("Av1CondContIC")
 > IC1
-An object of class “Av1CondContIC” 
+An object of class "Av1CondContIC" 
 ### name:	 conditionally centered IC for average conditional contamination neighborhoods 
 
 ### L2-differentiable regression type family:
  L2 differentiable regression type family 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable regression type family 
 main:	 0 
 
 ### neighborhood radius:	 0 
 
 ### clip:	[1] Inf
-### cent:	An object of class “EuclRandVarList” 
+### cent:	An object of class "EuclRandVarList" 
 Domain:	Euclidean Space with dimension 2 
 [[1]]
 length of Map:	 1 
@@ -199,19 +165,19 @@ Range:	Real Space with dimension 1
 > 
 > IC1 <- Av1CondContIC()
 > IC1
-An object of class “Av1CondContIC” 
+An object of class "Av1CondContIC" 
 ### name:	 conditionally centered IC for average conditional contamination neighborhoods 
 
 ### L2-differentiable regression type family:
  L2 differentiable regression type family 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable regression type family 
 main:	 0 
 
 ### neighborhood radius:	 0 
 
 ### clip:	[1] Inf
-### cent:	An object of class “EuclRandVarList” 
+### cent:	An object of class "EuclRandVarList" 
 Domain:	Euclidean Space with dimension 2 
 [[1]]
 length of Map:	 1 
@@ -239,7 +205,7 @@ Range:	Real Space with dimension 1
 > ### ** Examples
 > 
 > new("Av1CondContNeighborhood")
-An object of class “Av1CondContNeighborhood” 
+An object of class "Av1CondContNeighborhood" 
 type:	 average conditional convex contamination neighborhood 
 radius:	 0 
 > 
@@ -259,7 +225,7 @@ radius:	 0
 > ### ** Examples
 > 
 > Av1CondContNeighborhood()
-An object of class “Av1CondContNeighborhood” 
+An object of class "Av1CondContNeighborhood" 
 type:	 average conditional convex contamination neighborhood 
 radius:	 0 
 > 
@@ -300,19 +266,19 @@ function (radius = 0, radiusCurve = function(x) {
 > 
 > IC1 <- new("Av1CondTotalVarIC")
 > IC1
-An object of class “Av1CondTotalVarIC” 
+An object of class "Av1CondTotalVarIC" 
 ### name:	 conditionally centered IC for average conditional contamination neighborhoods 
 
 ### L2-differentiable regression type family:
  L2 differentiable regression type family 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable regression type family 
 main:	 0 
 
 ### neighborhood radius:	 0 
 
 ### clipUp:	[1] Inf
-### clipLo:	An object of class “RealRandVariable” 
+### clipLo:	An object of class "RealRandVariable" 
 length of Map:	 1 
 Domain:	Euclidean Space with dimension 1 
 Range:	Real Space with dimension 1 
@@ -340,19 +306,19 @@ Range:	Real Space with dimension 1
 > 
 > IC1 <- Av1CondTotalVarIC()
 > IC1
-An object of class “Av1CondTotalVarIC” 
+An object of class "Av1CondTotalVarIC" 
 ### name:	 conditionally centered IC for average conditional total variation neighborhoods 
 
 ### L2-differentiable regression type family:
  L2 differentiable regression type family 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable regression type family 
 main:	 0 
 
 ### neighborhood radius:	 0 
 
 ### clipUp:	[1] Inf
-### clipLo:	An object of class “RealRandVariable” 
+### clipLo:	An object of class "RealRandVariable" 
 length of Map:	 1 
 Domain:	Euclidean Space with dimension 1 
 Range:	Real Space with dimension 1 
@@ -379,7 +345,7 @@ Range:	Real Space with dimension 1
 > ### ** Examples
 > 
 > new("Av1CondTotalVarNeighborhood")
-An object of class “Av1CondTotalVarNeighborhood” 
+An object of class "Av1CondTotalVarNeighborhood" 
 type:	 average conditional total variation neighborhood 
 radius:	 0 
 > 
@@ -399,7 +365,7 @@ radius:	 0
 > ### ** Examples
 > 
 > Av1CondTotalVarNeighborhood()
-An object of class “Av1CondTotalVarNeighborhood” 
+An object of class "Av1CondTotalVarNeighborhood" 
 type:	 average conditional total variation neighborhood 
 radius:	 0 
 > 
@@ -439,12 +405,12 @@ function (radius = 0, radiusCurve = function(x) {
 > 
 > IC1 <- new("Av2CondContIC")
 > IC1
-An object of class “Av2CondContIC” 
+An object of class "Av2CondContIC" 
 ### name:	 conditionally centered IC for average square conditional contamination neighborhoods 
 
 ### L2-differentiable regression type family:
  L2 differentiable regression type family 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable regression type family 
 main:	 0 
 
@@ -474,12 +440,12 @@ main:	 0
 > 
 > IC1 <- Av2CondContIC()
 > IC1
-An object of class “Av2CondContIC” 
+An object of class "Av2CondContIC" 
 ### name:	 conditionally centered IC for average square conditional contamination neighborhoods 
 
 ### L2-differentiable regression type family:
  L2 differentiable regression type family 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable regression type family 
 main:	 0 
 
@@ -508,7 +474,7 @@ main:	 0
 > ### ** Examples
 > 
 > new("Av2CondContNeighborhood")
-An object of class “Av2CondContNeighborhood” 
+An object of class "Av2CondContNeighborhood" 
 type:	 average square conditional convex contamination neighborhood 
 radius:	 0 
 > 
@@ -528,7 +494,7 @@ radius:	 0
 > ### ** Examples
 > 
 > Av2CondContNeighborhood()
-An object of class “Av2CondContNeighborhood” 
+An object of class "Av2CondContNeighborhood" 
 type:	 average square conditional convex contamination neighborhood 
 radius:	 0 
 > 
@@ -569,22 +535,22 @@ function (radius = 0, radiusCurve = function(x) {
 > 
 > IC1 <- new("CondContIC")
 > IC1
-An object of class “CondContIC” 
+An object of class "CondContIC" 
 ### name:	 conditionally centered IC for average conditional contamination neighborhoods 
 
 ### L2-differentiable regression type family:
  L2 differentiable regression type family 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable regression type family 
 main:	 0 
 
 ### neighborhood radius:	 0 
 
-### clip:	An object of class “RealRandVariable” 
+### clip:	An object of class "RealRandVariable" 
 length of Map:	 1 
 Domain:	Euclidean Space with dimension 1 
 Range:	Real Space with dimension 1 
-### cent:	An object of class “EuclRandVarList” 
+### cent:	An object of class "EuclRandVarList" 
 Domain:	Euclidean Space with dimension 2 
 [[1]]
 length of Map:	 1 
@@ -613,22 +579,22 @@ Range:	Real Space with dimension 1
 > 
 > IC1 <- CondContIC()
 > IC1
-An object of class “CondContIC” 
+An object of class "CondContIC" 
 ### name:	 conditionally centered IC for average conditional contamination neighborhoods 
 
 ### L2-differentiable regression type family:
  L2 differentiable regression type family 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable regression type family 
 main:	 0 
 
 ### neighborhood radius:	 0 
 
-### clip:	An object of class “RealRandVariable” 
+### clip:	An object of class "RealRandVariable" 
 length of Map:	 1 
 Domain:	Real Space with dimension 1 
 Range:	Real Space with dimension 1 
-### cent:	An object of class “EuclRandVarList” 
+### cent:	An object of class "EuclRandVarList" 
 Domain:	Euclidean Space with dimension 2 
 [[1]]
 length of Map:	 1 
@@ -656,7 +622,7 @@ Range:	Real Space with dimension 1
 > ### ** Examples
 > 
 > new("CondContNeighborhood")
-An object of class “CondContNeighborhood” 
+An object of class "CondContNeighborhood" 
 type:	 conditional convex contamination neighborhood 
 radius:	 0 
 > 
@@ -676,7 +642,7 @@ radius:	 0
 > ### ** Examples
 > 
 > CondContNeighborhood()
-An object of class “CondContNeighborhood” 
+An object of class "CondContNeighborhood" 
 type:	 conditional convex contamination neighborhood 
 radius:	 0 
 > 
@@ -709,11 +675,11 @@ function (radius = 0, radiusCurve = function(x) {
 > ### ** Examples
 > 
 > new("CondIC")
-An object of class “CondIC” 
+An object of class "CondIC" 
 ### name:	 square integrable, conditionally centered (partial) IC 
 ### L2-differentiable parametric family:	 L2 differentiable regression type family 
 
-### 'Curve':	An object of class “EuclRandVarList” 
+### 'Curve':	An object of class "EuclRandVarList" 
 Domain:	Euclidean Space with dimension 2 
 [[1]]
 length of Map:	 1 
@@ -738,11 +704,11 @@ Range:	Real Space with dimension 1
 > ### ** Examples
 > 
 > CondIC()
-An object of class “CondIC” 
+An object of class "CondIC" 
 ### name:	 Influence curve for a L_2 differentiable regression type family 
 ### L2-differentiable parametric family:	 L2 differentiable regression type family 
 
-### 'Curve':	An object of class “EuclRandVarList” 
+### 'Curve':	An object of class "EuclRandVarList" 
 Domain:	Euclidean Space with dimension 2 
 [[1]]
 length of Map:	 1 
@@ -807,22 +773,22 @@ function (name, Curve = EuclRandVariable(Map = list(function(x) {
 > 
 > IC1 <- new("CondTotalVarIC")
 > IC1
-An object of class “CondTotalVarIC” 
+An object of class "CondTotalVarIC" 
 ### name:	 conditionally centered IC for average conditional contamination neighborhoods 
 
 ### L2-differentiable regression type family:
  L2 differentiable regression type family 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable regression type family 
 main:	 0 
 
 ### neighborhood radius:	 0 
 
-### clipUp:	An object of class “RealRandVariable” 
+### clipUp:	An object of class "RealRandVariable" 
 length of Map:	 1 
 Domain:	Euclidean Space with dimension 1 
 Range:	Real Space with dimension 1 
-### clipLo:	An object of class “RealRandVariable” 
+### clipLo:	An object of class "RealRandVariable" 
 length of Map:	 1 
 Domain:	Euclidean Space with dimension 1 
 Range:	Real Space with dimension 1 
@@ -850,22 +816,22 @@ Range:	Real Space with dimension 1
 > 
 > IC1 <- CondTotalVarIC()
 > IC1
-An object of class “CondTotalVarIC” 
+An object of class "CondTotalVarIC" 
 ### name:	 conditionally centered IC for average conditional total variation neighborhoods 
 
 ### L2-differentiable regression type family:
  L2 differentiable regression type family 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable regression type family 
 main:	 0 
 
 ### neighborhood radius:	 0 
 
-### clipUp:	An object of class “RealRandVariable” 
+### clipUp:	An object of class "RealRandVariable" 
 length of Map:	 1 
 Domain:	Real Space with dimension 1 
 Range:	Real Space with dimension 1 
-### clipLo:	An object of class “RealRandVariable” 
+### clipLo:	An object of class "RealRandVariable" 
 length of Map:	 1 
 Domain:	Real Space with dimension 1 
 Range:	Real Space with dimension 1 
@@ -892,7 +858,7 @@ Range:	Real Space with dimension 1
 > ### ** Examples
 > 
 > new("CondTotalVarNeighborhood")
-An object of class “CondTotalVarNeighborhood” 
+An object of class "CondTotalVarNeighborhood" 
 type:	 conditional total variation neighborhood 
 radius:	 0 
 > 
@@ -912,7 +878,7 @@ radius:	 0
 > ### ** Examples
 > 
 > CondTotalVarNeighborhood()
-An object of class “CondTotalVarNeighborhood” 
+An object of class "CondTotalVarNeighborhood" 
 type:	 conditional total variation neighborhood 
 radius:	 0 
 > 
@@ -944,8 +910,8 @@ function (radius = 0, radiusCurve = function(x) {
 > ### ** Examples
 > 
 > new("FixRobRegTypeModel")
-An object of class “FixRobRegTypeModel” 
-###### center:	An object of class “RegTypeFamily” 
+An object of class "FixRobRegTypeModel" 
+###### center:	An object of class "RegTypeFamily" 
 ### name:	 regression type family 
 
 ### ErrorDistr:	Distribution Object of Class: Norm
@@ -956,11 +922,11 @@ An object of class “FixRobRegTypeModel”
  mean: 0
  sd: 1
 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 parameter of a parametric family of probability measures 
 main:	 0 
 
-###### neighborhood:	An object of class “ContNeighborhood” 
+###### neighborhood:	An object of class "ContNeighborhood" 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
@@ -980,8 +946,8 @@ radius:	 0
 > ### ** Examples
 > 
 > FixRobRegTypeModel()
-An object of class “FixRobRegTypeModel” 
-###### center:	An object of class “RegTypeFamily” 
+An object of class "FixRobRegTypeModel" 
+###### center:	An object of class "RegTypeFamily" 
 ### name:	 regression type family 
 
 ### ErrorDistr:	Distribution Object of Class: Norm
@@ -992,11 +958,11 @@ An object of class “FixRobRegTypeModel”
  mean: 0
  sd: 1
 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 parameter of regression type family 
 main:	 0 
 
-###### neighborhood:	An object of class “ContNeighborhood” 
+###### neighborhood:	An object of class "ContNeighborhood" 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
@@ -1026,8 +992,8 @@ function (center = RegTypeFamily(), neighbor = ContNeighborhood())
 > ### ** Examples
 > 
 > new("InfRobRegTypeModel")
-An object of class “InfRobRegTypeModel” 
-###### center:	An object of class “L2RegTypeFamily” 
+An object of class "InfRobRegTypeModel" 
+###### center:	An object of class "L2RegTypeFamily" 
 ### name:	 L2 differentiable regression type family 
 
 ### ErrorDistr:	Distribution Object of Class: Norm
@@ -1038,11 +1004,11 @@ An object of class “InfRobRegTypeModel”
  mean: 0
  sd: 1
 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 parameter of a parametric family of probability measures 
 main:	 0 
 
-###### neighborhood:	An object of class “ContNeighborhood” 
+###### neighborhood:	An object of class "ContNeighborhood" 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
@@ -1062,8 +1028,8 @@ radius:	 0
 > ### ** Examples
 > 
 > InfRobRegTypeModel()
-An object of class “InfRobRegTypeModel” 
-###### center:	An object of class “L2RegTypeFamily” 
+An object of class "InfRobRegTypeModel" 
+###### center:	An object of class "L2RegTypeFamily" 
 ### name:	 L2 differentiable regression type family 
 
 ### ErrorDistr:	Distribution Object of Class: Norm
@@ -1074,11 +1040,11 @@ An object of class “InfRobRegTypeModel”
  mean: 0
  sd: 1
 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable regression type family 
 main:	 0 
 
-###### neighborhood:	An object of class “ContNeighborhood” 
+###### neighborhood:	An object of class "ContNeighborhood" 
 type:	 (uncond.) convex contamination neighborhood 
 radius:	 0 
 > 
@@ -1118,7 +1084,7 @@ function (center = L2RegTypeFamily(), neighbor = ContNeighborhood())
 > ### ** Examples
 > 
 > new("L2RegTypeFamily")
-An object of class “L2RegTypeFamily” 
+An object of class "L2RegTypeFamily" 
 ### name:	 L2 differentiable regression type family 
 
 ### ErrorDistr:	Distribution Object of Class: Norm
@@ -1129,7 +1095,7 @@ An object of class “L2RegTypeFamily”
  mean: 0
  sd: 1
 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 parameter of a parametric family of probability measures 
 main:	 0 
 > 
@@ -1149,7 +1115,7 @@ main:	 0
 > ### ** Examples
 > 
 > L2RegTypeFamily()
-An object of class “L2RegTypeFamily” 
+An object of class "L2RegTypeFamily" 
 ### name:	 L2 differentiable regression type family 
 
 ### ErrorDistr:	Distribution Object of Class: Norm
@@ -1160,7 +1126,7 @@ An object of class “L2RegTypeFamily”
  mean: 0
  sd: 1
 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable regression type family 
 main:	 0 
 > 
@@ -1180,7 +1146,7 @@ main:	 0
 > ### ** Examples
 > 
 > (LM1 <- NormLinRegFamily(Reg2Mom = matrix(1)))
-An object of class “L2RegTypeFamily” 
+An object of class "L2RegTypeFamily" 
 ### name:	 L2 differentiable linear regression family 
 
 ### ErrorDistr:	Distribution Object of Class: Norm
@@ -1191,7 +1157,7 @@ An object of class “L2RegTypeFamily”
  mean: 0
  sd: 1
 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable linear regression family 
 main:	 0 
 
@@ -1205,7 +1171,7 @@ function (x)
 {
     as.vector(x[1:1L] * (x[1L + 1] - x[1:1L] %*% 0))
 }
-<environment: 0xa6549e0>
+<environment: 0x0b966fc8>
 
 > FisherInfo(LM1)
 An object of class "PosDefSymmMatrix"
@@ -1236,7 +1202,7 @@ maximum deviation
 > ### ** Examples
 > 
 > (LM1 <- NormLinRegInterceptFamily(Reg2Mom = matrix(1)))
-An object of class “L2RegTypeFamily” 
+An object of class "L2RegTypeFamily" 
 ### name:	 L2 differentiable linear regression family with unknown intercept 
 
 ### ErrorDistr:	Distribution Object of Class: Norm
@@ -1247,7 +1213,7 @@ An object of class “L2RegTypeFamily”
  mean: 0
  sd: 1
 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable linear regression family with unknown intercept 
 main:	 0 0 
 
@@ -1261,7 +1227,7 @@ function (x)
 {
     as.vector(x[1:1L] * (x[1L + 1] - x[1:1L] %*% 0 - 0))
 }
-<environment: 0xa4c53f8>
+<environment: 0x0c183578>
 
 > FisherInfo(LM1)
 An object of class "PosDefSymmMatrix"
@@ -1294,7 +1260,7 @@ maximum deviation
 > ### ** Examples
 > 
 > (LM1 <- NormLinRegScaleFamily(Reg2Mom = matrix(1)))
-An object of class “L2RegTypeFamily” 
+An object of class "L2RegTypeFamily" 
 ### name:	 L2 differentiable linear regression family with unknown scale 
 
 ### ErrorDistr:	Distribution Object of Class: Norm
@@ -1305,7 +1271,7 @@ An object of class “L2RegTypeFamily”
  mean: 0
  sd: 1
 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 Parameter of L2 differentiable linear regression family with unknown scale 
 main:	 0 1 
 
@@ -1319,7 +1285,7 @@ function (x)
 {
     as.vector(x[1:1L] * (x[1L + 1] - x[1:1L] %*% 0)/1^2)
 }
-<environment: 0xaa67150>
+<environment: 0x0d7f1a00>
 
 > FisherInfo(LM1)
 An object of class "PosDefSymmMatrix"
@@ -1355,7 +1321,7 @@ maximum deviation
 > ### ** Examples
 > 
 > new("RegTypeFamily")
-An object of class “RegTypeFamily” 
+An object of class "RegTypeFamily" 
 ### name:	 regression type family 
 
 ### ErrorDistr:	Distribution Object of Class: Norm
@@ -1366,7 +1332,7 @@ An object of class “RegTypeFamily”
  mean: 0
  sd: 1
 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 parameter of a parametric family of probability measures 
 main:	 0 
 > 
@@ -1386,7 +1352,7 @@ main:	 0
 > ### ** Examples
 > 
 > RegTypeFamily()
-An object of class “RegTypeFamily” 
+An object of class "RegTypeFamily" 
 ### name:	 regression type family 
 
 ### ErrorDistr:	Distribution Object of Class: Norm
@@ -1397,7 +1363,7 @@ An object of class “RegTypeFamily”
  mean: 0
  sd: 1
 
-### param:	An object of class “ParamFamParameter” 
+### param:	An object of class "ParamFamParameter" 
 name:	 parameter of regression type family 
 main:	 0 
 > 
@@ -1405,8 +1371,10 @@ main:	 0
 > 
 > ### * <FOOTER>
 > ###
+> cleanEx()
+> options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  21.925 0.108 22.113 0 0 
+Time elapsed:  19.59 0.83 39.86 NA NA 
 > grDevices::dev.off()
 null device 
           1 
