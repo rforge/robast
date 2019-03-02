@@ -30,8 +30,8 @@
         for(i in 1:dimn){
             dotsFun  <- .filterFunargs(dots, fun@Map[[i]])
 
-            funwD <- function(x)  do.call(fun@Map[[i]], c(list(x), dotsFun))
-            funwDc <- function(x,cond){ y <- c(x,cond);  do.call(fun@Map[[i]], c(list(x=y), dotsFun))}
+            funwD <- function(x)  do.call(fun@Map[[i]], c(list(x), eval.parent(dotsFun,1)))
+            funwDc <- function(x,cond){ y <- c(x,cond);  do.call(fun@Map[[i]], c(list(x=y), eval.parent(dotsFun,1)))}
 
             Eargs <- c(Eargs0, list(fun=if(withCond)funwDc else funwD), Eargs1, dotsI)
             res[i] <- buf <- do.call(E, Eargs)
