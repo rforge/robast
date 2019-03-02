@@ -308,8 +308,8 @@ fixed part of param.:
 loc:	0
 trafo:
 function(x){ list(fval = tau(x), mat = Dtau(x)) }
-<bytecode: 0x000000001a57d7b0>
-<environment: 0x000000001a57a038>
+<bytecode: 0x000000001a56e738>
+<environment: 0x000000001a563d98>
 Shape parameter must not be negative.
 > FisherInfo(G1)
 An object of class "PosSemDefSymmMatrix"
@@ -364,8 +364,8 @@ scale:	1
 shape:	0.5
 trafo:
 function(x){ list(fval = tau(x), mat = Dtau(x)) }
-<bytecode: 0x000000001f82fb00>
-<environment: 0x000000001f833ec8>
+<bytecode: 0x000000001f81a3a8>
+<environment: 0x000000001f81e788>
 Shape parameter must not be negative.
 > FisherInfo(G1)
 An object of class "PosSemDefSymmMatrix"
@@ -545,8 +545,8 @@ fixed part of param.:
 loc:	0
 trafo:
 function(x){ list(fval = tau(x), mat = Dtau(x)) }
-<bytecode: 0x000000001a57d7b0>
-<environment: 0x000000001c79e528>
+<bytecode: 0x000000001a56e738>
+<environment: 0x000000001c782e50>
 Shape parameter must not be negative.
 > FisherInfo(G1)
 An object of class "PosSemDefSymmMatrix"
@@ -757,7 +757,7 @@ function (x)
 {
     LogDeriv(x - c(loc = 0))
 }
-<environment: 0x000000001f8890f8>
+<environment: 0x000000001f8756f0>
 
 > checkL2deriv(G1)
 precision of centering:	 1.51181e-06 
@@ -1327,12 +1327,12 @@ Infos:
 > system.time(print(Sn(GPareto(shape=0.5,scale=2))))
 [1] 1.519379
    user  system elapsed 
-   0.32    0.07    0.41 
+   0.34    0.15    0.50 
 > ## No test: 
 > system.time(print(Sn(as(GPareto(shape=0.5,scale=2),"AbscontDistribution"))))
 [1] 1.522578
    user  system elapsed 
-   0.75    0.00    0.75 
+   0.85    0.00    0.90 
 > ## End(No test)
 > 
 > 
@@ -1364,8 +1364,8 @@ scale:	1
 shape:	0.5
 trafo:
 function(x){ list(fval = tau(x), mat = Dtau(x)) }
-<bytecode: 0x000000001a57d7b0>
-<environment: 0x000000001d241a68>
+<bytecode: 0x000000001a56e738>
+<environment: 0x000000001d2301d0>
 Shape parameter must not be negative.
 > FisherInfo(G1)
 An object of class "PosSemDefSymmMatrix"
@@ -1747,7 +1747,7 @@ detaching 'package:mgcv', 'package:nlme'
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  24.52 1.43 26.81 NA NA 
+Time elapsed:  30.23 1.82 33.38 NA NA 
 > grDevices::dev.off()
 null device 
           1 

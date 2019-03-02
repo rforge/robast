@@ -1,4 +1,4 @@
-..makeIC.qtl <- function (IC, L2Fam){
+..makeIC.qtl <- function (IC, L2Fam,...){
         mc <- match.call()
         mcl <- as.list(mc)[-1]
         mcl$IC <- IC

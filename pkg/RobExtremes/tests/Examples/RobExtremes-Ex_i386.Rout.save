@@ -308,8 +308,8 @@ fixed part of param.:
 loc:	0
 trafo:
 function(x){ list(fval = tau(x), mat = Dtau(x)) }
-<bytecode: 0x18f5f030>
-<environment: 0x18f63a10>
+<bytecode: 0x18f35310>
+<environment: 0x18f377a0>
 Shape parameter must not be negative.
 > FisherInfo(G1)
 An object of class "PosSemDefSymmMatrix"
@@ -364,8 +364,8 @@ scale:	1
 shape:	0.5
 trafo:
 function(x){ list(fval = tau(x), mat = Dtau(x)) }
-<bytecode: 0x13080b30>
-<environment: 0x13083780>
+<bytecode: 0x130564e0>
+<environment: 0x130581a0>
 Shape parameter must not be negative.
 > FisherInfo(G1)
 An object of class "PosSemDefSymmMatrix"
@@ -545,8 +545,8 @@ fixed part of param.:
 loc:	0
 trafo:
 function(x){ list(fval = tau(x), mat = Dtau(x)) }
-<bytecode: 0x18f5f030>
-<environment: 0x1016ecb8>
+<bytecode: 0x18f35310>
+<environment: 0x10150d58>
 Shape parameter must not be negative.
 > FisherInfo(G1)
 An object of class "PosSemDefSymmMatrix"
@@ -757,7 +757,7 @@ function (x)
 {
     LogDeriv(x - c(loc = 0))
 }
-<environment: 0x12cae4e0>
+<environment: 0x12c820c0>
 
 > checkL2deriv(G1)
 precision of centering:	 1.51181e-06 
@@ -1327,12 +1327,12 @@ Infos:
 > system.time(print(Sn(GPareto(shape=0.5,scale=2))))
 [1] 1.519379
    user  system elapsed 
-   0.42    0.16    0.59 
+   0.36    0.23    0.59 
 > ## No test: 
 > system.time(print(Sn(as(GPareto(shape=0.5,scale=2),"AbscontDistribution"))))
 [1] 1.522578
    user  system elapsed 
-   0.52    0.00    0.52 
+   0.67    0.00    0.67 
 > ## End(No test)
 > 
 > 
@@ -1364,8 +1364,8 @@ scale:	1
 shape:	0.5
 trafo:
 function(x){ list(fval = tau(x), mat = Dtau(x)) }
-<bytecode: 0x18f5f030>
-<environment: 0x12ca73a0>
+<bytecode: 0x18f35310>
+<environment: 0x12c81e60>
 Shape parameter must not be negative.
 > FisherInfo(G1)
 An object of class "PosSemDefSymmMatrix"
@@ -1747,7 +1747,7 @@ detaching 'package:mgcv', 'package:nlme'
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  23.72 1.43 26.02 NA NA 
+Time elapsed:  27.42 1.58 29.83 NA NA 
 > grDevices::dev.off()
 null device 
           1 
