@@ -33,7 +33,6 @@ setMethod("scale", "GEV",
            scale(x@param))
 setMethod("shape", "GEV", function(object) shape(object@param))
 
-
 ## wrapped replace methods
 setMethod("loc<-", "GEV", function(object, value) 
            new("GEV", loc = value, scale = scale(object), shape = shape(object)))
@@ -57,6 +56,14 @@ setValidity("GEVParameter", function(object){
 #    stop("shape has to be non-negative")
   else return(TRUE)
 })
+
+setMethod("liesInSupport", signature(object = "GEV",
+                                     x = "numeric"),
+  function(object, x, checkFin = TRUE){
+    loc=loc(object); scale=scale(object); shape=shape(object)
+    if(shape>0) return(is.finite(x)&(x>= loc-scale/shape))
+    if(shape<0) return(is.finite(x)&(x<= loc-scale/shape))
+    if(abs(shape)<1e-8) return(is.finite(x))})
 
 ## generating function
 GEV <- function(loc = 0, scale = 1, shape = 0, location = loc){ 

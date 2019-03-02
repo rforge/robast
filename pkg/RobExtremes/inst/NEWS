@@ -8,6 +8,44 @@
  information) 
 
 #######################################
+version 1.2
+#######################################
+
+user-visible CHANGES:
++ return object of roptest (with interpolRisks) now contains information on its bias,
+  so can, e.g., be used in confint with accounting for possible bias
+
+bugfixes:
++ Bernhard discovered a bug in ".checkEstClassForParamFamily" for GEV (was GPD instead of GEV)
++ there were no classes [GPD/GEV]MDEstimate -> fixed now
+
+under the hood
++ moved quantile integration methods for expectation for Weibull and
+  Gamma distribution to pkg distrEx (>= 2.8.0)
++ in asvarMedkMAD we now use distr::solve
++ made a helper function .qtlIntegrate out of existing code in 
+  RobExtremes 1.1.0  and moved it to distrEx where it is exported
+  from version 2.8.0; it is reused in RobExtremes for the GEV methods 
++ as with the interpolating - getStartIC methods in ROptEst, 
+  the makeIC-task is removed from the inner .modifyIC.0 function and 
+  delegated to the outer .modifyIC , so .getPsi, getPsi.wL, and
+  .getPsi.P loose their argument withMakeIC
++ in the getStartIC methods for interpolRisks, we now produce slots modifyIC with argument
+  withMakeIC (as before) and with "..." to pass on arguments to E() (e.g., when makeIC is called)
++ the timings are now about ~ 2s per estimator for GEV and GPD and check/makeIC are much faster
++ script updated 
++ the makeIC methods for GPD/GEV... also gain an "..." argument 
++ fixed minor issues in scripts/RobFitsAtRealData.R
++ expectation E() of Pareto, GPD, and GEV gain argument diagnostic and use dot-filtering (like in distrEx)
++ minor bugfixes in .getBetaXiGEW 
++ new S4 classes
+  "GPDML.ALEstimate", "GPDCvMMD.ALEstimate", and "GEVML.ALEstimate", "GEVCvMMD.ALEstimate"
+  deleted classes "GPDMCALEstimate", "GEVMCALEstimate" as not every MCE is an ALE -> this gave misleading error messages
++ warning/caveat in the help to GEVFamily/GEVFamilyMuUnknown as to the accuracy of PickandsEstimator for GEV 
++ introduced particular liesInSupport methods for Gumbel, Pareto, GPareto, and GEV 
+
+  
+#######################################
 version 1.1
 #######################################
 
@@ -76,7 +114,7 @@ user-visible CHANGES:
   realized in startEstGEV.R : a CvM-MDE with xi varying on a grid...
 + provide wrapper for ismev-diagnostics ie gev.diag, gev.prof, gev.profxi, 
   gpd.diag, gpd.prof, gpd.profxi
-
+  
 GENERAL ENHANCEMENTS:
 
 under the hood:

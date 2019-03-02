@@ -8,6 +8,7 @@
 \alias{Min<-,Pareto-method}
 \alias{scale,Pareto-method}
 \alias{*,Pareto,numeric-method}
+\alias{liesInSupport,Pareto,numeric-method}
 
 \title{Pareto distribution}
 \description{[borrowed from \pkg{actuar}]:
@@ -85,6 +86,8 @@ Class \code{"Distribution"}, by class \code{"AbscontDistribution"}.
     \item{*}{\code{signature(e1 = "Pareto", e2 = "numeric")}: exact method
       for this transformation --- stays within this class if \code{e2>0}. }
 
+    \item{liesInSupport}{\code{signature(object = "Pareto", x = "numeric")}:
+      checks if \code{x} lies in the support of the respective distribution. }
   }
 }
 \references{Johnson et al. (1995) \emph{Continuous Univariate Distributions. Vol. 2. 2nd ed.}

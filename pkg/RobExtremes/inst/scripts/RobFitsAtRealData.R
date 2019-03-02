@@ -7,8 +7,8 @@ require(ismev)
 require(fitdistrplus) ## for dataset groundbeef
 
 
-help(package="RobExtremes")
-help("RobExtremes-package")
+#help(package="RobExtremes")
+#help("RobExtremes-package")
 
 #----------------------------------------
 ## data sets
@@ -46,6 +46,17 @@ system.time(mlEi10ALE <- roptest(portpiriei, GEVFam,risk=asCov(),steps=10))
 system.time(MBRi <- MBREstimator(portpiriei, GEVFam))
 ## synonymous to
 ## system.time(MBRi0 <- roptest(portpiriei, GEVFam,risk=MBRRisk()))
+
+## some diagnostics as to timings and integrations:
+system.time(MBRiD <- MBREstimator(portpiriei, GEVFam, diagnostic = TRUE))
+showDiagnostic(MBRiD)
+timings(MBRiD)
+kStepTimings(MBRiD)
+(int.times <- getDiagnostic(MBRiD, what="time"))
+
+IC <- pIC(MBRiD)
+es <- checkIC(IC,diagnostic = TRUE)
+
 system.time(RMXi <- RMXEstimator(portpiriei, GEVFam))
 ## synonymous to
 ## system.time(RMXi <- roptest(portpiriei, GEVFam,risk=RMXRRisk()))
@@ -53,9 +64,20 @@ system.time(RMXi <- RMXEstimator(portpiriei, GEVFam))
 ## little to the situation where we enforce IC conditions
 checkIC(pIC(RMXi))
 system.time(RMXiw <- RMXEstimator(portpiriei, GEVFam,withMakeIC=TRUE))
-checkIC(pIC(RMXiw))
+checkIC(pIC(RMXiw), forceContICMethod = TRUE)
+## uses contIC 0 - 1 standardization...
+## for a moment remove this method
+oldM <- getMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"))
+removeMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"))
+system.time(RMXiw2 <- RMXEstimator(portpiriei, GEVFam,withMakeIC=TRUE))
+checkIC(pIC(RMXiw2))
+setMethod("makeIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),oldM)
+erg <- getMethod("checkIC", signature(IC = "IC", L2Fam = "missing"))(pIC(RMXiw2),
+           out=TRUE, diagnostic=TRUE)
+
 estimate(RMXi)
 estimate(RMXiw)
+estimate(RMXiw2)
 
 ## our output:
 mlEi
@@ -69,8 +91,6 @@ estimate(mlEi10ALE) ### similar after 10 steps
 estimate(MBRi)
 estimate(RMXi)
 estimate(RMXiw)
-### where do the robust estimators spend their time?
-attr(MBRi, "timings")
 
 ## our return values can be plugged into ismev-diagnostics:
 devNew()
@@ -164,13 +184,9 @@ devNew()
 gev.profxi(mlEc, -0.3, 0.3)
 
 ## diagnostics from pkg 'distrMod'/'RobAStBase'
-devNew()
 qqplot(portpiriec,MBRc)
-devNew()
 qqplot(portpiriec,MBRc,ylim=c(3.5,5))
-devNew()
 returnlevelplot(portpiriec,MBRc)
-devNew()
 returnlevelplot(portpiriec,MBRc,ylim=c(3.5,5))
 
 ## here the MBR-IC looks as follows
@@ -237,48 +253,33 @@ gpd.profxi(mlE2c, -0.02, 0.02)
 devNew()
 plot(pIC(MBR2c))
 
-devNew()
 qqplot(rainc,MBR2c)
-devNew()
 qqplot(rainc,MBR2c,ylim=c(5,100))
-devNew()
 qqplot(rainc,MBR2c,xlim=c(5,100),ylim=c(5,100),log="xy")
-devNew()
 qqplot(rainc,MBR2c,xlim=c(5,100),ylim=c(5,100),log="xy",
        cex.pts=2,col.pts="blue",with.lab=TRUE,cex.lbs=.9,which.Order=1:3)
 
-devNew()
 returnlevelplot(raini,MBR2i,MaxOrPot="POT",threshold=0)
-devNew()
 returnlevelplot(raini,MBR2i,MaxOrPot="POT",threshold=0, withLab=TRUE, cex.lbl=0.8)
-devNew()
 returnlevelplot(rainc,MBR2c,MaxOrPot="POT",threshold=0)
-devNew()
 returnlevelplot(rainc,MBR2c,ylim=c(10,100),MaxOrPot="POT",threshold=0)
 #
 L2F <- eval(MBR2c@pIC@CallL2Fam)
 dI2c <- L2F@distribution
-devNew()
 qqplot(rainc,dI2c)
 rainc.10 <- rainc-10
-devNew()
 qqplot(rainc.10,dI2c-10)
-devNew()
 returnlevelplot(rainc.10,dI2c-10,MaxOrPot="POT",threshold=0)
 
 ## wrong data set
 dI2i <- distribution(eval(MBR2i@pIC@CallL2Fam))
 loc(dI2i) <- 0
-devNew()
 qqplot(portpiriei-10,dI2i)
-devNew()
 qqplot(portpiriec,MBR2c)
 ### all points are red
 
 ## right data set
-devNew()
 qqplot(raini-10,dI2i)
-devNew()
 qqplot(rainc,MBR2c)
 
 
@@ -291,11 +292,8 @@ xc <- c(x, 1e15,1e12,1e69, 2.001,2.00000001)
 PM <- ParetoFamily(Min=2)
 mlE3i <- MLEstimator(x,PM)
 mlE3c <- MLEstimator(xc,PM)
-devNew()
 qqplot(x, mlE3i, log="xy")
-devNew()
 qqplot(xc, mlE3c, log="xy")
-devNew()
 returnlevelplot(x, mlE3i, MaxOrPOT="POT",ylim=c(1,1e5),log="y")
 
 system.time(MBR3i <- MBREstimator(x, PM))
@@ -339,9 +337,7 @@ devNew()
 plot(pIC(MBR4i))
 devNew()
 plot(pIC(RMX4i))
-devNew()
 qqplot(grbsi, RMX4i)
-devNew()
 qqplot(grbsc, RMX4c, log="xy")
 
 #######################################################
@@ -350,13 +346,13 @@ qqplot(grbsc, RMX4c, log="xy")
 
 GF <- GammaFamily()
 system.time(mlE5i <- MLEstimator(grbsi, GF))
-system.time(OMS5i <- MBREstimator(grbsi, GF))
-system.time(RMX5i <- OMSEstimator(grbsi, GF))
-system.time(MBR5i <- RMXEstimator(grbsi, GF))
+system.time(MBR5i <- MBREstimator(grbsi, GF))
+system.time(OMS5i <- OMSEstimator(grbsi, GF))
+system.time(RMX5i <- RMXEstimator(grbsi, GF))
 system.time(mlE5c <- MLEstimator(grbsc, GF))
-system.time(OMS5c <- MBREstimator(grbsc, GF))
-system.time(RMX5c <- OMSEstimator(grbsc, GF))
-system.time(MBR5c <- RMXEstimator(grbsc, GF))
+system.time(MBR5c <- MBREstimator(grbsc, GF))
+system.time(OMS5c <- OMSEstimator(grbsc, GF))
+system.time(RMX5c <- RMXEstimator(grbsc, GF))
 estimate(mlE5i)
 estimate(RMX5i)
 estimate(OMS5i)
@@ -371,7 +367,5 @@ devNew()
 plot(pIC(RMX5i))
 devNew()
 plot(pIC(MBR5i))
-devNew()
 qqplot(grbsi, RMX5i)
-devNew()
 qqplot(grbsc, RMX5c, log="xy")

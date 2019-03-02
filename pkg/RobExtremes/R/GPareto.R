@@ -58,6 +58,13 @@ setValidity("GParetoParameter", function(object){
   else return(TRUE)
 })
 
+setMethod("liesInSupport", signature(object = "GPareto",
+                                     x = "numeric"),
+  function(object, x, checkFin = TRUE){
+    loc=loc(object); scale=scale(object); shape=shape(object)
+    if(shape>=0) return(is.finite(x)&(x>= loc))
+    if(shape<0) return(is.finite(x)&(x<= loc-scale/shape)&(x>=loc))})
+
 ## generating function
 GPareto <- function(loc = 0, scale = 1, shape = 0, location = loc){ 
            if(!missing(loc)&&!missing(location)) 

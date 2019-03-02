@@ -32,7 +32,10 @@ exportClasses("L2LocScaleShapeUnion")
 exportClasses("GPDEstimate","GPDMCEstimate","GPDLDEstimate",
               "GPDkStepEstimate","GEVEstimate","GEVLDEstimate",
 			  "GEVkStepEstimate","GEVMCEstimate",
-			  "GPDORobEstimate","GEVORobEstimate")			  
+			  "GPDORobEstimate","GEVORobEstimate",
+			  GEVCvMMD.ALEstimate,GEVML.ALEstimate,
+			  GPDCvMMD.ALEstimate,GPDML.ALEstimate)			  
+
 exportMethods("initialize", "show", "rescaleFunction") 
 exportMethods("loc", "loc<-", "kMAD", "Sn", "Qn")
 exportMethods("validParameter",
@@ -45,10 +48,10 @@ exportMethods("validParameter",
 exportMethods(".checkEstClassForParamFamily")
 exportMethods("locscaleshapename","locscalename","scaleshapename",
               "locationname","scalename","shapename","locscaleshapename<-")
-exportMethods("modifyModel", "getStartIC")
+exportMethods("modifyModel", "getStartIC", "coerce")
 exportMethods("moveL2Fam2RefParam",
 			  "moveICBackFromRefParam")			  
-exportMethods("checkIC", "makeIC")
+exportMethods("checkIC", "makeIC", "liesInSupport")
 export("EULERMASCHERONICONSTANT","APERYCONSTANT")
 export("getCVaR", "getVaR", "getEL")
 export("Gumbel", "Pareto", "GPareto", "GEV")

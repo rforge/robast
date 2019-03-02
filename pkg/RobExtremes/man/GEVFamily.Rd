@@ -38,7 +38,12 @@ GEVFamily(loc = 0, scale = 1, shape = 0.5, of.interest = c("scale", "shape"),
       be computed? Defaults to \code{FALSE} (to speed up computations).}
   \item{withMDE}{logical: should Minimum Distance Estimators be used to
                  find a good starting value for the parameter search?
-                 Defaults to \code{FALSE}  (to speed up computations).}
+                 Defaults to \code{FALSE}  (to speed up computations).
+                 We have seen cases though, where the use of the then
+                 employed \code{PickandsEstimator} was drastically misleading
+                 and subsequently led to bad estimates where it is used
+                 as starting value; so where feasible it is a good idea
+                 to also try argument \code{withMDE=TRUE} for control purposes.}
   \item{..ignoreTrafo}{logical: only used internally in \code{kStepEstimator}; do not change this.}
   \item{..withWarningGEV}{logical: shall warnings be issued if shape is large?}
 }

@@ -54,7 +54,7 @@ asvarMedkMAD <- function( model, k=1){
       D1 <- matrix(c(dG1_beta,dG2_beta,dG1_xi,dG2_xi),2,2)
       D2 <- matrix(c(dG1_M,dG2_M,dG1_m,dG2_m),2,2)
 
-      D <- -solve(D1)%*%D2
+      D <- - distr::solve(D1)%*%D2
   }else{
    psi_med <- function(x) (0.5-(x<=m))/dm
    psi_kMad <- function(x){
@@ -71,7 +71,7 @@ asvarMedkMAD <- function( model, k=1){
    E12 <- E(distribution(model),fun=function(x) psi_kMad(x) * L_xi.f(x))
    E21 <- E(distribution(model),fun=function(x) psi_med(x) * L_beta.f(x))
    E22 <- E(distribution(model),fun=function(x) psi_med(x) * L_xi.f(x))
-   D <- solve(matrix(c(E11,E21,E12,E22),2,2))
+   D <- distr::solve(matrix(c(E11,E21,E12,E22),2,2))
   }
 
   ASV_Med <- PosSemDefSymmMatrix(D %*% V %*% t(D))

@@ -2,7 +2,7 @@
    xi <- main(param)[nam]
    return(is.na(fct[[1]](xi)))
 }
-.getPsi <- function(param, fct, L2Fam , type, withMakeIC = FALSE){
+.getPsi <- function(param, fct, L2Fam , type){
 
    scshnm <- scaleshapename(L2Fam)
    shnam <- scshnm["shape"]
@@ -29,7 +29,7 @@
       ai <- Ai %*% zi
       Am <- (Ai+Aa)/2; Ai <- Aa <- Am
       am <- (ai+aa)/2; ai <- aa <- am
-      zi <- solve(Ai,ai)
+      zi <- distr::solve(Ai,ai)
    }
    a <-  c(.dbeta%*%aa)
    aw <- c(.dbeta1%*%zi)
@@ -53,20 +53,22 @@
                           normW = normt)
    }else weight(w) <- minbiasweight(w, neighbor = nb, biastype = biast,
                           normW = normt)
+   Risk <- list(asBias = list(value = b, biastype = biast,
+                                       normtype = normt,
+                                       neighbortype = class(nb)))
 
    res <- list(a = a, A = A, b = b, d = 0*a,
                normtype = normt, biastype = biast, w = w,
-               info = c("optIC", ICT), risk = list(),
+               info = c("optIC", ICT), risk = Risk,
                modifyIC = NULL)
 
 
    IC <- generateIC(nb, L2Fam, res)
-   if(withMakeIC) IC <- makeIC(IC,L2Fam)
    return(IC)
 }
 
 
-.getPsi.wL <- function(param, fct, L2Fam , type, withMakeIC = FALSE){
+.getPsi.wL <- function(param, fct, L2Fam , type){
 
    scshnm <- scaleshapename(L2Fam)
    shnam <- scshnm["shape"]
@@ -96,7 +98,7 @@
       ai <- Ai %*% zi
       Am <- (Ai+Aa)/2; Ai <- Aa <- Am
       am <- (ai+aa)/2; ai <- aa <- am
-      zi <- solve(Ai,ai)
+      zi <- distr::solve(Ai,ai)
    }
    a <-  c(.dbeta%*%aa)
    aw <- c(.dbeta1%*%zi)
@@ -121,14 +123,17 @@
    }else weight(w) <- minbiasweight(w, neighbor = nb, biastype = biast,
                           normW = normt)
 
+   Risk <- list(asBias = list(value = b, biastype = biast,
+                                       normtype = normt,
+                                       neighbortype = class(nb)))
+
    res <- list(a = a, A = A, b = b, d = 0*a,
                normtype = normt, biastype = biast, w = w,
-               info = c("optIC", ICT), risk = list(),
+               info = c("optIC", ICT), risk = Risk,
                modifyIC = NULL)
 
 
    IC <- generateIC(nb, L2Fam, res)
-   if(withMakeIC) IC <- makeIC(IC,L2Fam)
    return(IC)
 }
 

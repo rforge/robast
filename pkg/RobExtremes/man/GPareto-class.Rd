@@ -12,6 +12,7 @@
 \alias{shape<-,GPareto-method}
 \alias{+,GPareto,numeric-method}
 \alias{*,GPareto,numeric-method}
+\alias{liesInSupport,GPareto,numeric-method}
 
 
 \title{Generalized Pareto distribution}
@@ -92,6 +93,8 @@ Class \code{"Distribution"}, by class \code{"AbscontDistribution"}.
     \item{kurtosis}{\code{signature(signature(x = "GPareto")}:
     exact evaluation using explicit expressions.}
 
+    \item{liesInSupport}{\code{signature(object = "GPareto", x = "numeric")}:
+      checks if \code{x} lies in the support of the respective distribution. }
 
   }
 }

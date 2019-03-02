@@ -30,14 +30,15 @@
          names(e0) <- c("scale","shape")
          return(e0)
       }
-      mygev <- GEVFamily(loc=0,scale=e0[1],shape=e0[2], withPos=withPos,
+      mygev <- GEVFamily(loc=0,scale=e0[1],shape=e0[2],
+                         withPos=withPos,
                          start0Est = fu, ..withWarningGEV=FALSE)
       mde0 <- try(MDEstimator(x0, mygev, distance=CvMDist, startPar=c("scale"=e0[1],"shape"=e0[2])),silent=TRUE)
       if(!is(mde0,"try-error")){
           es <- estimate(mde0)
           crit1 <- criterion(mde0)
           if(.issueIntermediateParams){
-             cat("1st candidate:\n", round(es,6), " crit:", round(crit1,6), , "   ")
+             cat("1st candidate:\n", round(es,6), " crit:", round(crit1,6), "\n")
           }
           if(quantile(1+es[2]*x0/es[1], epsn/n)>0){
              validi <- 1
@@ -114,8 +115,8 @@
           }
       }
   }
-  names(es) <- c("scale","shape")
-  return(es)
+  names(es0) <- c("scale","shape")
+  return(es0)
 }
 
 .getMuBetaXiGEV <- function(x, xiGrid = .getXiGrid(), withPos=TRUE, secLevel = 0.7,
