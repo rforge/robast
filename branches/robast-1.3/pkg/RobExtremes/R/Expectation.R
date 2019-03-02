@@ -1,44 +1,53 @@
+## copied form distrEx from distrEx 2.8.0 and branch 1.2.0 on
 
-setMethod("E", signature(object = "Pareto", 
-                         fun = "missing", 
+## .qtlIntegrate is moved from RobExtremes (slightly modified) to distrEx
+#   as of versions distrEx 2.8.0 and RobExtremes 1.2.0
+
+
+setMethod("E", signature(object = "Pareto",
+                         fun = "missing",
                          cond = "missing"),
-    function(object, low = NULL, upp = NULL, ...){
+    function(object, low = NULL, upp = NULL, ..., diagnostic = FALSE){
     if(!is.null(low)) if(low <= Min(object)) low <- NULL
     a <- shape(object); b <- Min(object)
     if(is.null(low) && is.null(upp)){
         if(a<=1) return(Inf)
         else return(b*a/(a-1))
-     }   
+     }
     else
-        return(E(as(object,"AbscontDistribution"), low=low, upp=upp, ...))    
+        return(E(object=object,fun=function(x)x, low=low, upp=upp, ...,
+                    diagnostic = diagnostic))
     })
 
 ### source http://mathworld.wolfram.com/ParetoDistribution.html
 
 
-setMethod("E", signature(object = "Gumbel", 
-                         fun = "missing", 
+setMethod("E", signature(object = "Gumbel",
+                         fun = "missing",
                          cond = "missing"),
-    function(object, low = NULL, upp = NULL, ...){a <- loc(object); b <- scale(object)
+    function(object, low = NULL, upp = NULL, ..., diagnostic = FALSE){
+    a <- loc(object); b <- scale(object)
     if(is.null(low) && is.null(upp))
            return(a- EULERMASCHERONICONSTANT * b)
     else
-        return(E(as(object,"AbscontDistribution"), low=low, upp=upp, ...))    
+        return(E(object=object,fun=function(x)x, low=low, upp=upp, ...,
+                    diagnostic = diagnostic))
     })
 ## http://mathworld.wolfram.com/GumbelDistribution.html
 
-setMethod("E", signature(object = "GPareto", 
-                         fun = "missing", 
+setMethod("E", signature(object = "GPareto",
+                         fun = "missing",
                          cond = "missing"),
-    function(object, low = NULL, upp = NULL, ...){
+    function(object, low = NULL, upp = NULL, ..., diagnostic = FALSE){
     if(!is.null(low)) if(low <= Min(object)) low <- NULL
     k <- shape(object); s <- scale(object); mu <- loc(object)
     if(is.null(low) && is.null(upp)){
         if(k>=1) return(Inf)
         else return(mu+s/(1-k))
-     }   
+     }
     else
-        return(E(as(object,"AbscontDistribution"), low=low, upp=upp, ...))    
+        return(E(object=object,fun=function(x)x, low=low, upp=upp, ...,
+                    diagnostic = diagnostic))
     })
 
 ### source http://en.wikipedia.org/wiki/Pareto_distribution
@@ -50,58 +59,20 @@ setMethod("E", signature(object = "DistributionsIntegratingByQuantiles",
              rel.tol= getdistrExOption("ErelativeTolerance"),
              lowerTruncQuantile = getdistrExOption("ElowerTruncQuantile"),
              upperTruncQuantile = getdistrExOption("EupperTruncQuantile"),
-             IQR.fac = max(1e4,getdistrExOption("IQR.fac")), ...
-             ){
+             IQR.fac = max(1e4,getdistrExOption("IQR.fac")), ...,
+             diagnostic = FALSE){
 
-        dots <- list(...)
-        dots.withoutUseApply <- dots
-        useApply <- TRUE
-        if(!is.null(dots$useApply)) useApply <- dots$useApply
+     dots <- list(...)
+     dotsI <- .filterEargs(dots)
+     dotsFun <- .filterFunargs(dots,fun)
+     funwD <- function(x) do.call(fun, c(list(x=x),dotsFun))
 
-        dots.withoutUseApply$useApply <- NULL
-        dots.withoutUseApply$stop.on.error <- NULL
-
-        integrand <- function(x, dfun, ...){   di <- dim(x)
-                                               y <- q.l(object)(x)##quantile transformation
-                                               if(useApply){
-                                                    funy <- sapply(y,fun, ...)
-                                                    dim(y) <- di
-                                                    dim(funy) <- di
-                                               }else funy <- fun(y,...)
-                                        return(funy) }
-
-         if(is.null(low)) low <- -Inf
-         if(is.null(upp)) upp <- Inf
-
-         Ib <- .getIntbounds(object, low, upp, lowerTruncQuantile,
-               upperTruncQuantile, IQR.fac)
-         low <- p(object)(Ib["low"])
-         upp <- p(object)(Ib["upp"])
-         if(is.nan(low)) low <- 0
-         if(is.nan(upp)) upp <- 1
-
-         if(upp < 0.98){
-           int <- do.call(distrExIntegrate, c(list(f = integrand,
-                    lower = low,
-                    upper = upp,
-                    rel.tol = rel.tol, stop.on.error = FALSE,
-                    distr = object, dfun = dunif), dots.withoutUseApply))
-         }else{
-           int1 <- do.call(distrExIntegrate, c(list(f = integrand,
-                    lower = low,
-                    upper = 0.98,
-                    rel.tol = rel.tol, stop.on.error = FALSE,
-                    distr = object, dfun = dunif), dots.withoutUseApply))
-           int2 <- do.call(distrExIntegrate, c(list(f = integrand,
-                    lower = 0.98,
-                    upper = upp,
-                    rel.tol = rel.tol, stop.on.error = FALSE,
-                    distr = object, dfun = dunif), dots.withoutUseApply))
-           int <- int1+int2
-         }
-
-         return(int)
-
+     do.call(.qtlIntegrate, c(list(object = object, fun = funwD, low = low, upp = upp,
+             rel.tol= rel.tol, lowerTruncQuantile = lowerTruncQuantile,
+             upperTruncQuantile = upperTruncQuantile,
+             IQR.fac = IQR.fac, ...,
+             .withLeftTail = FALSE, .withRightTail = TRUE,
+             diagnostic = diagnostic),dotsI))
     })
 
 setMethod("E", signature(object = "GPareto",
@@ -111,11 +82,11 @@ setMethod("E", signature(object = "GPareto",
              rel.tol= getdistrExOption("ErelativeTolerance"),
              lowerTruncQuantile = getdistrExOption("ElowerTruncQuantile"),
              upperTruncQuantile = getdistrExOption("EupperTruncQuantile"),
-             IQR.fac = max(1e4,getdistrExOption("IQR.fac")), ...
-             ){
+             IQR.fac = max(1e4,getdistrExOption("IQR.fac")), ...,
+             diagnostic = FALSE){
 
         dots <- list(...)
-        dots.withoutUseApply <- dots
+        dots.withoutUseApply <- .filterEargs(dots)
         useApply <- TRUE
         if(!is.null(dots$useApply)) useApply <- dots$useApply
         dots.withoutUseApply$useApply <- NULL
@@ -140,24 +111,26 @@ setMethod("E", signature(object = "GPareto",
                     lower = low,
                     upper = upp,
                     rel.tol = rel.tol,
-                    distr = object, dfun = d(object)), dots.withoutUseApply)))
+                    distr = object, dfun = d(object)), dots.withoutUseApply,
+                    diagnostic = diagnostic)))
 
     })
 
 
 setMethod("E", signature(object = "GEV",
-                         fun = "missing", 
+                         fun = "missing",
                          cond = "missing"),
-    function(object, low = NULL, upp = NULL, ...){
+    function(object, low = NULL, upp = NULL, ..., diagnostic = FALSE){
     if(!is.null(low)) if(low <= Min(object)) low <- NULL
     xi <- shape(object); sigma <- scale(object); mu <- loc(object)
     if(is.null(low) && is.null(upp)){
         if (xi==0) return(mu+sigma*EULERMASCHERONICONSTANT)
         else if(xi>=1) return(Inf)
         else return(mu+sigma*(gamma(1-xi)-1)/xi)
-        }       
+        }
     else
-        return(E(object, low=low, upp=upp, fun = function(x)x, ...))
+        return(E(object, low=low, upp=upp, fun = function(x)x, ...,
+                 diagnostic = diagnostic))
     })
 
 setMethod("E", signature(object = "GEV", fun = "function", cond = "missing"),
@@ -165,12 +138,14 @@ setMethod("E", signature(object = "GEV", fun = "function", cond = "missing"),
            signature(object = "DistributionsIntegratingByQuantiles",
                      fun = "function", cond = "missing")))
 
-setMethod("E", signature(object = "Weibull", fun = "function", cond = "missing"),
-           getMethod("E",
-           signature(object = "DistributionsIntegratingByQuantiles",
-                     fun = "function", cond = "missing")))
+## these routines are moved back to package distrEx from distrEx 2.8.0 / RobExtremes 1.2.0 on
 
-setMethod("E", signature(object = "Gammad", fun = "function", cond = "missing"),
-           getMethod("E",
-           signature(object = "DistributionsIntegratingByQuantiles",
-                     fun = "function", cond = "missing")))
+#setMethod("E", signature(object = "Weibull", fun = "function", cond = "missing"),
+#           getMethod("E",
+#           signature(object = "DistributionsIntegratingByQuantiles",
+#                     fun = "function", cond = "missing")))
+
+#setMethod("E", signature(object = "Gammad", fun = "function", cond = "missing"),
+#           getMethod("E",
+#           signature(object = "DistributionsIntegratingByQuantiles",
+#                     fun = "function", cond = "missing")))
