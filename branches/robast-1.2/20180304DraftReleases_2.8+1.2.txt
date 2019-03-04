@@ -1,0 +1,120 @@
+=================================================================================			 
+### distr release 2.8 ###
+=================================================================================			 
+
+Updates for the packages of the distr family are now avaialable on CRAN in 
+version >= 2.8.0. 
+
+The most important changes are enhancements as to 
+- implementation of distributions 
+- generic integration/expectation
+- plotting
+- minimum criterion estimators
+
+For some details see points D-1 to D-4 below, for more details please see the 
+NEWS files in the packages, available as NEWS("<pkgname>").
+
+=================================================================================			 
+### RobASt release 1.2 ###
+=================================================================================			 
+
+Updates for the packages of the RobASt family are now avaialable on CRAN in 
+version >= 1.2.0
+
+The most important changes are enhancements as to 
+- generic integration/expectation
+- argument digestion 
+- diagnostics and timings
+
+For some details see points R-1 to R-3 below, for more details please see the 
+NEWS files in the packages, available as NEWS("<pkgname>").
+
+Best regards from the main developpers & maintainers, 
+Peter Ruckdeschel (peter.ruckdeschel@uni-oldenburg.de) &
+Matthias Kohl (matthias.kohl@stamats.de)
+
+--------------------------------------------------------------------------------
+Some details
+--------------------------------------------------------------------------------
+=================================================================================			 
+### distr release 2.8 ###
+=================================================================================			 
+%---
+D-1. enhanced implementation of distributions: 
+%---
++ Function liesInSupport() gains an argument checkFin which in case of 
+  DiscreteDistributions, implements information on the finiteness of 
+  the support. 
++ We revised the code determine the quantile function when there are gaps in 
+  the support of a distribution with non-trivial (abs.) continuous part. 
+  This fixes an issue recently raised at the introduction of staged installation.
+%--- 
+D-2. enhanced integration/expectation:
+%--- 
++ The return values of distrExIntegrate and all E()-methods gain an optional 
+  attribute "diagnostic" for information on integration accuracy etc; this 
+  comes with functionality to inspect/access this information through functions 
+  showDiagnostic, getDiagnostic and the S3method for print for S3class 
+  DiagnosticClass 
++ We introduce filter functions to warrant some safety when digesting "..." 
+  args for distrExIntegrate(), E(), integrate(), GLIntegrate(), quantiles 
+  and IQR
++ We enhance method .qtlIntegrate  to integrate w.r.t. the quantile 
+  function for expectations (e.g. for Weibull, GPD, GEVD, Gamma)
+%--- 
+D-3. enhanced plotting:
+%--- 
++ Our plot methods gain a return object of S3 class c("plotInfo","DiagnInfo"), 
+  containing the information needed to (re)produce the respective plot, which 
+  at a later stage could be used by different graphic engines (like, e.g. ggplot) 
+  to produce the plot in a different framework. A more detailed description 
+  will follow in a subsequent version.
++ For diagnostic plots to be displayed in several windows, we enhance our helper
+  function devNew() to react on the opening of two many devices: in interactive 
+  mode it now asks the user to shut some devices after reaching a certain 
+  threshold of opened devices; in non-interactive mode, when this threshold is 
+  reached, it shuts the first 15 open devices; see ?devNew
+%--- 
+D-4. enhanced minimum criterion estimators
+%--- 
++ cleverer parsing of "..." args in M[L,C,D]Estimator:
+   (where: ML = MaxLikelihood, MC = MinCriterion, MD = MinDistance)
+  We actively filter out arguments causing clashes with formals in optim/optimize 
+  and calling arguments; from the remaining ones only [exactly] _named_ arguments 
+  of the optimizer (optim/optimize) and those matching either exactly arguments 
+  of the criterion or all remaining ones (if "..." is a formal of the criterion) 
+  are passed on.
++ For diagnostic purposes, MCEstimate-class gains a slot 'optimReturn' which is 
+  filled by the return value of the optimizer in "mceCalc" -- it has a 
+  corresponding accessor
++ For Cramer von Mises MD-Estimator, we distinguish 3 cases 
+  selected by  argument muDatOrMod = c("Dat","Mod", "Other"):
+  * in case "Dat", we integrate w.r.t the emp. cdf (default), 
+  * in case "Mod", we integrate w.r.t. the current best fit model distribution,
+  * and in case "Other" one has to supply an integration probability mu. 
+  The provided asymptotic covariances reflect this choice.
++ We add some theory/references to help file to MD estimators.
+=================================================================================			 
+### RobASt release 1.2 ###
+=================================================================================
+%--- 
+R-1. enhanced integration/expectation:
+%--- 
+E methods for RandVariables gain argument diagnostic (like E()-methods in 
+distrEx v 2.8.0).
+%--- 
+R-2. enhanced argument digestion 
+%--- 
+roptest and its wrappers RMX|OBR|MBR|OMSEstimator can now also digest args 
+startCtrl, startICCtrl, and kStepCtrl; additional functionality is provided to 
+be able to control with more granularity where particular parts of "..." go to. 
+%--- 
+R-3. diagnostics and timings
+%--- 
+Several functions gain optional diagnostics on integration and optimization
+accuracy and timings -- the latter in order to spot where the code spends its 
+time; this concerns functions robest, roptest, wrappers RMX|OBR|MBR|OMSEstimator, 
+kStepEstimator, getStartIC for asGRisk, asBias, RMX, and asAnscombe as well as 
+the particular checkIC/makeIC methods for ContIC.
+=================================================================================
+  
