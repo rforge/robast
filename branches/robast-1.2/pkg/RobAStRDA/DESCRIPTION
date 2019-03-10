@@ -1,6 +1,6 @@
 Package: RobAStRDA
 Version: 1.2.0
-Date: 2018-08-03
+Date: 2019-03-10
 Title: Interpolation Grids for Packages of the 'RobASt' - Family of Packages
 Description: Includes 'sysdata.rda' file for packages of the 'RobASt' - family of packages; is
         currently used by package 'RobExtremes' only.

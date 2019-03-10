@@ -12,7 +12,7 @@ Implementation of random variables by means of S4 classes and methods.
 \tabular{ll}{
 Package: \tab RandVar \cr
 Version: \tab 1.2.0 \cr
-Date: \tab 2018-08-03 \cr
+Date: \tab 2019-03-10 \cr
 Depends: \tab R (>= 2.14.0), methods, distr(>= 2.5.2), distrEx(>=
 2.5)\cr
 Imports: \tab startupmsg \cr

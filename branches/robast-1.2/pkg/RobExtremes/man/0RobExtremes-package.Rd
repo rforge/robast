@@ -62,9 +62,9 @@ We robust (high-breakdown) starting estimators for
 \itemize{
   \item GPD (PickandsEstimator, medkMAD, medSn, medQn)
   \item GEV (PickandsEstimator)
-  \item Pareto (Cramér-von-Mises-Minimum-Distance-Estimator)
+  \item Pareto (Cram?r-von-Mises-Minimum-Distance-Estimator)
   \item Weibull (the quantile based estimator of Boudt/Caliskan/Croux)
-  \item Gamma (Cramér-von-Mises-Minimum-Distance-Estimator)
+  \item Gamma (Cram?r-von-Mises-Minimum-Distance-Estimator)
 }
 
 For all these families, of course, MLEs and Minimum-Distance-Estimators
@@ -103,7 +103,7 @@ but also (adopted from package "distrMod")
 \tabular{ll}{
 Package: \tab RobExtremes \cr
 Version: \tab 1.2.0 \cr
-Date: \tab 2018-08-03 \cr
+Date: \tab 2019-03-10 \cr
 Title: \tab Optimally Robust Estimation for Extreme Value Distributions\cr
 Description: \tab Optimally robust estimation for extreme value distributions
 using S4 classes and methods \cr
@@ -269,7 +269,7 @@ Theory of Robustness.} PhD Thesis. Bayreuth. Available as
 \url{http://r-kurs.de/RRlong.pdf}
 
 P. Ruckdeschel, M. Kohl, T. Stabla, F. Camphausen (2006):
-S4 Classes for Distributions, \emph{R News}, \emph{6}(2), 2-6. 
+S4 Classes for Distributions, \emph{R News}, \emph{6}(2), 2-6.
 \url{https://CRAN.R-project.org/doc/Rnews/Rnews_2006-2.pdf}
 
 M. Kohl, P. Ruckdeschel, H. Rieder (2010):

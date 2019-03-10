@@ -6,14 +6,14 @@
 Optimally robust influence curves and estimators for location and scale
 }
 \description{
-Functions for the determination of optimally robust influence curves and 
+Functions for the determination of optimally robust influence curves and
 estimators in case of normal location and/or scale.
 }
 \details{
 \tabular{ll}{
 Package: \tab RobLox \cr
 Version: \tab 1.2.0 \cr
-Date: \tab 2018-08-03 \cr
+Date: \tab 2019-03-10 \cr
 Depends: \tab R(>= 2.14.0), stats, distrMod(>= 2.5.2), RobAStBase(>= 0.9) \cr
 Imports: \tab lattice, RColorBrewer, Biobase, RandVar(>= 0.9.2), distr(>= 2.5.2) \cr
 Suggests: \tab MASS\cr
@@ -33,10 +33,10 @@ VCS/SVNRevision: \tab 1097 \cr
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008). The Costs of not Knowing
   the Radius. \emph{Statistical Methods and Applications} \bold{17}(1) 13-40.
   Extended version: \url{http://r-kurs.de/RRlong.pdf}
-  
-  M. Kohl, P. Ruckdeschel, and H. Rieder (2010). Infinitesimally Robust Estimation 
-  in General Smoothly Parametrized Models. \emph{Statistical Methods and Application}, 
-  \bold{19}(3):333-354. 
+
+  M. Kohl, P. Ruckdeschel, and H. Rieder (2010). Infinitesimally Robust Estimation
+  in General Smoothly Parametrized Models. \emph{Statistical Methods and Application},
+  \bold{19}(3):333-354.
 }
 \seealso{ \code{\link[RobAStBase:0RobAStBase-package]{RobAStBase-package}} }
 \section{Package versions}{
@@ -47,7 +47,7 @@ Note: The first two numbers of package versions do not necessarily reflect
 }
 \examples{
 library(RobLox)
-ind <- rbinom(100, size=1, prob=0.05) 
+ind <- rbinom(100, size=1, prob=0.05)
 x <- rnorm(100, mean=ind*3, sd=(1-ind) + ind*9)
 roblox(x)
 
@@ -67,7 +67,7 @@ infoPlot(pIC(res))
 }
 
 ## row-wise application
-ind <- rbinom(200, size=1, prob=0.05) 
+ind <- rbinom(200, size=1, prob=0.05)
 X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
 rowRoblox(X)
 }

@@ -1,6 +1,6 @@
 Package: RandVar
 Version: 1.2.0
-Date: 2018-08-03
+Date: 2019-03-10
 Title: Implementation of Random Variables
 Description: Implements random variables by means of S4 classes and methods.
 Depends: R (>= 2.14.0), methods, distr(>= 2.8.0), distrEx(>= 2.8.0)
