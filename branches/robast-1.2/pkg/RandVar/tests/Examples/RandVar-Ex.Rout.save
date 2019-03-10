@@ -1,7 +1,7 @@
 
-R version 3.5.1 RC (2018-06-24 r74935) -- "Feather Spray"
-Copyright (C) 2018 The R Foundation for Statistical Computing
-Platform: i386-w64-mingw32/i386 (32-bit)
+R version 3.5.3 RC (2019-03-04 r76204) -- "Great Truth"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -20,7 +20,6 @@ Type 'q()' to quit R.
 > pkgname <- "RandVar"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
-> options(pager = "console")
 > base::assign(".ExTimings", "RandVar-Ex.timings", pos = 'CheckExEnv')
 > base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
 > base::assign(".format_ptime",
@@ -62,9 +61,9 @@ Loading required package: sfsmisc
 :distr>  vignette("distr").
 
 
-Attaching package: 'distr'
+Attaching package: ‘distr’
 
-The following objects are masked from 'package:stats':
+The following objects are masked from ‘package:stats’:
 
     df, qqplot, sd
 
@@ -86,9 +85,9 @@ Loading required package: distrEx
 :distrEx>  vignette("distr").
 
 
-Attaching package: 'distrEx'
+Attaching package: ‘distrEx’
 
-The following objects are masked from 'package:stats':
+The following objects are masked from ‘package:stats’:
 
     IQR, mad, median, var
 
@@ -171,12 +170,12 @@ The following objects are masked from 'package:stats':
 > dimension(R1)
 [1] 6
 > R1[1:2, 2]
-An object of class "EuclRandVariable" 
+An object of class “EuclRandVariable” 
 length of Map:	 2 
 Domain:	Real Space with dimension 1 
 Range:	Real Space with dimension 1 
 > R1[1:2, 1:2]
-An object of class "EuclRandMatrix" 
+An object of class “EuclRandMatrix” 
 Dim of Map:	 2 2 
 Domain:	Real Space with dimension 1 
 Range:	Real Space with dimension 1 
@@ -197,7 +196,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x0bfc6f78>
+<environment: 0x9600a88>
 
 > 
 > R2 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
@@ -226,7 +225,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0b9db190>
+<environment: 0x6bdb9a8>
 
 [[2]]
 function (x) 
@@ -237,7 +236,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0b9db190>
+<environment: 0x6bdb9a8>
 
 [[3]]
 function (x) 
@@ -248,7 +247,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0b9db190>
+<environment: 0x6bdb9a8>
 
 [[4]]
 function (x) 
@@ -259,7 +258,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0b9db190>
+<environment: 0x6bdb9a8>
 
 > 
 > ## "Arith" group
@@ -273,7 +272,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0ba3de98>
+<environment: 0x6a79010>
 
 [[2]]
 function (x) 
@@ -284,7 +283,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0ba3de98>
+<environment: 0x6a79010>
 
 [[3]]
 function (x) 
@@ -295,7 +294,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0ba3de98>
+<environment: 0x6a79010>
 
 [[4]]
 function (x) 
@@ -306,7 +305,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0ba3de98>
+<environment: 0x6a79010>
 
 [[5]]
 function (x) 
@@ -317,7 +316,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0ba3de98>
+<environment: 0x6a79010>
 
 [[6]]
 function (x) 
@@ -328,7 +327,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0ba3de98>
+<environment: 0x6a79010>
 
 > Map(R2 * R2)
 [[1]]
@@ -344,7 +343,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0bab00f8>
+<environment: 0x68ea108>
 
 [[2]]
 function (x) 
@@ -359,7 +358,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0bab00f8>
+<environment: 0x68ea108>
 
 [[3]]
 function (x) 
@@ -374,7 +373,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0bab00f8>
+<environment: 0x68ea108>
 
 [[4]]
 function (x) 
@@ -389,7 +388,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0bab00f8>
+<environment: 0x68ea108>
 
 > 
 > 
@@ -417,12 +416,12 @@ function (x)
 > 
 > R1 <- EuclRandMatrix(Map = L1, nrow = 3, Domain = Reals(), dimension = 1)
 > R1[1:2, 2]
-An object of class "EuclRandVariable" 
+An object of class “EuclRandVariable” 
 length of Map:	 2 
 Domain:	Real Space with dimension 1 
 Range:	Euclidean Space with dimension 1 
 > R1[1:2, 1:2]
-An object of class "EuclRandMatrix" 
+An object of class “EuclRandMatrix” 
 Dim of Map:	 2 2 
 Domain:	Real Space with dimension 1 
 Range:	Euclidean Space with dimension 1 
@@ -443,7 +442,7 @@ function (x)
     }
     t(f(x))
 }
-<environment: 0x0bd970d8>
+<environment: 0x5a533e0>
 
 > 
 > R2 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
@@ -470,7 +469,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0a31f498>
+<environment: 0x9b106f0>
 
 [[2]]
 function (x) 
@@ -481,7 +480,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0a31f498>
+<environment: 0x9b106f0>
 
 [[3]]
 function (x) 
@@ -492,7 +491,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0a31f498>
+<environment: 0x9b106f0>
 
 [[4]]
 function (x) 
@@ -503,7 +502,7 @@ function (x)
     }
     gamma(f1(x))
 }
-<environment: 0x0a31f498>
+<environment: 0x9b106f0>
 
 > 
 > ## "Arith" group
@@ -517,7 +516,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a37c540>
+<environment: 0x9b6a5b0>
 
 [[2]]
 function (x) 
@@ -528,7 +527,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a37c540>
+<environment: 0x9b6a5b0>
 
 [[3]]
 function (x) 
@@ -539,7 +538,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a37c540>
+<environment: 0x9b6a5b0>
 
 [[4]]
 function (x) 
@@ -550,7 +549,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a37c540>
+<environment: 0x9b6a5b0>
 
 [[5]]
 function (x) 
@@ -561,7 +560,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a37c540>
+<environment: 0x9b6a5b0>
 
 [[6]]
 function (x) 
@@ -572,7 +571,7 @@ function (x)
     }
     2/f2(x)
 }
-<environment: 0x0a37c540>
+<environment: 0x9b6a5b0>
 
 > Map(R2 * R2)
 [[1]]
@@ -588,7 +587,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0a3d8928>
+<environment: 0x9bd0920>
 
 [[2]]
 function (x) 
@@ -603,7 +602,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0a3d8928>
+<environment: 0x9bd0920>
 
 [[3]]
 function (x) 
@@ -618,7 +617,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0a3d8928>
+<environment: 0x9bd0920>
 
 [[4]]
 function (x) 
@@ -633,7 +632,7 @@ function (x)
     }
     f1(x) * f2(x)
 }
-<environment: 0x0a3d8928>
+<environment: 0x9bd0920>
 
 > 
 > 
@@ -718,7 +717,7 @@ function (Map = list(function(x) {
 > R3 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
 > 
 > (RL1 <- new("EuclRandVarList", list(R1, R2, R3)))
-An object of class "EuclRandVarList" 
+An object of class “EuclRandVarList” 
 Domain:	Real Space with dimension 1 
 [[1]]
 length of Map:	 4 
@@ -732,13 +731,13 @@ Range:	Euclidean Space with dimension 1
 > dimension(RL1)
 [1] 14
 > as(R1, "EuclRandVarList")
-An object of class "EuclRandVarList" 
+An object of class “EuclRandVarList” 
 Domain:	Real Space with dimension 1 
 [[1]]
 length of Map:	 4 
 Range:	Real Space with dimension 1 
 > as(R2, "EuclRandVarList")
-An object of class "EuclRandVarList" 
+An object of class “EuclRandVarList” 
 Domain:	Real Space with dimension 1 
 [[1]]
 Dim of Map:	 3 2 
@@ -754,7 +753,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x0a792f08>
+<environment: 0xa1113a0>
 
 [[2]]
 function (x) 
@@ -765,7 +764,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x0a792f08>
+<environment: 0xa1113a0>
 
 [[3]]
 function (x) 
@@ -776,7 +775,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x0a792f08>
+<environment: 0xa1113a0>
 
 [[4]]
 function (x) 
@@ -787,7 +786,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x0a792f08>
+<environment: 0xa1113a0>
 
 > 
 > ## "Arith" group
@@ -801,7 +800,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x0a84bcc0>
+<environment: 0xa2e9860>
 
 [[2]]
 function (x) 
@@ -812,7 +811,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x0a84bcc0>
+<environment: 0xa2e9860>
 
 [[3]]
 function (x) 
@@ -823,7 +822,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x0a84bcc0>
+<environment: 0xa2e9860>
 
 [[4]]
 function (x) 
@@ -834,7 +833,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x0a84bcc0>
+<environment: 0xa2e9860>
 
 > Map((RL1 * 2)[[2]])
 [[1]]
@@ -846,7 +845,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x0a96e5c0>
+<environment: 0xa3e87d8>
 
 [[2]]
 function (x) 
@@ -857,7 +856,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x0a96e5c0>
+<environment: 0xa3e87d8>
 
 [[3]]
 function (x) 
@@ -868,7 +867,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x0a96e5c0>
+<environment: 0xa3e87d8>
 
 [[4]]
 function (x) 
@@ -879,7 +878,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x0a96e5c0>
+<environment: 0xa3e87d8>
 
 [[5]]
 function (x) 
@@ -890,7 +889,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x0a96e5c0>
+<environment: 0xa3e87d8>
 
 [[6]]
 function (x) 
@@ -901,7 +900,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x0a96e5c0>
+<environment: 0xa3e87d8>
 
 > Map((RL1 / RL1)[[3]])
 [[1]]
@@ -917,7 +916,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x0aa95f38>
+<environment: 0xa50ad60>
 
 [[2]]
 function (x) 
@@ -932,7 +931,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x0aa95f38>
+<environment: 0xa50ad60>
 
 [[3]]
 function (x) 
@@ -947,7 +946,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x0aa95f38>
+<environment: 0xa50ad60>
 
 [[4]]
 function (x) 
@@ -962,7 +961,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x0aa95f38>
+<environment: 0xa50ad60>
 
 > 
 > 
@@ -993,7 +992,7 @@ function (x)
 > R3 <- EuclRandMatrix(Map = L2, ncol = 2, Domain = Reals(), dimension = 1)
 > 
 > (RL1 <- EuclRandVarList(R1, R2, R3))
-An object of class "EuclRandVarList" 
+An object of class “EuclRandVarList” 
 Domain:	Real Space with dimension 1 
 [[1]]
 length of Map:	 4 
@@ -1007,7 +1006,7 @@ Range:	Euclidean Space with dimension 1
 > is(R1, "EuclRandVarList")
 [1] FALSE
 > as(R1, "EuclRandVarList")
-An object of class "EuclRandVarList" 
+An object of class “EuclRandVarList” 
 Domain:	Real Space with dimension 1 
 [[1]]
 length of Map:	 4 
@@ -1015,7 +1014,7 @@ Range:	Real Space with dimension 1
 > is(R2, "EuclRandVarList")
 [1] FALSE
 > as(R2, "EuclRandVarList")
-An object of class "EuclRandVarList" 
+An object of class “EuclRandVarList” 
 Domain:	Real Space with dimension 1 
 [[1]]
 Dim of Map:	 3 2 
@@ -1031,7 +1030,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x0abd3d98>
+<environment: 0xa6525c8>
 
 [[2]]
 function (x) 
@@ -1042,7 +1041,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x0abd3d98>
+<environment: 0xa6525c8>
 
 [[3]]
 function (x) 
@@ -1053,7 +1052,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x0abd3d98>
+<environment: 0xa6525c8>
 
 [[4]]
 function (x) 
@@ -1064,7 +1063,7 @@ function (x)
     }
     exp(f1(x))
 }
-<environment: 0x0abd3d98>
+<environment: 0xa6525c8>
 
 > 
 > ## "Arith" group
@@ -1078,7 +1077,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x0ac38028>
+<environment: 0xa6be540>
 
 [[2]]
 function (x) 
@@ -1089,7 +1088,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x0ac38028>
+<environment: 0xa6be540>
 
 [[3]]
 function (x) 
@@ -1100,7 +1099,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x0ac38028>
+<environment: 0xa6be540>
 
 [[4]]
 function (x) 
@@ -1111,7 +1110,7 @@ function (x)
     }
     1 + f2(x)
 }
-<environment: 0x0ac38028>
+<environment: 0xa6be540>
 
 > Map((RL1 * 2)[[2]])
 [[1]]
@@ -1123,7 +1122,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x0ad172e8>
+<environment: 0xa763bf0>
 
 [[2]]
 function (x) 
@@ -1134,7 +1133,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x0ad172e8>
+<environment: 0xa763bf0>
 
 [[3]]
 function (x) 
@@ -1145,7 +1144,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x0ad172e8>
+<environment: 0xa763bf0>
 
 [[4]]
 function (x) 
@@ -1156,7 +1155,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x0ad172e8>
+<environment: 0xa763bf0>
 
 [[5]]
 function (x) 
@@ -1167,7 +1166,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x0ad172e8>
+<environment: 0xa763bf0>
 
 [[6]]
 function (x) 
@@ -1178,7 +1177,7 @@ function (x)
     }
     f1(x) * 2
 }
-<environment: 0x0ad172e8>
+<environment: 0xa763bf0>
 
 > Map((RL1 / RL1)[[3]])
 [[1]]
@@ -1194,7 +1193,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x0ade5a50>
+<environment: 0xad17c20>
 
 [[2]]
 function (x) 
@@ -1209,7 +1208,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x0ade5a50>
+<environment: 0xad17c20>
 
 [[3]]
 function (x) 
@@ -1224,7 +1223,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x0ade5a50>
+<environment: 0xad17c20>
 
 [[4]]
 function (x) 
@@ -1239,7 +1238,7 @@ function (x)
     }
     f1(x)/f2(x)
 }
-<environment: 0x0ade5a50>
+<environment: 0xad17c20>
 
 > 
 > ## The function is currently defined as
@@ -1338,7 +1337,7 @@ Slot "name":
 [1] "Real Space"
 
 > R1[2]
-An object of class "EuclRandVariable" 
+An object of class “EuclRandVariable” 
 length of Map:	 1 
 Domain:	Real Space with dimension 1 
 Range:	Real Space with dimension 1 
@@ -1443,7 +1442,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x09cc9600>
+<environment: 0x9d3e740>
 
 [[2]]
 function (x) 
@@ -1458,7 +1457,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x09cc9600>
+<environment: 0x9d3e740>
 
 [[3]]
 function (x) 
@@ -1473,7 +1472,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x09cc9600>
+<environment: 0x9d3e740>
 
 [[4]]
 function (x) 
@@ -1488,7 +1487,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x09cc9600>
+<environment: 0x9d3e740>
 
 > 
 > # "Arith" group generic
@@ -1502,7 +1501,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x09cdcf70>
+<environment: 0x9d4caf8>
 
 [[2]]
 function (x) 
@@ -1513,7 +1512,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x09cdcf70>
+<environment: 0x9d4caf8>
 
 [[3]]
 function (x) 
@@ -1524,7 +1523,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x09cdcf70>
+<environment: 0x9d4caf8>
 
 [[4]]
 function (x) 
@@ -1535,7 +1534,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x09cdcf70>
+<environment: 0x9d4caf8>
 
 > Map(c(1,3,5) * R1)
 Warning in c(1, 3, 5) * R1 :
@@ -1549,7 +1548,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x09d17188>
+<environment: 0x9d6ede0>
 
 [[2]]
 function (x) 
@@ -1560,7 +1559,7 @@ function (x)
     }
     3 * f2(x)
 }
-<environment: 0x09d17188>
+<environment: 0x9d6ede0>
 
 [[3]]
 function (x) 
@@ -1571,7 +1570,7 @@ function (x)
     }
     5 * f2(x)
 }
-<environment: 0x09d17188>
+<environment: 0x9d6ede0>
 
 [[4]]
 function (x) 
@@ -1582,7 +1581,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x09d17188>
+<environment: 0x9d6ede0>
 
 > try(1:5 * R1) # error
 Error in 1:5 * R1 : 
@@ -1597,7 +1596,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x09d988c0>
+<environment: 0x9dd91d8>
 
 [[2]]
 function (x) 
@@ -1608,7 +1607,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x09d988c0>
+<environment: 0x9dd91d8>
 
 [[3]]
 function (x) 
@@ -1619,7 +1618,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x09d988c0>
+<environment: 0x9dd91d8>
 
 [[4]]
 function (x) 
@@ -1630,7 +1629,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x09d988c0>
+<environment: 0x9dd91d8>
 
 > Map(R2 - 5)
 [[1]]
@@ -1642,7 +1641,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x09dbf540>
+<environment: 0x9f803f8>
 
 [[2]]
 function (x) 
@@ -1653,7 +1652,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x09dbf540>
+<environment: 0x9f803f8>
 
 [[3]]
 function (x) 
@@ -1664,7 +1663,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x09dbf540>
+<environment: 0x9f803f8>
 
 [[4]]
 function (x) 
@@ -1675,7 +1674,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x09dbf540>
+<environment: 0x9f803f8>
 
 > Map(R1 ^ R1)
 [[1]]
@@ -1691,7 +1690,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x09e68cb8>
+<environment: 0x9fa9978>
 
 [[2]]
 function (x) 
@@ -1706,7 +1705,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x09e68cb8>
+<environment: 0x9fa9978>
 
 [[3]]
 function (x) 
@@ -1721,7 +1720,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x09e68cb8>
+<environment: 0x9fa9978>
 
 [[4]]
 function (x) 
@@ -1736,7 +1735,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x09e68cb8>
+<environment: 0x9fa9978>
 
 > 
 > 
@@ -1798,7 +1797,7 @@ Slot "name":
 
 > Range(R1) <- Reals()
 > R1[2]
-An object of class "EuclRandVariable" 
+An object of class “EuclRandVariable” 
 length of Map:	 1 
 Domain:	Real Space with dimension 1 
 Range:	Real Space with dimension 1 
@@ -1899,7 +1898,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x09bce068>
+<environment: 0x96af088>
 
 [[2]]
 function (x) 
@@ -1914,7 +1913,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x09bce068>
+<environment: 0x96af088>
 
 [[3]]
 function (x) 
@@ -1929,7 +1928,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x09bce068>
+<environment: 0x96af088>
 
 [[4]]
 function (x) 
@@ -1944,7 +1943,7 @@ function (x)
     }
     log(f1(x))
 }
-<environment: 0x09bce068>
+<environment: 0x96af088>
 
 > 
 > # "Arith" group generic
@@ -1958,7 +1957,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x09bdb280>
+<environment: 0x96c83a8>
 
 [[2]]
 function (x) 
@@ -1969,7 +1968,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x09bdb280>
+<environment: 0x96c83a8>
 
 [[3]]
 function (x) 
@@ -1980,7 +1979,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x09bdb280>
+<environment: 0x96c83a8>
 
 [[4]]
 function (x) 
@@ -1991,7 +1990,7 @@ function (x)
     }
     3 + f2(x)
 }
-<environment: 0x09bdb280>
+<environment: 0x96c83a8>
 
 > Map(c(1,3,5) * R1)
 Warning in c(1, 3, 5) * R1 :
@@ -2005,7 +2004,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x09bf8ce0>
+<environment: 0x96d8d48>
 
 [[2]]
 function (x) 
@@ -2016,7 +2015,7 @@ function (x)
     }
     3 * f2(x)
 }
-<environment: 0x09bf8ce0>
+<environment: 0x96d8d48>
 
 [[3]]
 function (x) 
@@ -2027,7 +2026,7 @@ function (x)
     }
     5 * f2(x)
 }
-<environment: 0x09bf8ce0>
+<environment: 0x96d8d48>
 
 [[4]]
 function (x) 
@@ -2038,7 +2037,7 @@ function (x)
     }
     1 * f2(x)
 }
-<environment: 0x09bf8ce0>
+<environment: 0x96d8d48>
 
 > try(1:5 * R1) # error
 Error in 1:5 * R1 : 
@@ -2053,7 +2052,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x09c33d70>
+<environment: 0x96f9fa8>
 
 [[2]]
 function (x) 
@@ -2064,7 +2063,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x09c33d70>
+<environment: 0x96f9fa8>
 
 [[3]]
 function (x) 
@@ -2075,7 +2074,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x09c33d70>
+<environment: 0x96f9fa8>
 
 [[4]]
 function (x) 
@@ -2086,7 +2085,7 @@ function (x)
     }
     1:2 * f2(x)
 }
-<environment: 0x09c33d70>
+<environment: 0x96f9fa8>
 
 > Map(R2 - 5)
 [[1]]
@@ -2098,7 +2097,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x09c49b80>
+<environment: 0x970a4e8>
 
 [[2]]
 function (x) 
@@ -2109,7 +2108,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x09c49b80>
+<environment: 0x970a4e8>
 
 [[3]]
 function (x) 
@@ -2120,7 +2119,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x09c49b80>
+<environment: 0x970a4e8>
 
 [[4]]
 function (x) 
@@ -2131,7 +2130,7 @@ function (x)
     }
     f1(x) - c(5, 5)
 }
-<environment: 0x09c49b80>
+<environment: 0x970a4e8>
 
 > Map(R1 ^ R1)
 [[1]]
@@ -2147,7 +2146,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x09c7c418>
+<environment: 0x9732d68>
 
 [[2]]
 function (x) 
@@ -2162,7 +2161,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x09c7c418>
+<environment: 0x9732d68>
 
 [[3]]
 function (x) 
@@ -2177,7 +2176,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x09c7c418>
+<environment: 0x9732d68>
 
 [[4]]
 function (x) 
@@ -2192,7 +2191,7 @@ function (x)
     }
     f1(x)^f2(x)
 }
-<environment: 0x09c7c418>
+<environment: 0x9732d68>
 
 > 
 > 
@@ -2241,7 +2240,7 @@ function (Map = list(function(x) {
 > ### ** Examples
 > 
 > (R1 <- new("RandVariable"))
-An object of class "RandVariable" 
+An object of class “RandVariable” 
 length of Map:	 1 
 Domain:	NULL
 Range:	NULL
@@ -2250,7 +2249,7 @@ Range:	NULL
 function (x) 
 {
 }
-<bytecode: 0x08f23408>
+<bytecode: 0x9e8e1d8>
 <environment: namespace:RandVar>
 
 > Domain(R1)
@@ -2261,7 +2260,7 @@ NULL
 > Domain(R1) <- Reals()
 > Range(R1) <- Naturals()
 > R1
-An object of class "RandVariable" 
+An object of class “RandVariable” 
 length of Map:	 2 
 Domain:	Real Space with dimension 1 
 Range:	Grid of Naturals with dimension 1 
@@ -2314,7 +2313,7 @@ function (x)
 > ### ** Examples
 > 
 > (R1 <- RandVariable())
-An object of class "RandVariable" 
+An object of class “RandVariable” 
 length of Map:	 1 
 Domain:	NULL
 Range:	NULL
@@ -2323,7 +2322,7 @@ Range:	NULL
 function (x) 
 {
 }
-<environment: 0x09dbb900>
+<environment: 0x9800778>
 
 > Domain(R1)
 NULL
@@ -2333,7 +2332,7 @@ NULL
 > Domain(R1) <- Reals()
 > Range(R1) <- Naturals()
 > R1
-An object of class "RandVariable" 
+An object of class “RandVariable” 
 length of Map:	 2 
 Domain:	Real Space with dimension 1 
 Range:	Grid of Naturals with dimension 1 
@@ -2396,7 +2395,7 @@ function (Map = list(function(x) {
 > ### ** Examples
 > 
 > new("RealRandVariable", Map=list(function(x){x}), Range = Reals())
-An object of class "RealRandVariable" 
+An object of class “RealRandVariable” 
 length of Map:	 1 
 Domain:	NULL
 Range:	Real Space with dimension 1 
@@ -2420,7 +2419,7 @@ Range:	Real Space with dimension 1
 > ### ** Examples
 > 
 > RealRandVariable(Map = list(function(x){x}), Domain = Reals())
-An object of class "RealRandVariable" 
+An object of class “RealRandVariable” 
 length of Map:	 1 
 Domain:	Real Space with dimension 1 
 Range:	Real Space with dimension 1 
@@ -2455,7 +2454,7 @@ function (Map = list(function(x) {
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.57 0.36 3.96 NA NA 
+Time elapsed:  2.113 0.061 2.174 0 0 
 > grDevices::dev.off()
 null device 
           1 
