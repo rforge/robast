@@ -1,8 +1,7 @@
 
-R Under development (unstable) (2013-02-06 r61845) -- "Unsuffered Consequences"
-Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+R Under development (unstable) (2019-02-27 r76167) -- "Unsuffered Consequences"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: i386-w64-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -21,86 +20,18 @@ Type 'q()' to quit R.
 > pkgname <- "RobLoxBioC"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
+> options(pager = "console")
 > library('RobLoxBioC')
-Loading required package: Biobase
-Loading required package: BiocGenerics
-Loading required package: parallel
-
-Attaching package: ‘BiocGenerics’
-
-The following objects are masked from ‘package:parallel’:
-
-    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-    clusterExport, clusterMap, parApply, parCapply, parLapply,
-    parLapplyLB, parRapply, parSapply, parSapplyLB
-
-The following object is masked from ‘package:stats’:
-
-    xtabs
-
-The following objects are masked from ‘package:base’:
-
-    Filter, Find, Map, Position, Reduce, anyDuplicated, as.data.frame,
-    cbind, colnames, duplicated, eval, get, intersect, lapply, mapply,
-    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int, rank,
-    rbind, rep.int, rownames, sapply, setdiff, sort, table, tapply,
-    union, unique, unlist
-
-Welcome to Bioconductor
-
-    Vignettes contain introductory material; view with
-    'browseVignettes()'. To cite Bioconductor, see
-    'citation("Biobase")', and for packages 'citation("pkgname")'.
-
-Loading required package: affy
-Loading required package: beadarray
-Loading required package: ggplot2
-Welcome to beadarray version 2.9.1
-beadarray versions >= 2.0.0 are substantial updates from beadarray 1.16.0 and earlier. Please see package vignette for details
 Loading required package: distr
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.8)
+:startupmsg>  Utilities for Start-Up Messages (version 0.9.6)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
 
 Loading required package: sfsmisc
-Loading required package: SweaveListingUtils
-:SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version 0.6)
-:SweaveListingUtils> 
-:SweaveListingUtils>  NOTE: Support for this package
-:SweaveListingUtils>  will stop soon.
-:SweaveListingUtils> 
-:SweaveListingUtils>  Package 'knitr' is providing the
-:SweaveListingUtils>  same functionality in a better
-:SweaveListingUtils>  way.
-:SweaveListingUtils> 
-:SweaveListingUtils>  Some functions from package 'base'
-:SweaveListingUtils>  are intentionally masked ---see
-:SweaveListingUtils>  SweaveListingMASK().
-:SweaveListingUtils> 
-:SweaveListingUtils>  Note that global options are
-:SweaveListingUtils>  controlled by
-:SweaveListingUtils>  SweaveListingoptions() ---c.f.
-:SweaveListingUtils>  ?"SweaveListingoptions".
-:SweaveListingUtils> 
-:SweaveListingUtils>  For more information see
-:SweaveListingUtils>  ?"SweaveListingUtils",
-:SweaveListingUtils>  NEWS("SweaveListingUtils")
-:SweaveListingUtils>  There is a vignette to this
-:SweaveListingUtils>  package; try
-:SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
-
-
-Attaching package: ‘SweaveListingUtils’
-
-The following object is masked from ‘package:base’:
-
-    library, require
-
-:distr>  Object oriented implementation of distributions (version
-:distr>  2.4)
+:distr>  Object Oriented Implementation of Distributions (version
+:distr>  2.8.0)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -119,130 +50,58 @@ The following object is masked from ‘package:base’:
 :distr>  vignette("distr").
 
 
-Attaching package: ‘distr’
+Attaching package: 'distr'
 
-The following object is masked from ‘package:stats’:
+The following objects are masked from 'package:stats':
 
     df, qqplot, sd
 
-Loading required package: RobLox
-Loading required package: lattice
-Loading required package: RColorBrewer
-Loading required package: distrMod
-Loading required package: distrEx
-:distrEx>  Extensions of package distr (version 2.4)
-:distrEx> 
-:distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
-:distrEx>  attached /before/ package "distrEx". See
-:distrEx>  distrExMASK().Note: Extreme value distribution
-:distrEx>  functionality has been moved to
-:distrEx> 
-:distrEx>        package "RobExtremes". See distrExMOVED().
-:distrEx> 
-:distrEx>  For more information see ?"distrEx", NEWS("distrEx"), as
-:distrEx>  well as
-:distrEx>    http://distr.r-forge.r-project.org/
-:distrEx>  Package "distrDoc" provides a vignette to this package
-:distrEx>  as well as to several related packages; try
-:distrEx>  vignette("distr").
+Loading required package: affy
+Loading required package: BiocGenerics
+Loading required package: parallel
 
+Attaching package: 'BiocGenerics'
 
-Attaching package: ‘distrEx’
+The following objects are masked from 'package:parallel':
 
-The following object is masked from ‘package:stats’:
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
 
-    IQR, mad, median, var
+The following objects are masked from 'package:distr':
 
-Loading required package: RandVar
-:RandVar>  Implementation of random variables (version 0.9)
-:RandVar> 
-:RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
-:RandVar>  well as
-:RandVar>    http://robast.r-forge.r-project.org/
-:RandVar>  This package also includes a vignette; try
-:RandVar>  vignette("RandVar").
+    sd, width, width<-
 
-Loading required package: MASS
-Loading required package: stats4
-:distrMod>  Object oriented implementation of probability models
-:distrMod>  (version 2.4)
-:distrMod> 
-:distrMod>  Some functions from pkg's 'base' and 'stats' are
-:distrMod>  intentionally masked ---see distrModMASK().
-:distrMod> 
-:distrMod>  Note that global options are controlled by
-:distrMod>  distrModoptions() ---c.f. ?"distrModoptions".
-:distrMod> 
-:distrMod>  For more information see ?"distrMod",
-:distrMod>  NEWS("distrMod"), as well as
-:distrMod>    http://distr.r-forge.r-project.org/
-:distrMod>  There is a vignette to this package; try
-:distrMod>  vignette("distrMod").
-:distrMod>  Package "distrDoc" provides a vignette to the other
-:distrMod>  distrXXX packages,
-:distrMod>  as well as to several related packages; try
-:distrMod>  vignette("distr").
+The following objects are masked from 'package:stats':
 
+    IQR, mad, sd, var, xtabs
 
-Attaching package: ‘distrMod’
+The following objects are masked from 'package:base':
 
-The following object is masked from ‘package:stats4’:
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, mapply, match, mget, order, paste,
+    pmax, pmax.int, pmin, pmin.int, rank, rbind, rowMeans, rowSums,
+    rownames, sapply, setdiff, sort, table, tapply, union, unique,
+    unsplit, which, which.max, which.min
 
-    confint
+Loading required package: Biobase
+Welcome to Bioconductor
 
-The following object is masked from ‘package:stats’:
-
-    confint
-
-The following object is masked from ‘package:base’:
-
-    norm
-
-Loading required package: RobAStBase
-Loading required package: rrcov
-Loading required package: robustbase
-Loading required package: pcaPP
-Loading required package: mvtnorm
-Scalable Robust Estimators with High Breakdown Point (version 1.3-02)
-
-:RobAStBase>  Robust Asymptotic Statistics (version 0.9)
-:RobAStBase> 
-:RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
-:RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
-:RobAStBase> 
-:RobAStBase>  Note that global options are controlled by
-:RobAStBase>  RobAStBaseoptions() ---c.f. ?"RobAStBaseoptions".
-:RobAStBase> 
-:RobAStBase>  For more information see ?"RobAStBase",
-:RobAStBase>  NEWS("RobAStBase"), as well as
-:RobAStBase>    http://robast.r-forge.r-project.org/
-
-
-Attaching package: ‘RobAStBase’
-
-The following object is masked from ‘package:graphics’:
-
-    clip
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
 
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
-> base::assign(".ExTimings", "RobLoxBioC-Ex.timings", pos = 'CheckExEnv')
-> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
-> base::assign(".format_ptime",
-+ function(x) {
-+   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
-+   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
-+   format(x[1L:3L])
-+ },
-+ pos = 'CheckExEnv')
-> 
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 > cleanEx()
 > nameEx("0RobLoxBioC-package")
 > ### * 0RobLoxBioC-package
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RobLoxBioC-package
 > ### Title: Infinitesimally robust estimators for preprocessing omics data
 > ### Aliases: RobLoxBioC-package RobLoxBioC
@@ -254,23 +113,19 @@ The following object is masked from ‘package:graphics’:
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("0RobLoxBioC-package", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("KolmogorovMinDist")
 > ### * KolmogorovMinDist
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: KolmogorovMinDist
 > ### Title: Generic Function for Computing Minimum Kolmogorov Distance for
 > ###   Biological Data
 > ### Aliases: KolmogorovMinDist KolmogorovMinDist-methods
 > ###   KolmogorovMinDist,matrix,Norm-method
 > ###   KolmogorovMinDist,AffyBatch,AbscontDistribution-method
-> ###   KolmogorovMinDist,BeadLevelList,AbscontDistribution-method
+> ###   KolmogorovMinDist,beadLevelData,AbscontDistribution-method
 > ### Keywords: robust
 > 
 > ### ** Examples
@@ -288,13 +143,13 @@ $n
 [1] 100 100
 
 > 
-> ## using Affymetrix-Data
+> ## using Affymetrix data
 > data(SpikeIn)
 > probes <- log2(pm(SpikeIn))
 > (res <- KolmogorovMinDist(probes, Norm()))
 $dist
- [1] 0.1755693 0.1567648 0.1571403 0.1609188 0.1617499 0.1607157 0.1382646
- [8] 0.1471997 0.1693088 0.1836652 0.1787724 0.1601283 0.1729001 0.1519412
+ [1] 0.1642185 0.1567706 0.1571387 0.1609188 0.1617499 0.1607157 0.1382646
+ [8] 0.1471997 0.1693088 0.1836652 0.1787724 0.1601283 0.1728984 0.1519412
 [15] 0.1682097 0.1662173 0.1547481 0.1716497 0.1751219 0.1671566
 
 $n
@@ -302,50 +157,116 @@ $n
 
 > boxplot(res$dist)
 > 
-> ## Not run: 
-> ##D ## "Not run" just because of computation time
-> ##D require(affydata)
-> ##D data(Dilution)
-> ##D res <- KolmogorovMinDist(Dilution[,1], Norm())
-> ##D summary(res$dist)
-> ##D boxplot(res$dist)
-> ##D plot(res$n, res$dist, pch = 20, main = "Kolmogorov distance vs. sample size",
-> ##D      xlab = "sample size", ylab = "Kolmogorov distance",
-> ##D      ylim = c(0, max(res$dist)))
-> ##D uni.n <- min(res$n):max(res$n)
-> ##D lines(uni.n, 1/(2*uni.n), col = "orange", lwd = 2)
-> ##D legend("topright", legend = "minimal possible distance", fill = "orange")
-> ## End(Not run)
+> ## No test: 
+> ## \donttest because of check time
+> ## using Affymetrix data
+> library(affydata)
+     Package    LibPath                              Item      
+[1,] "affydata" "C:/Program Files/R/R-devel/library" "Dilution"
+     Title                        
+[1,] "AffyBatch instance Dilution"
+> data(Dilution)
+> res <- KolmogorovMinDist(Dilution[,1], Norm())
+Background correcting ...Warning: replacing previous import 'AnnotationDbi::head' by 'utils::head' when loading 'hgu95av2cdf'
+Warning: replacing previous import 'AnnotationDbi::tail' by 'utils::tail' when loading 'hgu95av2cdf'
+
+ done.
+Calculating PM/MM ... done.
+Computing minimum Kolmogorov distance ... done.
+> summary(res$dist)
+      20A         
+ Min.   :0.05768  
+ 1st Qu.:0.09761  
+ Median :0.11124  
+ Mean   :0.11343  
+ 3rd Qu.:0.12607  
+ Max.   :0.81250  
+> boxplot(res$dist)
+> plot(res$n, res$dist, pch = 20, main = "Kolmogorov distance vs. sample size",
++      xlab = "sample size", ylab = "Kolmogorov distance",
++      ylim = c(0, max(res$dist)))
+> uni.n <- min(res$n):max(res$n)
+> lines(uni.n, 1/(2*uni.n), col = "orange", lwd = 2)
+> legend("topright", legend = "minimal possible distance", fill = "orange")
 > 
-> ## using Illumina-Data
-> ## Not run: 
-> ##D ## "Not run" just because of computation time
-> ##D data(BLData)
-> ##D res <- KolmogorovMinDist(BLData, Norm(), arrays = 1)
-> ##D res1 <- KolmogorovMinDist(BLData, log = TRUE, Norm(), arrays = 1)
-> ##D summary(cbind(res$dist, res1$dist))
-> ##D boxplot(list(res$dist, res1$dist), names = c("raw", "log-raw"))
-> ##D sort(unique(res1$n))
-> ##D plot(res1$n, res1$dist, pch = 20, main = "Kolmogorov distance vs. sample size",
-> ##D      xlab = "sample size", ylab = "Kolmogorov distance",
-> ##D      ylim = c(0, max(res1$dist)), xlim = c(min(res1$n), 56))
-> ##D uni.n <- min(res1$n):56
-> ##D lines(uni.n, 1/(2*uni.n), col = "orange", lwd = 2)
-> ##D legend("topright", legend = "minimal possible distance", fill = "orange")
-> ## End(Not run)
+> ## Illumina bead level data
+> library(beadarrayExampleData)
+Loading required package: beadarray
+Loading required package: hexbin
+Welcome to beadarray version 2.33.2
+> data(exampleBLData)
+> res <- KolmogorovMinDist(exampleBLData, Norm(), arrays = 1)
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+Warning in pnorm(y, mean = pars[1], sd = pars[2]) : NaNs produced
+> res1 <- KolmogorovMinDist(exampleBLData, Norm(), log = TRUE, arrays = 1)
+Warning in .local(x, D, ...) : NaNs produced
+Warning in .local(x, D, ...) : NaNs produced
+> summary(cbind(res$dist, res1$dist))
+  4613710017_B      4613710017_B    
+ Min.   :0.03507   Min.   :0.03999  
+ 1st Qu.:0.09037   1st Qu.:0.08376  
+ Median :0.10501   Median :0.09711  
+ Mean   :0.11476   Mean   :0.09988  
+ 3rd Qu.:0.12244   3rd Qu.:0.11280  
+ Max.   :1.00000   Max.   :0.33333  
+ NA's   :34                         
+> boxplot(list(res$dist, res1$dist), names = c("raw", "log-raw"))
+> sort(unique(res1$n))
+ [1]  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+[26] 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52
+[51] 53 54 55 57 58 59 60 61 62 63 64 65 66 67 68 73 74 75 76 77 79 80 84
+> plot(res1$n, res1$dist, pch = 20, main = "Kolmogorov distance vs. sample size",
++      xlab = "sample size", ylab = "Kolmogorov distance",
++      ylim = c(0, max(res1$dist)), xlim = c(min(res1$n), 56))
+> uni.n <- min(res1$n):56
+> lines(uni.n, 1/(2*uni.n), col = "orange", lwd = 2)
+> legend("topright", legend = "minimal possible distance", fill = "orange")
+> ## End(No test)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("KolmogorovMinDist", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
+
+detaching 'package:beadarrayExampleData', 'package:beadarray',
+  'package:hexbin', 'package:hgu95av2cdf', 'package:affydata'
+
 > nameEx("SimStudies")
 > ### * SimStudies
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: SimStudies
 > ### Title: Perform Monte-Carlo Study.
 > ### Aliases: AffySimStudy IlluminaSimStudy
@@ -379,16 +300,12 @@ relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("SimStudies", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("robloxbioc")
 > ### * robloxbioc
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: robloxbioc
 > ### Title: Generic Function for Preprocessing Biological Data
 > ### Aliases: robloxbioc robloxbioc-methods robloxbioc,matrix-method
@@ -419,47 +336,125 @@ relMSE (loc + scale)     1.322783 1.713026 1.1854660 1.0000000
 [1,] -0.02545634 1.042738
 [2,] -0.16757528 1.004658
 > 
-> ## Don't run to reduce check time on CRAN
-> ## Not run: 
-> ##D ## the function is designed for large scale problems
-> ##D X <- matrix(rnorm(50000*20, mean = 1), nrow = 50000)
-> ##D system.time(robloxbioc(X))
-> ##D 
-> ##D ## using Affymetrix-Data
-> ##D ## confer example to generateExprVal.method.mas
-> ##D ## A more worked out example can be found in the scripts folder
-> ##D ## of the package.
-> ##D data(SpikeIn)
-> ##D probes <- pm(SpikeIn) 
-> ##D mas <- generateExprVal.method.mas(probes)
-> ##D rl <- 2^robloxbioc(log2(t(probes)))
-> ##D concentrations <- as.numeric(colnames(SpikeIn))
-> ##D plot(concentrations, mas$exprs, log="xy", ylim=c(50,10000), type="b",
-> ##D      ylab = "expression measures")
-> ##D points(concentrations, rl[,1], pch = 20, col="orange", type="b")
-> ##D legend("topleft", c("MAS", "roblox"), pch = c(1, 20))
-> ##D 
-> ##D require(affydata)
-> ##D data(Dilution)
-> ##D eset <- robloxbioc(Dilution)
-> ##D ## Affymetrix scale normalization
-> ##D eset1 <- robloxbioc(Dilution, normalize = TRUE)
-> ##D ## "Not run" just because of computation time
-> ##D require(beadarrayExampleData)
-> ##D data(exampleBLData)
-> ##D res <- robloxbioc(exampleBLData, eps.upper = 0.5)
-> ##D res
-> ## End(Not run)
+> ## No test: 
+> ## \donttest to reduce check time
+> ## the function is designed for large scale problems
+> X <- matrix(rnorm(50000*20, mean = 1), nrow = 50000)
+> system.time(robloxbioc(X))
+   user  system elapsed 
+   0.63    0.01    0.64 
+> 
+> ## using Affymetrix data
+> ## confer example to generateExprVal.method.mas
+> ## A more worked out example can be found in the scripts folder
+> ## of the package.
+> data(SpikeIn)
+> probes <- pm(SpikeIn) 
+> mas <- generateExprVal.method.mas(probes)
+> rl <- 2^robloxbioc(log2(t(probes)))
+> concentrations <- as.numeric(colnames(SpikeIn))
+> plot(concentrations, mas$exprs, log="xy", ylim=c(50,10000), type="b",
++      ylab = "expression measures")
+> points(concentrations, rl[,1], pch = 20, col="orange", type="b")
+> legend("topleft", c("MAS", "roblox"), pch = c(1, 20))
+> 
+> ## Affymetrix dilution data
+> library(affydata)
+> data(Dilution)
+> eset <- robloxbioc(Dilution)
+Background correcting ... done.
+PM/MM correcting ... done.
+Computing expression values ... done.
+> ## Affymetrix scale normalization
+> eset1 <- robloxbioc(Dilution, normalize = TRUE)
+Background correcting ... done.
+PM/MM correcting ... done.
+Computing expression values ... done.
+Scale normalization ... done.
+> 
+> ## Illumina bead level data
+> library(beadarrayExampleData)
+Loading required package: beadarray
+Loading required package: hexbin
+Welcome to beadarray version 2.33.2
+> data(exampleBLData)
+> res <- robloxbioc(exampleBLData, eps.upper = 0.5)
+No sample factor specified. Summarizing each section separately
+Finding list of unique probes in beadLevelData
+49895  unique probeIDs found
+Loading required package: illuminaHumanv3.db
+Loading required package: AnnotationDbi
+Loading required package: stats4
+Loading required package: IRanges
+Loading required package: S4Vectors
+
+Attaching package: 'S4Vectors'
+
+The following object is masked from 'package:base':
+
+    expand.grid
+
+
+Attaching package: 'IRanges'
+
+The following object is masked from 'package:distr':
+
+    gaps
+
+The following object is masked from 'package:grDevices':
+
+    windows
+
+Loading required package: org.Hs.eg.db
+
+
+Number of unmapped probes removed:  319 
+Summarizing  G  channel
+Processing Array 1 
+Using rmx
+Summarizing  G  channel
+Processing Array 2 
+Using rmx
+Making summary object
+Annotating control probes using package illuminaHumanv3.db Version:1.26.0
+
+> res
+ExpressionSetIllumina (storageMode: list)
+assayData: 49576 features, 2 samples 
+  element names: exprs, se.exprs, nObservations 
+protocolData: none
+phenoData
+  rowNames: 4613710017_B 4616494005_A
+  varLabels: sampleID SampleFac
+  varMetadata: labelDescription
+featureData
+  featureNames: ILMN_1802380 ILMN_1893287 ... ILMN_1846115 (49576
+    total)
+  fvarLabels: ArrayAddressID IlluminaID Status
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation: Humanv3 
+QC Information
+ Available Slots:  
+  QC Items: Date, Matrix, ..., SampleGroup, numBeads
+  sampleNames: 4613710017_B, 4616494005_A
+> ## End(No test)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("robloxbioc", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > ### * <FOOTER>
 > ###
+> cleanEx()
+
+detaching 'package:illuminaHumanv3.db', 'package:org.Hs.eg.db',
+  'package:AnnotationDbi', 'package:IRanges', 'package:S4Vectors',
+  'package:stats4', 'package:beadarrayExampleData',
+  'package:beadarray', 'package:hexbin', 'package:hgu95av2cdf',
+  'package:affydata'
+
+> options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  12.136 0.156 12.385 0 0 
+Time elapsed:  854.42 12.72 1058.02 NA NA 
 > grDevices::dev.off()
 pdf 
   2 

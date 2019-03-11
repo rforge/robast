@@ -1,8 +1,7 @@
 
-R Under development (unstable) (2013-02-06 r61845) -- "Unsuffered Consequences"
-Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+R Under development (unstable) (2019-02-27 r76167) -- "Unsuffered Consequences"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: i386-w64-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -21,83 +20,19 @@ Type 'q()' to quit R.
 > pkgname <- "RobLox"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
+> options(pager = "console")
 > library('RobLox')
-Loading required package: lattice
-Loading required package: RColorBrewer
-Loading required package: Biobase
-Loading required package: BiocGenerics
-Loading required package: parallel
-
-Attaching package: ‘BiocGenerics’
-
-The following objects are masked from ‘package:parallel’:
-
-    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-    clusterExport, clusterMap, parApply, parCapply, parLapply,
-    parLapplyLB, parRapply, parSapply, parSapplyLB
-
-The following object is masked from ‘package:stats’:
-
-    xtabs
-
-The following objects are masked from ‘package:base’:
-
-    Filter, Find, Map, Position, Reduce, anyDuplicated, as.data.frame,
-    cbind, colnames, duplicated, eval, get, intersect, lapply, mapply,
-    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int, rank,
-    rbind, rep.int, rownames, sapply, setdiff, sort, table, tapply,
-    union, unique, unlist
-
-Welcome to Bioconductor
-
-    Vignettes contain introductory material; view with
-    'browseVignettes()'. To cite Bioconductor, see
-    'citation("Biobase")', and for packages 'citation("pkgname")'.
-
+Loading required package: distrMod
 Loading required package: distr
 Loading required package: startupmsg
-:startupmsg>  Utilities for start-up messages (version 0.8)
+:startupmsg>  Utilities for Start-Up Messages (version 0.9.6)
 :startupmsg> 
 :startupmsg>  For more information see ?"startupmsg",
 :startupmsg>  NEWS("startupmsg")
 
 Loading required package: sfsmisc
-Loading required package: SweaveListingUtils
-:SweaveListingUtils>  Utilities for Sweave together with
-:SweaveListingUtils>  TeX listings package (version 0.6)
-:SweaveListingUtils> 
-:SweaveListingUtils>  NOTE: Support for this package
-:SweaveListingUtils>  will stop soon.
-:SweaveListingUtils> 
-:SweaveListingUtils>  Package 'knitr' is providing the
-:SweaveListingUtils>  same functionality in a better
-:SweaveListingUtils>  way.
-:SweaveListingUtils> 
-:SweaveListingUtils>  Some functions from package 'base'
-:SweaveListingUtils>  are intentionally masked ---see
-:SweaveListingUtils>  SweaveListingMASK().
-:SweaveListingUtils> 
-:SweaveListingUtils>  Note that global options are
-:SweaveListingUtils>  controlled by
-:SweaveListingUtils>  SweaveListingoptions() ---c.f.
-:SweaveListingUtils>  ?"SweaveListingoptions".
-:SweaveListingUtils> 
-:SweaveListingUtils>  For more information see
-:SweaveListingUtils>  ?"SweaveListingUtils",
-:SweaveListingUtils>  NEWS("SweaveListingUtils")
-:SweaveListingUtils>  There is a vignette to this
-:SweaveListingUtils>  package; try
-:SweaveListingUtils>  vignette("ExampleSweaveListingUtils").
-
-
-Attaching package: ‘SweaveListingUtils’
-
-The following object is masked from ‘package:base’:
-
-    library, require
-
-:distr>  Object oriented implementation of distributions (version
-:distr>  2.4)
+:distr>  Object Oriented Implementation of Distributions (version
+:distr>  2.8.0)
 :distr> 
 :distr>  Attention: Arithmetics on distribution objects are
 :distr>  understood as operations on corresponding random variables
@@ -116,15 +51,14 @@ The following object is masked from ‘package:base’:
 :distr>  vignette("distr").
 
 
-Attaching package: ‘distr’
+Attaching package: 'distr'
 
-The following object is masked from ‘package:stats’:
+The following objects are masked from 'package:stats':
 
     df, qqplot, sd
 
-Loading required package: distrMod
 Loading required package: distrEx
-:distrEx>  Extensions of package distr (version 2.4)
+:distrEx>  Extensions of Package 'distr' (version 2.8.0)
 :distrEx> 
 :distrEx>  Note: Packages "e1071", "moments", "fBasics" should be
 :distrEx>  attached /before/ package "distrEx". See
@@ -141,14 +75,14 @@ Loading required package: distrEx
 :distrEx>  vignette("distr").
 
 
-Attaching package: ‘distrEx’
+Attaching package: 'distrEx'
 
-The following object is masked from ‘package:stats’:
+The following objects are masked from 'package:stats':
 
     IQR, mad, median, var
 
 Loading required package: RandVar
-:RandVar>  Implementation of random variables (version 0.9)
+:RandVar>  Implementation of Random Variables (version 1.2.0)
 :RandVar> 
 :RandVar>  For more information see ?"RandVar", NEWS("RandVar"), as
 :RandVar>  well as
@@ -158,8 +92,8 @@ Loading required package: RandVar
 
 Loading required package: MASS
 Loading required package: stats4
-:distrMod>  Object oriented implementation of probability models
-:distrMod>  (version 2.4)
+:distrMod>  Object Oriented Implementation of Probability Models
+:distrMod>  (version 2.8.0)
 :distrMod> 
 :distrMod>  Some functions from pkg's 'base' and 'stats' are
 :distrMod>  intentionally masked ---see distrModMASK().
@@ -178,28 +112,26 @@ Loading required package: stats4
 :distrMod>  vignette("distr").
 
 
-Attaching package: ‘distrMod’
+Attaching package: 'distrMod'
 
-The following object is masked from ‘package:stats4’:
-
-    confint
-
-The following object is masked from ‘package:stats’:
+The following object is masked from 'package:stats4':
 
     confint
 
-The following object is masked from ‘package:base’:
+The following object is masked from 'package:stats':
+
+    confint
+
+The following object is masked from 'package:base':
 
     norm
 
 Loading required package: RobAStBase
 Loading required package: rrcov
 Loading required package: robustbase
-Loading required package: pcaPP
-Loading required package: mvtnorm
-Scalable Robust Estimators with High Breakdown Point (version 1.3-02)
+Scalable Robust Estimators with High Breakdown Point (version 1.4-7)
 
-:RobAStBase>  Robust Asymptotic Statistics (version 0.9)
+:RobAStBase>  Robust Asymptotic Statistics (version 1.2.0)
 :RobAStBase> 
 :RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
 :RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
@@ -212,31 +144,21 @@ Scalable Robust Estimators with High Breakdown Point (version 1.3-02)
 :RobAStBase>    http://robast.r-forge.r-project.org/
 
 
-Attaching package: ‘RobAStBase’
+Attaching package: 'RobAStBase'
 
-The following object is masked from ‘package:graphics’:
+The following object is masked from 'package:graphics':
 
     clip
 
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
-> base::assign(".ExTimings", "RobLox-Ex.timings", pos = 'CheckExEnv')
-> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
-> base::assign(".format_ptime",
-+ function(x) {
-+   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
-+   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
-+   format(x[1L:3L])
-+ },
-+ pos = 'CheckExEnv')
-> 
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 > cleanEx()
 > nameEx("0RobLox-package")
 > ### * 0RobLox-package
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: RobLox-package
 > ### Title: Optimally robust influence curves and estimators for location
 > ###   and scale
@@ -251,7 +173,7 @@ The following object is masked from ‘package:graphics’:
 > roblox(x)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   roblox(x = x)
 samplesize:   100
@@ -302,7 +224,7 @@ samplesize:   100
 Call by which estimate was produced:
 roblox(x = x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
 > pIC(res)
-An object of class “ContIC” 
+An object of class "ContIC" 
 ### name:	 IC of contamination type 
 
 ### L2-differentiable parametric family:	 normal location and scale family 
@@ -349,7 +271,7 @@ sd      0  1
 > rowRoblox(X)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   rowRoblox(x = X)
 samplesize:   100
@@ -369,16 +291,12 @@ steps:
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("0RobLox-package", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("finiteSampleCorrection")
 > ### * finiteSampleCorrection
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: finiteSampleCorrection
 > ### Title: Function to compute finite-sample corrected radii
 > ### Aliases: finiteSampleCorrection
@@ -395,16 +313,12 @@ steps:
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("finiteSampleCorrection", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlOptIC")
 > ### * rlOptIC
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlOptIC
 > ### Title: Computation of the optimally robust IC for AL estimators
 > ### Aliases: rlOptIC
@@ -418,9 +332,12 @@ steps:
 precision of centering:	 0 
 precision of Fisher consistency:
               mean
-mean -7.580384e-06
+mean -2.150266e-06
+precision of Fisher consistency - relative error [%]:
+              mean
+mean -0.0002150266
 maximum deviation 
-     7.580384e-06 
+     2.150266e-06 
 > distrExOptions("ErelativeTolerance" = .Machine$double.eps^0.25) # default
 > Risks(IC1)
 $asMSE
@@ -440,20 +357,15 @@ $asCov
          [,1]
 [1,] 1.054162
 > plot(IC1)
-NULL
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlOptIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.AL")
 > ### * rlsOptIC.AL
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.AL
 > ### Title: Computation of the optimally robust IC for AL estimators
 > ### Aliases: rlsOptIC.AL
@@ -462,17 +374,21 @@ NULL
 > ### ** Examples
 > 
 > IC1 <- rlsOptIC.AL(r = 0.1, check = TRUE)
-Fisher consistency of eta.loc:	 -1.743783e-10 
-centering of eta.sc:	 -3.904033e-10 
-Fisher consistency of eta.sc:	 2.926179e-09 
+Fisher consistency of eta.loc:	 -1.743714e-10 
+centering of eta.sc:	 -3.903791e-10 
+Fisher consistency of eta.sc:	 2.926103e-09 
 MSE equation:	 1.207368e-14 
 > distrExOptions("ErelativeTolerance" = 1e-12)
 > checkIC(IC1)
-precision of centering:	 0 -6.039278e-07 
+precision of centering:	 0 -6.039298e-07 
 precision of Fisher consistency:
-             mean            sd
-mean -1.10248e-06  0.000000e+00
-sd    0.00000e+00 -1.685676e-05
+              mean            sd
+mean -1.102483e-06  0.000000e+00
+sd    0.000000e+00 -1.685676e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -0.0001102483          NaN
+sd             NaN -0.001685676
 maximum deviation 
      1.685676e-05 
 > distrExOptions("ErelativeTolerance" = .Machine$double.eps^0.25) # default
@@ -542,16 +458,12 @@ $asCov
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.AL", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.An1")
 > ### * rlsOptIC.An1
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.An1
 > ### Title: Computation of the optimally robust IC for An1 estimators
 > ### Aliases: rlsOptIC.An1
@@ -566,6 +478,10 @@ precision of Fisher consistency:
              mean           sd
 mean 2.530605e-08 0.000000e+00
 sd   0.000000e+00 3.875467e-06
+precision of Fisher consistency - relative error [%]:
+             mean           sd
+mean 2.530605e-06          NaN
+sd            NaN 0.0003875467
 maximum deviation 
      3.875467e-06 
 > Risks(IC1)
@@ -590,16 +506,12 @@ $asCov
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.An1", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.An2")
 > ### * rlsOptIC.An2
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.An2
 > ### Title: Computation of the optimally robust IC for An2 estimators
 > ### Aliases: rlsOptIC.An2
@@ -614,6 +526,10 @@ precision of Fisher consistency:
               mean            sd
 mean -4.006394e-07  0.000000e+00
 sd    0.000000e+00 -1.496408e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -4.006394e-05          NaN
+sd             NaN -0.001496408
 maximum deviation 
      0.0001066371 
 > Risks(IC1)
@@ -631,22 +547,16 @@ $asCov
 [1,] "rlsOptIC.An2" "optimally robust IC for An2 estimators and 'asMSE'"
 [2,] "rlsOptIC.An2" "where a = 1.813 and k = 2.267"                     
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.An2", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.AnMad")
 > ### * rlsOptIC.AnMad
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.AnMad
 > ### Title: Computation of the optimally robust IC for AnMad estimators
 > ### Aliases: rlsOptIC.AnMad
@@ -661,6 +571,10 @@ precision of Fisher consistency:
               mean            sd
 mean -4.044557e-07  0.000000e+00
 sd    0.000000e+00 -6.821323e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -4.044557e-05          NaN
+sd             NaN -0.006821323
 maximum deviation 
      6.821323e-05 
 > Risks(IC1)
@@ -678,22 +592,16 @@ $asCov
 [1,] "rlsOptIC.AnMad" "optimally robust IC for AnMad estimators and 'asMSE'"
 [2,] "rlsOptIC.AnMad" "where a = 1.814"                                     
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.AnMad", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.BM")
 > ### * rlsOptIC.BM
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.BM
 > ### Title: Computation of the optimally robust IC for BM estimators
 > ### Aliases: rlsOptIC.BM
@@ -707,9 +615,13 @@ precision of centering:	 0 -1.246469e-06
 precision of Fisher consistency:
               mean            sd
 mean -2.355426e-06  0.000000e+00
-sd    0.000000e+00 -1.737383e-05
+sd    0.000000e+00 -1.732518e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -0.0002355426          NaN
+sd             NaN -0.001732518
 maximum deviation 
-     1.737383e-05 
+     1.732518e-05 
 > Risks(IC1)
 $asMSE
 [1] 1.659506
@@ -728,22 +640,16 @@ $asCov
 [1,] "optimally robust IC for BM estimators and 'asMSE'"                      
 [2,] " where b.loc = 2.121 , b.sc.0 = 4.461 , alpha = 1.053 and gamma = 0.578"
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.BM", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Ha3")
 > ### * rlsOptIC.Ha3
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Ha3
 > ### Title: Computation of the optimally robust IC for Ha3 estimators
 > ### Aliases: rlsOptIC.Ha3
@@ -753,11 +659,15 @@ NULL
 > 
 > IC1 <- rlsOptIC.Ha3(r = 0.1)
 > checkIC(IC1)
-precision of centering:	 0 -2.659214e-07 
+precision of centering:	 0 -3.191376e-07 
 precision of Fisher consistency:
               mean            sd
 mean -8.538336e-07  0.000000e+00
 sd    0.000000e+00 -9.691769e-06
+precision of Fisher consistency - relative error [%]:
+              mean            sd
+mean -8.538336e-05           NaN
+sd             NaN -0.0009691769
 maximum deviation 
      9.691769e-06 
 > Risks(IC1)
@@ -782,16 +692,12 @@ $asCov
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.Ha3", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Ha4")
 > ### * rlsOptIC.Ha4
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Ha4
 > ### Title: Computation of the optimally robust IC for Ha4 estimators
 > ### Aliases: rlsOptIC.Ha4
@@ -806,6 +712,10 @@ precision of Fisher consistency:
               mean            sd
 mean -2.265319e-06  0.000000e+00
 sd    0.000000e+00 -1.498731e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -0.0002265319          NaN
+sd             NaN -0.001498731
 maximum deviation 
      0.0001069318 
 > Risks(IC1)
@@ -823,22 +733,16 @@ $asCov
 [1,] "rlsOptIC.Ha4" "optimally robust IC for Ha4 estimators and 'asMSE'"  
 [2,] "rlsOptIC.Ha4" "where a = 1.947 , b = 5.244 , c = 6.34 and k = 2.267"
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.Ha4", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.HaMad")
 > ### * rlsOptIC.HaMad
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.HaMad
 > ### Title: Computation of the optimally robust IC for HuMad estimators
 > ### Aliases: rlsOptIC.HaMad
@@ -853,6 +757,10 @@ precision of Fisher consistency:
               mean            sd
 mean -2.041724e-06  0.000000e+00
 sd    0.000000e+00 -6.821323e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -0.0002041724          NaN
+sd             NaN -0.006821323
 maximum deviation 
      6.821323e-05 
 > Risks(IC1)
@@ -870,22 +778,16 @@ $asCov
 [1,] "rlsOptIC.HaMad" "optimally robust IC for HaMad estimators and 'asMSE'"
 [2,] "rlsOptIC.HaMad" "where a = 1.944 , b = 4.368 , c = 10.51"             
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.HaMad", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Hu1")
 > ### * rlsOptIC.Hu1
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Hu1
 > ### Title: Computation of the optimally robust IC for Hu1 estimators
 > ### Aliases: rlsOptIC.Hu1
@@ -900,6 +802,10 @@ precision of Fisher consistency:
               mean            sd
 mean -3.746843e-06  0.000000e+00
 sd    0.000000e+00 -1.350353e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -0.0003746843          NaN
+sd             NaN -0.001350353
 maximum deviation 
      1.350353e-05 
 > Risks(IC1)
@@ -917,22 +823,16 @@ $asCov
 [1,] "rlsOptIC.Hu1" "optimally robust IC for Hu1 estimators and 'asMSE'"
 [2,] "rlsOptIC.Hu1" "where k = 2.197"                                   
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.Hu1", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Hu2")
 > ### * rlsOptIC.Hu2
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Hu2
 > ### Title: Computation of the optimally robust IC for Hu2 estimators
 > ### Aliases: rlsOptIC.Hu2
@@ -947,6 +847,10 @@ precision of Fisher consistency:
               mean            sd
 mean -2.563384e-06  0.000000e+00
 sd    0.000000e+00 -1.321969e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -0.0002563384          NaN
+sd             NaN -0.001321969
 maximum deviation 
      1.321969e-05 
 > Risks(IC1)
@@ -964,22 +868,16 @@ $asCov
 [1,] "rlsOptIC.Hu2" "optimally robust IC for Hu2 estimators and 'asMSE'"
 [2,] "rlsOptIC.Hu2" "where k = 1.945 and c = 2.266"                     
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.Hu2", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Hu2a")
 > ### * rlsOptIC.Hu2a
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Hu2a
 > ### Title: Computation of the optimally robust IC for Hu2a estimators
 > ### Aliases: rlsOptIC.Hu2a
@@ -994,6 +892,10 @@ precision of Fisher consistency:
              mean            sd
 mean -3.15714e-06  0.000000e+00
 sd    0.00000e+00 -1.321476e-05
+precision of Fisher consistency - relative error [%]:
+             mean           sd
+mean -0.000315714          NaN
+sd            NaN -0.001321476
 maximum deviation 
      1.321476e-05 
 > Risks(IC1)
@@ -1011,22 +913,16 @@ $asCov
 [1,] "rlsOptIC.Hu2a" "optimally robust IC for Hu2a estimators and 'asMSE'"
 [2,] "rlsOptIC.Hu2a" "where k1 = 0 and k2 = 2.198"                        
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.Hu2a", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Hu3")
 > ### * rlsOptIC.Hu3
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Hu3
 > ### Title: Computation of the optimally robust IC for Hu3 estimators
 > ### Aliases: rlsOptIC.Hu3
@@ -1041,6 +937,10 @@ precision of Fisher consistency:
               mean            sd
 mean -2.132286e-06  0.000000e+00
 sd    0.000000e+00 -1.574855e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -0.0002132286          NaN
+sd             NaN -0.001574855
 maximum deviation 
      8.525774e-05 
 > Risks(IC1)
@@ -1058,22 +958,16 @@ $asCov
 [1,] "rlsOptIC.Hu3" "optimally robust IC for Hu3 estimators and 'asMSE'"
 [2,] "rlsOptIC.Hu3" "where k = 1.948 , c1 = 0.112 and c2 = 2.268"       
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.Hu3", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.HuMad")
 > ### * rlsOptIC.HuMad
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.HuMad
 > ### Title: Computation of the optimally robust IC for HuMad estimators
 > ### Aliases: rlsOptIC.HuMad
@@ -1088,6 +982,10 @@ precision of Fisher consistency:
               mean            sd
 mean -1.987572e-06  0.000000e+00
 sd    0.000000e+00 -6.821323e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -0.0001987572          NaN
+sd             NaN -0.006821323
 maximum deviation 
      6.821323e-05 
 > Risks(IC1)
@@ -1105,22 +1003,16 @@ $asCov
 [1,] "rlsOptIC.HuMad" "optimally robust IC for HuMad estimators and 'asMSE'"
 [2,] "rlsOptIC.HuMad" "where k = 1.948"                                     
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.HuMad", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.M")
 > ### * rlsOptIC.M
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.M
 > ### Title: Computation of the optimally robust IC for M estimators
 > ### Aliases: rlsOptIC.M
@@ -1131,16 +1023,20 @@ NULL
 > IC1 <- rlsOptIC.M(r = 0.1, check = TRUE)
 constraint a1:	 4.682285e-09 
 constraint a3:	 -1.033529e-08 
-MSE equation:	 -3.383516e-12 
+MSE equation:	 -3.383432e-12 
 > distrExOptions("ErelativeTolerance" = 1e-12)
 > checkIC(IC1, NormLocationScaleFamily())
-precision of centering:	 -1.418367e-20 9.579943e-06 
+precision of centering:	 -4.020382e-20 -5.077122e-07 
 precision of Fisher consistency:
-             mean            sd
-mean 1.646253e-05 -8.358660e-22
-sd   1.313976e-21  2.094876e-05
+              mean            sd
+mean -1.083071e-06  9.647736e-20
+sd    5.538940e-20 -1.633143e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -0.0001083071          Inf
+sd             Inf -0.001633143
 maximum deviation 
-     2.094876e-05 
+     1.633143e-05 
 > distrExOptions("ErelativeTolerance" = .Machine$double.eps^0.25)
 > Risks(IC1)
 $asMSE
@@ -1157,22 +1053,16 @@ $asCov
 [1,] "rlsOptIC.M" "optimally robust IC for M estimators and 'asMSE'"           
 [2,] "rlsOptIC.M" "where a1 = 0.724 , a3 = 0.343 , b = 3.187 and gamma = 0.575"
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.M", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.MM2")
 > ### * rlsOptIC.MM2
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.MM2
 > ### Title: Computation of the optimally robust IC for MM2 estimators
 > ### Aliases: rlsOptIC.MM2
@@ -1187,6 +1077,10 @@ precision of Fisher consistency:
               mean            sd
 mean -2.225204e-06  0.000000e+00
 sd    0.000000e+00 -1.566028e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -0.0002225204          NaN
+sd             NaN -0.001566028
 maximum deviation 
      1.566028e-05 
 > Risks(IC1)
@@ -1204,22 +1098,16 @@ $asCov
 [1,] "rlsOptIC.MM2" "optimally robust IC for MM2 estimators and 'asMSE'"
 [2,] "rlsOptIC.MM2" "where c = 2.159 and d = 3.337"                     
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.MM2", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Tu1")
 > ### * rlsOptIC.Tu1
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Tu1
 > ### Title: Computation of the optimally robust IC for Tu1 estimators
 > ### Aliases: rlsOptIC.Tu1
@@ -1234,6 +1122,10 @@ precision of Fisher consistency:
               mean           sd
 mean -3.649066e-08 0.000000e+00
 sd    0.000000e+00 2.888236e-06
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -3.649066e-06          NaN
+sd             NaN 0.0002888236
 maximum deviation 
      2.888236e-06 
 > Risks(IC1)
@@ -1251,22 +1143,16 @@ $asCov
 [1,] "rlsOptIC.Tu1" "optimally robust IC for Tu1 estimators and 'asMSE'"
 [2,] "rlsOptIC.Tu1" "where a = 5.527"                                   
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.Tu1", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.Tu2")
 > ### * rlsOptIC.Tu2
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.Tu2
 > ### Title: Computation of the optimally robust IC for Tu2 estimators
 > ### Aliases: rlsOptIC.Tu2
@@ -1276,11 +1162,15 @@ NULL
 > 
 > IC1 <- rlsOptIC.Tu2(r = 0.1)
 > checkIC(IC1)
-precision of centering:	 0 -3.919236e-07 
+precision of centering:	 0 -1.429842e-07 
 precision of Fisher consistency:
               mean            sd
 mean -5.447399e-07  0.000000e+00
 sd    0.000000e+00 -1.437669e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -5.447399e-05          NaN
+sd             NaN -0.001437669
 maximum deviation 
      1.437669e-05 
 > Risks(IC1)
@@ -1298,22 +1188,16 @@ $asCov
 [1,] "rlsOptIC.Tu2" "optimally robust IC for Tu2 estimators and 'asMSE'"
 [2,] "rlsOptIC.Tu2" "where a = 6.357 and k = 2.264"                     
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.Tu2", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rlsOptIC.TuMad")
 > ### * rlsOptIC.TuMad
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rlsOptIC.TuMad
 > ### Title: Computation of the optimally robust IC for TuMad estimators
 > ### Aliases: rlsOptIC.TuMad
@@ -1328,6 +1212,10 @@ precision of Fisher consistency:
               mean            sd
 mean -5.410012e-07  0.000000e+00
 sd    0.000000e+00 -6.821323e-05
+precision of Fisher consistency - relative error [%]:
+              mean           sd
+mean -5.410012e-05          NaN
+sd             NaN -0.006821323
 maximum deviation 
      6.821323e-05 
 > Risks(IC1)
@@ -1345,22 +1233,16 @@ $asCov
 [1,] "rlsOptIC.TuMad" "optimally robust IC for TuMad estimators and 'asMSE'"
 [2,] "rlsOptIC.TuMad" "where a = 6.352"                                     
 > plot(IC1)
-NULL
-NULL
 > infoPlot(IC1)
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rlsOptIC.TuMad", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("roblox")
 > ### * roblox
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: roblox
 > ### Title: Optimally robust estimator for location and/or scale
 > ### Aliases: roblox
@@ -1426,9 +1308,9 @@ NULL
 > 
 > # Kolmogorov(-Smirnov) minimum distance estimator (robust)
 > (ks.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily()))
-Evaluations of Minimum Kolmogorov distance estimate:
-----------------------------------------------------
-An object of class “Estimate” 
+Evaluations of Minimum Kolmogorov distance estimate  :
+------------------------------------------------------
+An object of class "MDEstimate" 
 generated by call
   MDEstimator(x = x, ParamFamily = NormLocationScaleFamily())
 samplesize:   100
@@ -1443,7 +1325,7 @@ Kolmogorov distance
 > roblox(x, eps = 0.05, initial.est = estimate(ks.est))
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   roblox(x = x, eps = 0.05, initial.est = estimate(ks.est))
 samplesize:   100
@@ -1468,35 +1350,51 @@ steps:
 > 
 > # Cramer von Mises minimum distance estimator (robust)
 > (CvM.est <- MDEstimator(x, ParamFamily = NormLocationScaleFamily(), distance = CvMDist))
-Evaluations of Minimum CvM distance estimate:
----------------------------------------------
-An object of class “Estimate” 
+Evaluations of Minimum CvM distance estimate ( mu = emp. cdf )  :
+-----------------------------------------------------------------
+An object of class "CvMMD.ALEstimate" 
 generated by call
   MDEstimator(x = x, ParamFamily = NormLocationScaleFamily(), distance = CvMDist)
 samplesize:   100
 estimate:
        mean          sd 
--0.06995363  0.89265661 
+-0.08351915  0.89143039 
 Criterion:
 CvM distance 
-  0.02436665 
+    0.023081 
+asymptotic bias:
+NULL
+(partial) influence curve:
+An object of class "IC" 
+### name:	 IC of CvM MDE 
+### L2-differentiable parametric family:	 normal location and scale family 
+
+### 'Curve':	An object of class "EuclRandVarList" 
+Domain:	Real Space with dimension 1 
+[[1]]
+length of Map:	 2 
+Range:	Real Space with dimension 1 
+
+### Infos:
+     method        message                                
+[1,] "pIC-CvM-MDE" "computed by .CvMMDCovariance[WithMux]"
 > 
 > # optimally robust (amount of gross errors known)
 > roblox(x, eps = 0.05, initial.est = estimate(CvM.est))
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   roblox(x = x, eps = 0.05, initial.est = estimate(CvM.est))
 samplesize:   100
 estimate:
       mean           sd     
-  -0.11421421    0.89779415 
- ( 0.10240216) ( 0.07601982)
+  -0.11328296    0.89635007 
+ ( 0.10223745) ( 0.07589754)
 asymptotic (co)variance (multiplied with samplesize):
         [,1]      [,2]
-[1,] 1.04862 0.0000000
-[2,] 0.00000 0.5779013
+[1,] 1.04525 0.0000000
+[2,] 0.00000 0.5760437
 Infos:
      method  
 [1,] "roblox"
@@ -1504,22 +1402,18 @@ Infos:
 [1,] "finite-sample corrected optimally robust estimate for contamination 'eps' = 0.05 and 'asMSE'"
 asymptotic bias:
       sd 
-1.028857 
+1.027202 
 steps:
 [1] 1
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("roblox", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rowRoblox")
 > ### * rowRoblox
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rowRoblox and colRoblox
 > ### Title: Optimally robust estimation for location and/or scale
 > ### Aliases: rowRoblox colRoblox
@@ -1532,7 +1426,7 @@ steps:
 > rowRoblox(X)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   rowRoblox(x = X)
 samplesize:   100
@@ -1552,7 +1446,7 @@ steps:
 > rowRoblox(X, k = 3)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   rowRoblox(x = X, k = 3)
 samplesize:   100
@@ -1572,7 +1466,7 @@ steps:
 > rowRoblox(X, eps = 0.05)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   rowRoblox(x = X, eps = 0.05)
 samplesize:   100
@@ -1592,7 +1486,7 @@ steps:
 > rowRoblox(X, eps = 0.05, k = 3)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   rowRoblox(x = X, eps = 0.05, k = 3)
 samplesize:   100
@@ -1614,7 +1508,7 @@ steps:
 > colRoblox(X1)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   colRoblox(x = X1)
 samplesize:   100
@@ -1634,7 +1528,7 @@ steps:
 > colRoblox(X1, k = 3)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   colRoblox(x = X1, k = 3)
 samplesize:   100
@@ -1654,7 +1548,7 @@ steps:
 > colRoblox(X1, eps = 0.05)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   colRoblox(x = X1, eps = 0.05)
 samplesize:   100
@@ -1674,7 +1568,7 @@ steps:
 > colRoblox(X1, eps = 0.05, k = 3)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   colRoblox(x = X1, eps = 0.05, k = 3)
 samplesize:   100
@@ -1696,7 +1590,7 @@ steps:
 > rowRoblox(X2, sd = c(3, 4))
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   rowRoblox(x = X2, sd = c(3, 4))
 samplesize:   100
@@ -1716,7 +1610,7 @@ steps:
 > rowRoblox(X2, eps = 0.03, sd = c(3, 4))
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   rowRoblox(x = X2, sd = c(3, 4), eps = 0.03)
 samplesize:   100
@@ -1736,7 +1630,7 @@ steps:
 > rowRoblox(X2, sd = c(3, 4), k = 4)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   rowRoblox(x = X2, sd = c(3, 4), k = 4)
 samplesize:   100
@@ -1756,7 +1650,7 @@ steps:
 > rowRoblox(X2, eps = 0.03, sd = c(3, 4), k = 4)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   rowRoblox(x = X2, sd = c(3, 4), eps = 0.03, k = 4)
 samplesize:   100
@@ -1778,7 +1672,7 @@ steps:
 > colRoblox(X3, mean = c(-2, 1))
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   colRoblox(x = X3, mean = c(-2, 1))
 samplesize:   100
@@ -1798,7 +1692,7 @@ steps:
 > colRoblox(X3, eps = 0.02, mean = c(-2, 1))
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   colRoblox(x = X3, mean = c(-2, 1), eps = 0.02)
 samplesize:   100
@@ -1818,7 +1712,7 @@ steps:
 > colRoblox(X3, mean = c(-2, 1), k = 4)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   colRoblox(x = X3, mean = c(-2, 1), k = 4)
 samplesize:   100
@@ -1838,7 +1732,7 @@ steps:
 > colRoblox(X3, eps = 0.02, mean = c(-2, 1), k = 4)
 Evaluations of Optimally robust estimate:
 -----------------------------------------
-An object of class “Estimate” 
+An object of class "kStepEstimate" 
 generated by call
   colRoblox(x = X3, mean = c(-2, 1), eps = 0.02, k = 4)
 samplesize:   100
@@ -1858,16 +1752,12 @@ steps:
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rowRoblox", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("rsOptIC")
 > ### * rsOptIC
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: rsOptIC
 > ### Title: Computation of the optimally robust IC for AL estimators
 > ### Aliases: rsOptIC
@@ -1882,6 +1772,9 @@ precision of centering:	 -5.00529e-07
 precision of Fisher consistency:
               scale
 scale -1.394372e-05
+precision of Fisher consistency - relative error [%]:
+             scale
+scale -0.001394372
 maximum deviation 
      1.394372e-05 
 > distrExOptions("ErelativeTolerance" = .Machine$double.eps^0.25) # default
@@ -1903,20 +1796,15 @@ $asCov
           [,1]
 [1,] 0.5967817
 > plot(IC1)
-NULL
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("rsOptIC", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 > nameEx("showdown")
 > ### * showdown
 > 
 > flush(stderr()); flush(stdout())
 > 
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: showdown
 > ### Title: Estimator Showdown by Monte-Carlo Study.
 > ### Aliases: showdown
@@ -1954,13 +1842,12 @@ relMSE (loc + scale)     1.354211 1.854750   1.564143 1.0000000
 > 
 > 
 > 
-> 
-> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("showdown", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > ### * <FOOTER>
 > ###
+> cleanEx()
+> options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  72.904 0.34 73.52 0 0 
+Time elapsed:  58.89 2.69 111.11 NA NA 
 > grDevices::dev.off()
 pdf 
   2 
