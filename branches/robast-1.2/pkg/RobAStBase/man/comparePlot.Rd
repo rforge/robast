@@ -51,20 +51,20 @@ comparePlot(obj1, obj2, ... )
   \item{lwd}{linewidth[s] of ICs in arguments \code{obj1} [,\ldots,\code{obj4}].}
   \item{lty}{line-type[s] of ICs in arguments \code{obj1} [,\ldots,\code{obj4}].}
   \item{inner}{logical: do panels have their own titles? or \cr
-               character vector of / cast to length 'number of plotted 
+               character vector of / cast to length 'number of plotted
                dimensions';
-               if argument \code{to.draw.arg} is used, this refers to 
-               a vector of length \code{length(to.draw.arg)}, the 
-               actually plotted dimensions. For further information, see also 
-               description of argument \code{main} in \code{\link[graphics]{plot.default}}.} 
+               if argument \code{to.draw.arg} is used, this refers to
+               a vector of length \code{length(to.draw.arg)}, the
+               actually plotted dimensions. For further information, see also
+               description of argument \code{main} in \code{\link[graphics]{plot.default}}.}
   \item{sub}{logical: is a sub-title to be used? or \cr
               just as argument \code{sub} in \code{\link[graphics]{plot.default}}.}
   \item{tmar}{top margin -- useful for non-standard main title sizes}
   \item{bmar}{bottom margin -- useful for non-standard sub title sizes}
   \item{cex.inner}{magnification to be used for inner titles relative
-          to the current setting of \code{cex}; as in 
+          to the current setting of \code{cex}; as in
           \code{\link[graphics]{par}}}
-  \item{col.inner}{character or integer code; color for the inner title}              
+  \item{col.inner}{character or integer code; color for the inner title}
   \item{with.automatic.grid}{logical; should a grid be plotted alongside
       with the ticks of the axes, automatically? If \code{TRUE} a respective
       call to \code{grid} in argument \code{panel.first} is ignored. }
@@ -126,15 +126,15 @@ comparePlot(obj1, obj2, ... )
                  if non-NULL, user-given y-ticks (on original scale);
                  can be a list with one (numeric or NULL) item per panel}
   \item{mfColRow}{shall default partition in panels be used --- defaults to \code{TRUE}}
-  \item{to.draw.arg}{Either \code{NULL} (default; 
-                          everything is plotted) or a vector of either integers 
-                         (the indices of the subplots to be drawn) or characters 
+  \item{to.draw.arg}{Either \code{NULL} (default;
+                          everything is plotted) or a vector of either integers
+                         (the indices of the subplots to be drawn) or characters
                          --- the names of the subplots to be drawn: these
-                         names are to be chosen either among the row names of 
-                         the trafo matrix 
-                         \code{rownames(trafo(eval(obj1@CallL2Fam)@param))} 
-                         or if the last expression is \code{NULL} a 
-                         vector \code{"dim<dimnr>"}, \code{dimnr} running through 
+                         names are to be chosen either among the row names of
+                         the trafo matrix
+                         \code{rownames(trafo(eval(obj1@CallL2Fam)@param))}
+                         or if the last expression is \code{NULL} a
+                         vector \code{"dim<dimnr>"}, \code{dimnr} running through
                          the number of rows of the trafo matrix.
                          }
   \item{withSubst}{logical; if \code{TRUE} (default) pattern substitution for
@@ -163,8 +163,8 @@ comparePlot(obj1, obj2, ... )
         the rescalings, or a function which is then used for each of the
         rescalings, or a list of functions; if it is a function or a list of
         functions, if necessary it is recylced to length \code{nIC * dim}
-        where \code{dim} is the number of dimensions of the pICs to be plotted; 
-        in the index of this list, \code{nIC} is incremented first; 
+        where \code{dim} is the number of dimensions of the pICs to be plotted;
+        in the index of this list, \code{nIC} is incremented first;
         then \code{dim}.}
   \item{col.npts}{color of the non-labelled points of the \code{data} argument
      plotted; (may be a vector of length \code{nIC} the number of plotted pICs,
@@ -187,9 +187,9 @@ comparePlot(obj1, obj2, ... )
   the pICs to be plotted;  in the index of this list,
   \code{nIC} is incremented first; then \code{dim}.}
   \item{lab.pts}{character or NULL; labels to be plotted to the observations;
-                 can be a vector of length \code{n}, \code{n} the number of 
+                 can be a vector of length \code{n}, \code{n} the number of
                  all observations prior to any selection with \code{which.lbs},
-                 \code{which.Order}; if \code{lab.pts} is \code{NULL}, 
+                 \code{which.Order}; if \code{lab.pts} is \code{NULL},
                  observation indices are used.}
   \item{with.lab}{logical; shall labels be plotted to the observations?
                  (May be a vector of length \code{nIC}, see \code{col.pts}
@@ -216,7 +216,7 @@ comparePlot(obj1, obj2, ... )
         to the respective coordinate value of \code{alpha.trsp}. The non-NA
         entries must be integers in [0,255] (0 invisible, 255 opaque).}
   \item{jitter.fac}{jittering factor used in case of a \code{DiscreteDistribution}
-                    for plotting points of the \code{data} argument in a jittered 
+                    for plotting points of the \code{data} argument in a jittered
                     fashion (may be a vector of length 2, see \code{with.lab}).}
   \item{attr.pre}{logical; do graphical attributes for plotted data refer
                   to indices prior (\code{TRUE}) or posterior to selection
@@ -252,33 +252,33 @@ comparePlot(obj1, obj2, ... )
 }
 \details{
 Any parameters of \code{plot.default} may be passed on to this particular
-\code{plot} method. 
+\code{plot} method.
 
-For main-, inner, and subtitles given as arguments \code{main}, 
-\code{inner}, and \code{sub}, top and bottom margins are enlarged to 5 resp. 
-6 by default but may also be specified by \code{tmar} / \code{bmar} arguments. 
-If \code{main} / \code{inner} / \code{sub} are 
-logical then if the respective argument is \code{FALSE} nothing is done/plotted, 
-but if it is \code{TRUE}, we use a default main title taking up the calling 
+For main-, inner, and subtitles given as arguments \code{main},
+\code{inner}, and \code{sub}, top and bottom margins are enlarged to 5 resp.
+6 by default but may also be specified by \code{tmar} / \code{bmar} arguments.
+If \code{main} / \code{inner} / \code{sub} are
+logical then if the respective argument is \code{FALSE} nothing is done/plotted,
+but if it is \code{TRUE}, we use a default main title taking up the calling
 arguments in case of \code{main}, default inner titles taking up the
 class and (named) parameter slots of arguments in case of \code{inner},
 and a "generated on <data>"-tag in case of \code{sub}.
 Of course, if \code{main} / \code{inner} / \code{sub} are \code{character}, this
 is used for the title; in case of \code{inner} it is then checked whether it
-has correct length. If argument \code{withSubst} is \code{TRUE}, in all title 
+has correct length. If argument \code{withSubst} is \code{TRUE}, in all title
 and axis lable arguments, the following patterns are substituted:
 \describe{
-\item{\code{"\%C1"},\code{"\%C2"},[\code{"\%C3"},][\code{"\%C4"}]}{class of argument 
+\item{\code{"\%C1"},\code{"\%C2"},[\code{"\%C3"},][\code{"\%C4"}]}{class of argument
       \code{obj<i>}, i=1,..4}
-\item{\code{"\%A1"},\code{"\%A2"},[\code{"\%A3"},][\code{"\%A4"}]}{deparsed argument  
+\item{\code{"\%A1"},\code{"\%A2"},[\code{"\%A3"},][\code{"\%A4"}]}{deparsed argument
       \code{obj<i>}, i=1,..4}
 \item{\code{"\%D"}}{time/date-string when the plot was generated}
 }
 
 If argument \code{\dots} contains argument \code{ylim}, this may either be
-as in \code{plot.default} (i.e. a vector of length 2) or a vector of 
-length 2*(number of plotted dimensions); in the case of longer length, 
-these are the values for \code{ylim} for the plotted dimensions of the IC, 
+as in \code{plot.default} (i.e. a vector of length 2) or a vector of
+length 2*(number of plotted dimensions); in the case of longer length,
+these are the values for \code{ylim} for the plotted dimensions of the IC,
 one pair for each dimension.
 
 In addition, argument \code{\dots} may contain arguments \code{panel.first},
@@ -291,7 +291,7 @@ run through in the same order as the panels).
 
 %\value{}
 \references{
-  Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}. 
+  Kohl, M. (2005) \emph{Numerical Contributions to the Asymptotic Theory of Robustness}.
   Bayreuth: Dissertation.
 }
 \author{Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}}
@@ -301,7 +301,7 @@ run through in the same order as the panels).
 \examples{
 if(require(ROptEst)){
 
-N0 <- NormLocationScaleFamily(mean=0, sd=1) 
+N0 <- NormLocationScaleFamily(mean=0, sd=1)
 N0.Rob1 <- InfRobModel(center = N0, neighbor = ContNeighborhood(radius = 0.5))
 
 IC1 <- optIC(model = N0, risk = asCov())
@@ -320,38 +320,38 @@ comparePlot(IC1, IC2, data=data, with.lab = TRUE,
 \donttest{
 ## selection of subpanels for plotting
 par(mfrow=c(1,1))
-comparePlot(IC1, IC2 ,mfColRow = FALSE, to.draw.arg=c("mean"),
-            panel.first= grid(),ylim=c(-4,4),xlim=c(-6,6))
+comparePlot(IC1, IC2, mfColRow = FALSE, to.draw.arg=c("mean"),
+            panel.first=grid(), ylim=c(-4,4), xlim=c(-6,6))
 ## matrix-valued ylim
-comparePlot(IC1, IC2, panel.first= grid(),ylim=c(-4,4,0,4),xlim=c(-6,6))
+comparePlot(IC1, IC2, panel.first=grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
 
 x <- c(data,-12,10)
 comparePlot(IC1, IC2, data=x, which.Order=10,
-            panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
+            panel.first=grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
 
-Y <- Chisq(df=1)* DiscreteDistribution(c(-1,1))
+Y <- Chisq(df=1) * DiscreteDistribution(c(-1,1))
 comparePlot(IC1, IC2, data=x, which.Order=10,
             scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
             scaleY = TRUE, scaleY.fct=p(Y), scaleY.inv=q.l(Y),
-            panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
+            panel.first=grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
 comparePlot(IC1, IC2, data=x, which.Order=10,
             scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
             scaleY = TRUE, scaleY.fct=p(Y), scaleY.inv=q.l(Y),
             x.ticks = c(-Inf, -10, -1,0,1,10,Inf),
             y.ticks = c(-Inf, -5, -1,0,1,5,Inf),
-            panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
+            panel.first=grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
 
 ## with use of trafo-matrix:
 G <- GammaFamily(scale = 1, shape = 2)
 ## explicitely transforming to
 ## MASS parametrization:
 mtrafo <- function(x){
-     nms0 <- names(c(main(param(G)),nuisance(param(G))))
+     nms0 <- names(c(main(param(G)), nuisance(param(G))))
      nms <- c("shape","rate")
      fval0 <- c(x[2], 1/x[1])
      names(fval0) <- nms
      mat0 <- matrix( c(0, -1/x[1]^2, 1, 0), nrow = 2, ncol = 2,
-                     dimnames = list(nms,nms0))                          
+                     dimnames = list(nms,nms0))
      list(fval = fval0, mat = mat0)}
 G2 <- G
 trafo(G2) <- mtrafo
@@ -362,7 +362,7 @@ system.time(IC2 <- optIC(model = G2.Rob1, risk = asMSE()))
 system.time(IC2.i <- optIC(model = G2.Rob1, risk = asMSE(normtype=InfoNorm())))
 system.time(IC2.s <- optIC(model = G2.Rob1, risk = asMSE(normtype=SelfNorm())))
 
-comparePlot(IC1,IC2, IC2.i, IC2.s)
+comparePlot(IC1, IC2, IC2.i, IC2.s)
 }
 
 }

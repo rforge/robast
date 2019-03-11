@@ -16,7 +16,7 @@ These functions are internally used helper functions for \code{\link{plot}},
                                 x.ticks, scaleX, scaleX.fct,
                                 y.ticks, scaleY, scaleY.fct)
 .producePanelFirstSn(panelFirst, x.ticks, scaleX, scaleX.fct,
-                                y.ticks, scaleY, scaleY.fct)
+                                y.ticks, scaleY, scaleY.fct, logArg)
 }
 \arguments{
   \item{L2Fam}{the model at which the plot is produced (of class \code{L2ParamFamily}).}
@@ -32,6 +32,9 @@ These functions are internally used helper functions for \code{\link{plot}},
   \item{scaleY.fct}{an isotone, vectorized function mapping for each coordinate the
             range of the respective coordinate of the IC
             to [0,1]; defaulting to the cdf of \eqn{{\cal N}(0,1)}{N(0,1)}.}
+  \item{logArg}{a character string which contains "x" if the x axis is to be logarithmic,
+            "y" if the y axis is to be logarithmic and "xy" or "yx" if both axes are
+            to be logarithmic; see \code{\link{plot.default}}.}
   \item{to.draw.arg}{Either \code{NULL} (default;
                           everything is plotted) or a vector of either integers
                          (the indices of the subplots to be drawn) or characters
