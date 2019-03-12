@@ -13,7 +13,7 @@ using S4 classes and methods.
 \tabular{ll}{
 Package: \tab ROptEst \cr
 Version: \tab 1.2.0 \cr
-Date: \tab 2019-03-10 \cr
+Date: \tab 2019-03-12 \cr
 Depends: \tab R(>= 2.14.0), methods, distr(>= 2.8.0), distrEx(>= 2.8.0), distrMod(>= 2.8.0),
 RandVar(>= 1.2.0), RobAStBase(>= 1.2.0) \cr
 Suggests: \tab RobLox\cr
@@ -22,7 +22,7 @@ ByteCompile: \tab yes \cr
 Encoding: \tab latin1 \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-VCS/SVNRevision: \tab 1097 \cr
+VCS/SVNRevision: \tab 1202 \cr
 }
 }
 \author{

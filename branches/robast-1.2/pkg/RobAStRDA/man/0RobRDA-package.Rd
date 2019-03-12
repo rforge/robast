@@ -32,13 +32,13 @@ See also mail exchange P.Ruckdeschel - U.Ligges on R-devel---
 \tabular{ll}{
 Package: \tab RobAStRDA \cr
 Version: \tab 1.2.0 \cr
-Date: \tab 2019-03-10 \cr
-Depends: \tab R (>= 2.14.0) \cr
+Date: \tab 2019-03-12 \cr
+Depends: \tab R(>= 3.4) \cr
 LazyData: \tab yes \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-VCS/SVNRevision: \tab 1097 \cr
+VCS/SVNRevision: \tab 1202 \cr
 }
 }
 

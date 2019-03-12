@@ -103,13 +103,12 @@ but also (adopted from package "distrMod")
 \tabular{ll}{
 Package: \tab RobExtremes \cr
 Version: \tab 1.2.0 \cr
-Date: \tab 2019-03-11 \cr
+Date: \tab 2019-03-12 \cr
 Title: \tab Optimally Robust Estimation for Extreme Value Distributions\cr
 Description: \tab Optimally robust estimation for extreme value distributions
 using S4 classes and methods \cr
 \tab (based on packages distr, distrEx, distrMod, RobAStBase, and ROptEst). \cr
-Depends:\tab R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 1.0), robustbase(>= 0.8-0),
-        evd \cr
+Depends: \tab R(>= 3.4), methods, distrMod(>= 2.8.0), ROptEst(>= 1.2.0), robustbase, evd \cr
 Suggests: \tab RUnit (>= 0.4.26), ismev (>= 1.39) \cr
 Imports: \tab actuar, RobAStRDA, distr, distrEx, RandVar, RobAStBase, startupmsg \cr
 Authors:
@@ -130,7 +129,7 @@ LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
 Encoding: \tab latin1 \cr
-VCS/SVNRevision: \tab 1200 \cr
+VCS/SVNRevision: \tab 1202 \cr
 }
 }
 
