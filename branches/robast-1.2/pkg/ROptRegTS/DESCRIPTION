@@ -4,8 +4,8 @@ Date: 2019-03-10
 Title: Optimally Robust Estimation for Regression-Type Models
 Description: Optimally robust estimation for regression-type models using S4 classes and
         methods.
-Depends: R (>= 2.14.0), methods, ROptEstOld(>= 1.1.0)
-Imports: distr(>= 2.7.0), distrEx(>= 2.7.0), RandVar(>= 1.1.0)
+Depends: R (>= 2.14.0), methods, ROptEstOld(>= 1.2.0)
+Imports: distr(>= 2.8.0), distrEx(>= 2.8.0), RandVar(>= 1.2.0)
 Authors@R: c(person("Matthias", "Kohl", role=c("cre", "aut", "cph"),
         email="Matthias.Kohl@stamats.de"), person("Peter", "Ruckdeschel", role=c("aut",
         "cph")))

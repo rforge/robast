@@ -8,7 +8,7 @@ Description: Optimally robust estimation for extreme value distributions using S
 Depends: R(>= 2.14.0), methods, distrMod(>= 2.8.0), ROptEst(>= 1.2.0), robustbase, evd
 Suggests: RUnit(>= 0.4.26), ismev(>= 1.39)
 Enhances: fitdistrplus(>= 1.0-9)
-Imports: RobAStRDA, distr, distrEx(>= 2.8.0), RandVar, RobAStBase(>= 1.2.0), startupmsg, actuar
+Imports: RobAStRDA, distr(>= 2.8.0), distrEx(>= 2.8.0), RandVar(>= 1.2.0), RobAStBase(>= 1.2.0), startupmsg, actuar
 Authors@R: c(person("Nataliya", "Horbenko", role=c("aut","cph")), person("Bernhard", "Spangl",
         role="ctb", comment="contributed smoothed grid values of the Lagrange multipliers"),
         person("Sascha", "Desmettre", role="ctb", comment="contributed smoothed grid values of

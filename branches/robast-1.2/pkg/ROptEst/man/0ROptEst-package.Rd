@@ -14,8 +14,8 @@ using S4 classes and methods.
 Package: \tab ROptEst \cr
 Version: \tab 1.2.0 \cr
 Date: \tab 2019-03-10 \cr
-Depends: \tab R(>= 2.14.0), methods, distr(>= 2.5.2), distrEx(>= 2.5), distrMod(>= 2.5.2),
-RandVar(>= 0.9.2), RobAStBase(>= 1.0) \cr
+Depends: \tab R(>= 2.14.0), methods, distr(>= 2.8.0), distrEx(>= 2.8.0), distrMod(>= 2.8.0),
+RandVar(>= 1.2.0), RobAStBase(>= 1.2.0) \cr
 Suggests: \tab RobLox\cr
 Imports: \tab startupmsg, MASS, stats, graphics, utils, grDevices \cr
 ByteCompile: \tab yes \cr

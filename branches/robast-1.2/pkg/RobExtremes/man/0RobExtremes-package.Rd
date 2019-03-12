@@ -108,10 +108,10 @@ Title: \tab Optimally Robust Estimation for Extreme Value Distributions\cr
 Description: \tab Optimally robust estimation for extreme value distributions
 using S4 classes and methods \cr
 \tab (based on packages distr, distrEx, distrMod, RobAStBase, and ROptEst). \cr
-Depends:\tab R (>= 2.14.0), methods, distrMod(>= 2.5.2), ROptEst(>= 1.0), robustbase(>= 0.8-0),
+Depends:\tab R (>= 2.14.0), methods, distrMod(>= 2.8.0), ROptEst(>= 1.2.0), robustbase(>= 0.8-0),
         evd \cr
 Suggests: \tab RUnit (>= 0.4.26), ismev (>= 1.39) \cr
-Imports: \tab actuar, RobAStRDA, distr, distrEx, RandVar, RobAStBase, startupmsg \cr
+Imports: \tab actuar, RobAStRDA, distr(>= 2.8.0), distrEx(>= 2.8.0), RandVar(>= 1.2.0), RobAStBase(>= 2.8.0), startupmsg \cr
 Authors:
 \tab Bernhard Spangl [contributed smoothed grid values of the Lagrange multipliers]\cr
 \tab Sascha Desmettre [contributed smoothed grid values of the Lagrange multipliers]\cr
