@@ -18,11 +18,12 @@ Imports: \tab startupmsg \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-VCS/SVNRevision: \tab 1203 \cr
+VCS/SVNRevision: \tab 1205 \cr
 }
 }
 \author{
 Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},
+    
     \cr%
 Matthias Kohl \email{Matthias.Kohl@stamats.de}\cr
 Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}

@@ -34,6 +34,7 @@ where \eqn{q^X}{q^X} is the quantile function of X.
 In addition, where they exist, we provide closed from expressions for
 variances, median, IQR, skewness, kurtosis. \cr
 In addition,
+    
     extending estimators \code{Sn} and \code{Qn} from package
 \pkg{robustbase}, we provide functionals for Sn and Qn. A new
 asymmetric version of the \code{mad}, \code{kMAD} gives yet another robust
@@ -43,6 +44,7 @@ scale estimator (and functional). %\cr
 \section{Models and Estimators}{
 
 As to models,
+    
     we provide the
 \itemize{
 \item GPD model (with known threshold), together with (speeded-up) optimally
@@ -75,6 +77,7 @@ are also available through package "distrMod". %\cr
 We bridge to the diagnostics provided by package "ismev", i.e. our
 return objects can be plugged into the diagnostics of this package.\cr
 We have the usual diagnostic plots from package "RobAStBase",
+    
     i.e.
 \itemize{
   \item Outylingness plots  \code{outlyingPlotIC}
@@ -131,7 +134,7 @@ LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
 Encoding: \tab latin1 \cr
-VCS/SVNRevision: \tab 1203 \cr
+VCS/SVNRevision: \tab 1205 \cr
 }
 }
 
@@ -259,6 +262,7 @@ way to store the database of interpolating functions which allow the speed up
 
 \author{
 Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},
+    
     \cr
 Matthias Kohl \email{Matthias.Kohl@stamats.de}, and \cr
 Nataliya Horbenko \email{nhorbenko@gmail.com},\cr
@@ -277,9 +281,11 @@ M. Kohl, P. Ruckdeschel, H. Rieder (2010):
 Infinitesimally Robust Estimation in General Smoothly Parametrized Models.
 \emph{Stat. Methods Appl.}, \bold{19}, 333--354.\cr
 Ruckdeschel, P. and Horbenko,
+    
     N. (2011): Optimally-Robust Estimators in Generalized
 Pareto Models. \emph{Statistics}. \bold{47}(4), 762--791.\cr
 Ruckdeschel, P. and Horbenko,
+    
     N. (2012): Yet another breakdown point notion:
 EFSBP --illustrated at scale-shape models. \emph{Metrika}, \bold{75}(8),
 1025--1047.
@@ -287,6 +293,7 @@ EFSBP --illustrated at scale-shape models. \emph{Metrika}, \bold{75}(8),
 %a more detailed manual for \pkg{distr}, \pkg{distrSim}, \pkg{distrTEst}, and \pkg{RobExtremes} may be downloaded from
 %\url{http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf}\cr
 A vignette for packages \pkg{distr}, \pkg{distrSim}, \pkg{distrTEst},
+    
     
 and \pkg{RobExtremes} is included into the mere documentation package \pkg{distrDoc}
 and may be called by \code{require("distrDoc");vignette("distr")}.

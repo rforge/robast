@@ -21,7 +21,7 @@ Suggests: \tab MASS \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-VCS/SVNRevision: \tab 1204 \cr
+VCS/SVNRevision: \tab 1205 \cr
 }
 }
 \author{Matthias Kohl  \email{matthias.kohl@stamats.de}}
