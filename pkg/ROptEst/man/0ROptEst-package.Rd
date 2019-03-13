@@ -13,22 +13,23 @@ using S4 classes and methods.
 \tabular{ll}{
 Package: \tab ROptEst \cr
 Version: \tab 1.2.0 \cr
-Date: \tab 2019-03-12 \cr
-Depends: \tab R(>= 2.14.0), methods, distr(>= 2.5.2), distrEx(>= 2.5), distrMod(>= 2.5.2), 
-RandVar(>= 0.9.2), RobAStBase(>= 1.0) \cr
-Suggests: \tab RobLox\cr
+Date: \tab 2019-03-13 \cr
+Depends: \tab R(>= 3.4), methods, distr(>= 2.8.0), distrEx(>= 2.8.0),
+    distrMod(>= 2.8.0),RandVar(>= 1.2.0), RobAStBase(>= 1.2.0) \cr
+Suggests: \tab RobLox \cr
 Imports: \tab startupmsg, MASS, stats, graphics, utils, grDevices \cr
 ByteCompile: \tab yes \cr
 Encoding: \tab latin1 \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-VCS/SVNRevision: \tab 1202 \cr
+VCS/SVNRevision: \tab 1204 \cr
 }
 }
 \author{
-Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},\cr%
+Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},
+    
+    \cr%
 Matthias Kohl \email{Matthias.Kohl@stamats.de}\cr
-
 Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
 \references{
   M. Kohl (2005). Numerical Contributions to the Asymptotic Theory of Robustness.
