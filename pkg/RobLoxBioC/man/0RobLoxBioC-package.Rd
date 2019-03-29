@@ -13,9 +13,10 @@ and estimators for preprocessing omics data, in particular gene expression data.
 \tabular{ll}{
 Package: \tab RobLoxBioC \cr
 Version: \tab 1.2.0 \cr
-Date: \tab 2019-03-27 \cr
+Date: \tab 2019-03-29 \cr
 Depends:\tab R(>= 2.14.0), methods, distr(>= 2.5.2), affy \cr
 Imports:\tab Biobase, BiocGenerics, beadarray, RobLox(>= 0.9.2),
+    
     
     
     
@@ -24,11 +25,12 @@ Suggests:\tab affydata, hgu95av2cdf, beadarrayExampleData,
     
     
     
+    
     illuminaHumanv3.db \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-VCS/SVNRevision: \tab 1207 \cr
+VCS/SVNRevision: \tab 1208 \cr
 Encoding: \tab latin1 \cr
 }
 }

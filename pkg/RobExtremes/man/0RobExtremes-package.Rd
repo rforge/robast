@@ -37,6 +37,7 @@ In addition,
     
     
     
+    
     extending estimators \code{Sn} and \code{Qn} from package
 \pkg{robustbase}, we provide functionals for Sn and Qn. A new
 asymmetric version of the \code{mad}, \code{kMAD} gives yet another robust
@@ -46,6 +47,7 @@ scale estimator (and functional). %\cr
 \section{Models and Estimators}{
 
 As to models,
+    
     
     
     
@@ -84,6 +86,7 @@ We have the usual diagnostic plots from package "RobAStBase",
     
     
     
+    
     i.e.
 \itemize{
   \item Outylingness plots  \code{outlyingPlotIC}
@@ -112,7 +115,7 @@ but also (adopted from package "distrMod")
 \tabular{ll}{
 Package: \tab RobExtremes \cr
 Version: \tab 1.2.0 \cr
-Date: \tab 2019-03-27 \cr
+Date: \tab 2019-03-29 \cr
 Title: \tab Optimally Robust Estimation for Extreme Value Distributions\cr
 Description: \tab Optimally robust estimation for extreme value distributions
 using S4 classes and methods \cr
@@ -140,7 +143,7 @@ LazyLoad: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
 Encoding: \tab latin1 \cr
-VCS/SVNRevision: \tab 1207 \cr
+VCS/SVNRevision: \tab 1208 \cr
 }
 }
 
@@ -271,6 +274,7 @@ Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},
     
     
     
+    
     \cr
 Matthias Kohl \email{Matthias.Kohl@stamats.de}, and \cr
 Nataliya Horbenko \email{nhorbenko@gmail.com},\cr
@@ -292,9 +296,11 @@ Ruckdeschel, P. and Horbenko,
     
     
     
+    
     N. (2011): Optimally-Robust Estimators in Generalized
 Pareto Models. \emph{Statistics}. \bold{47}(4), 762--791.\cr
 Ruckdeschel, P. and Horbenko,
+    
     
     
     
@@ -305,6 +311,7 @@ EFSBP --illustrated at scale-shape models. \emph{Metrika}, \bold{75}(8),
 %a more detailed manual for \pkg{distr}, \pkg{distrSim}, \pkg{distrTEst}, and \pkg{RobExtremes} may be downloaded from
 %\url{http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf}\cr
 A vignette for packages \pkg{distr}, \pkg{distrSim}, \pkg{distrTEst},
+    
     
     
     
