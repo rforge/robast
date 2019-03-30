@@ -43,9 +43,7 @@ scale estimator (and functional). %\cr
 
 \section{Models and Estimators}{
 
-As to models,
-    
-    we provide the
+As to models, we provide the
 \itemize{
 \item GPD model (with known threshold), together with (speeded-up) optimally
 robust estimators, with LDEstimators (in general, and with \code{medkMAD},
@@ -261,9 +259,7 @@ way to store the database of interpolating functions which allow the speed up
 }
 
 \author{
-Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},
-    
-    \cr
+Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},\cr
 Matthias Kohl \email{Matthias.Kohl@stamats.de}, and \cr
 Nataliya Horbenko \email{nhorbenko@gmail.com},\cr
 \emph{Maintainer:}  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
@@ -280,21 +276,17 @@ S4 Classes for Distributions, \emph{R News}, \emph{6}(2), 2-6.
 M. Kohl, P. Ruckdeschel, H. Rieder (2010):
 Infinitesimally Robust Estimation in General Smoothly Parametrized Models.
 \emph{Stat. Methods Appl.}, \bold{19}, 333--354.\cr
-Ruckdeschel, P. and Horbenko,
-    
-    N. (2011): Optimally-Robust Estimators in Generalized
+
+Ruckdeschel, P. and Horbenko, N. (2011): Optimally-Robust Estimators in Generalized
 Pareto Models. \emph{Statistics}. \bold{47}(4), 762--791.\cr
-Ruckdeschel, P. and Horbenko,
-    
-    N. (2012): Yet another breakdown point notion:
+
+Ruckdeschel, P. and Horbenko, N. (2012): Yet another breakdown point notion:
 EFSBP --illustrated at scale-shape models. \emph{Metrika}, \bold{75}(8),
 1025--1047.
-
 %a more detailed manual for \pkg{distr}, \pkg{distrSim}, \pkg{distrTEst}, and \pkg{RobExtremes} may be downloaded from
 %\url{http://www.uni-bayreuth.de/departments/math/org/mathe7/DISTR/distr.pdf}\cr
+
 A vignette for packages \pkg{distr}, \pkg{distrSim}, \pkg{distrTEst},
-    
-    
 and \pkg{RobExtremes} is included into the mere documentation package \pkg{distrDoc}
 and may be called by \code{require("distrDoc");vignette("distr")}.
 

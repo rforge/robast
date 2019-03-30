@@ -15,11 +15,9 @@ Package: \tab RobLoxBioC \cr
 Version: \tab 1.3.0 \cr
 Date: \tab 2019-03-13 \cr
 Depends:\tab R(>= 2.14.0), methods, distr(>= 2.5.2), affy \cr
-Imports:\tab Biobase, BiocGenerics, beadarray, RobLox(>= 0.9.2),
-    
+Imports:\tab Biobase, BiocGenerics, beadarray, RobLox(>= 0.9.2),  
     distrMod(>= 2.5.2), lattice, RColorBrewer \cr
-Suggests:\tab affydata, hgu95av2cdf, beadarrayExampleData,
-    
+Suggests:\tab affydata, hgu95av2cdf, beadarrayExampleData,    
     illuminaHumanv3.db \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
