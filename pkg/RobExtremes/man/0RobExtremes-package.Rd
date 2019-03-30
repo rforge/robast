@@ -254,12 +254,7 @@ way to store the database of interpolating functions which allow the speed up
 }
 
 \author{
-Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},
-    
-    
-    
-    
-    \cr
+Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}, \cr
 Matthias Kohl \email{Matthias.Kohl@stamats.de}, and \cr
 Nataliya Horbenko \email{nhorbenko@gmail.com},\cr
 \emph{Maintainer:}  Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de}
