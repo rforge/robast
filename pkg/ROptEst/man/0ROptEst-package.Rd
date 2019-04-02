@@ -13,16 +13,15 @@ using S4 classes and methods.
 \tabular{ll}{
 Package: \tab ROptEst \cr
 Version: \tab 1.2.0 \cr
-Date: \tab 2019-03-29 \cr
-Depends: \tab R(>= 3.4), methods, distr(>= 2.8.0), distrEx(>= 2.8.0),
-    distrMod(>= 2.8.0),RandVar(>= 1.2.0), RobAStBase(>= 1.2.0) \cr
+Date: \tab 2019-04-02 \cr
+Depends: \tab R(>= 3.4), methods, distr(>= 2.8.0), distrEx(>= 2.8.0), distrMod(>= 2.8.0),RandVar(>= 1.2.0), RobAStBase(>= 1.2.0) \cr
 Suggests: \tab RobLox \cr
 Imports: \tab startupmsg, MASS, stats, graphics, utils, grDevices \cr
 ByteCompile: \tab yes \cr
 Encoding: \tab latin1 \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-VCS/SVNRevision: \tab 1208 \cr
+VCS/SVNRevision: \tab 1214 \cr
 }
 }
 \author{
@@ -32,7 +31,6 @@ Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
 \references{
   M. Kohl (2005). Numerical Contributions to the Asymptotic Theory of Robustness.
   Dissertation. University of Bayreuth.
-
   M. Kohl, P. Ruckdeschel, H. Rieder (2010). Infinitesimally Robust Estimation in 
   General Smoothly Parametrized Models. Statistical Methods and Application 19(3):333-354. 
 }
@@ -53,18 +51,15 @@ Note: The first two numbers of package versions do not necessarily reflect
 ## don't test to reduce check time on CRAN
 \donttest{
 library(ROptEst)
-
 ## Example: Rutherford-Geiger (1910); cf. Feller~(1968), Section VI.7 (a)
 x <- c(rep(0, 57), rep(1, 203), rep(2, 383), rep(3, 525), rep(4, 532), 
        rep(5, 408), rep(6, 273), rep(7, 139), rep(8, 45), rep(9, 27), 
        rep(10, 10), rep(11, 4), rep(12, 0), rep(13, 1), rep(14, 1))
-
 ## ML-estimate from package distrMod
 MLest <- MLEstimator(x, PoisFamily())
 MLest
 ## confidence interval based on CLT
 confint(MLest)
-
 ## compute optimally (w.r.t to MSE) robust estimator (unknown contamination)
 robEst <- roptest(x, PoisFamily(), eps.upper = 0.1, steps = 3)
 estimate(robEst)

@@ -13,24 +13,21 @@ estimators in case of normal location and/or scale.
 \tabular{ll}{
 Package: \tab RobLox \cr
 Version: \tab 1.2.0 \cr
-Date: \tab 2019-03-29 \cr
+Date: \tab 2019-04-02 \cr
 Depends: \tab R(>= 3.4), stats, distrMod(>= 2.8.0), RobAStBase(>= 1.2.0) \cr
-Imports: \tab methods, lattice, RColorBrewer, Biobase, RandVar(>= 1.2.0),
-    distr(>= 2.8.0) \cr
+Imports: \tab methods, lattice, RColorBrewer, Biobase, RandVar(>= 1.2.0), distr(>= 2.8.0) \cr
 Suggests: \tab MASS \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-VCS/SVNRevision: \tab 1208 \cr
+VCS/SVNRevision: \tab 1214 \cr
 }
 }
 \author{Matthias Kohl  \email{matthias.kohl@stamats.de}}
 \references{
   M. Kohl (2005). Numerical Contributions to the Asymptotic Theory of Robustness.
   Dissertation. University of Bayreuth.
-
   Rieder, H. (1994) \emph{Robust Asymptotic Statistics}. New York: Springer.
-
   Rieder, H., Kohl, M. and Ruckdeschel, P. (2008). The Costs of not Knowing
   the Radius. \emph{Statistical Methods and Applications} \bold{17}(1) 13-40.
   Extended version: \url{http://r-kurs.de/RRlong.pdf}
@@ -51,13 +48,11 @@ library(RobLox)
 ind <- rbinom(100, size=1, prob=0.05) 
 x <- rnorm(100, mean=ind*3, sd=(1-ind) + ind*9)
 roblox(x)
-
 res <- roblox(x, eps.lower = 0.01, eps.upper = 0.1, returnIC = TRUE)
 estimate(res)
 confint(res)
 confint(res, method = symmetricBias())
 pIC(res)
-
 ## don't run to reduce check time on CRAN
 \dontrun{
 checkIC(pIC(res))
@@ -66,7 +61,6 @@ Infos(pIC(res))
 plot(pIC(res))
 infoPlot(pIC(res))
 }
-
 ## row-wise application
 ind <- rbinom(200, size=1, prob=0.05) 
 X <- matrix(rnorm(200, mean=ind*3, sd=(1-ind) + ind*9), nrow = 2)
