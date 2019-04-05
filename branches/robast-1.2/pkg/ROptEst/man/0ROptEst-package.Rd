@@ -26,10 +26,7 @@ VCS/SVNRevision: \tab 1205 \cr
 }
 }
 \author{
-Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},
-
-
-    \cr%
+Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},\cr%
 Matthias Kohl \email{Matthias.Kohl@stamats.de}\cr
 Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
 \references{
