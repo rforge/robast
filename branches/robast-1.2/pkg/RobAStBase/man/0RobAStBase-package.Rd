@@ -12,7 +12,7 @@ Base S4-classes and functions for robust asymptotic statistics.
 \tabular{ll}{
 Package: \tab RobAStBase \cr
 Version: \tab 1.2.0 \cr
-Date: \tab 2019-03-13 \cr
+Date: \tab 2019-04-05 \cr
 Depends: \tab R(>= 3.4), methods, rrcov, distr(>= 2.8.0), distrEx(>= 2.8.0),
     distrMod(>= 2.8.0),RandVar(>= 1.2.0) \cr
 Suggests: \tab ROptEst(>= 1.2.0), RUnit(>= 0.4.26) \cr
@@ -26,8 +26,8 @@ VCS/SVNRevision: \tab 1205 \cr
 }
 \author{
 Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},
-    
-    
+
+
     \cr%
 Matthias Kohl \email{Matthias.Kohl@stamats.de}\cr
 Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}

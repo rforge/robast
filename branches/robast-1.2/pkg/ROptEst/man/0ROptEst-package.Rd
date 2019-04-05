@@ -13,7 +13,7 @@ using S4 classes and methods.
 \tabular{ll}{
 Package: \tab ROptEst \cr
 Version: \tab 1.2.0 \cr
-Date: \tab 2019-03-13 \cr
+Date: \tab 2019-04-05 \cr
 Depends: \tab R(>= 3.4), methods, distr(>= 2.8.0), distrEx(>= 2.8.0),
     distrMod(>= 2.8.0),RandVar(>= 1.2.0), RobAStBase(>= 1.2.0) \cr
 Suggests: \tab RobLox \cr
@@ -27,8 +27,8 @@ VCS/SVNRevision: \tab 1205 \cr
 }
 \author{
 Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de},
-    
-    
+
+
     \cr%
 Matthias Kohl \email{Matthias.Kohl@stamats.de}\cr
 Maintainer: Matthias Kohl  \email{matthias.kohl@stamats.de}}
