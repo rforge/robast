@@ -27,22 +27,36 @@ setMethod("checkIC", signature(IC = "ContIC", L2Fam = "L2ParamFamily"),
         G1 <- res$G1;  G2 <- res$G2;  G3 <- res$G3
         Delta1 <- A%*%G2- a*G1
         Delta2 <- A%*%G3 - a%*%t(G2)
-        Delta2 <- Delta2 - trafo(L2Fam)
+        trafoL <- trafo(L2Fam)
+        Delta2 <- Delta2 - trafoL
 
-        if(out)
-            cat("precision of centering:\t", Delta1, "\n")
+        Prec <- ceiling(12-round(max(log(abs(trafoL)+1e-14,10)))/2)
 
+    ## PR 20190407: in output in if(out)
+		## deleting all digits beyond 1e-12 (as numeric fuzz) --
+		## but check for relative accuracy by means of the "size" of the Fisher information
+		## measured in by the max(trafo)
         if(out){
-            cat("precision of Fisher consistency:\n")
-            print(Delta2)
-            cat("precision of Fisher consistency - relative error [%]:\n")
-            print(100*Delta2/trafo)
+            cent.out <- round(Delta1*10^Prec)/10^Prec
+            cat("precision of centering:\t", cent.out, "\n")
 
-            if(diagnostic){
+            oldOps <- options()
+            on.exit(do.call(options,oldOps))
+            consist.out <- round(Delta2*10^Prec)/10^Prec
+            options(digits=5,scipen=-2)
+            cat("precision of Fisher information:\n")
+            print(consist.out)
+
+            cat("precision of Fisher information - relativ error [%]:\n")
+            relconsist.out <- round(Delta2/trafoL*10^(Prec+2))/10^Prec
+            class(relconsist.out) <- c("relMatrix",class(consist.out))
+            print(relconsist.out)
+
+          if(diagnostic){
                print(attr(res$G1, "diagnostic"))
                print(attr(res$G2, "diagnostic"))
                print(attr(res$G3, "diagnostic"))
-            }
+          }
         }
 
         prec <- max(abs(Delta1), abs(Delta2))

@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2019-02-27 r76167) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-03-28 r76288) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
-Platform: i386-w64-mingw32/i386 (32-bit)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -97,7 +97,7 @@ Loading required package: RandVar
 Loading required package: MASS
 Loading required package: stats4
 :distrMod>  Object Oriented Implementation of Probability Models
-:distrMod>  (version 2.8.0)
+:distrMod>  (version 2.8.1)
 :distrMod> 
 :distrMod>  Some functions from pkg's 'base' and 'stats' are
 :distrMod>  intentionally masked ---see distrModMASK().
@@ -130,7 +130,7 @@ The following object is masked from 'package:base':
 
     norm
 
-:RobAStBase>  Robust Asymptotic Statistics (version 1.2.0)
+:RobAStBase>  Robust Asymptotic Statistics (version 1.2.1)
 :RobAStBase> 
 :RobAStBase>  Some functions from pkg's 'stats' and 'graphics'
 :RobAStBase>  are intentionally masked ---see RobAStBaseMASK().
@@ -166,23 +166,21 @@ The following object is masked from 'package:graphics':
 > ### ** Examples
 > 
 > library(RobAStBase)
-> 
 > ## some L2 differentiable parametric family from package distrMod, e.g.
 > B <- BinomFamily(size = 25, prob = 0.25) 
-> 
 > ## classical optimal IC
 > IC0 <- optIC(model = B, risk = asCov())
 > plot(IC0) # plot IC
 > checkIC(IC0, B)
-precision of centering:	 -2.112044e-17 
-precision of Fisher consistency:
-              prob
-prob -2.220446e-16
-precision of Fisher consistency - relative error [%]:
-              prob
-prob -2.220446e-14
+precision of centering:	 0 
+precision of Fisher information:
+     prob
+prob    0
+precision of Fisher information - relativ error [%]:
+     [,1] 
+[1,] 0.000
 maximum deviation 
-                0 
+     2.220446e-16 
 > 
 > 
 > 
@@ -254,48 +252,6 @@ NULL
 > 
 > ## von Mises minimum distance estimator with default mu
 > 
-> ## No test: 
->  ## to save time for CRAN
-> system.time(me <- CvMMDEstimator(x = x, ParamFamily = G))
-   user  system elapsed 
-   2.31    0.05    3.92 
-> str(me@pIC) ## a call
- language getPIC(new("CvMMDEstimate", criterion = c(`CvM distance` = 0.0318540469774686),      criterion.fct = function (sc| __truncated__ ...
-> system.time(pIC0 <- pIC(me))
-   user  system elapsed 
-   3.32    0.06    4.41 
-> str(me@pIC) ## now filled
-Formal class 'IC' [package "RobAStBase"] with 6 slots
-  ..@ CallL2Fam: language GammaFamily(trafo = matrix(c(1, 0, 0, 1), ncol = 2, dimnames = list(c("scale",  "shape"), c("scale", "shape"))), | __truncated__
-  ..@ modifyIC : NULL
-  ..@ name     : chr "IC of CvM MDE"
-  ..@ Curve    :Formal class 'EuclRandVarList' [package "RandVar"] with 1 slot
-  .. .. ..@ .Data:List of 1
-  .. .. .. ..$ :Formal class 'EuclRandVariable' [package "RandVar"] with 3 slots
-  .. .. .. .. .. ..@ Map   :List of 2
-  .. .. .. .. .. .. ..$ :function (x)  
-  .. .. .. .. .. .. .. ..- attr(*, "srcref")= 'srcref' int [1:8] 558 23 558 78 23 78 5827 5827
-  .. .. .. .. .. .. .. .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x10f1f9a0> 
-  .. .. .. .. .. .. ..$ :function (x)  
-  .. .. .. .. .. .. .. ..- attr(*, "srcref")= 'srcref' int [1:8] 558 23 558 78 23 78 5827 5827
-  .. .. .. .. .. .. .. .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x10f1f9a0> 
-  .. .. .. .. .. ..@ Domain:Formal class 'Reals' [package "distr"] with 2 slots
-  .. .. .. .. .. .. .. ..@ dimension: num 1
-  .. .. .. .. .. .. .. ..@ name     : chr "Real Space"
-  .. .. .. .. .. ..@ Range :Formal class 'Reals' [package "distr"] with 2 slots
-  .. .. .. .. .. .. .. ..@ dimension: num 1
-  .. .. .. .. .. .. .. ..@ name     : chr "Real Space"
-  ..@ Risks    :List of 1
-  .. ..$ asCov:Formal class 'PosSemDefSymmMatrix' [package "distr"] with 1 slot
-  .. .. .. ..@ .Data: num [1:2, 1:2] 0.725 -3.424 -3.424 20.474
-  .. .. .. .. ..- attr(*, "dimnames")=List of 2
-  .. .. .. .. .. ..$ : chr [1:2] "scale" "shape"
-  .. .. .. .. .. ..$ : chr [1:2] "scale" "shape"
-  ..@ Infos    : chr [1, 1:2] "pIC-CvM-MDE" "computed by .CvMMDCovariance[WithMux]"
-  .. ..- attr(*, "dimnames")=List of 2
-  .. .. ..$ : NULL
-  .. .. ..$ : chr [1:2] "method" "message"
-> ## End(No test)
 > 
 > 
 > 
@@ -330,7 +286,7 @@ Slot "name":
 
 Slot "weight":
 function(x) 1
-<bytecode: 0x0d28e0e0>
+<bytecode: 0x000000000c6afad8>
 <environment: namespace:RobAStBase>
 
 > 
@@ -361,7 +317,7 @@ Slot "name":
 
 Slot "weight":
 function(x) 1
-<bytecode: 0x0ce3dc08>
+<bytecode: 0x000000000c467898>
 <environment: namespace:RobAStBase>
 
 > 
@@ -455,9 +411,9 @@ comparePlot(obj1 = new("IC", CallL2Fam = GammaFamily(scale = 1,
                     sin(x)
                     1 %*% f1(x)
                   }
-                  f1(x) - 0.500000265830412
+                  f1(x) - 0.500000265830413
                 }
-                c(scale = -3.41853959532626) %*% f1(x)
+                c(scale = -3.41853959531967) %*% f1(x)
             }
             f2 <- function (x) 
             {
@@ -471,9 +427,9 @@ comparePlot(obj1 = new("IC", CallL2Fam = GammaFamily(scale = 1,
                   x^2
                   f1(x) + 1 %*% f2(x)
                 }
-                f1(x) - 1.99995915034328
+                f1(x) - 1.99995915033383
             }
-            f1(x) + c(scale = 0.250035802973725) %*% f2(x)
+            f1(x) + c(scale = 0.25003580297372) %*% f2(x)
         }, function (x) 
         {
             f1 <- function (x) 
@@ -486,9 +442,9 @@ comparePlot(obj1 = new("IC", CallL2Fam = GammaFamily(scale = 1,
                     sin(x)
                     1 %*% f1(x)
                   }
-                  f1(x) - 0.500000265830412
+                  f1(x) - 0.500000265830413
                 }
-                c(shape = 4.55770564375545) %*% f1(x)
+                c(shape = 4.55770564375941) %*% f1(x)
             }
             f2 <- function (x) 
             {
@@ -502,9 +458,9 @@ comparePlot(obj1 = new("IC", CallL2Fam = GammaFamily(scale = 1,
                   x^2
                   f1(x) + 1 %*% f2(x)
                 }
-                f1(x) - 1.99995915034328
+                f1(x) - 1.99995915033383
             }
-            f1(x) + c(shape = -7.66202724840538e-06) %*% f2(x)
+            f1(x) + c(shape = -7.66202724890216e-06) %*% f2(x)
         }), Domain = new("Reals", dimension = 1, name = "Real Space"), 
             Range = new("Reals", dimension = 1, name = "Real Space")))), 
     Risks = list(), Infos = c("IC<-", "generated by affine linear trafo to enforce consistency"
@@ -747,7 +703,7 @@ Slot "name":
 
 Slot "weight":
 function(x) 1
-<bytecode: 0x0d17de70>
+<bytecode: 0x000000000b6d4b40>
 <environment: namespace:RobAStBase>
 
 > 
@@ -1124,7 +1080,7 @@ Slot "name":
 
 Slot "weight":
 function(x) 1
-<bytecode: 0x0d1d7110>
+<bytecode: 0x000000000d630348>
 <environment: namespace:RobAStBase>
 
 > 
@@ -1260,12 +1216,12 @@ Slot "name":
 > IC1 <- new("IC")
 > checkIC(IC1)
 precision of centering:	 0 
-precision of Fisher consistency:
-              [,1]
-[1,] -5.794001e-06
-precision of Fisher consistency - relative error [%]:
-              [,1]
-[1,] -0.0005794001
+precision of Fisher information:
+           [,1]
+[1,] -5.794e-06
+precision of Fisher information - relativ error [%]:
+     [,1]     
+[1,] -5.79e-04
 maximum deviation 
      5.794001e-06 
 > 
@@ -1302,62 +1258,18 @@ maximum deviation
 + 
 + 
 + ## don't test to reduce check time on CRAN
-+ ## No test: 
-+ ## selection of subpanels for plotting
-+ par(mfrow=c(1,1))
-+ comparePlot(IC1, IC2 ,mfColRow = FALSE, to.draw.arg=c("mean"),
-+             panel.first= grid(),ylim=c(-4,4),xlim=c(-6,6))
-+ ## matrix-valued ylim
-+ comparePlot(IC1, IC2, panel.first= grid(),ylim=c(-4,4,0,4),xlim=c(-6,6))
-+ 
-+ x <- c(data,-12,10)
-+ comparePlot(IC1, IC2, data=x, which.Order=10,
-+             panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
-+ 
-+ Y <- Chisq(df=1)* DiscreteDistribution(c(-1,1))
-+ comparePlot(IC1, IC2, data=x, which.Order=10,
-+             scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
-+             scaleY = TRUE, scaleY.fct=p(Y), scaleY.inv=q.l(Y),
-+             panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
-+ comparePlot(IC1, IC2, data=x, which.Order=10,
-+             scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
-+             scaleY = TRUE, scaleY.fct=p(Y), scaleY.inv=q.l(Y),
-+             x.ticks = c(-Inf, -10, -1,0,1,10,Inf),
-+             y.ticks = c(-Inf, -5, -1,0,1,5,Inf),
-+             panel.first= grid(), ylim=c(-4,4,0,4), xlim=c(-6,6))
-+ 
-+ ## with use of trafo-matrix:
-+ G <- GammaFamily(scale = 1, shape = 2)
-+ ## explicitely transforming to
-+ ## MASS parametrization:
-+ mtrafo <- function(x){
-+      nms0 <- names(c(main(param(G)),nuisance(param(G))))
-+      nms <- c("shape","rate")
-+      fval0 <- c(x[2], 1/x[1])
-+      names(fval0) <- nms
-+      mat0 <- matrix( c(0, -1/x[1]^2, 1, 0), nrow = 2, ncol = 2,
-+                      dimnames = list(nms,nms0))                          
-+      list(fval = fval0, mat = mat0)}
-+ G2 <- G
-+ trafo(G2) <- mtrafo
-+ G2
-+ G2.Rob1 <- InfRobModel(center = G2, neighbor = ContNeighborhood(radius = 0.5))
-+ system.time(IC1 <- optIC(model = G2, risk = asCov()))
-+ system.time(IC2 <- optIC(model = G2.Rob1, risk = asMSE()))
-+ system.time(IC2.i <- optIC(model = G2.Rob1, risk = asMSE(normtype=InfoNorm())))
-+ system.time(IC2.s <- optIC(model = G2.Rob1, risk = asMSE(normtype=SelfNorm())))
-+ 
-+ comparePlot(IC1,IC2, IC2.i, IC2.s)
-+ ## End(No test)
 + 
 + }
 Loading required package: ROptEst
-maximum iterations reached!
- achieved precision:	 3.02372e-05 
+$obj1
+[1]  2  1 17  3  4 16
+
+$obj2
+[1]  2  1 17  3  4 16
+
 > 
 > 
 > 
-> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 
 detaching 'package:ROptEst'
@@ -1391,7 +1303,7 @@ function (data)
     }
     quantile(slot(norm, "fct")(data), cutoff.quantile)
 }
-<environment: 0x092c8de0>
+<environment: 0x0000000015b186f0>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -1427,7 +1339,7 @@ function (data)
     }
     quantile(slot(norm, "fct")(data), cutoff.quantile)
 }
-<environment: 0x09184510>
+<environment: 0x0000000016694768>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -1452,7 +1364,7 @@ function (data)
         quantile((rowSums(N0^2))^0.5, 0.95)
     }
 }
-<environment: 0x08f636d0>
+<environment: 0x0000000016b1fc90>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -1475,7 +1387,7 @@ function (data)
         qchisq(df = dim, 0.95)^0.5
     }
 }
-<environment: 0x07f676e0>
+<environment: 0x0000000016c06398>
 
 Slot "cutoff.quantile":
 [1] 0.95
@@ -1523,7 +1435,7 @@ Slot "cutoff.quantile":
 > myrisk <- asMSE()
 > getRiskFctBV(myrisk)
 function(bias, var)  return(bias^2+var)
-<environment: 0x153730a0>
+<environment: 0x0000000018bb2550>
 > 
 > 
 > 
@@ -1545,102 +1457,10 @@ function(bias, var)  return(bias^2+var)
 > infoPlot(IC1)
 > 
 > ## don't run to reduce check time on CRAN
-> ## No test: 
-> ## selection of subpanels for plotting
-> par(mfrow=c(1,2))
-> infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"))
-> infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","sd"), log="y")
-> 
-> infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
-+               panel.first= grid(), ylim = c(0,4), xlim = c(-6,6))
-> infoPlot(IC1, mfColRow = FALSE, to.draw.arg=c("Abs","mean"), 
-+               panel.first= grid(), ylim = c(0,4,-3,3), xlim = c(-6,6))
-> 
-> par(mfrow=c(1,3))
-> infoPlot(IC1, mfColRow = FALSE, panel.first= grid(),
-+          ylim = c(0,4,0,.3,0,.8), xlim=c(-6,6))
-> par(mfrow=c(1,1))
-> 
-> data <- r(N)(20)
-> par(mfrow=c(1,3))
-> infoPlot(IC1, data=data, mfColRow = FALSE, panel.first= grid(),
-+          with.lab = TRUE, cex.pts=2,
-+          which.lbs = c(1:4,15:20), which.Order = 1:6,
-+          return.Order = TRUE)
-$sel
-$sel$data
-[1]  1.5952808  1.1249309  0.9438362 -0.8356286  0.8212212 -0.6264538
-
-$sel$y
-[1] 3.1416159 1.2830881 0.8938065 0.7210346 0.7009074 0.4847253
-
-$sel$ind
-[1]  4 15 18  3 19  1
-
-$sel$ind1
- [1]  1  2  3  4 15 16 17 18 19 20
-
-$sel$data.ns
- [1]  0.18364332  0.32950777 -0.82046838  0.48742905  0.73832471  0.57578135
- [7] -0.30538839  1.51178117  0.38984324 -0.62124058 -2.21469989 -0.04493361
-[13] -0.01619026  0.59390132
-
-$sel$y.ns
- [1] 0.2671468 0.3072348 0.6998731 0.3829054 0.5968516 0.4432392 0.2988055
- [8] 2.6985985 0.3317632 0.4802073 8.7169480 0.2510105 0.2501311 0.4574620
-
-$sel$ind.ns
- [1]  2  5  6  7  8  9 10 11 12 13 14 16 17 20
-
-
-$sel.C
-$sel.C$data
-[1]  1.5952808  1.1249309  0.9438362 -0.8356286  0.8212212 -0.6264538
-
-$sel.C$y
-[1] 3.1416159 1.2830881 0.8938065 0.7210346 0.7009074 0.4847253
-
-$sel.C$ind
-[1]  4 15 18  3 19  1
-
-$sel.C$ind1
- [1]  1  2  3  4 15 16 17 18 19 20
-
-$sel.C$data.ns
- [1]  0.18364332  0.32950777 -0.82046838  0.48742905  0.73832471  0.57578135
- [7] -0.30538839  1.51178117  0.38984324 -0.62124058 -2.21469989 -0.04493361
-[13] -0.01619026  0.59390132
-
-$sel.C$y.ns
- [1] 0.2671468 0.3072348 0.6998731 0.3829054 0.5968516 0.4432392 0.2988055
- [8] 2.6985985 0.3317632 0.4802073 8.7169480 0.2510105 0.2501311 0.4574620
-
-$sel.C$ind.ns
- [1]  2  5  6  7  8  9 10 11 12 13 14 16 17 20
-
-
-> infoPlot(IC1, data=data[1:10], mfColRow = FALSE, panel.first= grid(),
-+          with.lab = TRUE, cex.pts=0.7)
-> par(mfrow=c(1,1))
-> 
-> ICr <- makeIC(list(function(x)sign(x),function(x)sign(abs(x)-qnorm(.75))),N)
-> data <- r(N)(600)
-> data.c <- c(data, 1000*data[1:30])
-> par(mfrow=c(3,1))
-> infoPlot(ICr, data=data.c, tmar=c(4.1,0,0), bmar=c(0,0,4.1),
-+          xaxt=c("n","n","s"), mfColRow = FALSE, panel.first= grid(),
-+          cex.pts=c(.9,.9), alpha.trsp=20, lwd=2, lwdI=1.5, col=3,
-+          col.pts=c(3,2), colI=2, pch.pts=c(20,20), inner=FALSE,
-+          scaleX = TRUE, scaleX.fct=pnorm, scaleX.inv=qnorm,
-+          scaleY=TRUE, scaleY.fct=function(x) pchisq(x,df=1),
-+          scaleY.inv=function(x)qchisq(x,df=1),legend.cex = 1.0)
-> 
-> ## End(No test)
 > 
 > 
 > 
 > 
-> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("internals_ddPlot")
 > ### * internals_ddPlot
@@ -1714,76 +1534,10 @@ risk type:	 .MBRE
 > ### ** Examples
 > 
 > ## don't run to reduce check time on CRAN
-> ## No test: 
-> if(require(ROptEst)){
-+ ## 1. generate a contaminated sample
-+ ind <- rbinom(100, size=1, prob=0.05)
-+ x <- rnorm(100, mean=0, sd=(1-ind) + ind*9)
-+ 
-+ ## 2. Kolmogorov(-Smirnov) minimum distance estimator
-+ (est0 <- MDEstimator(x=x, NormLocationScaleFamily()))
-+ 
-+ ## 3. k-step estimation: radius known
-+ N1 <- NormLocationScaleFamily(mean=estimate(est0)["mean"], sd=estimate(est0)["sd"])
-+ N1.Rob <- InfRobModel(center = N1, neighbor = ContNeighborhood(radius = 0.5))
-+ IC1 <- optIC(model = N1.Rob, risk = asMSE())
-+ (est1 <- kStepEstimator(x, IC1, est0, steps = 3, withPIC = TRUE))
-+ estimate(est1)
-+ ksteps(est1)
-+ pICList(est1)
-+ start(est1)
-+ attr(est1,"timings")
-+ 
-+ ## a transformed model
-+ tfct <- function(x){
-+     nms0 <- c("mean","sd")
-+     nms  <- "comb"
-+     fval0 <- x[1]+2*x[2]
-+     names(fval0) <- nms
-+     mat0 <- matrix(c(1,2), nrow = 1, dimnames = list(nms,nms0))
-+     return(list(fval = fval0, mat = mat0))
-+ }
-+ 
-+ N1.traf <- N1; trafo(N1.traf) <- tfct
-+ N1R.traf <- N1.Rob; trafo(N1R.traf) <- tfct
-+ IC1.traf <- optIC(model = N1R.traf, risk = asMSE())
-+ (est0.traf <- MDEstimator(x, N1.traf))
-+ (est1.traf <- kStepEstimator(x, IC1.traf, est0, steps = 3,
-+                 withIC = TRUE, withPIC = TRUE, withUpdateInKer = FALSE))
-+ (est1a.traf <- kStepEstimator(x, IC1.traf, est0, steps = 3,
-+                 withIC = TRUE, withPIC = TRUE, withUpdateInKer = TRUE))
-+ estimate(est1.traf)
-+ ksteps(est1.traf)
-+ pICList(est1.traf)
-+ startval(est1.traf)
-+ 
-+ untransformed.estimate(est1.traf)
-+ uksteps(est1.traf)
-+ ICList(est1.traf)
-+ ustartval(est1.traf)
-+ 
-+ estimate(est1a.traf)
-+ ksteps(est1a.traf)
-+ pICList(est1a.traf)
-+ startval(est1a.traf)
-+ 
-+ untransformed.estimate(est1a.traf)
-+ uksteps(est1a.traf)
-+ ICList(est1a.traf)
-+ ustartval(est1a.traf)
-+ }
-Loading required package: ROptEst
-            [,1]
-mean -0.05297991
-sd    0.92479741
-> ## End(No test)
 > 
 > 
 > 
 > cleanEx()
-
-detaching 'package:ROptEst'
-
 > nameEx("makeIC-methods")
 > ### * makeIC-methods
 > 
@@ -1808,12 +1562,12 @@ detaching 'package:ROptEst'
 > ## check IC properties
 > checkIC(IC1, B)
 precision of centering:	 3.9 
-precision of Fisher consistency:
+precision of Fisher information:
      prob
 prob   12
-precision of Fisher consistency - relative error [%]:
-     prob
-prob 1200
+precision of Fisher information - relativ error [%]:
+     [,1]    
+[1,] 1200.000
 maximum deviation 
                12 
 > 
@@ -1822,51 +1576,51 @@ maximum deviation
 > 
 > ## check IC properties
 > checkIC(IC2)
-precision of centering:	 2.813539e-17 
-precision of Fisher consistency:
-              prob
-prob -1.110223e-16
-precision of Fisher consistency - relative error [%]:
-              prob
-prob -1.110223e-14
+precision of centering:	 0 
+precision of Fisher information:
+     prob
+prob    0
+precision of Fisher information - relativ error [%]:
+     [,1] 
+[1,] 0.000
 maximum deviation 
-                0 
+     1.110223e-16 
 > 
 > ## slot modifyIC is filled in case of IC2
 > IC3 <- modifyIC(IC2)(BinomFamily(13, 0.2), IC2)
 > checkIC(IC3)
-precision of centering:	 3.833034e-18 
-precision of Fisher consistency:
+precision of centering:	 0 
+precision of Fisher information:
      prob
 prob    0
-precision of Fisher consistency - relative error [%]:
-     prob
-prob    0
+precision of Fisher information - relativ error [%]:
+     [,1] 
+[1,] 0.000
 maximum deviation 
-                0 
+     3.091672e-18 
 > ## identical to
 > checkIC(IC3, BinomFamily(13, 0.2))
-precision of centering:	 3.833034e-18 
-precision of Fisher consistency:
+precision of centering:	 0 
+precision of Fisher information:
      prob
 prob    0
-precision of Fisher consistency - relative error [%]:
-     prob
-prob    0
+precision of Fisher information - relativ error [%]:
+     [,1] 
+[1,] 0.000
 maximum deviation 
-                0 
+     3.091672e-18 
 > 
 > IC4 <- makeIC(sin, B)
 > checkIC(IC4)
-precision of centering:	 1.559677e-17 
-precision of Fisher consistency:
-             prob
-prob 2.220446e-16
-precision of Fisher consistency - relative error [%]:
-             prob
-prob 2.220446e-14
+precision of centering:	 0 
+precision of Fisher information:
+     prob
+prob    0
+precision of Fisher information - relativ error [%]:
+     [,1] 
+[1,] 0.000
 maximum deviation 
-                0 
+     1.110223e-16 
 > 
 > (IC5 <- makeIC(list(function(x)x^3), B, name="a try"))
 An object of class "IC" 
@@ -1884,39 +1638,17 @@ Range:	Real Space with dimension 1
 [1,] "IC<-" "generated by affine linear trafo to enforce consistency"
 > plot(IC5)
 > checkIC(IC5)
-precision of centering:	 2.735345e-17 
-precision of Fisher consistency:
-              prob
-prob -1.110223e-16
-precision of Fisher consistency - relative error [%]:
-              prob
-prob -1.110223e-14
+precision of centering:	 0 
+precision of Fisher information:
+     prob
+prob    0
+precision of Fisher information - relativ error [%]:
+     [,1] 
+[1,] 0.000
 maximum deviation 
-                0 
+     2.565774e-17 
 > 
 > ## don't run to reduce check time on CRAN
-> ## No test: 
-> N0 <- NormLocationScaleFamily()
-> IC6 <- makeIC(list(sin,cos),N0)
-> plot(IC6)
-> checkIC(IC6)
-precision of centering:	 0 -1.999988e-07 
-precision of Fisher consistency:
-              mean            sd
-mean -1.110223e-16  0.000000e+00
-sd    0.000000e+00 -5.593968e-06
-precision of Fisher consistency - relative error [%]:
-              mean            sd
-mean -1.110223e-14           NaN
-sd             NaN -0.0005593968
-maximum deviation 
-     5.593968e-06 
-> 
-> getRiskIC(IC6,risk=trAsCov())$trAsCov$value
-[1] 1.718272
-> getRiskIC(IC6,risk=asBias(),neighbor=ContNeighborhood())$asBias$value
-[1] 2.648706
-> ## End(No test)
 > 
 > 
 > 
@@ -1947,7 +1679,7 @@ function(x){
     else 
         return(sqrt(colSums(x^2)))
 }
-<bytecode: 0x0e083878>
+<bytecode: 0x0000000016d3de48>
 <environment: namespace:distrMod>
 
 > 
@@ -1972,15 +1704,15 @@ function(x){
 > IC0 <- optIC(model = B, risk = asCov())
 > plot(IC0) # plot IC
 > checkIC(IC0, B)
-precision of centering:	 -2.112044e-17 
-precision of Fisher consistency:
-              prob
-prob -2.220446e-16
-precision of Fisher consistency - relative error [%]:
-              prob
-prob -2.220446e-14
+precision of centering:	 0 
+precision of Fisher information:
+     prob
+prob    0
+precision of Fisher information - relativ error [%]:
+     [,1] 
+[1,] 0.000
 maximum deviation 
-                0 
+     2.220446e-16 
 > 
 > 
 > 
@@ -2083,25 +1815,6 @@ $obj
 > ### ** Examples
 > 
 > ## \donttest to reduce check time
-> ## No test: 
-> qqplot(rnorm(40, mean = 15, sd = sqrt(30)), Chisq(df=15))
-> RobM <- InfRobModel(center = NormLocationFamily(mean=13,sd=sqrt(28)),
-+                     neighbor = ContNeighborhood(radius = 0.4))
-> 
-> x <- rnorm(20, mean = 15, sd = sqrt(30))
-> qqplot(x, RobM)
-> qqplot(x, RobM, alpha.CI=0.9, add.points.CI=FALSE)
-Warning in plot.window(...) :
-  "add.points.CI" is not a graphical parameter
-Warning in plot.xy(xy, type, ...) :
-  "add.points.CI" is not a graphical parameter
-Warning in axis(side = side, at = at, labels = labels, ...) :
-  "add.points.CI" is not a graphical parameter
-Warning in axis(side = side, at = at, labels = labels, ...) :
-  "add.points.CI" is not a graphical parameter
-Warning in box(...) : "add.points.CI" is not a graphical parameter
-Warning in title(...) : "add.points.CI" is not a graphical parameter
-> ## End(No test)
 > ## further examples for ANY,kStepEstimator-method
 > ## in example to roptest() in package ROptEst
 > 
@@ -2126,24 +1839,6 @@ Warning in title(...) : "add.points.CI" is not a graphical parameter
 > returnlevelplot(rnorm(40, mean = 15, sd = sqrt(30)), Chisq(df=15))
 > RobM <- InfRobModel(center = NormLocationFamily(mean=13,sd=sqrt(28)),
 +                     neighbor = ContNeighborhood(radius = 0.4))
-> ## No test: 
-> ## \donttest to reduce check time
-> x <- rnorm(20, mean = 15, sd = sqrt(30))
-> returnlevelplot(x, RobM)
-> returnlevelplot(x, RobM, alpha.CI=0.9, add.points.CI=FALSE)
-Warning in plot.window(...) :
-  "add.points.CI" is not a graphical parameter
-Warning in plot.xy(xy, type, ...) :
-  "add.points.CI" is not a graphical parameter
-Warning in axis(side = side, at = at, labels = labels, ...) :
-  "add.points.CI" is not a graphical parameter
-Warning in axis(side = side, at = at, labels = labels, ...) :
-  "add.points.CI" is not a graphical parameter
-Warning in box(...) : "add.points.CI" is not a graphical parameter
-Warning in title(...) : "add.points.CI" is not a graphical parameter
-Warning in plot.xy(xy.coords(x, y), type = type, ...) :
-  "add.points.CI" is not a graphical parameter
-> ## End(No test)
 > ## further examples for ANY,kStepEstimator-method
 > ## in example to roptest() in package ROptEst
 > 
@@ -2175,7 +1870,7 @@ Warning in plot.xy(xy.coords(x, y), type = type, ...) :
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  190.35 2.93 360.61 NA NA 
+Time elapsed:  16.27 0.55 16.98 NA NA 
 > grDevices::dev.off()
 null device 
           1 

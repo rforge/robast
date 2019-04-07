@@ -66,35 +66,39 @@ setMethod("checkIC", signature(IC = "IC", L2Fam = "L2ParamFamily"),
             stop("dimension of 'Domain' of 'Curve' != dimension of 'img' of 'distribution' of 'L2Fam'")
 
         trafo <- trafo(L2Fam@param)
+        Prec <- ceiling(12-round(max(log(abs(trafo)+1e-14,10)))/2)
 
         res <- .preparedirectCheckMakeIC(L2Fam, IC, ..., diagnostic = diagn0stic)
 
         cent <- res$E.IC
         attr(cent,"diagnostic") <- NULL
-        if(out)
-            cat("precision of centering:\t", cent, "\n")
-
-
         consist <- res$E.IC.L - trafo
         attr(consist,"diagnostic") <- NULL
 
+    ## PR 20190407: in output in if(out)
+		## deleting all digits beyond 1e-12 (as numeric fuzz) --
+		## but check for relative accuracy by means of the "size" of the Fisher information
+		## measured in by the max(trafo)
         if(out){
-            cat("precision of Fisher consistency:\n")
-            print(consist)
-            cat("precision of Fisher consistency - relative error [%]:\n")
-            print(100*consist/trafo)
+            cent.out <- round(cent*10^Prec)/10^Prec
+            cat("precision of centering:\t", cent.out, "\n")
+
+            oldOps <- options()
+            on.exit(do.call(options,oldOps))
+            consist.out <- round(consist*10^Prec)/10^Prec
+            options(digits=5,scipen=-2)
+            cat("precision of Fisher information:\n")
+            print(consist.out)
+
+            cat("precision of Fisher information - relativ error [%]:\n")
+            relconsist.out <- round(consist/trafo*10^(Prec+2))/10^Prec
+            class(relconsist.out) <- c("relMatrix",class(consist.out))
+            print(relconsist.out)
+
         }
 
         prec <- max(abs(cent), abs(consist))
-
-        ## PR 20190222:
-		## deleting all digits beyond 1e-12 (as numeric fuzz) -- 
-		## but check for relative accuracy by means of the "size" of the Fisher information 
-		## measured in by the max(trafo)
-
         names(prec) <- "maximum deviation"
-		relPrec <- 12-round(log(max(trafo),10))
-		prec <- round(prec*10^relPrec)/10^relPrec
 
         if(diagnostic && out){
            print(attr(res$E.IC,"diagnostic"),xname="E.IC")

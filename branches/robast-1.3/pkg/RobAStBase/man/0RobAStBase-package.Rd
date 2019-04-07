@@ -12,9 +12,9 @@ Base S4-classes and functions for robust asymptotic statistics.
 \tabular{ll}{
 Package: \tab RobAStBase \cr
 Version: \tab 1.3.0 \cr
-Date: \tab 2019-03-13 \cr
+Date: \tab 2019-04-07 \cr
 Depends: \tab R(>= 3.4), methods, rrcov, distr(>= 2.8.0), distrEx(>= 2.8.0),
-    distrMod(>= 2.8.0),RandVar(>= 1.2.0) \cr
+    distrMod(>= 2.8.1),RandVar(>= 1.2.0) \cr
 Suggests: \tab ROptEst(>= 1.2.0), RUnit(>= 0.4.26) \cr
 Imports: \tab startupmsg, graphics, grDevices, stats \cr
 ByteCompile: \tab yes \cr

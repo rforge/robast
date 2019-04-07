@@ -13,16 +13,16 @@ using S4 classes and methods.
 \tabular{ll}{
 Package: \tab ROptEst \cr
 Version: \tab 1.3.0 \cr
-Date: \tab 2019-03-13 \cr
+Date: \tab 2019-04-07 \cr
 Depends: \tab R(>= 3.4), methods, distr(>= 2.8.0), distrEx(>= 2.8.0),
-    distrMod(>= 2.8.0),RandVar(>= 1.2.0), RobAStBase(>= 1.2.0) \cr
+    distrMod(>= 2.8.1),RandVar(>= 1.2.0), RobAStBase(>= 1.2.0) \cr
 Suggests: \tab RobLox \cr
 Imports: \tab startupmsg, MASS, stats, graphics, utils, grDevices \cr
 ByteCompile: \tab yes \cr
 Encoding: \tab latin1 \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-VCS/SVNRevision: \tab 1205 \cr
+VCS/SVNRevision: \tab 1213 \cr
 }
 }
 \author{
