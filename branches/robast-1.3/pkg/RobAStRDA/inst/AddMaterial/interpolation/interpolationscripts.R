@@ -1,3 +1,5 @@
+## add 20190413: We thin out the rda file, deleting pre-3.7.0 interpolators
+##               to be able to better compress file sizes
 ################################################################################
 ###
 ### merge and thin out results on rdafile
@@ -13,10 +15,10 @@ require(RobAStRDA)
 #####
 
 oldwd <- getwd()
-.basepath <- "C:/rtest/RobASt/branches/robast-1.1/pkg"
+.basepath <- "C:/rtest/RobASt/branches/robast-1.3/pkg"
 .myFolderFrom <- file.path(.basepath,"RobExtremesBuffer")
-myRDA0 <- file.path(.basepath,"RobExtremesBuffer/sysdata.rda")
-#myRDA <- file.path(.basepath,"RobExtremesBuffer/sysdata.rda")
+myRDA0 <- file.path(.basepath,"RobExtremesBuffer/sysdataOnlyGridsOnlyR-3.7.0dev.rda")
+#myRDA <- file.path(.basepath,"RobExtremesBuffer/sysdata1.rda")
 #myRDA0 <- file.path(.basepath,"RobAStRDA/R/sysdata0.rda")
 myRDA <- file.path(.basepath,"RobAStRDA/R/sysdata.rda")
 CSVFiles <- grep("\\.csv$", dir(.myFolderFrom), value=TRUE)
@@ -28,13 +30,17 @@ CSVFiles <- paste(.myFolderFrom, CSVFiles, sep="/")
 .computeInterpolators(myRDA0, myRDA,withSmoothFct = TRUE)
 ###
 
+## as a result, at check time the installed size of the package is~6.3MB instead of 11.3MB
+## the price to pay: we need R>=3.5.0
+
+### the lines 34+ in this file interpolationscripts.R before v 1.3.0 can be skipped
 if(FALSE){
 #---------------------------------------------------------
 # (1) load package in R>3.0
 #---------------------------------------------------------
   if(getRversion()>"3.0"){
     require(RobAStRDA)
-    .basepath <- "C:/rtest/RobASt/branches/robast-1.1/pkg"
+    .basepath <- "C:/rtest/RobASt/branches/robast-1.3/pkg"
     .myFolderFrom <- file.path(.basepath,"RobExtremesBuffer")
     (myRDAg30 <- file.path(.basepath,"RobExtremesBuffer/sysdataOnlyGridsOnlyR-3.5.1rc.rda"))
     (myRDAg3 <- file.path(.basepath,"RobExtremesBuffer/sysdataWithInterpOnlyR-3.5.1rc.rda"))
@@ -62,7 +68,7 @@ if(FALSE){
 #---------------------------------------------------------
   if(getRversion()<"2.16"){
     require(RobAStRDA)
-    .basepath <- "C:/rtest/RobASt/branches/robast-1.1/pkg"
+    .basepath <- "C:/rtest/RobASt/branches/robast-1.3/pkg"
     .myFolderFrom <- file.path(.basepath,"RobExtremesBuffer")
     myRDAs30 <- file.path(.basepath,"RobExtremesBuffer/sysdataOnlyGridsOnlyR-2.15.1.rda")
     myRDAs3 <- file.path(.basepath,"RobExtremesBuffer/sysdataWithInterpOnlyR-2.15.1.rda")

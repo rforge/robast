@@ -1,0 +1,382 @@
+plotInfo distr / plot-distribution
+
+abscont:
+     plotInfo <- list(call = mc, dots=dots,
+                      args = list(width = width, height = height,
+                      withSweave = withSweave,
+                      xlim = xlim, ylim = ylim, ngrid = ngrid,
+                      verticals = verticals, do.points = do.points,
+                      main = main, inner = inner, sub = sub,
+                      bmar = bmar, tmar = tmar, cex.main = cex.main,
+                      cex.inner = cex.inner, cex.sub = cex.sub,
+                      col.points = col.points, col.vert = col.vert,
+                      col.main = col.main, col.inner = col.inner,
+                      col.sub = col.sub, cex.points = cex.points,
+                      pch.u = pch.u, pch.a = pch.a, mfColRow = mfColRow,
+                      to.draw.arg = to.draw.arg, withSubst = withSubst),
+                      to.draw=to.draw, panelFirst = pF,
+                      panelLast = pL)
+
+     plotInfo$to.draw <- to.draw
+     plotInfo$panelFirst <- pF
+     plotInfo$panelLast <- pL
+
+	 plotInfo$dplot$plot <- c(list(x = grid, dxg, type = "l",
+             ylim = ylim1,  ylab = ylab0[["d"]], xlab = xlab0[["d"]], log = logpd),
+             dots.lowlevel)
+      plotInfo$dplot$usr <- par("usr")
+      plotInfo$dplot$title <- list(main = inner.d, line = lineT,
+               cex.main = cex.inner, col.main = col.inner)
+  
+      plotInfo$pplot$plot <- c(list(x = grid, pxg, type = "l",
+             ylim = ylim2, ylab = ylab0[["p"]], xlab = xlab0[["p"]], log = logpd),
+             dots.lowlevel)
+      plotInfo$pplot$usr <- par("usr")
+      plotInfo$pplot$title <- list(main = inner.p, line = lineT,
+                  cex.main = cex.inner, col.main = col.inner)
+
+	  plotInfo$qplot$plot <- c(list(x = po, xo, type = "n",
+             xlim = ylim2, ylim = xlim, ylab = ylab0[["q"]], xlab = xlab0[["q"]],
+             log = logq), dots.lowlevel)
+      plotInfo$qplot$usr <- par("usr")
+      plotInfo$qplot$title <- list(main = inner.q, line = lineT,
+              cex.main = cex.inner, col.main = col.inner)
+      plotInfo$qplot$vlines <- c(list(x=pu[o], y=xu[o],
+                    col = col.vert), dots.without.pch0)
+      plotInfo$qplot$vpoints.l <- c(list(x=pu1, y=gaps(x)[,1],
+                   pch = pch.a, cex = cex.points, col = col.points),
+                   dots.for.points)
+      plotInfo$qplot$vpoints.r <- c(list(x=pu1, y=gaps(x)[,2],
+                   pch = pch.a, cex = cex.points, col = col.points),
+                   dots.for.points)
+				  
+      plotInfo$mainL <- list(text = main, side = 3, cex = cex.main, adj = .5,
+               outer = TRUE, padj = 1.4, col = col.main)
+      plotInfo$subL <- list(text = sub, side = 1, cex = cex.sub, adj = .5,
+               outer = TRUE, line = -1.6, col = col.sub)
+
+discrete
+			   
+			         plotInfo <- list(call = mc, dots=dots,
+                      args = list(width = width, height = height,
+                         withSweave = withSweave,
+                         xlim = xlim, ylim = ylim, verticals = verticals,
+                         do.points = do.points, main = main, inner = inner,
+                         sub = sub, bmar = bmar, tmar = tmar, cex.main = cex.main,
+                         cex.inner = cex.inner, cex.sub = cex.sub,
+                         col.points = col.points, col.hor = col.hor,
+                         col.vert = col.vert, col.main = col.main,
+                         col.inner = col.inner, col.sub = col.sub,
+                         cex.points = cex.points, pch.u = pch.u,
+                         pch.a = pch.a, mfColRow = mfColRow,
+                         to.draw.arg = to.draw.arg, withSubst = withSubst))
+      plotInfo$to.draw <- to.draw
+      plotInfo$panelFirst <- pF
+      plotInfo$panelLast <- pL
+
+       plotInfo$dplot$plot <- c(list(x = supp, dx, type = "h", pch = pch.a,
+            ylim = ylim1, xlim=xlim, ylab = ylab0[["d"]], xlab = xlab0[["d"]],
+            log = logpd), dots.without.pch)
+       plotInfo$dplot$usr <- par("usr")
+       plotInfo$dplot$title <- list(main = inner.d, line = lineT,
+             cex.main = cex.inner, col.main = col.inner)
+       plotInfo$dplot$points <- c(list(x = supp, y = dx, pch = pch.a,
+                  cex = cex.points, col = col.points), dots.for.points)
+
+        plotInfo$pplot$plot <- c(list(x = stepfun(x = supp1, y = psupp1),
+                     main = "", verticals = verticals,
+                     do.points = FALSE,
+                     ylim = ylim2, ylab = ylab0[["p"]], xlab = xlab0[["p"]],
+                     col.hor = col.hor, col.vert = col.vert,
+                     log = logpd), dots.without.pch)
+       plotInfo$pplot$usr <- par("usr")
+       plotInfo$pplot$points.u <- c(list(x = supp, y = psupp1[1:ngrid], pch = pch.u,
+                  cex = cex.points, col = col.points), dots.for.points)
+       plotInfo$pplot$points.a <- c(list(x = supp, y = psupp1[2:(ngrid+1)], pch = pch.a,
+                  cex = cex.points, col = col.points), dots.for.points)
+       plotInfo$pplot$title <- c(main = inner.p, line = lineT,
+             cex.main = cex.inner, col.main = col.inner)
+       plotInfo$pplot$points <- c(list(x = supp,
+                  y = c(0,p(x)(supp[-length(supp)])), pch = pch.u,
+                  cex = cex.points, col = col.points), dots.for.points)
+
+		plotInfo$qplot$plot <- c(list(x = stepfun(c(0,p(x)(supp)),
+                            c(NA,supp,NA), right = TRUE),
+            main = "", xlim = ylim2, ylim = c(min(supp),max(supp)),
+            ylab = ylab0[["q"]], xlab = xlab0[["q"]],
+            verticals = verticals, do.points = do.points,
+            cex.points = cex.points, pch = pch.a,
+            col.points = col.points,
+            col.hor = col.hor, col.vert = col.vert,
+            log = logq), dots.without.pch)
+       plotInfo$qplot$usr <- par("usr")
+       plotInfo$qplot$title <- c(main = inner.q, line = lineT,
+             cex.main = cex.inner, col.main = col.inner)
+       plotInfo$qplot$lines <- c(list(x = c(0,p(x)(supp[1])), y = rep(supp[1],2),
+                  col = col.vert), dots.without.pch0)
+           plotInfo$qplot$points.u <- c(list(x = p(x)(supp[-length(supp)]),
+                  y = supp[-1], pch = pch.u, cex = cex.points,
+                  col = col.points), dots.for.points)
+           plotInfo$qplot$points.a <- c(list(x = 0, y = supp[1], pch = pch.u,
+                  cex = cex.points, col = col.points), dots.for.points)
+           plotInfo$qplot$vlines <- c(list(x = rep(p(x)(supp[1]),2), y = c(supp[1],supp[2]),
+                  col = col.vert), dots.without.pch0)
+
+LebDec		  
+      plotInfo <- list(call = mc, dots=dots, args=args0)
+     plotInfo$to.draw <- to.draw
+     plotInfo$panelFirst <- pF
+     plotInfo$panelLast <- pL
+
+        plotInfo$pplot$plot <- c(list(x = grid, pxg, type = "l",
+             ylim = ylim2, ylab = ylab0[[1]][["p"]], xlab = xlab0[[1]][["p"]], log = logpd),
+             dots.lowlevel)
+        plotInfo$pplot$usr <- par("usr")
+           plotInfo$pplot$points.u <- c(list(x = supp, y = pxg.d, pch = pch.a,
+                     cex = cex.points, col = col.points), dots.for.points)
+           plotInfo$pplot$points.a <- c(list(x = supp-del, y = pxg.d0, pch = pch.u,
+                     cex = cex.points, col = col.points), dots.for.points)
+            plotInfo$pplot$vlines <- c(list(x = xv, y = pxv, col = col.vert),
+                    dots.v)
+        plotInfo$pplot$title <- list(main = inner.p, line = lineT,
+                  cex.main = cex.inner, col.main = col.inner)
+
+        plotInfo$qplot$plot <- c(list(x = po, xo, type = "n",
+             xlim = ylim2, ylim = xlim, ylab = ylab0[[1]][["q"]], xlab = xlab0[[1]][["q"]],
+             log = logq), dots.without.pch)
+        plotInfo$qplot$usr <- par("usr")
+        plotInfo$qplot$title <- c(main = inner.q, line = lineT,
+             cex.main = cex.inner, col.main = col.inner)
+        plotInfo$qplot$lines <- c(list(x=po, y=xo), dots.for.lines)
+                plotInfo$qplot$vlines <- c(list(pu[o], xu[o],
+                        col = col.vert), dots.v)
+        plotInfo$qplot$points.u <- c(list(x = pu1, y = gaps(x)[,1], pch = pch.a,
+                    cex = cex.points, col = col.points), dots.for.points)
+        plotInfo$qplot$points.a <- c(list(x = pu1, y = gaps(x)[,2], pch = pch.u,
+                    cex = cex.points, col = col.points), dots.for.points)
+        plotInfo$qplot$points0 <- c(list(x = 0, y = q.l(x)(0), pch = pch.u,
+                   cex = cex.points, col = col.points), dots.for.points)
+
+	   plotInfo$mainL <- list(text = main, side = 3, cex = cex.main, adj = .5,
+                  outer = TRUE, padj = 1.4, col = col.main)
+       plotInfo$subL <- list(text = sub, side = 1, cex = cex.sub, adj = .5,
+               outer = TRUE, line = -1.6, col = col.sub)
+
+       plotInfo$ac <- do.call(plotC, c(list(acPart(x)),mc.ac), envir = parent.frame(2))
+       plotInfo$di <- do.call(plotD, c(list(discretePart(x)),mc.di), envir = parent.frame(2))
+
+	   
+qqplot
+    plotInfo <- list(call = mc, dots=dots, args=args0)
+    qqplotInfo <- list(xy.0=xy, y.0=y, 
+                         withConf.pw=withConf.pw, 
+                         withConf.sim=withConf.sim, 
+                         alpha.CI=alpha.CI ,
+                         col.pCI = col.pCI , lty.pCI = lty.pCI , 
+                         lwd.pCI = lwd.pCI , pch.pCI = pch.pCI, 
+                         cex.pCI = cex.pCI , 
+                         col.sCI = col.sCI , lty.sCI = lty.sCI , 
+                         lwd.sCI = lwd.sCI , pch.sCI = pch.sCI, 
+                         cex.sCI = cex.sCI , 
+                         n = n , 
+                         exact.sCI = exact.sCI, exact.pCI = exact.pCI,
+                  nosym.pCI = nosym.pCI, with.legend = with.legend,
+                  legend.bg = legend.bg, legend.pos = legend.pos,
+                  legend.cex = legend.cex, legend.pref = legend.pref,
+                  legend.postf = legend.postf, legend.alpha = legend.alpha, debug = debug,
+                  args.stats.qqplot = mcl
+                  )
+    qqb <- .confqq(xy, y, datax=TRUE, withConf.pw, withConf.sim, alpha.CI,
+                      col.pCI, lty.pCI, lwd.pCI, pch.pCI, cex.pCI,
+                      col.sCI, lty.sCI, lwd.sCI, pch.sCI, cex.sCI,
+                  n, exact.sCI = exact.sCI, exact.pCI = exact.pCI,
+                  nosym.pCI = nosym.pCI, with.legend = with.legend,
+                  legend.bg = legend.bg, legend.pos = legend.pos,
+                  legend.cex = legend.cex, legend.pref = legend.pref,
+                  legend.postf = legend.postf, legend.alpha = legend.alpha,
+                  debug = debug)
+    ret <- do.call(stats::qqplot, args=mcl)
+    qq.usr <- par("usr")
+    qqb <- qqbounds(sort(unique(xy)),y,alpha.CI,n,withConf.pw, withConf.sim,
+                   exact.sCI,exact.pCI,nosym.pCI,debug)
+    qqplotInfo <- c(plotInfo, ret=ret, usr=qq.usr, qqplotInfo=qqplotInfo, qqb=qqb)
+
+
+------------------------------------------------------------------------------------------------
+distrMod
+------------------------------------------------------------------------------------------------
+"plot", signature(x = "ParamFamily", y = "missing"),
+    function(x, ...){ 
+        mc <- match.call(call = sys.call(sys.parent(1)))
+        dots <- match.call(call = sys.call(sys.parent(1)),
+                        expand.dots = FALSE)$"..."
+        args0 <- list(x=x)
+        plotInfo <- list(call = mc, dots=dots, args=args0)
+        plotInfo$distribution <- plot(e1,...)
+        class(plotInfo) <- c("plotInfo","DiagnInfo")
+
+"plot", signature(x = "L2ParamFamily", y = "missing"),
+        mc <- match.call(call = sys.call(sys.parent(1)))
+        dots <- match.call(call = sys.call(sys.parent(1)),
+                        expand.dots = FALSE)$"..."
+        args0 <- list(x=x, withSweave = withSweave,
+             main = main, inner = inner, sub = sub,
+             col.inner = col.inner, cex.inner = cex.inner,
+             bmar = bmar, tmar = tmar, mfColRow = mfColRow,
+             to.draw.arg = to.draw.arg, withSubst= withSubst)
+        plotInfo <- list(call = mc, dots=dots, args=args0)
+	        plotInfo$to.draw <- to.draw
+        plotInfo$panelFirst <- pF
+        plotInfo$panelLast <- pL
+           lis0 <- c(list(e1, withSweave = withSweave, 
+                          main = main, inner = innerD, sub = sub, 
+                          col.inner = col.inner, cex.inner = cex.innerD),
+                     dots, mfColRow = mfColRow)
+           lis0$to.draw.arg  <- todrw 
+           lis0[["panel.first"]] <- pF[plotCount+(0:2)]
+           lis0[["panel.last"]]  <- pL[plotCount+(0:2)]
+           plotInfo$distr <- do.call(plot, args = lis0)
+           plotInfo$distr$List <- lis0
+        plotInfo$parArgs <- parArgs
+        plotInfo$L2derivPlotUsr <- plotInfo$L2derivPlotArgs <- vector("list",dims0)
+        plotInfo$L2derivPlotLines <- plotInfo$L2derivPlotTitle <- vector("list",dims0)
+            plotInfo$L2derivPlotArgs[[i]] <- c(list(x=x.vec,
+                   y=sapply(x.vec, L2deriv@Map[[indi]]),
+                   type = plty, lty = lty, xlab = "x",
+                   ylab = expression(paste(L[2], " derivative"))),
+                   dots)
+            plotInfo$L2derivPlotUsr[[i]] <- par("usr")
+            plotInfo$L2derivPlotLines[[i]] <- c(list(x.vec1, sapply(x.vec1,
+                    L2deriv@Map[[indi]]), lty = "dotted"),dots)
+            plotInfo$L2derivPlotTitle[[i]] <- c(list(main = innerT[i]), dotsT,
+                       line = lineT, cex.main = cex.inner,
+                       col.main = col.inner)
+        plotInfo$mainL <- list(text = main, side = 3, cex = cex.main, adj = .5,
+                  outer = TRUE, padj = 1.4, col = col.main)
+        plotInfo$subL <- list(text = sub, side = 1, cex = cex.sub, adj = .5,
+               outer = TRUE, line = -1.6, col = col.sub)
+
+qqplot
+  "qqplot", signature(x = "ANY", y = "UnivariateDistribution"),
+    plotInfo <- list(call = mc, dots=dots, args=args0)
+        qqplotInfo <- list(xy.0=xy, y.0=y, datax = datax, 
+                         withConf.pw=withConf.pw, 
+                         withConf.sim=withConf.sim, 
+                         alpha.CI=alpha.CI ,
+                         col.pCI = col.pCI , lty.pCI = lty.pCI , 
+                         lwd.pCI = lwd.pCI , pch.pCI = pch.pCI, 
+                         cex.pCI = cex.pCI , 
+                         col.sCI = col.sCI , lty.sCI = lty.sCI , 
+                         lwd.sCI = lwd.sCI , pch.sCI = pch.sCI, 
+                         cex.sCI = cex.sCI , 
+                         n = n , 
+                         exact.sCI = exact.sCI, exact.pCI = exact.pCI,
+                  nosym.pCI = nosym.pCI, with.legend = with.legend,
+                  legend.bg = legend.bg, legend.pos = legend.pos,
+                  legend.cex = legend.cex, legend.pref = legend.pref,
+                  legend.postf = legend.postf, legend.alpha = legend.alpha, 
+                  debug = debug,
+                  args.stats.qqplot = mcl,
+                  withLab = withLab,
+                  lbprep = lbprep
+                  )
+	    ret <- do.call(stats::qqplot, args=mcl)
+       qq.usr <- par("usr")
+      qqb <- .confqq(xy, y, datax=datax, withConf.pw, withConf.sim, alpha.CI,
+                      col.pCI, lty.pCI, lwd.pCI, pch.pCI, cex.pCI,
+                      col.sCI, lty.sCI, lwd.sCI, pch.sCI, cex.sCI,
+                  n, exact.sCI = exact.sCI, exact.pCI = exact.pCI,
+                  nosym.pCI = nosym.pCI, with.legend = with.legend,
+                  legend.bg = legend.bg, legend.pos = legend.pos,
+                  legend.cex = legend.cex, legend.pref = legend.pref,
+                  legend.postf = legend.postf, legend.alpha = legend.alpha, debug = debug)
+    qqplotInfo <- c(plotInfo, ret=ret, usr=qq.usr, qqplotInfo=qqplotInfo, qqb=qqb)
+
+	
+ "qqplot", signature(x = "ANY", y = "ProbFamily")
+     mc <- match.call(call = sys.call(sys.parent(1)))
+    dots <- match.call(call = sys.call(sys.parent(1)),
+                       expand.dots = FALSE)$"..."
+    args0 <- list(x = x, y = y,
+                  n = if(!missing(n)) n else length(x),
+                  withIdLine = withIdLine, withConf = withConf,
+    withConf.pw  = if(!missing(withConf.pw)) withConf.pw else if(!missing(withConf)) withConf else NULL,
+    withConf.sim = if(!missing(withConf.sim)) withConf.sim else if(!missing(withConf)) withConf else NULL,
+                  plot.it = plot.it, xlab = xlab, ylab = ylab)
+   
+	retv <- do.call(getMethod("qqplot", signature(x="ANY", y="UnivariateDistribution")),
+            args=mcl)
+    retv$call <- mc        
+    retv$args <- args0
+    retv$dots <- dots
+
+  "qqplot", signature(x = "ANY", y = "Estimate")
+    mc <- match.call(call = sys.call(sys.parent(1)))
+    dots <- match.call(call = sys.call(sys.parent(1)),
+                       expand.dots = FALSE)$"..."
+    args0 <- list(x = x, y = y,
+                  n = if(!missing(n)) n else length(x),
+                  withIdLine = withIdLine, withConf = withConf,
+    withConf.pw  = if(!missing(withConf.pw)) withConf.pw else if(!missing(withConf)) withConf else NULL,
+    withConf.sim = if(!missing(withConf.sim)) withConf.sim else if(!missing(withConf)) withConf else NULL,
+                  plot.it = plot.it, xlab = xlab, ylab = ylab)
+    retv <- do.call(getMethod("qqplot", signature(x="ANY", y="ProbFamily")),
+            args=mcl)
+    retv$call <- mc
+    retv$args <- args0
+    retv$dots <- dots
+    return(invisible(retv))
+------------------------------------------------------------------------------------------------
+distrMod
+------------------------------------------------------------------------------------------------
+  "plot",signature(x = "Dataclass", y="missing"), 
+            args0 <- list(x=x, obs0=obs0, dims0=dims0, runs0=runs0)
+            mc <- match.call(call = sys.call(sys.parent(1)))
+            dots <- match.call(call = sys.call(sys.parent(1)),
+                               expand.dots = FALSE)$"..."
+            plotInfo <- list(call = mc, dots=dots, args=args0)
+            plotInfo$dotsMatplot <- vector("list",lrun0)
+            plotInfo$usrMatplot <- vector("list",lrun0)
+                     plotInfo$dotsMatplot[[i]] <- dots
+                     do.call("matplot", args = dots)
+                     plotInfo$usrMatplot[[i]] <- par("usr")
+                plotInfo$dotsEnd <- dots
+                plotInfo$usrEnd[[i]] <- par("usr")
+
+   "plot",signature(x="Contsimulation", y="missing"), 
+            args0 <- list(x=x, obs0=obs0, dims0=dims0, runs0=runs0)
+            mc <- match.call(call = sys.call(sys.parent(1)))
+            dots <- match.call(call = sys.call(sys.parent(1)),
+                               expand.dots = FALSE)$"..."
+            plotInfo <- list(call = mc, dots=dots, args=args0)
+            plotInfo$dotsMatplot <- vector("list",lrun0)
+            plotInfo$usrMatplot <- vector("list",lrun0)
+            plotInfo$dotsCMatpoints <- vector("list",lrun0)
+                     plotInfo$dotsMatplot[[i]] <- dots
+                     do.call("matplot", args = dots)
+                     plotInfo$usrMatplot[[i]] <- par("usr")
+                         plotInfo$dotsMatpoints[[i]] <- dots
+                         do.call("matpoints", args = dots)
+                plotInfo$dotsEnd <- dots
+                plotInfo$usrEnd[[i]] <- par("usr")
+------------------------------------------------------------------------------------------------
+distrTEst
+------------------------------------------------------------------------------------------------
+"plot",signature(x="Evaluation",y="missing"),
+            args0 <- list(x=x, runs0=runs0, dims0=dims0)
+            mc <- match.call(call = sys.call(sys.parent(1)))
+            dots <- match.call(call = sys.call(sys.parent(1)),
+                               expand.dots = FALSE)$"..."
+            plotInfo <- list(call = mc, dots=dots, args=args0)
+            plotInfo$boxplot <- boxplot(result(x)[runs0,dims0[1:ldim0]],...)
+            plotInfo$usr <- par("usr")
+setMethod("plot",signature(x="EvaluationList",y="missing"),
+{           args0 <- list(x=x, runs0=runs0, dims0=dims0, evals0=evals0)
+            mc <- match.call(call = sys.call(sys.parent(1)))
+            dots <- match.call(call = sys.call(sys.parent(1)),
+                               expand.dots = FALSE)$"..."
+            plotInfo <- list(call = mc, dots=dots, args=args0)
+  plotInfo$boxplot <- plotInfo$usr <- plotInfo$bpdots <-vector("list",resdim0)
+       plotInfo$bpdots[[i]] <- dots
+       plotInfo$boxplot[[i]] <- do.call("boxplot", args = dots)
+       plotInfo$usr[[i]] <- par("usr")
