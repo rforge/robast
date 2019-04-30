@@ -1,6 +1,6 @@
 
 setMethod("var", signature(x = "Pareto"),
-    function(x, ...){
+    function(x, propagate.names=getdistrExOption("propagate.names.functionals"), ...){
     dots <- match.call(call = sys.call(sys.parent(1)), 
                        expand.dots = FALSE)$"..."
     fun <- NULL; cond <- NULL; low <- NULL; upp <- NULL
@@ -8,14 +8,16 @@ setMethod("var", signature(x = "Pareto"),
     if(hasArg(upp)) upp <- dots$upp
     if(hasArg(fun)||hasArg(cond)||!is.null(low)||!is.null(upp)) 
         return(var(as(x,"AbscontDistribution"),...))
-    else{ a <- shape(x); b <- Min(x)
+    else{a <- shape(x); b <- Min(x)
         if(a<=2) return(NA)
-        return(b^2 * a/(a-1)^2/(a-2))
+        ret.v <- b^2 * a/(a-1)^2/(a-2)
+        if(!propagate.names){names(ret.v) <- NULL}
+        return(ret.v)
     }})
 ### source http://mathworld.wolfram.com/ParetoDistribution.html
 
 setMethod("var", signature(x = "Gumbel"),
-    function(x, ...){
+    function(x, propagate.names=getdistrExOption("propagate.names.functionals"), ...){
     dots <- match.call(call = sys.call(sys.parent(1)), 
                        expand.dots = FALSE)$"..."
     fun <- NULL; cond <- NULL; low <- NULL; upp <- NULL
@@ -24,12 +26,14 @@ setMethod("var", signature(x = "Gumbel"),
     if(hasArg(fun)||hasArg(cond)||!is.null(low)||!is.null(upp)) 
         return(var(as(x,"AbscontDistribution"),...))
     else{  b <- scale(x)
-            return(b^2 * pi^2/6)
+           ret.v <- (b^2 * pi^2/6)
+           if(!propagate.names){names(ret.v) <- NULL}
+           return(ret.v)
     }})
 ## http://mathworld.wolfram.com/GumbelDistribution.html
 
 setMethod("var", signature(x = "GPareto"),
-    function(x, ...){
+    function(x, propagate.names=getdistrExOption("propagate.names.functionals"), ...){
     dots <- match.call(call = sys.call(sys.parent(1)), 
                        expand.dots = FALSE)$"..."
     fun <- NULL; cond <- NULL; low <- NULL; upp <- NULL
@@ -39,13 +43,15 @@ setMethod("var", signature(x = "GPareto"),
         return(var(as(x,"AbscontDistribution"),...))
     else{ k <- shape(x); s <- scale(x)
         if(k>=1/2) return(NA)
-        return(s^2/(1-k)^2/(1-2*k))
+        ret.v <- s^2/(1-k)^2/(1-2*k)
+        if(!propagate.names){names(ret.v) <- NULL}
+        return(ret.v)
     }})
 ### source http://en.wikipedia.org/wiki/Pareto_distribution
 
 
 setMethod("var", signature(x = "GEV"),
-    function(x, ...){
+    function(x, propagate.names=getdistrExOption("propagate.names.functionals"), ...){
     dots <- match.call(call = sys.call(sys.parent(1)), 
                        expand.dots = FALSE)$"..."
     fun <- NULL; cond <- NULL; low <- NULL; upp <- NULL
@@ -55,8 +61,10 @@ setMethod("var", signature(x = "GEV"),
         return(var(as(x,"AbscontDistribution"),...))
     else{ xi <- shape(x); sigma <- scale(x)
         if(xi>=1/2) return(NA)
-        if(xi==0) return(sigma^2*pi^2/6)
-        if((xi!=0)&&(xi<1/2))return(sigma^2*(gamma(1-2*xi)-gamma(1-xi)^2)/xi^2)
+        if(xi==0) ret.v <- sigma^2*pi^2/6
+        if((xi!=0)&&(xi<1/2)) ret.v <- sigma^2*(gamma(1-2*xi)-gamma(1-xi)^2)/xi^2
+        if(!propagate.names){names(ret.v) <- NULL}
+        return(ret.v)
     }})
 ### http://en.wikipedia.org/wiki/Generalized_extreme_value_distribution
 
@@ -66,21 +74,33 @@ setMethod("var", signature(x = "GEV"),
 
 
 setMethod("median", signature(x = "Pareto"),
-    function(x) {a <- shape(x); b<- Min(x)
-              return(b*2^(1/a))
+    function(x, propagate.names=getdistrExOption("propagate.names.functionals")) {
+    a <- shape(x); b<- Min(x)
+    ret.v <- b*2^(1/a)
+    if(!propagate.names){names(ret.v) <- NULL}
+    return(ret.v)
     })
 setMethod("median", signature(x = "Gumbel"),
-    function(x) {a <- loc(x); b <- scale(x)
-              return(a - b *log(log(2)))
+    function(x, propagate.names=getdistrExOption("propagate.names.functionals")) {
+    a <- loc(x); b <- scale(x)
+    ret.v <- a - b *log(log(2))
+    if(!propagate.names){names(ret.v) <- NULL}
+    return(ret.v)
     })
 setMethod("median", signature(x = "GPareto"),
-    function(x) {k <- shape(x); mu <- loc(x); s <- scale(x)
-              return(mu + s*(2^k-1)/k)
+    function(x, propagate.names=getdistrExOption("propagate.names.functionals")) {
+    k <- shape(x); mu <- loc(x); s <- scale(x)
+    ret.v <- mu + s*(2^k-1)/k
+    if(!propagate.names){names(ret.v) <- NULL}
+    return(ret.v)
     })
 setMethod("median", signature(x = "GEV"),
-    function(x) {xi <- shape(x); mu <- loc(x); sigma <- scale(x)
-              if (xi != 0) return(mu + sigma*(log(2)^(-xi)-1)/xi)
-              else return(mu-sigma*log(log(2)))
+    function(x, propagate.names=getdistrExOption("propagate.names.functionals")) {
+    xi <- shape(x); mu <- loc(x); sigma <- scale(x)
+    if (xi != 0) ret.v <- (mu + sigma*(log(2)^(-xi)-1)/xi)
+       else ret.v <- (mu-sigma*log(log(2)))
+    if(!propagate.names){names(ret.v) <- NULL}
+    return(ret.v)
     })
 
 #################################################################
@@ -89,19 +109,31 @@ setMethod("median", signature(x = "GEV"),
 
 
 setMethod("IQR", signature(x = "Pareto"),
-    function(x) {a <- shape(x); b<- Min(x)
-              return(b*(4^(1/a)-(4/3)^(1/a)))
+    function(x, propagate.names=getdistrExOption("propagate.names.functionals")) {
+    a <- shape(x); b<- Min(x)
+    ret.v <- (b*(4^(1/a)-(4/3)^(1/a)))
+    if(!propagate.names){names(ret.v) <- NULL}
+    return(ret.v)
     })
 setMethod("IQR", signature(x = "Gumbel"),
-    function(x) { b <- scale(x)
-              return(b * (log(log(4))-log(log(4/3))))
+    function(x, propagate.names=getdistrExOption("propagate.names.functionals")) {
+    b <- scale(x)
+    ret.v <- (b * (log(log(4))-log(log(4/3))))
+    if(!propagate.names){names(ret.v) <- NULL}
+    return(ret.v)
     })
 setMethod("IQR", signature(x = "GPareto"),
-    function(x) {k <- shape(x); s<- scale(x)
-              return(s/k*4^k*(1-3^(-k)))
+    function(x, propagate.names=getdistrExOption("propagate.names.functionals")) {
+    k <- shape(x); s<- scale(x)
+    ret.v <- (s/k*4^k*(1-3^(-k)))
+    if(!propagate.names){names(ret.v) <- NULL}
+    return(ret.v)
     })
 setMethod("IQR", signature(x = "GEV"),
-    function(x) {xi <- shape(x); sigma<- scale(x)
-             if (xi != 0) return(sigma*((log(4/3))^(-xi)-(log(4))^(-xi))/xi)
-             else return(sigma*(log(log(4))-log(log(4/3))))
+    function(x, propagate.names=getdistrExOption("propagate.names.functionals")) {
+    xi <- shape(x); sigma<- scale(x)
+    if (xi != 0) ret.v <- (sigma*((log(4/3))^(-xi)-(log(4))^(-xi))/xi)
+            else ret.v <- (sigma*(log(log(4))-log(log(4/3))))
+    if(!propagate.names){names(ret.v) <- NULL}
+    return(ret.v)
     })

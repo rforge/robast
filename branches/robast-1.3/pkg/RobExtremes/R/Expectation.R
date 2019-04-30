@@ -7,12 +7,18 @@
 setMethod("E", signature(object = "Pareto",
                          fun = "missing",
                          cond = "missing"),
-    function(object, low = NULL, upp = NULL, ..., diagnostic = FALSE){
+    function(object, low = NULL, upp = NULL,
+             propagate.names=getdistrExOption("propagate.names.functionals"), ...,
+             diagnostic = FALSE){
     if(!is.null(low)) if(low <= Min(object)) low <- NULL
     a <- shape(object); b <- Min(object)
     if(is.null(low) && is.null(upp)){
         if(a<=1) return(Inf)
-        else return(b*a/(a-1))
+        else{
+          ret.v <- b*a/(a-1)
+          if(!propagate.names){names(ret.v) <- NULL}
+          return(ret.v)
+        }
      }
     else
         return(E(object=object,fun=function(x)x, low=low, upp=upp, ...,
@@ -25,11 +31,15 @@ setMethod("E", signature(object = "Pareto",
 setMethod("E", signature(object = "Gumbel",
                          fun = "missing",
                          cond = "missing"),
-    function(object, low = NULL, upp = NULL, ..., diagnostic = FALSE){
+    function(object, low = NULL, upp = NULL,
+             propagate.names=getdistrExOption("propagate.names.functionals"), ...,
+             diagnostic = FALSE){
     a <- loc(object); b <- scale(object)
-    if(is.null(low) && is.null(upp))
-           return(a- EULERMASCHERONICONSTANT * b)
-    else
+    if(is.null(low) && is.null(upp)){
+          ret.v <- a- EULERMASCHERONICONSTANT * b
+          if(!propagate.names){names(ret.v) <- NULL}
+          return(ret.v)
+    }else
         return(E(object=object,fun=function(x)x, low=low, upp=upp, ...,
                     diagnostic = diagnostic))
     })
@@ -38,14 +48,19 @@ setMethod("E", signature(object = "Gumbel",
 setMethod("E", signature(object = "GPareto",
                          fun = "missing",
                          cond = "missing"),
-    function(object, low = NULL, upp = NULL, ..., diagnostic = FALSE){
+    function(object, low = NULL, upp = NULL,
+             propagate.names=getdistrExOption("propagate.names.functionals"), ...,
+             diagnostic = FALSE){
     if(!is.null(low)) if(low <= Min(object)) low <- NULL
     k <- shape(object); s <- scale(object); mu <- loc(object)
     if(is.null(low) && is.null(upp)){
         if(k>=1) return(Inf)
-        else return(mu+s/(1-k))
-     }
-    else
+        else{
+          ret.v <- mu+s/(1-k)
+          if(!propagate.names){names(ret.v) <- NULL}
+          return(ret.v)
+        }
+     }else
         return(E(object=object,fun=function(x)x, low=low, upp=upp, ...,
                     diagnostic = diagnostic))
     })
@@ -120,15 +135,20 @@ setMethod("E", signature(object = "GPareto",
 setMethod("E", signature(object = "GEV",
                          fun = "missing",
                          cond = "missing"),
-    function(object, low = NULL, upp = NULL, ..., diagnostic = FALSE){
+    function(object, low = NULL, upp = NULL,
+             propagate.names=getdistrExOption("propagate.names.functionals"), ...,
+             diagnostic = FALSE){
     if(!is.null(low)) if(low <= Min(object)) low <- NULL
     xi <- shape(object); sigma <- scale(object); mu <- loc(object)
     if(is.null(low) && is.null(upp)){
-        if (xi==0) return(mu+sigma*EULERMASCHERONICONSTANT)
-        else if(xi>=1) return(Inf)
-        else return(mu+sigma*(gamma(1-xi)-1)/xi)
-        }
-    else
+        if (xi==0) ret.v <- mu+sigma*EULERMASCHERONICONSTANT
+        else if(xi>=1) ret.v <- Inf
+        else ret.v <- mu+sigma*(gamma(1-xi)-1)/xi
+
+        if(!propagate.names){names(ret.v) <- NULL}
+        return(ret.v)
+
+        }else
         return(E(object, low=low, upp=upp, fun = function(x)x, ...,
                  diagnostic = diagnostic))
     })

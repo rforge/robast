@@ -8,6 +8,16 @@
  information) 
 
 #######################################
+version 1.3
+#######################################
+
+user-visible CHANGES:
++  taking up a suggestion by Andreas.Scheidegger@eawag.ch, we introduced new 
+   argument propagate.names in our functionals controlling whether names 
+   obtained from parameter coordinates should be propagated to return values 
+   of specific S4 methods for functionals for Gumbel, GEV, GPD, Pareto
+
+#######################################
 version 1.2
 #######################################
 
