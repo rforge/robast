@@ -206,6 +206,7 @@
         return(fun)
 }
 
+
 cniperCont <- function(IC1, IC2, data = NULL, ...,
                            neighbor, risk, lower=getdistrOption("DistrResolution"),
                            upper=1-getdistrOption("DistrResolution"), n = 101,
@@ -404,6 +405,9 @@ cniperCont <- function(IC1, IC2, data = NULL, ...,
         invisible(plotInfo)
 }
 
+
+
+
 cniperPoint <- function(L2Fam, neighbor, risk= asMSE(),
                         lower=getdistrOption("DistrResolution"),
                         upper=1-getdistrOption("DistrResolution")){
@@ -415,6 +419,11 @@ cniperPoint <- function(L2Fam, neighbor, risk= asMSE(),
         if(is.null(as.list(mc)$upper)) upper <- q.l(L2Fam)(upper)
 #        lower <- q(L2Fam)(lower)
 #        upper <- q(L2Fam)(upper)
+
+## comment Matthias 20190513:
+## do we need
+## if(is.null(as.list(mc)$lower)) lower <- q.l(L2Fam)(lower)
+## if(is.null(as.list(mc)$upper)) upper <- q.l(L2Fam)(upper)
 
         robMod <- InfRobModel(center = L2Fam, neighbor = neighbor)
 
