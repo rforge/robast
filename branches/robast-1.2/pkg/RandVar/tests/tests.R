@@ -117,13 +117,13 @@ plot(DL4)
 
 
 ## "Math" group
-system.time(Map(log(abs(R4))), gcFirst = TRUE)
-system.time(Map(gamma(R7)), gcFirst = TRUE)
-system.time(Map(exp(RL1)[[1]]), gcFirst = TRUE)
+Map(log(abs(R4)))
+Map(gamma(R7))
+Map(exp(RL1)[[1]])
 
 
 ## "Arith" group
-system.time(Map(3 + R3), gcFirst = TRUE)
+Map(3 + R3)
 Map(c(1,3,5) * R3)
 try(1:5 * R3) # error
 Map(1:2 * R4)
@@ -135,7 +135,7 @@ Map(R3 ^ R3)
 Map(R7 * R7)
 Map((1 + RL1)[[1]])
 Map((RL1 * 2)[[2]])
-system.time(Map((RL1 %% RL1)[[3]]), gcFirst = TRUE)
+Map((RL1 %% RL1)[[3]])
 
 
 ## "%*%"
@@ -159,12 +159,12 @@ Map(R9 %*% matrix(1:4, nrow = 2))
 Map(R10)
 R3 %*% R3 # inner product
 R3 %*% R10
-system.time(R9 %*% R7, gcFirst = TRUE)
+R9 %*% R7
 (RL3 <- diag(dimension(RL1)) %*% RL1)
 
 
 ## %m% "matrix multiplication" for 'EuclRandVarList'
-system.time(RL4 <- EuclRandVarList(t(R3[1:2]), R7) %m% EuclRandVarList(R6, R9), gcFirst = TRUE)
+RL4 <- EuclRandVarList(t(R3[1:2]), R7) %m% EuclRandVarList(R6, R9)
 
 ## integration
 MVD <- DiscreteMVDistribution(supp = matrix(c(r(Pois(5))(10), r(Pois(5))(10)), ncol = 2))
