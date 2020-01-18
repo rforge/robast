@@ -12,13 +12,13 @@ Implementation of random variables by means of S4 classes and methods.
 \tabular{ll}{
 Package: \tab RandVar \cr
 Version: \tab 1.3.0 \cr
-Date: \tab 2019-03-13 \cr
+Date: \tab 2020-01-18 \cr
 Depends: \tab R(>= 3.4), methods, distr(>= 2.8.0), distrEx(>= 2.8.0) \cr
 Imports: \tab startupmsg \cr
 ByteCompile: \tab yes \cr
 License: \tab LGPL-3 \cr
 URL: \tab http://robast.r-forge.r-project.org/\cr
-VCS/SVNRevision: \tab 1205 \cr
+VCS/SVNRevision: \tab 1228 \cr
 }
 }
 \author{
@@ -38,7 +38,6 @@ Note: The first two numbers of package versions do not necessarily reflect
  RobAStXXX family as a whole in order to ease updating "depends"
  information.
 }
-
 \examples{
 library(RandVar)
 #vignette("RandVar")
