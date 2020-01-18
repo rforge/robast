@@ -8,7 +8,9 @@ set.seed(123)
 ## RandVariable
 (R1 <- new("RandVariable"))
 (R1 <- RandVariable())
+## IGNORE_RDIFF_BEGIN
 Map(R1)
+## IGNORE_RDIFF_END
 Domain(R1)
 Range(R1)
 Map(R1) <- list(function(x){ceiling(x)}, function(x){floor(x)})
