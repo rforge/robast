@@ -48,7 +48,7 @@ setMethod("confint", signature(object="ALEstimate", method="missing"),
     ci[] <- main(object) + sd0 %o% fac
 ### end of borrowed code
 
-    new("Confint", type = gettext("asymptotic (LAN-based)"),
+    new("Confint", type = gettext("asymptotic (CLT-based)"),
                    samplesize.estimate = object@samplesize,
                    call.estimate = object@estimate.call,
                    name.estimate = object@name,
