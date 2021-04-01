@@ -17,7 +17,7 @@ Authors@R: c(person("Matthias", "Kohl", role=c("aut", "cph")), person("Bernhard"
             role="ctb", comment="helped with manual smoothing of the interpolators"),
             person("Peter", "Ruckdeschel", role=c("cre", "cph", "aut"),
             email="peter.ruckdeschel@uni-oldenburg.de"))
-LazyData: yes
+SysDataCompression: xz
 ByteCompile: yes
 License: LGPL-3
 URL: http://robast.r-forge.r-project.org/
